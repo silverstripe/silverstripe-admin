@@ -33,6 +33,7 @@ use SilverStripe\Forms\HTMLEditor\HTMLEditorConfig;
 use SilverStripe\Forms\HTMLEditor\HTMLEditorField_Toolbar;
 use SilverStripe\Forms\Schema\FormSchema;
 use SilverStripe\i18n\i18n;
+use SilverStripe\ORM\CMSPreviewable;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\ORM\Hierarchy\Hierarchy;
 use SilverStripe\ORM\SS_List;

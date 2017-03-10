@@ -1,0 +1,47 @@
+language: php
+
+sudo: false
+
+addons:
+  apt:
+    packages:
+      - tidy
+
+env:
+  global:
+    - TRAVIS_NODE_VERSION="6"
+
+matrix:
+  fast_finish: true
+  include:
+    - php: 5.5
+      env: DB=PGSQL PHPUNIT_TEST=1
+    - php: 5.6
+      env: DB=MYSQL PHPUNIT_TEST=1 PHPCS_TEST=1
+    - php: 7.0
+      env: DB=MYSQL PHPUNIT_TEST=1
+    - php: 7.1
+      env: DB=MYSQL PDO=1
+    - php: 5.6
+      env: NPM_TEST=1
+
+before_script:
+  - export CORE_RELEASE=$TRAVIS_BRANCH
+  - printf "\n" | pecl install imagick
+  - composer self-update || true
+  - "if [ \"$PHPCS_TEST\" = \"1\" ]; then pyrus install pear/PHP_CodeSniffer; fi"
+  - phpenv rehash
+  - phpenv config-rm xdebug.ini
+  - "export DISPLAY=\":99\""
+  - "export XVFBARGS=\":99 -ac -screen 0 1024x768x16\""
+  - "export COMPOSER_ROOT_VERSION=4.0.x-dev"
+  - "if [ \"$na\" = \"\" ]; then composer install --prefer-dist; fi"
+  - "if [ \"$DB\" = \"PGSQL\" ]; then composer require silverstripe/postgresql:2.0.x-dev --prefer-dist; fi"
+  - "if [ \"$DB\" = \"SQLITE\" ]; then composer require silverstripe/sqlite3:2.0.x-dev --prefer-dist; fi"
+  - "if [ \"$NPM_TEST\" = \"1\" ]; then nvm install $TRAVIS_NODE_VERSION && npm install -g yarn && yarn install --network-concurrency 1 && yarn run build; fi"
+
+script:
+  - "if [ \"$PHPUNIT_TEST\" = \"1\" ]; then vendor/bin/phpunit tests/php; fi"
+  - "if [ \"$NPM_TEST\" = \"1\" ]; then git diff-files --quiet -w; fi"
+  - "if [ \"$NPM_TEST\" = \"1\" ]; then git diff -w --no-color; fi"
+  - "if [ \"$PHPCS_TEST\" = \"1\" ]; then composer run-script lint; fi"
