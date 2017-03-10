@@ -1,0 +1,8 @@
+docs/ export-ignore
+
+# Line endings
+sake text eol=lf
+
+# Hide diffs
+client/dist/js/ -diff
+client/dist/css/ -diff

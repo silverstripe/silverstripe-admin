@@ -1,0 +1,9 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "jasmine": true
+  },
+  "rules": {
+    "init-declarations": 1
+  }
+}

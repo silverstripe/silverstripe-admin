@@ -1,0 +1,5 @@
+inherit: true
+filter:
+  excluded_paths:
+    - thirdparty/*
+
