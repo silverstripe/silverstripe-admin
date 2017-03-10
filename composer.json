@@ -27,7 +27,8 @@
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
-    }
+    },
+    "installer-name": "silverstripe-admin"
   },
   "autoload": {
     "psr-4": {
