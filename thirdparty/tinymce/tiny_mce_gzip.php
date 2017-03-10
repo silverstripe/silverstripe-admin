@@ -9,8 +9,11 @@
  * Contributing: http://tinymce.moxiecode.com/contributing
  */
 
-$frameworkPath = defined('FRAMEWORK_PATH') ? FRAMEWORK_PATH : rtrim(dirname(dirname(dirname(dirname(__FILE__)))), DIRECTORY_SEPARATOR);
-$basePath = defined('BASE_PATH') ? BASE_PATH : rtrim(dirname($frameworkPath), DIRECTORY_SEPARATOR);
+// If framework isn't installed inside admin dir, root directory is one level up
+$basePath = dirname(dirname(__DIR__));
+if (!is_dir($basePath . '/framework')) {
+    $basePath = dirname($basePath);
+}
 
 // require composers autoloader
 if(file_exists($basePath . '/vendor/autoload.php')) {

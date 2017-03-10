@@ -82,7 +82,11 @@ abstract class ModelAdmin extends LeftAndMain
      */
     private static $menu_priority = -0.5;
 
-    private static $menu_icon = 'framework/admin/client/src/sprites/menu-icons/16x16/db.png';
+    /**
+     * @todo ensure copied to client/dist folder and link from there
+     * @var string
+     */
+    private static $menu_icon = 'silverstripe-admin/client/src/sprites/menu-icons/16x16/db.png';
 
     private static $allowed_actions = array(
         'ImportForm',

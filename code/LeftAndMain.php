@@ -178,7 +178,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      * @var array
      */
     private static $admin_themes = [
-        'silverstripe/framework:/admin/themes/cms-forms',
+        'silverstripe/admin:cms-forms',
         SSViewer::DEFAULT_THEME,
     ];
 
@@ -272,7 +272,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function getCombinedClientConfig()
     {
         $combinedClientConfig = ['sections' => []];
-        $cmsClassNames = CMSMenu::get_cms_classes('SilverStripe\\Admin\\LeftAndMain', true, CMSMenu::URL_PRIORITY);
+        $cmsClassNames = CMSMenu::get_cms_classes(self::class, true, CMSMenu::URL_PRIORITY);
 
         foreach ($cmsClassNames as $className) {
             $combinedClientConfig['sections'][$className] =  Injector::inst()->get($className)->getClientConfig();
