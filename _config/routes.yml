@@ -1,0 +1,9 @@
+---
+Name: adminroutes
+After:
+  - '#rootroutes'
+  - '#coreroutes'
+---
+SilverStripe\Control\Director:
+  rules:
+    'admin': 'SilverStripe\Admin\AdminRootController'
