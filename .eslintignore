@@ -1,0 +1,35 @@
+# Ignore dist files
+client/dist/
+
+# Ignore legacy files
+client/src/legacy/ConfirmedPasswordField.js
+client/src/legacy/DateField.js
+client/src/legacy/GridField.js
+client/src/legacy/HtmlEditorField.js
+client/src/legacy/InlineFormAction.js
+client/src/legacy/PermissionCheckboxSetField.js
+client/src/legacy/SelectionGroup.js
+client/src/legacy/TabSet.js
+client/src/legacy/TinyMCE_SSPlugin.js
+client/src/legacy/ToggleCompositeField.js
+client/src/legacy/ToggleField.js
+client/src/legacy/TreeDropdownField.js
+client/src/i18n.js
+client/src/i18nx.js
+client/src/jQuery.js
+client/src/legacy/LeftAndMain.js
+client/src/legacy/LeftAndMain.*.js
+client/src/legacy/MemberDatetimeOptionsetField.js
+client/src/legacy/MemberImportForm.js
+client/src/legacy/ModelAdmin.js
+client/src/legacy/SecurityAdmin.js
+client/src/legacy/leaktools.js
+client/src/legacy/sspath.js
+client/src/legacy/ssui.core.js
+
+# Ignore vendor
+node_modules/
+thirdparty/
+
+# Ignore language files (auto-generated)
+client/lang/
