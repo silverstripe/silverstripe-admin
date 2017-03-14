@@ -1,11 +1,13 @@
 # SilverStripe Admin Module
 
-[![Build Status](http://img.shields.io/travis/silverstripe/silverstripe-admin.svg?style=flat-square)](https://travis-ci.org/silverstripe/silverstripe-admin)
-[![Code Quality](http://img.shields.io/scrutinizer/g/silverstripe/silverstripe-admin.svg?style=flat-square)](https://scrutinizer-ci.com/g/silverstripe/silverstripe-admin)
-[![Code Climate](https://codeclimate.com/github/silverstripe/silverstripe-admin/badges/gpa.svg)](https://codeclimate.com/github/silverstripe/silverstripe-admin)
-[![Version](http://img.shields.io/packagist/v/silverstripe/admin.svg?style=flat-square)](https://packagist.org/packages/silverstripe/admin)
-[![License](http://img.shields.io/packagist/l/silverstripe/admin.svg?style=flat-square)](LICENSE.md)
-![helpfulrobot](https://helpfulrobot.io/silverstripe/admin/badge)
+[![Build Status](https://api.travis-ci.org/silverstripe/silverstripe-admin.svg?branch=master)](https://travis-ci.org/silverstripe/silverstripe-admin)
+[![Latest Stable Version](https://poser.pugx.org/silverstripe/framework/version.svg)](http://www.silverstripe.org/stable-download/)
+[![Latest Unstable Version](https://poser.pugx.org/silverstripe/framework/v/unstable.svg)](https://packagist.org/packages/silverstripe/framework)
+[![Total Downloads](https://poser.pugx.org/silverstripe/framework/downloads.svg)](https://packagist.org/packages/silverstripe/framework)
+[![License](https://poser.pugx.org/silverstripe/framework/license.svg)](https://github.com/silverstripe/silverstripe-admin#license)
+[![Dependency Status](https://www.versioneye.com/php/silverstripe:framework/badge.svg)](https://www.versioneye.com/php/silverstripe:framework)
+[![Reference Status](https://www.versioneye.com/php/silverstripe:framework/reference_badge.svg?style=flat)](https://www.versioneye.com/php/silverstripe:framework/references)
+![helpfulrobot](https://helpfulrobot.io/silverstripe/framework/badge)
 
 ## Overview
 
