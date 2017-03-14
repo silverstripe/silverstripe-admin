@@ -5,8 +5,8 @@
 [![Latest Unstable Version](https://poser.pugx.org/silverstripe/admin/v/unstable.svg)](https://packagist.org/packages/silverstripe/admin)
 [![Total Downloads](https://poser.pugx.org/silverstripe/admin/downloads.svg)](https://packagist.org/packages/silverstripe/admin)
 [![License](https://poser.pugx.org/silverstripe/admin/license.svg)](https://github.com/silverstripe/silverstripe-admin#license)
-[![Dependency Status](https://www.versioneye.com/php/silverstripe:framework/badge.svg)](https://www.versioneye.com/php/silverstripe:framework)
-[![Reference Status](https://www.versioneye.com/php/silverstripe:framework/reference_badge.svg?style=flat)](https://www.versioneye.com/php/silverstripe:framework/references)
+[![Dependency Status](https://www.versioneye.com/php/silverstripe:admin/badge.svg)](https://www.versioneye.com/php/silverstripe:admin)
+[![Reference Status](https://www.versioneye.com/php/silverstripe:admin/reference_badge.svg?style=flat)](https://www.versioneye.com/php/silverstripe:admin/references)
 ![helpfulrobot](https://helpfulrobot.io/silverstripe/admin/badge)
 
 ## Overview
