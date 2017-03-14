@@ -24,7 +24,7 @@ You'll also need to run `dev/build`.
 
 ## Documentation
 
-See the [docs/en](docs/en/introduction.md) folder.
+See [doc.silverstripe.org](http://doc.silverstripe.org)
 
 ## Versioning
 
