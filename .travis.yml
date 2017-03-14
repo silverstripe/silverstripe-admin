@@ -44,4 +44,5 @@ script:
   - "if [ \"$PHPUNIT_TEST\" = \"1\" ]; then vendor/bin/phpunit tests/php; fi"
   - "if [ \"$NPM_TEST\" = \"1\" ]; then git diff-files --quiet -w; fi"
   - "if [ \"$NPM_TEST\" = \"1\" ]; then git diff -w --no-color; fi"
+  - "if [ \"$NPM_TEST\" = \"1\" ]; then yarn run test; fi"
   - "if [ \"$PHPCS_TEST\" = \"1\" ]; then composer run-script lint; fi"
