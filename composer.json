@@ -22,7 +22,8 @@
     "silverstripe/framework": "^4@dev"
   },
   "require-dev": {
-    "phpunit/PHPUnit": "~4.8"
+    "phpunit/PHPUnit": "~4.8",
+    "silverstripe/framework": "^4.0@dev"
   },
   "extra": {
     "branch-alias": {
@@ -38,6 +39,5 @@
   },
   "scripts": {
     "lint": "phpcs --standard=tests/phpcs/ruleset.xml code/ tests/php/"
-  },
-  "min-stability": "dev"
+  }
 }
