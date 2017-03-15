@@ -431,7 +431,7 @@ class CMSMenu extends Object implements IteratorAggregate, i18nEntityProvider
             $ownerModule = ClassLoader::instance()->getManifest()->getOwnerModule($cmsClass);
             $entities["{$cmsClass}.MENUTITLE"] = [
                 'default' => $defaultTitle,
-                'module' => $ownerModule
+                'module' => $ownerModule->getShortName()
             ];
         }
         return $entities;
