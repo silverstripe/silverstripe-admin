@@ -10,7 +10,7 @@ addons:
 env:
   global:
     - TRAVIS_NODE_VERSION="6"
-    - COMPOSER_ROOT_VERSION=4.0.x-dev
+    - COMPOSER_ROOT_VERSION=1.0.x-dev
 
 matrix:
   fast_finish: true
@@ -36,7 +36,7 @@ before_script:
   - "export DISPLAY=\":99\""
   - "export XVFBARGS=\":99 -ac -screen 0 1024x768x16\""
   - "if [ \"$na\" = \"\" ]; then composer install --prefer-dist; fi"
-  - composer require silverstripe/framework:4.0.x-dev --prefer-dist
+  - composer require silverstripe/framework:4.0.x-dev silverstripe/config:1.0.x-dev --prefer-dist
   - "if [ \"$DB\" = \"PGSQL\" ]; then composer require silverstripe/postgresql:2.0.x-dev --prefer-dist; fi"
   - "if [ \"$DB\" = \"SQLITE\" ]; then composer require silverstripe/sqlite3:2.0.x-dev --prefer-dist; fi"
   - "if [ \"$NPM_TEST\" = \"1\" ]; then nvm install $TRAVIS_NODE_VERSION && npm install -g yarn && yarn install --network-concurrency 1 && yarn run build; fi"
@@ -48,3 +48,4 @@ script:
   - "if [ \"$NPM_TEST\" = \"1\" ]; then yarn run lint; fi"
   - "if [ \"$NPM_TEST\" = \"1\" ]; then yarn run test; fi"
   - "if [ \"$PHPCS_TEST\" = \"1\" ]; then composer run-script lint; fi"
+  - "if [ \"$PHPCS_TEST\" = \"1\" ]; then composer validate; fi"
