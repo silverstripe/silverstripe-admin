@@ -204,11 +204,12 @@ class FormBuilderLoader extends Component {
    *
    * @param {Boolean} schema If form schema data should be returned in the response.
    * @param {Boolean} state If form state data should be returned in the response.
+   * @param {Boolean} errors If form errors should be returned in the response.
    * @return {Object} Promise from the AJAX request.
    */
-  fetch(schema = true, state = true) {
+  fetch(schema = true, state = true, errors = true) {
     // Note: `errors` is only valid for submissions, not schema requests, so omitted here
-    const headerValues = [];
+    const headerValues = ['auto'];
 
     if (schema) {
       headerValues.push('schema');
@@ -216,6 +217,10 @@ class FormBuilderLoader extends Component {
 
     if (state) {
       headerValues.push('state');
+    }
+
+    if (errors) {
+      headerValues.push('errors');
     }
 
     if (this.props.loading) {
@@ -229,16 +234,38 @@ class FormBuilderLoader extends Component {
       .then(formSchema => {
         this.props.actions.schema.setSchemaLoading(this.props.schemaUrl, false);
 
+        if (formSchema.errors &&
+          typeof this.props.onLoadingError === 'function') {
+          return this.props.onLoadingError(formSchema);
+        }
+
         if (typeof formSchema.id !== 'undefined') {
           const overriddenSchema = Object.assign({},
             formSchema,
-            { state: this.overrideStateData(formSchema.state) }
+            {
+              id: this.props.schemaUrl,
+              state: this.overrideStateData(formSchema.state),
+            }
           );
           this.props.actions.schema.setSchema(this.props.schemaUrl, overriddenSchema);
 
           return overriddenSchema;
         }
         return formSchema;
+      })
+      .catch((error) => {
+        this.props.actions.schema.setSchemaLoading(this.props.schemaUrl, false);
+        if (typeof this.props.onLoadingError === 'function') {
+          return this.props.onLoadingError({
+            errors: [
+              {
+                value: error.message,
+                type: 'error',
+              },
+            ],
+          });
+        }
+        return {};
       });
   }
 

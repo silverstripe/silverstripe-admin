@@ -28,6 +28,8 @@ class Injector {
    */
   getComponentByDataType(dataType) {
     switch (dataType) {
+      case 'String':
+        return this.components.LabelField;
       case 'Text':
       case 'Date':
       case 'DateTime':

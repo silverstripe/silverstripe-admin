@@ -54,7 +54,7 @@ class OptionsetField extends SilverStripeComponent {
       key,
       id: key,
       name: this.props.name,
-      className: this.props.itemClass,
+      className: `${this.props.itemClass} option-val--${item.value}`,
       disabled: item.disabled || this.props.disabled,
       readOnly: this.props.readOnly,
       onChange: this.handleChange,
@@ -98,6 +98,7 @@ OptionsetField.defaultProps = {
   // React considers "undefined" as an uncontrolled component.
   extraClass: '',
   className: '',
+  itemClass: '',
 };
 
 export { OptionsetField };

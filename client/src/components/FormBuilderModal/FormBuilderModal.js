@@ -11,6 +11,20 @@ class FormBuilderModal extends SilverStripeComponent {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleHide = this.handleHide.bind(this);
     this.clearResponse = this.clearResponse.bind(this);
+    this.handleLoadingError = this.handleLoadingError.bind(this);
+  }
+
+  handleLoadingError(schema) {
+    if (this.props.showErrorMessage) {
+      const error = schema.errors && schema.errors[0];
+      this.setState({
+        response: error.value,
+        error: true,
+      });
+    }
+    if (typeof this.props.onLoadingError === 'function') {
+      this.props.onLoadingError(schema);
+    }
   }
 
   /**
@@ -27,6 +41,7 @@ class FormBuilderModal extends SilverStripeComponent {
         schemaUrl={this.props.schemaUrl}
         handleSubmit={this.handleSubmit}
         handleAction={this.props.handleAction}
+        onLoadingError={this.handleLoadingError}
       />
     );
   }
@@ -95,10 +110,12 @@ class FormBuilderModal extends SilverStripeComponent {
       // do not want this as part of the main promise chain.
       promise
         .then((response) => {
-          this.setState({
-            response: response.message,
-            error: false,
-          });
+          if (response) {
+            this.setState({
+              response: response.message,
+              error: false,
+            });
+          }
           return response;
         })
         .catch((errorPromise) => {
@@ -148,6 +165,7 @@ class FormBuilderModal extends SilverStripeComponent {
         show={this.props.show}
         onHide={this.handleHide}
         className={this.props.className}
+        dialogClassName={this.props.dialogClassName}
         bsSize={this.props.bsSize}
       >
         {this.renderHeader()}

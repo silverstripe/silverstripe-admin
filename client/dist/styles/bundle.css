@@ -15525,6 +15525,30 @@ div.grid-field__sort-field+.form__fieldgroup-item{
   padding-bottom:1.2308rem;
 }
 
+.form--fill-height{
+  height:100%;
+  min-height:0;
+  padding-bottom:0;
+  display:-webkit-box;
+  display:-ms-flexbox;
+  display:flex;
+  -webkit-box-orient:vertical;
+  -webkit-box-direction:normal;
+      -ms-flex-direction:column;
+          flex-direction:column;
+  overflow-y:auto;
+}
+
+.form--fill-height>fieldset{
+  -webkit-box-flex:1;
+      -ms-flex:1;
+          flex:1;
+}
+
+.form--fill-height>.btn-toolbar{
+  margin-bottom:0;
+}
+
 .form-group:after,.form__divider:after{
   border-bottom:1px solid #e5e8eb;
   visibility:visible;
@@ -15667,6 +15691,10 @@ input.checkbox,input.radio,input[type=checkbox],input[type=radio]{
   .field input[type=date].creditcard,.field input[type=date].text,.field input[type=date].TreeDropdownField,.field input[type=datetime-local].creditcard,.field input[type=datetime-local].text,.field input[type=datetime-local].TreeDropdownField,.field input[type=month].creditcard,.field input[type=month].text,.field input[type=month].TreeDropdownField,.field input[type=time].creditcard,.field input[type=time].text,.field input[type=time].TreeDropdownField,input[type=date].form-control,input[type=datetime-local].form-control,input[type=month].form-control,input[type=time].form-control{
     line-height:1.539;
   }
+}
+
+.htmleditorfield-dialog .htmleditorfield-from-web div.remoteurl label,.input-group-addon{
+  line-height:1.539;
 }
 
 @media (min-width:992px){
@@ -15851,9 +15879,17 @@ input.checkbox,input.radio,input[type=checkbox],input[type=radio]{
 }
 
 .modal-content{
+  height:auto;
+  min-height:0;
+  display:-webkit-box;
+  display:-ms-flexbox;
+  display:flex;
+  -webkit-box-orient:vertical;
+  -webkit-box-direction:normal;
+      -ms-flex-direction:column;
+          flex-direction:column;
   overflow:hidden;
   border:0;
-  height:auto;
 }
 
 .modal-header{

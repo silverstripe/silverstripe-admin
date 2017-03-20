@@ -37,12 +37,21 @@ class OptionField extends SilverStripeComponent {
    * @returns {object} properties
    */
   getInputProps() {
+    const classNames = [
+      this.props.className,
+      this.props.extraClass,
+    ];
+
+    if (!!this.props.value) {
+      classNames.push('checked');
+    }
+
     return {
       id: this.props.id,
       name: this.props.name,
       disabled: this.props.disabled,
       readOnly: this.props.readOnly,
-      className: `${this.props.className} ${this.props.extraClass}`,
+      className: classNames.join(' '),
       onChange: this.handleChange,
       checked: !!this.props.value,
       value: 1,
@@ -68,7 +77,11 @@ class OptionField extends SilverStripeComponent {
         throw new Error(`Invalid OptionField type: ${this.props.type}`);
     }
 
-    return castStringToElement(Option, labelText, this.getInputProps());
+    const label = (typeof labelText === 'string')
+      ? { react: <span>{labelText}</span> }
+      : labelText;
+
+    return castStringToElement(Option, label, this.getInputProps());
   }
 }
 
