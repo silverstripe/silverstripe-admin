@@ -39,6 +39,6 @@
   "scripts": {
     "lint": "phpcs --standard=tests/phpcs/ruleset.xml code/ tests/php/"
   },
-  "min-stability": "dev",
+  "minimum-stability": "dev",
   "prefer-stable": true
 }
