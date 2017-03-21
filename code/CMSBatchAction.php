@@ -7,7 +7,7 @@ use SilverStripe\Core\Convert;
 use SilverStripe\Core\Object;
 use SilverStripe\ORM\SS_List;
 use SilverStripe\ORM\DataObject;
-use SilverStripe\ORM\Versioning\Versioned;
+use SilverStripe\Versioned\Versioned;
 
 /**
  * A class representing back actions.
@@ -163,7 +163,7 @@ abstract class CMSBatchAction extends Object
         }
         $onlyOnLive = array_keys($onlyOnLive);
 
-        if ($checkLivePages && $onlyOnLive && Object::has_extension($managedClass, 'SilverStripe\\ORM\\Versioning\\Versioned')) {
+        if ($checkLivePages && $onlyOnLive && Object::has_extension($managedClass, Versioned::class)) {
             // Get the pages that only exist on live (deleted from stage)
             $livePages = Versioned::get_by_stage($managedClass, "Live")->byIDs($onlyOnLive);
             foreach ($livePages as $obj) {

@@ -2,6 +2,8 @@
 
 namespace SilverStripe\Admin\Tests;
 
+use SilverStripe\Assets\File;
+use SilverStripe\Core\Manifest\ModuleLoader;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Admin\CMSMenu;
 use SilverStripe\Admin\LeftAndMain;
@@ -32,13 +34,15 @@ class LeftAndMainTest extends FunctionalTest
         //$this->autoFollowRedirection = false;
         $this->resetMenu();
         $this->backupCombined = Requirements::get_combined_files_enabled();
+        $base = ModuleLoader::instance()->getManifest()->getModule('silverstripe/admin');
+        $assetsDir = File::join_paths($base->getRelativePath(), 'tests/php/assets');
 
         LeftAndMain::config()
             ->update('extra_requirements_css', array(
-                FRAMEWORK_ADMIN_DIR . '/tests/assets/LeftAndMainTest.css'
+                $assetsDir.'/LeftAndMainTest.css'
             ))
             ->update('extra_requirements_javascript', array(
-                FRAMEWORK_ADMIN_DIR . '/tests/assets/LeftAndMainTest.js'
+                $assetsDir. '/LeftAndMainTest.js'
             ));
 
         Requirements::set_combined_files_enabled(false);
@@ -75,12 +79,12 @@ class LeftAndMainTest extends FunctionalTest
         $response = $this->get('LeftAndMainTest_Controller');
 
         $this->assertRegExp(
-            '/tests\/assets\/LeftAndMainTest.css/i',
+            '/tests\/php\/assets\/LeftAndMainTest.css/i',
             $response->getBody(),
             "body should contain custom css"
         );
         $this->assertRegExp(
-            '/tests\/assets\/LeftAndMainTest.js/i',
+            '/tests\/php\/assets\/LeftAndMainTest.js/i',
             $response->getBody(),
             "body should contain custom js"
         );

@@ -13,8 +13,8 @@ use SilverStripe\Forms\Form;
 use SilverStripe\Forms\RequiredFields;
 use SilverStripe\ORM\SS_List;
 use SilverStripe\ORM\ValidationResult;
-use SilverStripe\ORM\Versioning\ChangeSet;
-use SilverStripe\ORM\Versioning\ChangeSetItem;
+use SilverStripe\Versioned\ChangeSet;
+use SilverStripe\Versioned\ChangeSetItem;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\UnexpectedDataException;
 use SilverStripe\Security\SecurityToken;
@@ -44,7 +44,7 @@ class CampaignAdmin extends LeftAndMain implements PermissionProvider
 
     private static $menu_icon_class = 'font-icon-page-multiple';
 
-    private static $tree_class = 'SilverStripe\\ORM\\Versioning\\ChangeSet';
+    private static $tree_class = ChangeSet::class;
 
     private static $url_handlers = [
         'GET sets' => 'readCampaigns',

@@ -3,7 +3,7 @@
 namespace SilverStripe\Admin\Tests\CampaignAdminTest;
 
 use SilverStripe\ORM\UnexpectedDataException;
-use SilverStripe\ORM\Versioning\ChangeSet;
+use SilverStripe\Versioned\ChangeSet;
 
 class InvalidChangeSet extends ChangeSet
 {
