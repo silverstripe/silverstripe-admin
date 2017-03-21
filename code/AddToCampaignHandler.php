@@ -16,8 +16,9 @@ use SilverStripe\Forms\Form;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\FieldType\DBHTMLText;
-use SilverStripe\ORM\Versioning\ChangeSet;
-use SilverStripe\ORM\Versioning\ChangeSetItem;
+use SilverStripe\Versioned\ChangeSet;
+use SilverStripe\Versioned\ChangeSetItem;
+use SilverStripe\Versioned\Versioned;
 
 /**
  * Class AddToCampaignHandler - handle the AddToCampaign action.
@@ -129,7 +130,7 @@ class AddToCampaignHandler
         $id = (int)$id;
         $class = ClassInfo::class_name($class);
 
-        if (!$class || !is_subclass_of($class, 'SilverStripe\\ORM\\DataObject') || !Object::has_extension($class, 'SilverStripe\\ORM\\Versioning\\Versioned')) {
+        if (!$class || !is_subclass_of($class, DataObject::class) || !Object::has_extension($class, Versioned::class)) {
             $this->controller->httpError(400, _t(
                 'AddToCampaign.ErrorGeneral',
                 'We apologise, but there was an error'

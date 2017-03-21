@@ -4,7 +4,7 @@
 namespace SilverStripe\Admin;
 
 use SilverStripe\Forms\FormField;
-use SilverStripe\ORM\Versioning\ChangeSet;
+use SilverStripe\Versioned\ChangeSet;
 
 /**
  * Warning: Volatile API as placeholder for standard "GridField"
