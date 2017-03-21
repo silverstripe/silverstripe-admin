@@ -1,4 +1,3 @@
-/* <label id="$ID" class="$extraClass">$Title</label> */
 import React, { PropTypes } from 'react';
 
 const LabelField = (
