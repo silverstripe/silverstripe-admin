@@ -9,16 +9,11 @@ import * as configActions from 'state/config/ConfigActions';
 import ConfigReducer from 'state/config/ConfigReducer';
 import SchemaReducer from 'state/schema/SchemaReducer';
 import RecordsReducer from 'state/records/RecordsReducer';
-import CampaignReducer from 'state/campaign/CampaignReducer';
 import BreadcrumbsReducer from 'state/breadcrumbs/BreadcrumbsReducer';
 import bootInjector from 'boot/BootInjector';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { printRequest } from 'apollo-client/transport/networkInterface';
 import qs from 'qs';
-
-// Sections
-// eslint-disable-next-line no-unused-vars
-import CampaignAdmin from 'containers/CampaignAdmin/controller';
 
 import es6promise from 'es6-promise';
 es6promise.polyfill();
@@ -69,7 +64,6 @@ function appBoot() {
   reducerRegister.add('form', ReduxFormReducer);
   reducerRegister.add('schemas', SchemaReducer);
   reducerRegister.add('records', RecordsReducer);
-  reducerRegister.add('campaign', CampaignReducer);
   reducerRegister.add('breadcrumbs', BreadcrumbsReducer);
   reducerRegister.add('routing', routerReducer);
   reducerRegister.add('apollo', apolloClient.reducer());
