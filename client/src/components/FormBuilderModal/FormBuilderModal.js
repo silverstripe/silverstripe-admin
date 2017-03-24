@@ -191,6 +191,7 @@ FormBuilderModal.propTypes = {
   handleAction: React.PropTypes.func,
   responseClassGood: React.PropTypes.string,
   responseClassBad: React.PropTypes.string,
+  showErrorMessage: React.PropTypes.bool,
 };
 
 FormBuilderModal.defaultProps = {

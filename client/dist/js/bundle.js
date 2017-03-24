@@ -392,10 +392,8 @@ t.default=l},,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,fu
 function n(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(t,"__esModule",{value:!0})
 var a=function(){function e(e,t){for(var n=0;n<t.length;n++){var a=t[n]
 a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}return function(t,n,a){return n&&e(t.prototype,n),a&&e(t,a),t}}(),r=function(){function e(){
-n(this,e),this.components={}}return a(e,[{key:"getComponentByName",value:function e(t){return this.components[t]}},{key:"getComponentByDataType",value:function e(t){switch(t){case"String":return this.components.LabelField
-
-
-case"Text":case"Date":case"DateTime":return this.components.TextField
+n(this,e),this.components={}}return a(e,[{key:"getComponentByName",value:function e(t){return this.components[t]}},{key:"getComponentByDataType",value:function e(t){switch(t){case"String":case"Text":case"Date":
+case"DateTime":return this.components.TextField
 case"Hidden":return this.components.HiddenField
 case"SingleSelect":return this.components.SingleSelectField
 case"Custom":return this.components.GridField
@@ -475,7 +473,9 @@ var t=""
 return t=this.state.error?this.props.responseClassBad||"response error":this.props.responseClassGood||"response good",u.default.createElement("div",{className:t},u.default.createElement("span",null,this.state.response))
 
 }},{key:"clearResponse",value:function e(){this.setState({response:null})}},{key:"handleHide",value:function e(){this.clearResponse(),"function"==typeof this.props.handleHide&&this.props.handleHide()}},{
-key:"handleSubmit",value:function e(t,n,a){var r=this,i=null
+key:"handleSubmit",value:function e(t,n,a){var r=this
+this.clearResponse()
+var i=null
 if(i="function"==typeof this.props.handleSubmit?this.props.handleSubmit(t,n,a):a(),!i)throw new Error("Promise was not returned for submitting")
 return i.then(function(e){return e&&r.setState({response:e.message,error:!1}),e}).catch(function(e){e.then(function(e){r.setState({response:e,error:!0})})}),i}},{key:"renderHeader",value:function e(){return this.props.title!==!1?u.default.createElement(f.Modal.Header,{
 closeButton:!0},u.default.createElement(f.Modal.Title,null,this.props.title)):"function"==typeof this.props.handleHide?u.default.createElement("button",{type:"button",className:"close form-builder-modal__close-button",
@@ -485,9 +485,10 @@ onClick:this.handleHide,"aria-label":c.default._t("FormBuilderModal.CLOSE","Clos
 return u.default.createElement(f.Modal,{show:this.props.show,onHide:this.handleHide,className:this.props.className,dialogClassName:this.props.dialogClassName,bsSize:this.props.bsSize},this.renderHeader(),u.default.createElement(f.Modal.Body,{
 className:this.props.bodyClassName},n,t,this.props.children))}}]),t}(_.default)
 y.propTypes={show:u.default.PropTypes.bool,title:u.default.PropTypes.oneOfType([u.default.PropTypes.string,u.default.PropTypes.bool]),className:u.default.PropTypes.string,bodyClassName:u.default.PropTypes.string,
-handleHide:u.default.PropTypes.func,schemaUrl:u.default.PropTypes.string,handleSubmit:u.default.PropTypes.func,handleAction:u.default.PropTypes.func,responseClassGood:u.default.PropTypes.string,responseClassBad:u.default.PropTypes.string
-},y.defaultProps={show:!1,title:null},t.default=y},function(e,t){e.exports=i18n},function(e,t){e.exports=FormBuilderLoader},function(e,t,n){(function(t){e.exports=t.GridField=n(117)}).call(t,function(){
-return this}())},function(e,t,n){"use strict"
+handleHide:u.default.PropTypes.func,schemaUrl:u.default.PropTypes.string,handleSubmit:u.default.PropTypes.func,handleAction:u.default.PropTypes.func,responseClassGood:u.default.PropTypes.string,responseClassBad:u.default.PropTypes.string,
+showErrorMessage:u.default.PropTypes.bool},y.defaultProps={show:!1,title:null},t.default=y},function(e,t){e.exports=i18n},function(e,t){e.exports=FormBuilderLoader},function(e,t,n){(function(t){e.exports=t.GridField=n(117)
+
+}).call(t,function(){return this}())},function(e,t,n){"use strict"
 function a(e){if(e&&e.__esModule)return e
 var t={}
 if(null!=e)for(var n in e)Object.prototype.hasOwnProperty.call(e,n)&&(t[n]=e[n])
