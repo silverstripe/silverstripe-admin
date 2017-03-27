@@ -1,3 +1,5 @@
 .sass-cache
 /vendor/
 /node_modules/
+/**/*.js.map
+/**/*.css.map
