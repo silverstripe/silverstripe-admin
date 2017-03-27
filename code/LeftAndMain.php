@@ -2186,7 +2186,8 @@ class LeftAndMain extends Controller implements PermissionProvider
             // Check if modeladmin has explicit required_permission_codes option.
             // If a modeladmin is namespaced you can apply this config to override
             // the default permission generation based on fully qualified class name.
-            $code = $this->getRequiredPermissions();
+            $code = $class::getRequiredPermissions();
+            
             if (!$code) {
                 continue;
             }
