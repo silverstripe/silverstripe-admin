@@ -1,4 +1,5 @@
 /* global tinymce */
+import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
 
 (() => {
   const sslink = {
@@ -12,14 +13,16 @@
       ed.addButton('sslink', {
         icon: 'link',
         title: 'Insert Link',
-        cmd: 'sslink',
+        type: 'menubutton',
+        menu: TinyMCEActionRegistrar.getActions('sslink'),
       });
       ed.addMenuItem('sslink', {
         icon: 'link',
         text: 'Insert Link',
-        cmd: 'sslink',
+        menu: TinyMCEActionRegistrar.getActions('sslink'),
       });
 
+      /*
       ed.addCommand('sslink', () => {
         // See HtmlEditorField.js
         window.jQuery(`#${ed.id}`).entwine('ss').openLinkDialog();
@@ -36,6 +39,7 @@
           ed.execCommand('sslink', ui, val);
         }
       });
+      */
     },
   };
 

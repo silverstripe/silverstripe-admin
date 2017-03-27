@@ -61,6 +61,7 @@ TinyMCEConfig::get('cms')
         'contextmenu' => null,
         'image' => null,
         'sslink' => FRAMEWORK_ADMIN_DIR . '/client/dist/js/TinyMCE_sslink.js'
-    ));
+    ))
+    ->setOption('contextmenu', 'sslink inserttable | cell row column deletetable');
 
 CMSMenu::remove_menu_class(CMSProfileController::class);
