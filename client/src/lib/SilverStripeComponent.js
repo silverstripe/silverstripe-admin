@@ -1,7 +1,3 @@
-/**
- * @file Base component which all SilverStripe ReactJS components should extend from.
- */
-
 import React, { Component } from 'react';
 import $ from 'jQuery';
 

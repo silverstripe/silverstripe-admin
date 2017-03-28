@@ -16048,57 +16048,6 @@ body,html{
   display:flex;
 }
 
-.campaign-admin__campaign{
-  position:relative;
-  height:100%;
-}
-
-@media (max-width:991px){
-  .campaign-admin__campaign.campaign-admin__campaign--hide-preview .campaign-admin__campaign-preview{
-    display:none;
-  }
-
-  .campaign-admin__campaign .list-group-item.active{
-    background-color:#fff;
-    color:#4f5861;
-    z-index:0;
-  }
-
-  .campaign-admin__campaign .list-group-item.active:hover{
-    background-color:#f5f5f5;
-    color:#4f5861;
-    border-color:#e5e8eb;
-  }
-}
-
-.campaign-admin__campaign-items{
-  width:100%;
-  z-index:1;
-  position:relative;
-}
-
-@media (min-width:992px){
-  .campaign-admin__campaign-items{
-    width:300px;
-  }
-}
-
-.campaign-admin__item-links--has-links,.campaign-admin__item-links--is-linked{
-  color:#29abe2;
-  float:right;
-  position:absolute;
-  right:1.2308rem;
-  top:27px;
-  font-size:.923rem;
-}
-
-.campaign-admin__item-links--has-links:before,.campaign-admin__item-links--is-linked:before{
-  font-size:16px;
-  position:relative;
-  top:3px;
-  margin-right:1px;
-}
-
 .app{
   height:100%;
 }
