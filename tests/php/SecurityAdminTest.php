@@ -13,7 +13,7 @@ class SecurityAdminTest extends FunctionalTest
 
     protected static $fixture_file = 'LeftAndMainTest.yml';
 
-    protected $extraDataObjects = [
+    protected static $extra_dataobjects = [
         LeftAndMainTest\TestObject::class,
     ];
 

@@ -9,12 +9,12 @@ class ModelAdminTest extends FunctionalTest
 {
     protected static $fixture_file = 'ModelAdminTest.yml';
 
-    protected $extraDataObjects = [
+    protected static $extra_dataobjects = [
         ModelAdminTest\Contact::class,
         ModelAdminTest\Player::class
     ];
 
-    protected $extraControllers = [
+    protected static $extra_controllers = [
         ModelAdminTest\ContactAdmin::class,
         ModelAdminTest\PlayerAdmin::class,
     ];

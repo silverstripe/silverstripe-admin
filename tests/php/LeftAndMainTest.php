@@ -16,11 +16,11 @@ class LeftAndMainTest extends FunctionalTest
 
     protected static $fixture_file = 'LeftAndMainTest.yml';
 
-    protected $extraDataObjects = [
+    protected static $extra_dataobjects = [
         LeftAndMainTest\TestObject::class
     ];
 
-    protected $extraControllers = [
+    protected static $extra_controllers = [
         LeftAndMainTest\TestController::class,
     ];
 
