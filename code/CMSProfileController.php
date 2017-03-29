@@ -18,7 +18,7 @@ class CMSProfileController extends LeftAndMain
 
     private static $required_permission_codes = false;
 
-    private static $tree_class = 'SilverStripe\\Security\\Member';
+    private static $tree_class = Member::class;
 
     public function getEditForm($id = null, $fields = null)
     {

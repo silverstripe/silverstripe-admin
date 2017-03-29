@@ -18,7 +18,6 @@ use SilverStripe\Forms\GridField\GridFieldButtonRow;
 use SilverStripe\Forms\GridField\GridFieldExportButton;
 use SilverStripe\Forms\GridField\GridFieldImportButton;
 use SilverStripe\Forms\GridField\GridField;
-use SilverStripe\Security\Security;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Group;
 use SilverStripe\Security\Permission;
@@ -39,9 +38,9 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
 
     private static $menu_title = 'Security';
 
-    private static $tree_class = 'SilverStripe\\Security\\Group';
+    private static $tree_class = Group::class;
 
-    private static $subitem_class = 'SilverStripe\\Security\\Member';
+    private static $subitem_class = Member::class;
 
     private static $required_permission_codes = 'CMS_ACCESS_SecurityAdmin';
 
@@ -93,19 +92,7 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
 
     public function getEditForm($id = null, $fields = null)
     {
-        // TODO Duplicate record fetching (see parent implementation)
-        if (!$id) {
-            $id = $this->currentPageID();
-        }
-        $form = parent::getEditForm($id);
-
-        // TODO Duplicate record fetching (see parent implementation)
-        $record = $this->getRecord($id);
-
-        if ($record && !$record->canView()) {
-            return Security::permissionFailure($this);
-        }
-
+        // Build member fields
         $memberList = GridField::create(
             'Members',
             false,
@@ -114,18 +101,12 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
                 ->addComponent(new GridFieldButtonRow('after'))
                 ->addComponent(new GridFieldExportButton('buttons-before-left'))
         )->addExtraClass("members_grid");
-
-        if ($record && method_exists($record, 'getValidator')) {
-            $validator = $record->getValidator();
-        } else {
-            $validator = Member::singleton()->getValidator();
-        }
-
         /** @var GridFieldDetailForm $detailForm */
-        $detailForm = $memberListConfig->getComponentByType('SilverStripe\\Forms\\GridField\\GridFieldDetailForm');
-        $detailForm
-            ->setValidator($validator);
+        $detailForm = $memberListConfig->getComponentByType(GridFieldDetailForm::class);
+        $memberValidator = Member::singleton()->getValidator();
+        $detailForm->setValidator($memberValidator);
 
+        // Build group fields
         $groupList = GridField::create(
             'Groups',
             false,
@@ -134,7 +115,7 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
                 ->addComponent(new GridFieldExportButton('buttons-before-left'))
         );
         /** @var GridFieldDataColumns $columns */
-        $columns = $groupList->getConfig()->getComponentByType('SilverStripe\\Forms\\GridField\\GridFieldDataColumns');
+        $columns = $groupList->getConfig()->getComponentByType(GridFieldDataColumns::class);
         $columns->setDisplayFields(array(
             'Breadcrumbs' => Group::singleton()->fieldLabel('Title')
         ));
@@ -145,13 +126,13 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
             }
         ));
 
-        $fields = new FieldList(
-            $root = new TabSet(
+        $fields = FieldList::create(
+            TabSet::create(
                 'Root',
-                $usersTab = new Tab(
+                Tab::create(
                     'Users',
                     _t('SecurityAdmin.Users', 'Users'),
-                    new LiteralField(
+                    LiteralField::create(
                         'MembersCautionText',
                         sprintf(
                             '<div class="alert alert-warning" role="alert">%s</div>',
@@ -163,12 +144,12 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
                     ),
                     $memberList
                 ),
-                $groupsTab = new Tab(
+                Tab::create(
                     'Groups',
-                    singleton('SilverStripe\\Security\\Group')->i18n_plural_name(),
+                    Group::singleton()->i18n_plural_name(),
                     $groupList
                 )
-            ),
+            )->setTemplate('SilverStripe\\Forms\\CMSTabSet'),
             // necessary for tree node selection in LeftAndMain.EditForm.js
             new HiddenField('ID', false, 0)
         );
@@ -188,9 +169,6 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
             );
         }
 
-        // Tab nav in CMS is rendered through separate template
-        $root->setTemplate('SilverStripe\\Forms\\CMSTabSet');
-
         // Add roles editing interface
         $rolesTab = null;
         if (Permission::check('APPLY_ROLES')) {
@@ -205,20 +183,15 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
             $rolesTab->push($rolesField);
         }
 
-        $actions = new FieldList();
-
+        // Build replacement form
         $form = Form::create(
             $this,
             'EditForm',
             $fields,
-            $actions
+            new FieldList()
         )->setHTMLID('Form_EditForm');
         $form->addExtraClass('cms-edit-form fill-height');
         $form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
-        // Tab nav in CMS is rendered through separate template
-        if ($form->Fields()->hasTabSet()) {
-            $form->Fields()->findOrMakeTab('Root')->setTemplate('SilverStripe\\Forms\\CMSTabSet');
-        }
         $form->addExtraClass('ss-tabset cms-tabset ' . $this->BaseCSSClasses());
         $form->setAttribute('data-pjax-fragment', 'CurrentForm');
 
