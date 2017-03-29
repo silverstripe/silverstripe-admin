@@ -15853,7 +15853,7 @@ input.checkbox,input.radio,input[type=checkbox],input[type=radio]{
 .modal-content{
   overflow:hidden;
   border:0;
-  height:100%;
+  height:auto;
 }
 
 .modal-header{
