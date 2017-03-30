@@ -41,6 +41,9 @@ const config = [
     resolve: {
       root: [__dirname, path.resolve(__dirname, PATHS.ADMIN_JS_SRC)],
       modulesDirectories: [PATHS.MODULES],
+      alias: {
+        modernizr$: path.resolve(__dirname, `${PATHS.ADMIN_JS_SRC}/.modernizrrc`),
+      },
     },
     output: {
       path: 'client/dist',
@@ -104,6 +107,10 @@ const config = [
         {
           test: '/i18n.js/',
           loader: 'script-loader',
+        },
+        {
+          test: /\.modernizrrc$/,
+          loader: 'modernizr!json',
         },
       ],
     },
