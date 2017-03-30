@@ -460,7 +460,7 @@ return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function s(e,t){if("funct
 e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}Object.defineProperty(t,"__esModule",{
 value:!0})
 var o=function(){function e(e,t){for(var n=0;n<t.length;n++){var a=t[n]
-a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}return function(t,n,a){return n&&e(t.prototype,n),a&&e(t,a),t}}(),d=n(5),u=a(d),l=n(114),c=a(l),f=n(21),h=n(20),_=a(h),m=n(115),p=a(m),y=function(e){
+a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}return function(t,n,a){return n&&e(t.prototype,n),a&&e(t,a),t}}(),d=n(5),u=a(d),l=n(114),c=a(l),f=n(21),h=n(20),_=a(h),m=n(115),p=a(m),y=n(22),g=a(y),M=function(e){
 function t(e){r(this,t)
 var n=i(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
 return n.handleSubmit=n.handleSubmit.bind(n),n.handleHide=n.handleHide.bind(n),n.clearResponse=n.clearResponse.bind(n),n.handleLoadingError=n.handleLoadingError.bind(n),n}return s(t,e),o(t,[{key:"handleLoadingError",
@@ -470,10 +470,10 @@ schemaUrl:this.props.schemaUrl,handleSubmit:this.handleSubmit,handleAction:this.
 
 
 var t=""
-return t=this.state.error?this.props.responseClassBad||"response error":this.props.responseClassGood||"response good",u.default.createElement("div",{className:t},u.default.createElement("span",null,this.state.response))
+return t=this.state.error?this.props.responseClassBad||"response error":this.props.responseClassGood||"response good",u.default.createElement("div",{className:t},(0,g.default)("span",{html:this.state.response
+}))}},{key:"clearResponse",value:function e(){this.setState({response:null})}},{key:"handleHide",value:function e(){this.clearResponse(),"function"==typeof this.props.handleHide&&this.props.handleHide()
 
-}},{key:"clearResponse",value:function e(){this.setState({response:null})}},{key:"handleHide",value:function e(){this.clearResponse(),"function"==typeof this.props.handleHide&&this.props.handleHide()}},{
-key:"handleSubmit",value:function e(t,n,a){var r=this
+}},{key:"handleSubmit",value:function e(t,n,a){var r=this
 this.clearResponse()
 var i=null
 if(i="function"==typeof this.props.handleSubmit?this.props.handleSubmit(t,n,a):a(),!i)throw new Error("Promise was not returned for submitting")
@@ -484,9 +484,9 @@ onClick:this.handleHide,"aria-label":c.default._t("FormBuilderModal.CLOSE","Clos
 
 return u.default.createElement(f.Modal,{show:this.props.show,onHide:this.handleHide,className:this.props.className,dialogClassName:this.props.dialogClassName,bsSize:this.props.bsSize},this.renderHeader(),u.default.createElement(f.Modal.Body,{
 className:this.props.bodyClassName},n,t,this.props.children))}}]),t}(_.default)
-y.propTypes={show:u.default.PropTypes.bool,title:u.default.PropTypes.oneOfType([u.default.PropTypes.string,u.default.PropTypes.bool]),className:u.default.PropTypes.string,bodyClassName:u.default.PropTypes.string,
+M.propTypes={show:u.default.PropTypes.bool,title:u.default.PropTypes.oneOfType([u.default.PropTypes.string,u.default.PropTypes.bool]),className:u.default.PropTypes.string,bodyClassName:u.default.PropTypes.string,
 handleHide:u.default.PropTypes.func,schemaUrl:u.default.PropTypes.string,handleSubmit:u.default.PropTypes.func,handleAction:u.default.PropTypes.func,responseClassGood:u.default.PropTypes.string,responseClassBad:u.default.PropTypes.string,
-showErrorMessage:u.default.PropTypes.bool},y.defaultProps={show:!1,title:null},t.default=y},function(e,t){e.exports=i18n},function(e,t){e.exports=FormBuilderLoader},function(e,t,n){(function(t){e.exports=t.GridField=n(117)
+showErrorMessage:u.default.PropTypes.bool},M.defaultProps={show:!1,title:null},t.default=M},function(e,t){e.exports=i18n},function(e,t){e.exports=FormBuilderLoader},function(e,t,n){(function(t){e.exports=t.GridField=n(117)
 
 }).call(t,function(){return this}())},function(e,t,n){"use strict"
 function a(e){if(e&&e.__esModule)return e
@@ -1555,13 +1555,18 @@ i.default.entwine("ss",function(e){e(".TreeDropdownField").entwine({"from .cms-c
 
 function a(e){return e&&e.__esModule?e:{default:e}}var r=n(1),i=a(r),s=n(5),o=a(s),d=n(196),u=a(d),l=n(106),c=n(197),f=a(c)
 i.default.entwine("ss",function(e){e(".cms-content-actions .add-to-campaign-action,#add-to-campaign__action").entwine({onclick:function t(){var n=e("#add-to-campaign__dialog-wrapper")
-return n.length||(n=e('<div id="add-to-campaign__dialog-wrapper" />'),e("body").append(n)),n.open(),!1}}),e("#add-to-campaign__dialog-wrapper").entwine({onunmatch:function e(){this._clearModal()},open:function e(){
-this._renderModal(!0)},close:function e(){this._renderModal(!1)},_renderModal:function t(n){var a=this,r=function e(){return a.close()},i=function e(){return a._handleSubmitModal.apply(a,arguments)},s=e("form.cms-edit-form :input[name=ID]").val(),d=window.ss.store,c="SilverStripe\\CMS\\Controllers\\CMSPageEditController",h=d.getState().config.sections[c],_=h.form.AddToCampaignForm.schemaUrl+"/"+s
+return n.length||(n=e('<div id="add-to-campaign__dialog-wrapper" />'),e("body").append(n)),n.open(),!1}}),e(".add-to-campaign-modal .add-to-campaign-modal__nav-link").entwine({onclick:function t(n){n.preventDefault()
 
 
-u.default.render(o.default.createElement(l.Provider,{store:d},o.default.createElement(f.default,{show:n,handleSubmit:i,handleHide:r,schemaUrl:_,bodyClassName:"modal__dialog",responseClassBad:"modal__response modal__response--error",
-responseClassGood:"modal__response modal__response--good"})),this[0])},_clearModal:function e(){u.default.unmountComponentAtNode(this[0])},_handleSubmitModal:function e(t,n,a){return a()}})})},,function(e,t){
-e.exports=FormBuilderModal},function(e,t,n){"use strict"
+var a=e(n.target)
+window.location=a.attr("href")}}),e("#add-to-campaign__dialog-wrapper").entwine({onunmatch:function e(){this._clearModal()},open:function e(){this._renderModal(!0)},close:function e(){this._renderModal(!1)
+
+},_renderModal:function t(n){var a=this,r=function e(){return a.close()},i=function e(){return a._handleSubmitModal.apply(a,arguments)},s=e("form.cms-edit-form :input[name=ID]").val(),d=window.ss.store,c="SilverStripe\\CMS\\Controllers\\CMSPageEditController",h=d.getState().config.sections[c],_=h.form.AddToCampaignForm.schemaUrl+"/"+s
+
+
+u.default.render(o.default.createElement(l.Provider,{store:d},o.default.createElement(f.default,{title:"Add to campaign",show:n,handleSubmit:i,handleHide:r,schemaUrl:_,bodyClassName:"modal__dialog",className:"add-to-campaign-modal",
+responseClassBad:"modal__response modal__response--error",responseClassGood:"modal__response modal__response--good"})),this[0])},_clearModal:function e(){u.default.unmountComponentAtNode(this[0])},_handleSubmitModal:function e(t,n,a){
+return a()}})})},,function(e,t){e.exports=FormBuilderModal},function(e,t,n){"use strict"
 function a(e){return e&&e.__esModule?e:{default:e}}var r=n(1),i=a(r)
 n(183),n(199)
 var s=function e(t){var n=(0,i.default)((0,i.default)(this).contents()).find(".message")

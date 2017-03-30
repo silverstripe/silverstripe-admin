@@ -26,6 +26,16 @@ jQuery.entwine('ss', ($) => {
     },
   });
 
+  // This is required because the React version of e.preventDefault() doesn't work
+  // this is to prevent PJAX request to occur when clicking a link the modal
+  $('.add-to-campaign-modal .add-to-campaign-modal__nav-link').entwine({
+    onclick: (e) => {
+      e.preventDefault();
+      const $link = $(e.target);
+      window.location = $link.attr('href');
+    }
+  });
+
 	/**
    * Uses React-Bootstrap in order to replicate the bootstrap styling and JavaScript behaviour.
    * The "add to campaign" dialog is used in a similar fashion in AssetAdmin.
@@ -57,11 +67,13 @@ jQuery.entwine('ss', ($) => {
       ReactDOM.render(
         <Provider store={store}>
           <FormBuilderModal
+            title="Add to campaign"
             show={show}
             handleSubmit={handleSubmit}
             handleHide={handleHide}
             schemaUrl={modalSchemaUrl}
             bodyClassName="modal__dialog"
+            className="add-to-campaign-modal"
             responseClassBad="modal__response modal__response--error"
             responseClassGood="modal__response modal__response--good"
           />
