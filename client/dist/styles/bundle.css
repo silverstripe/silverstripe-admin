@@ -15876,6 +15876,12 @@ input.checkbox,input.radio,input[type=checkbox],input[type=radio]{
   margin-top:-7px;
 }
 
+.modal-header .modal-title{
+  margin-top:.3077rem;
+  font-size:18px;
+  font-weight:400;
+}
+
 .modal-body{
   min-height:200px;
 }

@@ -57,11 +57,13 @@ jQuery.entwine('ss', ($) => {
       ReactDOM.render(
         <Provider store={store}>
           <FormBuilderModal
+            title="Add to campaign"
             show={show}
             handleSubmit={handleSubmit}
             handleHide={handleHide}
             schemaUrl={modalSchemaUrl}
             bodyClassName="modal__dialog"
+            className="add-to-campaign-modal"
             responseClassBad="modal__response modal__response--error"
             responseClassGood="modal__response modal__response--good"
           />

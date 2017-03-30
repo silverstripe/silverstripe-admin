@@ -31,6 +31,12 @@
       margin-top: -7px;
     }
   }
+
+  .modal-title {
+    margin-top: $spacer-sm / 3;
+    font-size: $font-size-h2;
+    font-weight: normal;
+  }
 }
 
 .modal-body {

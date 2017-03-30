@@ -455,16 +455,16 @@ return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function a(e,t){if("funct
 e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}Object.defineProperty(t,"__esModule",{
 value:!0})
 var s=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
-r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),l=n(5),u=r(l),c=n(114),d=r(c),f=n(21),p=n(20),h=r(p),m=n(115),g=r(m),y=function(e){
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),l=n(5),u=r(l),c=n(114),d=r(c),f=n(21),p=n(20),h=r(p),m=n(115),g=r(m),y=n(22),v=r(y),b=function(e){
 function t(e){i(this,t)
 var n=o(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
 return n.handleSubmit=n.handleSubmit.bind(n),n.handleHide=n.handleHide.bind(n),n.clearResponse=n.clearResponse.bind(n),n}return a(t,e),s(t,[{key:"getForm",value:function e(){return this.props.schemaUrl?u.default.createElement(g.default,{
 schemaUrl:this.props.schemaUrl,handleSubmit:this.handleSubmit,handleAction:this.props.handleAction}):null}},{key:"getResponse",value:function e(){if(!this.state||!this.state.response)return null
 var t=""
-return t=this.state.error?this.props.responseClassBad||"response error":this.props.responseClassGood||"response good",u.default.createElement("div",{className:t},u.default.createElement("span",null,this.state.response))
+return t=this.state.error?this.props.responseClassBad||"response error":this.props.responseClassGood||"response good",u.default.createElement("div",{className:t},(0,v.default)("span",{html:this.state.response
+}))}},{key:"clearResponse",value:function e(){this.setState({response:null})}},{key:"handleHide",value:function e(){this.clearResponse(),"function"==typeof this.props.handleHide&&this.props.handleHide()
 
-}},{key:"clearResponse",value:function e(){this.setState({response:null})}},{key:"handleHide",value:function e(){this.clearResponse(),"function"==typeof this.props.handleHide&&this.props.handleHide()}},{
-key:"handleSubmit",value:function e(t,n,r){var i=this,o=null
+}},{key:"handleSubmit",value:function e(t,n,r){var i=this,o=null
 if(o="function"==typeof this.props.handleSubmit?this.props.handleSubmit(t,n,r):r(),!o)throw new Error("Promise was not returned for submitting")
 return o.then(function(e){return i.setState({response:e.message,error:!1}),e}).catch(function(e){e.then(function(e){i.setState({response:e,error:!0})})}),o}},{key:"renderHeader",value:function e(){return this.props.title!==!1?u.default.createElement(f.Modal.Header,{
 closeButton:!0},u.default.createElement(f.Modal.Title,null,this.props.title)):"function"==typeof this.props.handleHide?u.default.createElement("button",{type:"button",className:"close form-builder-modal__close-button",
@@ -473,9 +473,9 @@ onClick:this.handleHide,"aria-label":d.default._t("FormBuilderModal.CLOSE","Clos
 
 return u.default.createElement(f.Modal,{show:this.props.show,onHide:this.handleHide,className:this.props.className,bsSize:this.props.bsSize},this.renderHeader(),u.default.createElement(f.Modal.Body,{className:this.props.bodyClassName
 },n,t,this.props.children))}}]),t}(h.default)
-y.propTypes={show:u.default.PropTypes.bool,title:u.default.PropTypes.oneOfType([u.default.PropTypes.string,u.default.PropTypes.bool]),className:u.default.PropTypes.string,bodyClassName:u.default.PropTypes.string,
+b.propTypes={show:u.default.PropTypes.bool,title:u.default.PropTypes.oneOfType([u.default.PropTypes.string,u.default.PropTypes.bool]),className:u.default.PropTypes.string,bodyClassName:u.default.PropTypes.string,
 handleHide:u.default.PropTypes.func,schemaUrl:u.default.PropTypes.string,handleSubmit:u.default.PropTypes.func,handleAction:u.default.PropTypes.func,responseClassGood:u.default.PropTypes.string,responseClassBad:u.default.PropTypes.string
-},y.defaultProps={show:!1,title:null},t.default=y},function(e,t){e.exports=i18n},function(e,t){e.exports=FormBuilderLoader},function(e,t,n){(function(t){e.exports=t.GridField=n(117)}).call(t,function(){
+},b.defaultProps={show:!1,title:null},t.default=b},function(e,t){e.exports=i18n},function(e,t){e.exports=FormBuilderLoader},function(e,t,n){(function(t){e.exports=t.GridField=n(117)}).call(t,function(){
 return this}())},function(e,t,n){"use strict"
 function r(e){if(e&&e.__esModule)return e
 var t={}
@@ -1547,9 +1547,9 @@ return n.length||(n=e('<div id="add-to-campaign__dialog-wrapper" />'),e("body").
 this._renderModal(!0)},close:function e(){this._renderModal(!1)},_renderModal:function t(n){var r=this,i=function e(){return r.close()},o=function e(){return r._handleSubmitModal.apply(r,arguments)},a=e("form.cms-edit-form :input[name=ID]").val(),l=window.ss.store,d="SilverStripe\\CMS\\Controllers\\CMSPageEditController",p=l.getState().config.sections[d],h=p.form.AddToCampaignForm.schemaUrl+"/"+a
 
 
-u.default.render(s.default.createElement(c.Provider,{store:l},s.default.createElement(f.default,{show:n,handleSubmit:o,handleHide:i,schemaUrl:h,bodyClassName:"modal__dialog",responseClassBad:"modal__response modal__response--error",
-responseClassGood:"modal__response modal__response--good"})),this[0])},_clearModal:function e(){u.default.unmountComponentAtNode(this[0])},_handleSubmitModal:function e(t,n,r){return r()}})})},,function(e,t){
-e.exports=FormBuilderModal},function(e,t,n){"use strict"
+u.default.render(s.default.createElement(c.Provider,{store:l},s.default.createElement(f.default,{title:"Add to campaign",show:n,handleSubmit:o,handleHide:i,schemaUrl:h,bodyClassName:"modal__dialog",className:"add-to-campaign-modal",
+responseClassBad:"modal__response modal__response--error",responseClassGood:"modal__response modal__response--good"})),this[0])},_clearModal:function e(){u.default.unmountComponentAtNode(this[0])},_handleSubmitModal:function e(t,n,r){
+return r()}})})},,function(e,t){e.exports=FormBuilderModal},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}var i=n(1),o=r(i)
 n(183),n(199)
 var a=function e(t){var n=(0,o.default)((0,o.default)(this).contents()).find(".message")
