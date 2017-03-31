@@ -1594,13 +1594,13 @@ var t=e.prevAll("li.selected")
 t.length&&t.removeClass("selected")
 var n=e.nextAll("li.selected")
 n.length&&n.removeClass("selected"),(0,i.default)(this).focus()})})},function(e,t,n){"use strict"
-function a(e){return e&&e.__esModule?e:{default:e}}var r=n(1),i=a(r),s=n(204),o=a(s),d=n(321),u=a(d)
-n(322),i.default.entwine("ss",function(e){e("input[type=date]").entwine({onadd:function t(){if(!u.default.inputtypes.date&&!(this.prop("disabled")||this.prop("readonly")||this.hasClass("hasDatepicker"))){
+function a(e){return e&&e.__esModule?e:{default:e}}var r=n(1),i=a(r),s=n(114),o=a(s),d=n(204),u=a(d),l=n(321),c=a(l)
+n(322),i.default.entwine("ss",function(e){e("input[type=date]").entwine({onadd:function t(){if(!c.default.inputtypes.date&&!(this.prop("disabled")||this.prop("readonly")||this.hasClass("hasDatepicker"))){
 var n=e("<input/>",{type:"hidden",name:this.attr("name"),value:this.val()})
-this.parent().append(n),this.removeAttr("name"),o.default.locale(this.attr("lang"))
-var a=this.val(),r=(0,o.default)(a).format("L")
-this.val(r),this.attr("placeholder","Example: "+(0,o.default)().endOf("month").format("L")),this.updateValue()}},onchange:function e(){this.updateValue()},updateValue:function e(){var t=this.val(),n=(0,
-o.default)(t,"L").format("YYYY-MM-DD")
+this.parent().append(n),this.removeAttr("name"),u.default.locale(this.attr("lang"))
+var a=this.val(),r=(0,u.default)(a).format("L")
+this.val(r),this.attr("placeholder",o.default._t("DateField.DateFormatExample")+": "+(0,u.default)().endOf("month").format("L")),this.updateValue()}},onchange:function e(){this.updateValue()},updateValue:function e(){
+var t=this.val(),n=(0,u.default)(t,"L").format("YYYY-MM-DD")
 this.parent().find("input[type=hidden]").val(n)}})})},function(e,t,n){(function(e){!function(t,n){e.exports=n()}(this,function(){"use strict"
 function t(){return ba.apply(null,arguments)}function a(e){ba=e}function r(e){return e instanceof Array||"[object Array]"===Object.prototype.toString.call(e)}function i(e){return null!=e&&"[object Object]"===Object.prototype.toString.call(e)
 
