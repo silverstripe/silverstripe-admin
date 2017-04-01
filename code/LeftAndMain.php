@@ -499,12 +499,6 @@ class LeftAndMain extends Controller implements PermissionProvider
         if (!empty($member->Locale)) {
             i18n::set_locale($member->Locale);
         }
-        if (!empty($member->DateFormat)) {
-            i18n::config()->date_format = $member->DateFormat;
-        }
-        if (!empty($member->TimeFormat)) {
-            i18n::config()->time_format = $member->TimeFormat;
-        }
 
         // can't be done in cms/_config.php as locale is not set yet
         CMSMenu::add_link(

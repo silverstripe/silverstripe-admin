@@ -1319,13 +1319,17 @@ this.add(this.find(".cms-tabset")).redrawTabs(),this.find(".cms-content-header")
 if(this.trigger("beforesubmitform"),!this.is(".changed")||this.is(".discardchanges"))return!0
 if(this.find(".btn-toolbar :submit.btn--loading.loading").length>0)return!0
 var t=confirm(s.default._t("LeftAndMain.CONFIRMUNSAVED"))
-return t&&this.addClass("discardchanges"),t},onsubmit:function e(t,n){if("_blank"!=this.prop("target"))return n&&this.closest(".cms-container").submitForm(this,n),!1},validate:function e(){var t=!0
+return t&&this.addClass("discardchanges"),t},onsubmit:function e(t,n){"_blank"!=this.prop("target")&&(t.preventDefault(),n&&this.closest(".cms-container").submitForm(this,n))},validate:function e(){var t=!0
+
+
 return this.trigger("validate",{isValid:t}),t},"from .htmleditor":{oneditorinit:function t(n){var a=this,r=e(n.target).closest(".field.htmleditor"),i=r.find("textarea.htmleditor").getEditor().getInstance()
 
 
 i.onClick.add(function(e){a.saveFieldFocus(r.attr("id"))})}},"from .cms-edit-form :input:not(:submit)":{onclick:function t(n){this.saveFieldFocus(e(n.target).attr("id"))},onfocus:function t(n){this.saveFieldFocus(e(n.target).attr("id"))
 
-}},"from .cms-edit-form .treedropdown *":{onfocusin:function t(n){var a=e(n.target).closest(".field.treedropdown")
+},onblur:function e(t){t.target.checkValidity()?this.removeClass("error"):this.addClass("error")}},"from .cms-edit-form .treedropdown *":{onfocusin:function t(n){var a=e(n.target).closest(".field.treedropdown")
+
+
 this.saveFieldFocus(a.attr("id"))}},"from .cms-edit-form .dropdown .chosen-container a":{onfocusin:function t(n){var a=e(n.target).closest(".field.dropdown")
 this.saveFieldFocus(a.attr("id"))}},"from .cms-container":{ontabstaterestored:function e(t){this.restoreFieldFocus()}},saveFieldFocus:function t(n){if("undefined"!=typeof window.sessionStorage&&null!==window.sessionStorage){
 var a=e(this).attr("id"),r=[]
