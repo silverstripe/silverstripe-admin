@@ -33,7 +33,7 @@ jQuery.entwine('ss', ($) => {
       e.preventDefault();
       const $link = $(e.target);
       window.location = $link.attr('href');
-    }
+    },
   });
 
 	/**
