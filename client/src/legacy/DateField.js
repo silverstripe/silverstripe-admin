@@ -1,46 +1,58 @@
 import $ from 'jQuery';
+import i18n from 'i18n';
+import moment from 'moment';
+import modernizr from 'modernizr';
 
-// entwine also required, but can't be included more than once without error
-require('../../../thirdparty/jquery-ui/jquery-ui.js');
+require('../../../thirdparty/jquery-entwine/dist/jquery.entwine-dist.js');
 
-$.fn.extend({
-  ssDatepicker: function(opts) {
-    return $(this).each(function() {
+$.entwine('ss', function($) {
+  $('input[type=date]').entwine({
+    onadd: function () {
+      // Browser supports type=date natively
+      if (modernizr.inputtypes.date) {
+        return;
+      }
 
       // disabled, readonly or already applied
-      if ($(this).prop('disabled') || $(this).prop('readonly') || $(this).hasClass('hasDatepicker')) {
+      if (this.prop('disabled') || this.prop('readonly') || this.hasClass('hasDatepicker')) {
         return;
       }
 
-      $(this).siblings("button").addClass("ui-icon ui-icon-calendar");
+      // Duplicate input field to store ISO value
+      const hiddenInput = $('<input/>', { type: 'hidden', name: this.attr('name'), value: this.val() });
+      this.parent().append(hiddenInput);
 
-      let config = $.extend(
-          {},
-          opts || {},
-          $(this).data(),
-          $(this).data('jqueryuiconfig')
-        );
-      if(!config.showcalendar) {
-        return;
+      // Avoid original field being saved
+      this.removeAttr('name');
+
+      // Set localised value in original field
+      moment.locale(this.attr('lang'));
+      const isoDate = this.val();
+      let localDate = '';
+      if (isoDate) {
+        localDate = moment(isoDate).format('L');
       }
+      this.val(localDate);
 
-      if(config.locale && $.datepicker.regional[config.locale]) {
-        // Note: custom config overrides regional settings
-        config = $.extend({}, $.datepicker.regional[config.locale], config);
+      // Set useful localised placeholder
+      this.attr(
+        'placeholder',
+        i18n._t('DateField.DateFormatExample') + ': ' + moment().endOf('month').format('L')
+      );
+
+      this.updateValue();
+    },
+    onchange: function () {
+      // TODO Validation
+      this.updateValue();
+    },
+    updateValue: function () {
+      const localDate = this.val();
+      let isoDate = '';
+      if (localDate) {
+        isoDate = moment(localDate, 'L').format('YYYY-MM-DD');
       }
-
-      // Initialize and open a datepicker
-      // live() doesn't have "onmatch", and jQuery.entwine is a bit too heavyweight
-      // for this, so we need to do this onclick.
-      $(this).datepicker(config);
-    });
-  }
-});
-
-$(document).on("click", ".field.date input.text,input.text.date", function() {
-  $(this).ssDatepicker();
-
-  if($(this).data('datepicker')) {
-    $(this).datepicker('show');
-  }
+      this.parent().find('input[type=hidden]').val(isoDate);
+    },
+  });
 });

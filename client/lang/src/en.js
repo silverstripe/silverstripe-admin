@@ -6,6 +6,7 @@
     "CMSMAIN.BATCH_RESTORE_PROMPT": "You have {num} page(s) selected.\n\nDo you really want to restore to stage?\n\nChildren of archived pages will be restored to the root level, unless those pages are also being restored.",
     "CMSMAIN.BATCH_UNPUBLISH_PROMPT": "You have {num} page(s) selected.\n\nDo you really want to unpublish",
     "CMSMAIN.SELECTONEPAGE": "Please select at least one page",
+    "DateField.DateFormatExample": "Example",
     "File.NO_SIZE": "N\/A",
     "FormBuilderModal.CLOSE": "Close",
     "LeftAndMain.CONFIRMUNSAVED": "Are you sure you want to navigate away from this page?\n\nWARNING: Your changes have not been saved.\n\nPress OK to continue, or Cancel to stay on the current page.",
