@@ -1319,17 +1319,13 @@ this.add(this.find(".cms-tabset")).redrawTabs(),this.find(".cms-content-header")
 if(this.trigger("beforesubmitform"),!this.is(".changed")||this.is(".discardchanges"))return!0
 if(this.find(".btn-toolbar :submit.btn--loading.loading").length>0)return!0
 var t=confirm(s.default._t("LeftAndMain.CONFIRMUNSAVED"))
-return t&&this.addClass("discardchanges"),t},onsubmit:function e(t,n){"_blank"!=this.prop("target")&&(t.preventDefault(),n&&this.closest(".cms-container").submitForm(this,n))},validate:function e(){var t=!0
-
-
+return t&&this.addClass("discardchanges"),t},onsubmit:function e(t,n){if("_blank"!=this.prop("target"))return n&&this.closest(".cms-container").submitForm(this,n),!1},validate:function e(){var t=!0
 return this.trigger("validate",{isValid:t}),t},"from .htmleditor":{oneditorinit:function t(n){var a=this,r=e(n.target).closest(".field.htmleditor"),i=r.find("textarea.htmleditor").getEditor().getInstance()
 
 
 i.onClick.add(function(e){a.saveFieldFocus(r.attr("id"))})}},"from .cms-edit-form :input:not(:submit)":{onclick:function t(n){this.saveFieldFocus(e(n.target).attr("id"))},onfocus:function t(n){this.saveFieldFocus(e(n.target).attr("id"))
 
-},onblur:function e(t){t.target.checkValidity()?this.removeClass("error"):this.addClass("error")}},"from .cms-edit-form .treedropdown *":{onfocusin:function t(n){var a=e(n.target).closest(".field.treedropdown")
-
-
+}},"from .cms-edit-form .treedropdown *":{onfocusin:function t(n){var a=e(n.target).closest(".field.treedropdown")
 this.saveFieldFocus(a.attr("id"))}},"from .cms-edit-form .dropdown .chosen-container a":{onfocusin:function t(n){var a=e(n.target).closest(".field.dropdown")
 this.saveFieldFocus(a.attr("id"))}},"from .cms-container":{ontabstaterestored:function e(t){this.restoreFieldFocus()}},saveFieldFocus:function t(n){if("undefined"!=typeof window.sessionStorage&&null!==window.sessionStorage){
 var a=e(this).attr("id"),r=[]
@@ -1602,10 +1598,10 @@ function a(e){return e&&e.__esModule?e:{default:e}}var r=n(1),i=a(r),s=n(114),o=
 n(322),i.default.entwine("ss",function(e){e("input[type=date]").entwine({onadd:function t(){if(!c.default.inputtypes.date&&!(this.prop("disabled")||this.prop("readonly")||this.hasClass("hasDatepicker"))){
 var n=e("<input/>",{type:"hidden",name:this.attr("name"),value:this.val()})
 this.parent().append(n),this.removeAttr("name"),u.default.locale(this.attr("lang"))
-var a=this.val(),r=(0,u.default)(a).format("L")
-this.val(r),this.attr("placeholder",o.default._t("DateField.DateFormatExample")+": "+(0,u.default)().endOf("month").format("L")),this.updateValue()}},onchange:function e(){this.updateValue()},updateValue:function e(){
-var t=this.val(),n=(0,u.default)(t,"L").format("YYYY-MM-DD")
-this.parent().find("input[type=hidden]").val(n)}})})},function(e,t,n){(function(e){!function(t,n){e.exports=n()}(this,function(){"use strict"
+var a=this.val(),r=""
+a&&(r=(0,u.default)(a).format("L")),this.val(r),this.attr("placeholder",o.default._t("DateField.DateFormatExample")+": "+(0,u.default)().endOf("month").format("L")),this.updateValue()}},onchange:function e(){
+this.updateValue()},updateValue:function e(){var t=this.val(),n=""
+t&&(n=(0,u.default)(t,"L").format("YYYY-MM-DD")),this.parent().find("input[type=hidden]").val(n)}})})},function(e,t,n){(function(e){!function(t,n){e.exports=n()}(this,function(){"use strict"
 function t(){return ba.apply(null,arguments)}function a(e){ba=e}function r(e){return e instanceof Array||"[object Array]"===Object.prototype.toString.call(e)}function i(e){return null!=e&&"[object Object]"===Object.prototype.toString.call(e)
 
 }function s(e){var t

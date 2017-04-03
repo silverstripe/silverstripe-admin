@@ -19,7 +19,7 @@ $.entwine('ss', function($) {
       }
 
       // Duplicate input field to store ISO value
-      const hiddenInput = $('<input/>', {type: 'hidden', name: this.attr('name'), value: this.val()});
+      const hiddenInput = $('<input/>', { type: 'hidden', name: this.attr('name'), value: this.val() });
       this.parent().append(hiddenInput);
 
       // Avoid original field being saved
@@ -28,7 +28,10 @@ $.entwine('ss', function($) {
       // Set localised value in original field
       moment.locale(this.attr('lang'));
       const isoDate = this.val();
-      const localDate = moment(isoDate).format('L');
+      let localDate = '';
+      if (isoDate) {
+        localDate = moment(isoDate).format('L');
+      }
       this.val(localDate);
 
       // Set useful localised placeholder
@@ -41,14 +44,15 @@ $.entwine('ss', function($) {
     },
     onchange: function () {
       // TODO Validation
-      // TODO Set localised Placeholder
-
       this.updateValue();
     },
     updateValue: function () {
       const localDate = this.val();
-      const isoDate = moment(localDate, 'L').format('YYYY-MM-DD');
+      let isoDate = '';
+      if (localDate) {
+        isoDate = moment(localDate, 'L').format('YYYY-MM-DD');
+      }
       this.parent().find('input[type=hidden]').val(isoDate);
-    }
+    },
   });
 });
