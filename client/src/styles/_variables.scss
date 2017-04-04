@@ -355,10 +355,10 @@ $input-box-shadow-focus: rgba(102, 175, 233, .6);
 //
 // $input-padding-x-sm: .75rem;
 // $input-padding-y-sm: .275rem;
-//
-// $input-padding-x-lg: 1.25rem;
-// $input-padding-y-lg: .75rem;
-//
+
+$input-padding-x-lg: 1.25rem;
+$input-padding-y-lg: .75rem;
+
 // $input-height: (($font-size-base * $line-height) + ($input-padding-y * 2));
 // $input-height-lg: (($font-size-lg * $line-height-lg) + ($input-padding-y-lg * 2));
 // $input-height-sm: (($font-size-sm * $line-height-sm) + ($input-padding-y-sm * 2));

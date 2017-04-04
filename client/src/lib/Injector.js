@@ -28,6 +28,7 @@ class Injector {
    */
   getComponentByDataType(dataType) {
     switch (dataType) {
+      case 'String':
       case 'Text':
       case 'Date':
       case 'DateTime':

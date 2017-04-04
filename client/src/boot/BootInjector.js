@@ -12,6 +12,7 @@ import LiteralField from 'components/LiteralField/LiteralField';
 import HtmlReadonlyField from 'components/HtmlReadonlyField/HtmlReadonlyField';
 import LookupField from 'components/LookupField/LookupField';
 import CompositeField from 'components/CompositeField/CompositeField';
+import LabelField from 'components/LabelField/LabelField';
 import Tabs from 'components/Tabs/Tabs';
 import TabItem from 'components/Tabs/TabItem';
 import FormAction from 'components/FormAction/FormAction';
@@ -41,6 +42,7 @@ class BootInjector {
     injector.register('Tabs', Tabs);
     injector.register('TabItem', TabItem);
     injector.register('FormAction', FormAction);
+    injector.register('LabelField', LabelField);
   }
 }
 

@@ -4,9 +4,12 @@
 }
 
 .modal-content {
+  height: auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   border: 0;
-  height: auto;
 }
 
 

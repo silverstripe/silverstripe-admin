@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import SilverStripeComponent from 'lib/SilverStripeComponent';
-import { FormGroup, ControlLabel } from 'react-bootstrap-ss';
+import { FormGroup, InputGroup, ControlLabel } from 'react-bootstrap-ss';
 import castStringToElement from 'lib/castStringToElement';
 import FormAlert from 'components/FormAlert/FormAlert';
 
@@ -106,12 +106,32 @@ function fieldHolder(Field) {
       };
     }
 
+    renderField() {
+      const field = <Field {...this.props} />;
+      const prefix = this.props.data.prefix;
+      const suffix = this.props.data.suffix;
+      if (!prefix && !suffix) {
+        return field;
+      }
+      return (
+        <InputGroup>
+          {prefix &&
+            <InputGroup.Addon>{prefix}</InputGroup.Addon>
+          }
+          {field}
+          {suffix &&
+            <InputGroup.Addon>{suffix}</InputGroup.Addon>
+          }
+        </InputGroup>
+      );
+    }
+
     render() {
       return (
         <FormGroup {...this.getHolderProps()}>
           {this.renderLeftTitle()}
           <div className="form__field-holder">
-            <Field {...this.props} />
+            {this.renderField()}
             {this.renderMessage()}
             {this.renderDescription()}
           </div>
@@ -123,19 +143,26 @@ function fieldHolder(Field) {
   }
 
   FieldHolder.propTypes = {
-    leftTitle: React.PropTypes.any,
-    rightTitle: React.PropTypes.any,
-    title: React.PropTypes.any,
-    extraClass: React.PropTypes.string,
-    holderId: React.PropTypes.string,
-    id: React.PropTypes.string,
-    description: React.PropTypes.any,
-    hideLabels: React.PropTypes.bool,
-    message: React.PropTypes.shape({
-      extraClass: React.PropTypes.string,
-      value: React.PropTypes.any,
-      type: React.PropTypes.string,
+    leftTitle: PropTypes.any,
+    rightTitle: PropTypes.any,
+    title: PropTypes.any,
+    extraClass: PropTypes.string,
+    holderId: PropTypes.string,
+    id: PropTypes.string,
+    description: PropTypes.any,
+    hideLabels: PropTypes.bool,
+    message: PropTypes.shape({
+      extraClass: PropTypes.string,
+      value: PropTypes.any,
+      type: PropTypes.string,
     }),
+    data: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.shape({
+        prefix: PropTypes.string,
+        suffix: PropTypes.string,
+      }),
+    ]),
   };
 
   FieldHolder.defaultProps = {
@@ -143,6 +170,7 @@ function fieldHolder(Field) {
     extraClass: '',
     leftTitle: null,
     rightTitle: null,
+    data: {},
   };
 
   return FieldHolder;
