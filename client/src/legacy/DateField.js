@@ -5,9 +5,9 @@ import modernizr from 'modernizr';
 
 require('../../../thirdparty/jquery-entwine/dist/jquery.entwine-dist.js');
 
-$.entwine('ss', function($) {
-  $('input[type=date]').entwine({
-    onadd: function () {
+$.entwine('ss', (jQuery) => {
+  jQuery('input[type=date]').entwine({
+    onadd() {
       // Browser supports type=date natively
       if (modernizr.inputtypes.date) {
         return;
@@ -19,7 +19,10 @@ $.entwine('ss', function($) {
       }
 
       // Duplicate input field to store ISO value
-      const hiddenInput = $('<input/>', { type: 'hidden', name: this.attr('name'), value: this.val() });
+      const hiddenInput = jQuery(
+        '<input/>',
+        { type: 'hidden', name: this.attr('name'), value: this.val() }
+      );
       this.parent().append(hiddenInput);
 
       // Avoid original field being saved
@@ -30,27 +33,37 @@ $.entwine('ss', function($) {
       const isoDate = this.val();
       let localDate = '';
       if (isoDate) {
-        localDate = moment(isoDate).format('L');
+        const dateObject = moment(isoDate);
+        if (dateObject.isValid()) {
+          localDate = dateObject.format('L');
+        }
       }
       this.val(localDate);
 
       // Set useful localised placeholder
-      this.attr(
-        'placeholder',
-        i18n._t('DateField.DateFormatExample') + ': ' + moment().endOf('month').format('L')
+      const placeholder = i18n.inject(
+        i18n._t('DateField.DateFormatExample', 'Example: {date}'),
+        { date: moment().endOf('month').format('L') }
       );
+      this.attr('placeholder', placeholder);
 
       this.updateValue();
     },
-    onchange: function () {
+    onchange() {
       // TODO Validation
       this.updateValue();
     },
-    updateValue: function () {
+    updateValue() {
       const localDate = this.val();
       let isoDate = '';
       if (localDate) {
-        isoDate = moment(localDate, 'L').format('YYYY-MM-DD');
+        for (const format of ['L', 'YYYY-MM-DD']) {
+          const dateObject = moment(localDate, format);
+          if (dateObject.isValid()) {
+            isoDate = dateObject.format('YYYY-MM-DD');
+            break;
+          }
+        }
       }
       this.parent().find('input[type=hidden]').val(isoDate);
     },
