@@ -1611,9 +1611,13 @@ n(322),i.default.entwine("ss",function(e){e("input[type=date]").entwine({onadd:f
 var n=e("<input/>",{type:"hidden",name:this.attr("name"),value:this.val()})
 this.parent().append(n),this.removeAttr("name"),u.default.locale(this.attr("lang"))
 var a=this.val(),r=""
-a&&(r=(0,u.default)(a).format("L")),this.val(r),this.attr("placeholder",o.default._t("DateField.DateFormatExample")+": "+(0,u.default)().endOf("month").format("L")),this.updateValue()}},onchange:function e(){
-this.updateValue()},updateValue:function e(){var t=this.val(),n=""
-t&&(n=(0,u.default)(t,"L").format("YYYY-MM-DD")),this.parent().find("input[type=hidden]").val(n)}})})},function(e,t,n){(function(e){!function(t,n){e.exports=n()}(this,function(){"use strict"
+if(a){var i=(0,u.default)(a)
+i.isValid()&&(r=i.format("L"))}this.val(r)
+var s=o.default.inject(o.default._t("DateField.DateFormatExample","Example: {date}"),{date:(0,u.default)().endOf("month").format("L")})
+this.attr("placeholder",s),this.updateValue()}},onchange:function e(){this.updateValue()},updateValue:function e(){var t=this.val(),n=""
+if(t)for(var a=["L","YYYY-MM-DD"],r=0;r<a.length;r++){var i=a[r],s=(0,u.default)(t,i)
+if(s.isValid()){n=s.format("YYYY-MM-DD")
+break}}this.parent().find("input[type=hidden]").val(n)}})})},function(e,t,n){(function(e){!function(t,n){e.exports=n()}(this,function(){"use strict"
 function t(){return ba.apply(null,arguments)}function a(e){ba=e}function r(e){return e instanceof Array||"[object Array]"===Object.prototype.toString.call(e)}function i(e){return null!=e&&"[object Object]"===Object.prototype.toString.call(e)
 
 }function s(e){var t

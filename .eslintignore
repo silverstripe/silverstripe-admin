@@ -3,7 +3,6 @@ client/dist/
 
 # Ignore legacy files
 client/src/legacy/ConfirmedPasswordField.js
-client/src/legacy/DateField.js
 client/src/legacy/GridField.js
 client/src/legacy/HtmlEditorField.js
 client/src/legacy/InlineFormAction.js
