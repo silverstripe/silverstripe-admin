@@ -3,6 +3,7 @@ import i18n from 'i18n';
 import { Modal } from 'react-bootstrap-ss';
 import SilverStripeComponent from 'lib/SilverStripeComponent';
 import FormBuilderLoader from 'containers/FormBuilderLoader/FormBuilderLoader';
+import castStringToElement from 'lib/castStringToElement';
 
 class FormBuilderModal extends SilverStripeComponent {
   constructor(props) {
@@ -66,7 +67,7 @@ class FormBuilderModal extends SilverStripeComponent {
 
     return (
       <div className={className}>
-        <span>{this.state.response}</span>
+        { castStringToElement('span', { html: this.state.response }) }
       </div>
     );
   }
