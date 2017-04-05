@@ -15903,27 +15903,28 @@ input.checkbox,input.radio,input[type=checkbox],input[type=radio]{
 }
 
 .modal-header{
-  height:53px;
+  margin-right:-.76925rem;
 }
 
 .modal-header .close{
-  top:.9231rem;
-  right:.9231rem;
-  position:absolute;
-  z-index:2;
-  margin-right:0;
-  font-size:24px;
+  font-size:28px;
   height:32px;
+  opacity:.5;
+  margin-top:0;
 }
 
 .modal-header .close span{
   overflow:hidden;
   display:block;
-  margin-top:-7px;
+  margin-top:-6px;
+}
+
+.modal-header .close:hover{
+  opacity:.7;
 }
 
 .modal-header .modal-title{
-  margin-top:.3077rem;
+  line-height:32px;
   font-size:19px;
   font-weight:400;
 }
