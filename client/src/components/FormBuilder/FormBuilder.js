@@ -304,6 +304,7 @@ class FormBuilder extends SilverStripeComponent {
       persistentSubmitErrors,
       form,
       afterMessages,
+      autoFocus,
     } = this.props;
 
     const props = {
@@ -327,6 +328,7 @@ class FormBuilder extends SilverStripeComponent {
       touchOnChange,
       persistentSubmitErrors,
       validate: this.validateForm,
+      autoFocus,
     };
 
     return <BaseFormComponent {...props} />;
@@ -375,10 +377,12 @@ const basePropTypes = {
 FormBuilder.propTypes = Object.assign({}, basePropTypes, {
   form: PropTypes.string.isRequired,
   schema: schemaPropType.isRequired,
+  autoFocus: PropTypes.bool,
 });
 
 FormBuilder.defaultProps = {
   responseRequestedSchema: ['auto'],
+  autoFocus: true,
 };
 
 export { basePropTypes, schemaPropType };

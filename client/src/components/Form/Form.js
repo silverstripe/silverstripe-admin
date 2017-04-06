@@ -1,8 +1,22 @@
-import React, { PropTypes } from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { PropTypes, Component } from 'react';
+import ReactDOM from 'react-dom';
 import FormAlert from 'components/FormAlert/FormAlert';
 
-class Form extends SilverStripeComponent {
+class Form extends Component {
+
+  componentDidMount() {
+    if (!this.props.autoFocus) {
+      return;
+    }
+
+    const node = ReactDOM.findDOMNode(this);
+    if (node) {
+      const input = node.querySelector('input, select, textarea');
+      if (input) {
+        input.focus();
+      }
+    }
+  }
 
   /**
    * Generates a list of messages if any are available
@@ -67,6 +81,7 @@ class Form extends SilverStripeComponent {
 }
 
 Form.propTypes = {
+  autoFocus: PropTypes.bool,
   actions: PropTypes.array,
   afterMessages: PropTypes.node,
   attributes: PropTypes.shape({
