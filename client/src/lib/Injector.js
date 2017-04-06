@@ -33,9 +33,13 @@ class Injector {
     switch (dataType) {
       case 'String':
       case 'Text':
-      case 'Date':
-      case 'DateTime':
         return this.components.TextField;
+      case 'Date':
+        return this.components.DateField;
+      case 'Time':
+        return this.components.TimeField;
+      case 'DateTime':
+        return this.components.DateTimeField;
       case 'Hidden':
         return this.components.HiddenField;
       case 'SingleSelect':

@@ -1,6 +1,9 @@
 import injector from 'lib/Injector';
 import TextField from 'components/TextField/TextField';
 import HiddenField from 'components/HiddenField/HiddenField';
+import DateField from 'components/DateField/DateField';
+import TimeField from 'components/TimeField/TimeField';
+import DateTimeField from 'components/DateTimeField/DateTimeField';
 import CheckboxField from 'components/CheckboxField/CheckboxField';
 import CheckboxSetField from 'components/CheckboxSetField/CheckboxSetField';
 import OptionsetField from 'components/OptionsetField/OptionsetField';
@@ -28,6 +31,9 @@ class BootInjector {
   start() {
     injector.register('TextField', TextField);
     injector.register('HiddenField', HiddenField);
+    injector.register('DateField', DateField);
+    injector.register('TimeField', TimeField);
+    injector.register('DateTimeField', DateTimeField);
     injector.register('CheckboxField', CheckboxField);
     injector.register('CheckboxSetField', CheckboxSetField);
     injector.register('OptionsetField', OptionsetField);
