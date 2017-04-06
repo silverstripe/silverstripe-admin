@@ -1,16 +1,21 @@
 .breadcrumb {
   font-size: $font-size-xs;
-  line-height: 14px;
+  line-height: 13px;
+  min-height: 13px;
   margin-bottom: 0;
   float: left;
-  max-height: $toolbar-height;
+
+  .toolbar & {
+    padding-bottom: 0;
+  }
 }
 
 .breadcrumb__container {
   max-height: $toolbar-height;
+  overflow: hidden;
 }
 
-.breadcrumb>li.breadcrumb__item--last, // TODO Fix Bootstrap clash
+.breadcrumb > li.breadcrumb__item--last, // TODO Fix Bootstrap clash
 .breadcrumb__item--last {
   display: block;
   float: none;
@@ -28,17 +33,24 @@
 }
 
 .cms h2.breadcrumb__item-title--last, // TODO Fix CMS clash
+.breadcrumb__item--last .breadcrumb__item-title,
 .breadcrumb__item-title--last {
   margin: 0;
-  font-size: $font-size-lg;
+  font-size: $font-size-h3;
   font-weight: normal;
   line-height: 24px;
   @include text-truncate;
 }
 
 // If only the title is shown
-.breadcrumb__item:only-child {
-  margin-top: 6px;
+.breadcrumb__item {
+  &:only-child {
+    margin-top: 6px;
+  }
+
+  &:empty {
+    margin-top: 0;
+  }
 }
 
 .breadcrumb__icon::before {
