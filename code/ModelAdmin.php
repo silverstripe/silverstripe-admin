@@ -397,8 +397,8 @@ abstract class ModelAdmin extends LeftAndMain
         if (!count($models)) {
             user_error(
                 'ModelAdmin::getManagedModels():
-				You need to specify at least one DataObject subclass in public static $managed_models.
-				Make sure that this property is defined, and that its visibility is set to "public"',
+				You need to specify at least one DataObject subclass in private static $managed_models.
+				Make sure that this property is defined, and that its visibility is set to "private"',
                 E_USER_ERROR
             );
         }
