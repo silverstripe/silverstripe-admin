@@ -382,7 +382,7 @@ FormBuilder.propTypes = Object.assign({}, basePropTypes, {
 
 FormBuilder.defaultProps = {
   responseRequestedSchema: ['auto'],
-  autoFocus: true,
+  autoFocus: false,
 };
 
 export { basePropTypes, schemaPropType };

@@ -82,6 +82,7 @@ class Form extends Component {
 
 Form.propTypes = {
   autoFocus: PropTypes.bool,
+  valid: PropTypes.bool,
   actions: PropTypes.array,
   afterMessages: PropTypes.node,
   attributes: PropTypes.shape({

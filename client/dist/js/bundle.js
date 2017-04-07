@@ -244,11 +244,10 @@ var s=o({},this.props.attributes,{onSubmit:this.props.handleSubmit,className:i.j
 return l.default.createElement("form",s,r,this.props.afterMessages,n&&l.default.createElement("fieldset",null,n),a&&l.default.createElement("div",{className:"btn-toolbar",role:"group"},a))}}]),t}(u.Component)
 
 
-m.propTypes={autoFocus:u.PropTypes.bool,actions:u.PropTypes.array,afterMessages:u.PropTypes.node,attributes:u.PropTypes.shape({action:u.PropTypes.string.isRequired,className:u.PropTypes.string,encType:u.PropTypes.string,
-id:u.PropTypes.string,method:u.PropTypes.string.isRequired}),fields:u.PropTypes.array.isRequired,handleSubmit:u.PropTypes.func,mapActionsToComponents:u.PropTypes.func.isRequired,mapFieldsToComponents:u.PropTypes.func.isRequired,
-messages:u.PropTypes.arrayOf(u.PropTypes.shape({extraClass:u.PropTypes.string,value:u.PropTypes.any,type:u.PropTypes.string}))},t.default=m},,function(e,t,n){(function(t){e.exports=t.FormConstants=n(28)
-
-}).call(t,function(){return this}())},function(e,t){"use strict"
+m.propTypes={autoFocus:u.PropTypes.bool,valid:u.PropTypes.bool,actions:u.PropTypes.array,afterMessages:u.PropTypes.node,attributes:u.PropTypes.shape({action:u.PropTypes.string.isRequired,className:u.PropTypes.string,
+encType:u.PropTypes.string,id:u.PropTypes.string,method:u.PropTypes.string.isRequired}),fields:u.PropTypes.array.isRequired,handleSubmit:u.PropTypes.func,mapActionsToComponents:u.PropTypes.func.isRequired,
+mapFieldsToComponents:u.PropTypes.func.isRequired,messages:u.PropTypes.arrayOf(u.PropTypes.shape({extraClass:u.PropTypes.string,value:u.PropTypes.any,type:u.PropTypes.string}))},t.default=m},,function(e,t,n){
+(function(t){e.exports=t.FormConstants=n(28)}).call(t,function(){return this}())},function(e,t){"use strict"
 Object.defineProperty(t,"__esModule",{value:!0}),t.default={CSRF_HEADER:"X-SecurityID"}},function(e,t,n){(function(t){e.exports=t.FormAlert=n(23)}).call(t,function(){return this}())},function(e,t,n){(function(t){
 e.exports=t.FormAction=n(31)}).call(t,function(){return this}())},function(e,t,n){"use strict"
 function a(e){return e&&e.__esModule?e:{default:e}}function r(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function i(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called")
@@ -347,7 +346,7 @@ return f.default.createElement(a,M)}}]),t}(g.default),T=c.PropTypes.shape({id:c.
 handleSubmit:c.PropTypes.func,handleAction:c.PropTypes.func,asyncValidate:c.PropTypes.func,onSubmitFail:c.PropTypes.func,onSubmitSuccess:c.PropTypes.func,shouldAsyncValidate:c.PropTypes.func,touchOnBlur:c.PropTypes.bool,
 touchOnChange:c.PropTypes.bool,persistentSubmitErrors:c.PropTypes.bool,validate:c.PropTypes.func,values:c.PropTypes.object,submitting:c.PropTypes.bool,baseFormComponent:c.PropTypes.func.isRequired,baseFieldComponent:c.PropTypes.func.isRequired,
 responseRequestedSchema:c.PropTypes.arrayOf(c.PropTypes.oneOf(["schema","state","errors","auto"]))}
-Y.propTypes=d({},D,{form:c.PropTypes.string.isRequired,schema:T.isRequired,autoFocus:c.PropTypes.bool}),Y.defaultProps={responseRequestedSchema:["auto"],autoFocus:!0},t.basePropTypes=D,t.schemaPropType=T,
+Y.propTypes=d({},D,{form:c.PropTypes.string.isRequired,schema:T.isRequired,autoFocus:c.PropTypes.bool}),Y.defaultProps={responseRequestedSchema:["auto"],autoFocus:!1},t.basePropTypes=D,t.schemaPropType=T,
 t.default=Y},function(e,t,n){"use strict"
 function a(e){return e&&e.__esModule?e:{default:e}}function r(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(t,"__esModule",{value:!0})
 var i=function(){function e(e,t){var n=[],a=!0,r=!1,i=void 0
