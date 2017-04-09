@@ -13,19 +13,44 @@ class TimeField extends TextField {
   }
 
   render() {
-    console.log('------- this is time field');
     return super.render();
   }
 
   getInputProps() {
+    console.log('---', this.props.value, this.getDisplayValue());
     const props = {};
     Object.assign(props, super.getInputProps());
-    Object.assign(props, { type: 'time' });
+    Object.assign(props, { value: this.getDisplayValue(), type: 'time' });
     return props;
   }
 
   isMultiline() {
     return false;
+  }
+
+  getDisplayValue() {
+    return this.props.value;
+    return this.convertToLocalTime(this.props.value);
+    // return this.props.value;
+    if (modernizr.inputtypes.date) {
+      return this.props.value;
+    }
+    else {
+      return this.convertToLocalTime(this.props.value);
+    }
+  }
+
+  convertToLocalTime(isoTime) {
+    moment.locale(this.props.lang);
+    let localTime = '';
+    if (isoTime) {
+      const timeObject = moment(isoTime);
+      console.log('--- is valid', timeObject.isValid());
+      if (timeObject.isValid()) {
+        localTime = dateObject.format('L');
+      }
+    }
+    return localTime;
   }
 
 }
