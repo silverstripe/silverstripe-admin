@@ -265,6 +265,7 @@ class FormBuilderLoader extends Component {
             ],
           });
         }
+        // Assign onLoadingError to suppress this
         throw error;
       });
   }

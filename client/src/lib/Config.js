@@ -39,6 +39,13 @@ class Config {
     return window.ss.config.sections[key];
   }
 
+  /**
+   * Gets the key of the current CMS section
+   */
+  static getCurrentSection() {
+
+  }
+
 }
 
 export default Config;

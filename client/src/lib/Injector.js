@@ -12,10 +12,13 @@ class Injector {
    * Gets the component matching the passed component name.
    * Used when a component type is provided bt the form schema.
    *
-   * @param string componentName - The name of the component to get from the injector.
+   * @param {String} componentName - The name of the component to get from the injector.
    * @return object|null
    */
   getComponentByName(componentName) {
+    if (typeof this.components[componentName] === 'undefined') {
+      throw new Error(`Unknown component ${componentName}`);
+    }
     return this.components[componentName];
   }
 

@@ -1,0 +1,40 @@
+@import "~react-select/dist/react-select.css";
+
+// options
+.treedropdownfield__option-button {
+  border: 0;
+  background: none;
+  min-width: 40px;
+  margin: -8px -10px -8px 10px;
+  padding-right: 10px;
+
+  &:hover {
+    background: $btn-secondary-bg;
+  }
+}
+
+.treedropdownfield__option-count {
+  padding: 0 10px;
+}
+
+.treedropdownfield__menu-loading {
+  padding: 0 0 0 8px;
+}
+
+// breadcrumbs
+.treedropdownfield__breadcrumbs {
+  background: $background-main;
+  border-bottom: 1px solid #e6e6e6; // Select.js border color
+
+  &:hover {
+    background: $btn-secondary-bg;
+  }
+}
+
+.treedropdownfield__breadcrumbs-button {
+  border: 0;
+  background: none;
+  width: 30px;
+  margin: -8px 0 -8px -10px;
+  padding-left: 10px;
+}
