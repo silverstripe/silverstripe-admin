@@ -2,10 +2,7 @@
 
 namespace SilverStripe\Admin;
 
-use SilverStripe\CMS\Controllers\CMSPageEditController;
-use SilverStripe\CMS\Controllers\CMSPagesController;
-use SilverStripe\CMS\Model\SiteTree;
-use SilverStripe\CMS\Model\VirtualPage;
+use LogicException;
 use SilverStripe\CMS\Controllers\SilverStripeNavigator;
 use SilverStripe\Control\ContentNegotiator;
 use SilverStripe\Control\Director;
@@ -44,7 +41,6 @@ use SilverStripe\ORM\ValidationException;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\ORM\DataObject;
-use SilverStripe\ORM\DB;
 use SilverStripe\Security\SecurityToken;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Permission;
@@ -55,7 +51,6 @@ use SilverStripe\View\Requirements;
 use SilverStripe\View\ArrayData;
 use ReflectionClass;
 use InvalidArgumentException;
-
 use SilverStripe\SiteConfig\SiteConfig;
 
 /**
@@ -144,9 +139,6 @@ class LeftAndMain extends Controller implements PermissionProvider
     private static $allowed_actions = [
         'index',
         'save',
-        'savetreenode',
-        'getsubtree',
-        'updatetreenodes',
         'printable',
         'show',
         'EditorToolbar',
@@ -158,7 +150,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     ];
 
     private static $url_handlers = [
-        'GET schema/$FormName/$ItemID/$OtherItemID' => 'schema'
+        'GET schema/$FormName/$ItemID/$OtherItemID' => 'schema',
     ];
 
     private static $dependencies = [
@@ -171,6 +163,13 @@ class LeftAndMain extends Controller implements PermissionProvider
      * @var FormSchema
      */
     protected $schema = null;
+
+    /**
+     * Current pageID for this request
+     *
+     * @var null
+     */
+    protected $pageID = null;
 
     /**
      * Assign themes to use for cms
@@ -993,11 +992,11 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * Return a list of appropriate templates for this class, with the given suffix using
+     * Return appropriate template(s) for this class, with the given suffix using
      * {@link SSViewer::get_templates_by_class()}
      *
      * @param string $suffix
-     * @return array
+     * @return string|array
      */
     public function getTemplatesWithSuffix($suffix)
     {
@@ -1024,18 +1023,28 @@ class LeftAndMain extends Controller implements PermissionProvider
         }
     }
 
+    /**
+     * Get dataobject from the current ID
+     *
+     * @param int|DataObject $id ID or object
+     * @return DataObject
+     */
     public function getRecord($id)
     {
         $className = $this->stat('tree_class');
-        if ($className && $id instanceof $className) {
-            return $id;
-        } elseif ($className && $id == 'root') {
-            return singleton($className);
-        } elseif ($className && is_numeric($id)) {
-            return DataObject::get_by_id($className, $id);
-        } else {
-            return false;
+        if (!$className) {
+            return null;
         }
+        if ($id instanceof $className) {
+            return $id;
+        }
+        if ($id === 'root') {
+            return DataObject::singleton($className);
+        }
+        if (is_numeric($id)) {
+            return DataObject::get_by_id($className, $id);
+        }
+        return null;
     }
 
     /**
@@ -1074,16 +1083,6 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * @return String HTML
-     */
-    public function SiteTreeAsUL()
-    {
-        $html = $this->getSiteTreeFor($this->stat('tree_class'));
-        $this->extend('updateSiteTreeAsUL', $html);
-        return $html;
-    }
-
-    /**
      * Gets the current search filter for this request, if available
      *
      * @throws InvalidArgumentException
@@ -1105,248 +1104,6 @@ class LeftAndMain extends Controller implements PermissionProvider
         }
 
         return Injector::inst()->createWithArgs($filterClass, array($params));
-    }
-
-    /**
-     * Get a site tree HTML listing which displays the nodes under the given criteria.
-     *
-     * @param string $className The class of the root object
-     * @param string $rootID The ID of the root object.  If this is null then a complete tree will be
-     *  shown
-     * @param string $childrenMethod The method to call to get the children of the tree. For example,
-     *  Children, AllChildrenIncludingDeleted, or AllHistoricalChildren
-     * @param string $numChildrenMethod
-     * @param callable $filterFunction
-     * @param int $nodeCountThreshold
-     * @return string Nested unordered list with links to each page
-     */
-    public function getSiteTreeFor(
-        $className,
-        $rootID = null,
-        $childrenMethod = null,
-        $numChildrenMethod = null,
-        $filterFunction = null,
-        $nodeCountThreshold = 30
-    ) {
-
-        // Filter criteria
-        $filter = $this->getSearchFilter();
-
-        // Default childrenMethod and numChildrenMethod
-        if (!$childrenMethod) {
-            $childrenMethod = ($filter && $filter->getChildrenMethod())
-            ? $filter->getChildrenMethod()
-            : 'AllChildrenIncludingDeleted';
-        }
-
-        if (!$numChildrenMethod) {
-            $numChildrenMethod = 'numChildren';
-            if ($filter && $filter->getNumChildrenMethod()) {
-                $numChildrenMethod = $filter->getNumChildrenMethod();
-            }
-        }
-        if (!$filterFunction && $filter) {
-            $filterFunction = function ($node) use ($filter) {
-                return $filter->isPageIncluded($node);
-            };
-        }
-
-        // Get the tree root
-        $record = ($rootID) ? $this->getRecord($rootID) : null;
-        $obj = $record ? $record : singleton($className);
-
-        // Get the current page
-        // NOTE: This *must* be fetched before markPartialTree() is called, as this
-        // causes the Hierarchy::$marked cache to be flushed (@see CMSMain::getRecord)
-        // which means that deleted pages stored in the marked tree would be removed
-        $currentPage = $this->currentPage();
-
-        // Mark the nodes of the tree to return
-        if ($filterFunction) {
-            $obj->setMarkingFilterFunction($filterFunction);
-        }
-
-        $obj->markPartialTree($nodeCountThreshold, $this, $childrenMethod, $numChildrenMethod);
-
-        // Ensure current page is exposed
-        if ($currentPage) {
-            $obj->markToExpose($currentPage);
-        }
-
-        // NOTE: SiteTree/CMSMain coupling :-(
-        if (class_exists('SilverStripe\\CMS\\Model\\SiteTree')) {
-            SiteTree::prepopulate_permission_cache(
-                'CanEditType',
-                $obj->markedNodeIDs(),
-                'SilverStripe\\CMS\\Model\\SiteTree::can_edit_multiple'
-            );
-        }
-
-        // getChildrenAsUL is a flexible and complex way of traversing the tree
-        $controller = $this;
-        $recordController = ($this->stat('tree_class') == 'SilverStripe\\CMS\\Model\\SiteTree')
-            ?  CMSPageEditController::singleton()
-            : $this;
-        $titleFn = function (&$child, $numChildrenMethod) use (&$controller, &$recordController, $filter) {
-            $link = Controller::join_links($recordController->Link("show"), $child->ID);
-            $node = LeftAndMain_TreeNode::create($child, $link, $controller->isCurrentPage($child), $numChildrenMethod, $filter);
-            return $node->forTemplate();
-        };
-
-        // Limit the amount of nodes shown for performance reasons.
-        // Skip the check if we're filtering the tree, since its not clear how many children will
-        // match the filter criteria until they're queried (and matched up with previously marked nodes).
-        $nodeThresholdLeaf = Config::inst()->get(Hierarchy::class, 'node_threshold_leaf');
-        if ($nodeThresholdLeaf && !$filterFunction) {
-            $nodeCountCallback = function ($parent, $numChildren) use (&$controller, $className, $nodeThresholdLeaf) {
-                if ($className !== 'SilverStripe\\CMS\\Model\\SiteTree'
-                    || !$parent->ID
-                    || $numChildren <= $nodeThresholdLeaf
-                ) {
-                    return null;
-                }
-                    return sprintf(
-                        '<ul><li class="readonly"><span class="item">'
-                            . '%s (<a href="%s" class="cms-panel-link" data-pjax-target="Content">%s</a>)'
-                            . '</span></li></ul>',
-                        _t('LeftAndMain.TooManyPages', 'Too many pages'),
-                        Controller::join_links(
-                            $controller->LinkWithSearch($controller->Link()),
-                            '?view=listview&ParentID=' . $parent->ID
-                        ),
-                        _t(
-                            'LeftAndMain.ShowAsList',
-                            'show as list',
-                            'Show large amount of pages in list instead of tree view'
-                        )
-                    );
-            };
-        } else {
-            $nodeCountCallback = null;
-        }
-
-        // If the amount of pages exceeds the node thresholds set, use the callback
-        $html = null;
-        if ($obj->ParentID && $nodeCountCallback) {
-            $html = $nodeCountCallback($obj, $obj->$numChildrenMethod());
-        }
-
-        // Otherwise return the actual tree (which might still filter leaf thresholds on children)
-        if (!$html) {
-            $html = $obj->getChildrenAsUL(
-                "",
-                $titleFn,
-                CMSPagesController::singleton(),
-                true,
-                $childrenMethod,
-                $numChildrenMethod,
-                $nodeCountThreshold,
-                $nodeCountCallback
-            );
-        }
-
-        // Wrap the root if needs be.
-        if (!$rootID) {
-            $rootLink = $this->Link('show') . '/root';
-
-            // This lets us override the tree title with an extension
-            if ($this->hasMethod('getCMSTreeTitle') && $customTreeTitle = $this->getCMSTreeTitle()) {
-                $treeTitle = $customTreeTitle;
-            } elseif (class_exists('SilverStripe\\SiteConfig\\SiteConfig')) {
-                $siteConfig = SiteConfig::current_site_config();
-                $treeTitle =  Convert::raw2xml($siteConfig->Title);
-            } else {
-                $treeTitle = '...';
-            }
-
-            $html = "<ul><li id=\"record-0\" data-id=\"0\" class=\"Root nodelete\"><strong>$treeTitle</strong>"
-                . $html . "</li></ul>";
-        }
-
-        return $html;
-    }
-
-    /**
-     * Get a subtree underneath the request param 'ID'.
-     * If ID = 0, then get the whole tree.
-     *
-     * @param HTTPRequest $request
-     * @return string
-     */
-    public function getsubtree($request)
-    {
-        $html = $this->getSiteTreeFor(
-            $this->stat('tree_class'),
-            $request->getVar('ID'),
-            null,
-            null,
-            null,
-            $request->getVar('minNodeCount')
-        );
-
-        // Trim off the outer tag
-        $html = preg_replace('/^[\s\t\r\n]*<ul[^>]*>/', '', $html);
-        $html = preg_replace('/<\/ul[^>]*>[\s\t\r\n]*$/', '', $html);
-
-        return $html;
-    }
-
-    /**
-     * Allows requesting a view update on specific tree nodes.
-     * Similar to {@link getsubtree()}, but doesn't enforce loading
-     * all children with the node. Useful to refresh views after
-     * state modifications, e.g. saving a form.
-     *
-     * @param HTTPRequest $request
-     * @return string JSON
-     */
-    public function updatetreenodes($request)
-    {
-        $data = array();
-        $ids = explode(',', $request->getVar('ids'));
-        foreach ($ids as $id) {
-            if ($id === "") {
-                continue; // $id may be a blank string, which is invalid and should be skipped over
-            }
-
-            $record = $this->getRecord($id);
-            if (!$record) {
-                continue; // In case a page is no longer available
-            }
-            $recordController = ($this->stat('tree_class') == 'SilverStripe\\CMS\\Model\\SiteTree')
-                ? CMSPageEditController::singleton()
-                : $this;
-
-            // Find the next & previous nodes, for proper positioning (Sort isn't good enough - it's not a raw offset)
-            // TODO: These methods should really be in hierarchy - for a start it assumes Sort exists
-            $next = $prev = null;
-
-            $className = $this->stat('tree_class');
-            $next = DataObject::get($className)
-                ->filter('ParentID', $record->ParentID)
-                ->filter('Sort:GreaterThan', $record->Sort)
-                ->first();
-
-            if (!$next) {
-                $prev = DataObject::get($className)
-                    ->filter('ParentID', $record->ParentID)
-                    ->filter('Sort:LessThan', $record->Sort)
-                    ->reverse()
-                    ->first();
-            }
-
-            $link = Controller::join_links($recordController->Link("show"), $record->ID);
-            $html = LeftAndMain_TreeNode::create($record, $link, $this->isCurrentPage($record))->forTemplate(). '</li>';
-
-            $data[$id] = array(
-                'html' => $html,
-                'ParentID' => $record->ParentID,
-                'NextID' => $next ? $next->ID : null,
-                'PrevID' => $prev ? $prev->ID : null
-            );
-        }
-        $this->getResponse()->addHeader('Content-Type', 'text/json');
-        return Convert::raw2json($data);
     }
 
     /**
@@ -1438,137 +1195,6 @@ class LeftAndMain extends Controller implements PermissionProvider
         );
     }
 
-    /**
-     * Update the position and parent of a tree node.
-     * Only saves the node if changes were made.
-     *
-     * Required data:
-     * - 'ID': The moved node
-     * - 'ParentID': New parent relation of the moved node (0 for root)
-     * - 'SiblingIDs': Array of all sibling nodes to the moved node (incl. the node itself).
-     *   In case of a 'ParentID' change, relates to the new siblings under the new parent.
-     *
-     * @param HTTPRequest $request
-     * @return HTTPResponse JSON string with a
-     * @throws HTTPResponse_Exception
-     */
-    public function savetreenode($request)
-    {
-        if (!SecurityToken::inst()->checkRequest($request)) {
-            return $this->httpError(400);
-        }
-        if (!Permission::check('SITETREE_REORGANISE') && !Permission::check('ADMIN')) {
-            $this->getResponse()->setStatusCode(
-                403,
-                _t(
-                    'LeftAndMain.CANT_REORGANISE',
-                    "You do not have permission to rearange the site tree. Your change was not saved."
-                )
-            );
-            return;
-        }
-
-        $className = $this->stat('tree_class');
-        $statusUpdates = array('modified'=>array());
-        $id = $request->requestVar('ID');
-        $parentID = $request->requestVar('ParentID');
-
-        if ($className == 'SilverStripe\\CMS\\Model\\SiteTree' && $page = DataObject::get_by_id(SiteTree::class, $id)) {
-            $root = $page->getParentType();
-            if (($parentID == '0' || $root == 'root') && !SiteConfig::current_site_config()->canCreateTopLevel()) {
-                $this->getResponse()->setStatusCode(
-                    403,
-                    _t(
-                        'LeftAndMain.CANT_REORGANISE',
-                        "You do not have permission to alter Top level pages. Your change was not saved."
-                    )
-                );
-                return;
-            }
-        }
-
-        $siblingIDs = $request->requestVar('SiblingIDs');
-        $statusUpdates = array('modified'=>array());
-        if (!is_numeric($id) || !is_numeric($parentID)) {
-            throw new InvalidArgumentException();
-        }
-
-        $node = DataObject::get_by_id($className, $id);
-        if ($node && !$node->canEdit()) {
-            return Security::permissionFailure($this);
-        }
-
-        if (!$node) {
-            $this->getResponse()->setStatusCode(
-                500,
-                _t(
-                    'LeftAndMain.PLEASESAVE',
-                    "Please Save Page: This page could not be updated because it hasn't been saved yet."
-                )
-            );
-            return;
-        }
-
-        // Update hierarchy (only if ParentID changed)
-        if ($node->ParentID != $parentID) {
-            $node->ParentID = (int)$parentID;
-            $node->write();
-
-            $statusUpdates['modified'][$node->ID] = array(
-                'TreeTitle'=>$node->TreeTitle
-            );
-
-            // Update all dependent pages
-            if (class_exists('SilverStripe\\CMS\\Model\\VirtualPage')) {
-                $virtualPages = VirtualPage::get()->filter("CopyContentFromID", $node->ID);
-                foreach ($virtualPages as $virtualPage) {
-                    $statusUpdates['modified'][$virtualPage->ID] = array(
-                        'TreeTitle' => $virtualPage->TreeTitle()
-                    );
-                }
-            }
-
-            $this->getResponse()->addHeader(
-                'X-Status',
-                rawurlencode(_t('LeftAndMain.REORGANISATIONSUCCESSFUL', 'Reorganised the site tree successfully.'))
-            );
-        }
-
-        // Update sorting
-        if (is_array($siblingIDs)) {
-            $counter = 0;
-            foreach ($siblingIDs as $id) {
-                if ($id == $node->ID) {
-                    $node->Sort = ++$counter;
-                    $node->write();
-                    $statusUpdates['modified'][$node->ID] = array(
-                        'TreeTitle' => $node->TreeTitle
-                    );
-                } elseif (is_numeric($id)) {
-                    // Nodes that weren't "actually moved" shouldn't be registered as
-                    // having been edited; do a direct SQL update instead
-                    ++$counter;
-                    $table = DataObject::getSchema()->baseDataTable($className);
-                    DB::prepared_query(
-                        "UPDATE \"$table\" SET \"Sort\" = ? WHERE \"ID\" = ?",
-                        array($counter, $id)
-                    );
-                }
-            }
-
-            $this->getResponse()->addHeader(
-                'X-Status',
-                rawurlencode(_t('LeftAndMain.REORGANISATIONSUCCESSFUL', 'Reorganised the site tree successfully.'))
-            );
-        }
-
-        return Convert::raw2json($statusUpdates);
-    }
-
-    public function CanOrganiseSitetree()
-    {
-        return !Permission::check('SITETREE_REORGANISE') && !Permission::check('ADMIN') ? false : true;
-    }
 
     /**
      * Retrieves an edit form, either for display, or to process submitted data.
@@ -1580,14 +1206,11 @@ class LeftAndMain extends Controller implements PermissionProvider
      * The form usually construct itself from {@link DataObject->getCMSFields()}
      * for the specific managed subclass defined in {@link LeftAndMain::$tree_class}.
      *
-     * @param HTTPRequest $request Optionally contains an identifier for the
-     *  record to load into the form.
+     * @param HTTPRequest $request Passed if executing a HTTPRequest directly on the form.
+     * If empty, this is invoked as $EditForm in the template
      * @return Form Should return a form regardless wether a record has been found.
      *  Form might be readonly if the current user doesn't have the permission to edit
      *  the record.
-     */
-    /**
-     * @return Form
      */
     public function EditForm($request = null)
     {
@@ -1607,132 +1230,119 @@ class LeftAndMain extends Controller implements PermissionProvider
             $id = $this->currentPageID();
         }
 
-        if (is_object($id)) {
-            $record = $id;
+        // Check record exists
+        $record = $this->getRecord($id);
+        if (!$record) {
+            return $this->EmptyForm();
+        }
+
+        // Check if this record is viewable
+        if ($record && !$record->canView()) {
+            $response = Security::permissionFailure($this);
+            $this->setResponse($response);
+            return null;
+        }
+
+        $fields = $fields ?: $record->getCMSFields();
+        if (!$fields) {
+            throw new LogicException(
+                "getCMSFields() returned null  - it should return a FieldList object.
+                Perhaps you forgot to put a return statement at the end of your method?"
+            );
+        }
+
+        // Add hidden fields which are required for saving the record
+        // and loading the UI state
+        if (!$fields->dataFieldByName('ClassName')) {
+            $fields->push(new HiddenField('ClassName'));
+        }
+
+        $tree_class = $this->stat('tree_class');
+        if ($tree_class::has_extension(Hierarchy::class)
+            && !$fields->dataFieldByName('ParentID')
+        ) {
+            $fields->push(new HiddenField('ParentID'));
+        }
+
+        // Added in-line to the form, but plucked into different view by frontend scripts.
+        if ($record instanceof CMSPreviewable) {
+            /** @skipUpgrade */
+            $navField = new LiteralField('SilverStripeNavigator', $this->getSilverStripeNavigator());
+            $navField->setAllowHTML(true);
+            $fields->push($navField);
+        }
+
+        if ($record->hasMethod('getAllCMSActions')) {
+            $actions = $record->getAllCMSActions();
         } else {
-            $record = $this->getRecord($id);
-            if ($record && !$record->canView()) {
-                return Security::permissionFailure($this);
+            $actions = $record->getCMSActions();
+            // add default actions if none are defined
+            if (!$actions || !$actions->count()) {
+                if ($record->hasMethod('canEdit') && $record->canEdit()) {
+                    $actions->push(
+                        FormAction::create('save', _t('CMSMain.SAVE', 'Save'))
+                           ->addExtraClass('btn btn-primary')
+                           ->addExtraClass('font-icon-add-circle')
+                    );
+                }
+                if ($record->hasMethod('canDelete') && $record->canDelete()) {
+                    $actions->push(
+                        FormAction::create('delete', _t('ModelAdmin.DELETE', 'Delete'))
+                            ->addExtraClass('btn btn-secondary')
+                    );
+                }
             }
         }
 
-        if ($record) {
-            $fields = ($fields) ? $fields : $record->getCMSFields();
-            if ($fields == null) {
-                user_error(
-                    "getCMSFields() returned null  - it should return a FieldList object.
-                    Perhaps you forgot to put a return statement at the end of your method?",
-                    E_USER_ERROR
-                );
-            }
+        $negotiator = $this->getResponseNegotiator();
+        $form = Form::create(
+            $this,
+            "EditForm",
+            $fields,
+            $actions
+        )->setHTMLID('Form_EditForm');
+        $form->addExtraClass('cms-edit-form');
+        $form->loadDataFrom($record);
+        $form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
+        $form->setAttribute('data-pjax-fragment', 'CurrentForm');
+        $form->setValidationResponseCallback(function (ValidationResult $errors) use ($negotiator, $form) {
+            $request = $this->getRequest();
+            if ($request->isAjax() && $negotiator) {
+                $result = $form->forTemplate();
 
-            // Add hidden fields which are required for saving the record
-            // and loading the UI state
-            if (!$fields->dataFieldByName('ClassName')) {
-                $fields->push(new HiddenField('ClassName'));
-            }
-
-            $tree_class = $this->stat('tree_class');
-            if ($tree_class::has_extension(Hierarchy::class)
-                && !$fields->dataFieldByName('ParentID')
-            ) {
-                $fields->push(new HiddenField('ParentID'));
-            }
-
-            // Added in-line to the form, but plucked into different view by frontend scripts.
-            if ($record instanceof CMSPreviewable) {
-                /** @skipUpgrade */
-                $navField = new LiteralField('SilverStripeNavigator', $this->getSilverStripeNavigator());
-                $navField->setAllowHTML(true);
-                $fields->push($navField);
-            }
-
-            if ($record->hasMethod('getAllCMSActions')) {
-                $actions = $record->getAllCMSActions();
-            } else {
-                $actions = $record->getCMSActions();
-                // add default actions if none are defined
-                if (!$actions || !$actions->count()) {
-                    if ($record->hasMethod('canEdit') && $record->canEdit()) {
-                        $actions->push(
-                            FormAction::create('save', _t('CMSMain.SAVE', 'Save'))
-                               ->addExtraClass('btn btn-primary')
-                               ->addExtraClass('font-icon-add-circle')
-                        );
+                return $negotiator->respond($request, array(
+                    'CurrentForm' => function () use ($result) {
+                        return $result;
                     }
-                    if ($record->hasMethod('canDelete') && $record->canDelete()) {
-                        $actions->push(
-                            FormAction::create('delete', _t('ModelAdmin.DELETE', 'Delete'))
-                                ->addExtraClass('btn btn-secondary')
-                        );
-                    }
-                }
+                ));
             }
+            return null;
+        });
 
-            $negotiator = $this->getResponseNegotiator();
-            $form = Form::create(
-                $this,
-                "EditForm",
-                $fields,
-                $actions
-            )->setHTMLID('Form_EditForm');
-            $form->addExtraClass('cms-edit-form');
-            $form->loadDataFrom($record);
-            $form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
-            $form->setAttribute('data-pjax-fragment', 'CurrentForm');
-            $form->setValidationResponseCallback(function (ValidationResult $errors) use ($negotiator, $form) {
-                $request = $this->getRequest();
-                if ($request->isAjax() && $negotiator) {
-                    $result = $form->forTemplate();
+        // Announce the capability so the frontend can decide whether to allow preview or not.
+        if ($record instanceof CMSPreviewable) {
+            $form->addExtraClass('cms-previewable');
+        }
+        $form->addExtraClass('fill-height');
 
-                    return $negotiator->respond($request, array(
-                        'CurrentForm' => function () use ($result) {
-                            return $result;
-                        }
-                    ));
-                }
-            });
-
-            // Announce the capability so the frontend can decide whether to allow preview or not.
-            if ($record instanceof CMSPreviewable) {
-                $form->addExtraClass('cms-previewable');
-            }
-            $form->addExtraClass('fill-height');
-
-            // Set this if you want to split up tabs into a separate header row
-            // if($form->Fields()->hasTabset()) {
-            //     $form->Fields()->findOrMakeTab('Root')->setTemplate('SilverStripe\\Forms\\CMSTabSet');
-            // }
-
-            // Add a default or custom validator.
-            // @todo Currently the default Validator.js implementation
-            //  adds javascript to the document body, meaning it won't
-            //  be included properly if the associated fields are loaded
-            //  through ajax. This means only serverside validation
-            //  will kick in for pages+validation loaded through ajax.
-            //  This will be solved by using less obtrusive javascript validation
-            //  in the future, see http://open.silverstripe.com/ticket/2915 and
-            //  http://open.silverstripe.com/ticket/3386
-            if ($record->hasMethod('getCMSValidator')) {
-                $validator = $record->getCMSValidator();
-                // The clientside (mainly LeftAndMain*.js) rely on ajax responses
-                // which can be evaluated as javascript, hence we need
-                // to override any global changes to the validation handler.
-                if ($validator != null) {
-                    $form->setValidator($validator);
-                }
-            } else {
-                $form->unsetValidator();
-            }
-
-            if ($record->hasMethod('canEdit') && !$record->canEdit()) {
-                $readonlyFields = $form->Fields()->makeReadonly();
-                $form->setFields($readonlyFields);
+        // Add a default or custom validator.
+        if ($record->hasMethod('getCMSValidator')) {
+            $validator = $record->getCMSValidator();
+            // The clientside (mainly LeftAndMain*.js) rely on ajax responses
+            // which can be evaluated as javascript, hence we need
+            // to override any global changes to the validation handler.
+            if ($validator) {
+                $form->setValidator($validator);
             }
         } else {
-            $form = $this->EmptyForm();
+            $form->unsetValidator();
         }
 
+        // Check if this form is readonly
+        if (!$record->canEdit()) {
+            $readonlyFields = $form->Fields()->makeReadonly();
+            $form->setFields($readonlyFields);
+        }
         return $form;
     }
 
@@ -1747,20 +1357,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         $form = Form::create(
             $this,
             "EditForm",
-            new FieldList(
-                // new HeaderField(
-                //     'WelcomeHeader',
-                //     $this->getApplicationName()
-                // ),
-                // new LiteralField(
-                //     'WelcomeText',
-                //     sprintf('<p id="WelcomeMessage">%s %s. %s</p>',
-                //         _t('LeftAndMain_right_ss.WELCOMETO','Welcome to'),
-                //         $this->getApplicationName(),
-                //         _t('CHOOSEPAGE','Please choose an item from the left.')
-                //     )
-                // )
-            ),
+            new FieldList(),
             new FieldList()
         )->setHTMLID('Form_EditForm');
         $form->unsetValidator();
@@ -1910,6 +1507,9 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     public function currentPageID()
     {
+        if ($this->pageID) {
+            return $this->pageID;
+        }
         if ($this->getRequest()->requestVar('ID') && is_numeric($this->getRequest()->requestVar('ID'))) {
             return $this->getRequest()->requestVar('ID');
         } elseif ($this->getRequest()->requestVar('CMSMainCurrentPageID') && is_numeric($this->getRequest()->requestVar('CMSMainCurrentPageID'))) {
@@ -1917,11 +1517,15 @@ class LeftAndMain extends Controller implements PermissionProvider
             return $this->getRequest()->requestVar('CMSMainCurrentPageID');
         } elseif (isset($this->urlParams['ID']) && is_numeric($this->urlParams['ID'])) {
             return $this->urlParams['ID'];
-        } elseif (Session::get($this->sessionNamespace() . ".currentPage")) {
-            return Session::get($this->sessionNamespace() . ".currentPage");
-        } else {
-            return null;
         }
+
+
+        /** @deprecated */
+        if (Session::get($this->sessionNamespace() . ".currentPage")) {
+            return Session::get($this->sessionNamespace() . ".currentPage");
+        }
+
+        return null;
     }
 
     /**
@@ -1934,7 +1538,9 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     public function setCurrentPageID($id)
     {
+        $this->pageID = $id;
         $id = (int)$id;
+        /** @deprecated */
         Session::set($this->sessionNamespace() . ".currentPage", $id);
     }
 

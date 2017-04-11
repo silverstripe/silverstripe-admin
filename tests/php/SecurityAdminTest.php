@@ -10,12 +10,7 @@ use SilverStripe\Security\Permission;
 
 class SecurityAdminTest extends FunctionalTest
 {
-
     protected static $fixture_file = 'LeftAndMainTest.yml';
-
-    protected static $extra_dataobjects = [
-        LeftAndMainTest\TestObject::class,
-    ];
 
     // TODO Fix export feature (moved from MemberTableField to GridFieldExportButton)
     // public function testGroupExport() {
