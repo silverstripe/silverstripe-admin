@@ -1,11 +1,11 @@
-# TextField Component
+# TimeField Component
 
 Generates an editable text field.
 
 ## Example
 
 ```js
-<TextField name="my-text" />
+<TimeField name="my-text" />
 ```
 
 

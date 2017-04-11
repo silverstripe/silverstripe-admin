@@ -18,19 +18,25 @@ class DateField extends TextField {
 
   getInputProps() {
     const props = {};
-    Object.assign(props, super.getInputProps());
-    Object.assign(props, { value: this.getDisplayValue(), type: 'date' });
+
+    let val = this.props.value;
+    if (!modernizr.inputtypes.date || this.props.readOnly) {
+      val = this.getLocalisedValue();
+    }
+
+    Object.assign(props, super.getInputProps(), {
+      type: 'date',
+      defaultValue: val
+    });
+
+    // Reset value so `defaultValue` is used
+    delete props.value;
+
     return props;
   }
 
-  getDisplayValue() {
-    // return this.props.value;
-    if (modernizr.inputtypes.date) {
-      return this.props.value;
-    }
-    else {
-      return this.convertToLocalDate(this.props.value);
-    }
+  getLocalisedValue() {
+    return this.convertToLocalised(this.props.value);
   }
 
   isMultiline() {
@@ -43,23 +49,23 @@ class DateField extends TextField {
    * @param {Event} event
    */
   handleChange(event) {
-    const localDate = event.target.value;
-    let isoDate = '';
+    const enteredValue = event.target.value;
+    let isoValue = '';
 
     // When browser support input=date the date value is already in iso format
     if (modernizr.inputtypes.date) {
-      isoDate = localDate;
+      isoValue = enteredValue;
     }
     else {
-      isoDate = this.convertToIsoDate(localDate);
+      isoValue = this.convertToIso(enteredValue);
     }
 
     if (typeof this.props.onChange === 'function') {
-      this.props.onChange(event, { id: this.props.id, value: isoDate });
+      this.props.onChange(isoValue);
     }
   }
 
-  convertToIsoDate(localDate) {
+  convertToIso(localDate) {
     moment.locale(this.props.lang);
     let isoDate = '';
 
@@ -74,7 +80,7 @@ class DateField extends TextField {
     return isoDate;
   }
 
-  convertToLocalDate(isoDate) {
+  convertToLocalised(isoDate) {
     moment.locale(this.props.lang);
     let localDate = '';
     if (isoDate) {

@@ -2,21 +2,21 @@
 
 jest.unmock('react');
 jest.unmock('react-addons-test-utils');
-jest.unmock('../DateTimeField');
+jest.unmock('../TimeField');
 
 jest.mock('modernizr', () => {
   return {
     inputtypes: {
-      date: false
+      time: false
     }
   };
 });
 
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
-import { DateTimeField } from '../DateTimeField';
+import { TimeField } from '../TimeField';
 
-describe('DateTimeField', () => {
+describe('TimeField', () => {
   let props = null;
 
 
@@ -30,19 +30,19 @@ describe('DateTimeField', () => {
   });
 
   describe('onChange()', () => {
-    let dateTimeField = null;
+    let timeField = null;
     let inputField = null;
 
     beforeEach(() => {
-      dateTimeField = ReactTestUtils.renderIntoDocument(
-        <DateTimeField {...props} />
+      timeField = ReactTestUtils.renderIntoDocument(
+        <TimeField {...props} />
       );
-      inputField = ReactTestUtils.findRenderedDOMComponentWithTag(dateTimeField, 'input');
+      inputField = ReactTestUtils.findRenderedDOMComponentWithTag(timeField, 'input');
     });
 
     it('should call the onChange function on props', () => {
       ReactTestUtils.Simulate.change(inputField);
-      expect(dateTimeField.props.onChange).toBeCalled();
+      expect(timeField.props.onChange).toBeCalled();
     });
   });
 

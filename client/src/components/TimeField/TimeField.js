@@ -2,25 +2,16 @@ import React from 'react';
 import SilverStripeComponent from 'lib/SilverStripeComponent';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import { FormControl } from 'react-bootstrap-ss';
-import { TextField } from '../TextField/TextField';
+import { DateField } from '../DateField/DateField';
 import moment from 'moment';
 import modernizr from 'modernizr';
 
-class TimeField extends TextField {
-
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return super.render();
-  }
+class TimeField extends DateField {
 
   getInputProps() {
-    console.log('---', this.props.value, this.getDisplayValue());
     const props = {};
     Object.assign(props, super.getInputProps());
-    Object.assign(props, { value: this.getDisplayValue(), type: 'time' });
+    Object.assign(props, { type: 'time' });
     return props;
   }
 
@@ -28,35 +19,28 @@ class TimeField extends TextField {
     return false;
   }
 
-  getDisplayValue() {
-    return this.props.value;
-    return this.convertToLocalTime(this.props.value);
-    // return this.props.value;
-    if (modernizr.inputtypes.date) {
-      return this.props.value;
-    }
-    else {
-      return this.convertToLocalTime(this.props.value);
-    }
-  }
-
-  convertToLocalTime(isoTime) {
-    moment.locale(this.props.lang);
+  convertToLocalised(isoTime) {
     let localTime = '';
     if (isoTime) {
-      const timeObject = moment(isoTime);
-      console.log('--- is valid', timeObject.isValid());
+      const timeObject = moment(isoTime, "HH:mm:ss");
       if (timeObject.isValid()) {
-        localTime = dateObject.format('L');
+        localTime = timeObject.format('LT');
       }
     }
     return localTime;
   }
 
-}
+  convertToIso(localTime) {
+    let isoTime = '';
+    if(localTime) {
+      const timeObject = moment(localTime, "LT");
+      if(timeObject.isValid()) {
+        isoTime = timeObject.format("HH:mm:ss");
+      }
+    }
+    return isoTime
+  }
 
-TimeField.propTypes = {
-  lang: React.PropTypes.string
 }
 
 export { TimeField };
