@@ -123,6 +123,9 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
                     return $controllerObj->handleRequest($request, $model);
                 }
             }
+            // Fall back to leftandmain
+            $controllerObj = Injector::inst()->create(LeftAndMain::class);
+            return $controllerObj->handleRequest($request, $model);
         }
 
         return $this->httpError(404, 'Not found');

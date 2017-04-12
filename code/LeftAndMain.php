@@ -147,10 +147,12 @@ class LeftAndMain extends Controller implements PermissionProvider
         'batchactions',
         'BatchActionsForm',
         'schema',
+        'methodSchema',
     ];
 
     private static $url_handlers = [
         'GET schema/$FormName/$ItemID/$OtherItemID' => 'schema',
+        'GET methodSchema/$Method/$FormName/$ItemID' => 'methodSchema',
     ];
 
     private static $dependencies = [
@@ -308,6 +310,11 @@ class LeftAndMain extends Controller implements PermissionProvider
             // and use in routing definitions.
             'name' => static::class,
             'url' => trim($this->Link(), '/'),
+            'form' => [
+                'EditorToolbar' => [
+                    'schemaUrl' => $this->Link('methodSchema/EditorToolbar/LinkForm'),
+                ],
+            ],
         ];
     }
 
@@ -367,6 +374,37 @@ class LeftAndMain extends Controller implements PermissionProvider
         $schemaID = $request->getURL();
         return $this->getSchemaResponse($schemaID, $form);
     }
+    
+    public function methodSchema($request)
+    {
+        $method = $request->param('Method');
+        $formName = $request->param('FormName');
+        $itemID = $request->param('ItemID');
+    
+        if (!$formName || !$method) {
+            return (new HTTPResponse('Missing request params', 400));
+        }
+    
+        if (!$this->hasMethod($method)) {
+            return (new HTTPResponse('Method not found', 404));
+        }
+        if (!$this->hasAction($method)) {
+            return (new HTTPResponse('Method not accessible', 401));
+        }
+    
+        $methodItem = $this->{$method}();
+        if (!$methodItem->hasMethod($formName)) {
+            return (new HTTPResponse('Form not found', 404));
+        }
+        if (!$methodItem->hasAction($formName)) {
+            return (new HTTPResponse('Form not accessible', 401));
+        }
+    
+        $form = $methodItem->{$formName}($itemID);
+        $schemaID = $request->getURL();
+        
+        return $this->getSchemaResponse($schemaID, $form);
+    }
 
     /**
      * Check if the current request has a X-Formschema-Request header set.
@@ -403,23 +441,6 @@ class LeftAndMain extends Controller implements PermissionProvider
         $response = new HTTPResponse(Convert::raw2json($data));
         $response->addHeader('Content-Type', 'application/json');
         return $response;
-    }
-
-    /**
-     * Get link to schema url for a given form
-     *
-     * @param Form $form
-     * @return string
-     */
-    protected function getSchemaLinkForForm(Form $form)
-    {
-        $parts = [$this->Link('schema'), $form->getName()];
-        if (($record = $form->getRecord()) && $record->isInDB()) {
-            $parts[] = $record->ID;
-        } elseif (($data = $form->getData()) && !empty($data['ID'])) {
-            $parts[] = $data['ID'];
-        }
-        return Controller::join_links($parts);
     }
 
     /**

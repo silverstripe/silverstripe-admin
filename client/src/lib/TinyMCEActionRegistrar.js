@@ -1,6 +1,7 @@
 /**
  * Acts as top level action registrar component for tinymce
  */
+
 class TinyMCEActionRegistrar {
 
   constructor() {
@@ -8,14 +9,13 @@ class TinyMCEActionRegistrar {
   }
 
   /**
-   * Register a new action for a menu item
+   * Register a new action for a menu item, and trigger callback
    *
    * @param {String} menu Name of top level menu item
    * @param {Object} action Menu action option
    */
   addAction(menu, action) {
-    this.initMenu(menu);
-    this.actions[menu].push(action);
+    this.actions[menu] = this.getActions(menu).concat([action]);
   }
 
   /**
@@ -25,19 +25,7 @@ class TinyMCEActionRegistrar {
    * @return {Array}
    */
   getActions(menu) {
-    this.initMenu(menu);
-    return this.actions[menu];
-  }
-
-  /**
-   * Ensure a menu item is registered
-   *
-   * @param {String} menu name of menu item
-   */
-  initMenu(menu) {
-    if (typeof this.actions[menu] === 'undefined') {
-      this.actions[menu] = [];
-    }
+    return this.actions[menu] || [];
   }
 }
 

@@ -12,7 +12,6 @@ import RecordsReducer from 'state/records/RecordsReducer';
 import BreadcrumbsReducer from 'state/breadcrumbs/BreadcrumbsReducer';
 import bootInjector from 'boot/BootInjector';
 import TreeDropdownFieldReducer from 'state/treeDropdownField/TreeDropdownFieldReducer';
-import BootTinyMCE from 'boot/BootTinyMCE';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { printRequest } from 'apollo-client/transport/networkInterface';
 import qs from 'qs';
@@ -113,9 +112,6 @@ function appBoot() {
   // Expose client for legacy use
   window.ss = window.ss || {};
   window.ss.apolloClient = apolloClient;
-
-  // TinyMCE Booting
-  BootTinyMCE.start();
 
   // Bootstrap routing
   const routes = new BootRoutes(store, apolloClient);

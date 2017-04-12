@@ -1,48 +1,65 @@
 /* global tinymce */
 import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
+import ReactDOM from 'react-dom';
+import jQuery from 'jquery';
 
-(() => {
-  const sslink = {
+const plugin = {
+  /**
+   * Initialise this plugin, or re-initialises it if already has
+   *
+   * @param {Object} editor
+   */
+  init(editor) {
+    const actions = TinyMCEActionRegistrar.getActions('sslink')
+      .map((action) => Object.assign(
+        {},
+        action,
+        { onclick: () => action.onclick(editor) }
+      ));
 
-    /**
-     * Initialise this plugin
-     *
-     * @param {Object} ed
-     */
-    init(ed) {
-      ed.addButton('sslink', {
-        icon: 'link',
-        title: 'Insert Link',
-        type: 'menubutton',
-        menu: TinyMCEActionRegistrar.getActions('sslink'),
-      });
-      ed.addMenuItem('sslink', {
-        icon: 'link',
-        text: 'Insert Link',
-        menu: TinyMCEActionRegistrar.getActions('sslink'),
-      });
+    editor.addButton('sslink', {
+      icon: 'link',
+      title: 'Insert Link',
+      type: 'menubutton',
+      menu: actions,
+    });
+    editor.addMenuItem('sslink', {
+      icon: 'link',
+      text: 'Insert Link',
+      menu: actions,
+    });
+  },
+};
 
-      /*
-      ed.addCommand('sslink', () => {
-        // See HtmlEditorField.js
-        window.jQuery(`#${ed.id}`).entwine('ss').openLinkDialog();
-      });
+jQuery.entwine('ss', ($) => {
+  $('.insert-link__dialog-wrapper').entwine({
+    Element: null,
 
-      // Replace the mceAdvLink and mceLink commands with the sslink command, and
-      // the mceAdvImage and mceImage commands with the ssmedia command
-      ed.on('BeforeExecCommand', (e) => {
-        const cmd = e.command;
-        const ui = e.ui;
-        const val = e.value;
-        if (cmd === 'mceAdvLink' || cmd === 'mceLink') {
-          e.preventDefault();
-          ed.execCommand('sslink', ui, val);
-        }
-      });
-      */
+    Data: {},
+
+    onunmatch() {
+      // solves errors given by ReactDOM "no matched root found" error.
+      this._clearModal();
     },
-  };
 
-  // Adds the plugin class to the list of available TinyMCE plugins
-  tinymce.PluginManager.add('sslink', (editor) => sslink.init(editor));
-})();
+    _clearModal() {
+      ReactDOM.unmountComponentAtNode(this[0]);
+      // this.empty();
+    },
+
+    open() {
+      this._renderModal(true);
+    },
+
+    close() {
+      this.setData({});
+      this._renderModal(false);
+    },
+
+  });
+});
+
+// Adds the plugin class to the list of available TinyMCE plugins
+tinymce.PluginManager.add('sslink', (editor) => plugin.init(editor));
+
+export default plugin;
