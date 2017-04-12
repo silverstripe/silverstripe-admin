@@ -16,9 +16,8 @@ import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 import { DateField } from '../DateField';
 
-describe('DateField', () => {
+describe('DateField without html5 date field support', () => {
   let props = null;
-
 
   beforeEach(() => {
     props = {
@@ -134,12 +133,12 @@ describe('DateField', () => {
       inputField = ReactTestUtils.findRenderedDOMComponentWithTag(dateField, 'input');
     });
 
-    it('should use localised form of date value in the input field', () => {
+    it('should use localised format of date value in the input field', () => {
       expect(inputField.value).toBe('05/01/2017');
     });
 
     it('should pass iso format instead of localised format', () => {
-      inputField.value = '05/02/2018fsdf';
+      inputField.value = '05/02/2018';
       ReactTestUtils.Simulate.change(inputField);
       expect(dateField.props.onChange).toBeCalledWith('2018-02-05');
     });

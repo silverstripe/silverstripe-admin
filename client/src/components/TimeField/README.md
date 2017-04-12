@@ -1,6 +1,6 @@
 # TimeField Component
 
-Generates an editable text field.
+Generates an editable time field.
 
 ## Example
 
@@ -15,7 +15,7 @@ Generates an editable text field.
  * `extraClass` (string): Extra classes the component should have.
  * `name` (string) (required): The name for the component.
  * `onChange` (function): Event handler for when the component changes.
- * `value` (string|number): The value to display for the field, can use `defaultValue` for uncontrollable component.
+ * `value` (string): The value to display for the field - expects time ISO 8601 time format.
  * `readOnly` (boolean): Whether this field is read only.
  * `disabled` (boolean): Whether this field is disabled.
  * `type` (string): Defines the type this component will have, e.g. `email`, `tel`.

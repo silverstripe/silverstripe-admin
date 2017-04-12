@@ -19,6 +19,10 @@ class TimeField extends DateField {
     return false;
   }
 
+  hasNativeSupport() {
+    return modernizr.inputtypes.time;
+  }
+
   convertToLocalised(isoTime) {
     let localTime = '';
     if (isoTime) {

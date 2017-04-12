@@ -16,16 +16,23 @@ class DateField extends TextField {
     return super.render();
   }
 
+  hasNativeSupport() {
+    return modernizr.inputtypes.date;
+  }
+
   getInputProps() {
     const props = {};
 
     let val = this.props.value;
-    if (!modernizr.inputtypes.date || this.props.readOnly) {
+    if (!this.hasNativeSupport() || this.props.readOnly) {
       val = this.getLocalisedValue();
     }
 
     Object.assign(props, super.getInputProps(), {
       type: 'date',
+      // `parse()` of redux-form `Field` should be used for parsing the
+      // localised input value to iso format to pass to redux store but `Field`
+      // is not accessible in this context.
       defaultValue: val
     });
 
@@ -53,7 +60,7 @@ class DateField extends TextField {
     let isoValue = '';
 
     // When browser support input=date the date value is already in iso format
-    if (modernizr.inputtypes.date) {
+    if (this.hasNativeSupport()) {
       isoValue = enteredValue;
     }
     else {

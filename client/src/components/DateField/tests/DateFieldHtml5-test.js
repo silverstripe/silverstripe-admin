@@ -29,7 +29,7 @@ describe('DateField with html5 date field support', () => {
     };
   });
 
-  describe('Browser doesn\'t support html5 date input', () => {
+  describe('Browser supports html5 date input', () => {
     let dateField = null;
     let inputFields = null;
     let inputField = null;
@@ -49,14 +49,16 @@ describe('DateField with html5 date field support', () => {
       inputField = inputFields[0];
     });
 
-    it('should render 2 inputs', () => {
-      expect(inputFields.length).toBe(1);
-      expect(inputField.type).toBe('date');
-    });
-
-    it('should use iso format in the input field', () => {
+    it('should use iso format of date value in the input field', () => {
       expect(inputField.value).toBe('2017-01-05');
     });
+
+    it('should pass iso format as entered in the input field', () => {
+      inputField.value = '2018-02-05';
+      ReactTestUtils.Simulate.change(inputField);
+      expect(dateField.props.onChange).toBeCalledWith('2018-02-05');
+    });
+
   });
 });
 
