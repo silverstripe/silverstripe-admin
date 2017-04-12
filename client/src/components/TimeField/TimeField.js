@@ -11,7 +11,9 @@ class TimeField extends DateField {
   getInputProps() {
     const props = {};
     Object.assign(props, super.getInputProps());
-    Object.assign(props, { type: 'time' });
+    Object.assign(props, {
+      type: this.props.html5 ? 'time' : 'text',
+    });
     return props;
   }
 

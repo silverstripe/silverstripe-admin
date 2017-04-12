@@ -25,6 +25,7 @@ describe('DateField with html5 date field support', () => {
       title: '',
       name: '',
       value: '',
+      html5: true,
       onChange: jest.genMockFunction(),
     };
   });
@@ -37,6 +38,7 @@ describe('DateField with html5 date field support', () => {
     Object.assign(modProps, props, {
       lang: 'en_NZ',
       value: '2017-01-05',
+      html5: true,
       onChange: jest.genMockFunction()
     });
 
@@ -59,6 +61,32 @@ describe('DateField with html5 date field support', () => {
       expect(dateField.props.onChange).toBeCalledWith('2018-02-05');
     });
 
+  });
+
+  describe('Browser supports html5 date input but user has opt-outed', () => {
+    let dateField = null;
+    let inputFields = null;
+    let inputField = null;
+    let modProps = {};
+    Object.assign(modProps, props, {
+      lang: 'en_NZ',
+      value: '2017-01-05',
+      html5: false,
+      onChange: jest.genMockFunction()
+    });
+
+    beforeEach(() => {
+      dateField = ReactTestUtils.renderIntoDocument(
+        <DateField {...modProps} />
+      );
+
+      inputFields = ReactTestUtils.scryRenderedDOMComponentsWithTag(dateField, 'input');
+      inputField = inputFields[0];
+    });
+
+    it('should use localised format of date value in the input field', () => {
+      expect(inputField.value).toBe('05/01/2017');
+    });
   });
 });
 

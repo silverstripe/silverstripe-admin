@@ -16,7 +16,7 @@ import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 import { TimeField } from '../TimeField';
 
-describe('TimeField without html5 time field support', () => {
+describe('TimeField with html5 time field support', () => {
   let props = null;
 
   beforeEach(() => {
@@ -34,6 +34,7 @@ describe('TimeField without html5 time field support', () => {
     let modProps = {};
     Object.assign(modProps, props, {
       value: '23:01:23',
+      html5: true,
       onChange: jest.genMockFunction()
     });
 
@@ -56,5 +57,27 @@ describe('TimeField without html5 time field support', () => {
     });
   });
 
+  describe('Browser supports html5 time input but user has opt-outed', () => {
+    let timeField = null;
+    let inputField = null;
+    let modProps = {};
+    Object.assign(modProps, props, {
+      value: '23:01:23',
+      html5: false,
+      onChange: jest.genMockFunction()
+    });
+
+    beforeEach(() => {
+      timeField = ReactTestUtils.renderIntoDocument(
+        <TimeField {...modProps} />
+      );
+
+      inputField = ReactTestUtils.findRenderedDOMComponentWithTag(timeField, 'input');
+    });
+
+    it('should use localised format of time value in the input field', () => {
+      expect(inputField.value).toBe('11:01 PM');
+    });
+  });
 });
 

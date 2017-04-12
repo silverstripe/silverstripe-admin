@@ -24,6 +24,7 @@ describe('DateField without html5 date field support', () => {
       title: '',
       name: '',
       value: '',
+      html5: true,
       onChange: jest.genMockFunction(),
     };
   });

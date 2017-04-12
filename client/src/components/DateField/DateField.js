@@ -24,12 +24,12 @@ class DateField extends TextField {
     const props = {};
 
     let val = this.props.value;
-    if (!this.hasNativeSupport() || this.props.readOnly) {
+    if (!this.hasNativeSupport() || !this.props.html5 || this.props.readOnly) {
       val = this.getLocalisedValue();
     }
 
     Object.assign(props, super.getInputProps(), {
-      type: 'date',
+      type: this.props.html5 ? 'date' : 'text',
       // `parse()` of redux-form `Field` should be used for parsing the
       // localised input value to iso format to pass to redux store but `Field`
       // is not accessible in this context.
