@@ -14672,6 +14672,7 @@ div.TreeDropdownField a.jstree-loading .jstree-pageicon{
   cursor:pointer;
   -webkit-transition:opacity .2s ease-in-out;
   transition:opacity .2s ease-in-out;
+  overflow:hidden;
 }
 
 .list-group-item,.list-group-item:hover{
@@ -14691,7 +14692,7 @@ div.TreeDropdownField a.jstree-loading .jstree-pageicon{
   line-height:1.539;
 }
 
-.list-group-item-heading{
+.list-group-item__heading{
   font-weight:400;
   font-size:14px;
   margin:2px 0 5px;
@@ -14700,11 +14701,16 @@ div.TreeDropdownField a.jstree-loading .jstree-pageicon{
 
 .list-group-item__thumbnail{
   width:64px;
-  height:64px;
+  height:auto;
   display:block;
   background:#e7e9ec;
   float:left;
-  margin:-12px 12px 0 -1.5385rem;
+  margin:-12px 12px -12px -1.5385rem;
+}
+
+.list-group-item__thumbnail>img{
+  max-height:65px;
+  height:100%;
 }
 
 .list-group-item__info{

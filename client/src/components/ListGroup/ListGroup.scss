@@ -25,6 +25,7 @@
   cursor: pointer;
   text-decoration: none;
   transition: opacity .2s ease-in-out;
+  overflow: hidden;
 
   &:hover {
     text-decoration: none;
@@ -46,7 +47,7 @@
   line-height: $line-height;
 }
 
-.list-group-item-heading {
+.list-group-item__heading {
   font-weight: 400;
   font-size: 14px;
   margin: 2px 0 5px;
@@ -55,11 +56,16 @@
 
 .list-group-item__thumbnail {
   width: 64px;
-  height: 64px;
+  height: auto;
   display: block;
   background: $gray-lighter;
   float: left;
-  margin: -12px 12px 0 #{0 - $grid-gutter-width / 2};
+  margin: -12px 12px -12px #{0 - $grid-gutter-width / 2};
+
+  > img {
+    max-height: 65px;
+    height: 100%;
+  }
 }
 
 .list-group-item__info {
