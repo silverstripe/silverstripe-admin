@@ -17,6 +17,11 @@ form.nostyle {
 // need this for consistent <fieldset> behaviour
 fieldset {
 	width: 100%;
+
+  // fix firefox fieldset width behaviour http://stackoverflow.com/a/17863685
+  @-moz-document url-prefix() {
+    display: table-cell;
+  }
 }
 
 .field { // TODO convert to .form-group

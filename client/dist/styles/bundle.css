@@ -8649,6 +8649,12 @@ fieldset{
   width:100%;
 }
 
+@-moz-document url-prefix(){
+  fieldset{
+    display:table-cell;
+  }
+}
+
 .field.ui-tabs{
   border-bottom:0;
 }
@@ -14612,7 +14618,6 @@ div.TreeDropdownField a.jstree-loading .jstree-pageicon{
   margin-top:0;
   display:inline-block;
   margin-right:.6154rem;
-  min-width:166px;
   vertical-align:bottom;
 }
 
