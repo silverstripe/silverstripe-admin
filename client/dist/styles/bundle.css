@@ -1308,11 +1308,11 @@ h1{
 }
 
 h2{
-  font-size:18px;
+  font-size:19px;
 }
 
 h3{
-  font-size:16px;
+  font-size:17px;
 }
 
 h4{
@@ -1332,11 +1332,11 @@ h6{
 }
 
 .h2{
-  font-size:18px;
+  font-size:19px;
 }
 
 .h3{
-  font-size:16px;
+  font-size:17px;
 }
 
 .h4{
@@ -3528,7 +3528,7 @@ pre code{
   }
 
   .field .input-group-lg input[type=date].creditcard,.field .input-group-lg input[type=date].text,.field .input-group-lg input[type=date].TreeDropdownField,.field .input-group-lg input[type=datetime-local].creditcard,.field .input-group-lg input[type=datetime-local].text,.field .input-group-lg input[type=datetime-local].TreeDropdownField,.field .input-group-lg input[type=month].creditcard,.field .input-group-lg input[type=month].text,.field .input-group-lg input[type=month].TreeDropdownField,.field .input-group-lg input[type=time].creditcard,.field .input-group-lg input[type=time].text,.field .input-group-lg input[type=time].TreeDropdownField,.input-group-lg .field input[type=date].creditcard,.input-group-lg .field input[type=date].text,.input-group-lg .field input[type=date].TreeDropdownField,.input-group-lg .field input[type=datetime-local].creditcard,.input-group-lg .field input[type=datetime-local].text,.input-group-lg .field input[type=datetime-local].TreeDropdownField,.input-group-lg .field input[type=month].creditcard,.input-group-lg .field input[type=month].text,.input-group-lg .field input[type=month].TreeDropdownField,.input-group-lg .field input[type=time].creditcard,.input-group-lg .field input[type=time].text,.input-group-lg .field input[type=time].TreeDropdownField,.input-group-lg input[type=date].form-control,.input-group-lg input[type=datetime-local].form-control,.input-group-lg input[type=month].form-control,.input-group-lg input[type=time].form-control,input[type=date].input-lg,input[type=datetime-local].input-lg,input[type=month].input-lg,input[type=time].input-lg{
-    line-height:3.14rem;
+    line-height:3.14133rem;
   }
 }
 
@@ -3553,7 +3553,7 @@ pre code{
 
 .field .input-group-lg>.TreeDropdownField,.field .input-group-lg>input.creditcard,.field .input-group-lg>input.text,.field .input-group-lg>select,.field .input-group-lg>textarea,.form-control-lg,.htmleditorfield-dialog .htmleditorfield-from-web div.remoteurl .input-group-lg>label,.input-group-lg>.form-control,.input-group-lg>.input-group-addon,.input-group-lg>.input-group-btn>.btn{
   padding:.75rem 1.25rem;
-  font-size:1.23rem;
+  font-size:1.231rem;
   line-height:1.33333;
   border-radius:.3rem;
 }
@@ -4105,7 +4105,7 @@ a.btn.disabled,fieldset[disabled] a.btn{
 
 .btn-group-lg>.btn,.btn-lg{
   padding:.75rem 1.25rem;
-  font-size:1.23rem;
+  font-size:1.231rem;
   line-height:1.33333;
   border-radius:.25rem;
 }
@@ -4520,7 +4520,7 @@ input[type=button].btn-block,input[type=reset].btn-block,input[type=submit].btn-
 
 .field .input-group-lg>.input-group-addon.TreeDropdownField,.field .input-group-lg>input.input-group-addon.creditcard,.field .input-group-lg>input.input-group-addon.text,.field .input-group-lg>select.input-group-addon,.field .input-group-lg>textarea.input-group-addon,.htmleditorfield-dialog .htmleditorfield-from-web div.remoteurl .field .input-group-lg>label.TreeDropdownField,.htmleditorfield-dialog .htmleditorfield-from-web div.remoteurl .input-group-lg>.input-group-btn>label.btn,.htmleditorfield-dialog .htmleditorfield-from-web div.remoteurl .input-group-lg>label,.htmleditorfield-dialog .htmleditorfield-from-web div.remoteurl label.form-control-lg,.input-group-addon.form-control-lg,.input-group-lg>.input-group-addon,.input-group-lg>.input-group-btn>.input-group-addon.btn{
   padding:.75rem 1.25rem;
-  font-size:1.23rem;
+  font-size:1.231rem;
   border-radius:.3rem;
 }
 
@@ -4954,7 +4954,7 @@ input[type=button].btn-block,input[type=reset].btn-block,input[type=submit].btn-
   padding-top:.25rem;
   padding-bottom:.25rem;
   margin-right:1rem;
-  font-size:1.23rem;
+  font-size:1.231rem;
 }
 
 .navbar-brand:focus,.navbar-brand:hover{
@@ -4981,7 +4981,7 @@ input[type=button].btn-block,input[type=reset].btn-block,input[type=submit].btn-
 
 .navbar-toggler{
   padding:.5rem .75rem;
-  font-size:1.23rem;
+  font-size:1.231rem;
   line-height:1;
   background:none;
   border:1px solid transparent;
@@ -5399,7 +5399,7 @@ input[type=button].btn-block,input[type=reset].btn-block,input[type=submit].btn-
 
 .pagination-lg .page-link{
   padding:.75rem 1.5rem;
-  font-size:1.23rem;
+  font-size:1.231rem;
   line-height:1.33333;
 }
 
@@ -12169,7 +12169,7 @@ li.class-ErrorPage>a .jstree-pageicon{
   position:absolute;
   margin-top:-1px;
   left:13px;
-  font-size:1.23rem;
+  font-size:1.231rem;
   -webkit-transition:all .2s;
   transition:all .2s;
   color:#5589a7;
@@ -14588,7 +14588,7 @@ div.TreeDropdownField a.jstree-loading .jstree-pageicon{
   position:absolute;
   right:0;
   top:0;
-  font-size:1.23rem;
+  font-size:1.231rem;
   color:#9ba5ae;
   text-align:center;
   content:"7";
@@ -14739,12 +14739,18 @@ div.TreeDropdownField a.jstree-loading .jstree-pageicon{
 .breadcrumb{
   font-size:.846rem;
   line-height:14px;
+  min-height:14px;
   margin-bottom:0;
   float:left;
 }
 
-.breadcrumb,.breadcrumb__container{
+.toolbar .breadcrumb{
+  padding-bottom:0;
+}
+
+.breadcrumb__container{
   max-height:52px;
+  overflow:hidden;
 }
 
 .breadcrumb>li.breadcrumb__item--last,.breadcrumb__item--last{
@@ -14761,9 +14767,9 @@ div.TreeDropdownField a.jstree-loading .jstree-pageicon{
   padding:0;
 }
 
-.breadcrumb__item-title--last,.cms h2.breadcrumb__item-title--last{
+.breadcrumb__item--last .breadcrumb__item-title,.breadcrumb__item-title--last,.cms h2.breadcrumb__item-title--last{
   margin:0;
-  font-size:1.23rem;
+  font-size:17px;
   font-weight:400;
   line-height:24px;
   overflow:hidden;
@@ -14773,6 +14779,10 @@ div.TreeDropdownField a.jstree-loading .jstree-pageicon{
 
 .breadcrumb__item:only-child{
   margin-top:6px;
+}
+
+.breadcrumb__item:empty{
+  margin-top:0;
 }
 
 .breadcrumb__icon:before{
@@ -14826,7 +14836,7 @@ fieldset+.btn-toolbar{
   position:relative;
   margin-right:6px;
   line-height:20px;
-  font-size:1.23rem;
+  font-size:1.231rem;
   float:left;
 }
 
@@ -14864,11 +14874,11 @@ fieldset+.btn-toolbar{
 .btn--hide-text{
   text-indent:-90000px;
   overflow:hidden;
-  min-width:2.7684rem;
+  min-width:2.7694rem;
 }
 
 .btn--hide-text.btn-sm,.btn-group-sm>.btn--hide-text.btn{
-  min-width:2.153rem;
+  min-width:2.154rem;
 }
 
 .btn--hide-text[class*=font-icon-]:before{
@@ -15396,7 +15406,7 @@ div.grid-field__sort-field+.form__fieldgroup-item{
 }
 
 .preview__overlay-text{
-  font-size:1.23rem;
+  font-size:1.231rem;
   position:relative;
   top:50%;
   -webkit-transform:translateY(-50%);
@@ -15914,7 +15924,7 @@ input.checkbox,input.radio,input[type=checkbox],input[type=radio]{
 
 .modal-header .modal-title{
   margin-top:.3077rem;
-  font-size:18px;
+  font-size:19px;
   font-weight:400;
 }
 
@@ -15972,7 +15982,7 @@ input.checkbox,input.radio,input[type=checkbox],input[type=radio]{
 }
 
 .modal__response--error,.modal__response--good{
-  font-size:1.23rem;
+  font-size:1.231rem;
 }
 
 .modal__response--error span:before,.modal__response--good span:before{
