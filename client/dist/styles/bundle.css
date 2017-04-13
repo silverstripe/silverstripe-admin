@@ -15080,15 +15080,32 @@ div.TreeDropdownField a.jstree-loading .jstree-pageicon{
 }
 
 .breadcrumb{
+  display:inline-block;
   font-size:.846rem;
   line-height:14px;
   min-height:14px;
   margin-bottom:0;
-  float:left;
+  max-width:100%;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  direction:rtl;
 }
 
 .toolbar .breadcrumb{
   padding-bottom:0;
+}
+
+.breadcrumb>li{
+  float:none;
+  display:inline;
+}
+
+.breadcrumb>li:before{
+  padding-right:.5rem;
+  padding-left:.5rem;
+  color:#ced3d9;
+  content:"/";
 }
 
 .breadcrumb__container{
