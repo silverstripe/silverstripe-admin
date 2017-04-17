@@ -16,27 +16,30 @@
 // Modal header
 // Top section of the modal w/ title and dismiss
 .modal-header {
-  height: $toolbar-total-height;
+  // height: $toolbar-total-height;
+  margin-right: -$panel-padding-x / 2;
 
   // Close icon
   .close {
-    top: $spacer-sm;
-    right: $spacer-sm;
-    position: absolute;
-    z-index: 2;
-    margin-right: 0;
-    font-size: 24px;
+    font-size: 28px;
     height: 32px;
+    opacity: .5;
+    margin-top: 0;
 
     span {
       overflow: hidden;
       display: block;
-      margin-top: -7px;
+      margin-top: -6px;
+    }
+
+    &:hover {
+      opacity: .7;
     }
   }
 
   .modal-title {
-    margin-top: $spacer-sm / 3;
+    // margin-top: $spacer-sm / 3;
+    line-height: 32px;
     font-size: $font-size-h2;
     font-weight: normal;
   }
