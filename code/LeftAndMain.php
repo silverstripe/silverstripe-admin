@@ -1083,6 +1083,13 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
+     * Cached search filter instance for current search
+     *
+     * @var LeftAndMain_SearchFilter
+     */
+    protected $searchFilterCache = null;
+
+    /**
      * Gets the current search filter for this request, if available
      *
      * @throws InvalidArgumentException
@@ -1090,6 +1097,10 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     protected function getSearchFilter()
     {
+        if ($this->searchFilterCache) {
+            return $this->searchFilterCache;
+        }
+
         // Check for given FilterClass
         $params = $this->getRequest()->getVar('q');
         if (empty($params['FilterClass'])) {
@@ -1099,11 +1110,11 @@ class LeftAndMain extends Controller implements PermissionProvider
         // Validate classname
         $filterClass = $params['FilterClass'];
         $filterInfo = new ReflectionClass($filterClass);
-        if (!$filterInfo->implementsInterface('SilverStripe\\Admin\\LeftAndMain_SearchFilter')) {
+        if (!$filterInfo->implementsInterface(LeftAndMain_SearchFilter::class)) {
             throw new InvalidArgumentException(sprintf('Invalid filter class passed: %s', $filterClass));
         }
 
-        return Injector::inst()->createWithArgs($filterClass, array($params));
+        return $this->searchFilterCache = Injector::inst()->createWithArgs($filterClass, array($params));
     }
 
     /**
