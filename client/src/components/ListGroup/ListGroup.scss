@@ -25,6 +25,7 @@
   cursor: pointer;
   text-decoration: none;
   transition: opacity .2s ease-in-out;
+  overflow: hidden;
 
   &:hover {
     text-decoration: none;
@@ -46,7 +47,7 @@
   line-height: $line-height;
 }
 
-.list-group-item-heading {
+.list-group-item__heading {
   font-weight: 400;
   font-size: 14px;
   margin: 2px 0 5px;
@@ -55,11 +56,26 @@
 
 .list-group-item__thumbnail {
   width: 64px;
-  height: 64px;
-  display: block;
-  background: $gray-lighter;
+  height: auto;
+
+  // Horizonally and vertically center
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   float: left;
-  margin: -12px 12px 0 #{0 - $grid-gutter-width / 2};
+  margin: -12px 12px -12px #{0 - $grid-gutter-width / 2};
+
+  > img {
+    max-height: 100%;
+    max-width: 100%;
+  }
+}
+
+.list-group-item__details {
+  // To make sure the thumbnail width (not actual images widths) is consistent
+  // across the list when the filename is really long
+  max-width: calc(100% - 64px);
 }
 
 .list-group-item__info {

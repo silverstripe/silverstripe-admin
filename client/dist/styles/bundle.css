@@ -14677,6 +14677,7 @@ div.TreeDropdownField a.jstree-loading .jstree-pageicon{
   cursor:pointer;
   -webkit-transition:opacity .2s ease-in-out;
   transition:opacity .2s ease-in-out;
+  overflow:hidden;
 }
 
 .list-group-item,.list-group-item:hover{
@@ -14696,7 +14697,7 @@ div.TreeDropdownField a.jstree-loading .jstree-pageicon{
   line-height:1.539;
 }
 
-.list-group-item-heading{
+.list-group-item__heading{
   font-weight:400;
   font-size:14px;
   margin:2px 0 5px;
@@ -14705,11 +14706,27 @@ div.TreeDropdownField a.jstree-loading .jstree-pageicon{
 
 .list-group-item__thumbnail{
   width:64px;
-  height:64px;
-  display:block;
-  background:#e7e9ec;
+  height:auto;
+  display:-webkit-box;
+  display:-ms-flexbox;
+  display:flex;
+  -webkit-box-pack:center;
+      -ms-flex-pack:center;
+          justify-content:center;
+  -webkit-box-align:center;
+      -ms-flex-align:center;
+          align-items:center;
   float:left;
-  margin:-12px 12px 0 -1.5385rem;
+  margin:-12px 12px -12px -1.5385rem;
+}
+
+.list-group-item__thumbnail>img{
+  max-height:100%;
+  max-width:100%;
+}
+
+.list-group-item__details{
+  max-width:calc(100% - 64px);
 }
 
 .list-group-item__info{
