@@ -14702,15 +14702,26 @@ div.TreeDropdownField a.jstree-loading .jstree-pageicon{
 .list-group-item__thumbnail{
   width:64px;
   height:auto;
-  display:block;
-  background:#e7e9ec;
+  display:-webkit-box;
+  display:-ms-flexbox;
+  display:flex;
+  -webkit-box-pack:center;
+      -ms-flex-pack:center;
+          justify-content:center;
+  -webkit-box-align:center;
+      -ms-flex-align:center;
+          align-items:center;
   float:left;
   margin:-12px 12px -12px -1.5385rem;
 }
 
 .list-group-item__thumbnail>img{
-  max-height:65px;
-  height:100%;
+  max-height:100%;
+  max-width:100%;
+}
+
+.list-group-item__details{
+  max-width:calc(100% - 64px);
 }
 
 .list-group-item__info{
