@@ -445,8 +445,9 @@ return t?k.default.recursive(!0,e,t):e})),l({},t,this.props.stateOverrides,{fiel
 return t&&i.push("schema"),a&&i.push("state"),r&&i.push("errors"),this.props.loading?Promise.resolve({}):(this.props.actions.schema.setSchemaLoading(this.props.schemaUrl,!0),this.callFetch(i).then(function(e){
 if(n.props.actions.schema.setSchemaLoading(n.props.schemaUrl,!1),e.errors&&"function"==typeof n.props.onLoadingError)return n.props.onLoadingError(e)
 if("undefined"!=typeof e.id){var t=l({},e,{id:n.props.schemaUrl,state:n.overrideStateData(e.state)})
-return n.props.actions.schema.setSchema(n.props.schemaUrl,t),t}return e}).catch(function(e){return n.props.actions.schema.setSchemaLoading(n.props.schemaUrl,!1),"function"==typeof n.props.onLoadingError?n.props.onLoadingError({
-errors:[{value:e.message,type:"error"}]}):{}}))}},{key:"handleAutofill",value:function e(t,n){this.props.actions.reduxForm.autofill(this.props.schemaUrl,t,n)}},{key:"render",value:function e(){if(!this.props.schema||!this.props.schema.schema||this.props.loading)return null
+return n.props.actions.schema.setSchema(n.props.schemaUrl,t),t}return e}).catch(function(e){if(n.props.actions.schema.setSchemaLoading(n.props.schemaUrl,!1),"function"==typeof n.props.onLoadingError)return n.props.onLoadingError({
+errors:[{value:e.message,type:"error"}]})
+throw e}))}},{key:"handleAutofill",value:function e(t,n){this.props.actions.reduxForm.autofill(this.props.schemaUrl,t,n)}},{key:"render",value:function e(){if(!this.props.schema||!this.props.schema.schema||this.props.loading)return null
 
 
 var t=l({},this.props,{form:this.props.schemaUrl,onSubmitSuccess:this.props.onSubmitSuccess,handleSubmit:this.handleSubmit,onAutofill:this.handleAutofill})
