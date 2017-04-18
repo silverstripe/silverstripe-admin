@@ -265,7 +265,7 @@ class FormBuilderLoader extends Component {
             ],
           });
         }
-        return {};
+        throw error;
       });
   }
 
