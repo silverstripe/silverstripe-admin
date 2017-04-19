@@ -2,24 +2,18 @@ import React from 'react';
 import SilverStripeComponent from 'lib/SilverStripeComponent';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import { FormControl } from 'react-bootstrap-ss';
-import { TextField } from '../TextField/TextField';
+import { DateField } from '../DateField/DateField';
 import moment from 'moment';
 import modernizr from 'modernizr';
 
-class DateTimeField extends TextField {
-
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return super.render();
-  }
+class DateTimeField extends DateField {
 
   getInputProps() {
     const props = {};
     Object.assign(props, super.getInputProps());
-    Object.assign(props, { type: 'datetime-local' });
+    Object.assign(props, {
+      type: this.props.html5 ? 'datetime-local' : 'text'
+    });
     return props;
   }
 
@@ -27,10 +21,43 @@ class DateTimeField extends TextField {
     return false;
   }
 
-}
+  hasNativeSupport() {
+    return modernizr.inputtypes['datetime-local'];
+  }
 
-DateTimeField.propTypes = {
-  lang: React.PropTypes.string
+  triggerChange(value) {
+    if(/^\d{4}-\d\d-\d\dT\d\d:\d\d$/.test(value)) {
+      value = value + ':00';
+    }
+
+    this.props.onChange(value);
+  }
+
+  convertToLocalised(isoTime) {
+    moment.locale(this.props.lang);
+    let localTime = '';
+    if (isoTime) {
+      const timeObject = moment(isoTime);
+      if (timeObject.isValid()) {
+        localTime = timeObject.format('L LT');
+      }
+    }
+    return localTime;
+  }
+
+  convertToIso(localTime) {
+    moment.locale(this.props.lang);
+    let isoTime = '';
+    if(localTime) {
+      // Input value can be in local format 'L' or ISO format
+      const timeObject = moment(localTime, ['L LT', moment.ISO_8601]);
+      if(timeObject.isValid()) {
+        isoTime = timeObject.format('YYYY-MM-DDTHH:mm:ss');
+      }
+    }
+    return isoTime
+  }
+
 }
 
 export { DateTimeField };

@@ -70,7 +70,7 @@ describe('DateField with html5 date field support', () => {
     let modProps = {};
     Object.assign(modProps, props, {
       lang: 'en_NZ',
-      value: '2017-01-05',
+      value: 'Jan 1, 2017',
       html5: false,
       onChange: jest.genMockFunction()
     });
@@ -84,8 +84,8 @@ describe('DateField with html5 date field support', () => {
       inputField = inputFields[0];
     });
 
-    it('should use localised format of date value in the input field', () => {
-      expect(inputField.value).toBe('05/01/2017');
+    it('should use whatever format passed to it', () => {
+      expect(inputField.value).toBe('Jan 1, 2017');
     });
   });
 });

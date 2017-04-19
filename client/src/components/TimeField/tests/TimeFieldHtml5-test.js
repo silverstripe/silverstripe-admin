@@ -62,7 +62,7 @@ describe('TimeField with html5 time field support', () => {
     let inputField = null;
     let modProps = {};
     Object.assign(modProps, props, {
-      value: '23:01:23',
+      value: '11:01:23 a',
       html5: false,
       onChange: jest.genMockFunction()
     });
@@ -75,8 +75,8 @@ describe('TimeField with html5 time field support', () => {
       inputField = ReactTestUtils.findRenderedDOMComponentWithTag(timeField, 'input');
     });
 
-    it('should use localised format of time value in the input field', () => {
-      expect(inputField.value).toBe('11:01 PM');
+    it('should use whatever time format passed to it', () => {
+      expect(inputField.value).toBe('11:01:23 a');
     });
   });
 });

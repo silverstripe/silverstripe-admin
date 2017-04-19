@@ -123,6 +123,7 @@ describe('DateField without html5 date field support', () => {
     Object.assign(modProps, props, {
       lang: 'en_NZ',
       value: '2017-01-05',
+      html5: true,
       onChange: jest.genMockFunction()
     });
 

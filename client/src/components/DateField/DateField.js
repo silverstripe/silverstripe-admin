@@ -24,7 +24,11 @@ class DateField extends TextField {
     const props = {};
 
     let val = this.props.value;
-    if (!this.hasNativeSupport() || !this.props.html5 || this.props.readOnly) {
+
+    if (!this.props.html5 || (this.hasNativeSupport() && this.props.html5)) {
+      val = this.props.value;
+    }
+    else {
       val = this.getLocalisedValue();
     }
 
@@ -43,7 +47,7 @@ class DateField extends TextField {
   }
 
   getLocalisedValue() {
-    return this.convertToLocalised(this.props.value);
+      return this.convertToLocalised(this.props.value);
   }
 
   isMultiline() {
@@ -60,7 +64,8 @@ class DateField extends TextField {
     let isoValue = '';
 
     // When browser support input=date the date value is already in iso format
-    if (this.hasNativeSupport()) {
+    // and html5 is enabled
+    if (!this.props.html5 || (this.hasNativeSupport() && this.props.html5)) {
       isoValue = enteredValue;
     }
     else {
@@ -68,8 +73,12 @@ class DateField extends TextField {
     }
 
     if (typeof this.props.onChange === 'function') {
-      this.props.onChange(isoValue);
+      this.triggerChange(isoValue);
     }
+  }
+
+  triggerChange(value) {
+    this.props.onChange(value);
   }
 
   convertToIso(localDate) {

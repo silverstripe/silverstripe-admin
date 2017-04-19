@@ -109,7 +109,8 @@ describe('TimeField without html5 time field support', () => {
     let modProps = {};
     Object.assign(modProps, props, {
       value: '23:01:23',
-      onChange: jest.genMockFunction()
+      onChange: jest.genMockFunction(),
+      html5: true
     });
 
     beforeEach(() => {
