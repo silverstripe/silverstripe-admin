@@ -26,6 +26,9 @@ class DateTimeField extends DateField {
   }
 
   triggerChange(value) {
+    // html5 `datetime-local` input doesn't retain second digits if they're
+    // `00` but that will failed the back-end validation. So add `:00` to the
+    // value if they're missing.
     if(/^\d{4}-\d\d-\d\dT\d\d:\d\d$/.test(value)) {
       value = value + ':00';
     }

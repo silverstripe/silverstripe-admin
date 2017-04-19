@@ -1,11 +1,11 @@
-# TextField Component
+# DateTimeField Component
 
-Generates an editable text field.
+Generates an editable date time field.
 
 ## Example
 
 ```js
-<TextField name="my-text" />
+<DateTimeField name="my-text" />
 ```
 
 
@@ -15,9 +15,9 @@ Generates an editable text field.
  * `extraClass` (string): Extra classes the component should have.
  * `name` (string) (required): The name for the component.
  * `onChange` (function): Event handler for when the component changes.
- * `value` (string|number): The value to display for the field, can use `defaultValue` for uncontrollable component.
+ * `value` (string): The value to display for the field - localised date time format or ISO 8601 date format
  * `readOnly` (boolean): Whether this field is read only.
  * `disabled` (boolean): Whether this field is disabled.
- * `type` (string): Defines the type this component will have, e.g. `email`, `tel`.
+ * `lang` (string): Locale string. E.g. `en_NZ`.
 
  _NOTE:_ For other properties, please refer to the [react-bootstrap FormControl](https://react-bootstrap.github.io/components.html#forms-props-form-control) documentation.
