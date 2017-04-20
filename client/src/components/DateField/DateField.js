@@ -1,16 +1,10 @@
 import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
-import { FormControl } from 'react-bootstrap-ss';
 import { TextField } from '../TextField/TextField';
 import moment from 'moment';
 import modernizr from 'modernizr';
 
 class DateField extends TextField {
-
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return super.render();
@@ -27,8 +21,7 @@ class DateField extends TextField {
 
     if (!this.props.html5 || (this.hasNativeSupport() && this.props.html5)) {
       val = this.props.value;
-    }
-    else {
+    } else {
       val = this.getLocalisedValue();
     }
 
@@ -37,7 +30,7 @@ class DateField extends TextField {
       // `parse()` of redux-form `Field` should be used for parsing the
       // localised input value to iso format to pass to redux store but `Field`
       // is not accessible in this context.
-      defaultValue: val
+      defaultValue: val,
     });
 
     // Reset value so `defaultValue` is used
@@ -47,7 +40,7 @@ class DateField extends TextField {
   }
 
   getLocalisedValue() {
-      return this.convertToLocalised(this.props.value);
+    return this.convertToLocalised(this.props.value);
   }
 
   isMultiline() {
@@ -67,8 +60,7 @@ class DateField extends TextField {
     // and html5 is enabled
     if (!this.props.html5 || (this.hasNativeSupport() && this.props.html5)) {
       isoValue = enteredValue;
-    }
-    else {
+    } else {
       isoValue = this.convertToIso(enteredValue);
     }
 
@@ -111,8 +103,8 @@ class DateField extends TextField {
 }
 
 DateField.propTypes = {
-  lang: React.PropTypes.string
-}
+  lang: React.PropTypes.string,
+};
 
 export { DateField };
 

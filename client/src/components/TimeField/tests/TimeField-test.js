@@ -4,13 +4,11 @@ jest.unmock('react');
 jest.unmock('react-addons-test-utils');
 jest.unmock('../TimeField');
 
-jest.mock('modernizr', () => {
-  return {
-    inputtypes: {
-      time: false
-    }
-  };
-});
+jest.mock('modernizr', () => ({
+  inputtypes: {
+    time: false,
+  },
+}));
 
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
@@ -89,7 +87,7 @@ describe('TimeField without html5 time field support', () => {
 
   describe('getLocalisedValue()', () => {
     let timeField = null;
-    let modProps = {};
+    const modProps = {};
     Object.assign(modProps, props, { value: '04:22:39' });
 
     beforeEach(() => {
@@ -106,11 +104,11 @@ describe('TimeField without html5 time field support', () => {
   describe('Browser doesn\'t support html5 time input', () => {
     let timeField = null;
     let inputField = null;
-    let modProps = {};
+    const modProps = {};
     Object.assign(modProps, props, {
       value: '23:01:23',
       onChange: jest.genMockFunction(),
-      html5: true
+      html5: true,
     });
 
     beforeEach(() => {
@@ -135,8 +133,6 @@ describe('TimeField without html5 time field support', () => {
       inputField.value = 'invalid value';
       ReactTestUtils.Simulate.change(inputField);
       expect(timeField.props.onChange).toBeCalledWith('');
-
     });
   });
-
 });

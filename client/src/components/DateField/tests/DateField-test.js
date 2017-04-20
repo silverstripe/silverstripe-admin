@@ -4,13 +4,11 @@ jest.unmock('react');
 jest.unmock('react-addons-test-utils');
 jest.unmock('../DateField');
 
-jest.mock('modernizr', () => {
-  return {
-    inputtypes: {
-      date: false
-    }
-  };
-});
+jest.mock('modernizr', () => ({
+  inputtypes: {
+    date: false,
+  },
+}));
 
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
@@ -48,7 +46,7 @@ describe('DateField without html5 date field support', () => {
 
   describe('convertToIso()', () => {
     let dateField = null;
-    let modProps = {};
+    const modProps = {};
     Object.assign(modProps, props, { lang: 'en_NZ' });
 
     beforeEach(() => {
@@ -72,7 +70,7 @@ describe('DateField without html5 date field support', () => {
 
   describe('convertToLocalised()', () => {
     let dateField = null;
-    let modProps = {};
+    const modProps = {};
     Object.assign(modProps, props, { lang: 'en_NZ' });
 
     beforeEach(() => {
@@ -101,7 +99,7 @@ describe('DateField without html5 date field support', () => {
 
   describe('getLocalisedValue()', () => {
     let dateField = null;
-    let modProps = {};
+    const modProps = {};
     Object.assign(modProps, props, { lang: 'en_NZ', value: '2017-01-05' });
 
     beforeEach(() => {
@@ -113,18 +111,17 @@ describe('DateField without html5 date field support', () => {
     it('should display local format when the browser doesn\'t support date type', () => {
       expect(dateField.getLocalisedValue()).toBe('05/01/2017');
     });
-
   });
 
   describe('Browser doesn\'t support html5 date input', () => {
     let dateField = null;
     let inputField = null;
-    let modProps = {};
+    const modProps = {};
     Object.assign(modProps, props, {
       lang: 'en_NZ',
       value: '2017-01-05',
       html5: true,
-      onChange: jest.genMockFunction()
+      onChange: jest.genMockFunction(),
     });
 
     beforeEach(() => {
@@ -149,7 +146,6 @@ describe('DateField without html5 date field support', () => {
       inputField.value = 'invalid value';
       ReactTestUtils.Simulate.change(inputField);
       expect(dateField.props.onChange).toBeCalledWith('');
-
     });
   });
 });

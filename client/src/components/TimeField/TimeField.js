@@ -1,7 +1,4 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
-import { FormControl } from 'react-bootstrap-ss';
 import { DateField } from '../DateField/DateField';
 import moment from 'moment';
 import modernizr from 'modernizr';
@@ -28,7 +25,7 @@ class TimeField extends DateField {
   convertToLocalised(isoTime) {
     let localTime = '';
     if (isoTime) {
-      const timeObject = moment(isoTime, "HH:mm:ss");
+      const timeObject = moment(isoTime, 'HH:mm:ss');
       if (timeObject.isValid()) {
         localTime = timeObject.format('LT');
       }
@@ -38,13 +35,13 @@ class TimeField extends DateField {
 
   convertToIso(localTime) {
     let isoTime = '';
-    if(localTime) {
-      const timeObject = moment(localTime, "LT");
-      if(timeObject.isValid()) {
-        isoTime = timeObject.format("HH:mm:ss");
+    if (localTime) {
+      const timeObject = moment(localTime, 'LT');
+      if (timeObject.isValid()) {
+        isoTime = timeObject.format('HH:mm:ss');
       }
     }
-    return isoTime
+    return isoTime;
   }
 
 }

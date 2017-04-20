@@ -4,13 +4,11 @@ jest.unmock('react');
 jest.unmock('react-addons-test-utils');
 jest.unmock('../DateField');
 
-jest.mock('modernizr', () => {
-  return {
-    inputtypes: {
-      date: true
-    }
-  };
-});
+jest.mock('modernizr', () => ({
+  inputtypes: {
+    date: true,
+  },
+}));
 
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
@@ -34,12 +32,12 @@ describe('DateField with html5 date field support', () => {
     let dateField = null;
     let inputFields = null;
     let inputField = null;
-    let modProps = {};
+    const modProps = {};
     Object.assign(modProps, props, {
       lang: 'en_NZ',
       value: '2017-01-05',
       html5: true,
-      onChange: jest.genMockFunction()
+      onChange: jest.genMockFunction(),
     });
 
     beforeEach(() => {
@@ -60,19 +58,18 @@ describe('DateField with html5 date field support', () => {
       ReactTestUtils.Simulate.change(inputField);
       expect(dateField.props.onChange).toBeCalledWith('2018-02-05');
     });
-
   });
 
   describe('Browser supports html5 date input but user has opt-outed', () => {
     let dateField = null;
     let inputFields = null;
     let inputField = null;
-    let modProps = {};
+    const modProps = {};
     Object.assign(modProps, props, {
       lang: 'en_NZ',
       value: 'Jan 1, 2017',
       html5: false,
-      onChange: jest.genMockFunction()
+      onChange: jest.genMockFunction(),
     });
 
     beforeEach(() => {

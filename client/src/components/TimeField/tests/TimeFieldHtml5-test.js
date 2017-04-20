@@ -4,13 +4,11 @@ jest.unmock('react');
 jest.unmock('react-addons-test-utils');
 jest.unmock('../TimeField');
 
-jest.mock('modernizr', () => {
-  return {
-    inputtypes: {
-      time: true
-    }
-  };
-});
+jest.mock('modernizr', () => ({
+  inputtypes: {
+    time: true,
+  },
+}));
 
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
@@ -31,11 +29,11 @@ describe('TimeField with html5 time field support', () => {
   describe('Browser supports html5 time input', () => {
     let timeField = null;
     let inputField = null;
-    let modProps = {};
+    const modProps = {};
     Object.assign(modProps, props, {
       value: '23:01:23',
       html5: true,
-      onChange: jest.genMockFunction()
+      onChange: jest.genMockFunction(),
     });
 
     beforeEach(() => {
@@ -60,11 +58,11 @@ describe('TimeField with html5 time field support', () => {
   describe('Browser supports html5 time input but user has opt-outed', () => {
     let timeField = null;
     let inputField = null;
-    let modProps = {};
+    const modProps = {};
     Object.assign(modProps, props, {
       value: '11:01:23 a',
       html5: false,
-      onChange: jest.genMockFunction()
+      onChange: jest.genMockFunction(),
     });
 
     beforeEach(() => {

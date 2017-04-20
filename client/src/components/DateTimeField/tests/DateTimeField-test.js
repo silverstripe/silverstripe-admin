@@ -4,13 +4,11 @@ jest.unmock('react');
 jest.unmock('react-addons-test-utils');
 jest.unmock('../DateTimeField');
 
-jest.mock('modernizr', () => {
-  return {
-    inputtypes: {
-      "datetime-local": false
-    }
-  };
-});
+jest.mock('modernizr', () => ({
+  inputtypes: {
+    'datetime-local': false,
+  },
+}));
 
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
@@ -48,7 +46,7 @@ describe('DateTimeField without html5 date time field support', () => {
 
   describe('convertToIso()', () => {
     let dateTimeField = null;
-    let modProps = {};
+    const modProps = {};
     Object.assign(modProps, props, { lang: 'en_NZ' });
 
     beforeEach(() => {
@@ -73,7 +71,7 @@ describe('DateTimeField without html5 date time field support', () => {
 
   describe('convertToLocalised()', () => {
     let dateTimeField = null;
-    let modProps = {};
+    const modProps = {};
     Object.assign(modProps, props, { lang: 'en_NZ' });
 
     beforeEach(() => {
@@ -103,12 +101,12 @@ describe('DateTimeField without html5 date time field support', () => {
   describe('Browser doesn\'t support html5 date time input', () => {
     let dateTimeField = null;
     let inputField = null;
-    let modProps = {};
+    const modProps = {};
     Object.assign(modProps, props, {
       lang: 'en_NZ',
       value: '2017-01-05T02:23:22',
       html5: true,
-      onChange: jest.genMockFunction()
+      onChange: jest.genMockFunction(),
     });
 
     beforeEach(() => {
@@ -133,8 +131,6 @@ describe('DateTimeField without html5 date time field support', () => {
       inputField.value = 'invalid value';
       ReactTestUtils.Simulate.change(inputField);
       expect(dateTimeField.props.onChange).toBeCalledWith('');
-
     });
   });
-
 });

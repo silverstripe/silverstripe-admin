@@ -1,7 +1,4 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
-import { FormControl } from 'react-bootstrap-ss';
 import { DateField } from '../DateField/DateField';
 import moment from 'moment';
 import modernizr from 'modernizr';
@@ -12,7 +9,7 @@ class DateTimeField extends DateField {
     const props = {};
     Object.assign(props, super.getInputProps());
     Object.assign(props, {
-      type: this.props.html5 ? 'datetime-local' : 'text'
+      type: this.props.html5 ? 'datetime-local' : 'text',
     });
     return props;
   }
@@ -29,11 +26,11 @@ class DateTimeField extends DateField {
     // html5 `datetime-local` input doesn't retain second digits if they're
     // `00` but that will failed the back-end validation. So add `:00` to the
     // value if they're missing.
-    if(/^\d{4}-\d\d-\d\dT\d\d:\d\d$/.test(value)) {
-      value = value + ':00';
+    if (/^\d{4}-\d\d-\d\dT\d\d:\d\d$/.test(value)) {
+      this.props.onChange(`${value}:00`);
+    } else {
+      this.props.onChange(value);
     }
-
-    this.props.onChange(value);
   }
 
   convertToLocalised(isoTime) {
@@ -51,14 +48,14 @@ class DateTimeField extends DateField {
   convertToIso(localTime) {
     moment.locale(this.props.lang);
     let isoTime = '';
-    if(localTime) {
+    if (localTime) {
       // Input value can be in local format 'L' or ISO format
       const timeObject = moment(localTime, ['L LT', moment.ISO_8601]);
-      if(timeObject.isValid()) {
+      if (timeObject.isValid()) {
         isoTime = timeObject.format('YYYY-MM-DDTHH:mm:ss');
       }
     }
-    return isoTime
+    return isoTime;
   }
 
 }
