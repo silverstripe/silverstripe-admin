@@ -275,7 +275,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         $cmsClassNames = CMSMenu::get_cms_classes(self::class, true, CMSMenu::URL_PRIORITY);
 
         foreach ($cmsClassNames as $className) {
-            $combinedClientConfig['sections'][$className] =  Injector::inst()->get($className)->getClientConfig();
+            $combinedClientConfig['sections'][] = Injector::inst()->get($className)->getClientConfig();
         }
 
         // Pass in base url (absolute and relative)
@@ -306,6 +306,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         return [
             // Trim leading/trailing slash to make it easier to concatenate URL
             // and use in routing definitions.
+            'name' => static::class,
             'url' => trim($this->Link(), '/'),
         ];
     }

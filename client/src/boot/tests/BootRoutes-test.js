@@ -12,15 +12,17 @@ describe('Bootroutes', () => {
     window.ss.config = {
       baseUrl: '/subdir',
       absoluteBaseUrl: 'http://www.mypage.com/subdir/',
-      sections: {
-        MySection: {
+      sections: [
+        {
+          name: 'MySection',
           url: 'admin/mysection',
           reactRouter: true,
         },
-        OldSection: {
+        {
+          name: 'OldSection',
           url: 'admin/old-section',
         },
-      },
+      ],
     };
   });
 

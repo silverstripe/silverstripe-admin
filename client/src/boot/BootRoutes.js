@@ -55,8 +55,7 @@ class BootRoutes {
     const currentPath = pageRouter.resolveURLToBase(location).replace(/\/$/, '');
 
     // Check if the current url matches a legacy route
-    return !!Object.keys(sections).find((key) => {
-      const section = sections[key];
+    return !!sections.find((section) => {
       const route = pageRouter.resolveURLToBase(section.url).replace(/\/$/, '');
 
       // Skip react routes
@@ -112,8 +111,8 @@ class BootRoutes {
     // This can be removed when top level sections are converted to React,
     // have their own JavaScript controllers, and register their own routes.
     let lastPath = null;
-    Object.keys(sections).forEach((key) => {
-      let route = pageRouter.resolveURLToBase(sections[key].url);
+    sections.forEach((section) => {
+      let route = pageRouter.resolveURLToBase(section.url);
       route = route.replace(/\/$/, ''); // Remove trailing slash
       route = `${route}(/*?)?`; // add optional trailing slash
 
