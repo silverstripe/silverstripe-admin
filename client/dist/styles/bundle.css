@@ -14516,6 +14516,10 @@ div.TreeDropdownField .treedropdownfield-panel .tree-holder>ul{
   margin-bottom:10px;
 }
 
+div.TreeDropdownField .treedropdownfield-panel .tree-holder span.badge{
+  display:none;
+}
+
 div.TreeDropdownField .treedropdownfield-panel ul{
   overflow-x:hidden;
   float:left;
