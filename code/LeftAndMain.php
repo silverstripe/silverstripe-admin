@@ -274,8 +274,10 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function getCombinedClientConfig()
     {
         $combinedClientConfig = ['sections' => []];
-        $cmsClassNames = CMSMenu::get_cms_classes(self::class, true, CMSMenu::URL_PRIORITY);
+        $cmsClassNames = CMSMenu::get_cms_classes(LeftAndMain::class, true, CMSMenu::URL_PRIORITY);
 
+        // append LeftAndMain to the list as well
+        $cmsClassNames[] = LeftAndMain::class;
         foreach ($cmsClassNames as $className) {
             $combinedClientConfig['sections'][] = Injector::inst()->get($className)->getClientConfig();
         }
@@ -311,8 +313,8 @@ class LeftAndMain extends Controller implements PermissionProvider
             'name' => static::class,
             'url' => trim($this->Link(), '/'),
             'form' => [
-                'EditorToolbar' => [
-                    'schemaUrl' => $this->Link('methodSchema/EditorToolbar/LinkForm'),
+                'EditorExternalLink' => [
+                    'schemaUrl' => $this->Link('methodSchema/EditorToolbar/EditorExternalLink'),
                 ],
             ],
         ];
@@ -769,6 +771,11 @@ class LeftAndMain extends Controller implements PermissionProvider
         // Handle missing url_segments
         $segment = $this->config()->get('url_segment')
             ?: $this->class;
+        
+        // LeftAndMain methods have a top-level uri access
+        if ($segment === LeftAndMain::class) {
+            $segment = '';
+        }
 
         $link = Controller::join_links(
             AdminRootController::admin_url(),

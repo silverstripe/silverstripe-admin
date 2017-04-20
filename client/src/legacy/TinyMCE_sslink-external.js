@@ -1,4 +1,5 @@
 /* global tinymce, ss */
+import i18n from 'i18n';
 import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -16,10 +17,11 @@ TinyMCEActionRegistrar.addAction('sslink', {
 const plugin = {
   init(editor) {
     editor.addCommand('sslinkexternal', () => {
-      // See HtmlEditorField.js
-      window.jQuery(`#${editor.id}`).entwine('ss').openLinkExternalDialog();
+      const field = window.jQuery(`#${editor.id}`).entwine('ss');
+
+      field.openLinkExternalDialog();
     });
-  }
+  },
 };
 
 const modalId = 'insert-link__dialog-wrapper--external';
@@ -35,7 +37,6 @@ jQuery.entwine('ss', ($) => {
 
       dialog.setElement(this);
       dialog.open();
-      return;
     },
   });
 
@@ -43,11 +44,11 @@ jQuery.entwine('ss', ($) => {
    * Assumes that $('.insert-link__dialog-wrapper').entwine({}); is defined for shared functions
    */
   $(`#${modalId}`).entwine({
-    _renderModal(show) {
+    renderModal(show) {
       const store = ss.store;
       const client = ss.apolloClient;
       const handleHide = () => this.close();
-      const handleInsert = (...args) => this._handleInsert(...args);
+      const handleInsert = (...args) => this.handleInsert(...args);
       const attrs = this.getOriginalAttributes();
 
       // create/update the react component
@@ -57,6 +58,7 @@ jQuery.entwine('ss', ($) => {
             show={show}
             onInsert={handleInsert}
             onHide={handleHide}
+            title={i18n._t('HTMLEditorField.LINK', 'Insert Link')}
             bodyClassName="modal__dialog"
             className="insert-link__dialog-wrapper--external"
             fileAttributes={attrs}
@@ -66,13 +68,20 @@ jQuery.entwine('ss', ($) => {
       );
     },
 
-    _handleInsert(data) {
+    buildAttributes(data) {
+      const attributes = this._super(data);
 
-    },
+      let href = attributes.href;
+      // Prefix the URL with "http://" if no prefix is found
+      if (href.indexOf('://') === -1) {
+        href = `http://${href}`;
+      }
+      if (href === 'http://') {
+        href = '';
+      }
+      attributes.href = href;
 
-    getOriginalAttributes() {
-      const element = this.getElement();
-      return {};
+      return attributes;
     },
   });
 });

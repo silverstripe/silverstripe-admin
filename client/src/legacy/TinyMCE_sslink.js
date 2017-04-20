@@ -48,14 +48,60 @@ jQuery.entwine('ss', ($) => {
     },
 
     open() {
-      this._renderModal(true);
+      this.renderModal(true);
     },
 
     close() {
       this.setData({});
-      this._renderModal(false);
+      this.renderModal(false);
     },
 
+    renderModal() {
+      /* noop */
+    },
+
+    /**
+     * Default behaviour, recommended to overload this and sanitise where needed
+     *
+     * @param data
+     * @private
+     */
+    handleInsert(data) {
+      const attributes = this.buildAttributes(data);
+
+      this.insertLinkInEditor(attributes);
+      this.close();
+    },
+
+    buildAttributes(data) {
+      const anchor = data.Anchor.length ? `#${data.Anchor}` : '';
+      const href = `${data.Link}${anchor}`;
+
+      return {
+        href,
+        target: data.TargetBlank ? '_blank' : '',
+        title: data.Description,
+      };
+    },
+
+    insertLinkInEditor(attributes) {
+      const editor = this.getElement().getEditor();
+      editor.insertLink(attributes);
+    },
+
+    getOriginalAttributes() {
+      const editor = this.getElement().getEditor();
+      const node = $(editor.getSelectedNode());
+
+      const hrefParts = (node.attr('href') || '').split('#');
+
+      return {
+        Link: hrefParts[0] || '',
+        Anchor: hrefParts[1] || '',
+        Description: node.attr('title'),
+        TargetBlank: !!node.attr('target'),
+      };
+    },
   });
 });
 
