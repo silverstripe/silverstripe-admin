@@ -3,6 +3,9 @@ import fieldHolder from 'components/FieldHolder/FieldHolder';
 import { TextField } from '../TextField/TextField';
 import moment from 'moment';
 import modernizr from 'modernizr';
+import i18n from 'i18n';
+
+const localFormat = 'L';
 
 class DateField extends TextField {
 
@@ -15,6 +18,10 @@ class DateField extends TextField {
   }
 
   getInputProps() {
+    const placeholder = i18n.inject(
+      i18n._t('DateField.DateFormatExample', 'Example: {datetime}'),
+      { datetime: moment().endOf('month').format(localFormat) }
+    );
     const props = {};
 
     let val = this.props.value;
@@ -31,6 +38,7 @@ class DateField extends TextField {
       // localised input value to iso format to pass to redux store but `Field`
       // is not accessible in this context.
       defaultValue: val,
+      placeholder,
     });
 
     // Reset value so `defaultValue` is used
@@ -79,7 +87,7 @@ class DateField extends TextField {
 
     if (localDate) {
       // Input value can be in local format 'L' or ISO format
-      const dateObject = moment(localDate, ['L', 'YYYY-MM-DD']);
+      const dateObject = moment(localDate, [localFormat, 'YYYY-MM-DD']);
       if (dateObject.isValid()) {
         isoDate = dateObject.format('YYYY-MM-DD');
       }
@@ -94,7 +102,7 @@ class DateField extends TextField {
     if (isoDate) {
       const dateObject = moment(isoDate);
       if (dateObject.isValid()) {
-        localDate = dateObject.format('L');
+        localDate = dateObject.format(localFormat);
       }
     }
     return localDate;

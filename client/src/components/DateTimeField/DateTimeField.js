@@ -2,14 +2,22 @@ import fieldHolder from 'components/FieldHolder/FieldHolder';
 import { DateField } from '../DateField/DateField';
 import moment from 'moment';
 import modernizr from 'modernizr';
+import i18n from 'i18n';
+
+const localFormat = 'L LT';
 
 class DateTimeField extends DateField {
 
   getInputProps() {
+    const placeholder = i18n.inject(
+      i18n._t('DateTimeField.DateTimeFormatExample', 'Example: {datetime}'),
+      { datetime: moment().endOf('month').format(localFormat) }
+    );
     const props = {};
     Object.assign(props, super.getInputProps());
     Object.assign(props, {
       type: this.props.html5 ? 'datetime-local' : 'text',
+      placeholder,
     });
     return props;
   }
@@ -39,7 +47,7 @@ class DateTimeField extends DateField {
     if (isoTime) {
       const timeObject = moment(isoTime);
       if (timeObject.isValid()) {
-        localTime = timeObject.format('L LT');
+        localTime = timeObject.format(localFormat);
       }
     }
     return localTime;
@@ -50,7 +58,7 @@ class DateTimeField extends DateField {
     let isoTime = '';
     if (localTime) {
       // Input value can be in local format 'L' or ISO format
-      const timeObject = moment(localTime, ['L LT', moment.ISO_8601]);
+      const timeObject = moment(localTime, [localFormat, moment.ISO_8601]);
       if (timeObject.isValid()) {
         isoTime = timeObject.format('YYYY-MM-DDTHH:mm:ss');
       }
