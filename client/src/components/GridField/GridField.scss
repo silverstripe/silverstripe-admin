@@ -160,9 +160,9 @@ div.grid-field__sort-field + .form__fieldgroup-item {
   position: absolute;
 }
 
-.filter-header { // TODO BEMify classes
-  .fieldgroup:not(.filter-buttons),
-  .fieldgroup:not(.filter-buttons) .fieldgroup-field {
+.grid-field__filter-header {
+  .fieldgroup:not(.grid-field__filter-buttons),
+  .fieldgroup:not(.grid-field__filter-buttons) .fieldgroup-field {
     width: 100%;
   }
 
@@ -171,7 +171,7 @@ div.grid-field__sort-field + .form__fieldgroup-item {
   }
 }
 
-.filter-buttons { // TODO BEMify classes
+.grid-field__filter-buttons {
   right: -5px;
   position: relative;
   width: auto;
