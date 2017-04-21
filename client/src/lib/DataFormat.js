@@ -22,21 +22,18 @@ export function fileSize(size) {
   if (size < 1024) {
     number = size;
     metric = 'bytes';
-  } else if (size < 1024 * 10) {
-    number = Math.round(size / 1024 * 10) / 10;
-    metric = 'KB';
   } else if (size < 1024 * 1024) {
     number = Math.round(size / 1024);
     metric = 'KB';
   } else if (size < 1024 * 1024 * 10) {
-    number = Math.round(size / 1024 * 1024 * 10) / 10;
+    number = Math.round((size / (1024 * 1024)) * 10) / 10;
     metric = 'MB';
   } else if (size < 1024 * 1024 * 1024) {
-    number = Math.round(size / 1024 * 1024);
+    number = Math.round(size / (1024 * 1024));
     metric = 'MB';
   }
   if ((!number && number !== 0) || !metric) {
-    number = Math.round(size / (1024 * 1024 * 1024) * 10) / 10;
+    number = Math.round((size / (1024 * 1024 * 1024)) * 10) / 10;
     metric = 'GB';
   }
 

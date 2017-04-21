@@ -819,9 +819,10 @@ n(this,e)}return a(e,null,[{key:"get",value:function e(t){return window.ss.confi
 }}]),e}()
 t.default=r},function(e,t,n){(function(t){e.exports=t.DataFormat=n(165)}).call(t,function(){return this}())},function(e,t,n){"use strict"
 function a(e){return e&&e.__esModule?e:{default:e}}function r(e){return l.default.parse(e.replace(/^\?/,""))}function i(e){var t=null,n=""
-return e<1024?(t=e,n="bytes"):e<10240?(t=Math.round(e/1024*10)/10,n="KB"):e<1048576?(t=Math.round(e/1024),n="KB"):e<10485760?(t=Math.round(e/1024*1024*10)/10,n="MB"):e<1073741824&&(t=Math.round(e/1024*1024),
-n="MB"),(t||0===t)&&n||(t=Math.round(e/1073741824*10)/10,n="GB"),isNaN(t)?d.default._t("File.NO_SIZE","N/A"):t+" "+n}function s(e){return/[.]/.exec(e)?e.replace(/^.+[.]/,""):""}Object.defineProperty(t,"__esModule",{
-value:!0}),t.decodeQuery=r,t.fileSize=i,t.getFileExtension=s
+return e<1024?(t=e,n="bytes"):e<1048576?(t=Math.round(e/1024),n="KB"):e<10485760?(t=Math.round(e/1048576*10)/10,n="MB"):e<1073741824&&(t=Math.round(e/1048576),n="MB"),(t||0===t)&&n||(t=Math.round(e/1073741824*10)/10,
+n="GB"),isNaN(t)?d.default._t("File.NO_SIZE","N/A"):t+" "+n}function s(e){return/[.]/.exec(e)?e.replace(/^.+[.]/,""):""}Object.defineProperty(t,"__esModule",{value:!0}),t.decodeQuery=r,t.fileSize=i,t.getFileExtension=s
+
+
 var o=n(115),d=a(o),u=n(13),l=a(u)},function(e,t,n){(function(t){e.exports=t.ReducerRegister=n(167)}).call(t,function(){return this}())},function(e,t){"use strict"
 function n(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(t,"__esModule",{value:!0})
 var a=function(){function e(e,t){for(var n=0;n<t.length;n++){var a=t[n]
