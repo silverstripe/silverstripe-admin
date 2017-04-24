@@ -15401,7 +15401,7 @@ button.close{
   right:0;
   margin-right:5px;
   margin-top:-2px;
-  position:absolute;
+  position:static;
 }
 
 .btn--close-panel:before{
@@ -15896,10 +15896,20 @@ div.grid-field__sort-field+.form__fieldgroup-item{
   -webkit-box-flex:1;
       -ms-flex:1;
           flex:1;
+  overflow-y:auto;
 }
 
 .form--fill-height>.btn-toolbar{
   margin-bottom:0;
+  border-top:1px solid #e5e8eb;
+}
+
+.form--fill-height>.btn-toolbar .form-group{
+  margin-bottom:0;
+}
+
+.form--padded .btn-toolbar,.form--padded>fieldset{
+  padding:20px;
 }
 
 .form-group:after,.form__divider:after{

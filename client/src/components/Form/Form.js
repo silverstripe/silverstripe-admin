@@ -60,11 +60,11 @@ class Form extends Component {
 
     return (
       <form {...formProps}>
-        {messages}
-
-        {this.props.afterMessages}
         {fields &&
           <fieldset>
+            {messages}
+            {this.props.afterMessages}
+
             {fields}
           </fieldset>
         }

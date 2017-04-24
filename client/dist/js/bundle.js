@@ -251,7 +251,7 @@ n&&n.focus()}}}},{key:"renderMessages",value:function e(){return Array.isArray(t
 
 t===!1&&i.push("form--invalid"),this.props.attributes&&this.props.attributes.className&&i.push(this.props.attributes.className)
 var s=o({},this.props.attributes,{onSubmit:this.props.handleSubmit,className:i.join(" ")})
-return d.default.createElement("form",s,a,this.props.afterMessages,n&&d.default.createElement("fieldset",null,n),r&&d.default.createElement("div",{className:"btn-toolbar",role:"group"},r))}}]),t}(l.Component)
+return d.default.createElement("form",s,n&&d.default.createElement("fieldset",null,a,this.props.afterMessages,n),r&&d.default.createElement("div",{className:"btn-toolbar",role:"group"},r))}}]),t}(l.Component)
 
 
 _.propTypes={autoFocus:l.PropTypes.bool,valid:l.PropTypes.bool,actions:l.PropTypes.array,afterMessages:l.PropTypes.node,attributes:l.PropTypes.shape({action:l.PropTypes.string.isRequired,className:l.PropTypes.string,
