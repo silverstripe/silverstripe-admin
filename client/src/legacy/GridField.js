@@ -66,7 +66,7 @@ $.entwine('ss', function($) {
           self.trigger('reload', self);
         },
         error: function(e) {
-          alert(i18n._t('GRIDFIELD.ERRORINTRANSACTION'));
+          alert(i18n._t('Admin.ERRORINTRANSACTION'));
           form.removeClass('loading');
         }
       }, ajaxOpts));
@@ -273,7 +273,7 @@ $.entwine('ss', function($) {
   // Covers both tabular delete button, and the button on the detail form
   $('.grid-field .grid-field__col-compact .action.gridfield-button-delete, .cms-edit-form .btn-toolbar button.action.action-delete').entwine({
     onclick: function(e){
-      if(!confirm(i18n._t('TABLEFIELD.DELETECONFIRMMESSAGE'))) {
+      if(!confirm(i18n._t('Admin.DELETECONFIRMMESSAGE'))) {
         e.preventDefault();
         return false;
       } else {
@@ -423,7 +423,7 @@ $.entwine('ss', function($) {
             data: encodeURIComponent(searchField.attr('name'))+'='+encodeURIComponent(searchField.val()),
             success: response,
             error: function(e) {
-              alert(i18n._t('GRIDFIELD.ERRORINTRANSACTION', 'An error occured while fetching data from the server\n Please try again later.'));
+              alert(i18n._t('Admin.ERRORINTRANSACTION', 'An error occured while fetching data from the server\n Please try again later.'));
             }
           });
         },

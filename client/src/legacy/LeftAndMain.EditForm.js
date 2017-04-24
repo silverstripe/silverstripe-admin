@@ -9,7 +9,7 @@ window.onbeforeunload = function(e) {
   var form = $('.cms-edit-form');
   form.trigger('beforesubmitform');
   if(form.is('.changed') && ! form.is('.discardchanges')) {
-    return i18n._t('LeftAndMain.CONFIRMUNSAVEDSHORT');
+    return i18n._t('Admin.CONFIRMUNSAVEDSHORT');
   }
 };
 
@@ -122,7 +122,7 @@ $.entwine('ss', function($){
           } else if (!this.getValidationErrorShown()) {
             // Ensure that this error message popup won't be added more than once
             this.setValidationErrorShown(true);
-            errorMessage(ss.i18n._t('ModelAdmin.VALIDATIONERROR', 'Validation Error'));
+            errorMessage(ss.i18n._t('Admin.VALIDATIONERROR', 'Validation Error'));
           }
         }
       }
@@ -176,7 +176,7 @@ $.entwine('ss', function($){
       if (this.find('.btn-toolbar :submit.btn--loading.loading').length > 0) {
         return true;
       }
-      var confirmed = confirm(i18n._t('LeftAndMain.CONFIRMUNSAVED'));
+      var confirmed = confirm(i18n._t('Admin.CONFIRMUNSAVED'));
       if(confirmed) {
         // Ensures that once a form is confirmed, subsequent
         // changes to the underlying form don't trigger

@@ -67,7 +67,7 @@ $.entwine('ss.tree', function($){
         var confirmed = confirm(
           i18n.inject(
             i18n._t(
-              "CMSMAIN.BATCH_PUBLISH_PROMPT",
+              "Admin.BATCH_PUBLISH_PROMPT",
               "You have {num} page(s) selected.\n\nDo you really want to publish?"
             ),
             {'num': ids.length}
@@ -81,7 +81,7 @@ $.entwine('ss.tree', function($){
         var confirmed = confirm(
           i18n.inject(
             i18n._t(
-              "CMSMAIN.BATCH_UNPUBLISH_PROMPT",
+              "Admin.BATCH_UNPUBLISH_PROMPT",
               "You have {num} page(s) selected.\n\nDo you really want to unpublish"
             ),
             {'num': ids.length}
@@ -95,7 +95,7 @@ $.entwine('ss.tree', function($){
         var confirmed = confirm(
           i18n.inject(
             i18n._t(
-              "CMSMAIN.BATCH_DELETE_PROMPT",
+              "Admin.BATCH_DELETE_PROMPT",
               "You have {num} page(s) selected.\n\nAre you sure you want to delete these pages?\n\nThese pages and all of their children pages will be deleted and sent to the archive."
             ),
             {'num': ids.length}
@@ -109,7 +109,7 @@ $.entwine('ss.tree', function($){
         var confirmed = confirm(
           i18n.inject(
             i18n._t(
-              "CMSMAIN.BATCH_RESTORE_PROMPT",
+              "Admin.BATCH_RESTORE_PROMPT",
               "You have {num} page(s) selected.\n\nDo you really want to restore to stage?\n\nChildren of archived pages will be restored to the root level, unless those pages are also being restored."
             ),
             {'num': ids.length}
@@ -249,7 +249,7 @@ $.entwine('ss.tree', function($){
 
       // if no nodes are selected, return with an error
       if(!ids || !ids.length) {
-        alert(i18n._t('CMSMAIN.SELECTONEPAGE', 'Please select at least one page'));
+        alert(i18n._t('Admin.SELECTONEPAGE', 'Please select at least one page'));
         e.preventDefault();
         return false;
       }

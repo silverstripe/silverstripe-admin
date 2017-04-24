@@ -45,7 +45,7 @@ class Preview extends SilverStripeComponent {
       editUrl = this.props.itemLinks.edit.href;
       toolbarButtons.push(
         <a key={editKey} href={editUrl} className="btn btn-secondary-outline font-icon-edit">
-          <span className="btn__title">{ i18n._t('Preview.EDIT', 'Edit') }</span>
+          <span className="btn__title">{ i18n._t('Admin.EDIT', 'Edit') }</span>
         </a>
       );
     }

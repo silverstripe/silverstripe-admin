@@ -412,7 +412,7 @@ jQuery.entwine('ss', function($) {
           buttons: {
             'insert': {
               text: i18n._t(
-                'HtmlEditorField.INSERT',
+                'Admin.INSERT',
                 'Insert'
               ),
               'data-icon': 'accept',
@@ -755,7 +755,7 @@ jQuery.entwine('ss', function($) {
         default:
           // This type does not support anchors at all.
           dfdAnchors.reject(i18n._t(
-            'HtmlEditorField.ANCHORSNOTSUPPORTED',
+            'Admin.ANCHORSNOTSUPPORTED',
             'Anchors are not supported for this link type.'
           ));
           break;
@@ -776,7 +776,7 @@ jQuery.entwine('ss', function($) {
       selector.empty();
       selector.append($(
         '<option value="" selected="1">' +
-        i18n._t('HtmlEditorField.LOOKINGFORANCHORS', 'Looking for anchors...') +
+        i18n._t('Admin.LOOKINGFORANCHORS', 'Looking for anchors...') +
         '</option>'
       ));
 
@@ -784,7 +784,7 @@ jQuery.entwine('ss', function($) {
         selector.empty();
         selector.append($(
           '<option value="" selected="1">' +
-          i18n._t('HtmlEditorField.SelectAnchor') +
+          i18n._t('Admin.SelectAnchor') +
           '</option>'
         ));
 

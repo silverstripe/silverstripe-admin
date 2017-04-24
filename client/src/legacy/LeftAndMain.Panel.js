@@ -104,9 +104,9 @@ $.entwine('ss', function($) {
       if(!this.find('.cms-panel-toggle').length) {
         container = $("<div class='toolbar toolbar--south cms-panel-toggle'></div>")
           .append('<a class="toggle-expand" href="#" data-toggle="tooltip" title="'+
-              i18n._t('LeftAndMain.EXPANDPANEL', 'Expand Panel') +'"><span>&raquo;</span></a>')
+              i18n._t('Admin.EXPANDPANEL', 'Expand Panel') +'"><span>&raquo;</span></a>')
           .append('<a class="toggle-collapse" href="#" data-toggle="tooltip" title="'+
-              i18n._t('LeftAndMain.COLLAPSEPANEL', 'Collapse Panel') +'"><span>&laquo;</span></a>');
+              i18n._t('Admin.COLLAPSEPANEL', 'Collapse Panel') +'"><span>&laquo;</span></a>');
 
         this.append(container);
       }

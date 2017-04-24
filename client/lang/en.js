@@ -24,5 +24,5 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "ModelAdmin.SAVED": "Saved",
     "ModelAdmin.VALIDATIONERROR": "Validation Error",
     "SecurityAdmin.BATCHACTIONSDELETECONFIRM": "Do you really want to delete %s groups?"
-});
+  });
 }

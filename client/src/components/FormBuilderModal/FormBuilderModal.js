@@ -148,7 +148,7 @@ class FormBuilderModal extends SilverStripeComponent {
           type="button"
           className="close form-builder-modal__close-button"
           onClick={this.handleHide}
-          aria-label={i18n._t('FormBuilderModal.CLOSE', 'Close')}
+          aria-label={i18n._t('Admin.CLOSE', 'Close')}
         >
           <span aria-hidden="true">×</span>
         </button>
