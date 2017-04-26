@@ -4,6 +4,7 @@ require('i18n.js');
 // Expose fields (see webpack config for matching "externals" config)
 require('expose?SilverStripeComponent!lib/SilverStripeComponent');
 require('expose?Backend!lib/Backend');
+require('expose?reduxFieldReducer!lib/reduxFieldReducer');
 require('expose?schemaFieldValues!lib/schemaFieldValues');
 require('expose?FieldHolder!components/FieldHolder/FieldHolder');
 require('expose?Form!components/Form/Form');
@@ -29,6 +30,9 @@ require('expose?TextField!components/TextField/TextField');
 require('expose?LiteralField!components/LiteralField/LiteralField');
 require('expose?Toolbar!components/Toolbar/Toolbar');
 require('expose?Breadcrumb!components/Breadcrumb/Breadcrumb');
+require('expose?TreeDropdownFieldNode!components/TreeDropdownField/TreeDropdownFieldNode');
+require('expose?TreeDropdownFieldMenu!components/TreeDropdownField/TreeDropdownFieldMenu');
+require('expose?TreeDropdownField!components/TreeDropdownField/TreeDropdownField');
 require('expose?BreadcrumbsActions!state/breadcrumbs/BreadcrumbsActions');
 require('expose?RecordsActions!state/records/RecordsActions');
 require('expose?RecordsActionTypes!state/records/RecordsActionTypes');

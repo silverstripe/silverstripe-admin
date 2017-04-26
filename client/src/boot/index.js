@@ -11,6 +11,7 @@ import SchemaReducer from 'state/schema/SchemaReducer';
 import RecordsReducer from 'state/records/RecordsReducer';
 import BreadcrumbsReducer from 'state/breadcrumbs/BreadcrumbsReducer';
 import bootInjector from 'boot/BootInjector';
+import TreeDropdownFieldReducer from 'state/treeDropdownField/TreeDropdownFieldReducer';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { printRequest } from 'apollo-client/transport/networkInterface';
 import qs from 'qs';
@@ -67,6 +68,7 @@ function appBoot() {
   reducerRegister.add('breadcrumbs', BreadcrumbsReducer);
   reducerRegister.add('routing', routerReducer);
   reducerRegister.add('apollo', apolloClient.reducer());
+  reducerRegister.add('treeDropdownField', TreeDropdownFieldReducer);
 
   bootInjector.start();
 
