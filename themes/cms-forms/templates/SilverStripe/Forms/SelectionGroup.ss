@@ -18,7 +18,7 @@
 	<% else %>
 		<% loop $FieldSet %>
 			<li class="selection-group__item<% if $Selected %> selected<% end_if %>" id="$HolderID">
-				{$RadioButton}{$RadioLabel}
+				<label>{$RadioButton} {$RadioLabel}</label>
 				<%-- Bypass composite item field and directly render child fields --%>
 				<% if $FieldList %>
 					<div class="selection-group selection-group__item__fieldlist" id="$ID">
