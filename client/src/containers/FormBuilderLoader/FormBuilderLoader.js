@@ -234,7 +234,7 @@ class FormBuilderLoader extends Component {
       .then(formSchema => {
         this.props.actions.schema.setSchemaLoading(this.props.schemaUrl, false);
 
-        if(typeof this.props.onFetchingSchema === 'function') {
+        if (typeof this.props.onFetchingSchema === 'function') {
           this.props.onFetchingSchema();
         }
 
@@ -313,6 +313,7 @@ FormBuilderLoader.propTypes = Object.assign({}, basePropTypes, {
   schema: schemaPropType,
   form: PropTypes.string,
   submitting: PropTypes.bool,
+  onFetchingSchema: PropTypes.func,
 });
 
 FormBuilderLoader.defaultProps = {

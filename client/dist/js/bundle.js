@@ -465,8 +465,9 @@ throw e}))}},{key:"handleAutofill",value:function e(t,n){this.props.actions.redu
 var t=d({},this.props,{form:this.props.schemaUrl,onSubmitSuccess:this.props.onSubmitSuccess,handleSubmit:this.handleSubmit,onAutofill:this.handleAutofill})
 return p.default.createElement(S.default,t)}}]),t}(f.Component)
 E.propTypes=d({},D.basePropTypes,{actions:f.PropTypes.shape({schema:f.PropTypes.object,reduxFrom:f.PropTypes.object}),schemaUrl:f.PropTypes.string.isRequired,schema:D.schemaPropType,form:f.PropTypes.string,
-submitting:f.PropTypes.bool}),E.defaultProps={baseFormComponent:(0,M.reduxForm)()(Y.default),baseFieldComponent:M.Field},t.default=(0,h.connect)(u,l)(E)},,,function(e,t){e.exports=ReduxForm},function(e,t){
-e.exports=SchemaActions},function(e,t){e.exports=FormBuilder},function(e,t,n){(function(t){e.exports=t.FormBuilderModal=n(116)}).call(t,function(){return this}())},function(e,t,n){"use strict"
+submitting:f.PropTypes.bool,onFetchingSchema:f.PropTypes.func}),E.defaultProps={baseFormComponent:(0,M.reduxForm)()(Y.default),baseFieldComponent:M.Field},t.default=(0,h.connect)(u,l)(E)},,,function(e,t){
+e.exports=ReduxForm},function(e,t){e.exports=SchemaActions},function(e,t){e.exports=FormBuilder},function(e,t,n){(function(t){e.exports=t.FormBuilderModal=n(116)}).call(t,function(){return this}())},function(e,t,n){
+"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function a(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function i(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called")
 
 
