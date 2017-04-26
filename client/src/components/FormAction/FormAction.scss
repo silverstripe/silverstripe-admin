@@ -269,7 +269,7 @@ button.close {
   right: 0;
   margin-right: 5px;
   margin-top: -2px;
-  position: absolute;
+  position: static;
 
   // Temp override JQueryUI color
   &::before {

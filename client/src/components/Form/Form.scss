@@ -12,12 +12,26 @@
 
   > fieldset {
     flex: 1;
+    overflow-y: auto;
   }
 
   > .btn-toolbar {
     margin-bottom: 0;
+    border-top: 1px solid $border-color-light;
+
+    .form-group {
+      margin-bottom: 0;
+    }
   }
 }
+
+.form--padded {
+
+  > fieldset, .btn-toolbar {
+    padding: 20px;
+  }
+}
+
 
 // Form divider lines
 .form__divider::after,
