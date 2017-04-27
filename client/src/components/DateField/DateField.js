@@ -26,14 +26,14 @@ class DateField extends TextField {
 
     let val = this.props.value;
 
-    if (!this.props.html5 || (this.hasNativeSupport() && this.props.html5)) {
+    if (!this.props.data.html5 || (this.hasNativeSupport() && this.props.data.html5)) {
       val = this.props.value;
     } else {
       val = this.getLocalisedValue();
     }
 
     Object.assign(props, super.getInputProps(), {
-      type: this.props.html5 ? 'date' : 'text',
+      type: this.props.data.html5 ? 'date' : 'text',
       // `parse()` of redux-form `Field` should be used for parsing the
       // localised input value to iso format to pass to redux store but `Field`
       // is not accessible in this context.
@@ -66,7 +66,7 @@ class DateField extends TextField {
 
     // When browser support input=date the date value is already in iso format
     // and html5 is enabled
-    if (!this.props.html5 || (this.hasNativeSupport() && this.props.html5)) {
+    if (!this.props.data.html5 || (this.hasNativeSupport() && this.props.data.html5)) {
       isoValue = enteredValue;
     } else {
       isoValue = this.convertToIso(enteredValue);
@@ -112,6 +112,13 @@ class DateField extends TextField {
 
 DateField.propTypes = {
   lang: React.PropTypes.string,
+  data: React.PropTypes.shape({
+    html5: React.PropTypes.boolean,
+  }),
+};
+
+DateField.defaultProps = {
+  data: {},
 };
 
 export { DateField };

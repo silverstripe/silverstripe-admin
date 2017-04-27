@@ -1,3 +1,4 @@
+import React from 'react';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import { DateField } from '../DateField/DateField';
 import moment from 'moment';
@@ -6,20 +7,21 @@ import i18n from 'i18n';
 
 const localFormat = 'L LT';
 
-class DateTimeField extends DateField {
+class DatetimeField extends DateField {
 
   getInputProps() {
     const placeholder = i18n.inject(
-      i18n._t('DateTimeField.DateTimeFormatExample', 'Example: {datetime}'),
+      i18n._t('DatetimeField.DateTimeFormatExample', 'Example: {datetime}'),
       { datetime: moment().endOf('month').format(localFormat) }
     );
-    const props = {};
-    Object.assign(props, super.getInputProps());
-    Object.assign(props, {
-      type: this.props.html5 ? 'datetime-local' : 'text',
-      placeholder,
-    });
-    return props;
+    return Object.assign(
+      {},
+      super.getInputProps(),
+      {
+        type: this.props.data.html5 ? 'datetime-local' : 'text',
+        placeholder,
+      },
+    );
   }
 
   isMultiline() {
@@ -68,6 +70,17 @@ class DateTimeField extends DateField {
 
 }
 
-export { DateTimeField };
+DatetimeField.propTypes = {
+  lang: React.PropTypes.string,
+  data: React.PropTypes.shape({
+    html5: React.PropTypes.boolean,
+  }),
+};
 
-export default fieldHolder(DateTimeField);
+DatetimeField.defaultProps = {
+  data: {},
+};
+
+export { DatetimeField };
+
+export default fieldHolder(DatetimeField);

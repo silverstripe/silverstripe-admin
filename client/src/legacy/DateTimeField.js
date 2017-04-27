@@ -42,7 +42,7 @@ $.entwine('ss', (jQuery) => {
 
       // Set useful localised placeholder
       const placeholder = i18n.inject(
-        i18n._t('DateTimeField.DateTimeFormatExample', 'Example: {datetime}'),
+        i18n._t('DatetimeField.DateTimeFormatExample', 'Example: {datetime}'),
         { datetime: moment().endOf('month').format('L LT') }
       );
       this.attr('placeholder', placeholder);

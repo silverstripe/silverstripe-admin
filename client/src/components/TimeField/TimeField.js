@@ -1,3 +1,4 @@
+import React from 'react';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import { DateField } from '../DateField/DateField';
 import moment from 'moment';
@@ -16,7 +17,7 @@ class TimeField extends DateField {
     const props = {};
     Object.assign(props, super.getInputProps());
     Object.assign(props, {
-      type: this.props.html5 ? 'time' : 'text',
+      type: this.props.data.html5 ? 'time' : 'text',
       placeholder,
     });
     return props;
@@ -53,6 +54,17 @@ class TimeField extends DateField {
   }
 
 }
+
+TimeField.propTypes = {
+  lang: React.PropTypes.string,
+  data: React.PropTypes.shape({
+    html5: React.PropTypes.boolean,
+  }),
+};
+
+TimeField.defaultProps = {
+  data: {},
+};
 
 export { TimeField };
 

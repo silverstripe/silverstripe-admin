@@ -73,7 +73,7 @@ require('../legacy/DateField.js');
 require('../legacy/ToggleCompositeField.js');
 require('../legacy/TreeDropdownField.js');
 require('../legacy/DateField.js');
-require('../legacy/DateTimeField.js');
+require('../legacy/DatetimeField.js');
 require('../legacy/HtmlEditorField.js');
 require('../legacy/TabSet.js');
 require('../legacy/GridField.js');

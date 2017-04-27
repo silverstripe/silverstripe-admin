@@ -38,8 +38,8 @@ class Injector {
         return this.components.DateField;
       case 'Time':
         return this.components.TimeField;
-      case 'DateTime':
-        return this.components.DateTimeField;
+      case 'Datetime':
+        return this.components.DatetimeField;
       case 'Hidden':
         return this.components.HiddenField;
       case 'SingleSelect':

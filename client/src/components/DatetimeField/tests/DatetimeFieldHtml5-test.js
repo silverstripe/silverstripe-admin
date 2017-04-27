@@ -2,7 +2,7 @@
 
 jest.unmock('react');
 jest.unmock('react-addons-test-utils');
-jest.unmock('../DateTimeField');
+jest.unmock('../DatetimeField');
 
 jest.mock('modernizr', () => ({
   inputtypes: {
@@ -12,9 +12,9 @@ jest.mock('modernizr', () => ({
 
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
-import { DateTimeField } from '../DateTimeField';
+import { DatetimeField } from '../DatetimeField';
 
-describe('DateTimeField with html5 date time field support', () => {
+describe('DatetimeField with html5 date time field support', () => {
   let props = null;
 
   beforeEach(() => {
@@ -27,22 +27,24 @@ describe('DateTimeField with html5 date time field support', () => {
   });
 
   describe('Browser supports html5 date time input', () => {
-    let dateTimeField = null;
+    let datetimeField = null;
     let inputField = null;
     const modProps = {};
     Object.assign(modProps, props, {
       lang: 'en_NZ',
       value: '2017-01-05T02:23:22',
-      html5: true,
+      data: {
+        html5: true,
+      },
       onChange: jest.genMockFunction(),
     });
 
     beforeEach(() => {
-      dateTimeField = ReactTestUtils.renderIntoDocument(
-        <DateTimeField {...modProps} />
+      datetimeField = ReactTestUtils.renderIntoDocument(
+        <DatetimeField {...modProps} />
       );
 
-      inputField = ReactTestUtils.findRenderedDOMComponentWithTag(dateTimeField, 'input');
+      inputField = ReactTestUtils.findRenderedDOMComponentWithTag(datetimeField, 'input');
     });
 
     it('should use localised format of date time value in the input field', () => {
@@ -52,28 +54,30 @@ describe('DateTimeField with html5 date time field support', () => {
     it('should pass iso format as entered in the input field', () => {
       inputField.value = '2018-02-05T03:34:33';
       ReactTestUtils.Simulate.change(inputField);
-      expect(dateTimeField.props.onChange).toBeCalledWith('2018-02-05T03:34:33');
+      expect(datetimeField.props.onChange).toBeCalledWith('2018-02-05T03:34:33');
     });
   });
 
   describe('Browser supports html5 date time input but user has opt-outed', () => {
-    let dateTimeField = null;
+    let datetimeField = null;
     let inputFields = null;
     let inputField = null;
     const modProps = {};
     Object.assign(modProps, props, {
       lang: 'en_NZ',
       value: 'Jan 1, 2017 2:56 PM',
-      html5: false,
+      data: {
+        html5: false,
+      },
       onChange: jest.genMockFunction(),
     });
 
     beforeEach(() => {
-      dateTimeField = ReactTestUtils.renderIntoDocument(
-        <DateTimeField {...modProps} />
+      datetimeField = ReactTestUtils.renderIntoDocument(
+        <DatetimeField {...modProps} />
       );
 
-      inputFields = ReactTestUtils.scryRenderedDOMComponentsWithTag(dateTimeField, 'input');
+      inputFields = ReactTestUtils.scryRenderedDOMComponentsWithTag(datetimeField, 'input');
       inputField = inputFields[0];
     });
 

@@ -15,7 +15,7 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "CMSMAIN.SELECTONEPAGE": "Please select at least one page",
     "DateField.DateFormatExample": "Example: {date}",
     "TimeField.TimeFormatExample": "Example: {time}",
-    "DateTimeField.DateTimeFormatExample": "Example: {datetime}",
+    "DatetimeField.DateTimeFormatExample": "Example: {datetime}",
     "File.NO_SIZE": "N\/A",
     "FormBuilderModal.CLOSE": "Close",
     "LeftAndMain.CONFIRMUNSAVED": "Are you sure you want to navigate away from this page?\n\nWARNING: Your changes have not been saved.\n\nPress OK to continue, or Cancel to stay on the current page.",
