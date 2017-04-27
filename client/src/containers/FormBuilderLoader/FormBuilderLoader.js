@@ -19,7 +19,6 @@ class FormBuilderLoader extends Component {
 
   constructor(props) {
     super(props);
-console.log('loader constructor');
     this.handleSubmit = this.handleSubmit.bind(this);
     this.clearSchema = this.clearSchema.bind(this);
     this.reduceSchemaErrors = this.reduceSchemaErrors.bind(this);
@@ -81,7 +80,6 @@ console.log('loader constructor');
    * @returns {Promise}
    */
   handleSubmit(data, action, submitFn) {
-  	console.log('submit!!!!!!!');
     let promise = null;
     if (typeof this.props.handleSubmit === 'function') {
       promise = this.props.handleSubmit(data, action, submitFn);

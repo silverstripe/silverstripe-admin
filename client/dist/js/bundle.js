@@ -312,9 +312,7 @@ if(Symbol.iterator in Object(t))return e(t,n)
 throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),d=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
 r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),c=n(5),f=r(c),p=n(14),h=r(p),_=n(20),m=r(_),y=n(23),g=r(y),v=n(40),M=r(v),b=n(106),w=r(b),L=n(107),T=r(L),k=function(e){
 function t(e){i(this,t)
-var n=s(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
-console.log("form builder constructor")
-var r=e.schema.schema
+var n=s(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e)),r=e.schema.schema
 return n.state={submittingAction:null},n.submitApi=w.default.createEndpointFetcher({url:r.attributes.action,method:r.attributes.method}),n.mapActionsToComponents=n.mapActionsToComponents.bind(n),n.mapFieldsToComponents=n.mapFieldsToComponents.bind(n),
 n.handleSubmit=n.handleSubmit.bind(n),n.handleAction=n.handleAction.bind(n),n.buildComponent=n.buildComponent.bind(n),n.validateForm=n.validateForm.bind(n),n}return o(t,e),d(t,[{key:"validateForm",value:function e(t){
 var n=this
@@ -435,14 +433,11 @@ for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},
 r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),f=n(5),p=a(f),h=n(110),_=n(111),m=n(8),y=a(m),g=n(18),v=a(g),M=n(112),b=n(113),w=r(b),L=n(14),T=a(L),k=n(28),Y=a(k),D=n(114),S=a(D),E=function(e){
 function t(e){i(this,t)
 var n=s(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
-return console.log("loader constructor"),n.handleSubmit=n.handleSubmit.bind(n),n.clearSchema=n.clearSchema.bind(n),n.reduceSchemaErrors=n.reduceSchemaErrors.bind(n),n.handleAutofill=n.handleAutofill.bind(n),
-n}return o(t,e),c(t,[{key:"componentDidMount",value:function e(){this.fetch()}},{key:"componentDidUpdate",value:function e(t){this.props.schemaUrl!==t.schemaUrl&&(this.clearSchema(t.schemaUrl),this.fetch())
-
-}},{key:"componentWillUnmount",value:function e(){this.clearSchema(this.props.schemaUrl)}},{key:"getMessages",value:function e(t){var n={}
+return n.handleSubmit=n.handleSubmit.bind(n),n.clearSchema=n.clearSchema.bind(n),n.reduceSchemaErrors=n.reduceSchemaErrors.bind(n),n.handleAutofill=n.handleAutofill.bind(n),n}return o(t,e),c(t,[{key:"componentDidMount",
+value:function e(){this.fetch()}},{key:"componentDidUpdate",value:function e(t){this.props.schemaUrl!==t.schemaUrl&&(this.clearSchema(t.schemaUrl),this.fetch())}},{key:"componentWillUnmount",value:function e(){
+this.clearSchema(this.props.schemaUrl)}},{key:"getMessages",value:function e(t){var n={}
 return t&&t.fields&&t.fields.forEach(function(e){e.message&&(n[e.name]=e.message)}),n}},{key:"clearSchema",value:function e(t){t&&((0,M.destroy)(t),this.props.actions.schema.setSchema(t,null))}},{key:"handleSubmit",
-value:function e(t,n,r){var a=this
-console.log("submit!!!!!!!")
-var i=null
+value:function e(t,n,r){var a=this,i=null
 if(i="function"==typeof this.props.handleSubmit?this.props.handleSubmit(t,n,r):r(),!i)throw new Error("Promise was not returned for submitting")
 return i.then(function(e){var t=e
 return t&&(t=a.reduceSchemaErrors(t),a.props.actions.schema.setSchema(a.props.schemaUrl,t)),t}).then(function(e){if(!e||!e.state)return e

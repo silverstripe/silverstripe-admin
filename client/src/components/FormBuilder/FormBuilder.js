@@ -10,7 +10,6 @@ class FormBuilder extends SilverStripeComponent {
 
   constructor(props) {
     super(props);
-console.log('form builder constructor');
     const schemaStructure = props.schema.schema;
     this.state = { submittingAction: null };
     this.submitApi = backend.createEndpointFetcher({
