@@ -20,7 +20,7 @@ class DatetimeField extends DateField {
       {
         type: this.props.data.html5 ? 'datetime-local' : 'text',
         placeholder,
-      },
+      }
     );
   }
 
