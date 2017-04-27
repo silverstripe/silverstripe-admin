@@ -581,8 +581,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         Requirements::javascript(FRAMEWORK_ADMIN_DIR . '/client/dist/js/vendor.js');
         Requirements::javascript(FRAMEWORK_ADMIN_DIR . '/client/dist/js/bundle.js');
         Requirements::css(ltrim(FRAMEWORK_ADMIN_DIR . '/client/dist/styles/bundle.css', '/'));
-
-        Requirements::add_i18n_javascript(ltrim(FRAMEWORK_DIR . '/client/lang', '/'), false, true);
+        
         Requirements::add_i18n_javascript(FRAMEWORK_ADMIN_DIR . '/client/lang', false, true);
 
         if (LeftAndMain::config()->uninherited('session_keepalive_ping')) {

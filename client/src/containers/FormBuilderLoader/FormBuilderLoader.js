@@ -19,7 +19,6 @@ class FormBuilderLoader extends Component {
 
   constructor(props) {
     super(props);
-
     this.handleSubmit = this.handleSubmit.bind(this);
     this.clearSchema = this.clearSchema.bind(this);
     this.reduceSchemaErrors = this.reduceSchemaErrors.bind(this);

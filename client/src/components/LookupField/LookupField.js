@@ -57,7 +57,7 @@ class LookupField extends SilverStripeComponent {
     if (!this.props.source) {
       return null;
     }
-    const none = `('${i18n._t('FormField.NONE', 'None')}')`;
+    const none = `('${i18n._t('Admin.NONE', 'None')}')`;
 
     return (
       <FormControl.Static {...this.getFieldProps()}>

@@ -643,7 +643,7 @@ $.entwine('ss.preview', function($){
       // Alert the user as to why the preview is hidden
       if ($('.cms-preview .result-selected').hasClass('font-icon-columns')) {
         statusMessage(i18n._t(
-          'LeftAndMain.DISABLESPLITVIEW',
+          'Admin.DISABLESPLITVIEW',
           "Screen too small to show site preview in split mode"),
         "error");
       }
