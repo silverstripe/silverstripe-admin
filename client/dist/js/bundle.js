@@ -323,11 +323,10 @@ var i=new M.default(t)
 return Object.entries(t).reduce(function(e,t){var r=l(t,1),s=r[0],o=(0,_.findField)(n.props.schema.schema.fields,s),d=i.validateFieldSchema(o),c=d.valid,p=d.errors
 if(c)return e
 var h=p.map(function(e,t){return f.default.createElement("span",{key:t,className:"form__validation-message"},e)})
-return u({},e,a({},s,{type:"error",value:{react:h}}))},{})}},{key:"handleAction",value:function e(t){console.log(t),"function"==typeof this.props.handleAction&&(console.log("handling it"),this.props.handleAction(t,this.props.values)),
-t.isPropagationStopped()||(console.log("submitting action"),this.setState({submittingAction:t.currentTarget.name}))}},{key:"handleSubmit",value:function e(t){var n=this
-console.log("submit")
-var r=this.state.submittingAction?this.state.submittingAction:this.props.schema.schema.actions[0].name,i=u({},t,a({},r,1)),s=this.props.responseRequestedSchema.join(),o={"X-Formschema-Request":s,"X-Requested-With":"XMLHttpRequest"
-},l=function e(t){return n.submitApi(t||i,o).then(function(e){return n.setState({submittingAction:null}),e}).catch(function(e){throw n.setState({submittingAction:null}),e})}
+return u({},e,a({},s,{type:"error",value:{react:h}}))},{})}},{key:"handleAction",value:function e(t){"function"==typeof this.props.handleAction&&this.props.handleAction(t,this.props.values),t.isPropagationStopped()||this.setState({
+submittingAction:t.currentTarget.name})}},{key:"handleSubmit",value:function e(t){var n=this,r=this.state.submittingAction?this.state.submittingAction:this.props.schema.schema.actions[0].name,i=u({},t,a({},r,1)),s=this.props.responseRequestedSchema.join(),o={
+"X-Formschema-Request":s,"X-Requested-With":"XMLHttpRequest"},l=function e(t){return n.submitApi(t||i,o).then(function(e){return n.setState({submittingAction:null}),e}).catch(function(e){throw n.setState({
+submittingAction:null}),e})}
 return"function"==typeof this.props.handleSubmit?this.props.handleSubmit(i,r,l):l()}},{key:"buildComponent",value:function e(t){var n=t,r=null!==n.schemaComponent?T.default.getComponentByName(n.schemaComponent):T.default.getComponentByDataType(n.type)
 
 

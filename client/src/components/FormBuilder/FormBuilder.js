@@ -74,16 +74,13 @@ class FormBuilder extends SilverStripeComponent {
    * @param {Event} event
    */
   handleAction(event) {
-  	console.log(event);
     // Custom handlers
     if (typeof this.props.handleAction === 'function') {
-    	console.log('handling it');
       this.props.handleAction(event, this.props.values);
     }
 
     // Allow custom handlers to cancel event
     if (!event.isPropagationStopped()) {
-    	console.log('submitting action');
       this.setState({ submittingAction: event.currentTarget.name });
     }
   }
@@ -97,7 +94,6 @@ class FormBuilder extends SilverStripeComponent {
    * @return {Promise|null}
    */
   handleSubmit(data) {
-  	console.log('submit');
     // Add form action data (or default to first action, same as browser behaviour)
     const action = this.state.submittingAction
       ? this.state.submittingAction
