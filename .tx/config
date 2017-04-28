@@ -1,0 +1,8 @@
+[main]
+host = https://www.transifex.com
+
+[silverstripe-admin.master-js]
+file_filter = client/lang/src/<lang>.json
+source_file = client/lang/src/en.json
+source_lang = en
+type = KEYVALUEJSON
