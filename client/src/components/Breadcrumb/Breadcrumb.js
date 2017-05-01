@@ -22,12 +22,7 @@ class Breadcrumb extends SilverStripeComponent {
            onClick={crumb.onClick}
          >{crumb.text}</Link>
         </li>
-    )).concat([
-      <li
-        key={this.props.crumbs.length - 1}
-        className="breadcrumb__item"
-      />,
-    ]);
+    ));
   }
 
   renderLastCrumb() {
@@ -56,9 +51,11 @@ class Breadcrumb extends SilverStripeComponent {
   render() {
     return (
       <div className="breadcrumb__container fill-height flexbox-area-grow">
-        <ol className="breadcrumb">
-          {this.renderBreadcrumbs()}
-        </ol>
+        <div className="breadcrumb__list-container">
+          <ol className="breadcrumb">
+            {this.renderBreadcrumbs()}
+          </ol>
+        </div>
         {this.renderLastCrumb()}
       </div>
     );

@@ -32,15 +32,21 @@ describe('BreadcrumbsComponent', () => {
       breadcrumbs = ReactTestUtils.renderIntoDocument(
         <Breadcrumb {...props} />
       );
-      const listEls = breadcrumbs.renderBreadcrumbs();
-      expect(listEls[0].props.children.props.children).toBe('breadcrumb1');
-      expect(listEls[1].props.children.props.children).toBe('breadcrumb2');
-      expect(listEls[2].props.children).toBe(undefined);
 
-      const lastEl = breadcrumbs.renderLastCrumb();
-      expect(lastEl.props.children.props.children[0]).toBe('breadcrumb3');
-      expect(lastEl.props.children.props.children[1].props.className.split(' '))
-        .toContain('breadcrumb3icon');
+      const links = ReactTestUtils.scryRenderedDOMComponentsWithClass(
+        breadcrumbs,
+        'breadcrumb__item-title'
+      );
+      expect(links[0].textContent).toBe('breadcrumb1');
+      expect(links[1].textContent).toBe('breadcrumb2');
+      expect(links[2].textContent).toBe('breadcrumb3');
+      expect(links[2].parentElement.classList).toContain('breadcrumb__item--last');
+
+      const lastLinkIcon = ReactTestUtils.scryRenderedDOMComponentsWithClass(
+        breadcrumbs,
+        'breadcrumb3icon'
+      );
+      expect(lastLinkIcon).toBeTruthy();
     });
 
     it('should return null if props.crumbs is not set', () => {
