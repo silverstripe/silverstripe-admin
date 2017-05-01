@@ -15079,11 +15079,14 @@ div.TreeDropdownField a.jstree-loading .jstree-pageicon{
   opacity:0;
 }
 
+.breadcrumb,.breadcrumb__list-container{
+  line-height:14px;
+  min-height:14px;
+}
+
 .breadcrumb{
   display:inline-block;
   font-size:.846rem;
-  line-height:14px;
-  min-height:14px;
   margin-bottom:0;
   max-width:100%;
   white-space:nowrap;

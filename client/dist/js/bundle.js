@@ -784,8 +784,8 @@ className:"breadcrumb__item-title",to:e.href,onClick:e.onClick},e.text))}):null}
 if(!t)return null
 var n=["breadcrumb__icon"]
 return t.icon&&n.push(t.icon.className),d.default.createElement("div",{className:"breadcrumb__item breadcrumb__item--last"},d.default.createElement("h2",{className:"breadcrumb__item-title"},t.text,t.icon&&d.default.createElement("span",{
-className:n.join(" "),onClick:t.icon.action})))}},{key:"render",value:function e(){return d.default.createElement("div",{className:"breadcrumb__container fill-height flexbox-area-grow"},d.default.createElement("div",null,d.default.createElement("ol",{
-className:"breadcrumb"},this.renderBreadcrumbs())),this.renderLastCrumb())}}]),t}(f.default)
+className:n.join(" "),onClick:t.icon.action})))}},{key:"render",value:function e(){return d.default.createElement("div",{className:"breadcrumb__container fill-height flexbox-area-grow"},d.default.createElement("div",{
+className:"breadcrumb__list-container"},d.default.createElement("ol",{className:"breadcrumb"},this.renderBreadcrumbs())),this.renderLastCrumb())}}]),t}(f.default)
 _.propTypes={crumbs:d.default.PropTypes.array},t.Breadcrumb=_,t.default=(0,p.connect)(o)(_)},function(e,t){e.exports=ReactRouter},function(e,t,n){(function(t){e.exports=t.TreeDropdownFieldNode=n(156)}).call(t,function(){
 return this}())},function(e,t,n){"use strict"
 Object.defineProperty(t,"__esModule",{value:!0})
