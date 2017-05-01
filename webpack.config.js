@@ -91,6 +91,8 @@ const config = [
       config: 'Config',
       'lib/Router': 'Router',
       qs: 'qs',
+      moment: 'moment',
+      modernizr: 'modernizr',
     },
     module: {
       loaders: [
