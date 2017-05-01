@@ -6,7 +6,7 @@
     "Admin.BATCH_RESTORE_PROMPT": "You have {num} page(s) selected.\n\nDo you really want to restore to stage?\n\nChildren of archived pages will be restored to the root level, unless those pages are also being restored.",
     "Admin.BATCH_UNPUBLISH_PROMPT": "You have {num} page(s) selected.\n\nDo you really want to unpublish",
     "Admin.SELECTONEPAGE": "Please select at least one page",
-    "Admin.DateFormatExample": "Example: {date}",
+    "Admin.FormatExample": "Example: {format}",
     "Admin.NO_SIZE": "N\/A",
     "Admin.CLOSE": "Close",
     "Admin.CONFIRMUNSAVED": "Are you sure you want to navigate away from this page?\n\nWARNING: Your changes have not been saved.\n\nPress OK to continue, or Cancel to stay on the current page.",

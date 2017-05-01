@@ -11,8 +11,8 @@ class DatetimeField extends DateField {
 
   getInputProps() {
     const placeholder = i18n.inject(
-      i18n._t('DatetimeField.DateTimeFormatExample', 'Example: {datetime}'),
-      { datetime: moment().endOf('month').format(localFormat) }
+      i18n._t('Admin.FormatExample', 'Example: {format}'),
+      { format: moment().endOf('month').format(localFormat) }
     );
     return Object.assign(
       {},

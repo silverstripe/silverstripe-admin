@@ -19,8 +19,8 @@ class DateField extends TextField {
 
   getInputProps() {
     const placeholder = i18n.inject(
-      i18n._t('DateField.DateFormatExample', 'Example: {datetime}'),
-      { datetime: moment().endOf('month').format(localFormat) }
+      i18n._t('Admin.FormatExample', 'Example: {format}'),
+      { format: moment().endOf('month').format(localFormat) }
     );
     const props = {};
 
