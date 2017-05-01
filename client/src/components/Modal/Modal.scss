@@ -21,6 +21,8 @@
 
   // Close icon
   .close {
+    position: relative;
+    z-index: 2;
     font-size: 28px;
     height: 32px;
     opacity: .5;

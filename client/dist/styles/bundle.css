@@ -15156,19 +15156,22 @@ div.TreeDropdownField a.jstree-loading .jstree-pageicon{
 }
 
 .form-builder-modal__close-button{
-  top:.9231rem;
-  right:.9231rem;
-  position:absolute;
-  z-index:61;
-  margin-right:0;
-  margin-top:-2px;
+  position:relative;
+  z-index:2;
+  font-size:28px;
   height:32px;
+  opacity:.5;
+  margin-top:0;
 }
 
 .form-builder-modal__close-button span{
   overflow:hidden;
   display:block;
-  margin-top:-7px;
+  margin-top:-6px;
+}
+
+.form-builder-modal__close-button:hover{
+  opacity:.7;
 }
 
 .form__field-message-item{
@@ -16280,6 +16283,8 @@ input.checkbox,input.radio,input[type=checkbox],input[type=radio]{
 }
 
 .modal-header .close{
+  position:relative;
+  z-index:2;
   font-size:28px;
   height:32px;
   opacity:.5;
