@@ -4162,9 +4162,7 @@ if(void 0!==s)return s.call(r)},d=n(5),c=r(d),f=n(147),p=r(f),h=n(146),_=n(227),
 
 }return s(t,e),u(t,[{key:"render",value:function e(){return l(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"render",this).call(this)}},{key:"hasNativeSupport",value:function e(){return g.default.inputtypes.date
 
-}},{key:"getInputProps",value:function e(){var n=b.default.inject(b.default._t("DateField.DateFormatExample","Example: {datetime}"),{datetime:(0,m.default)().endOf("month").format(M)}),r={},a=this.props.value
-
-
+}},{key:"getInputProps",value:function e(){var n=b.default.inject(b.default._t("Admin.FormatExample","Example: {format}"),{format:(0,m.default)().endOf("month").format(M)}),r={},a=this.props.value
 return a=!this.props.data.html5||this.hasNativeSupport()&&this.props.data.html5?this.props.value:this.getLocalisedValue(),o(r,l(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"getInputProps",this).call(this),{
 type:this.props.data.html5?"date":"text",defaultValue:a,placeholder:n}),delete r.value,r}},{key:"getLocalisedValue",value:function e(){return this.convertToLocalised(this.props.value)}},{key:"isMultiline",
 value:function e(){return!1}},{key:"handleChange",value:function e(t){var n=t.target.value,r=""
@@ -4196,7 +4194,7 @@ return null===i?void 0:e(i,n,r)}if("value"in a)return a.value
 var s=a.get
 if(void 0!==s)return s.call(r)},d=n(5),c=r(d),f=n(147),p=r(f),h=n(387),_=n(227),m=r(_),y=n(344),g=r(y),v=n(117),b=r(v),M="LT",w=function(e){function t(){return a(this,t),i(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))
 
-}return s(t,e),u(t,[{key:"getInputProps",value:function e(){var n=b.default.inject(b.default._t("TimeField.TimeFormatExample","Example: {time}"),{time:(0,m.default)().endOf("month").format(M)}),r={}
+}return s(t,e),u(t,[{key:"getInputProps",value:function e(){var n=b.default.inject(b.default._t("Admin.FormatExample","Example: {format}"),{format:(0,m.default)().endOf("month").format(M)}),r={}
 return o(r,l(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"getInputProps",this).call(this)),o(r,{type:this.props.data.html5?"time":"text",placeholder:n}),r}},{key:"isMultiline",value:function e(){
 return!1}},{key:"hasNativeSupport",value:function e(){return g.default.inputtypes.time}},{key:"convertToLocalised",value:function e(t){var n=""
 if(t){var r=(0,m.default)(t,"HH:mm:ss")
@@ -4223,8 +4221,7 @@ return null===i?void 0:e(i,n,r)}if("value"in a)return a.value
 var s=a.get
 if(void 0!==s)return s.call(r)},d=n(5),c=r(d),f=n(147),p=r(f),h=n(387),_=n(227),m=r(_),y=n(344),g=r(y),v=n(117),b=r(v),M="L LT",w=function(e){function t(){return a(this,t),i(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))
 
-}return s(t,e),u(t,[{key:"getInputProps",value:function e(){var n=b.default.inject(b.default._t("DatetimeField.DateTimeFormatExample","Example: {datetime}"),{datetime:(0,m.default)().endOf("month").format(M)
-})
+}return s(t,e),u(t,[{key:"getInputProps",value:function e(){var n=b.default.inject(b.default._t("Admin.FormatExample","Example: {format}"),{format:(0,m.default)().endOf("month").format(M)})
 return o({},l(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"getInputProps",this).call(this),{type:this.props.data.html5?"datetime-local":"text",placeholder:n})}},{key:"isMultiline",value:function e(){
 return!1}},{key:"hasNativeSupport",value:function e(){return g.default.inputtypes["datetime-local"]}},{key:"triggerChange",value:function e(t){/^\d{4}-\d\d-\d\dT\d\d:\d\d$/.test(t)?this.props.onChange(t+":00"):this.props.onChange(t)
 

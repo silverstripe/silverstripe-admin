@@ -11,8 +11,8 @@ class TimeField extends DateField {
 
   getInputProps() {
     const placeholder = i18n.inject(
-      i18n._t('TimeField.TimeFormatExample', 'Example: {time}'),
-      { time: moment().endOf('month').format(localFormat) }
+      i18n._t('Admin.FormatExample', 'Example: {format}'),
+      { format: moment().endOf('month').format(localFormat) }
     );
     const props = {};
     Object.assign(props, super.getInputProps());
