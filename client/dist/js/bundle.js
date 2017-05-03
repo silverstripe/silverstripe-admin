@@ -2414,11 +2414,11 @@ var i=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
 r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),a=n(1),s=r(a),u=n(5),l=r(u),c=n(29),d=r(c),p=n(154),f=n(240),h=r(f),m=n(192),y=r(m),v=n(257),g=r(v),b=n(258),_=r(b),w=n(259),E=r(w),T=n(260),C=n(261),P=function(){
 function e(t,n){o(this,e),this.store=t,this.client=n
 var r=y.default.get("absoluteBaseUrl")
-g.default.setAbsoluteBase(r)}return i(e,[{key:"start",value:function e(t){this.matchesLegacyRoute(t)?this.initLegacyRouter():this.initReactRouter()}},{key:"matchesLegacyRoute",value:function e(t){var n=y.default.get("sections"),r=g.default.resolveURLToBase(t).replace(/\/$/,"")
+g.default.setAbsoluteBase(r)}return i(e,[{key:"start",value:function e(t){this.matchesReactRoute(t)?this.initReactRouter():this.initLegacyRouter()}},{key:"matchesReactRoute",value:function e(t){var n=y.default.get("sections"),r=g.default.resolveURLToBase(t).replace(/\/$/,"")
 
 
 return!!n.find(function(e){var t=g.default.resolveURLToBase(e.url).replace(/\/$/,"")
-return!e.reactRouter&&r.match(t)})}},{key:"initReactRouter",value:function e(){_.default.updateRootRoute({component:E.default})
+return!!e.reactRouter&&r.match(t)})}},{key:"initReactRouter",value:function e(){_.default.updateRootRoute({component:E.default})
 var t=(0,T.syncHistoryWithStore)((0,p.useRouterHistory)(h.default)({basename:y.default.get("baseUrl")}),this.store)
 d.default.render(l.default.createElement(C.ApolloProvider,{store:this.store,client:this.client},l.default.createElement(p.Router,{history:t,routes:_.default.getRootRoute()})),document.getElementsByClassName("cms-content")[0])
 
