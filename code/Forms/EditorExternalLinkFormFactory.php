@@ -3,7 +3,7 @@
 namespace SilverStripe\Admin\Forms;
 
 use InvalidArgumentException;
-use SilverStripe\Control\Controller;
+use SilverStripe\Control\RequestHandler;
 use SilverStripe\Core\Extensible;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\Core\Config\Configurable;
@@ -21,12 +21,12 @@ class EditorExternalLinkFormFactory implements FormFactory
     use Configurable;
     
     /**
-     * @param Controller $controller
+     * @param RequestHandler $controller
      * @param string $name
      * @param array $context
      * @return Form
      */
-    public function getForm(Controller $controller, $name = FormFactory::DEFAULT_NAME, $context = [])
+    public function getForm(RequestHandler $controller = null, $name = FormFactory::DEFAULT_NAME, $context = [])
     {
         // Validate context
         foreach ($this->getRequiredContext() as $required) {
