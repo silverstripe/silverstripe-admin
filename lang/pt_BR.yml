@@ -1,0 +1,6 @@
+pt_BR:
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Nome do grupo'
+    MEMBERS: Membros
+    NEWGROUP: 'Novo Grupo'
+    PERMISSIONS: Permissões

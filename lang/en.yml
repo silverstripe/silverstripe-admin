@@ -1,4 +1,11 @@
 en:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: 'Published %d pages, %d failures'
+    PUBLISH_PAGES: Publish
+    RESTORE: Restore
+    RESTORED_PAGES: 'Restored %d pages'
+    UNPUBLISHED_PAGES: 'Unpublished %d pages'
+    UNPUBLISH_PAGES: Unpublish
   SilverStripe\Admin\CMSProfileController:
     MENUTITLE: 'My Profile'
   SilverStripe\Admin\GroupImportForm:
@@ -27,6 +34,12 @@ en:
     SAVEDUP: Saved.
     ValidationError: 'Validation error'
     VersionUnknown: Unknown
+    CANCEL: Cancel
+    CANT_REORGANISE: 'You do not have permission to alter Top level pages. Your change was not saved.'
+    PLEASESAVE: 'Please Save Page: This page could not be updated because it hasn''t been saved yet.'
+    REORGANISATIONSUCCESSFUL: 'Reorganised the site tree successfully.'
+    ShowAsList: 'show as list'
+    TooManyPages: 'Too many pages'
   SilverStripe\Admin\MemberImportForm:
     BtnImport: 'Import from CSV'
     FileFieldLabel: 'CSV File <small>(Allowed extensions: *.csv)</small>'
@@ -65,26 +78,9 @@ en:
     MemberListCaution: 'Caution: Removing members from this list will remove them from all groups and the database'
     TABROLES: Roles
     Users: Users
-  SilverStripe\CMS\Controllers\CMSMain:
-    ACCESSALLINTERFACES: 'Access to all CMS sections'
-    ACCESSALLINTERFACESHELP: 'Overrules more specific access settings.'
-  SilverStripe\CMS\Controllers\CMSPagesController:
-    FILTER: Filter
-  SilverStripe\CMS\Controllers\SilverStripeNavigator:
-    Auto: Auto
-    ChangeViewMode: 'Change view mode'
-    Desktop: Desktop
-    DualWindowView: 'Dual Window'
-    EditView: 'Edit mode'
-    Mobile: Mobile
-    PreviewState: 'Preview State'
-    PreviewView: 'Preview mode'
-    Responsive: Responsive
-    SplitView: 'Split mode'
-    Tablet: Tablet
-    ViewDeviceWidth: 'Select a preview width'
-    Width: width
-  SilverStripe\Forms\Form:
-    SubmitBtnLabel: Go
-  SilverStripe\Security\Member:
-    CANTEDIT: 'You don''t have permission to do that'
+    GROUPNAME: 'Group name'
+    MEMBERS: Members
+    NEWGROUP: 'New Group'
+    PERMISSIONS: Permissions
+    ROLES: Roles
+    ROLESDESCRIPTION: 'Roles are predefined sets of permissions, and can be assigned to groups.<br />They are inherited from parent groups if required.'

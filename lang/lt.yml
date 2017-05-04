@@ -1,0 +1,13 @@
+lt:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: 'Publikuoti %d puslapiai, %d klaidų.'
+    PUBLISH_PAGES: Publikuoti
+    RESTORE: Atstatyti
+    RESTORED_PAGES: 'Atstatyti %d puslapiai'
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Grupės pavadinimas'
+    MEMBERS: Vartotojai
+    NEWGROUP: 'Nauja grupė'
+    PERMISSIONS: Leidimai
+    ROLES: Rolės
+    ROLESDESCRIPTION: 'Rolės - tai iš anksto sudarytas leidimų sąrašas, kuris gali būti priskirtas grupėms.<br />Jos yra paveldimos iš tėvinės grupės.'

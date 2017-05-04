@@ -1,0 +1,9 @@
+es_MX:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: 'Se publicaron %d páginas, %d fallos'
+    PUBLISH_PAGES: Publicar
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Nombre de grupo'
+    MEMBERS: Miembros
+    NEWGROUP: 'Nuevo grupo'
+    PERMISSIONS: Permisos

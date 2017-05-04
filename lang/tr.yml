@@ -1,0 +1,8 @@
+tr:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISH_PAGES: Yayınla
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Grup adı'
+    MEMBERS: Üyeler
+    NEWGROUP: 'Yeni Grup'
+    PERMISSIONS: İzinler

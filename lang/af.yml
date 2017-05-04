@@ -1,0 +1,7 @@
+af:
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Groep naam'
+    MEMBERS: Lede
+    PERMISSIONS: Toegangsregte
+    ROLES: Rolle
+    ROLESDESCRIPTION: ' '

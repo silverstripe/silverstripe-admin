@@ -1,0 +1,3 @@
+si:
+  SilverStripe\Admin\SecurityAdmin:
+    NEWGROUP: 'අලුත් කන්ඩාමක්'

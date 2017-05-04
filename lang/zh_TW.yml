@@ -1,0 +1,6 @@
+zh_TW:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: '已出版 %d 網頁, %d 失敗'
+    PUBLISH_PAGES: 出版
+  SilverStripe\Admin\SecurityAdmin:
+    NEWGROUP: 新增群組

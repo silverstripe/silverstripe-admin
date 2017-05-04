@@ -1,0 +1,10 @@
+th:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: 'เผยแพร่แล้ว %d หน้า, ล้วเหลว %d'
+    PUBLISH_PAGES: เผยแพร่
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: ชื่อกลุ่มสมาชิก
+    MEMBERS: สมาชิก
+    NEWGROUP: สร้างกลุ่มใหม่
+    PERMISSIONS: สิทธิ์อนุญาต
+    ROLES: บทบาท

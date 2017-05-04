@@ -1,0 +1,14 @@
+bg:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: 'Публикувани %d страници, %d грешки'
+    PUBLISH_PAGES: Публикувай
+    RESTORE: Възстанови
+    RESTORED_PAGES: 'Бяха възстановени %d страници'
+    UNPUBLISH_PAGES: 'Премахни от публикация'
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Име на група'
+    MEMBERS: Потребители
+    NEWGROUP: 'Нова група'
+    PERMISSIONS: 'Разрешения'
+    ROLES: 'Роли'
+    ROLESDESCRIPTION: 'Ролите са предварително зададени сетове от разрешения и могат да бъдат присвоявани на групи.<br />Ако е нужно, те се наследяват от родителските групи.'

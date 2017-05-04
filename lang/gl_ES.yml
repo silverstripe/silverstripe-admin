@@ -1,0 +1,10 @@
+gl_ES:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: '%d páxinas publicadas, %d erros'
+    PUBLISH_PAGES: Publicar
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Nome do grupo'
+    MEMBERS: Membros
+    NEWGROUP: 'Novo grupo'
+    PERMISSIONS: Permisos
+    ROLESDESCRIPTION: 'Os roles son conxuntos de permisos predefinidos, e poden ser asinados a grupos.<br />Poden ser herdados dos grupos pai si requeridos.'

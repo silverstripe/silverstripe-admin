@@ -1,0 +1,8 @@
+id_ID:
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Nama kelompok'
+    MEMBERS: Pengguna
+    NEWGROUP: 'Kelompok Baru'
+    PERMISSIONS: Perijinan
+    ROLES: Peran
+    ROLESDESCRIPTION: 'Peran adalah set perijinan yang sudah ditentukan, dan dapat dihubungkan ke kelompok.<br />Dapat diwariskan dari kelompok induk jika diperlukan.'

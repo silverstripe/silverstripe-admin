@@ -1,0 +1,11 @@
+et_EE:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: 'Avaldatud %d lehte, %d tõrget'
+    PUBLISH_PAGES: Avalda
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Rühma nimi'
+    MEMBERS: Kasutajad
+    NEWGROUP: 'Uus rühm'
+    PERMISSIONS: Õigused
+    ROLES: Rollid
+    ROLESDESCRIPTION: 'Rollid on eelmäratud õiguste kogumid, mida on võimalik määrara gruppidele.<br />Need päritakse vajaduse korral vanemgruppidest.'

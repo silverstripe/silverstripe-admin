@@ -1,0 +1,15 @@
+fi:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: 'Julkaistu %d sivua, %d epäonnistumista'
+    PUBLISH_PAGES: Julkaise
+    RESTORE: Palauta
+    RESTORED_PAGES: 'Palautettu %d sivua'
+    UNPUBLISHED_PAGES: 'Poistettiin näkyvistä %d sivua'
+    UNPUBLISH_PAGES: 'Poista näkyvistä'
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Ryhmän nimi'
+    MEMBERS: Jäsenet
+    NEWGROUP: 'Uusi ryhmä'
+    PERMISSIONS: Oikeudet
+    ROLES: Roolit
+    ROLESDESCRIPTION: 'Tässä osiossa voit lisätä rooleja tähän ryhmään. Roolit ovat käyttöoikeuksien loogisia ryhmittymiä, joita voidaan muokata Roolit-välilehdellä'

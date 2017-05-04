@@ -1,0 +1,15 @@
+es:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: 'Publicadas %d páginas, %d fallos'
+    PUBLISH_PAGES: Publicar
+    RESTORE: Restaurar
+    RESTORED_PAGES: '%d páginas restauradas'
+    UNPUBLISHED_PAGES: '%d páginas despublicadas'
+    UNPUBLISH_PAGES: Despublicar
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Nombre del grupo'
+    MEMBERS: Miembros
+    NEWGROUP: 'Nuevo grupo'
+    PERMISSIONS: Permisos
+    ROLES: Roles
+    ROLESDESCRIPTION: 'Las reglas son conjuntos predefinidos de permisos, y pueden ser asignadas a grupos.<br /> Pueden ser heredadas desde grupos padres si es necesario.'

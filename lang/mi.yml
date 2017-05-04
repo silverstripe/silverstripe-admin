@@ -1,0 +1,11 @@
+mi:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: '%d ngā whārangi kua whakaputaina, %d i rahua'
+    PUBLISH_PAGES: Whakaputa
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Ingoa rōpū'
+    MEMBERS: 'Ngā Mema'
+    NEWGROUP: 'Rōpū Hōu'
+    PERMISSIONS: 'Ngā Whakaaetanga'
+    ROLES: 'Ngā Tūnga'
+    ROLESDESCRIPTION: 'Ko ngā tūnga he huinga o ngā whakaaetanga i tautuhia i mua, ā, ka taea te tautapa i ēnei ki ngā rōpū.<br />I tukuna iho i ngā rōpū matua ki te hiahiatia.'

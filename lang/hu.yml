@@ -1,0 +1,6 @@
+hu:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: '%d oldal publikálva, %d hibás'
+    PUBLISH_PAGES: Publikálni
+  SilverStripe\Admin\SecurityAdmin:
+    NEWGROUP: 'Új csoport'
