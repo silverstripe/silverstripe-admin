@@ -8,7 +8,7 @@
 						<% if $SectionTitle %>
 							$SectionTitle
 						<% else %>
-							<%t ModelAdmin.Title 'Data Models' %>
+							<%t SilverStripe\Admin\ModelAdmin.Title 'Data Models' %>
 						<% end_if %>
 					</span>
 				</h2>
@@ -17,7 +17,7 @@
 
 		<div class="cms-content-header-tabs cms-tabset-nav-primary ss-ui-tabs-nav">
             <% if $SearchForm %>
-			    <button id="filters-button" class="btn btn-secondary btn--icon-large font-icon-search no-text" title="<%t CMSPagesController_Tools_ss.FILTER 'Filter' %>"></button>
+			    <button id="filters-button" class="btn btn-secondary btn--icon-large font-icon-search no-text" title="<%t SilverStripe\CMS\Controllers\CMSPagesController.FILTER 'Filter' %>"></button>
             <% end_if %>
 			<ul class="cms-tabset-nav-primary">
 				<% loop $ManagedModelTabs %>

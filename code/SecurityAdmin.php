@@ -131,13 +131,13 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
                 'Root',
                 Tab::create(
                     'Users',
-                    _t('SecurityAdmin.Users', 'Users'),
+                    _t('SilverStripe\\Admin\\SecurityAdmin.Users', 'Users'),
                     LiteralField::create(
                         'MembersCautionText',
                         sprintf(
                             '<div class="alert alert-warning" role="alert">%s</div>',
                             _t(
-                                'SecurityAdmin.MemberListCaution',
+                                'SilverStripe\\Admin\\SecurityAdmin.MemberListCaution',
                                 'Caution: Removing members from this list will remove them from all groups and the database'
                             )
                         )
@@ -160,12 +160,12 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
             $memberListConfig->addComponent(
                 GridFieldImportButton::create('buttons-before-left')
                     ->setImportIframe($this->Link('memberimport'))
-                    ->setModalTitle(_t('SecurityAdmin.IMPORTUSERS', 'Import users'))
+                    ->setModalTitle(_t('SilverStripe\\Admin\\SecurityAdmin.IMPORTUSERS', 'Import users'))
             );
             $groupListConfig->addComponent(
                 GridFieldImportButton::create('buttons-before-left')
                     ->setImportIframe($this->Link('groupimport'))
-                    ->setModalTitle(_t('SecurityAdmin.IMPORTGROUPS', 'Import groups'))
+                    ->setModalTitle(_t('SilverStripe\\Admin\\SecurityAdmin.IMPORTGROUPS', 'Import groups'))
             );
         }
 
@@ -179,7 +179,7 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
                 GridFieldConfig_RecordEditor::create()
             );
 
-            $rolesTab = $fields->findOrMakeTab('Root.Roles', _t('SecurityAdmin.TABROLES', 'Roles'));
+            $rolesTab = $fields->findOrMakeTab('Root.Roles', _t('SilverStripe\\Admin\\SecurityAdmin.TABROLES', 'Roles'));
             $rolesTab->push($rolesField);
         }
 
@@ -288,12 +288,12 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
                 )));
             } elseif ($params['FieldName'] == 'Users') {
                 $crumbs->unshift(new ArrayData(array(
-                    'Title' => _t('SecurityAdmin.Users', 'Users'),
+                    'Title' => _t('SilverStripe\\Admin\\SecurityAdmin.Users', 'Users'),
                     'Link' => $this->Link('users')
                 )));
             } elseif ($params['FieldName'] == 'Roles') {
                 $crumbs->unshift(new ArrayData(array(
-                    'Title' => _t('SecurityAdmin.TABROLES', 'Roles'),
+                    'Title' => _t('SilverStripe\\Admin\\SecurityAdmin.TABROLES', 'Roles'),
                     'Link' => $this->Link('roles')
                 )));
             }
@@ -308,27 +308,27 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
         $title = $this->menu_title();
         return array(
             "CMS_ACCESS_SecurityAdmin" => array(
-                'name' => _t('CMSMain.ACCESS', "Access to '{title}' section", array('title' => $title)),
-                'category' => _t('Permission.CMS_ACCESS_CATEGORY', 'CMS Access'),
+                'name' => _t('SilverStripe\\CMS\\Controllers\\CMSMain.ACCESS', "Access to '{title}' section", array('title' => $title)),
+                'category' => _t('SilverStripe\\Security\\Permission.CMS_ACCESS_CATEGORY', 'CMS Access'),
                 'help' => _t(
-                    'SecurityAdmin.ACCESS_HELP',
+                    'SilverStripe\\Admin\\SecurityAdmin.ACCESS_HELP',
                     'Allow viewing, adding and editing users, as well as assigning permissions and roles to them.'
                 )
             ),
             'EDIT_PERMISSIONS' => array(
-                'name' => _t('SecurityAdmin.EDITPERMISSIONS', 'Manage permissions for groups'),
-                'category' => _t('Permissions.PERMISSIONS_CATEGORY', 'Roles and access permissions'),
+                'name' => _t('SilverStripe\\Admin\\SecurityAdmin.EDITPERMISSIONS', 'Manage permissions for groups'),
+                'category' => _t('SilverStripe\\Security\\Permission.PERMISSIONS_CATEGORY', 'Roles and access permissions'),
                 'help' => _t(
-                    'SecurityAdmin.EDITPERMISSIONS_HELP',
+                    'SilverStripe\\Admin\\SecurityAdmin.EDITPERMISSIONS_HELP',
                     'Ability to edit Permissions and IP Addresses for a group.'
                     . ' Requires the "Access to \'Security\' section" permission.'
                 ),
                 'sort' => 0
             ),
             'APPLY_ROLES' => array(
-                'name' => _t('SecurityAdmin.APPLY_ROLES', 'Apply roles to groups'),
-                'category' => _t('Permissions.PERMISSIONS_CATEGORY', 'Roles and access permissions'),
-                'help' => _t('SecurityAdmin.APPLY_ROLES_HELP', 'Ability to edit the roles assigned to a group.'
+                'name' => _t('SilverStripe\\Admin\\SecurityAdmin.APPLY_ROLES', 'Apply roles to groups'),
+                'category' => _t('SilverStripe\\Security\\Permission.PERMISSIONS_CATEGORY', 'Roles and access permissions'),
+                'help' => _t('SilverStripe\\Admin\\SecurityAdmin.APPLY_ROLES_HELP', 'Ability to edit the roles assigned to a group.'
                     . ' Requires the "Access to \'Users\' section" permission.'),
                 'sort' => 0
             )

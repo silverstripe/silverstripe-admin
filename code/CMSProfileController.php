@@ -33,7 +33,7 @@ class CMSProfileController extends LeftAndMain
         $form->Fields()->removeByName('LastVisited');
         $form->Fields()->push(new HiddenField('ID', null, Member::currentUserID()));
         $form->Actions()->push(
-            FormAction::create('save', _t('CMSMain.SAVE', 'Save'))
+            FormAction::create('save', _t('SilverStripe\\CMS\\Controllers\\CMSMain.SAVE', 'Save'))
                 ->addExtraClass('btn-primary font-icon-save')
                 ->setUseButtonTag(true)
         );
@@ -85,7 +85,7 @@ class CMSProfileController extends LeftAndMain
         $origLocale = $member->Locale;
 
         if (!$member->canEdit()) {
-            $form->sessionMessage(_t('Member.CANTEDIT', 'You don\'t have permission to do that'), 'bad');
+            $form->sessionMessage(_t('SilverStripe\\Security\\Member.CANTEDIT', 'You don\'t have permission to do that'), 'bad');
             return $this->redirectBack();
         }
 
