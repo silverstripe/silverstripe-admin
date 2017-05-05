@@ -62,6 +62,7 @@ TinyMCEConfig::get('cms')
         'image' => null,
         'sslink' => FRAMEWORK_ADMIN_DIR . '/client/dist/js/TinyMCE_sslink.js',
         'sslinkexternal' => FRAMEWORK_ADMIN_DIR . '/client/dist/js/TinyMCE_sslink-external.js',
+        'sslinkemail' => FRAMEWORK_ADMIN_DIR . '/client/dist/js/TinyMCE_sslink-email.js',
     ))
     ->setOption('contextmenu', 'sslink inserttable | cell row column deletetable');
 

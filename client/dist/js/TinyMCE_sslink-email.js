@@ -1,15 +1,21 @@
-webpackJsonp([4],[function(e,t,n){"use strict"
+webpackJsonp([3],[function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0})
-var i=n(5),o=r(i),a=n(2),s=r(a),l=n(6),u=r(l),c=n(3),f=r(c),d=n(7),p=n(4),h=r(p),v=n(8)
-s.default.addAction("sslink",{text:o.default._t("Admin.LINKLABEL_EXTERNALURL","Link to external URL"),onclick:function e(t){return t.execCommand("sslinkexternal")}})
-var y={init:function e(t){t.addCommand("sslinkexternal",function(){var e=window.jQuery("#"+t.id).entwine("ss")
-e.openLinkExternalDialog()})}},m="insert-link__dialog-wrapper--external",b="SilverStripe\\Admin\\LeftAndMain",w="EditorExternalLink",_=(0,v.createInsertLinkModal)(b,w)
-h.default.entwine("ss",function(e){e("textarea.htmleditor").entwine({openLinkExternalDialog:function t(){var n=e("#"+m)
-n.length||(n=e('<div id="'+m+'" />'),e("body").append(n)),n.addClass("insert-link__dialog-wrapper"),n.setElement(this),n.open()}}),e("#"+m).entwine({renderModal:function e(t){var n=this,r=ss.store,i=ss.apolloClient,a=function e(){
+var i=n(5),o=r(i),a=n(2),s=r(a),l=n(6),u=r(l),c=n(3),f=r(c),d=n(7),p=n(4),h=r(p),m=n(8)
+s.default.addAction("sslink",{text:o.default._t("Admin.LINKLABEL_EMAIL","Link to email address"),onclick:function e(t){return t.execCommand("sslinkemail")}})
+var v={init:function e(t){t.addCommand("sslinkemail",function(){var e=window.jQuery("#"+t.id).entwine("ss")
+e.openLinkEmailDialog()})}},b="insert-link__dialog-wrapper--email",y="SilverStripe\\Admin\\LeftAndMain",w="EditorEmailLink",g=(0,m.createInsertLinkModal)(y,w)
+h.default.entwine("ss",function(e){e("textarea.htmleditor").entwine({openLinkEmailDialog:function t(){var n=e("#"+b)
+n.length||(n=e('<div id="'+b+'" />'),e("body").append(n)),n.addClass("insert-link__dialog-wrapper"),n.setElement(this),n.open()}}),e("#"+b).entwine({renderModal:function e(t){var n=this,r=ss.store,i=ss.apolloClient,a=function e(){
 return n.close()},s=function e(){return n.handleInsert.apply(n,arguments)},l=this.getOriginalAttributes()
-f.default.render(u.default.createElement(d.ApolloProvider,{store:r,client:i},u.default.createElement(_,{show:t,onInsert:s,onHide:a,title:o.default._t("HTMLEditorField.LINK","Insert Link"),bodyClassName:"modal__dialog",
-className:"insert-link__dialog-wrapper--external",fileAttributes:l})),this[0])},buildAttributes:function e(t){var n=this._super(t),r=n.href
-return r.indexOf("://")===-1&&(r="http://"+r),"http://"===r&&(r=""),n.href=r,n}})}),tinymce.PluginManager.add("sslinkexternal",function(e){return y.init(e)}),t.default=y},,function(e,t){"use strict"
+f.default.render(u.default.createElement(d.ApolloProvider,{store:r,client:i},u.default.createElement(g,{show:t,onInsert:s,onHide:a,title:o.default._t("HTMLEditorField.LINK","Insert Link"),bodyClassName:"modal__dialog",
+className:"insert-link__dialog-wrapper--email",fileAttributes:l})),this[0])},getOriginalAttributes:function t(){var n=this.getElement().getEditor(),r=e(n.getSelectedNode()),i=(r.attr("href")||"").split("?"),o=i[0].replace(/^mailto:/,"").split("?")[0]
+
+
+o.match(/.+@.+\..+/)||(o="")
+var a=i[1]?i[1].match(/subject=([^&]+)/):"",s=a?a[1]:""
+return{Link:o,Subject:s,Description:r.attr("title")}},buildAttributes:function e(t){var n=this._super(t),r="",i=n.href.replace(/^mailto:/,"").split("?")[0]
+return i.match(/.+@.+\..+/)||(i=""),i&&(r="mailto:"+i),r&&t.Subject&&(r=r+"?subject="+encodeURIComponent(t.Subject)),n.href=r,delete n.target,n}})}),tinymce.PluginManager.add("sslinkemail",function(e){
+return v.init(e)}),t.default=v},,function(e,t){"use strict"
 function n(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(t,"__esModule",{value:!0})
 var r=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
 r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),i=function(){function e(){
@@ -31,7 +37,7 @@ if(Array.isArray(t))return t
 if(Symbol.iterator in Object(t))return e(t,n)
 throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),c=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]
 for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},f=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
-r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),d=n(6),p=i(d),h=n(9),v=n(10),y=n(11),m=i(y),b=n(12),w=r(b),_=function(e){
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),d=n(6),p=i(d),h=n(9),m=n(10),v=n(11),b=i(v),y=n(12),w=r(y),g=function(e){
 function t(e){o(this,t)
 var n=a(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
 return n.handleSubmit=n.handleSubmit.bind(n),n.setOverrides(e.show?e:null),n}return s(t,e),f(t,[{key:"componentWillReceiveProps",value:function e(t){(t.show&&!this.props.show||!t.show&&this.props.show)&&this.setOverrides(t.show?t:null)
@@ -46,8 +52,8 @@ this.props.actions.schema.setSchemaStateOverrides(t.schemaUrl,i)}}},{key:"getMod
 return delete t.onHide,delete t.onInsert,delete t.sectionConfig,t}},{key:"handleSubmit",value:function e(t,n){switch(n){case"action_cancel":this.props.onHide()
 break
 default:this.props.onInsert(t,n)}return Promise.resolve()}},{key:"render",value:function e(){var t=this.getModalProps()
-return p.default.createElement(m.default,t)}}]),t}(d.Component)
-_.propTypes={show:d.PropTypes.bool,schemaUrl:d.PropTypes.string,onInsert:d.PropTypes.func.isRequired,onHide:d.PropTypes.func.isRequired,actions:d.PropTypes.object},_.defaultProps={}
-var k=function e(t,n){function r(e){var r=e.config.sections.find(function(e){return e.name===t}),i=""+r.form[n].schemaUrl
-return{sectionConfig:r,schemaUrl:i}}return(0,v.connect)(r,l)(_)}
-t.InsertLinkModal=_,t.createInsertLinkModal=k,t.default=(0,v.connect)(function(){return{}},l)(_)},,,function(e,t){e.exports=FormBuilderModal},function(e,t){e.exports=SchemaActions}])
+return p.default.createElement(b.default,t)}}]),t}(d.Component)
+g.propTypes={show:d.PropTypes.bool,schemaUrl:d.PropTypes.string,onInsert:d.PropTypes.func.isRequired,onHide:d.PropTypes.func.isRequired,actions:d.PropTypes.object},g.defaultProps={}
+var _=function e(t,n){function r(e){var r=e.config.sections.find(function(e){return e.name===t}),i=""+r.form[n].schemaUrl
+return{sectionConfig:r,schemaUrl:i}}return(0,m.connect)(r,l)(g)}
+t.InsertLinkModal=g,t.createInsertLinkModal=_,t.default=(0,m.connect)(function(){return{}},l)(g)},,,function(e,t){e.exports=FormBuilderModal},function(e,t){e.exports=SchemaActions}])

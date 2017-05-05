@@ -316,6 +316,9 @@ class LeftAndMain extends Controller implements PermissionProvider
                 'EditorExternalLink' => [
                     'schemaUrl' => $this->Link('methodSchema/EditorToolbar/EditorExternalLink'),
                 ],
+                'EditorEmailLink' => [
+                    'schemaUrl' => $this->Link('methodSchema/EditorToolbar/EditorEmailLink'),
+                ],
             ],
         ];
     }

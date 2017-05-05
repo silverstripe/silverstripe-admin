@@ -5,11 +5,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from 'react-apollo';
 import jQuery from 'jquery';
-import InsertLinkExternalModal from 'containers/InsertLinkExternalModal/InsertLinkExternalModal';
+import { createInsertLinkModal } from 'containers/InsertLinkModal/InsertLinkModal';
 
 // Link to external url
 TinyMCEActionRegistrar.addAction('sslink', {
-  text: 'Link to external URL',
+  text: i18n._t('Admin.LINKLABEL_EXTERNALURL', 'Link to external URL'),
   // eslint-disable-next-line no-console
   onclick: (editor) => editor.execCommand('sslinkexternal'),
 });
@@ -25,15 +25,20 @@ const plugin = {
 };
 
 const modalId = 'insert-link__dialog-wrapper--external';
+const sectionConfigKey = 'SilverStripe\\Admin\\LeftAndMain';
+const formName = 'EditorExternalLink';
+const InsertLinkExternalModal = createInsertLinkModal(sectionConfigKey, formName);
+
 jQuery.entwine('ss', ($) => {
   $('textarea.htmleditor').entwine({
     openLinkExternalDialog() {
       let dialog = $(`#${modalId}`);
 
       if (!dialog.length) {
-        dialog = $(`<div id="${modalId}" class="insert-link__dialog-wrapper" />`);
+        dialog = $(`<div id="${modalId}" />`);
         $('body').append(dialog);
       }
+      dialog.addClass('insert-link__dialog-wrapper');
 
       dialog.setElement(this);
       dialog.open();

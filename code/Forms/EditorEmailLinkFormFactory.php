@@ -14,7 +14,7 @@ use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\FormFactory;
 use SilverStripe\Forms\TextField;
 
-class EditorExternalLinkFormFactory implements FormFactory
+class EditorEmailLinkFormFactory implements FormFactory
 {
     use Extensible;
     use Injectable;
@@ -47,13 +47,9 @@ class EditorExternalLinkFormFactory implements FormFactory
     protected function getFormFields($controller, $name, $context)
     {
         $fields = FieldList::create([
-            TextField::create('Link', _t('HTMLEditorField.URL', 'URL'), 'http://'),
+            TextField::create('Link', _t('HTMLEditorField.EMAIL', 'Email address'), ''),
+            TextField::create('Subject', _t('HTMLEditorField.SUBJECT', 'Subject')),
             TextField::create('Description', _t('HTMLEditorField.LINKDESCR', 'Link description')),
-            TextField::create('Anchor', _t('HTMLEditorField.ANCHORVALUE', 'Anchor')),
-            CheckboxField::create(
-                'TargetBlank',
-                _t('HTMLEditorField.LINKOPENNEWWIN', 'Open link in a new window?')
-            ),
         ]);
         
         return $fields;

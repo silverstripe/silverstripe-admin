@@ -4,14 +4,12 @@ import { connect } from 'react-redux';
 import FormBuilderModal from 'components/FormBuilderModal/FormBuilderModal';
 import * as schemaActions from 'state/schema/SchemaActions';
 
-const sectionConfigKey = 'SilverStripe\\Admin\\LeftAndMain';
-const formName = 'EditorExternalLink';
-
-class InsertLinkExternalModal extends Component {
+class InsertLinkModal extends Component {
   constructor(props) {
     super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.setOverrides(props.show ? props : null);
   }
 
   componentWillReceiveProps(props) {
@@ -42,9 +40,6 @@ class InsertLinkExternalModal extends Component {
       const attrs = Object.assign({}, props.fileAttributes);
 
       delete attrs.ID;
-      if (!attrs.Link) {
-        delete attrs.Link;
-      }
 
       const overrides = {
         fields: Object.entries(attrs).map((field) => {
@@ -52,7 +47,6 @@ class InsertLinkExternalModal extends Component {
           return { name, value };
         }),
       };
-      console.log(overrides);
       // set overrides into redux store, so that it can be accessed by FormBuilder with the same
       // schemaUrl.
       this.props.actions.schema.setSchemaStateOverrides(props.schemaUrl, overrides);
@@ -99,7 +93,7 @@ class InsertLinkExternalModal extends Component {
   }
 }
 
-InsertLinkExternalModal.propTypes = {
+InsertLinkModal.propTypes = {
   show: PropTypes.bool,
   schemaUrl: PropTypes.string,
   onInsert: PropTypes.func.isRequired,
@@ -107,19 +101,7 @@ InsertLinkExternalModal.propTypes = {
   actions: PropTypes.object,
 };
 
-InsertLinkExternalModal.defaultProps = {};
-
-function mapStateToProps(state) {
-  const sectionConfig = state.config.sections.find((section) => section.name === sectionConfigKey);
-
-  // get the schemaUrl to use as a key for overrides
-  const schemaUrl = `${sectionConfig.form[formName].schemaUrl}`;
-
-  return {
-    sectionConfig,
-    schemaUrl,
-  };
-}
+InsertLinkModal.defaultProps = {};
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -129,4 +111,23 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InsertLinkExternalModal);
+const createInsertLinkModal = (sectionConfigKey, formName) => {
+  function mapStateToProps(state) {
+    const sectionConfig = state.config.sections
+      .find((section) => section.name === sectionConfigKey);
+
+    // get the schemaUrl to use as a key for overrides
+    const schemaUrl = `${sectionConfig.form[formName].schemaUrl}`;
+
+    return {
+      sectionConfig,
+      schemaUrl,
+    };
+  }
+
+  return connect(mapStateToProps, mapDispatchToProps)(InsertLinkModal);
+};
+
+export { InsertLinkModal, createInsertLinkModal };
+
+export default connect(() => ({}), mapDispatchToProps)(InsertLinkModal);

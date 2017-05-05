@@ -1,16 +1,129 @@
-/* global tinymce */
+/* global tinymce, ss */
+import i18n from 'i18n';
 import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { ApolloProvider } from 'react-apollo';
+import jQuery from 'jquery';
+import { createInsertLinkModal } from 'containers/InsertLinkModal/InsertLinkModal';
+
+// Link to email address
+TinyMCEActionRegistrar.addAction('sslink', {
+  text: i18n._t('Admin.LINKLABEL_EMAIL', 'Link to email address'),
+  // eslint-disable-next-line no-console
+  onclick: (editor) => editor.execCommand('sslinkemail'),
+});
 
 const plugin = {
   init(editor) {
-    // Link to email
-    TinyMCEActionRegistrar.addAction('sslink', {
-      text: 'Link to an email address',
-      // eslint-disable-next-line no-console
-      onclick: (e) => console.log('email', e),
+    editor.addCommand('sslinkemail', () => {
+      const field = window.jQuery(`#${editor.id}`).entwine('ss');
+
+      field.openLinkEmailDialog();
     });
-  }
+  },
 };
+
+const modalId = 'insert-link__dialog-wrapper--email';
+const sectionConfigKey = 'SilverStripe\\Admin\\LeftAndMain';
+const formName = 'EditorEmailLink';
+const InsertLinkEmailModal = createInsertLinkModal(sectionConfigKey, formName);
+
+jQuery.entwine('ss', ($) => {
+  $('textarea.htmleditor').entwine({
+    openLinkEmailDialog() {
+      let dialog = $(`#${modalId}`);
+
+      if (!dialog.length) {
+        dialog = $(`<div id="${modalId}" />`);
+        $('body').append(dialog);
+      }
+      dialog.addClass('insert-link__dialog-wrapper');
+
+      dialog.setElement(this);
+      dialog.open();
+    },
+  });
+
+  /**
+   * Assumes that $('.insert-link__dialog-wrapper').entwine({}); is defined for shared functions
+   */
+  $(`#${modalId}`).entwine({
+    renderModal(show) {
+      const store = ss.store;
+      const client = ss.apolloClient;
+      const handleHide = () => this.close();
+      const handleInsert = (...args) => this.handleInsert(...args);
+      const attrs = this.getOriginalAttributes();
+      // create/update the react component
+      ReactDOM.render(
+        <ApolloProvider store={store} client={client}>
+          <InsertLinkEmailModal
+            show={show}
+            onInsert={handleInsert}
+            onHide={handleHide}
+            title={i18n._t('HTMLEditorField.LINK', 'Insert Link')}
+            bodyClassName="modal__dialog"
+            className="insert-link__dialog-wrapper--email"
+            fileAttributes={attrs}
+          />
+        </ApolloProvider>,
+        this[0]
+      );
+    },
+
+    getOriginalAttributes() {
+      const editor = this.getElement().getEditor();
+      const node = $(editor.getSelectedNode());
+
+      const hrefParts = (node.attr('href') || '').split('?');
+
+      let email = hrefParts[0].replace(/^mailto:/, '').split('?')[0];
+      // simple valid regex check a@b.c passes
+      if (!email.match(/.+@.+\..+/)) {
+        email = '';
+      }
+
+      const subjectMatch = (hrefParts[1])
+        ? hrefParts[1].match(/subject=([^&]+)/)
+        : '';
+      const subject = (subjectMatch)
+        ? subjectMatch[1]
+        : '';
+
+      return {
+        Link: email,
+        Subject: subject,
+        Description: node.attr('title'),
+      };
+    },
+
+    buildAttributes(data) {
+      const attributes = this._super(data);
+
+      let href = '';
+
+      let email = attributes.href.replace(/^mailto:/, '').split('?')[0];
+      // simple valid regex check a@b.c passes
+      if (!email.match(/.+@.+\..+/)) {
+        email = '';
+      }
+
+      // Prefix the URL with "http://" if no prefix is found
+      if (email) {
+        href = `mailto:${email}`;
+      }
+      if (href && data.Subject) {
+        href = `${href}?subject=${encodeURIComponent(data.Subject)}`;
+      }
+      attributes.href = href;
+
+      delete attributes.target;
+
+      return attributes;
+    },
+  });
+});
 
 // Adds the plugin class to the list of available TinyMCE plugins
 tinymce.PluginManager.add('sslinkemail', (editor) => plugin.init(editor));

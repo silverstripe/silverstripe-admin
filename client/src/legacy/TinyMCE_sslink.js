@@ -74,7 +74,7 @@ jQuery.entwine('ss', ($) => {
     },
 
     buildAttributes(data) {
-      const anchor = data.Anchor.length ? `#${data.Anchor}` : '';
+      const anchor = data.Anchor && data.Anchor.length ? `#${data.Anchor}` : '';
       const href = `${data.Link}${anchor}`;
 
       return {
@@ -87,6 +87,8 @@ jQuery.entwine('ss', ($) => {
     insertLinkInEditor(attributes) {
       const editor = this.getElement().getEditor();
       editor.insertLink(attributes);
+      editor.addUndo();
+      editor.repaint();
     },
 
     getOriginalAttributes() {
