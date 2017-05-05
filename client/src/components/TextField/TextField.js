@@ -12,15 +12,7 @@ class TextField extends SilverStripeComponent {
   }
 
   render() {
-    let field = null;
-
-    if (this.props.readOnly) {
-      field = <FormControl.Static {...this.getInputProps()}>{this.props.value}</FormControl.Static>;
-    } else {
-      field = <FormControl {...this.getInputProps()} />;
-    }
-
-    return field;
+    return <FormControl {...this.getInputProps()} />;
   }
 
   /**
@@ -36,27 +28,27 @@ class TextField extends SilverStripeComponent {
       name: this.props.name,
       disabled: this.props.disabled,
       readOnly: this.props.readOnly,
+      value: this.props.value,
+      placeholder: this.props.placeholder,
     };
+
+    if (this.isMultiline()) {
+      Object.assign(props, {
+        componentClass: 'textarea',
+        rows: this.props.data.rows,
+        cols: this.props.data.columns,
+      });
+    } else {
+      Object.assign(props, {
+        componentClass: 'input',
+        type: this.props.type ? this.props.type : null,
+      });
+    }
 
     if (!this.props.readOnly) {
       Object.assign(props, {
-        placeholder: this.props.placeholder,
         onChange: this.handleChange,
-        value: this.props.value,
       });
-
-      if (this.isMultiline()) {
-        Object.assign(props, {
-          componentClass: 'textarea',
-          rows: this.props.data.rows,
-          cols: this.props.data.columns,
-        });
-      } else {
-        Object.assign(props, {
-          componentClass: 'input',
-          type: this.props.type ? this.props.type : null,
-        });
-      }
     }
 
     return props;

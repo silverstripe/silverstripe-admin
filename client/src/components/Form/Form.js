@@ -69,10 +69,9 @@ class Form extends Component {
           </fieldset>
         }
 
-        {actions &&
-          <div className="btn-toolbar" role="group">
-            {actions}
-          </div>
+        { actions && actions.length
+          ? <div className="btn-toolbar" role="group">{actions}</div>
+          : null
         }
       </form>
     );
