@@ -1,12 +1,6 @@
 en:
-  SilverStripe\Admin\CMSBatchAction:
-    PUBLISHED_PAGES: 'Published %d pages, %d failures'
-    PUBLISH_PAGES: Publish
-    RESTORE: Restore
-    RESTORED_PAGES: 'Restored %d pages'
-    UNPUBLISHED_PAGES: 'Unpublished %d pages'
-    UNPUBLISH_PAGES: Unpublish
   SilverStripe\Admin\CMSProfileController:
+    CANTEDIT: 'You don''t have permission to do that'
     MENUTITLE: 'My Profile'
   SilverStripe\Admin\GroupImportForm:
     Help1: '<p>Import one or more groups in <em>CSV</em> format (comma-separated values). <small><a href="#" class="toggle-advanced">Show advanced usage</a></small></p>'
@@ -15,6 +9,8 @@ en:
     ResultDeleted: 'Deleted %d groups'
     ResultUpdated: 'Updated %d groups'
   SilverStripe\Admin\LeftAndMain:
+    ACCESSALLINTERFACES: 'Access to all CMS sections'
+    ACCESSALLINTERFACESHELP: 'Overrules more specific access settings.'
     CollapsePanel: 'Collapse Panel'
     DELETED: Deleted.
     DropdownBatchActionsDefault: 'Choose an action...'
@@ -32,14 +28,23 @@ en:
     PreviewButton: Preview
     REQUIREJS: 'The CMS requires that you have JavaScript enabled.'
     SAVEDUP: Saved.
+    SUBMIT_BUTTON_LABEL: Go
     ValidationError: 'Validation error'
     VersionUnknown: Unknown
-    CANCEL: Cancel
-    CANT_REORGANISE: 'You do not have permission to alter Top level pages. Your change was not saved.'
-    PLEASESAVE: 'Please Save Page: This page could not be updated because it hasn''t been saved yet.'
-    REORGANISATIONSUCCESSFUL: 'Reorganised the site tree successfully.'
-    ShowAsList: 'show as list'
-    TooManyPages: 'Too many pages'
+  SilverStripe\Admin\LeftAndMain_ViewModeSelector:
+    Auto: Auto
+    ChangeViewMode: 'Change view mode'
+    Desktop: Desktop
+    DualWindowView: 'Dual Window'
+    EditView: 'Edit mode'
+    Mobile: Mobile
+    PreviewState: 'Preview State'
+    PreviewView: 'Preview mode'
+    Responsive: Responsive
+    SplitView: 'Split mode'
+    Tablet: Tablet
+    ViewDeviceWidth: 'Select a preview width'
+    Width: width
   SilverStripe\Admin\MemberImportForm:
     BtnImport: 'Import from CSV'
     FileFieldLabel: 'CSV File <small>(Allowed extensions: *.csv)</small>'
@@ -78,9 +83,3 @@ en:
     MemberListCaution: 'Caution: Removing members from this list will remove them from all groups and the database'
     TABROLES: Roles
     Users: Users
-    GROUPNAME: 'Group name'
-    MEMBERS: Members
-    NEWGROUP: 'New Group'
-    PERMISSIONS: Permissions
-    ROLES: Roles
-    ROLESDESCRIPTION: 'Roles are predefined sets of permissions, and can be assigned to groups.<br />They are inherited from parent groups if required.'

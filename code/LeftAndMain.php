@@ -581,7 +581,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         Requirements::javascript(FRAMEWORK_ADMIN_DIR . '/client/dist/js/vendor.js');
         Requirements::javascript(FRAMEWORK_ADMIN_DIR . '/client/dist/js/bundle.js');
         Requirements::css(ltrim(FRAMEWORK_ADMIN_DIR . '/client/dist/styles/bundle.css', '/'));
-        
+
         Requirements::add_i18n_javascript(FRAMEWORK_ADMIN_DIR . '/client/lang', false, true);
 
         if (LeftAndMain::config()->uninherited('session_keepalive_ping')) {
@@ -1462,7 +1462,7 @@ class LeftAndMain extends Controller implements PermissionProvider
                     ->setAttribute('data-placeholder', _t('SilverStripe\\Admin\\LeftAndMain.DropdownBatchActionsDefault', 'Choose an action...'))
             ),
             new FieldList(
-                FormAction::create('submit', _t('SilverStripe\\Forms\\Form.SubmitBtnLabel', "Go"))
+                FormAction::create('submit', _t(__CLASS__.'.SUBMIT_BUTTON_LABEL', "Go"))
                     ->addExtraClass('btn-secondary-outline')
             )
         );
@@ -1776,9 +1776,9 @@ class LeftAndMain extends Controller implements PermissionProvider
     {
         $perms = array(
             "CMS_ACCESS_LeftAndMain" => array(
-                'name' => _t('SilverStripe\\CMS\\Controllers\\CMSMain.ACCESSALLINTERFACES', 'Access to all CMS sections'),
+                'name' => _t(__CLASS__.'.ACCESSALLINTERFACES', 'Access to all CMS sections'),
                 'category' => _t('SilverStripe\\Security\\Permission.CMS_ACCESS_CATEGORY', 'CMS Access'),
-                'help' => _t('SilverStripe\\CMS\\Controllers\\CMSMain.ACCESSALLINTERFACESHELP', 'Overrules more specific access settings.'),
+                'help' => _t(__CLASS__.'.ACCESSALLINTERFACESHELP', 'Overrules more specific access settings.'),
                 'sort' => -100
             )
         );

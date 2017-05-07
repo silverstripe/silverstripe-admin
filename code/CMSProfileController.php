@@ -85,7 +85,7 @@ class CMSProfileController extends LeftAndMain
         $origLocale = $member->Locale;
 
         if (!$member->canEdit()) {
-            $form->sessionMessage(_t('SilverStripe\\Security\\Member.CANTEDIT', 'You don\'t have permission to do that'), 'bad');
+            $form->sessionMessage(_t(__CLASS__.'.CANTEDIT', 'You don\'t have permission to do that'), 'bad');
             return $this->redirectBack();
         }
 
