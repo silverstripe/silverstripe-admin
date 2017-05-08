@@ -1,0 +1,12 @@
+nl:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: '%d pagina''s gepubliceerd'
+    PUBLISH_PAGES: Publiceer
+    RESTORE: Herstel
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Groep naam'
+    MEMBERS: Leden
+    NEWGROUP: 'Nieuwe Groep'
+    PERMISSIONS: Rechten
+    ROLES: Rollen
+    ROLESDESCRIPTION: 'In deze sectie kunt u rollen toevoegen aan deze groep. Rollen zijn logische groeperingen van rechten die in het Rollen tabblad gewijzigd kunnen worden.'

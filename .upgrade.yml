@@ -1,0 +1,12 @@
+mappings:
+  LeftAndMain: SilverStripe\Admin\LeftAndMain
+  SilverStripeNavigator: SilverStripe\CMS\Controllers\SilverStripeNavigator
+  ModelAdmin: SilverStripe\Admin\ModelAdmin
+  BackLink_Button_ss: SilverStripe\Admin\LeftAndMain
+  CMSLoadingScreen_ss: SilverStripe\Admin\LeftAndMain
+  LeftAndMain_Menu_ss: SilverStripe\Admin\LeftAndMain
+  CMSPagesController_Tools_ss: SilverStripe\CMS\Controllers\CMSPagesController
+  ModelAdmin_ImportSpec_ss: SilverStripe\Admin\ModelAdmin
+  ModelAdmin_Tools_ss: SilverStripe\Admin\ModelAdmin
+  MemberTableField: SilverStripe\Security\Security
+  SecurityAdmin_MemberImportForm: SilverStripe\Admin\MemberImportForm

@@ -1,0 +1,11 @@
+ar:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: '%d من الصفحات المنشورة'
+    PUBLISH_PAGES: النشر
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'اسم المجموعة'
+    MEMBERS: الأعضاء
+    NEWGROUP: 'مجموعة جديدة'
+    PERMISSIONS: الصلاحيات
+    ROLES: قواعد
+    ROLESDESCRIPTION: 'هذا القسم يسمح لك بإضافة الأدوار إلى هذه المجموعة. قواعد المجموعات بمنطقية من الأذونات، والتي يمكن تعديلها في تبويب القواعد'

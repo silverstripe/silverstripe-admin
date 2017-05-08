@@ -1,0 +1,5 @@
+sl_SI:
+  SilverStripe\Admin\SecurityAdmin:
+    MEMBERS: Uporabniki
+    PERMISSIONS: Dovoljenja
+    ROLES: Vloge

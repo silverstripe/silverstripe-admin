@@ -1,0 +1,4 @@
+ko:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: '%d페이지를 공개하고, %d페이지는 공개에서 실패했습니다.'
+    PUBLISH_PAGES: 공개

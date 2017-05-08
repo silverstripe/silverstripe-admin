@@ -1,0 +1,13 @@
+pl:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: 'Opublikowano %d stron, %d się nie powiodło'
+    PUBLISH_PAGES: Opublikuj
+    RESTORE: Przywróć
+    RESTORED_PAGES: 'Przywrócono %d stron'
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Nazwa Grupy'
+    MEMBERS: Użytkownicy
+    NEWGROUP: 'Nowa grupa'
+    PERMISSIONS: Zezwolenia
+    ROLES: Role
+    ROLESDESCRIPTION: 'Sekcja umożliwia dodanie ról do grupy. Role są logicznie uporządkowanymi uprawnieniami, które można edytować w zakładce Role'

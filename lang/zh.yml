@@ -1,0 +1,11 @@
+zh:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: '发布 %d 个页面， %d 个失败'
+    PUBLISH_PAGES: 发布
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 小组名称
+    MEMBERS: 成员
+    NEWGROUP: 新的小组
+    PERMISSIONS: 权限
+    ROLES: 角色
+    ROLESDESCRIPTION: '角色是预定义的权限，并可被分配到小组。<br />如果需要的话，它们可以从父小组继承。'

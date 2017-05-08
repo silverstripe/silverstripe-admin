@@ -1,0 +1,15 @@
+sk:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: 'Publikovaných %d stránok, %d zlyhaní'
+    PUBLISH_PAGES: Zverejniť
+    RESTORE: Obnoviť
+    RESTORED_PAGES: 'Obnovených %d stránok'
+    UNPUBLISHED_PAGES: 'Nezverejnených %d stránok'
+    UNPUBLISH_PAGES: Nezverejniť
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Názov skupiny'
+    MEMBERS: Členovia
+    NEWGROUP: 'Nová skupina'
+    PERMISSIONS: Právomoci
+    ROLES: Úlohy
+    ROLESDESCRIPTION: 'Úlohy sú logické zoskupenia právomocí a môžu byť pridelené k skupinám.<br />Sú zdedené z nadradených skupín, ak je to požadované.'

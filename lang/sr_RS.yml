@@ -1,0 +1,8 @@
+sr_RS:
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Име групе'
+    MEMBERS: Чланови
+    NEWGROUP: 'Нова група'
+    PERMISSIONS: Дозволе
+    ROLES: Улоге
+    ROLESDESCRIPTION: 'Улоге су предефинисани скупови овлашћења и могу бити додељене групама.<br />Наслеђују се од родитељских група ако је потребно.'

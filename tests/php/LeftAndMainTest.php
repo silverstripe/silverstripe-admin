@@ -47,7 +47,7 @@ class LeftAndMainTest extends FunctionalTest
         CMSMenu::populate_menu();
         CMSMenu::add_link(
             'Help',
-            _t('LeftAndMain.HELP', 'Help', 'Menu title'),
+            _t('SilverStripe\\Admin\\LeftAndMain.HELP', 'Help', 'Menu title'),
             LeftAndMain::config()->help_link,
             -2,
             array(

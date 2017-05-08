@@ -1,0 +1,13 @@
+de:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: '%d Seiten veröffentlicht, %d Fehler'
+    PUBLISH_PAGES: Veröffentlichen
+    RESTORE: Wiederherstellen
+    RESTORED_PAGES: '%d Seiten wiederhergestellt'
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: Gruppenname
+    MEMBERS: Mitglieder
+    NEWGROUP: 'Neue Gruppe'
+    PERMISSIONS: Berechtigungen
+    ROLES: Rollen
+    ROLESDESCRIPTION: 'Hier können Sie der Gruppe Rollen zuweisen. Rollen sind logische Gruppierungen von Berechtigungen.'

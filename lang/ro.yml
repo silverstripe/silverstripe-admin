@@ -1,0 +1,6 @@
+ro:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: '%d pagini publicate, %d erori'
+    PUBLISH_PAGES: Publicare
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Numele grupului'

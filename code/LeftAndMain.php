@@ -502,7 +502,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         // can't be done in cms/_config.php as locale is not set yet
         CMSMenu::add_link(
             'Help',
-            _t('LeftAndMain.HELP', 'Help', 'Menu title'),
+            _t('SilverStripe\\Admin\\LeftAndMain.HELP', 'Help', 'Menu title'),
             LeftAndMain::config()->uninherited('help_link'),
             -2,
             array(
@@ -534,16 +534,16 @@ class LeftAndMain extends Controller implements PermissionProvider
             // if no alternate menu items have matched, return a permission error
             $messageSet = array(
                 'default' => _t(
-                    'LeftAndMain.PERMDEFAULT',
+                    'SilverStripe\\Admin\\LeftAndMain.PERMDEFAULT',
                     "You must be logged in to access the administration area; please enter your credentials below."
                 ),
                 'alreadyLoggedIn' => _t(
-                    'LeftAndMain.PERMALREADY',
+                    'SilverStripe\\Admin\\LeftAndMain.PERMALREADY',
                     "I'm sorry, but you can't access that part of the CMS.  If you want to log in as someone else, do"
                     . " so below."
                 ),
                 'logInAgain' => _t(
-                    'LeftAndMain.PERMAGAIN',
+                    'SilverStripe\\Admin\\LeftAndMain.PERMAGAIN',
                     "You have been logged out of the CMS.  If you would like to log in again, enter a username and"
                     . " password below."
                 ),
@@ -581,7 +581,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         Requirements::javascript(FRAMEWORK_ADMIN_DIR . '/client/dist/js/vendor.js');
         Requirements::javascript(FRAMEWORK_ADMIN_DIR . '/client/dist/js/bundle.js');
         Requirements::css(ltrim(FRAMEWORK_ADMIN_DIR . '/client/dist/styles/bundle.css', '/'));
-        
+
         Requirements::add_i18n_javascript(FRAMEWORK_ADMIN_DIR . '/client/lang', false, true);
 
         if (LeftAndMain::config()->uninherited('session_keepalive_ping')) {
@@ -649,7 +649,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             $response = parent::handleRequest($request, $model);
         } catch (ValidationException $e) {
             // Nicer presentation of model-level validation errors
-            $msgs = _t('LeftAndMain.ValidationError', 'Validation error') . ': '
+            $msgs = _t('SilverStripe\\Admin\\LeftAndMain.ValidationError', 'Validation error') . ': '
                 . $e->getMessage();
             $e = new HTTPResponse_Exception($msgs, 403);
             $errorResponse = $e->getResponse();
@@ -1151,7 +1151,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         $this->extend('onAfterSave', $record);
         $this->setCurrentPageID($record->ID);
 
-        $message = _t('LeftAndMain.SAVEDUP', 'Saved.');
+        $message = _t('SilverStripe\\Admin\\LeftAndMain.SAVEDUP', 'Saved.');
         if ($this->getSchemaRequested()) {
             $schemaId = Controller::join_links($this->Link('schema/DetailEditForm'), $id);
             // Ensure that newly created records have all their data loaded back into the form.
@@ -1198,7 +1198,7 @@ class LeftAndMain extends Controller implements PermissionProvider
 
         $record->delete();
 
-        $this->getResponse()->addHeader('X-Status', rawurlencode(_t('LeftAndMain.DELETED', 'Deleted.')));
+        $this->getResponse()->addHeader('X-Status', rawurlencode(_t('SilverStripe\\Admin\\LeftAndMain.DELETED', 'Deleted.')));
         return $this->getResponseNegotiator()->respond(
             $this->getRequest(),
             array('currentform' => array($this, 'EmptyForm'))
@@ -1290,14 +1290,14 @@ class LeftAndMain extends Controller implements PermissionProvider
             if (!$actions || !$actions->count()) {
                 if ($record->hasMethod('canEdit') && $record->canEdit()) {
                     $actions->push(
-                        FormAction::create('save', _t('CMSMain.SAVE', 'Save'))
+                        FormAction::create('save', _t('SilverStripe\\CMS\\Controllers\\CMSMain.SAVE', 'Save'))
                            ->addExtraClass('btn btn-primary')
                            ->addExtraClass('font-icon-add-circle')
                     );
                 }
                 if ($record->hasMethod('canDelete') && $record->canDelete()) {
                     $actions->push(
-                        FormAction::create('delete', _t('ModelAdmin.DELETE', 'Delete'))
+                        FormAction::create('delete', _t('SilverStripe\\Admin\\ModelAdmin.DELETE', 'Delete'))
                             ->addExtraClass('btn btn-secondary')
                     );
                 }
@@ -1443,7 +1443,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function BatchActionsForm()
     {
         $actions = $this->batchactions()->batchActionList();
-        $actionsMap = array('-1' => _t('LeftAndMain.DropdownBatchActionsDefault', 'Choose an action...')); // Placeholder action
+        $actionsMap = array('-1' => _t('SilverStripe\\Admin\\LeftAndMain.DropdownBatchActionsDefault', 'Choose an action...')); // Placeholder action
         foreach ($actions as $action) {
             $actionsMap[$action->Link] = $action->Title;
         }
@@ -1459,10 +1459,10 @@ class LeftAndMain extends Controller implements PermissionProvider
                     $actionsMap
                 )
                     ->setAttribute('autocomplete', 'off')
-                    ->setAttribute('data-placeholder', _t('LeftAndMain.DropdownBatchActionsDefault', 'Choose an action...'))
+                    ->setAttribute('data-placeholder', _t('SilverStripe\\Admin\\LeftAndMain.DropdownBatchActionsDefault', 'Choose an action...'))
             ),
             new FieldList(
-                FormAction::create('submit', _t('Form.SubmitBtnLabel', "Go"))
+                FormAction::create('submit', _t(__CLASS__.'.SUBMIT_BUTTON_LABEL', "Go"))
                     ->addExtraClass('btn-secondary-outline')
             )
         );
@@ -1655,7 +1655,7 @@ class LeftAndMain extends Controller implements PermissionProvider
                 if ($staticVersion = file_get_contents($moduleSpec['versionFile'])) {
                     $versions[$moduleName] = $staticVersion;
                 } else {
-                    $versions[$moduleName] = _t('LeftAndMain.VersionUnknown', 'Unknown');
+                    $versions[$moduleName] = _t('SilverStripe\\Admin\\LeftAndMain.VersionUnknown', 'Unknown');
                 }
             }
         }
@@ -1776,9 +1776,9 @@ class LeftAndMain extends Controller implements PermissionProvider
     {
         $perms = array(
             "CMS_ACCESS_LeftAndMain" => array(
-                'name' => _t('CMSMain.ACCESSALLINTERFACES', 'Access to all CMS sections'),
-                'category' => _t('Permission.CMS_ACCESS_CATEGORY', 'CMS Access'),
-                'help' => _t('CMSMain.ACCESSALLINTERFACESHELP', 'Overrules more specific access settings.'),
+                'name' => _t(__CLASS__.'.ACCESSALLINTERFACES', 'Access to all CMS sections'),
+                'category' => _t('SilverStripe\\Security\\Permission.CMS_ACCESS_CATEGORY', 'CMS Access'),
+                'help' => _t(__CLASS__.'.ACCESSALLINTERFACESHELP', 'Overrules more specific access settings.'),
                 'sort' => -100
             )
         );
@@ -1807,12 +1807,12 @@ class LeftAndMain extends Controller implements PermissionProvider
             $title = LeftAndMain::menu_title($class);
             $perms[$code] = array(
                 'name' => _t(
-                    'CMSMain.ACCESS',
+                    'SilverStripe\\CMS\\Controllers\\CMSMain.ACCESS',
                     "Access to '{title}' section",
                     "Item in permission selection identifying the admin section. Example: Access to 'Files & Images'",
                     array('title' => $title)
                 ),
-                'category' => _t('Permission.CMS_ACCESS_CATEGORY', 'CMS Access')
+                'category' => _t('SilverStripe\\Security\\Permission.CMS_ACCESS_CATEGORY', 'CMS Access')
             );
         }
 

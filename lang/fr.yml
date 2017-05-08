@@ -1,0 +1,13 @@
+fr:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: '%d pages publiées, %d échecs'
+    PUBLISH_PAGES: Publier
+    RESTORE: Restaurer
+    RESTORED_PAGES: '%d pages restaurées'
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Nom du group'
+    MEMBERS: Membres
+    NEWGROUP: 'Nouveau groupe'
+    PERMISSIONS: Autorisations
+    ROLES: Rôles
+    ROLESDESCRIPTION: 'Les rôles sont des regroupements logiques d’autorisations qui peuvent être assignés à des groupes.<br />Ils peuvent être hérités de groupes parents, si nécessaire.'

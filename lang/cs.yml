@@ -1,0 +1,13 @@
+cs:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: 'Zveřejněných %d stránek, %d selhání'
+    PUBLISH_PAGES: Zveřejnit
+    RESTORE: Obnovit
+    RESTORED_PAGES: 'Obnoveno %d stránek'
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Jméno skupiny'
+    MEMBERS: Členové
+    NEWGROUP: 'Nová skupina'
+    PERMISSIONS: Práva
+    ROLES: Role
+    ROLESDESCRIPTION: 'Role jsou předdefinované seskupení oprávnění, které mohou být přidělené k skupinám. Jsou dědené z nadřazených skupin, když je požadováno.'

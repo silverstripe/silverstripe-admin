@@ -211,7 +211,7 @@ abstract class ModelAdmin extends LeftAndMain
             $fieldConfig->addComponent(
                 GridFieldImportButton::create('buttons-before-left')
                     ->setImportForm($this->ImportForm())
-                    ->setModalTitle(_t('ModelAdmin.IMPORT', 'Import from CSV'))
+                    ->setModalTitle(_t('SilverStripe\\Admin\\ModelAdmin.IMPORT', 'Import from CSV'))
             );
         }
 
@@ -280,9 +280,9 @@ abstract class ModelAdmin extends LeftAndMain
             "SearchForm",
             $context->getSearchFields(),
             new FieldList(
-                FormAction::create('search', _t('MemberTableField.APPLY_FILTER', 'Apply Filter'))
+                FormAction::create('search', _t(__CLASS__.'.APPLY_FILTER', 'Apply Filter'))
                     ->setUseButtonTag(true)->addExtraClass('btn-primary'),
-                ResetFormAction::create('clearsearch', _t('ModelAdmin.RESET', 'Reset'))
+                ResetFormAction::create('clearsearch', _t(__CLASS__.'.RESET', 'Reset'))
                     ->setUseButtonTag(true)->addExtraClass('btn-secondary')
             ),
             new RequiredFields()
@@ -496,13 +496,13 @@ abstract class ModelAdmin extends LeftAndMain
         $fields->push(
             new CheckboxField(
                 'EmptyBeforeImport',
-                _t('ModelAdmin.EMPTYBEFOREIMPORT', 'Replace data'),
+                _t('SilverStripe\\Admin\\ModelAdmin.EMPTYBEFOREIMPORT', 'Replace data'),
                 false
             )
         );
 
         $actions = new FieldList(
-            FormAction::create('import', _t('ModelAdmin.IMPORT', 'Import from CSV'))
+            FormAction::create('import', _t('SilverStripe\\Admin\\ModelAdmin.IMPORT', 'Import from CSV'))
                 ->addExtraClass('btn btn-secondary-outline font-icon-upload')
         );
 
@@ -549,7 +549,7 @@ abstract class ModelAdmin extends LeftAndMain
             file_get_contents($_FILES['_CsvFile']['tmp_name']) == ''
         ) {
             $form->sessionMessage(
-                _t('ModelAdmin.NOCSVFILE', 'Please browse for a CSV file to import'),
+                _t('SilverStripe\\Admin\\ModelAdmin.NOCSVFILE', 'Please browse for a CSV file to import'),
                 ValidationResult::TYPE_ERROR
             );
             $this->redirectBack();
@@ -566,30 +566,30 @@ abstract class ModelAdmin extends LeftAndMain
         if ($results) {
             if ($results->CreatedCount()) {
                 $message .= _t(
-                    'ModelAdmin.IMPORTEDRECORDS',
+                    'SilverStripe\\Admin\\ModelAdmin.IMPORTEDRECORDS',
                     "Imported {count} records.",
                     array('count' => $results->CreatedCount())
                 );
             }
             if ($results && $results->UpdatedCount()) {
                 $message .= _t(
-                    'ModelAdmin.UPDATEDRECORDS',
+                    'SilverStripe\\Admin\\ModelAdmin.UPDATEDRECORDS',
                     "Updated {count} records.",
                     array('count' => $results->UpdatedCount())
                 );
             }
             if ($results->DeletedCount()) {
                 $message .= _t(
-                    'ModelAdmin.DELETEDRECORDS',
+                    'SilverStripe\\Admin\\ModelAdmin.DELETEDRECORDS',
                     "Deleted {count} records.",
                     array('count' => $results->DeletedCount())
                 );
             }
             if (!$results->CreatedCount() && !$results->UpdatedCount()) {
-                $message .= _t('ModelAdmin.NOIMPORT', "Nothing to import");
+                $message .= _t('SilverStripe\\Admin\\ModelAdmin.NOIMPORT', "Nothing to import");
             }
         } else {
-            $message .= _t('ModelAdmin.NOIMPORT', "Nothing to import");
+            $message .= _t('SilverStripe\\Admin\\ModelAdmin.NOIMPORT', "Nothing to import");
         }
 
         $form->sessionMessage($message, 'good');

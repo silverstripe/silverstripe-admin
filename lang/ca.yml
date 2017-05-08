@@ -1,0 +1,6 @@
+ca:
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Nom de grup'
+    MEMBERS: Membres
+    NEWGROUP: 'Nou grup'
+    PERMISSIONS: Permisos

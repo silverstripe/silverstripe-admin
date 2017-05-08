@@ -1,0 +1,14 @@
+fa_IR:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: 'انتشار %d صفحه، %d عدم موفقیت'
+    PUBLISH_PAGES: انتشار
+    RESTORE: بازنشاندن
+    RESTORED_PAGES: 'بازنشاندن %d صفحه'
+    UNPUBLISHED_PAGES: 'عدم انتشار %d صفحه'
+    UNPUBLISH_PAGES: 'عدم انتشار'
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'نام گروه'
+    MEMBERS: کاربران
+    NEWGROUP: 'گروه تازه'
+    PERMISSIONS: دسترسی‌ها
+    ROLES: وظایف

@@ -1,0 +1,13 @@
+hr:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: 'Objavljeno %d stranica, %d neuspješno'
+    PUBLISH_PAGES: Objavi
+    RESTORE: Povrati
+    RESTORED_PAGES: 'Vraćeno ''%d'' stranica'
+    UNPUBLISHED_PAGES: 'Neobjavljene %d stranice'
+    UNPUBLISH_PAGES: Odjavi
+  SilverStripe\Admin\SecurityAdmin:
+    MEMBERS: Članovi
+    NEWGROUP: 'Nova Grupa'
+    PERMISSIONS: Dozvole
+    ROLES: Uloge

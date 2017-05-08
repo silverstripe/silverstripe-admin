@@ -1,0 +1,6 @@
+da:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: 'Publiserede %d sider'
+    PUBLISH_PAGES: Publisér
+  SilverStripe\Admin\SecurityAdmin:
+    NEWGROUP: 'Ny gruppe'

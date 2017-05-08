@@ -28,12 +28,12 @@ class GroupImportForm extends Form
     {
         if (!$fields) {
             $helpHtml = _t(
-                'GroupImportForm.Help1',
+                'SilverStripe\\Admin\\GroupImportForm.Help1',
                 '<p>Import one or more groups in <em>CSV</em> format (comma-separated values).'
                 . ' <small><a href="#" class="toggle-advanced">Show advanced usage</a></small></p>'
             );
             $helpHtml .= _t(
-                'GroupImportForm.Help2',
+                'SilverStripe\\Admin\\GroupImportForm.Help2',
                 '<div class="advanced">'
                 . '<h4>Advanced usage</h4>'
                 . '<ul>'
@@ -56,7 +56,7 @@ class GroupImportForm extends Form
                 $fileField = new FileField(
                     'CsvFile',
                     DBField::create_field('HTMLFragment', _t(
-                        'SecurityAdmin_MemberImportForm.FileFieldLabel',
+                        'SilverStripe\\Admin\\MemberImportForm.FileFieldLabel',
                         'CSV File <small>(Allowed extensions: *.csv)</small>'
                     ))
                 )
@@ -65,7 +65,7 @@ class GroupImportForm extends Form
         }
 
         if (!$actions) {
-            $action = new FormAction('doImport', _t('SecurityAdmin_MemberImportForm.BtnImport', 'Import from CSV'));
+            $action = new FormAction('doImport', _t('SilverStripe\\Admin\\MemberImportForm.BtnImport', 'Import from CSV'));
             $action->addExtraClass('btn btn-secondary-outline font-icon-upload');
             $actions = new FieldList($action);
         }
@@ -91,26 +91,26 @@ class GroupImportForm extends Form
         $msgArr = array();
         if ($result->CreatedCount()) {
             $msgArr[] = _t(
-                'GroupImportForm.ResultCreated',
+                'SilverStripe\\Admin\\GroupImportForm.ResultCreated',
                 'Created {count} groups',
                 array('count' => $result->CreatedCount())
             );
         }
         if ($result->UpdatedCount()) {
             $msgArr[] = _t(
-                'GroupImportForm.ResultUpdated',
+                'SilverStripe\\Admin\\GroupImportForm.ResultUpdated',
                 'Updated %d groups',
                 array('count' => $result->UpdatedCount())
             );
         }
         if ($result->DeletedCount()) {
             $msgArr[] = _t(
-                'GroupImportForm.ResultDeleted',
+                'SilverStripe\\Admin\\GroupImportForm.ResultDeleted',
                 'Deleted %d groups',
                 array('count' => $result->DeletedCount())
             );
         }
-        $msg = ($msgArr) ? implode(',', $msgArr) : _t('MemberImportForm.ResultNone', 'No changes');
+        $msg = ($msgArr) ? implode(',', $msgArr) : _t('SilverStripe\\Admin\\MemberImportForm.ResultNone', 'No changes');
 
         $this->sessionMessage($msg, 'good');
 

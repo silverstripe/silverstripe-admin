@@ -1,0 +1,15 @@
+eo:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: 'Publikigis %d paĝojn, %d malsukcesojn'
+    PUBLISH_PAGES: Publikigi
+    RESTORE: Restaŭri
+    RESTORED_PAGES: 'Restaŭris %d paĝojn'
+    UNPUBLISHED_PAGES: 'Nepublikigitaj %d paĝoj'
+    UNPUBLISH_PAGES: Malpublikigi
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Grupa Nomo'
+    MEMBERS: Membroj
+    NEWGROUP: 'Nova Grupo'
+    PERMISSIONS: Permesoj
+    ROLES: Roloj
+    ROLESDESCRIPTION: 'Ĉi tiu sekcio ebligas aldoni rolojn al ĉi tiu grupo. Roloj estas logikaj grupoj de permesoj, kiuj estas redakteblaj en la langeto Roloj'

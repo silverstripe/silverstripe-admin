@@ -1,0 +1,13 @@
+ja:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: '%dページを公開しましたが、%dページの公開に失敗しました。'
+    PUBLISH_PAGES: '公開'
+    RESTORE: '復元'
+    RESTORED_PAGES: '%dページを復元しました'
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: グループ名
+    MEMBERS: メンバー
+    NEWGROUP: 新しいグループ
+    PERMISSIONS: 承認
+    ROLES: 役割
+    ROLESDESCRIPTION: '役割は、事前定義された権限の設定であり、グループに割り当てることができます。<br /> 必要であれば、それらは親グループから継承されます。'

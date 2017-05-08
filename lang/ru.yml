@@ -1,0 +1,13 @@
+ru:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: 'Опубликовано %d страниц, %d ошибок'
+    PUBLISH_PAGES: Опубликовать
+    RESTORE: Восстановить
+    RESTORED_PAGES: 'Восстановлено %d страниц'
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Имя группы'
+    MEMBERS: Участники
+    NEWGROUP: 'Новая группа'
+    PERMISSIONS: 'Права доступа'
+    ROLES: 'Роли'
+    ROLESDESCRIPTION: 'Роли представляют собой сочетания различных прав доступа, которые могут быть присвоены группам.<br />При необходимости они наследуются от групп более высокого уровня.'

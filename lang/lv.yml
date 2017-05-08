@@ -1,0 +1,7 @@
+lv:
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Grupas nosaukums'
+    MEMBERS: Lietotāji
+    PERMISSIONS: Atļaujas
+    ROLES: Lomas
+    ROLESDESCRIPTION: 'Šī sadaļa jums ļauj pievienot šai grupai lomas. Lomas ir loģiskas atļauju grupas, kuras var labot Lomas cilnē'

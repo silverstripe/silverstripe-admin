@@ -1,0 +1,13 @@
+sl:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: 'Objavljenih je bilo %d strani. (Število napak %d)'
+    PUBLISH_PAGES: Objavi
+    RESTORE: Obnovi
+    RESTORED_PAGES: 'Obnovljene %d strani'
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Ime skupine'
+    MEMBERS: Člani
+    NEWGROUP: 'Nova Skupina'
+    PERMISSIONS: Dovoljenja
+    ROLES: Vloge
+    ROLESDESCRIPTION: 'Tukaj lahko skupini dodajate vloge. Vloge so logični sklopi dovoljenj, ki jih urejate v zavihku "Vloge".'

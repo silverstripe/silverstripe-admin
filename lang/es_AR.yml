@@ -1,0 +1,11 @@
+es_AR:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: 'Se publicaron %d páginas, %d fallas'
+    PUBLISH_PAGES: Publicar
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Nombre de grupo'
+    MEMBERS: Miembros
+    NEWGROUP: 'Nuevo Grupo'
+    PERMISSIONS: Permisos
+    ROLES: roles
+    ROLESDESCRIPTION: 'Esta sección le permite agregar roles a este grupo. Los roles son agrupaciones lógicas de permisos, que se pueden editar en la pestaña Roles.'

@@ -1,0 +1,6 @@
+bs:
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Ime grupe'
+    MEMBERS: Članovi
+    NEWGROUP: 'Nova grupa'
+    PERMISSIONS: Ovlaštenja

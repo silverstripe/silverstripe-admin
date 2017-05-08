@@ -1,0 +1,6 @@
+is:
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: 'Nafn hóps'
+    MEMBERS: Félagar
+    PERMISSIONS: Leyfi
+    ROLES: Hlutverk

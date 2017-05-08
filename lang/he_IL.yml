@@ -1,0 +1,6 @@
+he_IL:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: 'פורסמו %d עמודים, %d שגיאות'
+    PUBLISH_PAGES: פרסום
+  SilverStripe\Admin\SecurityAdmin:
+    NEWGROUP: 'קבוצה חדשה'

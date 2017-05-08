@@ -1,0 +1,8 @@
+uk:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: 'Опубліковано %d сторінок, %d навдач'
+    PUBLISH_PAGES: Опублікувати
+  SilverStripe\Admin\SecurityAdmin:
+    MEMBERS: Члени
+    NEWGROUP: 'Нова Група'
+    PERMISSIONS: Дозволи

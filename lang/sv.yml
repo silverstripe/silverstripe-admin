@@ -1,0 +1,15 @@
+sv:
+  SilverStripe\Admin\CMSBatchAction:
+    PUBLISHED_PAGES: 'Publicerade %d sidor, %d misslyckades'
+    PUBLISH_PAGES: Publicera
+    RESTORE: 'Återskapa'
+    RESTORED_PAGES: 'Återskapade %d sidor'
+    UNPUBLISHED_PAGES: 'Avpublicerade %d sidor'
+    UNPUBLISH_PAGES: Avpublicera
+  SilverStripe\Admin\SecurityAdmin:
+    GROUPNAME: Gruppnamn
+    MEMBERS: Medlemmar
+    NEWGROUP: 'Ny grupp'
+    PERMISSIONS: Tillstånd
+    ROLES: Roller
+    ROLESDESCRIPTION: 'Roller är fördefinierade uppsättningar av tillstånd, och kan tilldelas grupper. <br/> De ärvs från föräldragrupper om det krävs.'
