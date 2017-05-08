@@ -22,17 +22,14 @@ use SilverStripe\Forms\GridField\GridFieldExportButton;
 use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
 use SilverStripe\Forms\GridField\GridFieldPrintButton;
 use SilverStripe\Forms\GridField\GridField;
-use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\GridField\GridFieldImportButton;
 use SilverStripe\ORM\ArrayLib;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\Search\SearchContext;
-use SilverStripe\ORM\SS_List;
 use SilverStripe\ORM\ValidationResult;
 use SilverStripe\Security\Member;
 use SilverStripe\View\ArrayData;
-use SilverStripe\View\SSViewer;
 
 /**
  * Generates a three-pane UI for editing model classes, with an
