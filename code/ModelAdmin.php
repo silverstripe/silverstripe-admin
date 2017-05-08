@@ -12,7 +12,6 @@ use SilverStripe\Forms\Form;
 use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\GridField\GridFieldDetailForm;
 use SilverStripe\Forms\GridField\GridFieldFilterHeader;
-use SilverStripe\Forms\ResetFormAction;
 use SilverStripe\Forms\RequiredFields;
 use SilverStripe\Forms\HiddenField;
 use SilverStripe\Forms\FileField;
@@ -282,7 +281,8 @@ abstract class ModelAdmin extends LeftAndMain
             new FieldList(
                 FormAction::create('search', _t(__CLASS__.'.APPLY_FILTER', 'Apply Filter'))
                     ->setUseButtonTag(true)->addExtraClass('btn-primary'),
-                ResetFormAction::create('clearsearch', _t(__CLASS__.'.RESET', 'Reset'))
+                FormAction::create('clearsearch', _t(__CLASS__.'.RESET', 'Reset'))
+                    ->setAttribute('type', 'reset')
                     ->setUseButtonTag(true)->addExtraClass('btn-secondary')
             ),
             new RequiredFields()

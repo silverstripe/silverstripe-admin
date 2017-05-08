@@ -13815,7 +13815,7 @@ li.class-ErrorPage>a .jstree-pageicon{
   right:-1px;
 }
 
-.ModelAdmin .cms-content-fields .cms-content-tools .cms-panel-content .cms-search-form .resetformaction{
+.ModelAdmin .cms-content-fields .cms-content-tools .cms-panel-content .cms-search-form [type=reset]{
   margin-right:0;
 }
 
