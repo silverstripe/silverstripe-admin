@@ -25,6 +25,7 @@ class InsertLinkModal extends Component {
   /**
    * Compares the current properties with received properties and determines if overrides need to be
    * cleared or added.
+   * TODO move setting overrides to a HOC?
    *
    * @param {object} props
    */
