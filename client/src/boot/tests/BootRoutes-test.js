@@ -29,16 +29,18 @@ describe('Bootroutes', () => {
   describe('add', () => {
     it('loading react section should boot react', () => {
       const routes = new BootRoutes({});
-      expect(routes.matchesLegacyRoute('/subdir/admin/mysection'))
+      expect(routes.matchesReactRoute('/subdir/admin/old-section'))
         .toEqual(false);
-      expect(routes.matchesLegacyRoute('/subdir/admin/mysection/subpage'))
+      expect(routes.matchesReactRoute('/subdir/admin/old-section/subpage'))
         .toEqual(false);
-      expect(routes.matchesLegacyRoute('/subdir/admin/old-section'))
+      expect(routes.matchesReactRoute('/subdir/admin/mysection'))
+        .toEqual(true);
+      expect(routes.matchesReactRoute('/subdir/admin/mysection/subpage'))
         .toEqual(true);
 
       // It doesn't really matter what unknown sections are known as, as
       // either router will do a full page redirect to unknown routes.
-      expect(routes.matchesLegacyRoute('/subdir/admin/anothersection'))
+      expect(routes.matchesReactRoute('/subdir/admin/anothersection'))
         .toEqual(false);
     });
   });
