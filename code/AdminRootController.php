@@ -125,6 +125,7 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
             }
             // Fall back to methods defined on LeftAndMain
             $controllerObj = Injector::inst()->create(LeftAndMain::class);
+            $controllerObj->setSession($this->session);
             return $controllerObj->handleRequest($request, $model);
         }
 

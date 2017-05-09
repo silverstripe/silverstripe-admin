@@ -78,10 +78,14 @@ jQuery.entwine('ss', ($) => {
 
       let href = attributes.href;
       // Prefix the URL with "http://" if no prefix is found
-      if (href.indexOf('://') === -1) {
-        href = `http://${href}`;
+      if (!href.match(/^(https?)?:\/\//)) {
+        href = `${window.location.protocol}//${href}`;
       }
-      if (href === 'http://') {
+      // if it's just the hash, then remove the prefix
+      href = href.replace(/^(https?)?:\/\/(#.*)$/, '$2');
+
+      // if it is just the prefix, then leave it blank
+      if (href.match(/^(https?)?:\/\/$/)) {
         href = '';
       }
       attributes.href = href;
