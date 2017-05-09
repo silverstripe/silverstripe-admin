@@ -327,7 +327,7 @@ return u({},e,o({},a,{type:"error",value:{react:h}}))},{})}},{key:"handleAction"
 submittingAction:t.currentTarget.name})}},{key:"handleSubmit",value:function e(t){var n=this,r=this.state.submittingAction?this.state.submittingAction:this.props.schema.schema.actions[0].name,i=u({},t,o({},r,1)),a=this.props.responseRequestedSchema.join(),s={
 "X-Formschema-Request":a,"X-Requested-With":"XMLHttpRequest"},l=function e(t){return n.submitApi(t||i,s).then(function(e){return n.setState({submittingAction:null}),e}).catch(function(e){throw n.setState({
 submittingAction:null}),e})}
-return"function"==typeof this.props.handleSubmit?this.props.handleSubmit(i,r,l):l()}},{key:"buildComponent",value:function e(t){var n=t,r=null!==n.schemaComponent?C.default.getComponentByName(n.schemaComponent):C.default.getComponentByDataType(n.type)
+return"function"==typeof this.props.handleSubmit?this.props.handleSubmit(i,r,l):l()}},{key:"buildComponent",value:function e(t){var n=t,r=null!==n.schemaComponent?C.default.getComponentByName(n.schemaComponent):C.default.getComponentByDataType(n.schemaType)
 
 
 if(null===r)return null
@@ -336,7 +336,7 @@ n=u({},n,n.input),delete n.input
 var o=this.props.createFn
 return"function"==typeof o?o(r,n):p.default.createElement(r,u({key:n.id},n))}},{key:"mapFieldsToComponents",value:function e(t){var n=this,r=this.props.baseFieldComponent
 return t.map(function(e){var t=e
-return e.children&&(t=u({},e,{children:n.mapFieldsToComponents(e.children)})),t=u({onAutofill:n.props.onAutofill,formid:n.props.form},t),"Structural"===e.type||e.readOnly===!0?n.buildComponent(t):p.default.createElement(r,u({
+return e.children&&(t=u({},e,{children:n.mapFieldsToComponents(e.children)})),t=u({onAutofill:n.props.onAutofill,formid:n.props.form},t),"Structural"===e.schemaType||e.readOnly===!0?n.buildComponent(t):p.default.createElement(r,u({
 key:t.id},t,{component:n.buildComponent}))})}},{key:"mapActionsToComponents",value:function e(t){var n=this
 return t.map(function(e){var t=u({},e)
 return e.children?t.children=n.mapActionsToComponents(e.children):(t.handleClick=n.handleAction,n.props.submitting&&n.state.submittingAction===e.name&&(t.loading=!0)),n.buildComponent(t)})}},{key:"normalizeFields",
@@ -731,8 +731,8 @@ return n.handleChange=n.handleChange.bind(n),n}return a(t,e),u(t,[{key:"render",
 return t=this.props.readOnly?c.default.createElement(m.FormControl.Static,this.getInputProps(),this.props.value):c.default.createElement(m.FormControl,this.getInputProps())}},{key:"getInputProps",value:function e(){
 var t={bsClass:this.props.bsClass,className:this.props.className+" "+this.props.extraClass,id:this.props.id,name:this.props.name,disabled:this.props.disabled,readOnly:this.props.readOnly}
 return this.props.readOnly||(s(t,{placeholder:this.props.placeholder,onChange:this.handleChange,value:this.props.value}),this.isMultiline()?s(t,{componentClass:"textarea",rows:this.props.data.rows,cols:this.props.data.columns
-}):s(t,{componentClass:"input",type:this.props.type?this.props.type.toLowerCase():null})),t}},{key:"isMultiline",value:function e(){return this.props.data&&this.props.data.rows>1}},{key:"handleChange",
-value:function e(t){"function"==typeof this.props.onChange&&this.props.onChange(t,{id:this.props.id,value:t.target.value})}}]),t}(p.default)
+}):s(t,{componentClass:"input",type:this.props.type?this.props.type:null})),t}},{key:"isMultiline",value:function e(){return this.props.data&&this.props.data.rows>1}},{key:"handleChange",value:function e(t){
+"function"==typeof this.props.onChange&&this.props.onChange(t,{id:this.props.id,value:t.target.value})}}]),t}(p.default)
 y.propTypes={extraClass:c.default.PropTypes.string,id:c.default.PropTypes.string,name:c.default.PropTypes.string.isRequired,onChange:c.default.PropTypes.func,value:c.default.PropTypes.oneOfType([c.default.PropTypes.string,c.default.PropTypes.number]),
 readOnly:c.default.PropTypes.bool,disabled:c.default.PropTypes.bool,placeholder:c.default.PropTypes.string,type:c.default.PropTypes.string},y.defaultProps={value:"",extraClass:"",className:"",type:"text"
 },t.TextField=y,t.default=(0,h.default)(y)},function(e,t){e.exports=FieldHolder},function(e,t,n){(function(t){e.exports=t.LiteralField=n(149)}).call(t,function(){return this}())},function(e,t,n){"use strict"

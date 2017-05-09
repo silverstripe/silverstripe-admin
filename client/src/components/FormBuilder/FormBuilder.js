@@ -139,7 +139,7 @@ class FormBuilder extends SilverStripeComponent {
     // 'component' key is renamed to 'schemaComponent' in normalize*() methods
     const SchemaComponent = componentProps.schemaComponent !== null
       ? injector.getComponentByName(componentProps.schemaComponent)
-      : injector.getComponentByDataType(componentProps.type);
+      : injector.getComponentByDataType(componentProps.schemaType);
 
     if (SchemaComponent === null) {
       return null;
@@ -193,7 +193,7 @@ class FormBuilder extends SilverStripeComponent {
 
       // Don't wrap structural or readonly fields, since they don't need connected fields.
       // The redux-form connected fields also messed up react-bootstrap's tab handling.
-      if (field.type === 'Structural' || field.readOnly === true) {
+      if (field.schemaType === 'Structural' || field.readOnly === true) {
         return this.buildComponent(props);
       }
 
