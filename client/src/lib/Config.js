@@ -36,7 +36,7 @@ class Config {
    * @return object|undefined
    */
   static getSection(key) {
-    return window.ss.config.sections[key];
+    return window.ss.config.sections.find((section) => section.name === key);
   }
 
   /**

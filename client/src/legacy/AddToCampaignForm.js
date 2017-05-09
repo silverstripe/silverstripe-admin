@@ -60,8 +60,9 @@ jQuery.entwine('ss', ($) => {
       const handleSubmit = (...args) => this._handleSubmitModal(...args);
       const id = $('form.cms-edit-form :input[name=ID]').val();
       const store = window.ss.store;
-      const sectionKey = 'SilverStripe\\CMS\\Controllers\\CMSPageEditController';
-      const sectionConfig = store.getState().config.sections[sectionKey];
+      const sectionConfigKey = 'SilverStripe\\CMS\\Controllers\\CMSPageEditController';
+      const sectionConfig = store.getState().config.sections
+        .find((section) => section.name === sectionConfigKey);
       const modalSchemaUrl = `${sectionConfig.form.AddToCampaignForm.schemaUrl}/${id}`;
 
       ReactDOM.render(

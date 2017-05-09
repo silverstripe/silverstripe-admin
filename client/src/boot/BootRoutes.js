@@ -36,31 +36,29 @@ class BootRoutes {
    */
   start(location) {
     // Decide which router to use
-    if (this.matchesLegacyRoute(location)) {
-      this.initLegacyRouter();
-    } else {
+    if (this.matchesReactRoute(location)) {
       this.initReactRouter();
+    } else {
+      this.initLegacyRouter();
     }
   }
 
   /**
-   * Determine if the given location matches a legacy or a react route.
+   * Determine if the given location matches a react route.
    *
    * @param {String} location URL
-   * @return {Boolean} True if this is a legacy non-react route
+   * @return {Boolean} True if this is a react route
    */
-  matchesLegacyRoute(location) {
-    // Legacy routes will always cause a full page reload
+  matchesReactRoute(location) {
     const sections = Config.get('sections');
     const currentPath = pageRouter.resolveURLToBase(location).replace(/\/$/, '');
 
-    // Check if the current url matches a legacy route
-    return !!Object.keys(sections).find((key) => {
-      const section = sections[key];
+    // Check if the current url matches a react route
+    return !!sections.find((section) => {
       const route = pageRouter.resolveURLToBase(section.url).replace(/\/$/, '');
 
-      // Skip react routes
-      if (section.reactRouter) {
+      // Skip non-react routes
+      if (!section.reactRouter) {
         return false;
       }
 
@@ -112,8 +110,8 @@ class BootRoutes {
     // This can be removed when top level sections are converted to React,
     // have their own JavaScript controllers, and register their own routes.
     let lastPath = null;
-    Object.keys(sections).forEach((key) => {
-      let route = pageRouter.resolveURLToBase(sections[key].url);
+    sections.forEach((section) => {
+      let route = pageRouter.resolveURLToBase(section.url);
       route = route.replace(/\/$/, ''); // Remove trailing slash
       route = `${route}(/*?)?`; // add optional trailing slash
 
