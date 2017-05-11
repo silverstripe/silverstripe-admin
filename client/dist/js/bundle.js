@@ -427,37 +427,40 @@ window.ss=window.ss||{},window.ss.injector=window.ss.injector||new o,t.default=w
 function r(e){if(e&&e.__esModule)return e
 var t={}
 if(null!=e)for(var n in e)Object.prototype.hasOwnProperty.call(e,n)&&(t[n]=e[n])
-return t.default=e,t}function o(e){return e&&e.__esModule?e:{default:e}}function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function a(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called")
+return t.default=e,t}function o(e){return e&&e.__esModule?e:{default:e}}function i(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}function a(e,t){
+if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function s(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called")
+return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function u(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t)
+e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}function l(e,t){var n=e.schemas[t.schemaUrl],r=e.form&&e.form[t.schemaUrl],o=r&&r.submitting,i=r&&r.values,a=n&&n.stateOverride,s=n&&n.metadata&&n.metadata.loading
 
 
-return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function s(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t)
-e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}function u(e,t){var n=e.schemas[t.schemaUrl],r=e.form&&e.form[t.schemaUrl],o=r&&r.submitting,i=r&&r.values,a=n&&n.stateOverride,s=n&&n.metadata&&n.metadata.loading
-
-
-return{schema:n,submitting:o,values:i,stateOverrides:a,loading:s}}function l(e){return{actions:{schema:(0,m.bindActionCreators)(E,e),reduxForm:(0,m.bindActionCreators)({autofill:w.autofill},e)}}}Object.defineProperty(t,"__esModule",{
-value:!0})
-var c=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]
-for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},d=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
-r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),p=n(6),f=o(p),h=n(10),m=n(9),y=n(18),v=o(y),g=n(28),b=o(g),w=n(119),_=n(12),E=r(_),T=n(24),C=o(T),P=n(38),O=o(P),k=n(120),S=o(k),j=function(e){
-function t(e){i(this,t)
-var n=a(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
-return n.handleSubmit=n.handleSubmit.bind(n),n.clearSchema=n.clearSchema.bind(n),n.reduceSchemaErrors=n.reduceSchemaErrors.bind(n),n.handleAutofill=n.handleAutofill.bind(n),n}return s(t,e),d(t,[{key:"componentDidMount",
+return{schema:n,submitting:o,values:i,stateOverrides:a,loading:s}}function c(e){return{actions:{schema:(0,y.bindActionCreators)(C,e),reduxForm:(0,y.bindActionCreators)({autofill:_.autofill,initialize:_.initialize
+},e)}}}Object.defineProperty(t,"__esModule",{value:!0})
+var d=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]
+for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},p=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),f=n(6),h=o(f),m=n(10),y=n(9),v=n(18),g=o(v),b=n(28),w=o(b),_=n(119),E=n(30),T=n(12),C=r(T),P=n(24),O=o(P),k=n(38),S=o(k),j=n(120),x=o(j),F=function(e){
+function t(e){a(this,t)
+var n=s(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
+return n.handleSubmit=n.handleSubmit.bind(n),n.clearSchema=n.clearSchema.bind(n),n.reduceSchemaErrors=n.reduceSchemaErrors.bind(n),n.handleAutofill=n.handleAutofill.bind(n),n}return u(t,e),p(t,[{key:"componentDidMount",
 value:function e(){this.fetch()}},{key:"componentDidUpdate",value:function e(t){this.props.schemaUrl!==t.schemaUrl&&(this.clearSchema(t.schemaUrl),this.fetch())}},{key:"componentWillUnmount",value:function e(){
 this.clearSchema(this.props.schemaUrl)}},{key:"getMessages",value:function e(t){var n={}
-return t&&t.fields&&t.fields.forEach(function(e){e.message&&(n[e.name]=e.message)}),n}},{key:"clearSchema",value:function e(t){t&&((0,w.destroy)(t),this.props.actions.schema.setSchema(t,null))}},{key:"handleSubmit",
-value:function e(t,n,r){var o=this,i=null
-if(i="function"==typeof this.props.handleSubmit?this.props.handleSubmit(t,n,r):r(),!i)throw new Error("Promise was not returned for submitting")
-return i.then(function(e){var t=e
-return t&&(t=o.reduceSchemaErrors(t),o.props.actions.schema.setSchema(o.props.schemaUrl,t)),t}).then(function(e){if(!e||!e.state)return e
+return t&&t.fields&&t.fields.forEach(function(e){e.message&&(n[e.name]=e.message)}),n}},{key:"clearSchema",value:function e(t){t&&((0,_.destroy)(t),this.props.actions.schema.setSchema(t,null))}},{key:"handleSubmit",
+value:function e(t,n,r){var o=this,a=null
+if(a="function"==typeof this.props.handleSubmit?this.props.handleSubmit(t,n,r):r(),!a)throw new Error("Promise was not returned for submitting")
+return a.then(function(e){var t=e
+if(t){t=o.reduceSchemaErrors(t),o.props.actions.schema.setSchema(o.props.schemaUrl,t)
+var n=t.schema||o.props.schema.schema
+if(t.state){var r=t.state.fields.reduce(function(e,t){var r=(0,E.findField)(n.fields,t.name)
+return r&&"Structural"!==r.schemaType&&r.readOnly!==!0?d({},e,i({},t.name,t.value)):e},{})
+o.props.actions.reduxForm.initialize(o.props.schemaUrl,r,!1)}}return t}).then(function(e){if(!e||!e.state)return e
 var t=o.getMessages(e.state)
-if(Object.keys(t).length)throw new w.SubmissionError(t)
+if(Object.keys(t).length)throw new _.SubmissionError(t)
 return e})}},{key:"reduceSchemaErrors",value:function e(t){if(!t.errors)return t
-var n=c({},t)
-return n.state||(n=c({},n,{state:this.props.schema.state})),n=c({},n,{state:c({},n.state,{fields:n.state.fields.map(function(e){return c({},e,{message:t.errors.find(function(t){return t.field===e.name})
-})}),messages:t.errors.filter(function(e){return!e.field})})}),delete n.errors,(0,b.default)(n)}},{key:"overrideStateData",value:function e(t){if(!this.props.stateOverrides||!t)return t
+var n=d({},t)
+return n.state||(n=d({},n,{state:this.props.schema.state})),n=d({},n,{state:d({},n.state,{fields:n.state.fields.map(function(e){return d({},e,{message:t.errors.find(function(t){return t.field===e.name})
+})}),messages:t.errors.filter(function(e){return!e.field})})}),delete n.errors,(0,w.default)(n)}},{key:"overrideStateData",value:function e(t){if(!this.props.stateOverrides||!t)return t
 var n=this.props.stateOverrides.fields,r=t.fields
 return n&&r&&(r=r.map(function(e){var t=n.find(function(t){return t.name===e.name})
-return t?C.default.recursive(!0,e,t):e})),c({},t,this.props.stateOverrides,{fields:r})}},{key:"callFetch",value:function e(t){return(0,v.default)(this.props.schemaUrl,{headers:{"X-FormSchema-Request":t.join(",")
+return t?O.default.recursive(!0,e,t):e})),d({},t,this.props.stateOverrides,{fields:r})}},{key:"callFetch",value:function e(t){return(0,g.default)(this.props.schemaUrl,{headers:{"X-FormSchema-Request":t.join(",")
 },credentials:"same-origin"}).then(function(e){return e.json()})}},{key:"fetch",value:function e(){var t=!(arguments.length>0&&void 0!==arguments[0])||arguments[0],n=this,r=!(arguments.length>1&&void 0!==arguments[1])||arguments[1],o=!(arguments.length>2&&void 0!==arguments[2])||arguments[2],i=["auto"]
 
 
@@ -465,16 +468,16 @@ return t&&i.push("schema"),r&&i.push("state"),o&&i.push("errors"),this.props.loa
 if(n.props.actions.schema.setSchemaLoading(n.props.schemaUrl,!1),"function"==typeof n.props.onFetchingSchema&&n.props.onFetchingSchema(),e.errors&&"function"==typeof n.props.onLoadingError)return n.props.onLoadingError(e)
 
 
-if("undefined"!=typeof e.id){var t=c({},e,{id:n.props.schemaUrl,state:n.overrideStateData(e.state)})
+if("undefined"!=typeof e.id){var t=d({},e,{id:n.props.schemaUrl,state:n.overrideStateData(e.state)})
 return n.props.actions.schema.setSchema(n.props.schemaUrl,t),t}return e}).catch(function(e){if(n.props.actions.schema.setSchemaLoading(n.props.schemaUrl,!1),"function"==typeof n.props.onLoadingError)return n.props.onLoadingError({
 errors:[{value:e.message,type:"error"}]})
 throw e}))}},{key:"handleAutofill",value:function e(t,n){this.props.actions.reduxForm.autofill(this.props.schemaUrl,t,n)}},{key:"render",value:function e(){if(!this.props.schema||!this.props.schema.schema||this.props.loading)return null
 
 
-var t=c({},this.props,{form:this.props.schemaUrl,onSubmitSuccess:this.props.onSubmitSuccess,handleSubmit:this.handleSubmit,onAutofill:this.handleAutofill})
-return f.default.createElement(S.default,t)}}]),t}(p.Component)
-j.propTypes=c({},k.basePropTypes,{actions:p.PropTypes.shape({schema:p.PropTypes.object,reduxFrom:p.PropTypes.object}),schemaUrl:p.PropTypes.string.isRequired,schema:k.schemaPropType,form:p.PropTypes.string,
-submitting:p.PropTypes.bool,onFetchingSchema:p.PropTypes.func}),j.defaultProps={baseFormComponent:(0,w.reduxForm)()(O.default),baseFieldComponent:w.Field},t.default=(0,h.connect)(u,l)(j)},function(e,t){
+var t=d({},this.props,{form:this.props.schemaUrl,onSubmitSuccess:this.props.onSubmitSuccess,handleSubmit:this.handleSubmit,onAutofill:this.handleAutofill})
+return h.default.createElement(x.default,t)}}]),t}(f.Component)
+F.propTypes=d({},j.basePropTypes,{actions:f.PropTypes.shape({schema:f.PropTypes.object,reduxFrom:f.PropTypes.object}),schemaUrl:f.PropTypes.string.isRequired,schema:j.schemaPropType,form:f.PropTypes.string,
+submitting:f.PropTypes.bool,onFetchingSchema:f.PropTypes.func}),F.defaultProps={baseFormComponent:(0,_.reduxForm)()(S.default),baseFieldComponent:_.Field},t.default=(0,m.connect)(l,c)(F)},function(e,t){
 e.exports=ReduxForm},function(e,t){e.exports=FormBuilder},function(e,t,n){(function(t){e.exports=t.FormBuilderModal=n(122)}).call(t,function(){return this}())},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function i(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called")
 
@@ -840,16 +843,17 @@ e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,wri
 
 
 if(r){var o=r.tree||{},i=r.visible||[],a=r.loading||[],s=r.failed||[]
-return{tree:o,visible:i,loading:a,failed:s}}return{}}function c(e){return{actions:{treeDropdownField:(0,m.bindActionCreators)(P,e)}}}Object.defineProperty(t,"__esModule",{value:!0}),t.ConnectedTreeDropdownField=t.TreeDropdownField=void 0
+return{tree:o,visible:i,loading:a,failed:s}}return{}}function c(e){return{actions:{treeDropdownField:(0,y.bindActionCreators)(O,e)}}}Object.defineProperty(t,"__esModule",{value:!0}),t.ConnectedTreeDropdownField=t.TreeDropdownField=void 0
 
 
-var d=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
-r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),p=n(6),f=o(p),h=n(10),m=n(9),y=n(152),v=o(y),g=n(18),b=o(g),w=n(167),_=o(w),E=n(5),T=o(E),C=n(179),P=r(C),O=n(163),k=o(O),S=n(161),j=o(S),x=n(181),F=o(x),D=function(e){
+var d=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]
+for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},p=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),f=n(6),h=o(f),m=n(10),y=n(9),v=n(152),g=o(v),b=n(18),w=o(b),_=n(167),E=o(_),T=n(5),C=o(T),P=n(179),O=r(P),k=n(163),S=o(k),j=n(161),x=o(j),F=n(181),D=o(F),R=function(e){
 function t(e){a(this,t)
 var n=s(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
 return n.render=n.render.bind(n),n.renderMenu=n.renderMenu.bind(n),n.renderOption=n.renderOption.bind(n),n.getBreadcrumbs=n.getBreadcrumbs.bind(n),n.getDropdownOptions=n.getDropdownOptions.bind(n),n.getSelectedOption=n.getSelectedOption.bind(n),
 n.getVisibleTree=n.getVisibleTree.bind(n),n.handleBack=n.handleBack.bind(n),n.handleChange=n.handleChange.bind(n),n.handleKeyDown=n.handleKeyDown.bind(n),n.handleNavigate=n.handleNavigate.bind(n),n.callFetch=n.callFetch.bind(n),
-n.lazyLoad=n.lazyLoad.bind(n),n.findTreeByID=n.findTreeByID.bind(n),n.findTreeByPath=n.findTreeByPath.bind(n),n.findTreePath=n.findTreePath.bind(n),n}return u(t,e),d(t,[{key:"componentDidMount",value:function e(){
+n.lazyLoad=n.lazyLoad.bind(n),n.findTreeByID=n.findTreeByID.bind(n),n.findTreeByPath=n.findTreeByPath.bind(n),n.findTreePath=n.findTreePath.bind(n),n}return u(t,e),p(t,[{key:"componentDidMount",value:function e(){
 this.lazyLoad([])}},{key:"getVisibleTree",value:function e(){return this.findTreeByPath(this.props.tree,this.props.visible)}},{key:"getBreadcrumbs",value:function e(){var t=[],n=this.props.tree,r=!0,o=!1,i=void 0
 
 
@@ -857,15 +861,14 @@ try{for(var a=function e(){var r=u.value
 return(n=n.children.find(function(e){return e.id===r}))?void t.push(n):"break"},s=this.props.visible[Symbol.iterator](),u;!(r=(u=s.next()).done);r=!0){var l=a()
 if("break"===l)break}}catch(e){o=!0,i=e}finally{try{!r&&s.return&&s.return()}finally{if(o)throw i}}return t}},{key:"getSelectedOption",value:function e(){if(!this.props.value)return null
 var t=this.findTreeByID(this.props.tree,this.props.value)
-return t?t:this.props.data.valueObject&&this.props.data.valueObject.id===this.props.value?this.props.data.valueObject:{id:this.props.value,title:T.default._t("Admin.TREEDROPDOWN_LOADING","Loading..."),
-disabled:!1}}},{key:"getDropdownOptions",value:function e(){var t=this,n=this.getVisibleTree(),r=n?n.children:[]
-if(this.props.value){var o=r.find(function(e){return e.id===t.props.value})
-o||(o=this.getSelectedOption(),r=r.slice(0),r.unshift(o))}return r&&r.length?r:[{id:null,title:null,disabled:!0}]}},{key:"callFetch",value:function e(t){var n=F.default.parse(this.props.data.urlTree,!0)
-
-
+return t?t:this.props.data.valueObject&&this.props.data.valueObject.id===this.props.value?this.props.data.valueObject:{id:this.props.value,title:C.default._t("Admin.TREEDROPDOWN_LOADING","Loading..."),
+disabled:!1}}},{key:"getDropdownOptions",value:function e(t){var n=this.getVisibleTree(),r=n?n.children.slice(0):[]
+if(t){var o=r.find(function(e){return e.id===t})
+o||(o=this.getSelectedOption(),r.unshift(o))}return this.props.data.showRootOption&&!this.props.visible.length&&r.unshift({id:"",title:this.props.data.emptyTitle,disabled:!1}),r&&r.length?r:[{id:null,title:null,
+disabled:!0}]}},{key:"callFetch",value:function e(t){var n=D.default.parse(this.props.data.urlTree,!0)
 n.search="",t.length&&(n.query.ID=t[t.length-1]),n.query.format="json"
-var r=F.default.format(n)
-return(0,b.default)(r,{credentials:"same-origin"}).then(function(e){return e.json()})}},{key:"findTreeByPath",value:function e(t,n){if(!t||0===Object.keys(t).length)return null
+var r=D.default.format(n)
+return(0,w.default)(r,{credentials:"same-origin"}).then(function(e){return e.json()})}},{key:"findTreeByPath",value:function e(t,n){if(!t||0===Object.keys(t).length)return null
 if(0===n.length)return t
 var r=n.slice(0),o=r.shift(),i=t.children.find(function(e){return e.id===o})
 return i?this.findTreeByPath(i,r):null}},{key:"findTreeByID",value:function e(t,n){if(!t||0===Object.keys(t).length)return null
@@ -898,23 +901,24 @@ if(n)switch(t.keyCode){case 37:this.handleBack(t)
 break
 case 39:n.count&&this.handleNavigate(t,n.id)}}},{key:"handleBack",value:function e(t){t.stopPropagation(),t.preventDefault()
 var n=this.props.visible
-n.length&&(n=n.slice(0,n.length-1)),this.lazyLoad(n),this.props.actions.treeDropdownField.setVisible(this.props.id,n)}},{key:"renderMenu",value:function e(t){var n=this.getVisibleTree()||{},r=this.props.loading.indexOf(n.id||0)>-1,o=this.props.failed.indexOf(n.id||0)>-1,i=this.getBreadcrumbs()
-
-
-return f.default.createElement(k.default,{loading:r,failed:o,tree:n,breadcrumbs:i,renderMenuOptions:t,onBack:this.handleBack})}},{key:"renderOption",value:function e(t){var n=this,r=null
+n.length&&(n=n.slice(0,n.length-1)),this.lazyLoad(n),this.props.actions.treeDropdownField.setVisible(this.props.id,n)}},{key:"renderMenu",value:function e(t){var n=this.getVisibleTree(),r=d({},n,{children:this.getDropdownOptions().filter(function(e){
+return null!==e.title})}),o=this.props.loading.indexOf(r.id||0)>-1,i=this.props.failed.indexOf(r.id||0)>-1,a=this.getBreadcrumbs()
+return h.default.createElement(S.default,{loading:o,failed:i,tree:r,breadcrumbs:a,renderMenuOptions:t,onBack:this.handleBack})}},{key:"renderOption",value:function e(t){var n=this,r=null
 if(t.count){var o=function e(r){return n.handleNavigate(r,t.id)}
-r=f.default.createElement("button",{className:"treedropdownfield__option-button",onClick:o,onMouseDown:o,onTouchEnd:o},f.default.createElement("span",{className:"treedropdownfield__option-count"},t.count),f.default.createElement("span",{
-className:"icon font-icon-list"}))}return f.default.createElement("div",{className:"treedropdownfield__option flexbox-area-grow fill-width"},f.default.createElement("span",{className:"treedropdownfield__option__title flexbox-area-grow"
-},t.title),r)}},{key:"render",value:function e(){var t=this,n={id:this.props.id},r=this.props.extraClass?"treedropdownfield "+this.props.extraClass:"treedropdownfield",o=this.getDropdownOptions()
-return f.default.createElement(_.default,{searchable:!1,className:r,name:this.props.name,options:o,inputProps:n,menuRenderer:this.renderMenu,optionRenderer:this.renderOption,onChange:this.handleChange,
-onInputKeyDown:this.handleKeyDown,value:this.props.value,ref:function e(n){t.selectField=n},placeholder:this.props.data.emptyTitle,labelKey:"title",valueKey:"id"})}}]),t}(p.Component)
-D.propTypes={extraClass:p.PropTypes.string,id:p.PropTypes.string,name:p.PropTypes.string.isRequired,onChange:p.PropTypes.func,value:p.PropTypes.oneOfType([p.PropTypes.string,p.PropTypes.number]),readOnly:p.PropTypes.bool,
-disabled:p.PropTypes.bool,tree:p.PropTypes.shape(j.default.propTypes),visible:p.PropTypes.array,loading:p.PropTypes.array,failed:p.PropTypes.array,data:p.PropTypes.shape({urlTree:p.PropTypes.string.isRequired,
-emptyTitle:p.PropTypes.string,valueObject:p.PropTypes.shape({id:p.PropTypes.number,title:p.PropTypes.string})}),onLoadingError:p.PropTypes.func,actions:p.PropTypes.shape({treeDropdownField:p.PropTypes.shape({
-beginTreeUpdating:p.PropTypes.func,updateTreeFailed:p.PropTypes.func,updateTree:p.PropTypes.func,setVisible:p.PropTypes.func})})},D.defaultProps={value:"",extraClass:"",className:"",tree:{},visible:[],
-loading:[],failed:[]}
-var R=(0,h.connect)(l,c)(D)
-t.TreeDropdownField=D,t.ConnectedTreeDropdownField=R,t.default=(0,v.default)(R)},function(e,t,n){"use strict"
+r=h.default.createElement("button",{className:"treedropdownfield__option-button",onClick:o,onMouseDown:o,onTouchEnd:o},h.default.createElement("span",{className:"treedropdownfield__option-count"},t.count),h.default.createElement("span",{
+className:"icon font-icon-list"}))}return h.default.createElement("div",{className:"treedropdownfield__option flexbox-area-grow fill-width"},h.default.createElement("span",{className:"treedropdownfield__option__title flexbox-area-grow"
+},t.title),r)}},{key:"render",value:function e(){var t=this,n={id:this.props.id},r=this.props.extraClass?"treedropdownfield "+this.props.extraClass:"treedropdownfield",o=this.getDropdownOptions(this.props.value),i=0===this.props.value?"":this.props.value
+
+
+return h.default.createElement(E.default,{searchable:!1,className:r,name:this.props.name,options:o,inputProps:n,menuRenderer:this.renderMenu,optionRenderer:this.renderOption,onChange:this.handleChange,
+onInputKeyDown:this.handleKeyDown,value:i,ref:function e(n){t.selectField=n},placeholder:this.props.data.emptyTitle,labelKey:"title",valueKey:"id"})}}]),t}(f.Component)
+R.propTypes={extraClass:f.PropTypes.string,id:f.PropTypes.string,name:f.PropTypes.string.isRequired,onChange:f.PropTypes.func,value:f.PropTypes.oneOfType([f.PropTypes.string,f.PropTypes.number]),readOnly:f.PropTypes.bool,
+disabled:f.PropTypes.bool,tree:f.PropTypes.shape(x.default.propTypes),visible:f.PropTypes.array,loading:f.PropTypes.array,failed:f.PropTypes.array,data:f.PropTypes.shape({urlTree:f.PropTypes.string.isRequired,
+emptyTitle:f.PropTypes.string,valueObject:f.PropTypes.shape({id:f.PropTypes.number,title:f.PropTypes.string}),showRootOption:f.PropTypes.bool}),onLoadingError:f.PropTypes.func,actions:f.PropTypes.shape({
+treeDropdownField:f.PropTypes.shape({beginTreeUpdating:f.PropTypes.func,updateTreeFailed:f.PropTypes.func,updateTree:f.PropTypes.func,setVisible:f.PropTypes.func})})},R.defaultProps={value:"",extraClass:"",
+className:"",tree:{},visible:[],loading:[],failed:[]}
+var A=(0,m.connect)(l,c)(R)
+t.TreeDropdownField=R,t.ConnectedTreeDropdownField=A,t.default=(0,g.default)(A)},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t){var n={}
 for(var r in e)t.indexOf(r)>=0||Object.prototype.hasOwnProperty.call(e,r)&&(n[r]=e[r])
 return n}function i(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}function a(e){var t=typeof e

@@ -9,7 +9,9 @@ import {
   SubmissionError,
   destroy as reduxDestroyForm,
   autofill,
+  initialize,
 } from 'redux-form';
+import { findField } from 'lib/schemaFieldValues';
 import * as schemaActions from 'state/schema/SchemaActions';
 import merge from 'merge';
 import Form from 'components/Form/Form';
@@ -98,6 +100,21 @@ class FormBuilderLoader extends Component {
           // Strip errors out of schema response in preparation for setSchema and SubmissionError
           schema = this.reduceSchemaErrors(schema);
           this.props.actions.schema.setSchema(this.props.schemaUrl, schema);
+
+          const schemaRef = schema.schema || this.props.schema.schema;
+          if (schema.state) {
+            const formData = schema.state.fields.reduce((tempData, state) => {
+              const field = findField(schemaRef.fields, state.name);
+
+              if (!field || field.schemaType === 'Structural' || field.readOnly === true) {
+                return tempData;
+              }
+              return Object.assign({}, tempData, {
+                [state.name]: state.value,
+              });
+            }, {});
+            this.props.actions.reduxForm.initialize(this.props.schemaUrl, formData, false);
+          }
         }
         return schema;
       })
@@ -339,7 +356,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: {
       schema: bindActionCreators(schemaActions, dispatch),
-      reduxForm: bindActionCreators({ autofill }, dispatch),
+      reduxForm: bindActionCreators({ autofill, initialize }, dispatch),
     },
   };
 }

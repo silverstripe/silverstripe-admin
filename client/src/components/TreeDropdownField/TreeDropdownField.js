@@ -104,20 +104,27 @@ class TreeDropdownField extends Component {
    *
    * @return {Array}
    */
-  getDropdownOptions() {
+  getDropdownOptions(value) {
     // force renderMenu() to handle rendering even if options are empty
     const node = this.getVisibleTree();
-    let options = node ? node.children : [];
+    const options = node ? node.children.slice(0) : [];
 
     // Ensure selected value exists in the option
-    if (this.props.value) {
+    if (value) {
       // Get selected option
-      let selectedOption = options.find((option) => (option.id === this.props.value));
+      let selectedOption = options.find((option) => (option.id === value));
       if (!selectedOption) {
         selectedOption = this.getSelectedOption();
-        options = options.slice(0);
         options.unshift(selectedOption);
       }
+    }
+
+    if (this.props.data.showRootOption && !this.props.visible.length) {
+      options.unshift({
+        id: '',
+        title: this.props.data.emptyTitle,
+        disabled: false,
+      });
     }
 
     if (options && options.length) {
@@ -405,10 +412,15 @@ class TreeDropdownField extends Component {
    */
   renderMenu(renderMenuOptions) {
     // Build root node
-    const tree = this.getVisibleTree() || {};
+    const visibleTree = this.getVisibleTree();
+    const tree = Object.assign({}, visibleTree, {
+      // we only want to show options with a title
+      children: this.getDropdownOptions().filter((option) => option.title !== null),
+    });
     const loading = this.props.loading.indexOf(tree.id || 0) > -1;
     const failed = this.props.failed.indexOf(tree.id || 0) > -1;
     const breadcrumbs = this.getBreadcrumbs();
+
     return (
       <TreeDropdownFieldMenu
         loading={loading}
@@ -460,7 +472,9 @@ class TreeDropdownField extends Component {
     const className = this.props.extraClass
       ? `treedropdownfield ${this.props.extraClass}`
       : 'treedropdownfield';
-    const options = this.getDropdownOptions();
+    const options = this.getDropdownOptions(this.props.value);
+    const value = (this.props.value === 0) ? '' : this.props.value;
+
     return (
       <Select
         searchable={false}
@@ -472,7 +486,7 @@ class TreeDropdownField extends Component {
         optionRenderer={this.renderOption}
         onChange={this.handleChange}
         onInputKeyDown={this.handleKeyDown}
-        value={this.props.value}
+        value={value}
         ref={(select) => { this.selectField = select; }}
         placeholder={this.props.data.emptyTitle}
         labelKey="title"
@@ -501,6 +515,7 @@ TreeDropdownField.propTypes = {
       id: PropTypes.number,
       title: PropTypes.string,
     }),
+    showRootOption: PropTypes.bool,
   }),
   onLoadingError: PropTypes.func,
   actions: PropTypes.shape({
