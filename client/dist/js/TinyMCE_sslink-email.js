@@ -7,7 +7,7 @@ e.openLinkEmailDialog()})}},b="insert-link__dialog-wrapper--email",y="SilverStri
 h.default.entwine("ss",function(e){e("textarea.htmleditor").entwine({openLinkEmailDialog:function t(){var n=e("#"+b)
 n.length||(n=e('<div id="'+b+'" />'),e("body").append(n)),n.addClass("insert-link__dialog-wrapper"),n.setElement(this),n.open()}}),e("#"+b).entwine({renderModal:function e(t){var n=this,r=ss.store,i=ss.apolloClient,a=function e(){
 return n.close()},s=function e(){return n.handleInsert.apply(n,arguments)},l=this.getOriginalAttributes()
-f.default.render(u.default.createElement(d.ApolloProvider,{store:r,client:i},u.default.createElement(g,{show:t,onInsert:s,onHide:a,title:o.default._t("HTMLEditorField.LINK","Insert Link"),bodyClassName:"modal__dialog",
+f.default.render(u.default.createElement(d.ApolloProvider,{store:r,client:i},u.default.createElement(g,{show:t,onInsert:s,onHide:a,title:o.default._t("Admin.LINK_EMAIL","Insert email link"),bodyClassName:"modal__dialog",
 className:"insert-link__dialog-wrapper--email",fileAttributes:l})),this[0])},getOriginalAttributes:function t(){var n=this.getElement().getEditor(),r=e(n.getSelectedNode()),i=(r.attr("href")||"").split("?"),o=i[0].replace(/^mailto:/,"").split("?")[0]
 
 
@@ -43,12 +43,12 @@ var n=a(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
 return n.handleSubmit=n.handleSubmit.bind(n),n.setOverrides(e.show?e:null),n}return s(t,e),f(t,[{key:"componentWillReceiveProps",value:function e(t){(t.show&&!this.props.show||!t.show&&this.props.show)&&this.setOverrides(t.show?t:null)
 
 }},{key:"componentWillUnmount",value:function e(){this.setOverrides()}},{key:"setOverrides",value:function e(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null
-if(!t){var n=t&&t.schemaUrl||this.props.schemaUrl
-n&&this.props.actions.schema.setSchemaStateOverrides(n,null)}if(t&&t.schemaUrl){var r=c({},t.fileAttributes)
-delete r.ID
-var i={fields:Object.entries(r).map(function(e){var t=u(e,2),n=t[0],r=t[1]
+if(t){if(t.schemaUrl){var n=c({},t.fileAttributes)
+delete n.ID
+var r={fields:Object.entries(n).map(function(e){var t=u(e,2),n=t[0],r=t[1]
 return{name:n,value:r}})}
-this.props.actions.schema.setSchemaStateOverrides(t.schemaUrl,i)}}},{key:"getModalProps",value:function e(){var t=c({},this.props,{handleSubmit:this.handleSubmit,handleHide:this.props.onHide})
+this.props.actions.schema.setSchemaStateOverrides(t.schemaUrl,r)}}else{var i=t&&t.schemaUrl||this.props.schemaUrl
+i&&this.props.actions.schema.setSchemaStateOverrides(i,null)}}},{key:"getModalProps",value:function e(){var t=c({},this.props,{handleSubmit:this.handleSubmit,handleHide:this.props.onHide})
 return delete t.onHide,delete t.onInsert,delete t.sectionConfig,t}},{key:"handleSubmit",value:function e(t,n){switch(n){case"action_cancel":this.props.onHide()
 break
 default:this.props.onInsert(t,n)}return Promise.resolve()}},{key:"render",value:function e(){var t=this.getModalProps()

@@ -40,6 +40,7 @@ class EditorExternalLinkFormFactory implements FormFactory
         $validator = $this->getValidator($controller, $name, $context);
         /** @var Form $form */
         $form = Form::create($controller, $name, $fields, $actions, $validator);
+        $form->addExtraClass('form--no-dividers');
         
         return $form;
     }
@@ -52,7 +53,7 @@ class EditorExternalLinkFormFactory implements FormFactory
             TextField::create('Anchor', _t('HTMLEditorField.ANCHORVALUE', 'Anchor')),
             CheckboxField::create(
                 'TargetBlank',
-                _t('HTMLEditorField.LINKOPENNEWWIN', 'Open link in a new window?')
+                _t('HTMLEditorField.LINKOPENNEWWIN', 'Open in new window/tab')
             ),
         ]);
         

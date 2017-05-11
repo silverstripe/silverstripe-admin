@@ -20,5 +20,7 @@
     "Admin.EXPANDPANEL": "Expand panel",
     "Admin.COLLAPSEPANEL": "Collapse panel",
     "Admin.LINKLABEL_EXTERNALURL": "Link to external URL",
-    "Admin.LINKLABEL_EMAIL": "Link to email address"
+    "Admin.LINKLABEL_EMAIL": "Link to email address",
+    "Admin.LINK_EXTERNAL": "Insert external link",
+    "Admin.LINK_EMAIL": "Insert email link"
 }

@@ -21,7 +21,7 @@ const plugin = {
         editor.execCommand('sslinkpage', ui, val);
       }
     });
-  }
+  },
 };
 
 // Adds the plugin class to the list of available TinyMCE plugins

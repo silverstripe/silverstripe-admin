@@ -36,8 +36,7 @@ class InsertLinkModal extends Component {
       if (schemaUrl) {
         this.props.actions.schema.setSchemaStateOverrides(schemaUrl, null);
       }
-    }
-    if (props && props.schemaUrl) {
+    } else if (props.schemaUrl) {
       const attrs = Object.assign({}, props.fileAttributes);
 
       delete attrs.ID;
