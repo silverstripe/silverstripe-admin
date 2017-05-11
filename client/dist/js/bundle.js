@@ -251,9 +251,9 @@ n&&n.focus()}}}},{key:"renderMessages",value:function e(){return Array.isArray(t
 
 t===!1&&i.push("form--invalid"),this.props.attributes&&this.props.attributes.className&&i.push(this.props.attributes.className)
 var a=s({},this.props.attributes,{onSubmit:this.props.handleSubmit,className:i.join(" ")})
-return c.default.createElement("form",a,n&&c.default.createElement("fieldset",null,o,this.props.afterMessages,n),r&&c.default.createElement("div",{className:"btn-toolbar",role:"group"},r))}}]),t}(l.Component)
+return c.default.createElement("form",a,n&&c.default.createElement("fieldset",null,o,this.props.afterMessages,n),r&&r.length?c.default.createElement("div",{className:"btn-toolbar",role:"group"},r):null)
 
-
+}}]),t}(l.Component)
 m.propTypes={autoFocus:l.PropTypes.bool,valid:l.PropTypes.bool,actions:l.PropTypes.array,afterMessages:l.PropTypes.node,attributes:l.PropTypes.shape({action:l.PropTypes.string.isRequired,className:l.PropTypes.string,
 encType:l.PropTypes.string,id:l.PropTypes.string,method:l.PropTypes.string.isRequired}),fields:l.PropTypes.array.isRequired,handleSubmit:l.PropTypes.func,mapActionsToComponents:l.PropTypes.func.isRequired,
 mapFieldsToComponents:l.PropTypes.func.isRequired,messages:l.PropTypes.arrayOf(l.PropTypes.shape({extraClass:l.PropTypes.string,value:l.PropTypes.any,type:l.PropTypes.string}))},t.default=m},,function(e,t,n){
@@ -727,12 +727,12 @@ for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},
 r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),l=n(5),c=r(l),d=n(23),p=r(d),f=n(147),h=r(f),m=n(24),y=function(e){
 function t(e){o(this,t)
 var n=i(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
-return n.handleChange=n.handleChange.bind(n),n}return a(t,e),u(t,[{key:"render",value:function e(){var t=null
-return t=this.props.readOnly?c.default.createElement(m.FormControl.Static,this.getInputProps(),this.props.value):c.default.createElement(m.FormControl,this.getInputProps())}},{key:"getInputProps",value:function e(){
-var t={bsClass:this.props.bsClass,className:this.props.className+" "+this.props.extraClass,id:this.props.id,name:this.props.name,disabled:this.props.disabled,readOnly:this.props.readOnly}
-return this.props.readOnly||(s(t,{placeholder:this.props.placeholder,onChange:this.handleChange,value:this.props.value}),this.isMultiline()?s(t,{componentClass:"textarea",rows:this.props.data.rows,cols:this.props.data.columns
-}):s(t,{componentClass:"input",type:this.props.type?this.props.type:null})),t}},{key:"isMultiline",value:function e(){return this.props.data&&this.props.data.rows>1}},{key:"handleChange",value:function e(t){
-"function"==typeof this.props.onChange&&this.props.onChange(t,{id:this.props.id,value:t.target.value})}}]),t}(p.default)
+return n.handleChange=n.handleChange.bind(n),n}return a(t,e),u(t,[{key:"render",value:function e(){return c.default.createElement(m.FormControl,this.getInputProps())}},{key:"getInputProps",value:function e(){
+var t={bsClass:this.props.bsClass,className:this.props.className+" "+this.props.extraClass,id:this.props.id,name:this.props.name,disabled:this.props.disabled,readOnly:this.props.readOnly,value:this.props.value,
+placeholder:this.props.placeholder}
+return this.isMultiline()?s(t,{componentClass:"textarea",rows:this.props.data.rows,cols:this.props.data.columns}):s(t,{componentClass:"input",type:this.props.type?this.props.type:null}),this.props.readOnly||s(t,{
+onChange:this.handleChange}),t}},{key:"isMultiline",value:function e(){return this.props.data&&this.props.data.rows>1}},{key:"handleChange",value:function e(t){"function"==typeof this.props.onChange&&this.props.onChange(t,{
+id:this.props.id,value:t.target.value})}}]),t}(p.default)
 y.propTypes={extraClass:c.default.PropTypes.string,id:c.default.PropTypes.string,name:c.default.PropTypes.string.isRequired,onChange:c.default.PropTypes.func,value:c.default.PropTypes.oneOfType([c.default.PropTypes.string,c.default.PropTypes.number]),
 readOnly:c.default.PropTypes.bool,disabled:c.default.PropTypes.bool,placeholder:c.default.PropTypes.string,type:c.default.PropTypes.string},y.defaultProps={value:"",extraClass:"",className:"",type:"text"
 },t.TextField=y,t.default=(0,h.default)(y)},function(e,t){e.exports=FieldHolder},function(e,t,n){(function(t){e.exports=t.LiteralField=n(149)}).call(t,function(){return this}())},function(e,t,n){"use strict"
