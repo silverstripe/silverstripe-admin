@@ -1,4 +1,4 @@
-import injector from 'lib/Injector';
+import injector from '../injector/injector';
 import TextField from 'components/TextField/TextField';
 import HiddenField from 'components/HiddenField/HiddenField';
 import DateField from 'components/DateField/DateField';

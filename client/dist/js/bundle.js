@@ -2427,7 +2427,19 @@ var w=h(l.createStore),E=w(o,r)
 E.dispatch(b.setConfig(m.default.getAll())),window.ss=window.ss||{},window.ss.store=E,window.ss=window.ss||{},window.ss.apolloClient=n
 var C=new u.default(E,n)
 C.start(window.location.pathname),window.jQuery&&window.jQuery("body").addClass("js-react-boot")}var a=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]
+<<<<<<< HEAD
 for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},s=n(243),u=o(s),l=n(9),c=n(275),d=o(c),p=n(119),f=n(274),h=n(197),m=o(h),y=n(276),v=o(y),g=n(277),b=r(g),w=n(279),_=o(w),E=n(280),T=o(E),C=n(281),P=o(C),O=n(282),S=o(O),k=n(283),j=o(k),x=n(284),F=o(x),D=n(304),R=o(D),A=n(305),M=o(A),I=n(306),N=n(23),L=o(N),B=n(20),U=o(B)
+=======
+<<<<<<< HEAD
+for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},s=n(243),u=o(s),l=n(9),c=n(265),d=o(c),p=n(119),f=n(264),h=n(197),m=o(h),y=n(266),v=o(y),g=n(267),b=r(g),w=n(269),_=o(w),E=n(270),T=o(E),C=n(271),P=o(C),O=n(272),S=o(O),k=n(273),j=o(k),x=n(293),F=o(x),D=n(294),R=o(D),A=n(295),I=n(23),M=o(I),N=n(20),L=o(N)
+=======
+<<<<<<< HEAD
+for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},s=n(243),u=o(s),l=n(9),c=n(265),d=o(c),p=n(119),f=n(264),h=n(197),m=o(h),y=n(266),v=o(y),g=n(267),b=r(g),w=n(269),_=o(w),E=n(270),T=o(E),C=n(271),P=o(C),O=n(272),k=o(O),S=n(273),j=o(S),x=n(293),F=o(x),D=n(294),R=o(D),A=n(295),I=n(23),M=o(I),N=n(20),L=o(N)
+=======
+for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},s=n(239),u=o(s),l=n(111),c=n(262),d=o(c),p=n(112),f=n(260),h=n(192),m=o(h),y=n(263),v=o(y),g=n(264),b=r(g),_=n(266),w=o(_),E=n(267),T=o(E),C=n(268),P=o(C),O=n(269),k=o(O),S=n(270),j=o(S),x=n(291),F=o(x),D=n(292),R=o(D),A=n(293),I=n(13),M=o(I),N=n(10),L=o(N)
+>>>>>>> initial build
+>>>>>>> initial build
+>>>>>>> initial build
 
 
 U.default.polyfill(),window.onload=i},function(e,t,n){"use strict"
@@ -2583,13 +2595,26 @@ for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},
 t.default=o},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(t,"__esModule",{value:!0})
 var i=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
+<<<<<<< HEAD
 r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),a=n(116),s=r(a),u=n(151),l=r(u),c=n(145),d=r(c),p=n(285),f=r(p),h=n(286),m=r(h),y=n(287),v=r(y),g=n(288),b=r(g),w=n(290),_=r(w),E=n(291),T=r(E),C=n(292),P=r(C),O=n(293),S=r(O),k=n(294),j=r(k),x=n(295),F=r(x),D=n(154),R=r(D),A=n(296),M=r(A),I=n(297),N=r(I),L=n(298),B=r(L),U=n(299),V=r(U),H=n(300),$=r(H),q=n(301),K=r(q),z=n(302),W=r(z),G=n(303),X=r(G),Y=n(166),Q=r(Y),J=function(){
+=======
+<<<<<<< HEAD
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),a=n(116),s=r(a),u=n(151),l=r(u),c=n(145),d=r(c),p=n(274),f=r(p),h=n(275),m=r(h),y=n(276),v=r(y),g=n(277),b=r(g),w=n(279),_=r(w),E=n(280),T=r(E),C=n(281),P=r(C),O=n(282),S=r(O),k=n(283),j=r(k),x=n(284),F=r(x),D=n(154),R=r(D),A=n(285),I=r(A),M=n(286),N=r(M),L=n(287),B=r(L),U=n(288),V=r(U),H=n(289),$=r(H),q=n(290),K=r(q),z=n(291),W=r(z),G=n(292),X=r(G),Y=n(166),Q=r(Y),J=function(){
+=======
+<<<<<<< HEAD
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),a=n(116),s=r(a),u=n(151),l=r(u),c=n(145),d=r(c),p=n(274),f=r(p),h=n(275),m=r(h),y=n(276),v=r(y),g=n(277),b=r(g),w=n(279),_=r(w),E=n(280),T=r(E),C=n(281),P=r(C),O=n(282),k=r(O),S=n(283),j=r(S),x=n(284),F=r(x),D=n(154),R=r(D),A=n(285),I=r(A),M=n(286),N=r(M),L=n(287),B=r(L),U=n(288),V=r(U),H=n(289),$=r(H),q=n(290),K=r(q),z=n(291),W=r(z),G=n(292),X=r(G),Y=n(166),Q=r(Y),J=function(){
+=======
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),a=n(271),s=r(a),u=n(146),l=r(u),c=n(140),d=r(c),p=n(272),f=r(p),h=n(273),m=r(h),y=n(274),v=r(y),g=n(275),b=r(g),_=n(277),w=r(_),E=n(278),T=r(E),C=n(279),P=r(C),O=n(280),k=r(O),S=n(281),j=r(S),x=n(282),F=r(x),D=n(149),R=r(D),A=n(283),I=r(A),M=n(284),N=r(M),L=n(285),B=r(L),U=n(286),V=r(U),H=n(287),$=r(H),q=n(288),K=r(q),z=n(289),W=r(z),G=n(290),X=r(G),Y=n(161),Q=r(Y),J=function(){
+>>>>>>> initial build
+>>>>>>> initial build
+>>>>>>> initial build
 function e(){o(this,e)}return i(e,[{key:"start",value:function e(){s.default.register("TextField",l.default),s.default.register("HiddenField",d.default),s.default.register("DateField",f.default),s.default.register("TimeField",m.default),
 s.default.register("DatetimeField",v.default),s.default.register("CheckboxField",b.default),s.default.register("CheckboxSetField",_.default),s.default.register("OptionsetField",T.default),s.default.register("GridField",P.default),
 s.default.register("FieldGroup",X.default),s.default.register("SingleSelectField",S.default),s.default.register("PopoverField",j.default),s.default.register("HeaderField",F.default),s.default.register("LiteralField",R.default),
 s.default.register("HtmlReadonlyField",M.default),s.default.register("LookupField",N.default),s.default.register("CompositeField",B.default),s.default.register("Tabs",$.default),s.default.register("TabItem",K.default),
 s.default.register("FormAction",W.default),s.default.register("LabelField",V.default),s.default.register("TreeDropdownField",Q.default)}}]),e}()
-t.default=new J},function(e,t,n){"use strict"
+t.default=new J},function(e,t){"use strict"
+Object.defineProperty(t,"__esModule",{value:!0}),t.default={data:{},get:function e(t){return this.data[t]},register:function e(t,n){this.data[t]=n}}},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function i(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called")
 
 
@@ -2639,7 +2664,15 @@ var o=Object.getOwnPropertyDescriptor(t,n)
 if(void 0===o){var i=Object.getPrototypeOf(t)
 return null===i?void 0:e(i,n,r)}if("value"in o)return o.value
 var a=o.get
+<<<<<<< HEAD
 if(void 0!==a)return a.call(r)},c=n(6),d=r(c),p=n(152),f=r(p),h=n(285),m=n(231),y=r(m),v=n(232),g=r(v),b=n(5),w=r(b),_="LT",E=function(e){function t(){return o(this,t),i(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))
+=======
+<<<<<<< HEAD
+if(void 0!==a)return a.call(r)},c=n(6),d=r(c),p=n(152),f=r(p),h=n(274),m=n(231),y=r(m),v=n(232),g=r(v),b=n(5),w=r(b),_="LT",E=function(e){function t(){return o(this,t),i(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))
+=======
+if(void 0!==a)return a.call(r)},c=n(5),d=r(c),p=n(147),f=r(p),h=n(272),m=n(227),y=r(m),v=n(228),g=r(v),b=n(117),_=r(b),w="LT",E=function(e){function t(){return o(this,t),i(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))
+>>>>>>> initial build
+>>>>>>> initial build
 
 }return a(t,e),u(t,[{key:"getInputProps",value:function e(){var n=w.default.inject(w.default._t("Admin.FormatExample","Example: {format}"),{format:(0,y.default)().endOf("month").format(_)}),r={}
 return s(r,l(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"getInputProps",this).call(this)),s(r,{type:this.props.data.html5?"time":"text",placeholder:n}),r}},{key:"isMultiline",value:function e(){
@@ -2666,7 +2699,15 @@ var o=Object.getOwnPropertyDescriptor(t,n)
 if(void 0===o){var i=Object.getPrototypeOf(t)
 return null===i?void 0:e(i,n,r)}if("value"in o)return o.value
 var a=o.get
+<<<<<<< HEAD
 if(void 0!==a)return a.call(r)},c=n(6),d=r(c),p=n(152),f=r(p),h=n(285),m=n(231),y=r(m),v=n(232),g=r(v),b=n(5),w=r(b),_="L LT",E=function(e){function t(){return o(this,t),i(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))
+=======
+<<<<<<< HEAD
+if(void 0!==a)return a.call(r)},c=n(6),d=r(c),p=n(152),f=r(p),h=n(274),m=n(231),y=r(m),v=n(232),g=r(v),b=n(5),w=r(b),_="L LT",E=function(e){function t(){return o(this,t),i(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))
+=======
+if(void 0!==a)return a.call(r)},c=n(5),d=r(c),p=n(147),f=r(p),h=n(272),m=n(227),y=r(m),v=n(228),g=r(v),b=n(117),_=r(b),w="L LT",E=function(e){function t(){return o(this,t),i(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))
+>>>>>>> initial build
+>>>>>>> initial build
 
 }return a(t,e),u(t,[{key:"getInputProps",value:function e(){var n=w.default.inject(w.default._t("Admin.FormatExample","Example: {format}"),{format:(0,y.default)().endOf("month").format(_)})
 return s({},l(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"getInputProps",this).call(this),{type:this.props.data.html5?"datetime-local":"text",placeholder:n})}},{key:"isMultiline",value:function e(){
@@ -2689,7 +2730,15 @@ e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,wri
 value:!0})
 var s=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]
 for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},u=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
+<<<<<<< HEAD
 r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),l=n(6),c=r(l),d=n(289),p=r(d),f=n(152),h=r(f),m=n(33),y=r(m),v=function(e){
+=======
+<<<<<<< HEAD
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),l=n(6),c=r(l),d=n(278),p=r(d),f=n(152),h=r(f),m=n(33),y=r(m),v=function(e){
+=======
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),l=n(5),c=r(l),d=n(276),p=r(d),f=n(147),h=r(f),m=n(23),y=r(m),v=function(e){
+>>>>>>> initial build
+>>>>>>> initial build
 function t(){return o(this,t),i(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))}return a(t,e),u(t,[{key:"render",value:function e(){var t=(0,h.default)(p.default)
 return c.default.createElement(t,s({},this.props,{type:"checkbox",hideLabels:!0}))}}]),t}(y.default)
 t.default=v},function(e,t,n){"use strict"
@@ -2725,7 +2774,15 @@ return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function a(e,t){if("funct
 e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}Object.defineProperty(t,"__esModule",{
 value:!0}),t.CheckboxSetField=void 0
 var s=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
+<<<<<<< HEAD
 r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),u=n(6),l=r(u),c=n(33),d=r(c),p=n(289),f=r(p),h=n(152),m=r(h),y=function(e){
+=======
+<<<<<<< HEAD
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),u=n(6),l=r(u),c=n(33),d=r(c),p=n(278),f=r(p),h=n(152),m=r(h),y=function(e){
+=======
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),u=n(5),l=r(u),c=n(23),d=r(c),p=n(276),f=r(p),h=n(147),m=r(h),y=function(e){
+>>>>>>> initial build
+>>>>>>> initial build
 function t(e){o(this,t)
 var n=i(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
 return n.getItemKey=n.getItemKey.bind(n),n.getOptionProps=n.getOptionProps.bind(n),n.handleChange=n.handleChange.bind(n),n.getValues=n.getValues.bind(n),n}return a(t,e),s(t,[{key:"getItemKey",value:function e(t,n){
@@ -2748,7 +2805,15 @@ return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function a(e,t){if("funct
 e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}Object.defineProperty(t,"__esModule",{
 value:!0}),t.OptionsetField=void 0
 var s=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
+<<<<<<< HEAD
 r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),u=n(6),l=r(u),c=n(33),d=r(c),p=n(289),f=r(p),h=n(152),m=r(h),y=function(e){
+=======
+<<<<<<< HEAD
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),u=n(6),l=r(u),c=n(33),d=r(c),p=n(278),f=r(p),h=n(152),m=r(h),y=function(e){
+=======
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),u=n(5),l=r(u),c=n(23),d=r(c),p=n(276),f=r(p),h=n(147),m=r(h),y=function(e){
+>>>>>>> initial build
+>>>>>>> initial build
 function t(e){o(this,t)
 var n=i(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
 return n.getItemKey=n.getItemKey.bind(n),n.getOptionProps=n.getOptionProps.bind(n),n.handleChange=n.handleChange.bind(n),n}return a(t,e),s(t,[{key:"getItemKey",value:function e(t,n){return this.props.id+"-"+(t.value||"empty"+n)
@@ -2934,7 +2999,15 @@ var o=Object.getOwnPropertyDescriptor(t,n)
 if(void 0===o){var i=Object.getPrototypeOf(t)
 return null===i?void 0:e(i,n,r)}if("value"in o)return o.value
 var a=o.get
+<<<<<<< HEAD
 if(void 0!==a)return a.call(r)},l=n(298),c=r(l),d=n(152),p=r(d),f=function(e){function t(){return o(this,t),i(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))}return a(t,e),s(t,[{key:"getClassName",
+=======
+<<<<<<< HEAD
+if(void 0!==a)return a.call(r)},l=n(287),c=r(l),d=n(152),p=r(d),f=function(e){function t(){return o(this,t),i(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))}return a(t,e),s(t,[{key:"getClassName",
+=======
+if(void 0!==a)return a.call(r)},l=n(285),c=r(l),d=n(147),p=r(d),f=function(e){function t(){return o(this,t),i(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))}return a(t,e),s(t,[{key:"getClassName",
+>>>>>>> initial build
+>>>>>>> initial build
 value:function e(){return"field-group-component "+u(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"getClassName",this).call(this)}}]),t}(c.default)
 t.FieldGroup=f,t.default=(0,p.default)(f)},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e){if(Array.isArray(e)){for(var t=0,n=Array(e.length);t<e.length;t++)n[t]=e[t]
