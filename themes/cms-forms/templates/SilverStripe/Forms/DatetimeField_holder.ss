@@ -2,7 +2,7 @@
     <% if $Title %>
         <label for="$ID" id="title-$ID" class="form__field-label">$Title</label>
     <% end_if %>
-    <div id="$ID" <% include SilverStripe/Forms/AriaAttributes %>
+    <div <% include SilverStripe/Forms/AriaAttributes %>
 		class="form__fieldgroup form__field-holder
 			<% if not $Title %> form__field-holder--no-label<% end_if %>
 			<% if $extraClass %> $extraClass<% end_if %>"
