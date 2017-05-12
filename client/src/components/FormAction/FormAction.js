@@ -1,5 +1,6 @@
 import React from 'react';
 import SilverStripeComponent from 'lib/SilverStripeComponent';
+import castStringToElement from 'lib/castStringToElement';
 
 class FormAction extends SilverStripeComponent {
   constructor(props) {
@@ -12,7 +13,7 @@ class FormAction extends SilverStripeComponent {
     return (
       <button {...this.getButtonProps()}>
         {this.getLoadingIcon()}
-        <span>{this.props.title}</span>
+        {castStringToElement('span', this.props.title)}
       </button>
     );
   }

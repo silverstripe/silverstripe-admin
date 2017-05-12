@@ -436,7 +436,6 @@ $.entwine('ss', function($) {
 
       if($(button).is('button')) {
         $(button).data('original-text', $(button).text());
-        $(button).text('');
 
         $(button).append($(
           '<div class="btn__loading-icon">'+
