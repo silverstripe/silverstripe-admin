@@ -7,7 +7,6 @@ use SilverStripe\Control\RequestHandler;
 use SilverStripe\Core\Extensible;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\Core\Config\Configurable;
-use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\FormAction;
@@ -48,9 +47,18 @@ class EditorEmailLinkFormFactory implements FormFactory
     protected function getFormFields($controller, $name, $context)
     {
         $fields = FieldList::create([
-            TextField::create('Link', _t('HTMLEditorField.EMAIL', 'Email address'), ''),
-            TextField::create('Subject', _t('HTMLEditorField.SUBJECT', 'Subject')),
-            TextField::create('Description', _t('HTMLEditorField.LINKDESCR', 'Link description')),
+            TextField::create(
+                'Link',
+                _t('SilverStripe\\Forms\\HTMLEditor\\HTMLEditorField.EMAIL', 'Email address')
+            ),
+            TextField::create(
+                'Subject',
+                _t('SilverStripe\\Forms\\HTMLEditor\\HTMLEditorField.SUBJECT', 'Subject')
+            ),
+            TextField::create(
+                'Description',
+                _t('SilverStripe\\Forms\\HTMLEditor\\HTMLEditorField.LINKDESCR', 'Link description')
+            ),
         ]);
         
         return $fields;
@@ -59,7 +67,7 @@ class EditorEmailLinkFormFactory implements FormFactory
     protected function getFormActions($controller, $name, $context)
     {
         $actions = FieldList::create([
-            FormAction::create('insert', _t('CMSMain.INSERT_LINK', 'Insert link'))
+            FormAction::create('insert', _t('SilverStripe\\CMS\\Controllers\\CMSMain.INSERT_LINK', 'Insert link'))
                 ->setSchemaData(['data' => ['buttonStyle' => 'primary']]),
         ]);
     

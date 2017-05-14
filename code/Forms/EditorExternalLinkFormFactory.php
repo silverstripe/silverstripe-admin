@@ -48,12 +48,15 @@ class EditorExternalLinkFormFactory implements FormFactory
     protected function getFormFields($controller, $name, $context)
     {
         $fields = FieldList::create([
-            TextField::create('Link', _t('HTMLEditorField.URL', 'URL'), 'http://'),
-            TextField::create('Description', _t('HTMLEditorField.LINKDESCR', 'Link description')),
-            TextField::create('Anchor', _t('HTMLEditorField.ANCHORVALUE', 'Anchor')),
+            TextField::create('Link', _t('SilverStripe\\Forms\\HTMLEditor\\HTMLEditorField.URL', 'URL'), 'http://'),
+            TextField::create(
+                'Description',
+                _t('SilverStripe\\Forms\\HTMLEditor\\HTMLEditorField.LINKDESCR', 'Link description')
+            ),
+            TextField::create('Anchor', _t('SilverStripe\\Forms\\HTMLEditor\\HTMLEditorField.ANCHORVALUE', 'Anchor')),
             CheckboxField::create(
                 'TargetBlank',
-                _t('HTMLEditorField.LINKOPENNEWWIN', 'Open in new window/tab')
+                _t('SilverStripe\\Forms\\HTMLEditor\\HTMLEditorField.LINKOPENNEWWIN', 'Open in new window/tab')
             ),
         ]);
         
@@ -63,7 +66,7 @@ class EditorExternalLinkFormFactory implements FormFactory
     protected function getFormActions($controller, $name, $context)
     {
         $actions = FieldList::create([
-            FormAction::create('insert', _t('CMSMain.INSERT_LINK', 'Insert link'))
+            FormAction::create('insert', _t('SilverStripe\\CMS\\Controllers\\CMSMain.INSERT_LINK', 'Insert link'))
                 ->setSchemaData(['data' => ['buttonStyle' => 'primary']]),
         ]);
     

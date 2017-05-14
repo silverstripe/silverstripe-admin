@@ -56,14 +56,25 @@ TinyMCEConfig::get('cms')->setOptions(array(
         . "object[width|height|data|type],param[name|value],map[class|name|id],area[shape|coords|href|target|alt]"
 ));
 
-TinyMCEConfig::get('cms')
-    ->enablePlugins(array(
-        'contextmenu' => null,
-        'image' => null,
-        'sslink' => FRAMEWORK_ADMIN_DIR . '/client/dist/js/TinyMCE_sslink.js',
-        'sslinkexternal' => FRAMEWORK_ADMIN_DIR . '/client/dist/js/TinyMCE_sslink-external.js',
-        'sslinkemail' => FRAMEWORK_ADMIN_DIR . '/client/dist/js/TinyMCE_sslink-email.js',
-    ))
-    ->setOption('contextmenu', 'sslink inserttable | cell row column deletetable');
+// Avoid creating global variables
+call_user_func(function () {
+    if (strcasecmp(__DIR__, BASE_PATH) === 0) {
+        // Admin is root
+        $clientPath = 'client';
+    } else {
+        // Asset-admin is subdir
+        $clientPath = basename(__DIR__) . '/client';
+    }
+    // Re-enable media dialog
+    TinyMCEConfig::get('cms')
+        ->enablePlugins(array(
+            'contextmenu' => null,
+            'image' => null,
+            'sslink' => "${$clientPath}/client/dist/js/TinyMCE_sslink.js",
+            'sslinkexternal' => "${$clientPath}/client/dist/js/TinyMCE_sslink-external.js",
+            'sslinkemail' => "${$clientPath}/client/dist/js/TinyMCE_sslink-email.js",
+        ))
+        ->setOption('contextmenu', 'sslink inserttable | cell row column deletetable');
+});
 
 CMSMenu::remove_menu_class(CMSProfileController::class);
