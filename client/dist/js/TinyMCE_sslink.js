@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 webpackJsonp([2],[function(n,t,e){"use strict"
 function i(n){return n&&n.__esModule?n:{default:n}}Object.defineProperty(t,"__esModule",{value:!0})
 var r=Object.assign||function(n){for(var t=1;t<arguments.length;t++){var e=arguments[t]
@@ -18,3 +19,49 @@ var i=function(){function n(n,t){for(var e=0;e<t.length;e++){var i=t[e]
 i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(n,i.key,i)}}return function(t,e,i){return e&&n(t.prototype,e),i&&n(t,i),t}}(),r=function(){function n(){
 e(this,n),this.actions={}}return i(n,[{key:"addAction",value:function n(t,e){this.actions[t]=this.getActions(t).concat([e])}},{key:"getActions",value:function n(t){return this.actions[t]||[]}}]),n}()
 window.ss=window.ss||{},window.ss.tinymceactions=window.ss.tinymceactions||new r,t.default=window.ss.tinymceactions}])
+=======
+webpackJsonp([2],[
+/* 0 */
+/***/ (function(module, exports) {
+
+	'use strict';
+	
+	(function () {
+	  var sslink = {
+	    init: function init(ed) {
+	      ed.addButton('sslink', {
+	        icon: 'link',
+	        title: 'Insert Link',
+	        cmd: 'sslink'
+	      });
+	      ed.addMenuItem('sslink', {
+	        icon: 'link',
+	        text: 'Insert Link',
+	        cmd: 'sslink'
+	      });
+	
+	      ed.addCommand('sslink', function () {
+	        window.jQuery('#' + ed.id).entwine('ss').openLinkDialog();
+	      });
+	
+	      ed.on('BeforeExecCommand', function (e) {
+	        var cmd = e.command;
+	        var ui = e.ui;
+	        var val = e.value;
+	        if (cmd === 'mceAdvLink' || cmd === 'mceLink') {
+	          e.preventDefault();
+	          ed.execCommand('sslink', ui, val);
+	        }
+	      });
+	    }
+	  };
+	
+	  tinymce.PluginManager.add('sslink', function (editor) {
+	    return sslink.init(editor);
+	  });
+	})();
+
+/***/ })
+]);
+//# sourceMappingURL=TinyMCE_sslink.js.map
+>>>>>>> provide injector

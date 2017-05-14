@@ -1,5 +1,6 @@
 import React from 'react';
 import SilverStripeComponent from 'lib/SilverStripeComponent';
+import provideInjector from '../../injector/provideInjector';
 
 /**
  * Empty container for the moment, will eventually contain the CMS menu`
@@ -13,4 +14,4 @@ class App extends SilverStripeComponent {
   }
 }
 
-export default App;
+export default provideInjector(App);
