@@ -30,7 +30,7 @@ class TextField extends SilverStripeComponent {
       readOnly: this.props.readOnly,
       value: this.props.value,
       placeholder: this.props.placeholder,
-      autoFocus: this.props.autoFocus
+      autoFocus: this.props.autoFocus,
     };
 
     if (this.isMultiline()) {
