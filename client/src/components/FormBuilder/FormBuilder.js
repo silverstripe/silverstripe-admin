@@ -10,7 +10,6 @@ class FormBuilder extends SilverStripeComponent {
 
   constructor(props) {
     super(props);
-    console.log(this.props, this.context);
     const schemaStructure = props.schema.schema;
     this.state = { submittingAction: null };
     this.submitApi = backend.createEndpointFetcher({
@@ -366,7 +365,7 @@ class FormBuilder extends SilverStripeComponent {
       validate: this.validateForm,
       autoFocus,
     };
-console.log('render with ', this.context);
+
     return <BaseFormComponent {...props} />;
   }
 }

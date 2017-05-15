@@ -99,7 +99,7 @@ $.entwine('ss.preview', function($){
      * modeName can be: split, content, preview.
      */
     changeMode: function(modeName, save) {
-      var container = $('.cms-container.js').entwine('.ss');
+      var container = $('.cms-container').entwine('.ss');
 
       if (modeName == 'split') {
         container.splitViewMode();
@@ -157,7 +157,7 @@ $.entwine('ss.preview', function($){
       }
 
       // Update preview mode selectors.
-      var layoutOptions = $('.cms-container.js').entwine('.ss').getLayoutOptions();
+      var layoutOptions = $('.cms-container').entwine('.ss').getLayoutOptions();
       if (layoutOptions) {
         // There are two mode selectors that we need to keep in sync. Redraw both.
         $('.preview-mode-selector').changeVisibleMode(layoutOptions.mode);
@@ -502,7 +502,7 @@ $.entwine('ss.preview', function($){
       if (!this.getIsPreviewEnabled()) return;
 
       var doc,
-        containerEl = $('.cms-container.js');
+        containerEl = $('.cms-container');
       try {
         doc = this.find('iframe')[0].contentDocument;
       } catch (e) {
@@ -521,7 +521,7 @@ $.entwine('ss.preview', function($){
       if(id && contentPanel.find(':input[name=ID]').val() != id) {
         // Ignore behaviour without history support (as we need ajax loading
         // for the new form to load in the background)
-        $('.cms-container.js').entwine('.ss').loadPanel(editLink);
+        $('.cms-container').entwine('.ss').loadPanel(editLink);
       }
     },
 
@@ -638,7 +638,7 @@ $.entwine('ss.preview', function($){
   /**
    * Adjust the visibility of the preview-mode selector in the CMS part (hidden if preview is visible).
    */
-  $('.cms-container.js--content-mode').entwine({
+  $('.cms-container--content-mode').entwine({
     onmatch: function() {
       // Alert the user as to why the preview is hidden
       if ($('.cms-preview .result-selected').hasClass('font-icon-columns')) {
@@ -703,7 +703,7 @@ $.entwine('ss.preview', function($){
       var selected = this.find(':selected');
       var iconClass = selected.attr('data-icon');
 
-      var target = this.parent().find('.chosen-container.js a.chosen-single');
+      var target = this.parent().find('.chosen-container a.chosen-single');
       var oldIcon = target.attr('data-icon');
       if(typeof oldIcon !== 'undefined'){
         target.removeClass(oldIcon);

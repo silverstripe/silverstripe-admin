@@ -42,7 +42,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <script type="text/javascript" class="source below">
 $(function () {
 	// TO CREATE AN INSTANCE
-	// select the tree container.js using jQuery
+	// select the tree container using jQuery
 	$("#demo1")
 		// call `.jstree` with the options object
 		.jstree({
@@ -53,19 +53,19 @@ $(function () {
 			// it makes sense to configure a plugin only if overriding the defaults
 		})
 		// EVENTS
-		// each instance triggers its own events - to process those listen on the container.js
+		// each instance triggers its own events - to process those listen on the container
 		// all events are in the `.jstree` namespace
 		// so listen for `function_name`.`jstree` - you can function names from the docs
 		.bind("loaded.jstree", function (event, data) {
 			// you get two params - event & data - check the core docs for a detailed description
 		});
 	// INSTANCES
-	// 1) you can call most functions just by selecting the container.js and calling `.jstree("func",`
+	// 1) you can call most functions just by selecting the container and calling `.jstree("func",`
 	setTimeout(function () { $("#demo1").jstree("set_focus"); }, 500);
 	// with the methods below you can call even private functions (prefixed with `_`)
 	// 2) you can get the focused instance using `$.jstree._focused()`. 
 	setTimeout(function () { $.jstree._focused().select_node("#phtml_1"); }, 1000);
-	// 3) you can use $.jstree._reference - just pass the container.js, a node inside it, or a selector
+	// 3) you can use $.jstree._reference - just pass the container, a node inside it, or a selector
 	setTimeout(function () { $.jstree._reference("#phtml_1").close_node("#phtml_1"); }, 1500);
 	// 4) when you are working with an event you can use a shortcut
 	$("#demo1").bind("open_node.jstree", function (e, data) {
@@ -232,7 +232,7 @@ $(function () {
 <input type="text" id="text" value="" style="display:block; float:right;" />
 </div>
 
-<!-- the tcontainer.jsiner (notice NOT an UL node) -->
+<!-- the tree container (notice NOT an UL node) -->
 <div id="demo" class="demo" style="height:200px;"></div>
 <div style="height:30px; text-align:center;">
 	<input type="button" style='width:170px; height:24px; margin:5px auto;' value="reconstruct" onclick="$.get('./server.php?reconstruct', function () { $('#demo').jstree('refresh',-1); });" />

@@ -139,7 +139,7 @@
 				if(typeof instance_id !== "undefined" && instances[instance_id]) { instances[instance_id].destroy(); }
 				// push a new empty object to the instances array
 				instance_id = parseInt(instances.push({}),10) - 1;
-				// store the jstree instance id to the container.js element
+				// store the jstree instance id to the container element
 				$.data(this, "jstree_instance_id", instance_id);
 				// clean up all plugins
 				b.plugins = $.isArray(b.plugins) ? b.plugins : $.jstree.defaults.plugins.slice();
@@ -156,7 +156,7 @@
 				});
 				s.plugins = t;
 
-				// push the new object to the instances array (at the same time set the default classes to the container.js) and init
+				// push the new object to the instances array (at the same time set the default classes to the container) and init
 				instances[instance_id] = new $.jstree._instance(instance_id, $(this).addClass("jstree jstree-" + instance_id), s); 
 				// init all activated plugins for this instance
 				$.each(instances[instance_id]._get_settings().plugins, function (i, val) { instances[instance_id].data[val] = {}; });

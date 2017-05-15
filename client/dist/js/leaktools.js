@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 webpackJsonp([6],[function(e,n,o){"use strict"
 =======
 webpackJsonp([4],[function(e,n,o){"use strict"
@@ -13,6 +14,8 @@ if(e){for(var o=e;o&&1==o.nodeType;)o=o.parentNode
 o?o!==document&&console.log("Attached, but to",o,"not our document",e):(console.log("Unattached",e),console.log(this.events),n&&(0,a.default)(e).unbind().remove())}})}}}])
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> it works
 webpackJsonp([4],[
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -71,9 +74,13 @@ webpackJsonp([4],[
 
 /***/ })
 ]);
+<<<<<<< HEAD
 //# sourceMappingURL=leaktools.js.map
 >>>>>>> provide injector
 =======
 
 //# sourceMappingURL=leaktools.js.map
 >>>>>>> Context working
+=======
+//# sourceMappingURL=leaktools.js.map
+>>>>>>> it works

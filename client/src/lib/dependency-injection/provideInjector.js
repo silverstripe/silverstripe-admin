@@ -4,7 +4,6 @@ import { get } from './container.js';
 function provideInjector(Component) {
   class InjectorProvider extends React.Component {
     getChildContext() {
-      console.log('get context');
       return {
         injector: { get },
       };

@@ -39,7 +39,7 @@ $.entwine('ss', function($){
       this._super();
 
       this.bind('select_node.jstree', function(e, data) {
-        var node = data.rslt.obj, loadedNodeID = self.find(':input[name=ID]').val(), origEvent = data.args[2], container = $('.cms-container.js');
+        var node = data.rslt.obj, loadedNodeID = self.find(':input[name=ID]').val(), origEvent = data.args[2], container = $('.cms-container');
         
         // Don't trigger unless coming from a click event.
         // Avoids problems with automated section switches from tree to detail view

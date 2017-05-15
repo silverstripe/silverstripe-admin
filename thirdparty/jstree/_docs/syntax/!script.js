@@ -2203,7 +2203,7 @@ SyntaxHighlighter.brushes.JScript.aliases	= ['js', 'jscript', 'javascript'];
 SyntaxHighlighter.config.clipboardSwf = 'syntax/clipboard.swf';
 $(function () {
 	var divs = $([]);
-	$("#container.js .source").each(function () {
+	$("#container .source").each(function () {
 		var code = $(this).html().replace(/</g,'&lt;').replace(/>/g,'&gt;'),
 			div  = $('<div class="code"><pre class="brush:' + ( $(this).is("script") ? 'js' : 'xml' ) + ';">' + code + '</pre></div>'),
 			demo = $(this).prevAll(".demo:eq(0)");

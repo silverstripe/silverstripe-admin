@@ -2038,7 +2038,7 @@ $.ui.plugin.add("draggable", "connectToSortable", {
 					instance: sortable,
 					shouldRevert: sortable.options.revert
 				});
-				sortable.refreshPositions();	// Call the sortable's refreshPositions at drag start to refresh the containerCache since the sortable container.js cache is used in drag and needs to be up to date (this will ensure it's initialised as well as being kept in step with any changes that might have happened on the page).
+				sortable.refreshPositions();	// Call the sortable's refreshPositions at drag start to refresh the containerCache since the sortable container cache is used in drag and needs to be up to date (this will ensure it's initialised as well as being kept in step with any changes that might have happened on the page).
 				sortable._trigger("activate", event, uiSortable);
 			}
 		});
@@ -3952,18 +3952,18 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 			// Only put the placeholder inside the current Container, skip all
 			// items form other containers. This works because when moving
-			// an item from one container.js to another the
+			// an item from one container to another the
 			// currentContainer is switched before the placeholder is moved.
 			//
 			// Without this moving items in "sub-sortables" can cause the placeholder to jitter
-			// beetween the outer and inner container.js.
+			// beetween the outer and inner container.
 			if (item.instance !== this.currentContainer) continue;
 
 			if (itemElement != this.currentItem[0] //cannot intersect with itself
 				&&	this.placeholder[intersection == 1 ? "next" : "prev"]()[0] != itemElement //no useless actions that have been done before
 				&&	!$.contains(this.placeholder[0], itemElement) //no action if the item moved is the parent of the item checked
 				&& (this.options.type == 'semi-dynamic' ? !$.contains(this.element[0], itemElement) : true)
-				//&& itemElement.parentNode == this.placeholder[0].parentNode // only rearrange items within the same container.js
+				//&& itemElement.parentNode == this.placeholder[0].parentNode // only rearrange items within the same container
 			) {
 
 				this.direction = intersection == 1 ? "down" : "up";
@@ -4352,19 +4352,19 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 	_contactContainers: function(event) {
 
-		// get innermost container.js that intersects with item
+		// get innermost container that intersects with item
 		var innermostContainer = null, innermostIndex = null;
 
 
 		for (var i = this.containers.length - 1; i >= 0; i--){
 
-			// never consider a container.js that's located within the item itself
+			// never consider a container that's located within the item itself
 			if($.contains(this.currentItem[0], this.containers[i].element[0]))
 				continue;
 
 			if(this._intersectsWith(this.containers[i].containerCache)) {
 
-				// if we've already found a container.js and it's more "inner" than this, then continue
+				// if we've already found a container and it's more "inner" than this, then continue
 				if(innermostContainer && $.contains(this.containers[i].element[0], innermostContainer.element[0]))
 					continue;
 
@@ -4372,7 +4372,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 				innermostIndex = i;
 
 			} else {
-				// container.js doesn't intersect. trigger "out" event if necessary
+				// container doesn't intersect. trigger "out" event if necessary
 				if(this.containers[i].containerCache.over) {
 					this.containers[i]._trigger("out", event, this._uiHash(this));
 					this.containers[i].containerCache.over = 0;
@@ -4384,13 +4384,13 @@ $.widget("ui.sortable", $.ui.mouse, {
 		// if no intersecting containers found, return
 		if(!innermostContainer) return;
 
-		// move the item into the container.js if it's not there already
+		// move the item into the container if it's not there already
 		if(this.containers.length === 1) {
 			this.containers[innermostIndex]._trigger("over", event, this._uiHash(this));
 			this.containers[innermostIndex].containerCache.over = 1;
 		} else {
 
-			//When entering a new container.js, we will find the item with the least distance and append our item near it
+			//When entering a new container, we will find the item with the least distance and append our item near it
 			var dist = 10000; var itemWithLeastDistance = null;
 			var posProperty = this.containers[innermostIndex].floating ? 'left' : 'top';
 			var sizeProperty = this.containers[innermostIndex].floating ? 'width' : 'height';

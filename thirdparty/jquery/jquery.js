@@ -1581,7 +1581,7 @@ jQuery.support = (function() {
 		support.reliableHiddenOffsets = isSupported && ( tds[ 0 ].offsetHeight === 0 );
 
 		// Check if div with explicit width and no margin-right incorrectly
-		// gets computed margin-right based on width of container.js. For more
+		// gets computed margin-right based on width of container. For more
 		// info see bug #3333
 		// Fails in WebKit before Feb 2011 nightlies
 		// WebKit Bug 13343 - getComputedStyle returns wrong value for margin-right

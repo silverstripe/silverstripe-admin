@@ -1,7 +1,7 @@
 import React from 'react';
 
 function withInjector(Component, dependencies, mapDependenciesToProps) {
-  Component.contextTypes = {
+  const injectorContext = {
     injector: React.PropTypes.shape({
       get: React.PropTypes.func,
     }),
@@ -43,11 +43,13 @@ function withInjector(Component, dependencies, mapDependenciesToProps) {
     }
   }
 
+  Component.contextTypes = injectorContext;
+  Injectable.contextTypes = injectorContext;
   Injectable.displayName = `withInjector(${(Component.displayName || Component.name || 'Component')})`;
 
   return Injectable;
 }
 
 export {
-  withInjector
-};
+  withInjector,
+}

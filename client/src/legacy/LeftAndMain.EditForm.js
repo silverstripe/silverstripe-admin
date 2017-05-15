@@ -27,7 +27,7 @@ $.entwine('ss', function($){
    *
    * Base edit form, provides ajaxified saving
    * and reloading itself through the ajax return values.
-   * Takes care of resizing tabsets within the layout container.js.
+   * Takes care of resizing tabsets within the layout container.
    *
    * Change tracking is enabled on all fields within the form. If you want
    * to disable change tracking for a specific field, add a "no-change-track"
@@ -114,7 +114,7 @@ $.entwine('ss', function($){
         if(this.hasClass('validationerror')) {
           // Ensure the first validation error is visible
           var tabError = this.find('.message.validation, .message.required').first().closest('.tab');
-          $('.cms-container.js').clearCurrentTabState(); // clear state to avoid override later on
+          $('.cms-container').clearCurrentTabState(); // clear state to avoid override later on
 
           // Attempt #1: Look for nearest .ss-tabset (usually nested deeper underneath a .cms-tabset).
           var $tabSet = tabError.closest('.ss-tabset');
@@ -205,7 +205,7 @@ $.entwine('ss', function($){
       // This might be an unrelated button of the form field,
       // or a destructive action (if "save" is not available, or not on first position).
       if(this.prop("target") != "_blank") {
-        if(button) this.closest('.cms-container.js').submitForm(this, button);
+        if(button) this.closest('.cms-container').submitForm(this, button);
         return false;
       }
     },

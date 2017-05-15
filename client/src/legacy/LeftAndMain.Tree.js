@@ -186,7 +186,7 @@ $.entwine('ss.tree', function($){
                 movedNode.data('id') !== 0
                 // Archived pages can't be moved
                 && !movedNode.hasClass('status-archived')
-                // Only allow moving node inside the root container.js, not before/after it
+                // Only allow moving node inside the root container, not before/after it
                 && (!isMovedOntoContainer || data.p == 'inside')
                 // Children are generally allowed on parent
                 && !newParent.hasClass('nochildren')

@@ -43,7 +43,7 @@ window.ss.debounce = function (func, wait, immediate) {
 };
 
 $(window).bind('resize.leftandmain', function(e) {
-  $('.cms-container.js').trigger('windowresize');
+  $('.cms-container').trigger('windowresize');
 });
 
 // setup jquery.entwine
@@ -156,7 +156,7 @@ $.entwine('ss', function($) {
 
     // Enable reauthenticate dialog if requested
     if (xhr.getResponseHeader('X-Reauthenticate')) {
-      $('.cms-container.js').showLoginDialog();
+      $('.cms-container').showLoginDialog();
       return;
     }
 
@@ -177,7 +177,7 @@ $.entwine('ss', function($) {
    *  validate - ...
    *  aftersubmitform - ...
    */
-  $('.cms-container.js').entwine({
+  $('.cms-container').entwine({
 
     /**
      * Tracks current panel request.
@@ -262,9 +262,9 @@ $.entwine('ss', function($) {
     },
 
     clearViewMode: function () {
-      this.removeClass('cms-container.js--split-mode');
-      this.removeClass('cms-container.js--preview-mode');
-      this.removeClass('cms-container.js--content-mode');
+      this.removeClass('cms-container--split-mode');
+      this.removeClass('cms-container--preview-mode');
+      this.removeClass('cms-container--content-mode');
     },
 
     /**
@@ -344,7 +344,7 @@ $.entwine('ss', function($) {
         }
       }
 
-      this.addClass('cms-container.js--' + mode + '-mode');
+      this.addClass('cms-container--' + mode + '-mode');
       return false;
     },
 
@@ -642,7 +642,7 @@ $.entwine('ss', function($) {
      * is available.
      *
      * Example usage:
-     * $('.cms-container.js').loadFragment('admin/foobar/', 'FragmentName');
+     * $('.cms-container').loadFragment('admin/foobar/', 'FragmentName');
      *
      * @param url string Relative or absolute url of the controller.
      * @param pjaxFragments string PJAX fragment(s), comma separated.
@@ -763,8 +763,8 @@ $.entwine('ss', function($) {
           else newContentEls = newContentEl;
 
           // Update panels
-          if(newContentEl.find('.cms-container.js').length) {
-            throw 'Content loaded via ajax is not allowed to contain tags matching the ".cms-container.js" selector to avoid infinite loops';
+          if(newContentEl.find('.cms-container').length) {
+            throw 'Content loaded via ajax is not allowed to contain tags matching the ".cms-container" selector to avoid infinite loops';
           }
 
           // Set loading state and store element state
@@ -830,7 +830,7 @@ $.entwine('ss', function($) {
     /**
      * Function: refresh
      *
-     * Updates the container.js based on the current url
+     * Updates the container based on the current url
      *
      * Returns: void
      */
@@ -881,7 +881,7 @@ $.entwine('ss', function($) {
      * Requires HTML5 sessionStorage support.
      *
      * Parameters:
-     *   (Object) Map of tab container.js selectors to tab selectors.
+     *   (Object) Map of tab container selectors to tab selectors.
      *   Used to mark a specific tab as active regardless of the previously saved options.
      */
     restoreTabState: function(overrideStates) {
@@ -1068,7 +1068,7 @@ $.entwine('ss', function($) {
         url = (href && !href.match(/^#/)) ? href : this.data('href'),
         data = {pjax: this.data('pjaxTarget')};
 
-      $('.cms-container.js').loadPanel(url, null, data);
+      $('.cms-container').loadPanel(url, null, data);
       e.preventDefault();
     }
   });
@@ -1108,7 +1108,7 @@ $.entwine('ss', function($) {
 
           loading.hide();
 
-          $(".cms-container.js").refresh();
+          $(".cms-container").refresh();
 
           $(this).removeClass('ss-ui-button-loading ui-button-text-icons');
           $(this).addClass('ui-button-text-only');
@@ -1197,7 +1197,7 @@ $.entwine('ss', function($) {
 
       // We could've gotten stale classes and DOM elements from deferred cache.
       this.removeClass('has-chosen').chosen("destroy");
-      this.siblings('.chosen-container.js').remove();
+      this.siblings('.chosen-container').remove();
 
       // Apply Chosen
       applyChosen(this);
@@ -1225,7 +1225,7 @@ $.entwine('ss', function($) {
       // For example, a list prefiltered through external search criteria might be passed to GridField.
       var params = window.location.search.replace(/^\?/, '');
       if(params) url = $.path.addSearchParams(url, params);
-      $('.cms-container.js').loadPanel(url);
+      $('.cms-container').loadPanel(url);
     }
   });
 
@@ -1257,7 +1257,7 @@ $.entwine('ss', function($) {
         );
       }
 
-      var container = this.closest('.cms-container.js');
+      var container = this.closest('.cms-container');
       container.find('.cms-edit-form').tabs('select',0);  //always switch to the first tab (list view) when searching
       container.loadPanel(url, "", {}, true);
 

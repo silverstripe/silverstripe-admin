@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 webpackJsonp([5],[function(e,t,n){"use strict"
 n(13),n(14),n(16),n(26),n(29),n(31),n(37),n(39),n(41),n(42),n(44),n(47),n(117),n(121),n(124),n(134),n(135),n(136),n(137),n(138),n(139),n(141),n(144),n(146),n(149),n(150),n(153),n(155),n(157),n(160),n(162),
 n(165),n(187),n(190),n(191),n(192),n(194),n(196),n(198),n(200),n(202),n(204),n(205),n(208),n(209),n(210),n(212),n(213),n(214),n(215),n(216),n(217),n(218),n(219),n(220),n(221),n(222),n(223),n(224),n(225),
@@ -4224,6 +4225,8 @@ var u=n(28),l=r(u),c=n(180),d=r(c),p=n(27),f=r(p),h=(0,l.default)({fields:{}}),m
 >>>>>>> Context working
 var u=n(18),l=r(u),c=n(175),d=r(c),p=n(17),f=r(p),h=(0,l.default)({fields:{}}),m=(0,l.default)({visible:[],tree:{},loading:[],failed:[]})},function(e,t){e.exports=ApolloClient}])
 =======
+=======
+>>>>>>> it works
 webpackJsonp([3],[
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -4243,43 +4246,40 @@ webpackJsonp([3],[
 	__webpack_require__(33);
 	__webpack_require__(35);
 	__webpack_require__(38);
-	__webpack_require__(108);
-	__webpack_require__(115);
-	__webpack_require__(119);
-	__webpack_require__(129);
-	__webpack_require__(130);
-	__webpack_require__(131);
+	__webpack_require__(111);
+	__webpack_require__(118);
+	__webpack_require__(122);
 	__webpack_require__(132);
 	__webpack_require__(133);
 	__webpack_require__(134);
+	__webpack_require__(135);
 	__webpack_require__(136);
+	__webpack_require__(137);
 	__webpack_require__(139);
-	__webpack_require__(141);
+	__webpack_require__(142);
 	__webpack_require__(144);
-	__webpack_require__(145);
+	__webpack_require__(147);
 	__webpack_require__(148);
-	__webpack_require__(150);
-	__webpack_require__(152);
+	__webpack_require__(151);
+	__webpack_require__(153);
 	__webpack_require__(155);
-	__webpack_require__(157);
+	__webpack_require__(158);
 	__webpack_require__(160);
-	__webpack_require__(182);
+	__webpack_require__(163);
 	__webpack_require__(185);
-	__webpack_require__(186);
-	__webpack_require__(187);
+	__webpack_require__(188);
 	__webpack_require__(189);
-	__webpack_require__(191);
-	__webpack_require__(193);
-	__webpack_require__(195);
-	__webpack_require__(197);
-	__webpack_require__(199);
+	__webpack_require__(190);
+	__webpack_require__(192);
+	__webpack_require__(194);
+	__webpack_require__(196);
+	__webpack_require__(198);
 	__webpack_require__(200);
-	
+	__webpack_require__(202);
 	__webpack_require__(203);
-	__webpack_require__(204);
+	
 	__webpack_require__(206);
 	__webpack_require__(207);
-	__webpack_require__(208);
 	__webpack_require__(209);
 	__webpack_require__(210);
 	__webpack_require__(211);
@@ -4290,21 +4290,24 @@ webpackJsonp([3],[
 	__webpack_require__(216);
 	__webpack_require__(217);
 	__webpack_require__(218);
+	__webpack_require__(219);
 	__webpack_require__(220);
-	__webpack_require__(222);
-	
+	__webpack_require__(221);
 	__webpack_require__(223);
-	__webpack_require__(224);
 	__webpack_require__(225);
-	__webpack_require__(229);
-	__webpack_require__(230);
-	__webpack_require__(225);
+	
+	__webpack_require__(226);
+	__webpack_require__(227);
+	__webpack_require__(228);
 	__webpack_require__(232);
 	__webpack_require__(233);
+	__webpack_require__(228);
 	__webpack_require__(235);
-	__webpack_require__(237);
-	
+	__webpack_require__(236);
 	__webpack_require__(238);
+	__webpack_require__(240);
+	
+	__webpack_require__(241);
 
 /***/ }),
 /* 1 */,
@@ -7380,7 +7383,7 @@ webpackJsonp([3],[
 	    value: function buildComponent(props) {
 	      var componentProps = props;
 	
-	      var SchemaComponent = componentProps.schemaComponent !== null ? _Injector2.default.getComponentByName(componentProps.schemaComponent) : _Injector2.default.getComponentByDataType(componentProps.schemaType);
+	      var SchemaComponent = componentProps.schemaComponent !== null ? this.context.injector.get(componentProps.schemaComponent) : this.getComponentForDataType(componentProps.schemaType);
 	
 	      if (SchemaComponent === null) {
 	        return null;
@@ -7421,6 +7424,37 @@ webpackJsonp([3],[
 	
 	        return _react2.default.createElement(FieldComponent, _extends({ key: props.id }, props, { component: _this4.buildComponent }));
 	      });
+	    }
+	  }, {
+	    key: 'getComponentForDataType',
+	    value: function getComponentForDataType(dataType) {
+	      var get = this.context.injector.get;
+	
+	      switch (dataType) {
+	        case 'String':
+	        case 'Text':
+	          return get('TextField');
+	        case 'Date':
+	          return get('DateField');
+	        case 'Time':
+	          return get('TimeField');
+	        case 'Datetime':
+	          return get('DatetimeField');
+	        case 'Hidden':
+	          return get('HiddenField');
+	        case 'SingleSelect':
+	          return get('SingleSelectField');
+	        case 'Custom':
+	          return get('GridField');
+	        case 'Structural':
+	          return get('CompositeField');
+	        case 'Boolean':
+	          return get('CheckboxField');
+	        case 'MultiSelect':
+	          return get('CheckboxSetField');
+	        default:
+	          return null;
+	      }
 	    }
 	  }, {
 	    key: 'mapActionsToComponents',
@@ -7585,7 +7619,7 @@ webpackJsonp([3],[
 	
 	exports.basePropTypes = basePropTypes;
 	exports.schemaPropType = schemaPropType;
-	exports.default = FormBuilder;
+	exports.default = (0, _Injector.withInjector)(FormBuilder);
 
 /***/ }),
 /* 40 */
@@ -7869,6 +7903,97 @@ webpackJsonp([3],[
 
 /***/ }),
 /* 107 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.withInjector = exports.provideInjector = undefined;
+	
+	var _provideInjector = __webpack_require__(108);
+	
+	var _withInjector = __webpack_require__(110);
+	
+	var _container = __webpack_require__(109);
+	
+	exports.provideInjector = _provideInjector.provideInjector;
+	exports.withInjector = _withInjector.withInjector;
+	exports.default = {
+	  get: _container.get,
+	  register: _container.register,
+	  freeze: _container.freeze,
+	  override: _container.override
+	};
+
+/***/ }),
+/* 108 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.provideInjector = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(5);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _container = __webpack_require__(109);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	function provideInjector(Component) {
+	  var InjectorProvider = function (_React$Component) {
+	    _inherits(InjectorProvider, _React$Component);
+	
+	    function InjectorProvider() {
+	      _classCallCheck(this, InjectorProvider);
+	
+	      return _possibleConstructorReturn(this, (InjectorProvider.__proto__ || Object.getPrototypeOf(InjectorProvider)).apply(this, arguments));
+	    }
+	
+	    _createClass(InjectorProvider, [{
+	      key: 'getChildContext',
+	      value: function getChildContext() {
+	        return {
+	          injector: { get: _container.get }
+	        };
+	      }
+	    }, {
+	      key: 'render',
+	      value: function render() {
+	        return _react2.default.createElement(Component, this.props);
+	      }
+	    }]);
+	
+	    return InjectorProvider;
+	  }(_react2.default.Component);
+	
+	  InjectorProvider.childContextTypes = {
+	    injector: _react2.default.PropTypes.shape({
+	      get: _react2.default.PropTypes.func
+	    })
+	  };
+	
+	  return InjectorProvider;
+	}
+	
+	exports.provideInjector = provideInjector;
+
+/***/ }),
+/* 109 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -7876,79 +8001,129 @@ webpackJsonp([3],[
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	var frozen = false;
+	var container = {};
+	var callbacks = {};
+	
+	var get = exports.get = function get(key) {
+	  return container[key];
+	};
+	
+	var register = exports.register = function register(key, value) {
+	  if (frozen) {
+	    throw new Error('Cannot mutate DI container after it has been initialised');
+	  }
+	  if (callbacks[key]) {
+	    var newComponent = callbacks[key](value);
+	    delete callbacks[key];
+	    register(key, newComponent);
+	  } else {
+	    container[key] = value;
+	  }
+	};
+	
+	var override = exports.override = function override(key, callback) {
+	  callbacks[key] = callback;
+	};
+	
+	var freeze = exports.freeze = function freeze() {
+	  frozen = true;
+	};
+
+/***/ }),
+/* 110 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.withInjector = undefined;
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
+	var _react = __webpack_require__(5);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var Injector = function () {
-	  function Injector() {
-	    _classCallCheck(this, Injector);
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	    this.components = {};
-	  }
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	  _createClass(Injector, [{
-	    key: 'getComponentByName',
-	    value: function getComponentByName(componentName) {
-	      if (typeof this.components[componentName] === 'undefined') {
-	        throw new Error('Unknown component ' + componentName);
+	function withInjector(Component, dependencies, mapDependenciesToProps) {
+	  var injectorContext = {
+	    injector: _react2.default.PropTypes.shape({
+	      get: _react2.default.PropTypes.func
+	    })
+	  };
+	
+	  var Injectable = function (_React$Component) {
+	    _inherits(Injectable, _React$Component);
+	
+	    function Injectable() {
+	      _classCallCheck(this, Injectable);
+	
+	      return _possibleConstructorReturn(this, (Injectable.__proto__ || Object.getPrototypeOf(Injectable)).apply(this, arguments));
+	    }
+	
+	    _createClass(Injectable, [{
+	      key: 'render',
+	      value: function render() {
+	        var props = {};
+	        if (dependencies) {
+	          if (!Array.isArray(dependencies)) {
+	            throw new Error('\n            withInjector() passed an argument for dependencies that is ' + (typeof dependencies === 'undefined' ? 'undefined' : _typeof(dependencies)) + '. \n            Must be an array of named dependencies.\n          ');
+	            return;
+	          }
+	          var resolved = dependencies.map(this.context.injector.get);
+	          if (mapDependenciesToProps && typeof mapDependenciesToProps === 'function') {
+	            props = mapDependenciesToProps.apply(undefined, _toConsumableArray(resolved));
+	            if ((typeof props === 'undefined' ? 'undefined' : _typeof(props)) !== 'object') {
+	              throw new Error('\n              mapDepedenciesToProps parameter passed to withInjector() \n              should return an object that maps prop names to dependencies\n             ');
+	            }
+	          } else {
+	            for (var i = 0; i < dependencies.length; i++) {
+	              props[dependencies[i]] = resolved[i];
+	            }
+	          }
+	        }
+	
+	        return _react2.default.createElement(Component, _extends({}, this.props, props), this.props.children);
 	      }
-	      return this.components[componentName];
-	    }
-	  }, {
-	    key: 'getComponentByDataType',
-	    value: function getComponentByDataType(dataType) {
-	      switch (dataType) {
-	        case 'String':
-	        case 'Text':
-	          return this.components.TextField;
-	        case 'Date':
-	          return this.components.DateField;
-	        case 'Time':
-	          return this.components.TimeField;
-	        case 'Datetime':
-	          return this.components.DatetimeField;
-	        case 'Hidden':
-	          return this.components.HiddenField;
-	        case 'SingleSelect':
-	          return this.components.SingleSelectField;
-	        case 'Custom':
-	          return this.components.GridField;
-	        case 'Structural':
-	          return this.components.CompositeField;
-	        case 'Boolean':
-	          return this.components.CheckboxField;
-	        case 'MultiSelect':
-	          return this.components.CheckboxSetField;
-	        default:
-	          return null;
-	      }
-	    }
-	  }, {
-	    key: 'register',
-	    value: function register(name, component) {
-	      this.components[name] = component;
-	    }
-	  }]);
+	    }]);
 	
-	  return Injector;
-	}();
+	    return Injectable;
+	  }(_react2.default.Component);
 	
-	window.ss = window.ss || {};
-	window.ss.injector = window.ss.injector || new Injector();
+	  Component.contextTypes = injectorContext;
+	  Injectable.contextTypes = injectorContext;
+	  Injectable.displayName = 'withInjector(' + (Component.displayName || Component.name || 'Component') + ')';
 	
-	exports.default = window.ss.injector;
+	  return Injectable;
+	}
+	
+	exports.withInjector = withInjector;
 
 /***/ }),
-/* 108 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["FormBuilderLoader"] = __webpack_require__(109);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["FormBuilderLoader"] = __webpack_require__(112);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 109 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7965,9 +8140,9 @@ webpackJsonp([3],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactRedux = __webpack_require__(110);
+	var _reactRedux = __webpack_require__(113);
 	
-	var _redux = __webpack_require__(111);
+	var _redux = __webpack_require__(114);
 	
 	var _isomorphicFetch = __webpack_require__(8);
 	
@@ -7977,9 +8152,9 @@ webpackJsonp([3],[
 	
 	var _deepFreezeStrict2 = _interopRequireDefault(_deepFreezeStrict);
 	
-	var _reduxForm = __webpack_require__(112);
+	var _reduxForm = __webpack_require__(115);
 	
-	var _SchemaActions = __webpack_require__(113);
+	var _SchemaActions = __webpack_require__(116);
 	
 	var schemaActions = _interopRequireWildcard(_SchemaActions);
 	
@@ -7991,7 +8166,7 @@ webpackJsonp([3],[
 	
 	var _Form2 = _interopRequireDefault(_Form);
 	
-	var _FormBuilder = __webpack_require__(114);
+	var _FormBuilder = __webpack_require__(117);
 	
 	var _FormBuilder2 = _interopRequireDefault(_FormBuilder);
 	
@@ -8288,34 +8463,34 @@ webpackJsonp([3],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(FormBuilderLoader);
 
 /***/ }),
-/* 110 */,
-/* 111 */,
-/* 112 */
+/* 113 */,
+/* 114 */,
+/* 115 */
 /***/ (function(module, exports) {
 
 	module.exports = ReduxForm;
 
 /***/ }),
-/* 113 */
+/* 116 */
 /***/ (function(module, exports) {
 
 	module.exports = SchemaActions;
 
 /***/ }),
-/* 114 */
+/* 117 */
 /***/ (function(module, exports) {
 
 	module.exports = FormBuilder;
 
 /***/ }),
-/* 115 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["FormBuilderModal"] = __webpack_require__(116);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["FormBuilderModal"] = __webpack_require__(119);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 116 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8330,7 +8505,7 @@ webpackJsonp([3],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _i18n = __webpack_require__(117);
+	var _i18n = __webpack_require__(120);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
@@ -8340,7 +8515,7 @@ webpackJsonp([3],[
 	
 	var _SilverStripeComponent2 = _interopRequireDefault(_SilverStripeComponent);
 	
-	var _FormBuilderLoader = __webpack_require__(118);
+	var _FormBuilderLoader = __webpack_require__(121);
 	
 	var _FormBuilderLoader2 = _interopRequireDefault(_FormBuilderLoader);
 	
@@ -8556,26 +8731,26 @@ webpackJsonp([3],[
 	exports.default = FormBuilderModal;
 
 /***/ }),
-/* 117 */
+/* 120 */
 /***/ (function(module, exports) {
 
 	module.exports = i18n;
 
 /***/ }),
-/* 118 */
+/* 121 */
 /***/ (function(module, exports) {
 
 	module.exports = FormBuilderLoader;
 
 /***/ }),
-/* 119 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["GridField"] = __webpack_require__(120);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["GridField"] = __webpack_require__(123);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 120 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8592,39 +8767,39 @@ webpackJsonp([3],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _i18n = __webpack_require__(117);
+	var _i18n = __webpack_require__(120);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
-	var _redux = __webpack_require__(111);
+	var _redux = __webpack_require__(114);
 	
-	var _reactRedux = __webpack_require__(110);
+	var _reactRedux = __webpack_require__(113);
 	
 	var _SilverStripeComponent = __webpack_require__(23);
 	
 	var _SilverStripeComponent2 = _interopRequireDefault(_SilverStripeComponent);
 	
-	var _GridFieldTable = __webpack_require__(121);
+	var _GridFieldTable = __webpack_require__(124);
 	
 	var _GridFieldTable2 = _interopRequireDefault(_GridFieldTable);
 	
-	var _GridFieldHeader = __webpack_require__(122);
+	var _GridFieldHeader = __webpack_require__(125);
 	
 	var _GridFieldHeader2 = _interopRequireDefault(_GridFieldHeader);
 	
-	var _GridFieldHeaderCell = __webpack_require__(124);
+	var _GridFieldHeaderCell = __webpack_require__(127);
 	
 	var _GridFieldHeaderCell2 = _interopRequireDefault(_GridFieldHeaderCell);
 	
-	var _GridFieldRow = __webpack_require__(123);
+	var _GridFieldRow = __webpack_require__(126);
 	
 	var _GridFieldRow2 = _interopRequireDefault(_GridFieldRow);
 	
-	var _GridFieldCell = __webpack_require__(125);
+	var _GridFieldCell = __webpack_require__(128);
 	
 	var _GridFieldCell2 = _interopRequireDefault(_GridFieldCell);
 	
-	var _GridFieldAction = __webpack_require__(126);
+	var _GridFieldAction = __webpack_require__(129);
 	
 	var _GridFieldAction2 = _interopRequireDefault(_GridFieldAction);
 	
@@ -8632,7 +8807,7 @@ webpackJsonp([3],[
 	
 	var _FormConstants2 = _interopRequireDefault(_FormConstants);
 	
-	var _RecordsActions = __webpack_require__(127);
+	var _RecordsActions = __webpack_require__(130);
 	
 	var actions = _interopRequireWildcard(_RecordsActions);
 	
@@ -8827,7 +9002,7 @@ webpackJsonp([3],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(GridField);
 
 /***/ }),
-/* 121 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8921,7 +9096,7 @@ webpackJsonp([3],[
 	exports.default = GridFieldTable;
 
 /***/ }),
-/* 122 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8940,7 +9115,7 @@ webpackJsonp([3],[
 	
 	var _SilverStripeComponent2 = _interopRequireDefault(_SilverStripeComponent);
 	
-	var _GridFieldRow = __webpack_require__(123);
+	var _GridFieldRow = __webpack_require__(126);
 	
 	var _GridFieldRow2 = _interopRequireDefault(_GridFieldRow);
 	
@@ -8978,7 +9153,7 @@ webpackJsonp([3],[
 	exports.default = GridFieldHeader;
 
 /***/ }),
-/* 123 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9032,7 +9207,7 @@ webpackJsonp([3],[
 	exports.default = GridFieldRow;
 
 /***/ }),
-/* 124 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9089,7 +9264,7 @@ webpackJsonp([3],[
 	exports.default = GridFieldHeaderCell;
 
 /***/ }),
-/* 125 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9171,7 +9346,7 @@ webpackJsonp([3],[
 	exports.default = GridFieldCell;
 
 /***/ }),
-/* 126 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9235,7 +9410,7 @@ webpackJsonp([3],[
 	exports.default = GridFieldAction;
 
 /***/ }),
-/* 127 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9247,7 +9422,7 @@ webpackJsonp([3],[
 	exports.fetchRecord = fetchRecord;
 	exports.deleteRecord = deleteRecord;
 	
-	var _RecordsActionTypes = __webpack_require__(128);
+	var _RecordsActionTypes = __webpack_require__(131);
 	
 	var _RecordsActionTypes2 = _interopRequireDefault(_RecordsActionTypes);
 	
@@ -9352,7 +9527,7 @@ webpackJsonp([3],[
 	}
 
 /***/ }),
-/* 128 */
+/* 131 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -9376,49 +9551,49 @@ webpackJsonp([3],[
 	};
 
 /***/ }),
-/* 129 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["GridFieldCell"] = __webpack_require__(125);
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ }),
-/* 130 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["GridFieldHeader"] = __webpack_require__(122);
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ }),
-/* 131 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["GridFieldHeaderCell"] = __webpack_require__(124);
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ }),
 /* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["GridFieldRow"] = __webpack_require__(123);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["GridFieldCell"] = __webpack_require__(128);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
 /* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["GridFieldTable"] = __webpack_require__(121);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["GridFieldHeader"] = __webpack_require__(125);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
 /* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Accordion"] = __webpack_require__(135);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["GridFieldHeaderCell"] = __webpack_require__(127);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
 /* 135 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["GridFieldRow"] = __webpack_require__(126);
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ }),
+/* 136 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["GridFieldTable"] = __webpack_require__(124);
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ }),
+/* 137 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Accordion"] = __webpack_require__(138);
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ }),
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9474,14 +9649,14 @@ webpackJsonp([3],[
 	exports.default = Accordion;
 
 /***/ }),
-/* 136 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["AccordionBlock"] = __webpack_require__(137);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["AccordionBlock"] = __webpack_require__(140);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 137 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9500,7 +9675,7 @@ webpackJsonp([3],[
 	
 	var _SilverStripeComponent2 = _interopRequireDefault(_SilverStripeComponent);
 	
-	__webpack_require__(138);
+	__webpack_require__(141);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -9565,20 +9740,20 @@ webpackJsonp([3],[
 	exports.default = AccordionBlock;
 
 /***/ }),
-/* 138 */
+/* 141 */
 /***/ (function(module, exports) {
 
 	module.exports = BootstrapCollapse;
 
 /***/ }),
-/* 139 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["HiddenField"] = __webpack_require__(140);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["HiddenField"] = __webpack_require__(143);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 140 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9655,14 +9830,14 @@ webpackJsonp([3],[
 	exports.default = HiddenField;
 
 /***/ }),
-/* 141 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["ListGroup"] = __webpack_require__(142);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["ListGroup"] = __webpack_require__(145);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 142 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9681,7 +9856,7 @@ webpackJsonp([3],[
 	
 	var _SilverStripeComponent2 = _interopRequireDefault(_SilverStripeComponent);
 	
-	var _ListGroupItem = __webpack_require__(143);
+	var _ListGroupItem = __webpack_require__(146);
 	
 	var _ListGroupItem2 = _interopRequireDefault(_ListGroupItem);
 	
@@ -9725,7 +9900,7 @@ webpackJsonp([3],[
 	exports.default = ListGroup;
 
 /***/ }),
-/* 143 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9794,21 +9969,21 @@ webpackJsonp([3],[
 	exports.default = ListGroupItem;
 
 /***/ }),
-/* 144 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["ListGroupItem"] = __webpack_require__(143);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["ListGroupItem"] = __webpack_require__(146);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 145 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["TextField"] = __webpack_require__(146);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["TextField"] = __webpack_require__(149);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 146 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9830,7 +10005,7 @@ webpackJsonp([3],[
 	
 	var _SilverStripeComponent2 = _interopRequireDefault(_SilverStripeComponent);
 	
-	var _FieldHolder = __webpack_require__(147);
+	var _FieldHolder = __webpack_require__(150);
 	
 	var _FieldHolder2 = _interopRequireDefault(_FieldHolder);
 	
@@ -9936,20 +10111,20 @@ webpackJsonp([3],[
 	exports.default = (0, _FieldHolder2.default)(TextField);
 
 /***/ }),
-/* 147 */
+/* 150 */
 /***/ (function(module, exports) {
 
 	module.exports = FieldHolder;
 
 /***/ }),
-/* 148 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["LiteralField"] = __webpack_require__(149);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["LiteralField"] = __webpack_require__(152);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 149 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10028,14 +10203,14 @@ webpackJsonp([3],[
 	exports.default = LiteralField;
 
 /***/ }),
-/* 150 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Toolbar"] = __webpack_require__(151);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Toolbar"] = __webpack_require__(154);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 151 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10124,14 +10299,14 @@ webpackJsonp([3],[
 	exports.default = Toolbar;
 
 /***/ }),
-/* 152 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Breadcrumb"] = __webpack_require__(153);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Breadcrumb"] = __webpack_require__(156);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 153 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10151,9 +10326,9 @@ webpackJsonp([3],[
 	
 	var _SilverStripeComponent2 = _interopRequireDefault(_SilverStripeComponent);
 	
-	var _reactRedux = __webpack_require__(110);
+	var _reactRedux = __webpack_require__(113);
 	
-	var _reactRouter = __webpack_require__(154);
+	var _reactRouter = __webpack_require__(157);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -10261,20 +10436,20 @@ webpackJsonp([3],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Breadcrumb);
 
 /***/ }),
-/* 154 */
+/* 157 */
 /***/ (function(module, exports) {
 
 	module.exports = ReactRouter;
 
 /***/ }),
-/* 155 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["TreeDropdownFieldNode"] = __webpack_require__(156);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["TreeDropdownFieldNode"] = __webpack_require__(159);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 156 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10305,14 +10480,14 @@ webpackJsonp([3],[
 	exports.default = TreeDropdownFieldNode;
 
 /***/ }),
-/* 157 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["TreeDropdownFieldMenu"] = __webpack_require__(158);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["TreeDropdownFieldMenu"] = __webpack_require__(161);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 158 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10327,15 +10502,15 @@ webpackJsonp([3],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _i18n = __webpack_require__(117);
+	var _i18n = __webpack_require__(120);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
-	var _classnames = __webpack_require__(159);
+	var _classnames = __webpack_require__(162);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _TreeDropdownFieldNode = __webpack_require__(156);
+	var _TreeDropdownFieldNode = __webpack_require__(159);
 	
 	var _TreeDropdownFieldNode2 = _interopRequireDefault(_TreeDropdownFieldNode);
 	
@@ -10517,15 +10692,15 @@ webpackJsonp([3],[
 	exports.default = TreeDropdownFieldMenu;
 
 /***/ }),
-/* 159 */,
-/* 160 */
+/* 162 */,
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["TreeDropdownField"] = __webpack_require__(161);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["TreeDropdownField"] = __webpack_require__(164);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 161 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10541,11 +10716,11 @@ webpackJsonp([3],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactRedux = __webpack_require__(110);
+	var _reactRedux = __webpack_require__(113);
 	
-	var _redux = __webpack_require__(111);
+	var _redux = __webpack_require__(114);
 	
-	var _FieldHolder = __webpack_require__(147);
+	var _FieldHolder = __webpack_require__(150);
 	
 	var _FieldHolder2 = _interopRequireDefault(_FieldHolder);
 	
@@ -10553,27 +10728,27 @@ webpackJsonp([3],[
 	
 	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 	
-	var _reactSelect = __webpack_require__(162);
+	var _reactSelect = __webpack_require__(165);
 	
 	var _reactSelect2 = _interopRequireDefault(_reactSelect);
 	
-	var _i18n = __webpack_require__(117);
+	var _i18n = __webpack_require__(120);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
-	var _TreeDropdownFieldActions = __webpack_require__(174);
+	var _TreeDropdownFieldActions = __webpack_require__(177);
 	
 	var treeDropdownFieldActions = _interopRequireWildcard(_TreeDropdownFieldActions);
 	
-	var _TreeDropdownFieldMenu = __webpack_require__(158);
+	var _TreeDropdownFieldMenu = __webpack_require__(161);
 	
 	var _TreeDropdownFieldMenu2 = _interopRequireDefault(_TreeDropdownFieldMenu);
 	
-	var _TreeDropdownFieldNode = __webpack_require__(156);
+	var _TreeDropdownFieldNode = __webpack_require__(159);
 	
 	var _TreeDropdownFieldNode2 = _interopRequireDefault(_TreeDropdownFieldNode);
 	
-	var _url = __webpack_require__(176);
+	var _url = __webpack_require__(179);
 	
 	var _url2 = _interopRequireDefault(_url);
 	
@@ -11117,7 +11292,7 @@ webpackJsonp([3],[
 	exports.default = (0, _FieldHolder2.default)(ConnectedTreeDropdownField);
 
 /***/ }),
-/* 162 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/*!
@@ -11148,47 +11323,47 @@ webpackJsonp([3],[
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _reactInputAutosize = __webpack_require__(163);
+	var _reactInputAutosize = __webpack_require__(166);
 	
 	var _reactInputAutosize2 = _interopRequireDefault(_reactInputAutosize);
 	
-	var _classnames = __webpack_require__(159);
+	var _classnames = __webpack_require__(162);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _utilsDefaultArrowRenderer = __webpack_require__(164);
+	var _utilsDefaultArrowRenderer = __webpack_require__(167);
 	
 	var _utilsDefaultArrowRenderer2 = _interopRequireDefault(_utilsDefaultArrowRenderer);
 	
-	var _utilsDefaultFilterOptions = __webpack_require__(165);
+	var _utilsDefaultFilterOptions = __webpack_require__(168);
 	
 	var _utilsDefaultFilterOptions2 = _interopRequireDefault(_utilsDefaultFilterOptions);
 	
-	var _utilsDefaultMenuRenderer = __webpack_require__(167);
+	var _utilsDefaultMenuRenderer = __webpack_require__(170);
 	
 	var _utilsDefaultMenuRenderer2 = _interopRequireDefault(_utilsDefaultMenuRenderer);
 	
-	var _utilsDefaultClearRenderer = __webpack_require__(168);
+	var _utilsDefaultClearRenderer = __webpack_require__(171);
 	
 	var _utilsDefaultClearRenderer2 = _interopRequireDefault(_utilsDefaultClearRenderer);
 	
-	var _Async = __webpack_require__(169);
+	var _Async = __webpack_require__(172);
 	
 	var _Async2 = _interopRequireDefault(_Async);
 	
-	var _AsyncCreatable = __webpack_require__(170);
+	var _AsyncCreatable = __webpack_require__(173);
 	
 	var _AsyncCreatable2 = _interopRequireDefault(_AsyncCreatable);
 	
-	var _Creatable = __webpack_require__(171);
+	var _Creatable = __webpack_require__(174);
 	
 	var _Creatable2 = _interopRequireDefault(_Creatable);
 	
-	var _Option = __webpack_require__(172);
+	var _Option = __webpack_require__(175);
 	
 	var _Option2 = _interopRequireDefault(_Option);
 	
-	var _Value = __webpack_require__(173);
+	var _Value = __webpack_require__(176);
 	
 	var _Value2 = _interopRequireDefault(_Value);
 	
@@ -12349,7 +12524,7 @@ webpackJsonp([3],[
 	module.exports = exports['default'];
 
 /***/ }),
-/* 163 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12483,7 +12658,7 @@ webpackJsonp([3],[
 	module.exports = AutosizeInput;
 
 /***/ }),
-/* 164 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12512,14 +12687,14 @@ webpackJsonp([3],[
 	module.exports = exports["default"];
 
 /***/ }),
-/* 165 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _stripDiacritics = __webpack_require__(166);
+	var _stripDiacritics = __webpack_require__(169);
 	
 	var _stripDiacritics2 = _interopRequireDefault(_stripDiacritics);
 	
@@ -12559,7 +12734,7 @@ webpackJsonp([3],[
 	module.exports = filterOptions;
 
 /***/ }),
-/* 166 */
+/* 169 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -12574,14 +12749,14 @@ webpackJsonp([3],[
 	};
 
 /***/ }),
-/* 167 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _classnames = __webpack_require__(159);
+	var _classnames = __webpack_require__(162);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
@@ -12640,7 +12815,7 @@ webpackJsonp([3],[
 	module.exports = menuRenderer;
 
 /***/ }),
-/* 168 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12667,7 +12842,7 @@ webpackJsonp([3],[
 	module.exports = exports['default'];
 
 /***/ }),
-/* 169 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12694,11 +12869,11 @@ webpackJsonp([3],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Select = __webpack_require__(162);
+	var _Select = __webpack_require__(165);
 	
 	var _Select2 = _interopRequireDefault(_Select);
 	
-	var _utilsStripDiacritics = __webpack_require__(166);
+	var _utilsStripDiacritics = __webpack_require__(169);
 	
 	var _utilsStripDiacritics2 = _interopRequireDefault(_utilsStripDiacritics);
 	
@@ -12937,7 +13112,7 @@ webpackJsonp([3],[
 	module.exports = exports['default'];
 
 /***/ }),
-/* 170 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12950,7 +13125,7 @@ webpackJsonp([3],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Select = __webpack_require__(162);
+	var _Select = __webpack_require__(165);
 	
 	var _Select2 = _interopRequireDefault(_Select);
 	
@@ -12998,7 +13173,7 @@ webpackJsonp([3],[
 	module.exports = AsyncCreatable;
 
 /***/ }),
-/* 171 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13013,15 +13188,15 @@ webpackJsonp([3],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Select = __webpack_require__(162);
+	var _Select = __webpack_require__(165);
 	
 	var _Select2 = _interopRequireDefault(_Select);
 	
-	var _utilsDefaultFilterOptions = __webpack_require__(165);
+	var _utilsDefaultFilterOptions = __webpack_require__(168);
 	
 	var _utilsDefaultFilterOptions2 = _interopRequireDefault(_utilsDefaultFilterOptions);
 	
-	var _utilsDefaultMenuRenderer = __webpack_require__(167);
+	var _utilsDefaultMenuRenderer = __webpack_require__(170);
 	
 	var _utilsDefaultMenuRenderer2 = _interopRequireDefault(_utilsDefaultMenuRenderer);
 	
@@ -13319,7 +13494,7 @@ webpackJsonp([3],[
 	module.exports = Creatable;
 
 /***/ }),
-/* 172 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13330,7 +13505,7 @@ webpackJsonp([3],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _classnames = __webpack_require__(159);
+	var _classnames = __webpack_require__(162);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
@@ -13435,7 +13610,7 @@ webpackJsonp([3],[
 	module.exports = Option;
 
 /***/ }),
-/* 173 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13446,7 +13621,7 @@ webpackJsonp([3],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _classnames = __webpack_require__(159);
+	var _classnames = __webpack_require__(162);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
@@ -13546,7 +13721,7 @@ webpackJsonp([3],[
 	module.exports = Value;
 
 /***/ }),
-/* 174 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13559,7 +13734,7 @@ webpackJsonp([3],[
 	exports.updateTree = updateTree;
 	exports.updateTreeFailed = updateTreeFailed;
 	
-	var _TreeDropdownFieldActionTypes = __webpack_require__(175);
+	var _TreeDropdownFieldActionTypes = __webpack_require__(178);
 	
 	var _TreeDropdownFieldActionTypes2 = _interopRequireDefault(_TreeDropdownFieldActionTypes);
 	
@@ -13594,7 +13769,7 @@ webpackJsonp([3],[
 	}
 
 /***/ }),
-/* 175 */
+/* 178 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -13610,7 +13785,7 @@ webpackJsonp([3],[
 	};
 
 /***/ }),
-/* 176 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -13636,8 +13811,8 @@ webpackJsonp([3],[
 	
 	'use strict';
 	
-	var punycode = __webpack_require__(177);
-	var util = __webpack_require__(178);
+	var punycode = __webpack_require__(180);
+	var util = __webpack_require__(181);
 	
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -13712,7 +13887,7 @@ webpackJsonp([3],[
 	      'gopher:': true,
 	      'file:': true
 	    },
-	    querystring = __webpack_require__(179);
+	    querystring = __webpack_require__(182);
 	
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && util.isObject(url) && url instanceof Url) return url;
@@ -14348,7 +14523,7 @@ webpackJsonp([3],[
 
 
 /***/ }),
-/* 177 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/punycode v1.3.2 by @mathias */
@@ -14883,7 +15058,7 @@ webpackJsonp([3],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)(module), (function() { return this; }())))
 
 /***/ }),
-/* 178 */
+/* 181 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -14905,17 +15080,17 @@ webpackJsonp([3],[
 
 
 /***/ }),
-/* 179 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	exports.decode = exports.parse = __webpack_require__(180);
-	exports.encode = exports.stringify = __webpack_require__(181);
+	exports.decode = exports.parse = __webpack_require__(183);
+	exports.encode = exports.stringify = __webpack_require__(184);
 
 
 /***/ }),
-/* 180 */
+/* 183 */
 /***/ (function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -15001,7 +15176,7 @@ webpackJsonp([3],[
 
 
 /***/ }),
-/* 181 */
+/* 184 */
 /***/ (function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -15071,14 +15246,14 @@ webpackJsonp([3],[
 
 
 /***/ }),
-/* 182 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["BreadcrumbsActions"] = __webpack_require__(183);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["BreadcrumbsActions"] = __webpack_require__(186);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 183 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15088,7 +15263,7 @@ webpackJsonp([3],[
 	});
 	exports.setBreadcrumbs = setBreadcrumbs;
 	
-	var _BreadcrumbsActionTypes = __webpack_require__(184);
+	var _BreadcrumbsActionTypes = __webpack_require__(187);
 	
 	var _BreadcrumbsActionTypes2 = _interopRequireDefault(_BreadcrumbsActionTypes);
 	
@@ -15102,7 +15277,7 @@ webpackJsonp([3],[
 	}
 
 /***/ }),
-/* 184 */
+/* 187 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -15115,28 +15290,28 @@ webpackJsonp([3],[
 	};
 
 /***/ }),
-/* 185 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["RecordsActions"] = __webpack_require__(127);
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ }),
-/* 186 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["RecordsActionTypes"] = __webpack_require__(128);
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ }),
-/* 187 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Badge"] = __webpack_require__(188);
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ }),
 /* 188 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["RecordsActions"] = __webpack_require__(130);
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ }),
+/* 189 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["RecordsActionTypes"] = __webpack_require__(131);
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ }),
+/* 190 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Badge"] = __webpack_require__(191);
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ }),
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15175,14 +15350,14 @@ webpackJsonp([3],[
 	exports.default = Badge;
 
 /***/ }),
-/* 189 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Preview"] = __webpack_require__(190);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Preview"] = __webpack_require__(193);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 190 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15197,7 +15372,7 @@ webpackJsonp([3],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _i18n = __webpack_require__(117);
+	var _i18n = __webpack_require__(120);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
@@ -15336,14 +15511,14 @@ webpackJsonp([3],[
 	exports.default = Preview;
 
 /***/ }),
-/* 191 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Config"] = __webpack_require__(192);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Config"] = __webpack_require__(195);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 192 */
+/* 195 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -15389,14 +15564,14 @@ webpackJsonp([3],[
 	exports.default = Config;
 
 /***/ }),
-/* 193 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["DataFormat"] = __webpack_require__(194);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["DataFormat"] = __webpack_require__(197);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 194 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15408,7 +15583,7 @@ webpackJsonp([3],[
 	exports.fileSize = fileSize;
 	exports.getFileExtension = getFileExtension;
 	
-	var _i18n = __webpack_require__(117);
+	var _i18n = __webpack_require__(120);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
@@ -15459,14 +15634,14 @@ webpackJsonp([3],[
 	}
 
 /***/ }),
-/* 195 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["ReducerRegister"] = __webpack_require__(196);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["ReducerRegister"] = __webpack_require__(199);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 196 */
+/* 199 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -15521,14 +15696,14 @@ webpackJsonp([3],[
 	exports.default = window.ss.reducerRegister;
 
 /***/ }),
-/* 197 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["ReactRouteRegister"] = __webpack_require__(198);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["ReactRouteRegister"] = __webpack_require__(201);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 198 */
+/* 201 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -15648,21 +15823,21 @@ webpackJsonp([3],[
 	exports.default = window.ss.routeRegister;
 
 /***/ }),
-/* 199 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Injector"] = __webpack_require__(107);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 200 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Router"] = __webpack_require__(201);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Router"] = __webpack_require__(204);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 201 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15671,11 +15846,11 @@ webpackJsonp([3],[
 	  value: true
 	});
 	
-	var _page = __webpack_require__(202);
+	var _page = __webpack_require__(205);
 	
 	var _page2 = _interopRequireDefault(_page);
 	
-	var _url = __webpack_require__(176);
+	var _url = __webpack_require__(179);
 	
 	var _url2 = _interopRequireDefault(_url);
 	
@@ -15736,13 +15911,13 @@ webpackJsonp([3],[
 	exports.default = window.ss.router;
 
 /***/ }),
-/* 202 */
+/* 205 */
 /***/ (function(module, exports) {
 
 	module.exports = Page;
 
 /***/ }),
-/* 203 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15928,7 +16103,7 @@ webpackJsonp([3],[
 	_jQuery2.default.path = path;
 
 /***/ }),
-/* 204 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery) {'use strict';
@@ -15939,7 +16114,7 @@ webpackJsonp([3],[
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	__webpack_require__(205);
+	__webpack_require__(208);
 	
 	_jQuery2.default.widget("ssui.ssdialog", _jQuery2.default.ui.dialog, {
 	  options: {
@@ -16098,8 +16273,8 @@ webpackJsonp([3],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 205 */,
-/* 206 */
+/* 208 */,
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery) {'use strict';
@@ -16112,7 +16287,7 @@ webpackJsonp([3],[
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	__webpack_require__(204);
+	__webpack_require__(207);
 	
 	var windowWidth, windowHeight;
 	
@@ -17169,7 +17344,7 @@ webpackJsonp([3],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 207 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17332,7 +17507,7 @@ webpackJsonp([3],[
 	});
 
 /***/ }),
-/* 208 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17496,7 +17671,7 @@ webpackJsonp([3],[
 	});
 
 /***/ }),
-/* 209 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17845,7 +18020,7 @@ webpackJsonp([3],[
 	});
 
 /***/ }),
-/* 210 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17931,7 +18106,7 @@ webpackJsonp([3],[
 	});
 
 /***/ }),
-/* 211 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery) {'use strict';
@@ -17940,7 +18115,7 @@ webpackJsonp([3],[
 	
 	var _jQuery2 = _interopRequireDefault(_jQuery);
 	
-	var _i18n = __webpack_require__(117);
+	var _i18n = __webpack_require__(120);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
@@ -18221,6 +18396,42 @@ webpackJsonp([3],[
 	      this._super();
 	    }
 	  });
+	
+	  $('.cms-edit-form [name="CanViewType"], ' + '.cms-edit-form [name="CanEditType"], ' + '.cms-edit-form #CanCreateTopLevelType').entwine({
+	    onmatch: function onmatch() {
+	      if (this.val() === 'OnlyTheseUsers') {
+	        if (this.is(':checked')) {
+	          this.showList(true);
+	        } else {
+	          this.hideList(true);
+	        }
+	      }
+	    },
+	    onchange: function onchange(e) {
+	      if (e.target.value === 'OnlyTheseUsers') {
+	        this.showList();
+	      } else {
+	        this.hideList();
+	      }
+	    },
+	    showList: function showList(instant) {
+	      var holder = this.closest('.field');
+	      var list = holder.next().filter('.listbox');
+	
+	      holder.addClass('field--merge-below');
+	      list[instant ? 'show' : 'slideDown'](function () {
+	        list.css('overflow', 'visible');
+	      });
+	    },
+	    hideList: function hideList(instant) {
+	      var holder = this.closest('.field');
+	      var list = holder.next().filter('.listbox');
+	
+	      list[instant ? 'hide' : 'slideUp'](function () {
+	        holder.removeClass('field--merge-below');
+	      }).css('overflow', 'hidden');
+	    }
+	  });
 	});
 	
 	var errorMessage = function errorMessage(text) {
@@ -18229,7 +18440,7 @@ webpackJsonp([3],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 212 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18601,7 +18812,7 @@ webpackJsonp([3],[
 	});
 
 /***/ }),
-/* 213 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18610,7 +18821,7 @@ webpackJsonp([3],[
 	
 	var _jQuery2 = _interopRequireDefault(_jQuery);
 	
-	var _i18n = __webpack_require__(117);
+	var _i18n = __webpack_require__(120);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
@@ -19134,7 +19345,7 @@ webpackJsonp([3],[
 	});
 
 /***/ }),
-/* 214 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery) {'use strict';
@@ -19143,7 +19354,7 @@ webpackJsonp([3],[
 	
 	var _jQuery2 = _interopRequireDefault(_jQuery);
 	
-	var _i18n = __webpack_require__(117);
+	var _i18n = __webpack_require__(120);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
@@ -19420,7 +19631,7 @@ webpackJsonp([3],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 215 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19457,7 +19668,7 @@ webpackJsonp([3],[
 	});
 
 /***/ }),
-/* 216 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19498,7 +19709,7 @@ webpackJsonp([3],[
 	});
 
 /***/ }),
-/* 217 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19521,7 +19732,7 @@ webpackJsonp([3],[
 	});
 
 /***/ }),
-/* 218 */
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19538,9 +19749,9 @@ webpackJsonp([3],[
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _reactRedux = __webpack_require__(110);
+	var _reactRedux = __webpack_require__(113);
 	
-	var _FormBuilderModal = __webpack_require__(219);
+	var _FormBuilderModal = __webpack_require__(222);
 	
 	var _FormBuilderModal2 = _interopRequireDefault(_FormBuilderModal);
 	
@@ -19623,13 +19834,13 @@ webpackJsonp([3],[
 	});
 
 /***/ }),
-/* 219 */
+/* 222 */
 /***/ (function(module, exports) {
 
 	module.exports = FormBuilderModal;
 
 /***/ }),
-/* 220 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19640,8 +19851,8 @@ webpackJsonp([3],[
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	__webpack_require__(206);
-	__webpack_require__(221);
+	__webpack_require__(209);
+	__webpack_require__(224);
 	
 	var refreshAfterImport = function refreshAfterImport(e) {
 	  var existingFormMessage = (0, _jQuery2.default)((0, _jQuery2.default)(this).contents()).find('.message');
@@ -19699,7 +19910,7 @@ webpackJsonp([3],[
 	});
 
 /***/ }),
-/* 221 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19780,7 +19991,7 @@ webpackJsonp([3],[
 	});
 
 /***/ }),
-/* 222 */
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19791,7 +20002,7 @@ webpackJsonp([3],[
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	__webpack_require__(206);
+	__webpack_require__(209);
 	
 	_jQuery2.default.entwine('ss', function ($) {
 	  $('.cms-content-tools #Form_SearchForm').entwine({
@@ -19817,7 +20028,7 @@ webpackJsonp([3],[
 	});
 
 /***/ }),
-/* 223 */
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19839,7 +20050,7 @@ webpackJsonp([3],[
 	});
 
 /***/ }),
-/* 224 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19869,7 +20080,7 @@ webpackJsonp([3],[
 	});
 
 /***/ }),
-/* 225 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19878,21 +20089,21 @@ webpackJsonp([3],[
 	
 	var _jQuery2 = _interopRequireDefault(_jQuery);
 	
-	var _i18n = __webpack_require__(117);
+	var _i18n = __webpack_require__(120);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
-	var _moment = __webpack_require__(226);
+	var _moment = __webpack_require__(229);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
-	var _modernizr = __webpack_require__(227);
+	var _modernizr = __webpack_require__(230);
 	
 	var _modernizr2 = _interopRequireDefault(_modernizr);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	__webpack_require__(228);
+	__webpack_require__(231);
 	
 	_jQuery2.default.entwine('ss', function (jQuery) {
 	  jQuery('input[type=date]').entwine({
@@ -19950,20 +20161,20 @@ webpackJsonp([3],[
 	});
 
 /***/ }),
-/* 226 */
+/* 229 */
 /***/ (function(module, exports) {
 
 	module.exports = moment;
 
 /***/ }),
-/* 227 */
+/* 230 */
 /***/ (function(module, exports) {
 
 	module.exports = modernizr;
 
 /***/ }),
-/* 228 */,
-/* 229 */
+/* 231 */,
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19974,7 +20185,7 @@ webpackJsonp([3],[
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	__webpack_require__(205);
+	__webpack_require__(208);
 	
 	_jQuery2.default.entwine('ss', function ($) {
 		$('.ss-toggle').entwine({
@@ -20005,7 +20216,7 @@ webpackJsonp([3],[
 	});
 
 /***/ }),
-/* 230 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery) {'use strict';
@@ -20014,14 +20225,14 @@ webpackJsonp([3],[
 	
 	var _jQuery2 = _interopRequireDefault(_jQuery);
 	
-	var _i18n = __webpack_require__(117);
+	var _i18n = __webpack_require__(120);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	__webpack_require__(228);
 	__webpack_require__(231);
+	__webpack_require__(234);
 	
 	_jQuery2.default.entwine('ss', function ($) {
 		var windowWidth, windowHeight;
@@ -20414,8 +20625,8 @@ webpackJsonp([3],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 231 */,
-/* 232 */
+/* 234 */,
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20424,21 +20635,21 @@ webpackJsonp([3],[
 	
 	var _jQuery2 = _interopRequireDefault(_jQuery);
 	
-	var _i18n = __webpack_require__(117);
+	var _i18n = __webpack_require__(120);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
-	var _moment = __webpack_require__(226);
+	var _moment = __webpack_require__(229);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
-	var _modernizr = __webpack_require__(227);
+	var _modernizr = __webpack_require__(230);
 	
 	var _modernizr2 = _interopRequireDefault(_modernizr);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	__webpack_require__(228);
+	__webpack_require__(231);
 	
 	_jQuery2.default.entwine('ss', function (jQuery) {
 	  jQuery('input[type=datetime-local]').entwine({
@@ -20490,16 +20701,16 @@ webpackJsonp([3],[
 	});
 
 /***/ }),
-/* 233 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var _jquery = __webpack_require__(234);
+	var _jquery = __webpack_require__(237);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
-	var _i18n = __webpack_require__(117);
+	var _i18n = __webpack_require__(120);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
@@ -21198,13 +21409,13 @@ webpackJsonp([3],[
 	});
 
 /***/ }),
-/* 234 */
+/* 237 */
 /***/ (function(module, exports) {
 
 	module.exports = jQuery;
 
 /***/ }),
-/* 235 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21215,9 +21426,9 @@ webpackJsonp([3],[
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	__webpack_require__(205);
-	__webpack_require__(236);
-	__webpack_require__(228);
+	__webpack_require__(208);
+	__webpack_require__(239);
+	__webpack_require__(231);
 	
 	_jQuery2.default.entwine('ss', function ($) {
 		$('.ss-tabset').entwine({
@@ -21286,8 +21497,8 @@ webpackJsonp([3],[
 	});
 
 /***/ }),
-/* 236 */,
-/* 237 */
+/* 239 */,
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21296,14 +21507,14 @@ webpackJsonp([3],[
 	
 	var _jQuery2 = _interopRequireDefault(_jQuery);
 	
-	var _i18n = __webpack_require__(117);
+	var _i18n = __webpack_require__(120);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	__webpack_require__(205);
-	__webpack_require__(228);
+	__webpack_require__(208);
+	__webpack_require__(231);
 	
 	_jQuery2.default.entwine('ss', function ($) {
 	  $('.grid-field').entwine({
@@ -21689,68 +21900,68 @@ webpackJsonp([3],[
 	});
 
 /***/ }),
-/* 238 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _BootRoutes = __webpack_require__(239);
+	var _BootRoutes = __webpack_require__(242);
 	
 	var _BootRoutes2 = _interopRequireDefault(_BootRoutes);
 	
-	var _redux = __webpack_require__(111);
+	var _redux = __webpack_require__(114);
 	
-	var _reduxThunk = __webpack_require__(263);
+	var _reduxThunk = __webpack_require__(265);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reduxForm = __webpack_require__(112);
+	var _reduxForm = __webpack_require__(115);
 	
-	var _reactRouterRedux = __webpack_require__(261);
+	var _reactRouterRedux = __webpack_require__(263);
 	
-	var _Config = __webpack_require__(192);
+	var _Config = __webpack_require__(195);
 	
 	var _Config2 = _interopRequireDefault(_Config);
 	
-	var _ReducerRegister = __webpack_require__(264);
+	var _ReducerRegister = __webpack_require__(266);
 	
 	var _ReducerRegister2 = _interopRequireDefault(_ReducerRegister);
 	
-	var _ConfigActions = __webpack_require__(265);
+	var _ConfigActions = __webpack_require__(267);
 	
 	var configActions = _interopRequireWildcard(_ConfigActions);
 	
-	var _ConfigReducer = __webpack_require__(267);
+	var _ConfigReducer = __webpack_require__(269);
 	
 	var _ConfigReducer2 = _interopRequireDefault(_ConfigReducer);
 	
-	var _SchemaReducer = __webpack_require__(268);
+	var _SchemaReducer = __webpack_require__(270);
 	
 	var _SchemaReducer2 = _interopRequireDefault(_SchemaReducer);
 	
-	var _RecordsReducer = __webpack_require__(269);
+	var _RecordsReducer = __webpack_require__(271);
 	
 	var _RecordsReducer2 = _interopRequireDefault(_RecordsReducer);
 	
-	var _BreadcrumbsReducer = __webpack_require__(270);
+	var _BreadcrumbsReducer = __webpack_require__(272);
 	
 	var _BreadcrumbsReducer2 = _interopRequireDefault(_BreadcrumbsReducer);
 	
-	var _BootInjector = __webpack_require__(271);
+	var _registerComponents = __webpack_require__(273);
 	
-	var _BootInjector2 = _interopRequireDefault(_BootInjector);
+	var _registerComponents2 = _interopRequireDefault(_registerComponents);
 	
-	var _TreeDropdownFieldReducer = __webpack_require__(292);
+	var _TreeDropdownFieldReducer = __webpack_require__(293);
 	
 	var _TreeDropdownFieldReducer2 = _interopRequireDefault(_TreeDropdownFieldReducer);
 	
-	var _apolloClient = __webpack_require__(293);
+	var _apolloClient = __webpack_require__(294);
 	
 	var _apolloClient2 = _interopRequireDefault(_apolloClient);
 	
-	var _networkInterface = __webpack_require__(294);
+	var _networkInterface = __webpack_require__(295);
 	
 	var _qs = __webpack_require__(13);
 	
@@ -21808,7 +22019,7 @@ webpackJsonp([3],[
 	  _ReducerRegister2.default.add('apollo', apolloClient.reducer());
 	  _ReducerRegister2.default.add('treeDropdownField', _TreeDropdownFieldReducer2.default);
 	
-	  _BootInjector2.default.start();
+	  (0, _registerComponents2.default)();
 	
 	  var initialState = {};
 	  var rootReducer = (0, _redux.combineReducers)(_ReducerRegister2.default.getAll());
@@ -21848,11 +22059,10 @@ webpackJsonp([3],[
 	    window.jQuery('body').addClass('js-react-boot');
 	  }
 	}
-	
 	window.onload = appBoot;
 
 /***/ }),
-/* 239 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21875,31 +22085,31 @@ webpackJsonp([3],[
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _reactRouter = __webpack_require__(154);
+	var _reactRouter = __webpack_require__(157);
 	
-	var _createBrowserHistory = __webpack_require__(240);
+	var _createBrowserHistory = __webpack_require__(243);
 	
 	var _createBrowserHistory2 = _interopRequireDefault(_createBrowserHistory);
 	
-	var _Config = __webpack_require__(192);
+	var _Config = __webpack_require__(195);
 	
 	var _Config2 = _interopRequireDefault(_Config);
 	
-	var _Router = __webpack_require__(257);
+	var _Router = __webpack_require__(260);
 	
 	var _Router2 = _interopRequireDefault(_Router);
 	
-	var _ReactRouteRegister = __webpack_require__(258);
+	var _ReactRouteRegister = __webpack_require__(261);
 	
 	var _ReactRouteRegister2 = _interopRequireDefault(_ReactRouteRegister);
 	
-	var _App = __webpack_require__(259);
+	var _App = __webpack_require__(262);
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-	var _reactRouterRedux = __webpack_require__(261);
+	var _reactRouterRedux = __webpack_require__(263);
 	
-	var _reactApollo = __webpack_require__(262);
+	var _reactApollo = __webpack_require__(264);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21988,7 +22198,7 @@ webpackJsonp([3],[
 	          var forceReload = ctx.data && ctx.data.__forceReload;
 	          if (ctx.path !== lastPath || forceReload) {
 	            lastPath = ctx.path.replace(/#.*$/, '');
-	            (0, _jQuery2.default)('.cms-container').entwine('ss').handleStateChange(null, ctx.state);
+	            (0, _jQuery2.default)('.cms-container.js').entwine('ss').handleStateChange(null, ctx.state);
 	          }
 	        });
 	      });
@@ -22003,9 +22213,6 @@ webpackJsonp([3],[
 	exports.default = BootRoutes;
 
 /***/ }),
-/* 240 */,
-/* 241 */,
-/* 242 */,
 /* 243 */,
 /* 244 */,
 /* 245 */,
@@ -22020,19 +22227,22 @@ webpackJsonp([3],[
 /* 254 */,
 /* 255 */,
 /* 256 */,
-/* 257 */
+/* 257 */,
+/* 258 */,
+/* 259 */,
+/* 260 */
 /***/ (function(module, exports) {
 
 	module.exports = Router;
 
 /***/ }),
-/* 258 */
+/* 261 */
 /***/ (function(module, exports) {
 
 	module.exports = ReactRouteRegister;
 
 /***/ }),
-/* 259 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22051,9 +22261,7 @@ webpackJsonp([3],[
 	
 	var _SilverStripeComponent2 = _interopRequireDefault(_SilverStripeComponent);
 	
-	var _provideInjector = __webpack_require__(260);
-	
-	var _provideInjector2 = _interopRequireDefault(_provideInjector);
+	var _Injector = __webpack_require__(107);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -22075,94 +22283,45 @@ webpackJsonp([3],[
 	  _createClass(App, [{
 	    key: 'render',
 	    value: function render() {
-	      var Child = _react2.default.Children.only(this.props.children);
-	      return Child;
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        this.props.children
+	      );
 	    }
 	  }]);
 	
 	  return App;
 	}(_SilverStripeComponent2.default);
 	
-	exports.default = (0, _provideInjector2.default)(App);
-
-/***/ }),
-/* 260 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	exports.default = function (Component) {
-	  var InjectorProvider = function () {
-	    function InjectorProvider() {
-	      _classCallCheck(this, InjectorProvider);
-	    }
-	
-	    _createClass(InjectorProvider, [{
-	      key: 'getChildContext',
-	      value: function getChildContext() {
-	        return _container2.default;
-	      }
-	    }, {
-	      key: 'render',
-	      value: function render() {
-	        return _react2.default.createElement(Component, null);
-	      }
-	    }]);
-	
-	    return InjectorProvider;
-	  }();
-	
-	  InjectorProvider.childContextTypes = {
-	    get: _react2.default.PropTypes.func
-	  };
-	
-	  return InjectorProvider;
-	};
-	
-	var _react = __webpack_require__(5);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _container = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../container\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	
-	var _container2 = _interopRequireDefault(_container);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/***/ }),
-/* 261 */
-/***/ (function(module, exports) {
-
-	module.exports = ReactRouterRedux;
-
-/***/ }),
-/* 262 */
-/***/ (function(module, exports) {
-
-	module.exports = ReactApollo;
+	exports.default = (0, _Injector.provideInjector)(App);
 
 /***/ }),
 /* 263 */
 /***/ (function(module, exports) {
 
-	module.exports = ReduxThunk;
+	module.exports = ReactRouterRedux;
 
 /***/ }),
 /* 264 */
 /***/ (function(module, exports) {
 
-	module.exports = ReducerRegister;
+	module.exports = ReactApollo;
 
 /***/ }),
 /* 265 */
+/***/ (function(module, exports) {
+
+	module.exports = ReduxThunk;
+
+/***/ }),
+/* 266 */
+/***/ (function(module, exports) {
+
+	module.exports = ReducerRegister;
+
+/***/ }),
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22172,7 +22331,7 @@ webpackJsonp([3],[
 	});
 	exports.setConfig = setConfig;
 	
-	var _ConfigActionTypes = __webpack_require__(266);
+	var _ConfigActionTypes = __webpack_require__(268);
 	
 	var _ConfigActionTypes2 = _interopRequireDefault(_ConfigActionTypes);
 	
@@ -22186,7 +22345,7 @@ webpackJsonp([3],[
 	}
 
 /***/ }),
-/* 266 */
+/* 268 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -22199,7 +22358,7 @@ webpackJsonp([3],[
 	};
 
 /***/ }),
-/* 267 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22214,7 +22373,7 @@ webpackJsonp([3],[
 	
 	var _deepFreezeStrict2 = _interopRequireDefault(_deepFreezeStrict);
 	
-	var _ConfigActionTypes = __webpack_require__(266);
+	var _ConfigActionTypes = __webpack_require__(268);
 	
 	var _ConfigActionTypes2 = _interopRequireDefault(_ConfigActionTypes);
 	
@@ -22238,7 +22397,7 @@ webpackJsonp([3],[
 	exports.default = configReducer;
 
 /***/ }),
-/* 268 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22310,7 +22469,7 @@ webpackJsonp([3],[
 	}
 
 /***/ }),
-/* 269 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22325,7 +22484,7 @@ webpackJsonp([3],[
 	
 	var _deepFreezeStrict2 = _interopRequireDefault(_deepFreezeStrict);
 	
-	var _RecordsActionTypes = __webpack_require__(128);
+	var _RecordsActionTypes = __webpack_require__(131);
 	
 	var _RecordsActionTypes2 = _interopRequireDefault(_RecordsActionTypes);
 	
@@ -22411,7 +22570,7 @@ webpackJsonp([3],[
 	exports.default = recordsReducer;
 
 /***/ }),
-/* 270 */
+/* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22426,7 +22585,7 @@ webpackJsonp([3],[
 	
 	var _deepFreezeStrict2 = _interopRequireDefault(_deepFreezeStrict);
 	
-	var _BreadcrumbsActionTypes = __webpack_require__(184);
+	var _BreadcrumbsActionTypes = __webpack_require__(187);
 	
 	var _BreadcrumbsActionTypes2 = _interopRequireDefault(_BreadcrumbsActionTypes);
 	
@@ -22452,7 +22611,7 @@ webpackJsonp([3],[
 	exports.default = reducer;
 
 /***/ }),
-/* 271 */
+/* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22461,163 +22620,129 @@ webpackJsonp([3],[
 	  value: true
 	});
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _Injector = __webpack_require__(107);
 	
-	var _injector = __webpack_require__(272);
+	var _Injector2 = _interopRequireDefault(_Injector);
 	
-	var _injector2 = _interopRequireDefault(_injector);
-	
-	var _TextField = __webpack_require__(146);
+	var _TextField = __webpack_require__(149);
 	
 	var _TextField2 = _interopRequireDefault(_TextField);
 	
-	var _HiddenField = __webpack_require__(140);
+	var _HiddenField = __webpack_require__(143);
 	
 	var _HiddenField2 = _interopRequireDefault(_HiddenField);
 	
-	var _DateField = __webpack_require__(273);
+	var _DateField = __webpack_require__(274);
 	
 	var _DateField2 = _interopRequireDefault(_DateField);
 	
-	var _TimeField = __webpack_require__(274);
+	var _TimeField = __webpack_require__(275);
 	
 	var _TimeField2 = _interopRequireDefault(_TimeField);
 	
-	var _DatetimeField = __webpack_require__(275);
+	var _DatetimeField = __webpack_require__(276);
 	
 	var _DatetimeField2 = _interopRequireDefault(_DatetimeField);
 	
-	var _CheckboxField = __webpack_require__(276);
+	var _CheckboxField = __webpack_require__(277);
 	
 	var _CheckboxField2 = _interopRequireDefault(_CheckboxField);
 	
-	var _CheckboxSetField = __webpack_require__(278);
+	var _CheckboxSetField = __webpack_require__(279);
 	
 	var _CheckboxSetField2 = _interopRequireDefault(_CheckboxSetField);
 	
-	var _OptionsetField = __webpack_require__(279);
+	var _OptionsetField = __webpack_require__(280);
 	
 	var _OptionsetField2 = _interopRequireDefault(_OptionsetField);
 	
-	var _GridField = __webpack_require__(280);
+	var _GridField = __webpack_require__(281);
 	
 	var _GridField2 = _interopRequireDefault(_GridField);
 	
-	var _SingleSelectField = __webpack_require__(281);
+	var _SingleSelectField = __webpack_require__(282);
 	
 	var _SingleSelectField2 = _interopRequireDefault(_SingleSelectField);
 	
-	var _PopoverField = __webpack_require__(282);
+	var _PopoverField = __webpack_require__(283);
 	
 	var _PopoverField2 = _interopRequireDefault(_PopoverField);
 	
-	var _HeaderField = __webpack_require__(283);
+	var _HeaderField = __webpack_require__(284);
 	
 	var _HeaderField2 = _interopRequireDefault(_HeaderField);
 	
-	var _LiteralField = __webpack_require__(149);
+	var _LiteralField = __webpack_require__(152);
 	
 	var _LiteralField2 = _interopRequireDefault(_LiteralField);
 	
-	var _HtmlReadonlyField = __webpack_require__(284);
+	var _HtmlReadonlyField = __webpack_require__(285);
 	
 	var _HtmlReadonlyField2 = _interopRequireDefault(_HtmlReadonlyField);
 	
-	var _LookupField = __webpack_require__(285);
+	var _LookupField = __webpack_require__(286);
 	
 	var _LookupField2 = _interopRequireDefault(_LookupField);
 	
-	var _CompositeField = __webpack_require__(286);
+	var _CompositeField = __webpack_require__(287);
 	
 	var _CompositeField2 = _interopRequireDefault(_CompositeField);
 	
-	var _LabelField = __webpack_require__(287);
+	var _LabelField = __webpack_require__(288);
 	
 	var _LabelField2 = _interopRequireDefault(_LabelField);
 	
-	var _Tabs = __webpack_require__(288);
+	var _Tabs = __webpack_require__(289);
 	
 	var _Tabs2 = _interopRequireDefault(_Tabs);
 	
-	var _TabItem = __webpack_require__(289);
+	var _TabItem = __webpack_require__(290);
 	
 	var _TabItem2 = _interopRequireDefault(_TabItem);
 	
-	var _FormAction = __webpack_require__(290);
+	var _FormAction = __webpack_require__(291);
 	
 	var _FormAction2 = _interopRequireDefault(_FormAction);
 	
-	var _FieldGroup = __webpack_require__(291);
+	var _FieldGroup = __webpack_require__(292);
 	
 	var _FieldGroup2 = _interopRequireDefault(_FieldGroup);
 	
-	var _TreeDropdownField = __webpack_require__(161);
+	var _TreeDropdownField = __webpack_require__(164);
 	
 	var _TreeDropdownField2 = _interopRequireDefault(_TreeDropdownField);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	exports.default = function () {
+	  _Injector2.default.register('TextField', _TextField2.default);
+	  _Injector2.default.register('HiddenField', _HiddenField2.default);
+	  _Injector2.default.register('DateField', _DateField2.default);
+	  _Injector2.default.register('TimeField', _TimeField2.default);
+	  _Injector2.default.register('DatetimeField', _DatetimeField2.default);
+	  _Injector2.default.register('CheckboxField', _CheckboxField2.default);
+	  _Injector2.default.register('CheckboxSetField', _CheckboxSetField2.default);
+	  _Injector2.default.register('OptionsetField', _OptionsetField2.default);
+	  _Injector2.default.register('GridField', _GridField2.default);
+	  _Injector2.default.register('FieldGroup', _FieldGroup2.default);
+	  _Injector2.default.register('SingleSelectField', _SingleSelectField2.default);
+	  _Injector2.default.register('PopoverField', _PopoverField2.default);
+	  _Injector2.default.register('HeaderField', _HeaderField2.default);
+	  _Injector2.default.register('LiteralField', _LiteralField2.default);
+	  _Injector2.default.register('HtmlReadonlyField', _HtmlReadonlyField2.default);
+	  _Injector2.default.register('LookupField', _LookupField2.default);
+	  _Injector2.default.register('CompositeField', _CompositeField2.default);
+	  _Injector2.default.register('Tabs', _Tabs2.default);
+	  _Injector2.default.register('TabItem', _TabItem2.default);
+	  _Injector2.default.register('FormAction', _FormAction2.default);
+	  _Injector2.default.register('LabelField', _LabelField2.default);
+	  _Injector2.default.register('TreeDropdownField', _TreeDropdownField2.default);
 	
-	var BootInjector = function () {
-	  function BootInjector() {
-	    _classCallCheck(this, BootInjector);
-	  }
-	
-	  _createClass(BootInjector, [{
-	    key: 'start',
-	    value: function start() {
-	      _injector2.default.register('TextField', _TextField2.default);
-	      _injector2.default.register('HiddenField', _HiddenField2.default);
-	      _injector2.default.register('DateField', _DateField2.default);
-	      _injector2.default.register('TimeField', _TimeField2.default);
-	      _injector2.default.register('DatetimeField', _DatetimeField2.default);
-	      _injector2.default.register('CheckboxField', _CheckboxField2.default);
-	      _injector2.default.register('CheckboxSetField', _CheckboxSetField2.default);
-	      _injector2.default.register('OptionsetField', _OptionsetField2.default);
-	      _injector2.default.register('GridField', _GridField2.default);
-	      _injector2.default.register('FieldGroup', _FieldGroup2.default);
-	      _injector2.default.register('SingleSelectField', _SingleSelectField2.default);
-	      _injector2.default.register('PopoverField', _PopoverField2.default);
-	      _injector2.default.register('HeaderField', _HeaderField2.default);
-	      _injector2.default.register('LiteralField', _LiteralField2.default);
-	      _injector2.default.register('HtmlReadonlyField', _HtmlReadonlyField2.default);
-	      _injector2.default.register('LookupField', _LookupField2.default);
-	      _injector2.default.register('CompositeField', _CompositeField2.default);
-	      _injector2.default.register('Tabs', _Tabs2.default);
-	      _injector2.default.register('TabItem', _TabItem2.default);
-	      _injector2.default.register('FormAction', _FormAction2.default);
-	      _injector2.default.register('LabelField', _LabelField2.default);
-	      _injector2.default.register('TreeDropdownField', _TreeDropdownField2.default);
-	    }
-	  }]);
-	
-	  return BootInjector;
-	}();
-	
-	exports.default = new BootInjector();
-
-/***/ }),
-/* 272 */
-/***/ (function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = {
-	  data: {},
-	  get: function get(key) {
-	    return this.data[key];
-	  },
-	  register: function register(key, value) {
-	    this.data[key] = value;
-	  }
+	  _Injector2.default.freeze();
 	};
 
 /***/ }),
-/* 273 */
+/* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22637,21 +22762,21 @@ webpackJsonp([3],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _FieldHolder = __webpack_require__(147);
+	var _FieldHolder = __webpack_require__(150);
 	
 	var _FieldHolder2 = _interopRequireDefault(_FieldHolder);
 	
-	var _TextField2 = __webpack_require__(146);
+	var _TextField2 = __webpack_require__(149);
 	
-	var _moment = __webpack_require__(226);
+	var _moment = __webpack_require__(229);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
-	var _modernizr = __webpack_require__(227);
+	var _modernizr = __webpack_require__(230);
 	
 	var _modernizr2 = _interopRequireDefault(_modernizr);
 	
-	var _i18n = __webpack_require__(117);
+	var _i18n = __webpack_require__(120);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
@@ -22788,7 +22913,7 @@ webpackJsonp([3],[
 	exports.default = (0, _FieldHolder2.default)(DateField);
 
 /***/ }),
-/* 274 */
+/* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22808,21 +22933,21 @@ webpackJsonp([3],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _FieldHolder = __webpack_require__(147);
+	var _FieldHolder = __webpack_require__(150);
 	
 	var _FieldHolder2 = _interopRequireDefault(_FieldHolder);
 	
-	var _DateField2 = __webpack_require__(273);
+	var _DateField2 = __webpack_require__(274);
 	
-	var _moment = __webpack_require__(226);
+	var _moment = __webpack_require__(229);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
-	var _modernizr = __webpack_require__(227);
+	var _modernizr = __webpack_require__(230);
 	
 	var _modernizr2 = _interopRequireDefault(_modernizr);
 	
-	var _i18n = __webpack_require__(117);
+	var _i18n = __webpack_require__(120);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
@@ -22911,7 +23036,7 @@ webpackJsonp([3],[
 	exports.default = (0, _FieldHolder2.default)(TimeField);
 
 /***/ }),
-/* 275 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22931,21 +23056,21 @@ webpackJsonp([3],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _FieldHolder = __webpack_require__(147);
+	var _FieldHolder = __webpack_require__(150);
 	
 	var _FieldHolder2 = _interopRequireDefault(_FieldHolder);
 	
-	var _DateField2 = __webpack_require__(273);
+	var _DateField2 = __webpack_require__(274);
 	
-	var _moment = __webpack_require__(226);
+	var _moment = __webpack_require__(229);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
-	var _modernizr = __webpack_require__(227);
+	var _modernizr = __webpack_require__(230);
 	
 	var _modernizr2 = _interopRequireDefault(_modernizr);
 	
-	var _i18n = __webpack_require__(117);
+	var _i18n = __webpack_require__(120);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
@@ -23042,7 +23167,7 @@ webpackJsonp([3],[
 	exports.default = (0, _FieldHolder2.default)(DatetimeField);
 
 /***/ }),
-/* 276 */
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23059,11 +23184,11 @@ webpackJsonp([3],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _OptionField = __webpack_require__(277);
+	var _OptionField = __webpack_require__(278);
 	
 	var _OptionField2 = _interopRequireDefault(_OptionField);
 	
-	var _FieldHolder = __webpack_require__(147);
+	var _FieldHolder = __webpack_require__(150);
 	
 	var _FieldHolder2 = _interopRequireDefault(_FieldHolder);
 	
@@ -23103,7 +23228,7 @@ webpackJsonp([3],[
 	exports.default = CheckboxField;
 
 /***/ }),
-/* 277 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23237,7 +23362,7 @@ webpackJsonp([3],[
 	exports.default = OptionField;
 
 /***/ }),
-/* 278 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23257,11 +23382,11 @@ webpackJsonp([3],[
 	
 	var _SilverStripeComponent2 = _interopRequireDefault(_SilverStripeComponent);
 	
-	var _OptionField = __webpack_require__(277);
+	var _OptionField = __webpack_require__(278);
 	
 	var _OptionField2 = _interopRequireDefault(_OptionField);
 	
-	var _FieldHolder = __webpack_require__(147);
+	var _FieldHolder = __webpack_require__(150);
 	
 	var _FieldHolder2 = _interopRequireDefault(_FieldHolder);
 	
@@ -23395,7 +23520,7 @@ webpackJsonp([3],[
 	exports.default = (0, _FieldHolder2.default)(CheckboxSetField);
 
 /***/ }),
-/* 279 */
+/* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23415,11 +23540,11 @@ webpackJsonp([3],[
 	
 	var _SilverStripeComponent2 = _interopRequireDefault(_SilverStripeComponent);
 	
-	var _OptionField = __webpack_require__(277);
+	var _OptionField = __webpack_require__(278);
 	
 	var _OptionField2 = _interopRequireDefault(_OptionField);
 	
-	var _FieldHolder = __webpack_require__(147);
+	var _FieldHolder = __webpack_require__(150);
 	
 	var _FieldHolder2 = _interopRequireDefault(_FieldHolder);
 	
@@ -23530,13 +23655,13 @@ webpackJsonp([3],[
 	exports.default = (0, _FieldHolder2.default)(OptionsetField);
 
 /***/ }),
-/* 280 */
+/* 281 */
 /***/ (function(module, exports) {
 
 	module.exports = GridField;
 
 /***/ }),
-/* 281 */
+/* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23558,11 +23683,11 @@ webpackJsonp([3],[
 	
 	var _SilverStripeComponent2 = _interopRequireDefault(_SilverStripeComponent);
 	
-	var _FieldHolder = __webpack_require__(147);
+	var _FieldHolder = __webpack_require__(150);
 	
 	var _FieldHolder2 = _interopRequireDefault(_FieldHolder);
 	
-	var _i18n = __webpack_require__(117);
+	var _i18n = __webpack_require__(120);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
@@ -23713,7 +23838,7 @@ webpackJsonp([3],[
 	exports.default = (0, _FieldHolder2.default)(SingleSelectField);
 
 /***/ }),
-/* 282 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23841,7 +23966,7 @@ webpackJsonp([3],[
 	exports.default = PopoverField;
 
 /***/ }),
-/* 283 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23922,7 +24047,7 @@ webpackJsonp([3],[
 	exports.default = HeaderField;
 
 /***/ }),
-/* 284 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23944,7 +24069,7 @@ webpackJsonp([3],[
 	
 	var _SilverStripeComponent2 = _interopRequireDefault(_SilverStripeComponent);
 	
-	var _FieldHolder = __webpack_require__(147);
+	var _FieldHolder = __webpack_require__(150);
 	
 	var _FieldHolder2 = _interopRequireDefault(_FieldHolder);
 	
@@ -24013,7 +24138,7 @@ webpackJsonp([3],[
 	exports.default = (0, _FieldHolder2.default)(HtmlReadonlyField);
 
 /***/ }),
-/* 285 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24035,11 +24160,11 @@ webpackJsonp([3],[
 	
 	var _reactBootstrapSs = __webpack_require__(24);
 	
-	var _FieldHolder = __webpack_require__(147);
+	var _FieldHolder = __webpack_require__(150);
 	
 	var _FieldHolder2 = _interopRequireDefault(_FieldHolder);
 	
-	var _i18n = __webpack_require__(117);
+	var _i18n = __webpack_require__(120);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
@@ -24142,7 +24267,7 @@ webpackJsonp([3],[
 	exports.default = (0, _FieldHolder2.default)(LookupField);
 
 /***/ }),
-/* 286 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24230,7 +24355,7 @@ webpackJsonp([3],[
 	exports.default = CompositeField;
 
 /***/ }),
-/* 287 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24278,7 +24403,7 @@ webpackJsonp([3],[
 	exports.default = LabelField;
 
 /***/ }),
-/* 288 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24434,7 +24559,7 @@ webpackJsonp([3],[
 	exports.default = Tabs;
 
 /***/ }),
-/* 289 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24535,13 +24660,13 @@ webpackJsonp([3],[
 	exports.default = TabItem;
 
 /***/ }),
-/* 290 */
+/* 291 */
 /***/ (function(module, exports) {
 
 	module.exports = FormAction;
 
 /***/ }),
-/* 291 */
+/* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24555,11 +24680,11 @@ webpackJsonp([3],[
 	
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
-	var _CompositeField2 = __webpack_require__(286);
+	var _CompositeField2 = __webpack_require__(287);
 	
 	var _CompositeField3 = _interopRequireDefault(_CompositeField2);
 	
-	var _FieldHolder = __webpack_require__(147);
+	var _FieldHolder = __webpack_require__(150);
 	
 	var _FieldHolder2 = _interopRequireDefault(_FieldHolder);
 	
@@ -24594,7 +24719,7 @@ webpackJsonp([3],[
 	exports.default = (0, _FieldHolder2.default)(FieldGroup);
 
 /***/ }),
-/* 292 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24608,7 +24733,7 @@ webpackJsonp([3],[
 	
 	var _deepFreezeStrict2 = _interopRequireDefault(_deepFreezeStrict);
 	
-	var _TreeDropdownFieldActionTypes = __webpack_require__(175);
+	var _TreeDropdownFieldActionTypes = __webpack_require__(178);
 	
 	var _TreeDropdownFieldActionTypes2 = _interopRequireDefault(_TreeDropdownFieldActionTypes);
 	
@@ -24733,13 +24858,14 @@ webpackJsonp([3],[
 	}
 
 /***/ }),
-/* 293 */
+/* 294 */
 /***/ (function(module, exports) {
 
 	module.exports = ApolloClient;
 
 /***/ })
 ]);
+<<<<<<< HEAD
 //# sourceMappingURL=bundle.js.map
 >>>>>>> provide injector
 <<<<<<< HEAD
@@ -24751,3 +24877,6 @@ var u=n(18),l=r(u),c=n(178),d=r(c),p=n(17),f=r(p),h=(0,l.default)({fields:{}}),m
 //# sourceMappingURL=bundle.js.map
 >>>>>>> Context working
 >>>>>>> Context working
+=======
+//# sourceMappingURL=bundle.js.map
+>>>>>>> it works

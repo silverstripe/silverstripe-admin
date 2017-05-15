@@ -207,7 +207,7 @@ $.entwine('ss', function($){
 
         // Trigger synthetic resize event. Avoid native window.resize event
         // since it causes other behaviour which should be reserved for actual window dimension changes.
-        $('.cms-container.js').trigger('windowresize');
+        $('.cms-container').trigger('windowresize');
 
         //If panel is closing
         if (this.hasClass('collapsed')) this.find('li.children.opened').removeClass('opened');
@@ -397,7 +397,7 @@ $.entwine('ss', function($){
 
   $('.cms .profile-link').entwine({
     onclick: function() {
-      $('.cms-container.js').loadPanel(this.attr('href'));
+      $('.cms-container').loadPanel(this.attr('href'));
       $('.cms-menu-list li').removeClass('current').close();
       return false;
     }

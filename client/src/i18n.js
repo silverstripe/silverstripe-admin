@@ -178,7 +178,7 @@ class i18n {
 		var rawLocale;
 		var detectedLocale;
 
-		// Get by container.js tag
+		// Get by container tag
 		rawLocale = document.body.getAttribute('lang');
 
 		// Get by meta

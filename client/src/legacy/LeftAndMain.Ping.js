@@ -5,7 +5,7 @@ import $ from 'jQuery';
 
 $.entwine('ss.ping', function($){
 
-  $('.cms-container.js').entwine(/** @lends ss.Form_EditForm */{
+  $('.cms-container').entwine(/** @lends ss.Form_EditForm */{
     /**
      * Variable: PingIntervalSeconds
      * (Number) Interval in which /Security/ping will be checked for a valid login session.

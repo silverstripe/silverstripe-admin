@@ -16,7 +16,7 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.FormatExample": "Example: {format}",
     "Admin.NO_SIZE": "N/A",
     "Admin.CLOSE": "Close",
-    "Admin.CONFIRMUNSAVED": "Anda ingin tinggalkan laman ini?\n\nPERINGATAN: Perubahan tidak akan disimpan.\n\nTekan OK untuk lanjut, atau Batal untuk tetap dependency-injection laman ini.",
+    "Admin.CONFIRMUNSAVED": "Anda ingin tinggalkan laman ini?\n\nPERINGATAN: Perubahan tidak akan disimpan.\n\nTekan OK untuk lanjut, atau Batal untuk tetap di laman ini.",
     "Admin.CONFIRMUNSAVEDSHORT": "PERINGATAN: Perubahan tidak akan disimpan.",
     "Admin.VALIDATIONERROR": "Kesalahan Validasi",
     "Admin.NONE": "None",

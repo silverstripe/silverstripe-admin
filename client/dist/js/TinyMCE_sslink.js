@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 webpackJsonp([2],[function(n,t,e){"use strict"
 function i(n){return n&&n.__esModule?n:{default:n}}Object.defineProperty(t,"__esModule",{value:!0})
 var r=Object.assign||function(n){for(var t=1;t<arguments.length;t++){var e=arguments[t]
@@ -75,3 +76,49 @@ tinymce.PluginManager.add("sslink",function(i){return n.init(i)})}()}])
 
 //# sourceMappingURL=TinyMCE_sslink.js.map
 >>>>>>> Context working
+=======
+webpackJsonp([2],[
+/* 0 */
+/***/ (function(module, exports) {
+
+	'use strict';
+	
+	(function () {
+	  var sslink = {
+	    init: function init(ed) {
+	      ed.addButton('sslink', {
+	        icon: 'link',
+	        title: 'Insert Link',
+	        cmd: 'sslink'
+	      });
+	      ed.addMenuItem('sslink', {
+	        icon: 'link',
+	        text: 'Insert Link',
+	        cmd: 'sslink'
+	      });
+	
+	      ed.addCommand('sslink', function () {
+	        window.jQuery('#' + ed.id).entwine('ss').openLinkDialog();
+	      });
+	
+	      ed.on('BeforeExecCommand', function (e) {
+	        var cmd = e.command;
+	        var ui = e.ui;
+	        var val = e.value;
+	        if (cmd === 'mceAdvLink' || cmd === 'mceLink') {
+	          e.preventDefault();
+	          ed.execCommand('sslink', ui, val);
+	        }
+	      });
+	    }
+	  };
+	
+	  tinymce.PluginManager.add('sslink', function (editor) {
+	    return sslink.init(editor);
+	  });
+	})();
+
+/***/ })
+]);
+//# sourceMappingURL=TinyMCE_sslink.js.map
+>>>>>>> it works
