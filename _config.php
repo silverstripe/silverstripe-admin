@@ -70,9 +70,9 @@ call_user_func(function () {
         ->enablePlugins(array(
             'contextmenu' => null,
             'image' => null,
-            'sslink' => "${$clientPath}/client/dist/js/TinyMCE_sslink.js",
-            'sslinkexternal' => "${$clientPath}/client/dist/js/TinyMCE_sslink-external.js",
-            'sslinkemail' => "${$clientPath}/client/dist/js/TinyMCE_sslink-email.js",
+            'sslink' => "{$clientPath}/dist/js/TinyMCE_sslink.js",
+            'sslinkexternal' => "{$clientPath}/dist/js/TinyMCE_sslink-external.js",
+            'sslinkemail' => "{$clientPath}/dist/js/TinyMCE_sslink-email.js",
         ))
         ->setOption('contextmenu', 'sslink inserttable | cell row column deletetable');
 });

@@ -19,7 +19,7 @@ class EditorExternalLinkFormFactory implements FormFactory
     use Extensible;
     use Injectable;
     use Configurable;
-    
+
     /**
      * @param RequestHandler $controller
      * @param string $name
@@ -34,50 +34,50 @@ class EditorExternalLinkFormFactory implements FormFactory
                 throw new InvalidArgumentException("Missing required context $required");
             }
         }
-    
+
         $fields = $this->getFormFields($controller, $name, $context);
         $actions = $this->getFormActions($controller, $name, $context);
         $validator = $this->getValidator($controller, $name, $context);
         /** @var Form $form */
         $form = Form::create($controller, $name, $fields, $actions, $validator);
         $form->addExtraClass('form--no-dividers');
-        
+
         return $form;
     }
-    
+
     protected function getFormFields($controller, $name, $context)
     {
         $fields = FieldList::create([
-            TextField::create('Link', _t('SilverStripe\\Forms\\HTMLEditor\\HTMLEditorField.URL', 'URL'), 'http://'),
+            TextField::create('Link', _t(__CLASS__.'.URL', 'URL'), 'http://'),
             TextField::create(
                 'Description',
-                _t('SilverStripe\\Forms\\HTMLEditor\\HTMLEditorField.LINKDESCR', 'Link description')
+                _t(__CLASS__.'.LINKDESCR', 'Link description')
             ),
-            TextField::create('Anchor', _t('SilverStripe\\Forms\\HTMLEditor\\HTMLEditorField.ANCHORVALUE', 'Anchor')),
+            TextField::create('Anchor', _t(__CLASS__.'.ANCHORVALUE', 'Anchor')),
             CheckboxField::create(
                 'TargetBlank',
-                _t('SilverStripe\\Forms\\HTMLEditor\\HTMLEditorField.LINKOPENNEWWIN', 'Open in new window/tab')
+                _t(__CLASS__.'.LINKOPENNEWWIN', 'Open in new window/tab')
             ),
         ]);
-        
+
         return $fields;
     }
-    
+
     protected function getFormActions($controller, $name, $context)
     {
         $actions = FieldList::create([
-            FormAction::create('insert', _t('SilverStripe\\CMS\\Controllers\\CMSMain.INSERT_LINK', 'Insert link'))
+            FormAction::create('insert', _t(__CLASS__.'.INSERT_LINK', 'Insert link'))
                 ->setSchemaData(['data' => ['buttonStyle' => 'primary']]),
         ]);
-    
+
         return $actions;
     }
-    
+
     protected function getValidator($controller, $name, $context)
     {
         return null;
     }
-    
+
     public function getRequiredContext()
     {
         return [];

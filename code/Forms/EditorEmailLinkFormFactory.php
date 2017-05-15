@@ -18,7 +18,7 @@ class EditorEmailLinkFormFactory implements FormFactory
     use Extensible;
     use Injectable;
     use Configurable;
-    
+
     /**
      * @param RequestHandler $controller
      * @param string $name
@@ -33,52 +33,52 @@ class EditorEmailLinkFormFactory implements FormFactory
                 throw new InvalidArgumentException("Missing required context $required");
             }
         }
-    
+
         $fields = $this->getFormFields($controller, $name, $context);
         $actions = $this->getFormActions($controller, $name, $context);
         $validator = $this->getValidator($controller, $name, $context);
         /** @var Form $form */
         $form = Form::create($controller, $name, $fields, $actions, $validator);
         $form->addExtraClass('form--no-dividers');
-        
+
         return $form;
     }
-    
+
     protected function getFormFields($controller, $name, $context)
     {
         $fields = FieldList::create([
             TextField::create(
                 'Link',
-                _t('SilverStripe\\Forms\\HTMLEditor\\HTMLEditorField.EMAIL', 'Email address')
+                _t(__CLASS__.'.EMAIL', 'Email address')
             ),
             TextField::create(
                 'Subject',
-                _t('SilverStripe\\Forms\\HTMLEditor\\HTMLEditorField.SUBJECT', 'Subject')
+                _t(__CLASS__.'.SUBJECT', 'Subject')
             ),
             TextField::create(
                 'Description',
-                _t('SilverStripe\\Forms\\HTMLEditor\\HTMLEditorField.LINKDESCR', 'Link description')
+                _t(__CLASS__.'.LINKDESCR', 'Link description')
             ),
         ]);
-        
+
         return $fields;
     }
-    
+
     protected function getFormActions($controller, $name, $context)
     {
         $actions = FieldList::create([
-            FormAction::create('insert', _t('SilverStripe\\CMS\\Controllers\\CMSMain.INSERT_LINK', 'Insert link'))
+            FormAction::create('insert', _t(__CLASS__.'.INSERT_LINK', 'Insert link'))
                 ->setSchemaData(['data' => ['buttonStyle' => 'primary']]),
         ]);
-    
+
         return $actions;
     }
-    
+
     protected function getValidator($controller, $name, $context)
     {
         return null;
     }
-    
+
     public function getRequiredContext()
     {
         return [];
