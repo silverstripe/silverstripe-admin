@@ -147,10 +147,12 @@ class LeftAndMain extends Controller implements PermissionProvider
         'batchactions',
         'BatchActionsForm',
         'schema',
+        'methodSchema',
     ];
 
     private static $url_handlers = [
         'GET schema/$FormName/$ItemID/$OtherItemID' => 'schema',
+        'GET methodSchema/$Method/$FormName/$ItemID' => 'methodSchema',
     ];
 
     private static $dependencies = [
@@ -272,8 +274,10 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function getCombinedClientConfig()
     {
         $combinedClientConfig = ['sections' => []];
-        $cmsClassNames = CMSMenu::get_cms_classes(self::class, true, CMSMenu::URL_PRIORITY);
+        $cmsClassNames = CMSMenu::get_cms_classes(LeftAndMain::class, true, CMSMenu::URL_PRIORITY);
 
+        // append LeftAndMain to the list as well
+        $cmsClassNames[] = LeftAndMain::class;
         foreach ($cmsClassNames as $className) {
             $combinedClientConfig['sections'][] = Injector::inst()->get($className)->getClientConfig();
         }
@@ -308,6 +312,14 @@ class LeftAndMain extends Controller implements PermissionProvider
             // and use in routing definitions.
             'name' => static::class,
             'url' => trim($this->Link(), '/'),
+            'form' => [
+                'EditorExternalLink' => [
+                    'schemaUrl' => $this->Link('methodSchema/EditorToolbar/EditorExternalLink'),
+                ],
+                'EditorEmailLink' => [
+                    'schemaUrl' => $this->Link('methodSchema/EditorToolbar/EditorEmailLink'),
+                ],
+            ],
         ];
     }
 
@@ -367,6 +379,37 @@ class LeftAndMain extends Controller implements PermissionProvider
         $schemaID = $request->getURL();
         return $this->getSchemaResponse($schemaID, $form);
     }
+    
+    public function methodSchema($request)
+    {
+        $method = $request->param('Method');
+        $formName = $request->param('FormName');
+        $itemID = $request->param('ItemID');
+    
+        if (!$formName || !$method) {
+            return (new HTTPResponse('Missing request params', 400));
+        }
+    
+        if (!$this->hasMethod($method)) {
+            return (new HTTPResponse('Method not found', 404));
+        }
+        if (!$this->hasAction($method)) {
+            return (new HTTPResponse('Method not accessible', 401));
+        }
+    
+        $methodItem = $this->{$method}();
+        if (!$methodItem->hasMethod($formName)) {
+            return (new HTTPResponse('Form not found', 404));
+        }
+        if (!$methodItem->hasAction($formName)) {
+            return (new HTTPResponse('Form not accessible', 401));
+        }
+    
+        $form = $methodItem->{$formName}($itemID);
+        $schemaID = $request->getURL();
+        
+        return $this->getSchemaResponse($schemaID, $form);
+    }
 
     /**
      * Check if the current request has a X-Formschema-Request header set.
@@ -403,23 +446,6 @@ class LeftAndMain extends Controller implements PermissionProvider
         $response = new HTTPResponse(Convert::raw2json($data));
         $response->addHeader('Content-Type', 'application/json');
         return $response;
-    }
-
-    /**
-     * Get link to schema url for a given form
-     *
-     * @param Form $form
-     * @return string
-     */
-    protected function getSchemaLinkForForm(Form $form)
-    {
-        $parts = [$this->Link('schema'), $form->getName()];
-        if (($record = $form->getRecord()) && $record->isInDB()) {
-            $parts[] = $record->ID;
-        } elseif (($data = $form->getData()) && !empty($data['ID'])) {
-            $parts[] = $data['ID'];
-        }
-        return Controller::join_links($parts);
     }
 
     /**
@@ -748,6 +774,11 @@ class LeftAndMain extends Controller implements PermissionProvider
         // Handle missing url_segments
         $segment = $this->config()->get('url_segment')
             ?: $this->class;
+        
+        // LeftAndMain methods have a top-level uri access
+        if ($segment === LeftAndMain::class) {
+            $segment = '';
+        }
 
         $link = Controller::join_links(
             AdminRootController::admin_url(),

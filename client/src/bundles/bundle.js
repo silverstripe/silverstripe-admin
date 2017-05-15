@@ -44,6 +44,7 @@ require('expose?ReducerRegister!lib/ReducerRegister');
 require('expose?ReactRouteRegister!lib/ReactRouteRegister');
 require('expose?Injector!lib/Injector');
 require('expose?Router!lib/Router');
+require('expose?TinyMCEActionRegistrar!lib/TinyMCEActionRegistrar');
 
 // Legacy CMS
 require('../legacy/sspath.js');

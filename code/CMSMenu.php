@@ -2,12 +2,14 @@
 
 namespace SilverStripe\Admin;
 
+use SilverStripe\CMS\Controllers\CMSMain;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Convert;
 use SilverStripe\Core\Manifest\ClassLoader;
 use SilverStripe\Core\Object;
 use SilverStripe\Control\Controller;
+use SilverStripe\Dev\TestOnly;
 use SilverStripe\i18n\i18n;
 use SilverStripe\i18n\i18nEntityProvider;
 use SilverStripe\Security\Member;
@@ -377,10 +379,10 @@ class CMSMenu extends Object implements IteratorAggregate, i18nEntityProvider
     public static function get_cms_classes($root = null, $recursive = true, $sort = self::MENU_PRIORITY)
     {
         if (!$root) {
-            $root = 'SilverStripe\\Admin\\LeftAndMain';
+            $root = LeftAndMain::class;
         }
         /** @todo Make these actual abstract classes */
-        $abstractClasses = ['SilverStripe\\Admin\\LeftAndMain', 'SilverStripe\\CMS\\Controllers\\CMSMain'];
+        $abstractClasses = [LeftAndMain::class, CMSMain::class];
         $subClasses = array_values(ClassInfo::subclassesFor($root));
         foreach ($subClasses as $className) {
             if ($recursive && $className != $root) {
@@ -390,7 +392,7 @@ class CMSMenu extends Object implements IteratorAggregate, i18nEntityProvider
         $subClasses = array_unique($subClasses);
         foreach ($subClasses as $key => $className) {
             // Remove abstract classes and LeftAndMain
-            if (in_array($className, $abstractClasses) || ClassInfo::classImplements($className, 'SilverStripe\\Dev\\TestOnly')) {
+            if (in_array($className, $abstractClasses) || ClassInfo::classImplements($className, TestOnly::class)) {
                 unset($subClasses[$key]);
             } else {
                 // Separate conditional to avoid autoloading the class

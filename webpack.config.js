@@ -37,6 +37,8 @@ const config = [
       leaktools: `${PATHS.ADMIN_JS_SRC}/legacy/leaktools.js`,
       MemberImportForm: `${PATHS.ADMIN_JS_SRC}/legacy/MemberImportForm.js`,
       TinyMCE_sslink: `${PATHS.ADMIN_JS_SRC}/legacy/TinyMCE_sslink.js`,
+      'TinyMCE_sslink-external': `${PATHS.ADMIN_JS_SRC}/legacy/TinyMCE_sslink-external.js`,
+      'TinyMCE_sslink-email': `${PATHS.ADMIN_JS_SRC}/legacy/TinyMCE_sslink-email.js`,
     },
     resolve: {
       root: [__dirname, path.resolve(__dirname, PATHS.ADMIN_JS_SRC)],

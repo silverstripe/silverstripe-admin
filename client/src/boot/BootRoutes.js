@@ -35,10 +35,11 @@ class BootRoutes {
    * @param {String} location Current location to check
    */
   start(location) {
-    // Decide which router to use
+    // Decide which router to use, check for React routes first
     if (this.matchesReactRoute(location)) {
       this.initReactRouter();
     } else {
+      // Check legacy last, as `LeftAndMain` should be the absolute last called
       this.initLegacyRouter();
     }
   }

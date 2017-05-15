@@ -1,7 +1,7 @@
 # FormBuilderLoader Component
 
 Used to retrieve a schema for FormBuilder to generate forms made up of field components and actions.
-Wraps a [FormBuilder](../../components/FormBuilder/README.md] component with async loading logic,
+Wraps a [FormBuilder](../../components/FormBuilder/README.md) component with async loading logic,
 and stores the loaded schemas in a Redux store.
 
 ## Properties
