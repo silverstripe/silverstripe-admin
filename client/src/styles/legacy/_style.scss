@@ -86,7 +86,7 @@ body.cms {
 //   display: inline-block;
 // }
 
-.cms-content-header { // Todo: should add .container-fluid to markup or extend .container-fluid
+.cms-content-header { // Todo: should add .container.js-fluid to markup or extend .container.js-fluid
   padding-left: $panel-padding-x;
   padding-right: $panel-padding-x;
   min-width: 100%;
@@ -630,7 +630,7 @@ body.cms {
 .ui-tabs .ui-tabs-nav.cms-tabset-nav-primary,
 .ui-tabs .cms-content-header-tabs .ui-tabs-nav {
 	margin-top: -$spacer-xs; // Same as toolbar padding
-	float: none; // parent container is already right floated
+	float: none; // parent container.js is already right floated
 	margin-bottom: 0;
 
   li {
@@ -2040,7 +2040,7 @@ form.small {
  * Page Edit Controller
  * -------------------------------------------- */
 
-/*.cms-container {
+/*.cms-container.js {
   .CMSPageEditController, .CMSPageSettingsController, .CMSPageHistoryController {
     // Fix pixel gap between nav tree and main page header
      margin-left: -1px; // Removed to close gap far right of right tabs?

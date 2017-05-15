@@ -1474,7 +1474,7 @@ jQuery.support = (function() {
 			support.boxSizingReliable = ( window.getComputedStyle( div, null ) || { width: "4px" } ).width === "4px";
 
 			// Check if div with explicit width and no margin-right incorrectly
-			// gets computed margin-right based on width of container. (#3333)
+			// gets computed margin-right based on width of container.js. (#3333)
 			// Fails in WebKit before Feb 2011 nightlies
 			// WebKit Bug 13343 - getComputedStyle returns wrong value for margin-right
 			marginDiv = div.appendChild( document.createElement("div") );
@@ -6490,7 +6490,7 @@ jQuery.extend({
 						tmp.removeChild( tmp.firstChild );
 					}
 
-					// Remember the top-level container for proper cleanup
+					// Remember the top-level container.js for proper cleanup
 					tmp = safe.lastChild;
 				}
 			}

@@ -4,7 +4,7 @@ import { Tab, Nav, NavItem } from 'react-bootstrap-ss';
 
 class Tabs extends SilverStripeComponent {
   /**
-   * Returns props for the container component
+   * Returns props for the container.js component
    *
    * @returns {object}
    */

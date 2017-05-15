@@ -29,7 +29,7 @@ $.entwine('ss', function($) {
       // Remove all bound events.
       // This guards against an edge case where the click handlers are not unbound
       // because the panel is still open when the ajax edit form reloads.
-      var frame = $('.cms-container').find('iframe');
+      var frame = $('.cms-container.js').find('iframe');
       frame.each(function(index, iframe){
         try {
           $(iframe).contents().off('click.ss-ui-action-tabset');
@@ -63,7 +63,7 @@ $.entwine('ss', function($) {
      * Note: Should be called by a click event attached to 'this'
      */
     attachCloseHandler: function(event, ui) {
-      var that = this, frame = $('.cms-container').find('iframe'), closeHandler;
+      var that = this, frame = $('.cms-container.js').find('iframe'), closeHandler;
 
       // Create a handler for the click event so we can close tabs
       // and easily remove the event once done
@@ -79,7 +79,7 @@ $.entwine('ss', function($) {
           that.tabs('option', 'active', false); // close tabs
 
           // remove click event from objects it is bound to (iframe's and document)
-          frame = $('.cms-container').find('iframe');
+          frame = $('.cms-container.js').find('iframe');
           frame.each(function(index, iframe){
             $(iframe).contents().off('click.ss-ui-action-tabset', closeHandler);
           });
@@ -123,7 +123,7 @@ $.entwine('ss', function($) {
           topPosition = -activePanel.outerHeight();
           containerSouth = activePanel.parents('.toolbar--south');
           if (containerSouth){
-            // If container is the southern panel, make tab appear from the top of the container
+            // If container.js is the southern panel, make tab appear from the top of the container.js
             padding = activeTab.offset().top - containerSouth.offset().top;
             topPosition = topPosition-padding;
           }

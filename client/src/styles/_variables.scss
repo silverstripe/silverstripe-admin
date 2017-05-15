@@ -150,7 +150,7 @@ $grid-breakpoints: (
 
 // Grid containers
 //
-// Define the maximum width of `.container` for different screen sizes.
+// Define the maximum width of `.container.js` for different screen sizes.
 
 $container-max-widths: (
   sm: 576px,
@@ -379,7 +379,7 @@ $input-padding-y-lg: .75rem;
 
 // Dropdowns
 //
-// Dropdown menu container and contents.
+// Dropdown menu container.js and contents.
 
 // $dropdown-bg: #fff;
 // $dropdown-border-color: rgba(0,0,0,.15);

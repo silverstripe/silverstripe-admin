@@ -15,7 +15,7 @@ import * as actions from 'state/records/RecordsActions';
 const NotYetLoaded = {};
 
 /**
- * The component acts as a container for a grid field,
+ * The component acts as a container.js for a grid field,
  * with smarts around data retrieval from external sources.
  *
  * @todo Convert to higher order component which hooks up form

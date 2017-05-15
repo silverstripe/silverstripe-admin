@@ -3,8 +3,8 @@ import $ from 'jQuery';
 $.entwine('ss', function($) {
   /**
    * Converts an inline field description into a tooltip
-   * which is shown on hover over any part of the field container,
-   * as well as when focusing into an input element within the field container.
+   * which is shown on hover over any part of the field container.js,
+   * as well as when focusing into an input element within the field container.js.
    *
    * Note that some fields don't have distinct focusable
    * input fields (e.g. GridField), and aren't compatible

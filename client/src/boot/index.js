@@ -11,7 +11,7 @@ import SchemaReducer from 'state/schema/SchemaReducer';
 import RecordsReducer from 'state/records/RecordsReducer';
 import BreadcrumbsReducer from 'state/breadcrumbs/BreadcrumbsReducer';
 import UnsavedFormsReducer from 'state/unsavedForms/UnsavedFormsReducer';
-import bootInjector from 'boot/BootInjector';
+import registerComponents from 'boot/registerComponents';
 import TreeDropdownFieldReducer from 'state/treeDropdownField/TreeDropdownFieldReducer';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { printRequest } from 'apollo-client/transport/networkInterface';
@@ -72,7 +72,7 @@ function appBoot() {
   reducerRegister.add('treeDropdownField', TreeDropdownFieldReducer);
   reducerRegister.add('unsavedForms', UnsavedFormsReducer);
 
-  bootInjector.start();
+  registerComponents();
 
   const initialState = {};
   const rootReducer = combineReducers(reducerRegister.getAll());
@@ -125,5 +125,4 @@ function appBoot() {
     window.jQuery('body').addClass('js-react-boot');
   }
 }
-
 window.onload = appBoot;

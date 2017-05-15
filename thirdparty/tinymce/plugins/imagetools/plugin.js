@@ -1380,7 +1380,7 @@ define("tinymce/imagetoolsplugin/CropRect", [
 			}
 
 			$(
-				'<div id="' + id + '" class="' + prefix + 'croprect-container"' +
+				'<div id="' + id + '" class="' + prefix + 'croprect-container.js"' +
 				' role="grid" aria-dropeffect="execute">'
 			).appendTo(containerElm);
 

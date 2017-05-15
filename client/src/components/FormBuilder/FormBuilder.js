@@ -4,12 +4,13 @@ import schemaFieldValues, { schemaMerge, findField } from 'lib/schemaFieldValues
 import SilverStripeComponent from 'lib/SilverStripeComponent';
 import Validator from 'lib/Validator';
 import backend from 'lib/Backend';
-import injector from 'lib/Injector';
+import Injector, { withInjector } from 'lib/Injector';
 
 class FormBuilder extends SilverStripeComponent {
 
   constructor(props) {
     super(props);
+    console.log(this.props, this.context);
     const schemaStructure = props.schema.schema;
     this.state = { submittingAction: null };
     this.submitApi = backend.createEndpointFetcher({
@@ -138,8 +139,8 @@ class FormBuilder extends SilverStripeComponent {
     let componentProps = props;
     // 'component' key is renamed to 'schemaComponent' in normalize*() methods
     const SchemaComponent = componentProps.schemaComponent !== null
-      ? injector.getComponentByName(componentProps.schemaComponent)
-      : injector.getComponentByDataType(componentProps.schemaType);
+      ? this.context.injector.get(componentProps.schemaComponent)
+      : this.getComponentForDataType(componentProps.schemaType);
 
     if (SchemaComponent === null) {
       return null;
@@ -153,7 +154,7 @@ class FormBuilder extends SilverStripeComponent {
     componentProps = Object.assign({}, componentProps, componentProps.input);
     delete componentProps.input;
 
-    // Provides container components a place to hook in
+    // Provides container.js components a place to hook in
     // and apply customisations to scaffolded components.
     const createFn = this.props.createFn;
     if (typeof createFn === 'function') {
@@ -199,6 +200,42 @@ class FormBuilder extends SilverStripeComponent {
 
       return <FieldComponent key={props.id} {...props} component={this.buildComponent} />;
     });
+  }
+
+  /**
+   * Default data type to component mappings.
+   * Used as a fallback when no component type is provided in the form schema.
+   *
+   * @param string dataType - The data type provided by the form schema.
+   * @return object|null
+   */
+  getComponentForDataType(dataType) {
+    const { injector: { get } } = this.context;
+    switch (dataType) {
+      case 'String':
+      case 'Text':
+        return get('TextField');
+      case 'Date':
+        return get('DateField');
+      case 'Time':
+        return get('TimeField');
+      case 'Datetime':
+        return get('DatetimeField');
+      case 'Hidden':
+        return get('HiddenField');
+      case 'SingleSelect':
+        return get('SingleSelectField');
+      case 'Custom':
+        return get('GridField');
+      case 'Structural':
+        return get('CompositeField');
+      case 'Boolean':
+        return get('CheckboxField');
+      case 'MultiSelect':
+        return get('CheckboxSetField');
+      default:
+        return null;
+    }
   }
 
   /**
@@ -329,7 +366,7 @@ class FormBuilder extends SilverStripeComponent {
       validate: this.validateForm,
       autoFocus,
     };
-
+console.log('render with ', this.context);
     return <BaseFormComponent {...props} />;
   }
 }
@@ -385,4 +422,4 @@ FormBuilder.defaultProps = {
 };
 
 export { basePropTypes, schemaPropType };
-export default FormBuilder;
+export default withInjector(FormBuilder);

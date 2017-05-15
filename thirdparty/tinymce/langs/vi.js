@@ -62,7 +62,7 @@ tinymce.addI18n('vi',{
 "Lower Roman": "S\u1ed1 la m\u00e3 th\u01b0\u1eddng",
 "Name": "T\u00ean",
 "Anchor": "Neo",
-"You have unsaved changes are you sure you want to navigate away?": "B\u1ea1n ch\u01b0a l\u01b0u thay \u0111\u1ed5i b\u1ea1n c\u00f3 ch\u1eafc b\u1ea1n mu\u1ed1n di chuy\u1ec3n \u0111i?",
+"You have unsaved changes are you sure you want to navigate away?": "B\u1ea1n ch\u01b0a l\u01b0u thay \u0111\u1ed5i b\u1ea1n c\u00f3 ch\u1eafc b\u1ea1n mu\u1ed1n dependency-injection chuy\u1ec3n \u0111i?",
 "Restore last draft": "Kh\u00f4i ph\u1ee5c b\u1ea3n g\u1ea7n nh\u1ea5t",
 "Special character": "K\u00fd t\u1ef1 \u0111\u1eb7c bi\u1ec7t",
 "Source code": "M\u00e3 ngu\u1ed3n",

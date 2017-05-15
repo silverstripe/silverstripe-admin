@@ -40,7 +40,7 @@ $.entwine('ss', function($) {
         success: function(data) {
           // Replace the grid field with response, not the form.
           // TODO Only replaces all its children, to avoid replacing the current scope
-          // of the executing method. Means that it doesn't retrigger the onmatch() on the main container.
+          // of the executing method. Means that it doesn't retrigger the onmatch() on the main container.js.
           self.empty().append($(data).children());
 
           // Refocus previously focused element. Useful e.g. for finding+adding

@@ -1355,7 +1355,7 @@ define("tinymce/tableplugin/Quirks", [
 			function tableCellSelected(ed, rng, n, currentCell) {
 				// The decision of when a table cell is selected is somewhat involved.  The fact that this code is
 				// required is actually a pointer to the root cause of this bug. A cell is selected when the start
-				// and end offsets are 0, the start container is a text, and the selection node is either a TR (most cases)
+				// and end offsets are 0, the start container.js is a text, and the selection node is either a TR (most cases)
 				// or the parent of the table (in the case of the selection containing the last cell of a table).
 				var TEXT_NODE = 3, table = ed.dom.getParent(rng.startContainer, 'TABLE');
 				var tableParent, allOfCellSelected, tableCellSelection;

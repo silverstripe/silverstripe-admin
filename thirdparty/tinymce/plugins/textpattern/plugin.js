@@ -133,7 +133,7 @@ tinymce.PluginManager.add('textpattern', function(editor) {
 			return;
 		}
 
-		// If container match doesn't have anything between start/end then do nothing
+		// If container.js match doesn't have anything between start/end then do nothing
 		if (container.data.length <= pattern.start.length + pattern.end.length) {
 			return;
 		}
