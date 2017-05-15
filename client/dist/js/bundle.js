@@ -451,7 +451,7 @@ if(t){t=o.reduceSchemaErrors(t),o.props.actions.schema.setSchema(o.props.schemaU
 var n=t.schema||o.props.schema.schema
 if(t.state){var r=t.state.fields.reduce(function(e,t){var r=(0,E.findField)(n.fields,t.name)
 return r&&"Structural"!==r.schemaType&&r.readOnly!==!0?d({},e,i({},t.name,t.value)):e},{})
-o.props.actions.reduxForm.initialize(o.props.schemaUrl,r,!1)}}return t}).then(function(e){if(!e||!e.state)return e
+o.props.actions.reduxForm.initialize(o.props.schemaUrl,r)}}return t}).then(function(e){if(!e||!e.state)return e
 var t=o.getMessages(e.state)
 if(Object.keys(t).length)throw new _.SubmissionError(t)
 return e})}},{key:"reduceSchemaErrors",value:function e(t){if(!t.errors)return t
@@ -854,9 +854,9 @@ var n=s(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
 return n.render=n.render.bind(n),n.renderMenu=n.renderMenu.bind(n),n.renderOption=n.renderOption.bind(n),n.getBreadcrumbs=n.getBreadcrumbs.bind(n),n.getDropdownOptions=n.getDropdownOptions.bind(n),n.getSelectedOption=n.getSelectedOption.bind(n),
 n.getVisibleTree=n.getVisibleTree.bind(n),n.handleBack=n.handleBack.bind(n),n.handleChange=n.handleChange.bind(n),n.handleKeyDown=n.handleKeyDown.bind(n),n.handleNavigate=n.handleNavigate.bind(n),n.callFetch=n.callFetch.bind(n),
 n.lazyLoad=n.lazyLoad.bind(n),n.findTreeByID=n.findTreeByID.bind(n),n.findTreeByPath=n.findTreeByPath.bind(n),n.findTreePath=n.findTreePath.bind(n),n}return u(t,e),p(t,[{key:"componentDidMount",value:function e(){
-this.lazyLoad([])}},{key:"getVisibleTree",value:function e(){return this.findTreeByPath(this.props.tree,this.props.visible)}},{key:"getBreadcrumbs",value:function e(){var t=[],n=this.props.tree,r=!0,o=!1,i=void 0
+this.lazyLoad([])}},{key:"componentWillReceiveProps",value:function e(t){t.data.cacheKey!==this.props.data.cacheKey&&this.loadTree([])}},{key:"getVisibleTree",value:function e(){return this.findTreeByPath(this.props.tree,this.props.visible)
 
-
+}},{key:"getBreadcrumbs",value:function e(){var t=[],n=this.props.tree,r=!0,o=!1,i=void 0
 try{for(var a=function e(){var r=u.value
 return(n=n.children.find(function(e){return e.id===r}))?void t.push(n):"break"},s=this.props.visible[Symbol.iterator](),u;!(r=(u=s.next()).done);r=!0){var l=a()
 if("break"===l)break}}catch(e){o=!0,i=e}finally{try{!r&&s.return&&s.return()}finally{if(o)throw i}}return t}},{key:"getSelectedOption",value:function e(){if(!this.props.value)return null
@@ -885,13 +885,12 @@ if(null!==l)return t.id&&l.unshift(t.id),l}}catch(e){o=!0,i=e}finally{try{!r&&a.
 return[].concat(i(n.props.loading),i(n.props.failed)).indexOf(e)>-1})
 if(r)return Promise.resolve({})
 var o=this.findTreeByPath(this.props.tree,t)
-return o&&(0===o.count||o.children.length)?Promise.resolve({}):(this.props.actions.treeDropdownField.beginTreeUpdating(this.props.id,t),this.callFetch(t).then(function(e){var r=0===Object.keys(n.props.tree).length
-
-
+return o&&(0===o.count||o.children.length)?Promise.resolve({}):this.loadTree(t)}},{key:"loadTree",value:function e(t){var n=this
+return this.props.actions.treeDropdownField.beginTreeUpdating(this.props.id,t),this.callFetch(t).then(function(e){var r=0===Object.keys(n.props.tree).length
 if(n.props.actions.treeDropdownField.updateTree(n.props.id,t,e),r&&n.props.value&&0===t.length){var o=n.findTreePath(e,n.props.value)
 o&&(o.pop(),n.props.actions.treeDropdownField.setVisible(n.props.id,o))}return e}).catch(function(e){if(n.props.actions.treeDropdownField.updateTreeFailed(n.props.id,t),"function"==typeof n.props.onLoadingError)return n.props.onLoadingError({
 errors:[{value:e.message,type:"error"}]})
-throw e}))}},{key:"handleChange",value:function e(t){var n=t?t.id:null
+throw e})}},{key:"handleChange",value:function e(t){var n=t?t.id:null
 "function"==typeof this.props.onChange&&this.props.onChange(n)}},{key:"handleNavigate",value:function e(t,n){t.stopPropagation(),t.preventDefault()
 var r=this.findTreePath(this.props.tree,n)
 r||(r=this.props.visible.slice(0),r.push(n)),this.lazyLoad(r),this.props.actions.treeDropdownField.setVisible(this.props.id,r)}},{key:"handleKeyDown",value:function e(t){var n=this.selectField.getFocusedOption()
@@ -913,10 +912,10 @@ className:"icon font-icon-list"}))}return h.default.createElement("div",{classNa
 return h.default.createElement(E.default,{searchable:!1,className:r,name:this.props.name,options:o,inputProps:n,menuRenderer:this.renderMenu,optionRenderer:this.renderOption,onChange:this.handleChange,
 onInputKeyDown:this.handleKeyDown,value:i,ref:function e(n){t.selectField=n},placeholder:this.props.data.emptyTitle,labelKey:"title",valueKey:"id"})}}]),t}(f.Component)
 R.propTypes={extraClass:f.PropTypes.string,id:f.PropTypes.string,name:f.PropTypes.string.isRequired,onChange:f.PropTypes.func,value:f.PropTypes.oneOfType([f.PropTypes.string,f.PropTypes.number]),readOnly:f.PropTypes.bool,
-disabled:f.PropTypes.bool,tree:f.PropTypes.shape(x.default.propTypes),visible:f.PropTypes.array,loading:f.PropTypes.array,failed:f.PropTypes.array,data:f.PropTypes.shape({urlTree:f.PropTypes.string.isRequired,
-emptyTitle:f.PropTypes.string,valueObject:f.PropTypes.shape({id:f.PropTypes.number,title:f.PropTypes.string}),showRootOption:f.PropTypes.bool}),onLoadingError:f.PropTypes.func,actions:f.PropTypes.shape({
-treeDropdownField:f.PropTypes.shape({beginTreeUpdating:f.PropTypes.func,updateTreeFailed:f.PropTypes.func,updateTree:f.PropTypes.func,setVisible:f.PropTypes.func})})},R.defaultProps={value:"",extraClass:"",
-className:"",tree:{},visible:[],loading:[],failed:[]}
+disabled:f.PropTypes.bool,tree:f.PropTypes.shape(x.default.propTypes),visible:f.PropTypes.array,loading:f.PropTypes.array,failed:f.PropTypes.array,data:f.PropTypes.shape({cacheKey:f.PropTypes.string.isRequired,
+urlTree:f.PropTypes.string.isRequired,emptyTitle:f.PropTypes.string,valueObject:f.PropTypes.shape({id:f.PropTypes.number,title:f.PropTypes.string}),showRootOption:f.PropTypes.bool}),onLoadingError:f.PropTypes.func,
+actions:f.PropTypes.shape({treeDropdownField:f.PropTypes.shape({beginTreeUpdating:f.PropTypes.func,updateTreeFailed:f.PropTypes.func,updateTree:f.PropTypes.func,setVisible:f.PropTypes.func})})},R.defaultProps={
+value:"",extraClass:"",className:"",tree:{},visible:[],loading:[],failed:[]}
 var A=(0,m.connect)(l,c)(R)
 t.TreeDropdownField=R,t.ConnectedTreeDropdownField=A,t.default=(0,g.default)(A)},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t){var n={}

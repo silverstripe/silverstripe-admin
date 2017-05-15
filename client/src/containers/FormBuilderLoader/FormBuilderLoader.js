@@ -113,7 +113,7 @@ class FormBuilderLoader extends Component {
                 [state.name]: state.value,
               });
             }, {});
-            this.props.actions.reduxForm.initialize(this.props.schemaUrl, formData, false);
+            this.props.actions.reduxForm.initialize(this.props.schemaUrl, formData);
           }
         }
         return schema;

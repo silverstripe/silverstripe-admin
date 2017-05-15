@@ -42,6 +42,13 @@ class TreeDropdownField extends Component {
     this.lazyLoad([]);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.data.cacheKey !== this.props.data.cacheKey) {
+      // invalidate the tree cache, as paths have changed
+      this.loadTree([]);
+    }
+  }
+
   /**
    * Get the currently visible node
    *
@@ -280,6 +287,10 @@ class TreeDropdownField extends Component {
       }
     }
 
+    return this.loadTree(path);
+  }
+
+  loadTree(path) {
     // Mark as loading
     this.props.actions.treeDropdownField.beginTreeUpdating(this.props.id, path);
 
@@ -509,6 +520,7 @@ TreeDropdownField.propTypes = {
   loading: PropTypes.array, // List of nodes marked as loading
   failed: PropTypes.array, // List of nodes that failed to load
   data: PropTypes.shape({
+    cacheKey: PropTypes.string.isRequired,
     urlTree: PropTypes.string.isRequired,
     emptyTitle: PropTypes.string,
     valueObject: PropTypes.shape({
