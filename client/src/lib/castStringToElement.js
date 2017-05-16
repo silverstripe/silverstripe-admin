@@ -8,7 +8,7 @@ import React from 'react';
  * @param {String|Component} Container Container type
  * @param {*} value Form schema value
  * @param {object} props container props
- * @returns {Component}
+ * @returns {XML}
  */
 export default function castStringToElement(Container, value, props = {}) {
   if (value && typeof value.react !== 'undefined') {

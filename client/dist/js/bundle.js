@@ -274,10 +274,10 @@ e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,wri
 value:!0})
 var s=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]
 for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},u=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
-r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),l=n(6),c=r(l),d=n(33),p=r(d),f=function(e){
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),l=n(6),c=r(l),d=n(33),p=r(d),f=n(35),h=r(f),m=function(e){
 function t(e){o(this,t)
 var n=i(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
-return n.handleClick=n.handleClick.bind(n),n}return a(t,e),u(t,[{key:"render",value:function e(){return c.default.createElement("button",this.getButtonProps(),this.getLoadingIcon(),c.default.createElement("span",null,this.props.title))
+return n.handleClick=n.handleClick.bind(n),n}return a(t,e),u(t,[{key:"render",value:function e(){return c.default.createElement("button",this.getButtonProps(),this.getLoadingIcon(),(0,h.default)("span",this.props.title))
 
 }},{key:"getButtonProps",value:function e(){return s({},"undefined"==typeof this.props.attributes?{}:this.props.attributes,{id:this.props.id,name:this.props.name,className:this.getButtonClasses(),disabled:this.props.disabled,
 onClick:this.handleClick})}},{key:"getButtonClasses",value:function e(){var t=["btn"],n=this.getButtonStyle()
@@ -291,9 +291,9 @@ return t.find(function(e){return e.indexOf("btn-")>-1})?null:"action_save"===thi
 return this.props.icon||this.props.data.icon||null}},{key:"getLoadingIcon",value:function e(){return this.props.loading?c.default.createElement("div",{className:"btn__loading-icon"},c.default.createElement("span",{
 className:"btn__circle btn__circle--1"}),c.default.createElement("span",{className:"btn__circle btn__circle--2"}),c.default.createElement("span",{className:"btn__circle btn__circle--3"})):null}},{key:"handleClick",
 value:function e(t){"function"==typeof this.props.handleClick&&this.props.handleClick(t,this.props.name||this.props.id)}}]),t}(p.default)
-f.propTypes={id:c.default.PropTypes.string,name:c.default.PropTypes.string,handleClick:c.default.PropTypes.func,title:c.default.PropTypes.string,type:c.default.PropTypes.string,loading:c.default.PropTypes.bool,
+m.propTypes={id:c.default.PropTypes.string,name:c.default.PropTypes.string,handleClick:c.default.PropTypes.func,title:c.default.PropTypes.string,type:c.default.PropTypes.string,loading:c.default.PropTypes.bool,
 icon:c.default.PropTypes.string,disabled:c.default.PropTypes.bool,data:c.default.PropTypes.oneOfType([c.default.PropTypes.array,c.default.PropTypes.shape({buttonStyle:c.default.PropTypes.string})]),extraClass:c.default.PropTypes.string,
-attributes:c.default.PropTypes.object},f.defaultProps={title:"",icon:"",extraClass:"",attributes:{},data:{},disabled:!1},t.default=f},function(e,t,n){(function(t){e.exports=t.SchemaActions=n(45)}).call(t,function(){
+attributes:c.default.PropTypes.object},m.defaultProps={title:"",icon:"",extraClass:"",attributes:{},data:{},disabled:!1},t.default=m},function(e,t,n){(function(t){e.exports=t.SchemaActions=n(45)}).call(t,function(){
 return this}())},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t){return{type:l.default.SET_SCHEMA,payload:s({id:e},t)}}function i(e,t){return{type:l.default.SET_SCHEMA_STATE_OVERRIDES,payload:{id:e,stateOverride:t
 }}}function a(e,t){return{type:l.default.SET_SCHEMA_LOADING,payload:{id:e,loading:t}}}Object.defineProperty(t,"__esModule",{value:!0})
@@ -1596,7 +1596,7 @@ this.checkCanNavigate(r.pjax?r.pjax.split(","):["Content"])&&(this.saveTabState(
 
 },submitForm:function e(t,n,r,o){var i=this
 n||(n=this.find(".btn-toolbar :submit[name=action_save]")),n||(n=this.find(".btn-toolbar :submit:first")),t.trigger("beforesubmitform"),this.trigger("submitform",{form:t,button:n}),$(n).addClass("btn--loading loading"),
-$(n).is("button")&&($(n).data("original-text",$(n).text()),$(n).text(""),$(n).append($('<div class="btn__loading-icon"><span class="btn__circle btn__circle--1" /><span class="btn__circle btn__circle--2" /><span class="btn__circle btn__circle--3" /></div>')),
+$(n).is("button")&&($(n).data("original-text",$(n).text()),$(n).append($('<div class="btn__loading-icon"><span class="btn__circle btn__circle--1" /><span class="btn__circle btn__circle--2" /><span class="btn__circle btn__circle--3" /></div>')),
 $(n).css($(n).outerWidth()+"px"))
 var a=t.validate(),s=function e(){$(n).removeClass("btn--loading loading"),$(n).find(".btn__loading-icon").remove(),$(n).css("width","auto"),$(n).text($(n).data("original-text"))}
 "undefined"==typeof a||a||(statusMessage("Validation failed.","bad"),s())
