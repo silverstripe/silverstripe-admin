@@ -444,14 +444,15 @@ return n.handleSubmit=n.handleSubmit.bind(n),n.clearSchema=n.clearSchema.bind(n)
 value:function e(){this.fetch()}},{key:"componentDidUpdate",value:function e(t){this.props.schemaUrl!==t.schemaUrl&&(this.clearSchema(t.schemaUrl),this.fetch())}},{key:"componentWillUnmount",value:function e(){
 this.clearSchema(this.props.schemaUrl)}},{key:"getMessages",value:function e(t){var n={}
 return t&&t.fields&&t.fields.forEach(function(e){e.message&&(n[e.name]=e.message)}),n}},{key:"clearSchema",value:function e(t){t&&((0,_.destroy)(t),this.props.actions.schema.setSchema(t,null))}},{key:"handleSubmit",
-value:function e(t,n,r){var o=this,a=null
-if(a="function"==typeof this.props.handleSubmit?this.props.handleSubmit(t,n,r):r(),!a)throw new Error("Promise was not returned for submitting")
-return a.then(function(e){var t=e
+value:function e(t,n,r){var o=this,a=null,s=function e(){return r().then(function(e){var t=e
 if(t){t=o.reduceSchemaErrors(t),o.props.actions.schema.setSchema(o.props.schemaUrl,t)
 var n=t.schema||o.props.schema.schema
-if(t.state){var r=t.state.fields.reduce(function(e,t){var r=(0,E.findField)(n.fields,t.name)
+if(t.state){var r=t.state.fields.reduce(function(e,t){if(!n)return e
+var r=(0,E.findField)(n.fields,t.name)
 return r&&"Structural"!==r.schemaType&&r.readOnly!==!0?d({},e,i({},t.name,t.value)):e},{})
-o.props.actions.reduxForm.initialize(o.props.schemaUrl,r)}}return t}).then(function(e){if(!e||!e.state)return e
+o.props.actions.reduxForm.initialize(o.props.schemaUrl,r)}}return t})}
+if(a="function"==typeof this.props.handleSubmit?this.props.handleSubmit(t,n,s):r(),!a)throw new Error("Promise was not returned for submitting")
+return a.then(function(e){if(!e||!e.state)return e
 var t=o.getMessages(e.state)
 if(Object.keys(t).length)throw new _.SubmissionError(t)
 return e})}},{key:"reduceSchemaErrors",value:function e(t){if(!t.errors)return t
@@ -864,8 +865,8 @@ var t=this.findTreeByID(this.props.tree,this.props.value)
 return t?t:this.props.data.valueObject&&this.props.data.valueObject.id===this.props.value?this.props.data.valueObject:{id:this.props.value,title:C.default._t("Admin.TREEDROPDOWN_LOADING","Loading..."),
 disabled:!1}}},{key:"getDropdownOptions",value:function e(t){var n=this.getVisibleTree(),r=n?n.children.slice(0):[]
 if(t){var o=r.find(function(e){return e.id===t})
-o||(o=this.getSelectedOption(),r.unshift(o))}return this.props.data.showRootOption&&!this.props.visible.length&&r.unshift({id:"",title:this.props.data.emptyTitle,disabled:!1}),r&&r.length?r:[{id:null,title:null,
-disabled:!0}]}},{key:"callFetch",value:function e(t){var n=D.default.parse(this.props.data.urlTree,!0)
+o||(o=this.getSelectedOption(),r.unshift(o))}return this.props.data.hasEmptyDefault&&!this.props.visible.length&&r.unshift({id:"",title:this.props.data.emptyString,disabled:!1}),r&&r.length?r:[{id:null,
+title:null,disabled:!0}]}},{key:"callFetch",value:function e(t){var n=D.default.parse(this.props.data.urlTree,!0)
 n.search="",t.length&&(n.query.ID=t[t.length-1]),n.query.format="json"
 var r=D.default.format(n)
 return(0,w.default)(r,{credentials:"same-origin"}).then(function(e){return e.json()})}},{key:"findTreeByPath",value:function e(t,n){if(!t||0===Object.keys(t).length)return null
@@ -910,10 +911,10 @@ className:"icon font-icon-list"}))}return h.default.createElement("div",{classNa
 
 
 return h.default.createElement(E.default,{searchable:!1,className:r,name:this.props.name,options:o,inputProps:n,menuRenderer:this.renderMenu,optionRenderer:this.renderOption,onChange:this.handleChange,
-onInputKeyDown:this.handleKeyDown,value:i,ref:function e(n){t.selectField=n},placeholder:this.props.data.emptyTitle,labelKey:"title",valueKey:"id"})}}]),t}(f.Component)
+onInputKeyDown:this.handleKeyDown,value:i,ref:function e(n){t.selectField=n},placeholder:this.props.data.emptyString,labelKey:"title",valueKey:"id"})}}]),t}(f.Component)
 R.propTypes={extraClass:f.PropTypes.string,id:f.PropTypes.string,name:f.PropTypes.string.isRequired,onChange:f.PropTypes.func,value:f.PropTypes.oneOfType([f.PropTypes.string,f.PropTypes.number]),readOnly:f.PropTypes.bool,
 disabled:f.PropTypes.bool,tree:f.PropTypes.shape(x.default.propTypes),visible:f.PropTypes.array,loading:f.PropTypes.array,failed:f.PropTypes.array,data:f.PropTypes.shape({cacheKey:f.PropTypes.string.isRequired,
-urlTree:f.PropTypes.string.isRequired,emptyTitle:f.PropTypes.string,valueObject:f.PropTypes.shape({id:f.PropTypes.number,title:f.PropTypes.string}),showRootOption:f.PropTypes.bool}),onLoadingError:f.PropTypes.func,
+urlTree:f.PropTypes.string.isRequired,emptyString:f.PropTypes.string,valueObject:f.PropTypes.shape({id:f.PropTypes.number,title:f.PropTypes.string}),hasEmptyDefault:f.PropTypes.bool}),onLoadingError:f.PropTypes.func,
 actions:f.PropTypes.shape({treeDropdownField:f.PropTypes.shape({beginTreeUpdating:f.PropTypes.func,updateTreeFailed:f.PropTypes.func,updateTree:f.PropTypes.func,setVisible:f.PropTypes.func})})},R.defaultProps={
 value:"",extraClass:"",className:"",tree:{},visible:[],loading:[],failed:[]}
 var A=(0,m.connect)(l,c)(R)
