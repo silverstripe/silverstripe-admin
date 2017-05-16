@@ -733,15 +733,15 @@ function t(e){o(this,t)
 var n=i(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
 return n.handleChange=n.handleChange.bind(n),n}return a(t,e),u(t,[{key:"render",value:function e(){return c.default.createElement(m.FormControl,this.getInputProps())}},{key:"getInputProps",value:function e(){
 var t={bsClass:this.props.bsClass,className:this.props.className+" "+this.props.extraClass,id:this.props.id,name:this.props.name,disabled:this.props.disabled,readOnly:this.props.readOnly,value:this.props.value,
-placeholder:this.props.placeholder}
+placeholder:this.props.placeholder,autoFocus:this.props.autoFocus}
 return this.isMultiline()?s(t,{componentClass:"textarea",rows:this.props.data.rows,cols:this.props.data.columns}):s(t,{componentClass:"input",type:this.props.type?this.props.type:null}),this.props.readOnly||s(t,{
 onChange:this.handleChange}),t}},{key:"isMultiline",value:function e(){return this.props.data&&this.props.data.rows>1}},{key:"handleChange",value:function e(t){"function"==typeof this.props.onChange&&this.props.onChange(t,{
 id:this.props.id,value:t.target.value})}}]),t}(p.default)
 y.propTypes={extraClass:c.default.PropTypes.string,id:c.default.PropTypes.string,name:c.default.PropTypes.string.isRequired,onChange:c.default.PropTypes.func,value:c.default.PropTypes.oneOfType([c.default.PropTypes.string,c.default.PropTypes.number]),
-readOnly:c.default.PropTypes.bool,disabled:c.default.PropTypes.bool,placeholder:c.default.PropTypes.string,type:c.default.PropTypes.string},y.defaultProps={value:"",extraClass:"",className:"",type:"text"
-},t.TextField=y,t.default=(0,h.default)(y)},function(e,t){e.exports=FieldHolder},function(e,t,n){(function(t){e.exports=t.LiteralField=n(154)}).call(t,function(){return this}())},function(e,t,n){"use strict"
+readOnly:c.default.PropTypes.bool,disabled:c.default.PropTypes.bool,placeholder:c.default.PropTypes.string,type:c.default.PropTypes.string,autoFocus:c.default.PropTypes.bool},y.defaultProps={value:"",extraClass:"",
+className:"",type:"text"},t.TextField=y,t.default=(0,h.default)(y)},function(e,t){e.exports=FieldHolder},function(e,t,n){(function(t){e.exports=t.LiteralField=n(154)}).call(t,function(){return this}())
 
-
+},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function i(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called")
 
 

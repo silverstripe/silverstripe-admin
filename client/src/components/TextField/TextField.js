@@ -30,6 +30,7 @@ class TextField extends SilverStripeComponent {
       readOnly: this.props.readOnly,
       value: this.props.value,
       placeholder: this.props.placeholder,
+      autoFocus: this.props.autoFocus,
     };
 
     if (this.isMultiline()) {
@@ -85,6 +86,7 @@ TextField.propTypes = {
   disabled: React.PropTypes.bool,
   placeholder: React.PropTypes.string,
   type: React.PropTypes.string,
+  autoFocus: React.PropTypes.bool,
 };
 
 TextField.defaultProps = {
