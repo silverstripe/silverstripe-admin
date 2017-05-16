@@ -2360,7 +2360,7 @@ n.length<1?(n=r,n.appendTo(document.body)):n.innerHTML=r.innerHTML
 var o=e(".modal-backdrop")
 o.length<1&&(o=e('<div class="modal-backdrop fade"></div>'),o.appendTo(document.body)),n.find("[data-dismiss]").on("click",function(){o.removeClass("in"),n.removeClass("in"),setTimeout(function(){o.remove()
 
-},.2)}),setTimeout(function(){o.addClass("in"),n.addClass("in")},0)}}),e(".grid-field .action:button").entwine({onclick:function e(t){var n="show"
+},150)}),setTimeout(function(){o.addClass("in"),n.addClass("in")},0)}}),e(".grid-field .action:button").entwine({onclick:function e(t){var n="show"
 return this.is(":disabled")?void t.preventDefault():(!this.hasClass("ss-gridfield-button-close")&&this.closest(".grid-field").hasClass("show-filter")||(n="hidden"),this.getGridField().reload({data:[{name:this.attr("name"),
 value:this.val(),filter:n}]}),void t.preventDefault())},actionurl:function t(){var n=this.closest(":button"),r=this.getGridField(),o=this.closest("form"),i=o.find(":input.gridstate").serialize(),a=o.find('input[name="SecurityID"]').val()
 
