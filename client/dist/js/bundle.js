@@ -11,28 +11,28 @@ e.exports=FormBuilderModal},function(e,t){e.exports=SchemaActions},function(e,t)
 function n(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(t,"__esModule",{value:!0})
 var r=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
 r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),o=function(){function e(){
-n(this,e),this.defaultLocale="en_US",this.currentLocale=this.detectLocale(),this.lang={}}return r(e,[{key:"setLocale",value:function e(t){this.currentLocale=t}},{key:"getLocale",value:function e(){return null!==this.currentLocale?this.currentLocale:this.defaultLocale
-
-}},{key:"_t",value:function e(t,n,r,o){var i=this.getLocale().replace(/_[\w]+/i,""),a=this.defaultLocale.replace(/_[\w]+/i,"")
-return this.lang&&this.lang[this.getLocale()]&&this.lang[this.getLocale()][t]?this.lang[this.getLocale()][t]:this.lang&&this.lang[i]&&this.lang[i][t]?this.lang[i][t]:this.lang&&this.lang[this.defaultLocale]&&this.lang[this.defaultLocale][t]?this.lang[this.defaultLocale][t]:this.lang&&this.lang[a]&&this.lang[a][t]?this.lang[a][t]:n?n:""
+n(this,e),this.defaultLocale="en_US",this.currentLocale=null,this.lang={}}return r(e,[{key:"setLocale",value:function e(t){this.currentLocale=t}},{key:"getLocale",value:function e(){return this.currentLocale||(this.currentLocale=this.detectLocale()),
+this.currentLocale||this.defaultLocale}},{key:"_t",value:function e(t,n){var r=this.getLocale().replace(/_[\w]+/i,""),o=this.defaultLocale.replace(/_[\w]+/i,"")
+return this.lang&&this.lang[this.getLocale()]&&this.lang[this.getLocale()][t]?this.lang[this.getLocale()][t]:this.lang&&this.lang[r]&&this.lang[r][t]?this.lang[r][t]:this.lang&&this.lang[this.defaultLocale]&&this.lang[this.defaultLocale][t]?this.lang[this.defaultLocale][t]:this.lang&&this.lang[o]&&this.lang[o][t]?this.lang[o][t]:n?n:""
 
 }},{key:"addDictionary",value:function e(t,n){"undefined"==typeof this.lang[t]&&(this.lang[t]={})
 for(var r in n)this.lang[t][r]=n[r]}},{key:"getDictionary",value:function e(t){return this.lang[t]}},{key:"stripStr",value:function e(t){return t.replace(/^\s*/,"").replace(/\s*$/,"")}},{key:"stripStrML",
-value:function e(t){for(var n=t.split("\n"),r=0;r<n.length;r+=1)n[r]=stripStr(n[r])
-return stripStr(n.join(" "))}},{key:"sprintf",value:function e(t){for(var n=arguments.length,r=Array(n>1?n-1:0),o=1;o<n;o++)r[o-1]=arguments[o]
+value:function e(t){for(var n=t.split("\n"),r=0;r<n.length;r+=1)n[r]=this.stripStr(n[r])
+return this.stripStr(n.join(" "))}},{key:"sprintf",value:function e(t){for(var n=arguments.length,r=Array(n>1?n-1:0),o=1;o<n;o++)r[o-1]=arguments[o]
 if(0===r.length)return t
 var i=new RegExp("(.?)(%s)","g"),a=0
-return t.replace(i,function(e,t,n,o,i){return"%"===t?e:t+r[a++]})}},{key:"inject",value:function e(t,n){var r=new RegExp("{([A-Za-z0-9_]*)}","g")
-return t.replace(r,function(e,t,r,o){return n[t]?n[t]:e})}},{key:"detectLocale",value:function t(){var n,r
-if(n=document.body.getAttribute("lang"),!n)for(var o=document.getElementsByTagName("meta"),i=0;i<o.length;i++)o[i].attributes["http-equiv"]&&"content-language"==o[i].attributes["http-equiv"].nodeValue.toLowerCase()&&(n=o[i].attributes.content.nodeValue)
+return t.replace(i,function(e,t){return"%"===t?e:t+r[a++]})}},{key:"inject",value:function e(t,n){var r=new RegExp("{([A-Za-z0-9_]*)}","g")
+return t.replace(r,function(e,t){return n[t]?n[t]:e})}},{key:"detectLocale",value:function e(){var t=document.documentElement.getAttribute("lang")
+if(t||(t=document.body.getAttribute("lang")),!t)for(var n=document.getElementsByTagName("meta"),r=0;r<n.length;r++)n[r].attributes["http-equiv"]&&"content-language"===n[r].attributes["http-equiv"].nodeValue.toLowerCase()&&(t=n[r].attributes.content.nodeValue)
 
 
-n||(n=this.defaultLocale)
-var a=n.match(/([^-|_]*)[-|_](.*)/)
-if(2==n.length){for(var s in e.lang)if(s.substr(0,2).toLowerCase()==n.toLowerCase()){r=s
-break}}else a&&(r=a[1].toLowerCase()+"_"+a[2].toUpperCase())
-return r}},{key:"addEvent",value:function e(t,n,r,o){return t.addEventListener?(t.addEventListener(n,r,o),!0):t.attachEvent?t.attachEvent("on"+n,r):void console.log("Handler could not be attached")}}]),
-e}(),i=new o
+t||(t=this.defaultLocale)
+var o=t.match(/([^-|_]*)[-|_](.*)/)
+if(2===t.length){for(var i in this.lang)if(i.substr(0,2).toLowerCase()===t.toLowerCase())return i
+return null}if(o){var a=o[1].toLowerCase(),s=o[2].toUpperCase()
+return a+"_"+s}return null}},{key:"addEvent",value:function e(t,n,r,o){if(t.addEventListener)return t.addEventListener(n,r,o),!0
+if(t.attachEvent)return t.attachEvent("on"+n,r)
+throw new Error("Handler could not be attached")}}]),e}(),i=new o
 window.ss="undefined"!=typeof window.ss?window.ss:{},window.ss.i18n=window.i18n=i,t.default=i},function(e,t,n){(function(t){e.exports=t.SilverStripeComponent=n(15)}).call(t,function(){return this}())},function(e,t,n){
 "use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function i(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called")
