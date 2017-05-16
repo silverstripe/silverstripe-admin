@@ -126,10 +126,10 @@ class TreeDropdownField extends Component {
       }
     }
 
-    if (this.props.data.showRootOption && !this.props.visible.length) {
+    if (this.props.data.hasEmptyDefault && !this.props.visible.length) {
       options.unshift({
         id: '',
-        title: this.props.data.emptyTitle,
+        title: this.props.data.emptyString,
         disabled: false,
       });
     }
@@ -499,7 +499,7 @@ class TreeDropdownField extends Component {
         onInputKeyDown={this.handleKeyDown}
         value={value}
         ref={(select) => { this.selectField = select; }}
-        placeholder={this.props.data.emptyTitle}
+        placeholder={this.props.data.emptyString}
         labelKey="title"
         valueKey="id"
       />
@@ -522,12 +522,12 @@ TreeDropdownField.propTypes = {
   data: PropTypes.shape({
     cacheKey: PropTypes.string.isRequired,
     urlTree: PropTypes.string.isRequired,
-    emptyTitle: PropTypes.string,
+    emptyString: PropTypes.string,
     valueObject: PropTypes.shape({
       id: PropTypes.number,
       title: PropTypes.string,
     }),
-    showRootOption: PropTypes.bool,
+    hasEmptyDefault: PropTypes.bool,
   }),
   onLoadingError: PropTypes.func,
   actions: PropTypes.shape({
