@@ -38,8 +38,8 @@ class TreeDropdownField extends Component {
   }
 
   componentDidMount() {
-    // Ensure root node is loaded
-    this.lazyLoad([]);
+    // Ensure root node is loaded, force invalidating the cache
+    this.loadTree([]);
   }
 
   componentWillReceiveProps(nextProps) {

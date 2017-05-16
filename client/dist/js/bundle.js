@@ -855,7 +855,7 @@ var n=s(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
 return n.render=n.render.bind(n),n.renderMenu=n.renderMenu.bind(n),n.renderOption=n.renderOption.bind(n),n.getBreadcrumbs=n.getBreadcrumbs.bind(n),n.getDropdownOptions=n.getDropdownOptions.bind(n),n.getSelectedOption=n.getSelectedOption.bind(n),
 n.getVisibleTree=n.getVisibleTree.bind(n),n.handleBack=n.handleBack.bind(n),n.handleChange=n.handleChange.bind(n),n.handleKeyDown=n.handleKeyDown.bind(n),n.handleNavigate=n.handleNavigate.bind(n),n.callFetch=n.callFetch.bind(n),
 n.lazyLoad=n.lazyLoad.bind(n),n.findTreeByID=n.findTreeByID.bind(n),n.findTreeByPath=n.findTreeByPath.bind(n),n.findTreePath=n.findTreePath.bind(n),n}return u(t,e),p(t,[{key:"componentDidMount",value:function e(){
-this.lazyLoad([])}},{key:"componentWillReceiveProps",value:function e(t){t.data.cacheKey!==this.props.data.cacheKey&&this.loadTree([])}},{key:"getVisibleTree",value:function e(){return this.findTreeByPath(this.props.tree,this.props.visible)
+this.loadTree([])}},{key:"componentWillReceiveProps",value:function e(t){t.data.cacheKey!==this.props.data.cacheKey&&this.loadTree([])}},{key:"getVisibleTree",value:function e(){return this.findTreeByPath(this.props.tree,this.props.visible)
 
 }},{key:"getBreadcrumbs",value:function e(){var t=[],n=this.props.tree,r=!0,o=!1,i=void 0
 try{for(var a=function e(){var r=u.value
