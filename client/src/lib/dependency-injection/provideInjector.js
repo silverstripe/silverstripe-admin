@@ -1,9 +1,10 @@
 import React from 'react';
-import { get } from './container.js';
+import Injector from 'lib/Injector';
 
 function provideInjector(Component) {
   class InjectorProvider extends React.Component {
     getChildContext() {
+      const { get } = Injector;
       return {
         injector: { get },
       };

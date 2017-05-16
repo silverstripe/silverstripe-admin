@@ -3,7 +3,7 @@ import SilverStripeComponent from 'lib/SilverStripeComponent';
 import { provideInjector } from 'lib/Injector';
 
 /**
- * Empty container.js for the moment, will eventually contain the CMS menu`
+ * Empty container for the moment, will eventually contain the CMS menu`
  * and apply to document.body, rather than just one specific DOM element.
  */
 class App extends SilverStripeComponent {

@@ -151,7 +151,7 @@ class BootRoutes {
         if (ctx.path !== lastPath || forceReload) {
           // Load the panel and stop processing routes.
           lastPath = ctx.path.replace(/#.*$/, '');
-          $('.cms-container.js')
+          $('.cms-container')
             .entwine('ss')
             .handleStateChange(null, ctx.state);
         }

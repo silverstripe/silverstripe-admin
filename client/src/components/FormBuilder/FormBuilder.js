@@ -153,7 +153,7 @@ class FormBuilder extends SilverStripeComponent {
     componentProps = Object.assign({}, componentProps, componentProps.input);
     delete componentProps.input;
 
-    // Provides container.js components a place to hook in
+    // Provides container components a place to hook in
     // and apply customisations to scaffolded components.
     const createFn = this.props.createFn;
     if (typeof createFn === 'function') {
