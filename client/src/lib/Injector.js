@@ -1,6 +1,6 @@
 import { provideInjector } from './dependency-injection/provideInjector';
 import { withInjector } from './dependency-injection/withInjector';
-import { get, register, freeze, override } from './dependency-injection/container';
+import { get, register, freeze, customise } from './dependency-injection/container';
 
 export {
   provideInjector,
@@ -11,5 +11,5 @@ export default {
   get,
   register,
   freeze,
-  override
+  customise
 }
