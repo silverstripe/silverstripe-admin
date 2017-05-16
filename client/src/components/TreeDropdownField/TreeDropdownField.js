@@ -122,8 +122,8 @@ class TreeDropdownField extends Component {
       let selectedOption = options.find((option) => (option.id === value));
       if (!selectedOption) {
         selectedOption = this.getSelectedOption();
-        options.unshift(selectedOption);
       }
+      options.unshift(selectedOption);
     }
 
     if (this.props.data.hasEmptyDefault && !this.props.visible.length) {
@@ -520,7 +520,7 @@ TreeDropdownField.propTypes = {
   loading: PropTypes.array, // List of nodes marked as loading
   failed: PropTypes.array, // List of nodes that failed to load
   data: PropTypes.shape({
-    cacheKey: PropTypes.string.isRequired,
+    cacheKey: PropTypes.string,
     urlTree: PropTypes.string.isRequired,
     emptyString: PropTypes.string,
     valueObject: PropTypes.shape({

@@ -1,6 +1,11 @@
 /* global jest, describe, beforeEach, it, expect */
 
 jest.mock('components/TreeDropdownField/TreeDropdownFieldMenu');
+jest.mock('isomorphic-fetch', () =>
+  () => Promise.resolve({
+    json: () => ({}),
+  })
+);
 
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
@@ -324,8 +329,11 @@ describe('TreeDropdownField', () => {
         <TreeDropdownField {...props} />
       );
       const options = field.getDropdownOptions();
+      const optionIds = options.map((option) => option.id).sort();
+      const childrenIds = props.tree.children.map((child) => child.id).sort();
 
-      expect(options).toBe(props.tree.children);
+      expect(optionIds[0]).toBe(childrenIds[0]);
+      expect(optionIds[1]).toBe(childrenIds[1]);
     });
 
     it('should return an empty first option if node has no children', () => {
@@ -351,7 +359,7 @@ describe('TreeDropdownField', () => {
       field = ReactTestUtils.renderIntoDocument(
         <TreeDropdownField {...props} />
       );
-      const options = field.getDropdownOptions();
+      const options = field.getDropdownOptions(35);
 
       expect(options.length).toBe(1);
       expect(options[0].id).toBe(35);
@@ -368,11 +376,32 @@ describe('TreeDropdownField', () => {
       field = ReactTestUtils.renderIntoDocument(
         <TreeDropdownField {...props} />
       );
-      const options = field.getDropdownOptions();
+      const options = field.getDropdownOptions(35);
 
       expect(options.length).toBe(3);
       expect(options[0].id).toBe(15);
       expect(options[0].title).toBe('page fifteen');
+    });
+
+    it('should not include the selected value/title if no value given', () => {
+      props.visible = [5, 9];
+      field = ReactTestUtils.renderIntoDocument(
+        <TreeDropdownField {...props} />
+      );
+      const options = field.getDropdownOptions();
+
+      expect(options.length).toBe(2);
+    });
+
+    it('should not include the root option when on the root path', () => {
+      props.visible = [];
+      props.data.hasEmptyDefault = true;
+      field = ReactTestUtils.renderIntoDocument(
+        <TreeDropdownField {...props} />
+      );
+      const options = field.getDropdownOptions();
+
+      expect(options.length).toBe(3);
     });
   });
 });

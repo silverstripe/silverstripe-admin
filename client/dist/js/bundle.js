@@ -865,7 +865,7 @@ var t=this.findTreeByID(this.props.tree,this.props.value)
 return t?t:this.props.data.valueObject&&this.props.data.valueObject.id===this.props.value?this.props.data.valueObject:{id:this.props.value,title:C.default._t("Admin.TREEDROPDOWN_LOADING","Loading..."),
 disabled:!1}}},{key:"getDropdownOptions",value:function e(t){var n=this.getVisibleTree(),r=n?n.children.slice(0):[]
 if(t){var o=r.find(function(e){return e.id===t})
-o||(o=this.getSelectedOption(),r.unshift(o))}return this.props.data.hasEmptyDefault&&!this.props.visible.length&&r.unshift({id:"",title:this.props.data.emptyString,disabled:!1}),r&&r.length?r:[{id:null,
+o||(o=this.getSelectedOption()),r.unshift(o)}return this.props.data.hasEmptyDefault&&!this.props.visible.length&&r.unshift({id:"",title:this.props.data.emptyString,disabled:!1}),r&&r.length?r:[{id:null,
 title:null,disabled:!0}]}},{key:"callFetch",value:function e(t){var n=D.default.parse(this.props.data.urlTree,!0)
 n.search="",t.length&&(n.query.ID=t[t.length-1]),n.query.format="json"
 var r=D.default.format(n)
@@ -913,10 +913,10 @@ className:"icon font-icon-list"}))}return h.default.createElement("div",{classNa
 return h.default.createElement(E.default,{searchable:!1,className:r,name:this.props.name,options:o,inputProps:n,menuRenderer:this.renderMenu,optionRenderer:this.renderOption,onChange:this.handleChange,
 onInputKeyDown:this.handleKeyDown,value:i,ref:function e(n){t.selectField=n},placeholder:this.props.data.emptyString,labelKey:"title",valueKey:"id"})}}]),t}(f.Component)
 R.propTypes={extraClass:f.PropTypes.string,id:f.PropTypes.string,name:f.PropTypes.string.isRequired,onChange:f.PropTypes.func,value:f.PropTypes.oneOfType([f.PropTypes.string,f.PropTypes.number]),readOnly:f.PropTypes.bool,
-disabled:f.PropTypes.bool,tree:f.PropTypes.shape(x.default.propTypes),visible:f.PropTypes.array,loading:f.PropTypes.array,failed:f.PropTypes.array,data:f.PropTypes.shape({cacheKey:f.PropTypes.string.isRequired,
-urlTree:f.PropTypes.string.isRequired,emptyString:f.PropTypes.string,valueObject:f.PropTypes.shape({id:f.PropTypes.number,title:f.PropTypes.string}),hasEmptyDefault:f.PropTypes.bool}),onLoadingError:f.PropTypes.func,
-actions:f.PropTypes.shape({treeDropdownField:f.PropTypes.shape({beginTreeUpdating:f.PropTypes.func,updateTreeFailed:f.PropTypes.func,updateTree:f.PropTypes.func,setVisible:f.PropTypes.func})})},R.defaultProps={
-value:"",extraClass:"",className:"",tree:{},visible:[],loading:[],failed:[]}
+disabled:f.PropTypes.bool,tree:f.PropTypes.shape(x.default.propTypes),visible:f.PropTypes.array,loading:f.PropTypes.array,failed:f.PropTypes.array,data:f.PropTypes.shape({cacheKey:f.PropTypes.string,urlTree:f.PropTypes.string.isRequired,
+emptyString:f.PropTypes.string,valueObject:f.PropTypes.shape({id:f.PropTypes.number,title:f.PropTypes.string}),hasEmptyDefault:f.PropTypes.bool}),onLoadingError:f.PropTypes.func,actions:f.PropTypes.shape({
+treeDropdownField:f.PropTypes.shape({beginTreeUpdating:f.PropTypes.func,updateTreeFailed:f.PropTypes.func,updateTree:f.PropTypes.func,setVisible:f.PropTypes.func})})},R.defaultProps={value:"",extraClass:"",
+className:"",tree:{},visible:[],loading:[],failed:[]}
 var A=(0,m.connect)(l,c)(R)
 t.TreeDropdownField=R,t.ConnectedTreeDropdownField=A,t.default=(0,g.default)(A)},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t){var n={}
