@@ -4,6 +4,7 @@
 import $ from 'jQuery';
 import i18n from 'i18n';
 
+const currBeforeUnload = window.onbeforeunload;
 // Can't bind this through jQuery
 window.onbeforeunload = function(e) {
   var form = $('.cms-edit-form');
@@ -11,6 +12,12 @@ window.onbeforeunload = function(e) {
   if(form.is('.changed') && ! form.is('.discardchanges')) {
     return i18n._t('Admin.CONFIRMUNSAVEDSHORT');
   }
+
+  if (typeof currBeforeUnload === 'function') {
+    return currBeforeUnload();
+  }
+
+  return null;
 };
 
 $.entwine('ss', function($){
