@@ -9,6 +9,7 @@ import * as treeDropdownFieldActions from 'state/treeDropdownField/TreeDropdownF
 import TreeDropdownFieldMenu from 'components/TreeDropdownField/TreeDropdownFieldMenu';
 import TreeDropdownFieldNode from 'components/TreeDropdownField/TreeDropdownFieldNode';
 import url from 'url';
+import { FormControl } from 'react-bootstrap-ss';
 
 class TreeDropdownField extends Component {
 
@@ -479,12 +480,32 @@ class TreeDropdownField extends Component {
   render() {
     const inputProps = {
       id: this.props.id,
+      readOnly: this.props.readOnly,
+      disabled: this.props.disabled,
     };
     const className = this.props.extraClass
       ? `treedropdownfield ${this.props.extraClass}`
       : 'treedropdownfield';
     const options = this.getDropdownOptions(this.props.value);
     const value = (this.props.value === 0) ? '' : this.props.value;
+
+    if (this.props.readOnly || this.props.disabled) {
+      // fallback to a textbox for readonly and disabled status
+      // react-select isn't ideal for display
+      const option = this.props.data.valueObject;
+      const title = option && option.title || this.props.data.emptyString;
+      return (
+        <div className={className}>
+          <span>{title}</span>
+          <FormControl
+            type="hidden"
+            name={this.props.name}
+            value={this.props.value}
+            {...inputProps}
+          />
+        </div>
+      );
+    }
 
     return (
       <Select

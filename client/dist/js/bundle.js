@@ -849,7 +849,7 @@ return{tree:o,visible:i,loading:a,failed:s}}return{}}function c(e){return{action
 
 var d=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]
 for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},p=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
-r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),f=n(6),h=o(f),m=n(10),y=n(9),v=n(152),g=o(v),b=n(18),w=o(b),_=n(167),E=o(_),T=n(5),C=o(T),P=n(179),O=r(P),k=n(163),S=o(k),j=n(161),x=o(j),F=n(181),D=o(F),R=function(e){
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),f=n(6),h=o(f),m=n(10),y=n(9),v=n(152),g=o(v),b=n(18),w=o(b),_=n(167),E=o(_),T=n(5),C=o(T),P=n(179),O=r(P),k=n(163),S=o(k),j=n(161),x=o(j),F=n(181),D=o(F),R=n(34),A=function(e){
 function t(e){a(this,t)
 var n=s(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
 return n.render=n.render.bind(n),n.renderMenu=n.renderMenu.bind(n),n.renderOption=n.renderOption.bind(n),n.getBreadcrumbs=n.getBreadcrumbs.bind(n),n.getDropdownOptions=n.getDropdownOptions.bind(n),n.getSelectedOption=n.getSelectedOption.bind(n),
@@ -907,18 +907,20 @@ return h.default.createElement(S.default,{loading:o,failed:i,tree:r,breadcrumbs:
 if(t.count){var o=function e(r){return n.handleNavigate(r,t.id)}
 r=h.default.createElement("button",{className:"treedropdownfield__option-button",onClick:o,onMouseDown:o,onTouchEnd:o},h.default.createElement("span",{className:"treedropdownfield__option-count"},t.count),h.default.createElement("span",{
 className:"icon font-icon-list"}))}return h.default.createElement("div",{className:"treedropdownfield__option flexbox-area-grow fill-width"},h.default.createElement("span",{className:"treedropdownfield__option__title flexbox-area-grow"
-},t.title),r)}},{key:"render",value:function e(){var t=this,n={id:this.props.id},r=this.props.extraClass?"treedropdownfield "+this.props.extraClass:"treedropdownfield",o=this.getDropdownOptions(this.props.value),i=0===this.props.value?"":this.props.value
+},t.title),r)}},{key:"render",value:function e(){var t=this,n={id:this.props.id,readOnly:this.props.readOnly,disabled:this.props.disabled},r=this.props.extraClass?"treedropdownfield "+this.props.extraClass:"treedropdownfield",o=this.getDropdownOptions(this.props.value),i=0===this.props.value?"":this.props.value
 
 
-return h.default.createElement(E.default,{searchable:!1,className:r,name:this.props.name,options:o,inputProps:n,menuRenderer:this.renderMenu,optionRenderer:this.renderOption,onChange:this.handleChange,
-onInputKeyDown:this.handleKeyDown,value:i,ref:function e(n){t.selectField=n},placeholder:this.props.data.emptyString,labelKey:"title",valueKey:"id"})}}]),t}(f.Component)
-R.propTypes={extraClass:f.PropTypes.string,id:f.PropTypes.string,name:f.PropTypes.string.isRequired,onChange:f.PropTypes.func,value:f.PropTypes.oneOfType([f.PropTypes.string,f.PropTypes.number]),readOnly:f.PropTypes.bool,
+if(this.props.readOnly||this.props.disabled){var a=this.props.data.valueObject,s=a&&a.title||this.props.data.emptyString
+return h.default.createElement("div",{className:r},h.default.createElement("span",null,s),h.default.createElement(R.FormControl,d({type:"hidden",name:this.props.name,value:this.props.value},n)))}return h.default.createElement(E.default,{
+searchable:!1,className:r,name:this.props.name,options:o,inputProps:n,menuRenderer:this.renderMenu,optionRenderer:this.renderOption,onChange:this.handleChange,onInputKeyDown:this.handleKeyDown,value:i,
+ref:function e(n){t.selectField=n},placeholder:this.props.data.emptyString,labelKey:"title",valueKey:"id"})}}]),t}(f.Component)
+A.propTypes={extraClass:f.PropTypes.string,id:f.PropTypes.string,name:f.PropTypes.string.isRequired,onChange:f.PropTypes.func,value:f.PropTypes.oneOfType([f.PropTypes.string,f.PropTypes.number]),readOnly:f.PropTypes.bool,
 disabled:f.PropTypes.bool,tree:f.PropTypes.shape(x.default.propTypes),visible:f.PropTypes.array,loading:f.PropTypes.array,failed:f.PropTypes.array,data:f.PropTypes.shape({cacheKey:f.PropTypes.string,urlTree:f.PropTypes.string.isRequired,
 emptyString:f.PropTypes.string,valueObject:f.PropTypes.shape({id:f.PropTypes.number,title:f.PropTypes.string}),hasEmptyDefault:f.PropTypes.bool}),onLoadingError:f.PropTypes.func,actions:f.PropTypes.shape({
-treeDropdownField:f.PropTypes.shape({beginTreeUpdating:f.PropTypes.func,updateTreeFailed:f.PropTypes.func,updateTree:f.PropTypes.func,setVisible:f.PropTypes.func})})},R.defaultProps={value:"",extraClass:"",
+treeDropdownField:f.PropTypes.shape({beginTreeUpdating:f.PropTypes.func,updateTreeFailed:f.PropTypes.func,updateTree:f.PropTypes.func,setVisible:f.PropTypes.func})})},A.defaultProps={value:"",extraClass:"",
 className:"",tree:{},visible:[],loading:[],failed:[]}
-var A=(0,m.connect)(l,c)(R)
-t.TreeDropdownField=R,t.ConnectedTreeDropdownField=A,t.default=(0,g.default)(A)},function(e,t,n){"use strict"
+var I=(0,m.connect)(l,c)(A)
+t.TreeDropdownField=A,t.ConnectedTreeDropdownField=I,t.default=(0,g.default)(I)},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t){var n={}
 for(var r in e)t.indexOf(r)>=0||Object.prototype.hasOwnProperty.call(e,r)&&(n[r]=e[r])
 return n}function i(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}function a(e){var t=typeof e
