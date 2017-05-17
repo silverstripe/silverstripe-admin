@@ -24,7 +24,7 @@ class i18n {
   /**
    * Set locale in long format, e.g. "de_AT" for Austrian German.
    *
-   * @param string locale
+   * @param {string} locale
    */
   setLocale(locale) {
     this.currentLocale = locale;
@@ -53,23 +53,19 @@ class i18n {
    * @return string : Translated word
    */
   _t(entity, fallbackString) {
+    const locale = this.getLocale();
     const langName = this.getLocale().replace(/_[\w]+/i, '');
     const defaultlangName = this.defaultLocale.replace(/_[\w]+/i, '');
 
-    if (this.lang && this.lang[this.getLocale()] && this.lang[this.getLocale()][entity]) {
-      return this.lang[this.getLocale()][entity];
-    }
+    const langs = [locale, langName, this.defaultLocale, defaultlangName];
+    if (this.lang) {
+      for (const lang of langs) {
+        const dictionary = this.getDictionary(lang);
 
-    if (this.lang && this.lang[langName] && this.lang[langName][entity]) {
-      return this.lang[langName][entity];
-    }
-
-    if (this.lang && this.lang[this.defaultLocale] && this.lang[this.defaultLocale][entity]) {
-      return this.lang[this.defaultLocale][entity];
-    }
-
-    if (this.lang && this.lang[defaultlangName] && this.lang[defaultlangName][entity]) {
-      return this.lang[defaultlangName][entity];
+        if (dictionary && dictionary[entity]) {
+          return dictionary[entity];
+        }
+      }
     }
 
     if (fallbackString) {
@@ -84,31 +80,28 @@ class i18n {
    * exist for this locale, its automatically created.
    * Existing entities are overwritten.
    *
-   * @param string locale
-   * @param Object dict
+   * @param {string} locale
+   * @param {Object} dict
    */
   addDictionary(locale, dict) {
-    if (typeof this.lang[locale] === 'undefined') {
-      this.lang[locale] = {};
-    }
-
-    for (const entity in dict) {
-      this.lang[locale][entity] = dict[entity];
-    }
+    this.lang[locale] = Object.assign({},
+      this.getDictionary(locale),
+      dict
+    );
   }
 
   /**
    * Get dictionary for a specific locale.
    *
-   * @param string locale
+   * @param {string} locale
    */
   getDictionary(locale) {
     return this.lang[locale];
   }
 
   /**
-   * @param string str - The string to strip.
-   * @return string result - Stripped string.
+   * @param {string} str - The string to strip.
+   * @return {string} result - Stripped string.
    *
    */
   stripStr(str) {
@@ -116,8 +109,8 @@ class i18n {
   }
 
   /**
-   * @param string str - The multi-line string to strip.
-   * @return string result - Stripped string.
+   * @param {string} str - The multi-line string to strip.
+   * @return {string} result - Stripped string.
    *
    */
   stripStrML(str) {
@@ -138,8 +131,9 @@ class i18n {
    * Substitutes %s with parameters
     * given in list. %%s is used to escape %s.
     *
-   * @param string s - The string to perform the substitutions on.
-   * @return string - The new string with substitutions made.
+   * @param {string} s - The string to perform the substitutions on.
+   * @param {string[]} params
+   * @return {string} params - The new string with substitutions made.
    */
   sprintf(s, ...params) {
     if (params.length === 0) {
@@ -162,9 +156,9 @@ class i18n {
   /**
    * Substitutes variables with a list of injections.
     *
-   * @param string s - The string to perform the substitutions on.
-   * @param object map - An object with the substitions map e.g. {var: value}.
-   * @return string - The new string with substitutions made.
+   * @param {string} s - The string to perform the substitutions on.
+   * @param {Object} map - An object with the substitions map e.g. {var: value}.
+   * @return {string} - The new string with substitutions made.
    */
   inject(s, map) {
     const regx = new RegExp('{([A-Za-z0-9_]*)}', 'g');
@@ -215,7 +209,7 @@ class i18n {
     // Get locale (e.g. 'en_US') from common name (e.g. 'en')
     // by looking at i18n.lang tables
     if (rawLocale.length === 2) {
-      for (const compareLocale in this.lang) {
+      for (const compareLocale of this.lang) {
         if (compareLocale.substr(0, 2).toLowerCase() === rawLocale.toLowerCase()) {
           return compareLocale;
         }
@@ -236,6 +230,12 @@ class i18n {
    * Attach an event listener to the given object.
    * Modeled after behaviour.js, but externalized
    * to keep the i18n library standalone for now.
+   *
+   * @param {Element} obj
+   * @param {string} evType
+   * @param {function} fn
+   * @param {boolean} useCapture
+   * @returns {boolean}
    */
   addEvent(obj, evType, fn, useCapture) {
     if (obj.addEventListener) {
