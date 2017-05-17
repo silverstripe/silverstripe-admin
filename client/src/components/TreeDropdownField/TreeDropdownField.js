@@ -38,8 +38,15 @@ class TreeDropdownField extends Component {
   }
 
   componentDidMount() {
-    // Ensure root node is loaded
-    this.lazyLoad([]);
+    // Ensure root node is loaded, force invalidating the cache
+    this.loadTree([]);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.data.cacheKey !== this.props.data.cacheKey) {
+      // invalidate the tree cache, as paths have changed
+      this.loadTree([]);
+    }
   }
 
   /**
@@ -104,20 +111,27 @@ class TreeDropdownField extends Component {
    *
    * @return {Array}
    */
-  getDropdownOptions() {
+  getDropdownOptions(value) {
     // force renderMenu() to handle rendering even if options are empty
     const node = this.getVisibleTree();
-    let options = node ? node.children : [];
+    const options = node ? node.children.slice(0) : [];
 
     // Ensure selected value exists in the option
-    if (this.props.value) {
+    if (value) {
       // Get selected option
-      let selectedOption = options.find((option) => (option.id === this.props.value));
+      let selectedOption = options.find((option) => (option.id === value));
       if (!selectedOption) {
         selectedOption = this.getSelectedOption();
-        options = options.slice(0);
-        options.unshift(selectedOption);
       }
+      options.unshift(selectedOption);
+    }
+
+    if (this.props.data.hasEmptyDefault && !this.props.visible.length) {
+      options.unshift({
+        id: '',
+        title: this.props.data.emptyString,
+        disabled: false,
+      });
     }
 
     if (options && options.length) {
@@ -273,6 +287,10 @@ class TreeDropdownField extends Component {
       }
     }
 
+    return this.loadTree(path);
+  }
+
+  loadTree(path) {
     // Mark as loading
     this.props.actions.treeDropdownField.beginTreeUpdating(this.props.id, path);
 
@@ -405,10 +423,15 @@ class TreeDropdownField extends Component {
    */
   renderMenu(renderMenuOptions) {
     // Build root node
-    const tree = this.getVisibleTree() || {};
+    const visibleTree = this.getVisibleTree();
+    const tree = Object.assign({}, visibleTree, {
+      // we only want to show options with a title
+      children: this.getDropdownOptions().filter((option) => option.title !== null),
+    });
     const loading = this.props.loading.indexOf(tree.id || 0) > -1;
     const failed = this.props.failed.indexOf(tree.id || 0) > -1;
     const breadcrumbs = this.getBreadcrumbs();
+
     return (
       <TreeDropdownFieldMenu
         loading={loading}
@@ -460,7 +483,9 @@ class TreeDropdownField extends Component {
     const className = this.props.extraClass
       ? `treedropdownfield ${this.props.extraClass}`
       : 'treedropdownfield';
-    const options = this.getDropdownOptions();
+    const options = this.getDropdownOptions(this.props.value);
+    const value = (this.props.value === 0) ? '' : this.props.value;
+
     return (
       <Select
         searchable={false}
@@ -472,9 +497,9 @@ class TreeDropdownField extends Component {
         optionRenderer={this.renderOption}
         onChange={this.handleChange}
         onInputKeyDown={this.handleKeyDown}
-        value={this.props.value}
+        value={value}
         ref={(select) => { this.selectField = select; }}
-        placeholder={this.props.data.emptyTitle}
+        placeholder={this.props.data.emptyString}
         labelKey="title"
         valueKey="id"
       />
@@ -495,12 +520,14 @@ TreeDropdownField.propTypes = {
   loading: PropTypes.array, // List of nodes marked as loading
   failed: PropTypes.array, // List of nodes that failed to load
   data: PropTypes.shape({
+    cacheKey: PropTypes.string,
     urlTree: PropTypes.string.isRequired,
-    emptyTitle: PropTypes.string,
+    emptyString: PropTypes.string,
     valueObject: PropTypes.shape({
       id: PropTypes.number,
       title: PropTypes.string,
     }),
+    hasEmptyDefault: PropTypes.bool,
   }),
   onLoadingError: PropTypes.func,
   actions: PropTypes.shape({

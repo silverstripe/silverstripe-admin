@@ -9,7 +9,9 @@ import {
   SubmissionError,
   destroy as reduxDestroyForm,
   autofill,
+  initialize,
 } from 'redux-form';
+import { findField } from 'lib/schemaFieldValues';
 import * as schemaActions from 'state/schema/SchemaActions';
 import merge from 'merge';
 import Form from 'components/Form/Form';
@@ -81,8 +83,42 @@ class FormBuilderLoader extends Component {
    */
   handleSubmit(data, action, submitFn) {
     let promise = null;
+
+    // need to initialise form data and setSchema before any redirects by callbacks happen
+    const newSubmitFn = () => (
+      submitFn()
+        .then(formSchema => {
+          let schema = formSchema;
+          if (schema) {
+            // Strip errors out of schema response in preparation for setSchema and SubmissionError
+            schema = this.reduceSchemaErrors(schema);
+            this.props.actions.schema.setSchema(this.props.schemaUrl, schema);
+
+            const schemaRef = schema.schema || this.props.schema.schema;
+            if (schema.state) {
+              const formData = schema.state.fields.reduce((tempData, state) => {
+                if (!schemaRef) {
+                  return tempData;
+                }
+
+                const field = findField(schemaRef.fields, state.name);
+
+                if (!field || field.schemaType === 'Structural' || field.readOnly === true) {
+                  return tempData;
+                }
+                return Object.assign({}, tempData, {
+                  [state.name]: state.value,
+                });
+              }, {});
+              this.props.actions.reduxForm.initialize(this.props.schemaUrl, formData);
+            }
+          }
+          return schema;
+        })
+    );
+
     if (typeof this.props.handleSubmit === 'function') {
-      promise = this.props.handleSubmit(data, action, submitFn);
+      promise = this.props.handleSubmit(data, action, newSubmitFn);
     } else {
       promise = submitFn();
     }
@@ -92,15 +128,6 @@ class FormBuilderLoader extends Component {
     }
 
     return promise
-      .then(formSchema => {
-        let schema = formSchema;
-        if (schema) {
-          // Strip errors out of schema response in preparation for setSchema and SubmissionError
-          schema = this.reduceSchemaErrors(schema);
-          this.props.actions.schema.setSchema(this.props.schemaUrl, schema);
-        }
-        return schema;
-      })
       // TODO Suggest storing messages in a separate redux store rather than throw an error
       // ref: https://github.com/erikras/redux-form/issues/94#issuecomment-143398399
       .then(formSchema => {
@@ -339,7 +366,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: {
       schema: bindActionCreators(schemaActions, dispatch),
-      reduxForm: bindActionCreators({ autofill }, dispatch),
+      reduxForm: bindActionCreators({ autofill, initialize }, dispatch),
     },
   };
 }
