@@ -2,9 +2,10 @@
 
 namespace SilverStripe\Admin;
 
+use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\Controller;
 use SilverStripe\Core\Convert;
-use SilverStripe\Core\Object;
+use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\ORM\SS_List;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Versioned\Versioned;
@@ -19,10 +20,11 @@ use SilverStripe\Versioned\Versioned;
  *  _t('CMSBatchActions.PUBLISHED_PAGES', 'published %d pages')));
  * </code>
  */
-abstract class CMSBatchAction extends Object
+abstract class CMSBatchAction
 {
+    use Injectable;
 
-    protected $managedClass = 'SilverStripe\\CMS\\Model\\SiteTree';
+    protected $managedClass = SiteTree::class;
 
     /**
      * The the text to show in the dropdown for this action
@@ -163,7 +165,7 @@ abstract class CMSBatchAction extends Object
         }
         $onlyOnLive = array_keys($onlyOnLive);
 
-        if ($checkLivePages && $onlyOnLive && Object::has_extension($managedClass, Versioned::class)) {
+        if ($checkLivePages && $onlyOnLive && DataObject::has_extension($managedClass, Versioned::class)) {
             // Get the pages that only exist on live (deleted from stage)
             $livePages = Versioned::get_by_stage($managedClass, "Live")->byIDs($onlyOnLive);
             foreach ($livePages as $obj) {

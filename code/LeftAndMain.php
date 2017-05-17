@@ -2,6 +2,7 @@
 
 namespace SilverStripe\Admin;
 
+use BadMethodCallException;
 use LogicException;
 use SilverStripe\CMS\Controllers\SilverStripeNavigator;
 use SilverStripe\Control\ContentNegotiator;
@@ -379,24 +380,24 @@ class LeftAndMain extends Controller implements PermissionProvider
         $schemaID = $request->getURL();
         return $this->getSchemaResponse($schemaID, $form);
     }
-    
+
     public function methodSchema($request)
     {
         $method = $request->param('Method');
         $formName = $request->param('FormName');
         $itemID = $request->param('ItemID');
-    
+
         if (!$formName || !$method) {
             return (new HTTPResponse('Missing request params', 400));
         }
-    
+
         if (!$this->hasMethod($method)) {
             return (new HTTPResponse('Method not found', 404));
         }
         if (!$this->hasAction($method)) {
             return (new HTTPResponse('Method not accessible', 401));
         }
-    
+
         $methodItem = $this->{$method}();
         if (!$methodItem->hasMethod($formName)) {
             return (new HTTPResponse('Form not found', 404));
@@ -404,10 +405,10 @@ class LeftAndMain extends Controller implements PermissionProvider
         if (!$methodItem->hasAction($formName)) {
             return (new HTTPResponse('Form not accessible', 401));
         }
-    
+
         $form = $methodItem->{$formName}($itemID);
         $schemaID = $request->getURL();
-        
+
         return $this->getSchemaResponse($schemaID, $form);
     }
 
@@ -688,7 +689,7 @@ class LeftAndMain extends Controller implements PermissionProvider
 
         $title = $this->Title();
         if (!$response->getHeader('X-Controller')) {
-            $response->addHeader('X-Controller', $this->class);
+            $response->addHeader('X-Controller', static::class);
         }
         if (!$response->getHeader('X-Title')) {
             $response->addHeader('X-Title', urlencode($title));
@@ -771,13 +772,15 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     public function Link($action = null)
     {
-        // Handle missing url_segments
-        $segment = $this->config()->get('url_segment')
-            ?: $this->class;
-        
         // LeftAndMain methods have a top-level uri access
-        if ($segment === LeftAndMain::class) {
+        if (static::class === LeftAndMain::class) {
             $segment = '';
+        } else {
+            // Get url_segment
+            $segment = $this->config()->get('url_segment');
+            if (!$segment) {
+                throw new BadMethodCallException("LeftAndMain subclasses must have url_segment");
+            }
         }
 
         $link = Controller::join_links(
@@ -1615,7 +1618,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     protected function sessionNamespace()
     {
         $override = $this->stat('session_namespace');
-        return $override ? $override : $this->class;
+        return $override ? $override : static::class;
     }
 
     /**
@@ -1829,7 +1832,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             // If a modeladmin is namespaced you can apply this config to override
             // the default permission generation based on fully qualified class name.
             $code = $class::getRequiredPermissions();
-            
+
             if (!$code) {
                 continue;
             }
