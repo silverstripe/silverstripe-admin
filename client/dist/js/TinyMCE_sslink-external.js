@@ -9,8 +9,9 @@ n.length||(n=e('<div id="'+y+'" />'),e("body").append(n)),n.addClass("insert-lin
 return n.close()},s=function e(){return n.handleInsert.apply(n,arguments)},l=this.getOriginalAttributes()
 f.default.render(u.default.createElement(d.ApolloProvider,{store:r,client:o},u.default.createElement(_,{show:t,onInsert:s,onHide:a,title:i.default._t("Admin.LINK_EXTERNAL","Insert external link"),bodyClassName:"modal__dialog",
 className:"insert-link__dialog-wrapper--external",fileAttributes:l})),this[0])},buildAttributes:function e(t){var n=this._super(t),r=n.href
-return r.match(/^(https?)?:\/\//)||(r=window.location.protocol+"//"+r),r=r.replace(/^(https?)?:\/\/(#.*)$/,"$2"),r.match(/^(https?)?:\/\/$/)&&(r=""),n.href=r,n}})}),tinymce.PluginManager.add("sslinkexternal",function(e){
-return m.init(e)}),t.default=m},,function(e,t){"use strict"
+return r.match(/:\/\//)||(r=window.location.protocol+"//"+r),r=r.replace(/:\/\/(#.*)$/,"$2"),r.match(/:\/\/$/)&&(r=""),n.href=r,n}})}),tinymce.PluginManager.add("sslinkexternal",function(e){return m.init(e)
+
+}),t.default=m},,function(e,t){"use strict"
 function n(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(t,"__esModule",{value:!0})
 var r=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
 r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),o=function(){function e(){
