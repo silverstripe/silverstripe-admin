@@ -17,7 +17,7 @@ function provideInjector(Component) {
 
   InjectorProvider.childContextTypes = {
     injector: React.PropTypes.shape({
-      get: React.PropTypes.func
+      get: React.PropTypes.func,
     }),
   };
 

@@ -1,4 +1,5 @@
 import BootRoutes from './BootRoutes';
+import Injector from 'lib/Injector';
 import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { reducer as ReduxFormReducer } from 'redux-form';
@@ -72,7 +73,11 @@ function appBoot() {
   reducerRegister.add('treeDropdownField', TreeDropdownFieldReducer);
   reducerRegister.add('unsavedForms', UnsavedFormsReducer);
 
-  registerComponents();
+  // Force this to the end of the execution queue to ensure it's last.
+  window.setTimeout(() => {
+    registerComponents();
+    Injector.load();
+  }, 0);
 
   const initialState = {};
   const rootReducer = combineReducers(reducerRegister.getAll());

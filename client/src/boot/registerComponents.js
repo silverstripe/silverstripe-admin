@@ -1,4 +1,4 @@
-import Injector from '../lib/Injector';
+import Injector from 'lib/Injector';
 import TextField from 'components/TextField/TextField';
 import HiddenField from 'components/HiddenField/HiddenField';
 import DateField from 'components/DateField/DateField';
@@ -45,6 +45,4 @@ export default () => {
   Injector.register('FormAction', FormAction);
   Injector.register('LabelField', LabelField);
   Injector.register('TreeDropdownField', TreeDropdownField);
-
-  Injector.freeze();
 };

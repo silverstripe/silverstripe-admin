@@ -848,10 +848,6 @@ bootstrap@4.0.0-alpha.2:
   version "4.0.0-alpha.2"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.0.0-alpha.2.tgz#1238dd5c482d2545f2be78ab0d98731eb93e50c1"
 
-bottlejs@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/bottlejs/-/bottlejs-1.6.0.tgz#95854f7b4163b2eadb85eee5398444ca2d95cf1c"
-
 brace-expansion@^1.0.0:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.7.tgz#3effc3c50e000531fb720eaff80f0ae8ef23cf59"
@@ -4698,6 +4694,10 @@ to-arraybuffer@^1.0.0:
 to-fast-properties@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-1.0.2.tgz#f3f5c0c3ba7299a7ef99427e44633257ade43320"
+
+toposort@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/toposort/-/toposort-1.0.3.tgz#f02cd8a74bd8be2fc0e98611c3bacb95a171869c"
 
 tough-cookie@^2.3.2, tough-cookie@~2.3.0:
   version "2.3.2"

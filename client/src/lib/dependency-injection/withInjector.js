@@ -34,18 +34,16 @@ function withInjector(Component, dependencies, mapDependenciesToProps) {
           }
         }
       }
-
-      return React.createElement(
-        Component,
-        Object.assign({}, this.props, props),
-        this.props.children
-      );
+      const newProps = Object.assign({}, this.props, props);
+      return <Component {...newProps} />;
     }
   }
 
   Component.contextTypes = injectorContext;
   Injectable.contextTypes = injectorContext;
-  Injectable.displayName = `withInjector(${(Component.displayName || Component.name || 'Component')})`;
+  Injectable.displayName = `withInjector(
+    ${(Component.displayName || Component.name || 'Component')}
+  )`;
 
   return Injectable;
 }
