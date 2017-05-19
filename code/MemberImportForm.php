@@ -29,27 +29,29 @@ class MemberImportForm extends Form
     {
         if (!$fields) {
             $helpHtml = _t(
-                'SilverStripe\\Admin\\MemberImportForm.Help1',
+                __CLASS__ . '.Help1',
                 '<p>Import users in <em>CSV format</em> (comma-separated values).'
                 . ' <small><a href="#" class="toggle-advanced">Show advanced usage</a></small></p>'
             );
+
+            $importer = new MemberCsvBulkLoader();
+            $importSpec = $importer->getImportSpec();
+
+            $columns = implode(', ', array_keys($importSpec['fields']));
             $helpHtml .= _t(
-                'SilverStripe\\Admin\\MemberImportForm.Help2',
+                __CLASS__ . '.Help2',
                 '<div class="advanced">'
                 . '<h4>Advanced usage</h4>'
                 . '<ul>'
-                . '<li>Allowed columns: <em>%s</em></li>'
+                . '<li>Allowed columns: <em>{columns}</em></li>'
                 . '<li>Existing users are matched by their unique <em>Code</em> property, and updated with any new values from '
                 . 'the imported file.</li>'
                 . '<li>Groups can be assigned by the <em>Groups</em> column. Groups are identified by their <em>Code</em> property, '
                 . 'multiple groups can be separated by comma. Existing group memberships are not cleared.</li>'
                 . '</ul>'
-                . '</div>'
+                . '</div>',
+                array('columns' => $columns)
             );
-
-            $importer = new MemberCsvBulkLoader();
-            $importSpec = $importer->getImportSpec();
-            $helpHtml = sprintf($helpHtml, implode(', ', array_keys($importSpec['fields'])));
 
             $fields = new FieldList(
                 new LiteralField('Help', $helpHtml),
@@ -100,26 +102,26 @@ class MemberImportForm extends Form
         $msgArr = array();
         if ($result->CreatedCount()) {
             $msgArr[] = _t(
-                'SilverStripe\\Admin\\MemberImportForm.ResultCreated',
+                __CLASS__ . '.ResultCreated',
                 'Created {count} members',
                 array('count' => $result->CreatedCount())
             );
         }
         if ($result->UpdatedCount()) {
             $msgArr[] = _t(
-                'SilverStripe\\Admin\\MemberImportForm.ResultUpdated',
+                __CLASS__ . '.ResultUpdated',
                 'Updated {count} members',
                 array('count' => $result->UpdatedCount())
             );
         }
         if ($result->DeletedCount()) {
             $msgArr[] = _t(
-                'SilverStripe\\Admin\\MemberImportForm.ResultDeleted',
-                'Deleted %d members',
+                __CLASS__ . '.ResultDeleted',
+                'Deleted {count} members',
                 array('count' => $result->DeletedCount())
             );
         }
-        $msg = ($msgArr) ? implode(',', $msgArr) : _t('SilverStripe\\Admin\\MemberImportForm.ResultNone', 'No changes');
+        $msg = ($msgArr) ? implode(',', $msgArr) : _t(__CLASS__ . '.ResultNone', 'No changes');
 
         $this->sessionMessage($msg, 'good');
 
