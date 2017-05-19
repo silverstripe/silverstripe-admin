@@ -16229,6 +16229,13 @@ input.checkbox,input.radio,input[type=checkbox],input[type=radio]{
             flex:0 0 83.33333%;
   }
 
+  .cms-edit-form:not(.AssetAdmin) .form-group.htmleditor .form__field-holder,.form--inline .form-group.htmleditor .form__field-holder,.ss-insert-link .form__fieldgroup .form-group.htmleditor .form__field-holder{
+    -webkit-box-flex:0;
+        -ms-flex:0 0 100%;
+            flex:0 0 100%;
+    max-width:1155px;
+  }
+
   .cms-edit-form:not(.AssetAdmin) .form__field-extra-label,.form--inline .form__field-extra-label,.ss-insert-link .form__fieldgroup .form__field-extra-label{
     -webkit-box-flex:0;
         -ms-flex:0 0 16.66667%;
