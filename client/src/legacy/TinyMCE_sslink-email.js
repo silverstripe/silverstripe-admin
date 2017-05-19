@@ -8,16 +8,20 @@ import jQuery from 'jquery';
 import { createInsertLinkModal } from 'containers/InsertLinkModal/InsertLinkModal';
 import { provideInjector } from 'lib/Injector';
 
+const commandName = 'sslinkemail';
+
 // Link to email address
-TinyMCEActionRegistrar.addAction('sslink', {
-  text: i18n._t('Admin.LINKLABEL_EMAIL', 'Link to email address'),
-  // eslint-disable-next-line no-console
-  onclick: (editor) => editor.execCommand('sslinkemail'),
-});
+TinyMCEActionRegistrar
+  .addAction('sslink', {
+    text: i18n._t('Admin.LINKLABEL_EMAIL', 'Link to email address'),
+    // eslint-disable-next-line no-console
+    onclick: (editor) => editor.execCommand(commandName),
+  })
+  .addCommandWithUrlTest(commandName, /^mailto:/);
 
 const plugin = {
   init(editor) {
-    editor.addCommand('sslinkemail', () => {
+    editor.addCommand(commandName, () => {
       const field = window.jQuery(`#${editor.id}`).entwine('ss');
 
       field.openLinkEmailDialog();
@@ -128,5 +132,5 @@ jQuery.entwine('ss', ($) => {
 });
 
 // Adds the plugin class to the list of available TinyMCE plugins
-tinymce.PluginManager.add('sslinkemail', (editor) => plugin.init(editor));
+tinymce.PluginManager.add(commandName, (editor) => plugin.init(editor));
 export default plugin;

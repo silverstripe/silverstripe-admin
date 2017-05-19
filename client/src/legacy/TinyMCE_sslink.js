@@ -2,6 +2,7 @@
 import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
 import ReactDOM from 'react-dom';
 import jQuery from 'jquery';
+import { setupTinyMceInlineToolbar } from 'components/TinymceInlineToolbar/TinymceInlineToolbar';
 
 const plugin = {
   /**
@@ -11,7 +12,7 @@ const plugin = {
    */
   init(editor) {
     const actions = TinyMCEActionRegistrar.getActions('sslink')
-      .map((action) => Object.assign(
+      .map(action => Object.assign(
         {},
         action,
         { onclick: () => action.onclick(editor) }
@@ -23,10 +24,26 @@ const plugin = {
       type: 'menubutton',
       menu: actions,
     });
+
     editor.addMenuItem('sslink', {
       icon: 'link',
       text: 'Insert Link',
       menu: actions,
+    });
+
+    function openLinkDialog() {
+      const node = tinymce.activeEditor.selection.getNode();
+      const href = node.getAttribute('href');
+      if (href) {
+        editor.execCommand(TinyMCEActionRegistrar.getEditorCommandFromUrl(href));
+      }
+    }
+
+    editor.on('preinit', () => {
+      setupTinyMceInlineToolbar(editor, [
+        { type: 'button', onClick: openLinkDialog, text: 'Edit link' },
+        { type: 'button', onClick: () => editor.execCommand('unlink'), text: 'Remove link' },
+      ]);
     });
   },
 };
