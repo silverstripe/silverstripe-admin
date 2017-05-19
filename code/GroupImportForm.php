@@ -58,7 +58,7 @@ class GroupImportForm extends Form
                 $fileField = new FileField(
                     'CsvFile',
                     DBField::create_field('HTMLFragment', _t(
-                        'SilverStripe\\Admin\\MemberImportForm.FileFieldLabel',
+                        MemberImportForm::class . '.FileFieldLabel',
                         'CSV File <small>(Allowed extensions: *.csv)</small>'
                     ))
                 )
@@ -67,7 +67,7 @@ class GroupImportForm extends Form
         }
 
         if (!$actions) {
-            $action = new FormAction('doImport', _t('SilverStripe\\Admin\\MemberImportForm.BtnImport', 'Import from CSV'));
+            $action = new FormAction('doImport', _t(MemberImportForm::class . '.BtnImport', 'Import from CSV'));
             $action->addExtraClass('btn btn-outline-secondary font-icon-upload');
             $actions = new FieldList($action);
         }
@@ -112,7 +112,7 @@ class GroupImportForm extends Form
                 ['count' => $result->DeletedCount()]
             );
         }
-        $msg = ($msgArr) ? implode(',', $msgArr) : _t('SilverStripe\\Admin\\MemberImportForm.ResultNone', 'No changes');
+        $msg = ($msgArr) ? implode(',', $msgArr) : _t(MemberImportForm::class . '.ResultNone', 'No changes');
 
         $this->sessionMessage($msg, 'good');
 

@@ -6,6 +6,7 @@ use BadMethodCallException;
 use InvalidArgumentException;
 use LogicException;
 use ReflectionClass;
+use SilverStripe\CMS\Controllers\CMSMain;
 use SilverStripe\CMS\Controllers\SilverStripeNavigator;
 use SilverStripe\Control\ContentNegotiator;
 use SilverStripe\Control\Controller;
@@ -1452,14 +1453,14 @@ class LeftAndMain extends Controller implements PermissionProvider
             if (!$actions || !$actions->count()) {
                 if ($record->hasMethod('canEdit') && $record->canEdit()) {
                     $actions->push(
-                        FormAction::create('save', _t('SilverStripe\\CMS\\Controllers\\CMSMain.SAVE', 'Save'))
+                        FormAction::create('save', _t(CMSMain::class . '.SAVE', 'Save'))
                             ->addExtraClass('btn btn-primary')
                             ->addExtraClass('font-icon-add-circle')
                     );
                 }
                 if ($record->hasMethod('canDelete') && $record->canDelete()) {
                     $actions->push(
-                        FormAction::create('delete', _t('SilverStripe\\Admin\\ModelAdmin.DELETE', 'Delete'))
+                        FormAction::create('delete', _t(ModelAdmin::class . '.DELETE', 'Delete'))
                             ->addExtraClass('btn btn-secondary')
                     );
                 }
@@ -1968,7 +1969,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         $perms = [
             "CMS_ACCESS_LeftAndMain" => [
                 'name' => _t(__CLASS__ . '.ACCESSALLINTERFACES', 'Access to all CMS sections'),
-                'category' => _t('SilverStripe\\Security\\Permission.CMS_ACCESS_CATEGORY', 'CMS Access'),
+                'category' => _t(Permission::class . '.CMS_ACCESS_CATEGORY', 'CMS Access'),
                 'help' => _t(__CLASS__ . '.ACCESSALLINTERFACESHELP', 'Overrules more specific access settings.'),
                 'sort' => -100
             ]
@@ -1999,12 +2000,12 @@ class LeftAndMain extends Controller implements PermissionProvider
             $title = LeftAndMain::menu_title($class);
             $perms[$code] = [
                 'name' => _t(
-                    'SilverStripe\\CMS\\Controllers\\CMSMain.ACCESS',
+                    CMSMain::class . '.ACCESS',
                     "Access to '{title}' section",
                     "Item in permission selection identifying the admin section. Example: Access to 'Files & Images'",
                     ['title' => $title]
                 ),
-                'category' => _t('SilverStripe\\Security\\Permission.CMS_ACCESS_CATEGORY', 'CMS Access')
+                'category' => _t(Permission::class . '.CMS_ACCESS_CATEGORY', 'CMS Access')
             ];
         }
 
