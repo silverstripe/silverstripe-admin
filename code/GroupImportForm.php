@@ -28,28 +28,30 @@ class GroupImportForm extends Form
     {
         if (!$fields) {
             $helpHtml = _t(
-                'SilverStripe\\Admin\\GroupImportForm.Help1',
+                __CLASS__ . '.Help1',
                 '<p>Import one or more groups in <em>CSV</em> format (comma-separated values).'
                 . ' <small><a href="#" class="toggle-advanced">Show advanced usage</a></small></p>'
             );
+
+            $importer = new GroupCsvBulkLoader();
+            $importSpec = $importer->getImportSpec();
+
+            $columns = implode(', ', array_keys($importSpec['fields']));
             $helpHtml .= _t(
-                'SilverStripe\\Admin\\GroupImportForm.Help2',
+                __CLASS__ . '.Help2',
                 '<div class="advanced">'
                 . '<h4>Advanced usage</h4>'
                 . '<ul>'
-                . '<li>Allowed columns: <em>%s</em></li>'
+                . '<li>Allowed columns: <em>{columns}</em></li>'
                 . '<li>Existing groups are matched by their unique <em>Code</em> value, and updated with any new values from the '
                 . 'imported file</li>'
                 . '<li>Group hierarchies can be created by using a <em>ParentCode</em> column.</li>'
                 . '<li>Permission codes can be assigned by the <em>PermissionCode</em> column. Existing permission codes are not '
                 . 'cleared.</li>'
                 . '</ul>'
-                . '</div>'
+                . '</div>',
+                array('columns' => $columns)
             );
-
-            $importer = new GroupCsvBulkLoader();
-            $importSpec = $importer->getImportSpec();
-            $helpHtml = sprintf($helpHtml, implode(', ', array_keys($importSpec['fields'])));
 
             $fields = new FieldList(
                 new LiteralField('Help', $helpHtml),
@@ -91,22 +93,22 @@ class GroupImportForm extends Form
         $msgArr = array();
         if ($result->CreatedCount()) {
             $msgArr[] = _t(
-                'SilverStripe\\Admin\\GroupImportForm.ResultCreated',
+                __CLASS__ . '.ResultCreated',
                 'Created {count} groups',
                 array('count' => $result->CreatedCount())
             );
         }
         if ($result->UpdatedCount()) {
             $msgArr[] = _t(
-                'SilverStripe\\Admin\\GroupImportForm.ResultUpdated',
-                'Updated %d groups',
+                __CLASS__ . '.ResultUpdated',
+                'Updated {count} groups',
                 array('count' => $result->UpdatedCount())
             );
         }
         if ($result->DeletedCount()) {
             $msgArr[] = _t(
-                'SilverStripe\\Admin\\GroupImportForm.ResultDeleted',
-                'Deleted %d groups',
+                __CLASS__ . '.ResultDeleted',
+                'Deleted {count} groups',
                 array('count' => $result->DeletedCount())
             );
         }

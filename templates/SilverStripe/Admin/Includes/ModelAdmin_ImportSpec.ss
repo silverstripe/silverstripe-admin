@@ -1,8 +1,8 @@
 <div class="importSpec" id="SpecFor{$ClassName}">
-	<a href="#SpecDetailsFor{$ClassName}" class="detailsLink"><% sprintf(_t('SilverStripe\Admin\ModelAdmin.IMPORTSPECLINK', 'Show Specification for %s'),$ModelName) %></a>
+	<a href="#SpecDetailsFor{$ClassName}" class="detailsLink"><%t SilverStripe\Admin\ModelAdmin.IMPORTSPECLINK 'Show Specification for {model}' model=$ModelName %></a>
 	<div class="details" id="SpecDetailsFor{$ClassName}">
-	<h4><% sprintf(_t('SilverStripe\Admin\ModelAdmin.IMPORTSPECTITLE', 'Specification for %s'),$ModelName) %></h4>
-		<h5><% _t('SilverStripe\Admin\ModelAdmin.IMPORTSPECFIELDS', 'Database columns') %></h5>
+	<h4><%t SilverStripe\Admin\ModelAdmin.IMPORTSPECTITLE 'Specification for {model}' model=$ModelName %></h4>
+		<h5><%t SilverStripe\Admin\ModelAdmin.IMPORTSPECFIELDS 'Database columns' %></h5>
 		<% loop $Fields %>
 		<dl>
 			<dt><em>$Name</em></dt>
