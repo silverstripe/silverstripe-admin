@@ -16233,7 +16233,7 @@ input.checkbox,input.radio,input[type=checkbox],input[type=radio]{
     -webkit-box-flex:0;
         -ms-flex:0 0 100%;
             flex:0 0 100%;
-    max-width:1155px;
+    max-width:calc(895px + 16.66667%);
   }
 
   .cms-edit-form:not(.AssetAdmin) .form__field-extra-label,.form--inline .form__field-extra-label,.ss-insert-link .form__fieldgroup .form__field-extra-label{
