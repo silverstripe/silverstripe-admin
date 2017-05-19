@@ -2,6 +2,7 @@
 import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
 import ReactDOM from 'react-dom';
 import jQuery from 'jquery';
+import createTinyMceInlineToolbar from 'lib/createTinymceInlineToolbar';
 
 const plugin = {
   /**
@@ -11,10 +12,10 @@ const plugin = {
    */
   init(editor) {
     const actions = TinyMCEActionRegistrar.getActions('sslink')
-      .map((action) => Object.assign(
+      .map(action => Object.assign(
         {},
         action,
-        { onclick: () => action.onclick(editor) }
+        { onclick: () => action.onclick(editor) },
       ));
 
     editor.addButton('sslink', {
@@ -23,11 +24,35 @@ const plugin = {
       type: 'menubutton',
       menu: actions,
     });
+
     editor.addMenuItem('sslink', {
       icon: 'link',
       text: 'Insert Link',
       menu: actions,
     });
+
+    function openLinkDialog() {
+      const node = tinymce.activeEditor.selection.getNode();
+      if (node.href) {
+        let command = 'sslinkexternal';
+
+        if (/^mailto:/.test(node.href)) {
+          command = 'sslinkemail';
+        } else if (/^\[sitetree/.test(node.href)) {
+          command = 'sslinkpage';
+        } else if (/^\[file_link/.test(node.href)) {
+          command = 'sslinkfile';
+        }
+
+        editor.execCommand(command);
+      }
+    }
+
+    const toolbar = createTinyMceInlineToolbar(editor, [
+      { type: 'button', onClick: openLinkDialog, tooltip: 'Edit link', icon: 'link' },
+      { type: 'button', onClick: () => editor.execCommand('unlink'), tooltip: 'Unlink', icon: 'unlink' },
+    ]);
+
   },
 };
 

@@ -1,6 +1,6 @@
 webpackJsonp([3],[function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0})
-var i=n(5),o=r(i),a=n(2),s=r(a),l=n(6),u=r(l),c=n(3),f=r(c),d=n(7),p=n(4),h=r(p),m=n(8)
+var i=n(6),o=r(i),a=n(2),s=r(a),l=n(7),u=r(l),c=n(3),f=r(c),d=n(8),p=n(4),h=r(p),m=n(9)
 s.default.addAction("sslink",{text:o.default._t("Admin.LINKLABEL_EMAIL","Link to email address"),onclick:function e(t){return t.execCommand("sslinkemail")}})
 var v={init:function e(t){t.addCommand("sslinkemail",function(){var e=window.jQuery("#"+t.id).entwine("ss")
 e.openLinkEmailDialog()})}},b="insert-link__dialog-wrapper--email",y="SilverStripe\\Admin\\LeftAndMain",w="EditorEmailLink",g=(0,m.createInsertLinkModal)(y,w)
@@ -20,7 +20,7 @@ function n(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as
 var r=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
 r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),i=function(){function e(){
 n(this,e),this.actions={}}return r(e,[{key:"addAction",value:function e(t,n){this.actions[t]=this.getActions(t).concat([n])}},{key:"getActions",value:function e(t){return this.actions[t]||[]}}]),e}()
-window.ss=window.ss||{},window.ss.tinymceactions=window.ss.tinymceactions||new i,t.default=window.ss.tinymceactions},,,function(e,t){e.exports=i18n},,function(e,t){e.exports=ReactApollo},function(e,t,n){
+window.ss=window.ss||{},window.ss.tinymceactions=window.ss.tinymceactions||new i,t.default=window.ss.tinymceactions},,,,function(e,t){e.exports=i18n},,function(e,t){e.exports=ReactApollo},function(e,t,n){
 "use strict"
 function r(e){if(e&&e.__esModule)return e
 var t={}
@@ -37,7 +37,7 @@ if(Array.isArray(t))return t
 if(Symbol.iterator in Object(t))return e(t,n)
 throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),c=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]
 for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},f=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
-r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),d=n(6),p=i(d),h=n(9),m=n(10),v=n(11),b=i(v),y=n(12),w=r(y),g=function(e){
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),d=n(7),p=i(d),h=n(10),m=n(11),v=n(12),b=i(v),y=n(13),w=r(y),g=function(e){
 function t(e){o(this,t)
 var n=a(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
 return n.handleSubmit=n.handleSubmit.bind(n),n.setOverrides(e.show?e:null),n}return s(t,e),f(t,[{key:"componentWillReceiveProps",value:function e(t){(t.show&&!this.props.show||!t.show&&this.props.show)&&this.setOverrides(t.show?t:null)
