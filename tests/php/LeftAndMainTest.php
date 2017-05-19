@@ -24,7 +24,7 @@ class LeftAndMainTest extends FunctionalTest
         //$this->autoFollowRedirection = false;
         $this->resetMenu();
         $this->backupCombined = Requirements::get_combined_files_enabled();
-        $base = ModuleLoader::instance()->getManifest()->getModule('silverstripe/admin');
+        $base = ModuleLoader::inst()->getManifest()->getModule('silverstripe/admin');
         $assetsDir = File::join_paths($base->getRelativePath(), 'tests/php/assets');
 
         LeftAndMain::config()
