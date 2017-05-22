@@ -312,6 +312,13 @@ input.radio {
       @include make-col-span(10);
     }
 
+    // HTML editor to expand to maximise to the space
+    // Max-width to visually match other stacked fields + label
+    .form-group.htmleditor .form__field-holder {
+      @include make-col-span(12);
+      max-width: calc(#{$input-max-width} + 16.66667%);
+    }
+
     .form__field-extra-label {
       @include make-col-span(2);
       @include make-col-offset(0);
