@@ -619,25 +619,18 @@ return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function u(e,t){if("funct
 e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}function l(e,t){var n=e.schemas[t.schemaUrl],r=e.form&&e.form[t.schemaUrl],o=r&&r.submitting,i=r&&r.values,a=n&&n.stateOverride,s=n&&n.metadata&&n.metadata.loading
 
 
-<<<<<<< HEAD
 return{schema:n,submitting:o,values:i,stateOverrides:a,loading:s}}function c(e){return{actions:{schema:(0,y.bindActionCreators)(C,e),reduxForm:(0,y.bindActionCreators)({autofill:_.autofill,initialize:_.initialize
 },e)}}}Object.defineProperty(t,"__esModule",{value:!0})
 var d=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]
 for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},p=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
+<<<<<<< HEAD
 r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),f=n(6),h=o(f),m=n(10),y=n(9),v=n(18),g=o(v),b=n(28),w=o(b),_=n(119),E=n(30),T=n(12),C=r(T),P=n(24),O=o(P),S=n(38),k=o(S),j=n(120),x=o(j),F=function(e){
+=======
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),f=n(6),h=o(f),m=n(10),y=n(9),v=n(18),g=o(v),b=n(28),w=o(b),_=n(123),E=n(30),T=n(12),C=r(T),P=n(24),O=o(P),S=n(38),k=o(S),j=n(124),x=o(j),F=function(e){
+>>>>>>> rebase
 function t(e){a(this,t)
 var n=s(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
 return n.handleSubmit=n.handleSubmit.bind(n),n.clearSchema=n.clearSchema.bind(n),n.reduceSchemaErrors=n.reduceSchemaErrors.bind(n),n.handleAutofill=n.handleAutofill.bind(n),n}return u(t,e),p(t,[{key:"componentDidMount",
-=======
-return{schema:n,submitting:o,values:i,stateOverrides:a,loading:s}}function l(e){return{actions:{schema:(0,m.bindActionCreators)(E,e),reduxForm:(0,m.bindActionCreators)({autofill:w.autofill},e)}}}Object.defineProperty(t,"__esModule",{
-value:!0})
-var c=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]
-for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},d=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
-r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),p=n(6),f=o(p),h=n(10),m=n(9),y=n(18),v=o(y),g=n(28),b=o(g),w=n(123),_=n(12),E=r(_),T=n(24),C=o(T),P=n(38),O=o(P),S=n(124),k=o(S),j=function(e){
-function t(e){i(this,t)
-var n=a(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
-return n.handleSubmit=n.handleSubmit.bind(n),n.clearSchema=n.clearSchema.bind(n),n.reduceSchemaErrors=n.reduceSchemaErrors.bind(n),n.handleAutofill=n.handleAutofill.bind(n),n}return s(t,e),d(t,[{key:"componentDidMount",
->>>>>>> Context working
 value:function e(){this.fetch()}},{key:"componentDidUpdate",value:function e(t){this.props.schemaUrl!==t.schemaUrl&&(this.clearSchema(t.schemaUrl),this.fetch())}},{key:"componentWillUnmount",value:function e(){
 this.clearSchema(this.props.schemaUrl)}},{key:"getMessages",value:function e(t){var n={}
 return t&&t.fields&&t.fields.forEach(function(e){e.message&&(n[e.name]=e.message)}),n}},{key:"clearSchema",value:function e(t){t&&((0,_.destroy)(t),this.props.actions.schema.setSchema(t,null))}},{key:"handleSubmit",
@@ -658,15 +651,7 @@ return n.state||(n=d({},n,{state:this.props.schema.state})),n=d({},n,{state:d({}
 })}),messages:t.errors.filter(function(e){return!e.field})})}),delete n.errors,(0,w.default)(n)}},{key:"overrideStateData",value:function e(t){if(!this.props.stateOverrides||!t)return t
 var n=this.props.stateOverrides.fields,r=t.fields
 return n&&r&&(r=r.map(function(e){var t=n.find(function(t){return t.name===e.name})
-<<<<<<< HEAD
-<<<<<<< HEAD
 return t?O.default.recursive(!0,e,t):e})),d({},t,this.props.stateOverrides,{fields:r})}},{key:"callFetch",value:function e(t){return(0,g.default)(this.props.schemaUrl,{headers:{"X-FormSchema-Request":t.join(",")
-=======
-return t?P.default.recursive(!0,e,t):e})),c({},t,this.props.stateOverrides,{fields:r})}},{key:"callFetch",value:function e(t){return(0,v.default)(this.props.schemaUrl,{headers:{"X-FormSchema-Request":t.join(",")
->>>>>>> Refine public API
-=======
-return t?C.default.recursive(!0,e,t):e})),c({},t,this.props.stateOverrides,{fields:r})}},{key:"callFetch",value:function e(t){return(0,v.default)(this.props.schemaUrl,{headers:{"X-FormSchema-Request":t.join(",")
->>>>>>> Proof of concepts working, API finalised
 },credentials:"same-origin"}).then(function(e){return e.json()})}},{key:"fetch",value:function e(){var t=!(arguments.length>0&&void 0!==arguments[0])||arguments[0],n=this,r=!(arguments.length>1&&void 0!==arguments[1])||arguments[1],o=!(arguments.length>2&&void 0!==arguments[2])||arguments[2],i=["auto"]
 
 
@@ -680,10 +665,10 @@ errors:[{value:e.message,type:"error"}]})
 throw e}))}},{key:"handleAutofill",value:function e(t,n){this.props.actions.reduxForm.autofill(this.props.schemaUrl,t,n)}},{key:"render",value:function e(){if(!this.props.schema||!this.props.schema.schema||this.props.loading)return null
 
 
-<<<<<<< HEAD
 var t=d({},this.props,{form:this.props.schemaUrl,onSubmitSuccess:this.props.onSubmitSuccess,handleSubmit:this.handleSubmit,onAutofill:this.handleAutofill})
 return h.default.createElement(x.default,t)}}]),t}(f.Component)
 F.propTypes=d({},j.basePropTypes,{actions:f.PropTypes.shape({schema:f.PropTypes.object,reduxFrom:f.PropTypes.object}),schemaUrl:f.PropTypes.string.isRequired,schema:j.schemaPropType,form:f.PropTypes.string,
+<<<<<<< HEAD
 <<<<<<< HEAD
 submitting:f.PropTypes.bool,onFetchingSchema:f.PropTypes.func}),F.defaultProps={baseFormComponent:(0,_.reduxForm)()(k.default),baseFieldComponent:_.Field},t.default=(0,m.connect)(l,c)(F)},function(e,t){
 =======
@@ -708,6 +693,9 @@ e.exports=ReduxForm},function(e,t){e.exports=SchemaActions},function(e,t){e.expo
 return f.default.createElement(k.default,t)}}]),t}(p.Component)
 j.propTypes=c({},S.basePropTypes,{actions:p.PropTypes.shape({schema:p.PropTypes.object,reduxFrom:p.PropTypes.object}),schemaUrl:p.PropTypes.string.isRequired,schema:S.schemaPropType,form:p.PropTypes.string,
 submitting:p.PropTypes.bool,onFetchingSchema:p.PropTypes.func}),j.defaultProps={baseFormComponent:(0,w.reduxForm)()(O.default),baseFieldComponent:w.Field},t.default=(0,h.connect)(u,l)(j)},function(e,t){
+=======
+submitting:f.PropTypes.bool,onFetchingSchema:f.PropTypes.func}),F.defaultProps={baseFormComponent:(0,_.reduxForm)()(k.default),baseFieldComponent:_.Field},t.default=(0,m.connect)(l,c)(F)},function(e,t){
+>>>>>>> rebase
 e.exports=ReduxForm},function(e,t){e.exports=FormBuilder},function(e,t,n){(function(t){e.exports=t.FormBuilderModal=n(126)}).call(t,function(){return this}())},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function i(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called")
 
@@ -1119,20 +1107,12 @@ e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,wri
 
 
 if(r){var o=r.tree||{},i=r.visible||[],a=r.loading||[],s=r.failed||[]
-<<<<<<< HEAD
-<<<<<<< HEAD
 return{tree:o,visible:i,loading:a,failed:s}}return{}}function c(e){return{actions:{treeDropdownField:(0,y.bindActionCreators)(O,e)}}}Object.defineProperty(t,"__esModule",{value:!0}),t.ConnectedTreeDropdownField=t.TreeDropdownField=void 0
-=======
-return{tree:o,visible:i,loading:a,failed:s}}return{}}function c(e){return{actions:{treeDropdownField:(0,m.bindActionCreators)(C,e)}}}Object.defineProperty(t,"__esModule",{value:!0}),t.ConnectedTreeDropdownField=t.TreeDropdownField=void 0
->>>>>>> Refine public API
-=======
-return{tree:o,visible:i,loading:a,failed:s}}return{}}function c(e){return{actions:{treeDropdownField:(0,m.bindActionCreators)(P,e)}}}Object.defineProperty(t,"__esModule",{value:!0}),t.ConnectedTreeDropdownField=t.TreeDropdownField=void 0
->>>>>>> Proof of concepts working, API finalised
 
 
-<<<<<<< HEAD
 var d=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]
 for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},p=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
+<<<<<<< HEAD
 <<<<<<< HEAD
 r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),f=n(6),h=o(f),m=n(10),y=n(9),v=n(152),g=o(v),b=n(18),w=o(b),_=n(167),E=o(_),T=n(5),C=o(T),P=n(179),O=r(P),S=n(163),k=o(S),j=n(161),x=o(j),F=n(181),D=o(F),R=n(34),A=function(e){
 =======
@@ -1164,6 +1144,9 @@ r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Obj
 r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),p=n(6),f=o(p),h=n(10),m=n(9),y=n(156),v=o(y),g=n(18),b=o(g),w=n(171),_=o(w),E=n(5),T=o(E),C=n(183),P=r(C),O=n(167),S=o(O),k=n(165),j=o(k),x=n(185),F=o(x),D=function(e){
 >>>>>>> Proof of concepts working, API finalised
 >>>>>>> Proof of concepts working, API finalised
+=======
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),f=n(6),h=o(f),m=n(10),y=n(9),v=n(156),g=o(v),b=n(18),w=o(b),_=n(171),E=o(_),T=n(5),C=o(T),P=n(183),O=r(P),S=n(167),k=o(S),j=n(165),x=o(j),F=n(185),D=o(F),A=n(34),R=function(e){
+>>>>>>> rebase
 function t(e){a(this,t)
 var n=s(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
 return n.render=n.render.bind(n),n.renderMenu=n.renderMenu.bind(n),n.renderOption=n.renderOption.bind(n),n.getBreadcrumbs=n.getBreadcrumbs.bind(n),n.getDropdownOptions=n.getDropdownOptions.bind(n),n.getSelectedOption=n.getSelectedOption.bind(n),
@@ -1215,9 +1198,9 @@ if(n)switch(t.keyCode){case 37:this.handleBack(t)
 break
 case 39:n.count&&this.handleNavigate(t,n.id)}}},{key:"handleBack",value:function e(t){t.stopPropagation(),t.preventDefault()
 var n=this.props.visible
-<<<<<<< HEAD
 n.length&&(n=n.slice(0,n.length-1)),this.lazyLoad(n),this.props.actions.treeDropdownField.setVisible(this.props.id,n)}},{key:"renderMenu",value:function e(t){var n=this.getVisibleTree(),r=d({},n,{children:this.getDropdownOptions().filter(function(e){
 return null!==e.title})}),o=this.props.loading.indexOf(r.id||0)>-1,i=this.props.failed.indexOf(r.id||0)>-1,a=this.getBreadcrumbs()
+<<<<<<< HEAD
 <<<<<<< HEAD
 return h.default.createElement(k.default,{loading:o,failed:i,tree:r,breadcrumbs:a,renderMenuOptions:t,onBack:this.handleBack})}},{key:"renderOption",value:function e(t){var n=this,r=null
 =======
@@ -1231,6 +1214,9 @@ return f.default.createElement(S.default,{loading:r,failed:o,tree:n,breadcrumbs:
 >>>>>>> Context working
 >>>>>>> Context working
 >>>>>>> Context working
+=======
+return h.default.createElement(k.default,{loading:o,failed:i,tree:r,breadcrumbs:a,renderMenuOptions:t,onBack:this.handleBack})}},{key:"renderOption",value:function e(t){var n=this,r=null
+>>>>>>> rebase
 if(t.count){var o=function e(r){return n.handleNavigate(r,t.id)}
 r=h.default.createElement("button",{className:"treedropdownfield__option-button",onClick:o,onMouseDown:o,onTouchEnd:o},h.default.createElement("span",{className:"treedropdownfield__option-count"},t.count),h.default.createElement("span",{
 className:"icon font-icon-list"}))}return h.default.createElement("div",{className:"treedropdownfield__option flexbox-area-grow fill-width"},h.default.createElement("span",{className:"treedropdownfield__option__title flexbox-area-grow"
@@ -1238,14 +1224,15 @@ className:"icon font-icon-list"}))}return h.default.createElement("div",{classNa
 
 
 if(this.props.readOnly||this.props.disabled){var a=this.props.data.valueObject,s=a&&a.title||this.props.data.emptyString
-return h.default.createElement("div",{className:r},h.default.createElement("span",null,s),h.default.createElement(R.FormControl,d({type:"hidden",name:this.props.name,value:this.props.value},n)))}return h.default.createElement(E.default,{
+return h.default.createElement("div",{className:r},h.default.createElement("span",null,s),h.default.createElement(A.FormControl,d({type:"hidden",name:this.props.name,value:this.props.value},n)))}return h.default.createElement(E.default,{
 searchable:!1,className:r,name:this.props.name,options:o,inputProps:n,menuRenderer:this.renderMenu,optionRenderer:this.renderOption,onChange:this.handleChange,onInputKeyDown:this.handleKeyDown,value:i,
 ref:function e(n){t.selectField=n},placeholder:this.props.data.emptyString,labelKey:"title",valueKey:"id"})}}]),t}(f.Component)
-A.propTypes={extraClass:f.PropTypes.string,id:f.PropTypes.string,name:f.PropTypes.string.isRequired,onChange:f.PropTypes.func,value:f.PropTypes.oneOfType([f.PropTypes.string,f.PropTypes.number]),readOnly:f.PropTypes.bool,
+R.propTypes={extraClass:f.PropTypes.string,id:f.PropTypes.string,name:f.PropTypes.string.isRequired,onChange:f.PropTypes.func,value:f.PropTypes.oneOfType([f.PropTypes.string,f.PropTypes.number]),readOnly:f.PropTypes.bool,
 disabled:f.PropTypes.bool,tree:f.PropTypes.shape(x.default.propTypes),visible:f.PropTypes.array,loading:f.PropTypes.array,failed:f.PropTypes.array,data:f.PropTypes.shape({cacheKey:f.PropTypes.string,urlTree:f.PropTypes.string.isRequired,
 emptyString:f.PropTypes.string,valueObject:f.PropTypes.shape({id:f.PropTypes.number,title:f.PropTypes.string}),hasEmptyDefault:f.PropTypes.bool}),onLoadingError:f.PropTypes.func,actions:f.PropTypes.shape({
-treeDropdownField:f.PropTypes.shape({beginTreeUpdating:f.PropTypes.func,updateTreeFailed:f.PropTypes.func,updateTree:f.PropTypes.func,setVisible:f.PropTypes.func})})},A.defaultProps={value:"",extraClass:"",
+treeDropdownField:f.PropTypes.shape({beginTreeUpdating:f.PropTypes.func,updateTreeFailed:f.PropTypes.func,updateTree:f.PropTypes.func,setVisible:f.PropTypes.func})})},R.defaultProps={value:"",extraClass:"",
 className:"",tree:{},visible:[],loading:[],failed:[]}
+<<<<<<< HEAD
 <<<<<<< HEAD
 var M=(0,m.connect)(l,c)(A)
 t.TreeDropdownField=A,t.ConnectedTreeDropdownField=M,t.default=(0,g.default)(M)},function(e,t,n){"use strict"
@@ -1268,6 +1255,10 @@ var A=(0,h.connect)(l,c)(D)
 t.TreeDropdownField=D,t.ConnectedTreeDropdownField=A,t.default=(0,v.default)(A)},function(e,t,n){"use strict"
 >>>>>>> Refine public API
 >>>>>>> Refine public API
+=======
+var I=(0,m.connect)(l,c)(R)
+t.TreeDropdownField=R,t.ConnectedTreeDropdownField=I,t.default=(0,g.default)(I)},function(e,t,n){"use strict"
+>>>>>>> rebase
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t){var n={}
 for(var r in e)t.indexOf(r)>=0||Object.prototype.hasOwnProperty.call(e,r)&&(n[r]=e[r])
 return n}function i(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}function a(e){var t=typeof e
