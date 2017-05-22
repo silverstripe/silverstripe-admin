@@ -7,10 +7,8 @@ use SilverStripe\Core\ClassInfo;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Convert;
 use SilverStripe\Core\Manifest\ClassLoader;
-use SilverStripe\Core\Object;
 use SilverStripe\Control\Controller;
 use SilverStripe\Dev\TestOnly;
-use SilverStripe\i18n\i18n;
 use SilverStripe\i18n\i18nEntityProvider;
 use SilverStripe\Security\Member;
 use IteratorAggregate;
@@ -30,7 +28,7 @@ use ArrayIterator;
  * Additional CMSMenu items can be added through {@link LeftAndMainExtension::init()}
  * extensions added to {@link LeftAndMain}.
  */
-class CMSMenu extends Object implements IteratorAggregate, i18nEntityProvider
+class CMSMenu implements IteratorAggregate, i18nEntityProvider
 {
 
     /**

@@ -3,7 +3,7 @@
 namespace SilverStripe\Admin;
 
 use SilverStripe\Core\Convert;
-use SilverStripe\Core\Object;
+use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 
@@ -15,8 +15,9 @@ use SilverStripe\ORM\FieldType\DBHTMLText;
  *
  * @see CMSMenu
  */
-class CMSMenuItem extends Object
+class CMSMenuItem
 {
+    use Injectable;
 
     /**
      * The (translated) menu title
@@ -71,8 +72,6 @@ class CMSMenuItem extends Object
         $this->controller = $controller;
         $this->priority = $priority;
         $this->iconClass = $iconClass;
-
-        parent::__construct();
     }
 
     /**
@@ -112,6 +111,8 @@ class CMSMenuItem extends Object
             $parts[] = ($value === true) ? "{$name}=\"{$name}\"" : "{$name}=\"" . Convert::raw2att($value) . "\"";
         }
 
-        return DBField::create_field('HTMLFragment', implode(' ', $parts));
+        /** @var DBHTMLText $fragment */
+        $fragment = DBField::create_field('HTMLFragment', implode(' ', $parts));
+        return $fragment;
     }
 }
