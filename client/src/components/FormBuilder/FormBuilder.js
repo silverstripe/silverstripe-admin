@@ -4,7 +4,7 @@ import schemaFieldValues, { schemaMerge, findField } from 'lib/schemaFieldValues
 import SilverStripeComponent from 'lib/SilverStripeComponent';
 import Validator from 'lib/Validator';
 import backend from 'lib/Backend';
-import Injector, { withInjector } from 'lib/Injector';
+import { withInjector } from 'lib/Injector';
 
 class FormBuilder extends SilverStripeComponent {
 

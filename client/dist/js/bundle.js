@@ -329,7 +329,7 @@ try{for(var a=e[Symbol.iterator](),s;!(r=(s=a.next()).done)&&(n.push(s.value),!t
 if(Array.isArray(t))return t
 if(Symbol.iterator in Object(t))return e(t,n)
 throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),c=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
-r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),d=n(6),p=r(d),f=n(24),h=r(f),m=n(30),y=r(m),v=n(33),g=r(v),b=n(49),w=r(b),_=n(115),E=r(_),T=n(116),C=r(T),P=function(e){
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),d=n(6),p=r(d),f=n(24),h=r(f),m=n(30),y=r(m),v=n(33),g=r(v),b=n(49),w=r(b),_=n(115),E=r(_),T=n(116),C=function(e){
 function t(e){i(this,t)
 var n=a(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e)),r=e.schema.schema
 return n.state={submittingAction:null},n.submitApi=E.default.createEndpointFetcher({url:r.attributes.action,method:r.attributes.method}),n.mapActionsToComponents=n.mapActionsToComponents.bind(n),n.mapFieldsToComponents=n.mapFieldsToComponents.bind(n),
@@ -381,13 +381,13 @@ var i=this.props,a=i.asyncValidate,s=i.onSubmitFail,l=i.onSubmitSuccess,c=i.shou
 form:m,afterMessages:v,fields:this.normalizeFields(t.fields,n),actions:this.normalizeActions(t.actions),attributes:o,data:t.data,initialValues:(0,y.default)(t,n),onSubmit:this.handleSubmit,valid:n&&n.valid,
 messages:n&&Array.isArray(n.messages)?n.messages:[],mapActionsToComponents:this.mapActionsToComponents,mapFieldsToComponents:this.mapFieldsToComponents,asyncValidate:a,onSubmitFail:s,onSubmitSuccess:l,
 shouldAsyncValidate:c,touchOnBlur:d,touchOnChange:f,persistentSubmitErrors:h,validate:this.validateForm,autoFocus:g}
-return p.default.createElement(r,b)}}]),t}(g.default),O=d.PropTypes.shape({id:d.PropTypes.string,schema:d.PropTypes.shape({attributes:d.PropTypes.shape({class:d.PropTypes.string,enctype:d.PropTypes.string
-}),fields:d.PropTypes.array.isRequired}),state:d.PropTypes.shape({fields:d.PropTypes.array}),loading:d.PropTypes.boolean,stateOverride:d.PropTypes.shape({fields:d.PropTypes.array})}),S={createFn:d.PropTypes.func,
+return p.default.createElement(r,b)}}]),t}(g.default),P=d.PropTypes.shape({id:d.PropTypes.string,schema:d.PropTypes.shape({attributes:d.PropTypes.shape({class:d.PropTypes.string,enctype:d.PropTypes.string
+}),fields:d.PropTypes.array.isRequired}),state:d.PropTypes.shape({fields:d.PropTypes.array}),loading:d.PropTypes.boolean,stateOverride:d.PropTypes.shape({fields:d.PropTypes.array})}),O={createFn:d.PropTypes.func,
 handleSubmit:d.PropTypes.func,handleAction:d.PropTypes.func,asyncValidate:d.PropTypes.func,onSubmitFail:d.PropTypes.func,onSubmitSuccess:d.PropTypes.func,shouldAsyncValidate:d.PropTypes.func,touchOnBlur:d.PropTypes.bool,
 touchOnChange:d.PropTypes.bool,persistentSubmitErrors:d.PropTypes.bool,validate:d.PropTypes.func,values:d.PropTypes.object,submitting:d.PropTypes.bool,baseFormComponent:d.PropTypes.func.isRequired,baseFieldComponent:d.PropTypes.func.isRequired,
 responseRequestedSchema:d.PropTypes.arrayOf(d.PropTypes.oneOf(["schema","state","errors","auto"]))}
-P.propTypes=u({},S,{form:d.PropTypes.string.isRequired,schema:O.isRequired,autoFocus:d.PropTypes.bool}),P.defaultProps={responseRequestedSchema:["auto"],autoFocus:!1},t.basePropTypes=S,t.schemaPropType=O,
-t.default=(0,T.withInjector)(P)},function(e,t,n){"use strict"
+C.propTypes=u({},O,{form:d.PropTypes.string.isRequired,schema:P.isRequired,autoFocus:d.PropTypes.bool}),C.defaultProps={responseRequestedSchema:["auto"],autoFocus:!1},t.basePropTypes=O,t.schemaPropType=P,
+t.default=(0,T.withInjector)(C)},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(t,"__esModule",{value:!0})
 var i=function(){function e(e,t){var n=[],r=!0,o=!1,i=void 0
 try{for(var a=e[Symbol.iterator](),s;!(r=(s=a.next()).done)&&(n.push(s.value),!t||n.length!==t);r=!0);}catch(e){o=!0,i=e}finally{try{!r&&a.return&&a.return()}finally{if(o)throw i}}return n}return function(t,n){
@@ -463,7 +463,9 @@ if(n&&"function"==typeof n){if(i=n.apply(void 0,o(a)),"object"!==("undefined"==t
 
 }else for(var s=0;s<t.length;s++)i[t[s]]=a[s]}var u=l({},this.props,i)
 return f.default.createElement(e,u)}}]),u}(f.default.Component)
-return e.contextTypes=r,u.contextTypes=r,u.displayName="withInjector(\n    "+(e.displayName||e.name||"Component")+"\n  )",u}Object.defineProperty(t,"__esModule",{value:!0}),t.withInjector=void 0
+return e.contextTypes=l({},e.contextTypes,r),u.contextTypes=r,u.displayName="withInjector(\n    "+(e.displayName||e.name||"Component")+"\n  )",u}Object.defineProperty(t,"__esModule",{value:!0}),t.withInjector=void 0
+
+
 var l=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]
 for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},c="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e
 
@@ -480,7 +482,8 @@ p.forEach(function(e){if(void 0!==t[e]&&"string"!=typeof t[e]&&!Array.isArray(t[
 
 
 t.apply(void 0,arguments)}},y=function e(t,n){var r=t.displayName||t.name||"Component",i=[r].concat(o(n))
-return i.reduce(function(e,t){return t+"("+e+")"})},v=function e(t){return p.forEach(function(e){Array.isArray(t[e])||(t[e]=t[e]?[t[e]]:[])}),t},g=function e(t){var n=[],r=[]
+return i.reduce(function(e,t){return t+"("+e+")"})},v=function e(t){var n=i({},t)
+return p.forEach(function(e){Array.isArray(t[e])?n[e]=t[e]:n[e]=t[e]?[t[e]]:[]}),n},g=function e(t){var n=[],r=[]
 t.forEach(function(e){var t=v(e),r=t.name,o=t.before,i=t.after
 o.length||i.length||i.push("*"),o.forEach(function(e){n.push([r,e])}),i.forEach(function(e){n.push([e,r])})})
 var o=(0,u.default)(n)
@@ -491,9 +494,10 @@ if(d[t]&&r.force!==!0)throw new Error("\n      Tried to register service "+t+" m
 
 d[t]=n},E=function e(t){if(!f)throw new Error("\n      Injector.get(): Attempted to access DI layer before it was initialised.\n      Did you forget to invoke Injector.load()?")
 if(!d[t])throw new Error("Injector.get(): Component "+t+" does not exist")
-return d[t]},T=function e(t,n){h(t),n(function(e,n){return w(t,e,n)})},C=function e(){for(var t in c)if(c.hasOwnProperty(t)){var n=g(c[t]),r=d[t],i=n.map(function(e){return e.factory}),a=n.map(function(e){
-return e.name}),s=l.compose.apply(void 0,o(i))(r)
-s.displayName=y(r,a),d[t]=s}f=!0},P={get:E,load:C,update:m(T),register:m(_)}
+return d[t]},T=function e(t,n){h(t),n(function(e,n){return w(t,e,n)})},C=function e(){Object.keys(c).forEach(function(e){if(c.hasOwnProperty(e)){var t=g(c[e]),n=d[e],r=t.map(function(e){return e.factory
+
+}),i=t.map(function(e){return e.name}),a=l.compose.apply(void 0,o(r))(n)
+a.displayName=y(n,i),d[e]=a}}),f=!0},P={get:E,load:C,update:m(T),register:m(_)}
 t.default=P},function(e,t){function n(e,t){function n(a,s,u){if(u.indexOf(a)>=0)throw new Error("Cyclic dependency: "+JSON.stringify(a))
 if(!~e.indexOf(a))throw new Error("Found unknown node. Make sure to provided all involved nodes. Unknown node: "+JSON.stringify(a))
 if(!i[s]){i[s]=!0

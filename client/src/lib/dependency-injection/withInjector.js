@@ -6,7 +6,7 @@ function withInjector(Component, dependencies, mapDependenciesToProps) {
       get: React.PropTypes.func,
     }),
   };
-
+  // eslint-disable-next-line react/prefer-stateless-function
   class Injectable extends React.Component {
     render() {
       let props = {};
@@ -16,7 +16,6 @@ function withInjector(Component, dependencies, mapDependenciesToProps) {
             withInjector() passed an argument for dependencies that is ${typeof dependencies}. 
             Must be an array of named dependencies.
           `);
-          return;
         }
         const resolved = dependencies.map(this.context.injector.get);
         if (mapDependenciesToProps && typeof mapDependenciesToProps === 'function') {
@@ -38,8 +37,11 @@ function withInjector(Component, dependencies, mapDependenciesToProps) {
       return <Component {...newProps} />;
     }
   }
-
-  Component.contextTypes = injectorContext;
+  // eslint-disable-next-line no-param-reassign
+  Component.contextTypes = {
+    ...Component.contextTypes,
+    ...injectorContext,
+  };
   Injectable.contextTypes = injectorContext;
   Injectable.displayName = `withInjector(
     ${(Component.displayName || Component.name || 'Component')}
@@ -50,4 +52,4 @@ function withInjector(Component, dependencies, mapDependenciesToProps) {
 
 export {
   withInjector,
-}
+};

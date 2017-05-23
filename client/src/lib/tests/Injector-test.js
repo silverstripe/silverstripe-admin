@@ -10,7 +10,7 @@ beforeEach(() => {
 });
 
 const expectError = (func) => {
-  let error;
+  let error = null;
   try {
     func();
   } catch (e) {
@@ -18,7 +18,7 @@ const expectError = (func) => {
   }
   expect(typeof error).toBe('object');
   expect(error.message).toBeTruthy();
-}
+};
 
 describe('Injector', () => {
   describe('Container API', () => {
@@ -36,7 +36,7 @@ describe('Injector', () => {
       Injector.register('TestService', TestService);
       const NewService = () => 'new service';
       expectError(() => Injector.register('TestService', NewService));
-      Injector.register('TestService', NewService, { force: true} );
+      Injector.register('TestService', NewService, { force: true });
       Injector.load();
       expect(Injector.get('TestService')()).toBe('new service');
     });
@@ -56,7 +56,18 @@ describe('Injector', () => {
         {
           name: 'test',
         },
-        (update) => {}
+        () => {}
+      ));
+    });
+    it('should throw on bad metadata', () => {
+      const TestService = () => 'test service';
+      Injector.register('TestService', TestService);
+      Injector.load();
+      expectError(() => Injector.update(
+        {
+          foo: 'test',
+        },
+        () => {}
       ));
     });
     it('should override components', () => {
@@ -68,7 +79,7 @@ describe('Injector', () => {
       const Service = Injector.get('TestComponent');
       // eslint-disable-next-line react/prefer-stateless-function, react/no-multi-comp
       class TestClass extends React.Component {
-        render () {
+        render() {
           return <Service />;
         }
       }
@@ -98,7 +109,7 @@ describe('Injector', () => {
           render() {
             return <div className="hoc"><TestComponent /></div>;
           }
-        };
+        }
 
         return TestClass;
       };
@@ -113,11 +124,14 @@ describe('Injector', () => {
     it('resolves priorities', () => {
       const OriginalComponent = ({ title }) => <h2>{title}</h2>;
       OriginalComponent.propTypes = {
-        title: React.PropTypes.string
+        title: React.PropTypes.string,
       };
       Injector.register('Original', OriginalComponent);
+      // eslint-disable-next-line react/prop-types
       const HOC_C = (Original) => (props) => <Original title={`C${props.title}`} />;
+      // eslint-disable-next-line react/prop-types
       const HOC_A = (Original) => (props) => <Original title={`A${props.title}`} />;
+      // eslint-disable-next-line react/prop-types
       const HOC_B = (Original) => (props) => <Original title={`B${props.title}`} />;
 
       // Ensure that ABC is applied in reverse (CBA), since the HOCs prepend
@@ -164,7 +178,7 @@ describe('Injector', () => {
         <button className="awesome-button">{props.children}</button>
       );
       AwesomeButton.propTypes = {
-        children: React.PropTypes.any
+        children: React.PropTypes.any,
       };
       Injector.register('AwesomeButton', AwesomeButton);
       Injector.load();
@@ -182,7 +196,7 @@ describe('Injector', () => {
         }
       }
       App.propTypes = {
-        children: React.PropTypes.any
+        children: React.PropTypes.any,
       };
 
       const InjectorProvider = provideInjector(App);

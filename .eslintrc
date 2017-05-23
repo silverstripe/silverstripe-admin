@@ -5,5 +5,10 @@
   },
   "rules": {
     "init-declarations": 1
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
   }
 }
