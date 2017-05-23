@@ -44,22 +44,27 @@ const validateMeta = (meta) => {
  * @returns function
  */
 const protect = (func) => {
-  if (initialised) {
-    throw new Error('Cannot mutate DI container after it has been initialised');
-  }
-  return (...params) => func(...params);
+  return (...params) => {
+    if (initialised) {
+      throw new Error('Cannot mutate DI container after it has been initialised');
+    }
+
+    func(...params);
+  };
 };
 
 /**
- * Creates a function that adds a "wrapper" display name to a component
+ * Creates a display name for a final composed component given all
+ * the names of the mutations that affected it.
  * e.g. my-module(TextField)
- * @param name
+ * @param original The original registered component
+ * @param array module The list of module names that modified the component
  */
-const addDisplayName = (name) => (Component) => {
-  const currentName = (Component.displayName || Component.name || 'Component');
-  Component.displayName = `${name}(${currentName})`;
+const createDisplayName = (original, modules) => {
+  const componentName = (original.displayName || original.name || 'Component');
+  const names = [componentName, ...modules];
 
-  return Component;
+  return names.reduce((acc, curr) => `${curr}(${acc})`);
 };
 
 /**
@@ -89,6 +94,9 @@ const sortMiddlewares = (middlewares) => {
   middlewares.forEach(entry => {
     const middleware = normaliseMiddleware(entry);
     const { name, before, after } = middleware;
+    if(!before.length && !after.length) {
+      after.push('*');
+    }
     before.forEach(beforeEntry => {
       graph.push([name, beforeEntry]);
     });
@@ -109,6 +117,18 @@ const sortMiddlewares = (middlewares) => {
 };
 
 /**
+ * Empties the state and restarts the injector. Should be used
+ * only for testing purposes.
+ */
+const reset = () => {
+  [middlewares, container].forEach(o => {
+    Object.keys(o).forEach(k => delete o[k]);
+  });
+
+  initialised = false;
+};
+
+/**
  * Applies a middleware function to compose an existing component
  * with new properties
  * @param key The name of the dependency to customise
@@ -117,10 +137,6 @@ const sortMiddlewares = (middlewares) => {
 const customise = (meta, key, factory) => {
   validateMeta(meta);
   if (!middlewares[key]) middlewares[key] = [];
-  factory = compose(
-    addDisplayName(meta.name),
-    factory
-  );
   middlewares[key].push({...meta, factory});
 };
 
@@ -192,18 +208,24 @@ const load = function load() {
       const sortedMiddlewares = sortMiddlewares(middlewares[key]);
       const service = container[key];
       const factories = sortedMiddlewares.map(m => m.factory);
-
-      //const creator = compose(...factories).bind(null, service);
-      container[key] = compose(...factories)(service);
+      const names = sortedMiddlewares.map(m => m.name);
+      const composed = compose(...factories)(service);
+      composed.displayName = createDisplayName(service, names);
+      container[key] = composed;
     }
   }
   initialised = true;
 };
 
 // Public API
-export default {
+const ContainerAPI = {
   get,
   load,
   update: protect(update),
-  register: protect(register)
+  register: protect(register),
+};
+if (process.env.NODE_ENV !== 'production') {
+  ContainerAPI.__reset__ = reset;
 }
+
+export default ContainerAPI;

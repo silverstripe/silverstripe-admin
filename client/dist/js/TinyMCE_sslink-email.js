@@ -57,3 +57,5 @@ g.propTypes={show:d.PropTypes.bool,schemaUrl:d.PropTypes.string,onInsert:d.PropT
 var _=function e(t,n){function r(e){var r=e.config.sections.find(function(e){return e.name===t}),i=""+r.form[n].schemaUrl
 return{sectionConfig:r,schemaUrl:i}}return(0,m.connect)(r,l)(g)}
 t.InsertLinkModal=g,t.createInsertLinkModal=_,t.default=(0,m.connect)(function(){return{}},l)(g)},,,function(e,t){e.exports=FormBuilderModal},function(e,t){e.exports=SchemaActions}])
+
+//# sourceMappingURL=TinyMCE_sslink-email.js.map

@@ -4,3 +4,5 @@ a.default.entwine("ss.ping",function(n){n(".cms-container").entwine({PingInterva
 
 }
 setInterval(function(){n.ajax({url:"Security/ping",global:!1,type:"POST",complete:t})},1e3*this.getPingIntervalSeconds())}})})}])
+
+//# sourceMappingURL=LeftAndMain.Ping.js.map
