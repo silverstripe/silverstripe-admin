@@ -1,7 +1,10 @@
+/* global window */
+
 import $ from 'jQuery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router as ReactRouter, useRouterHistory } from 'react-router';
+import { useBeforeUnload } from 'history';
 import createHistory from 'history/lib/createBrowserHistory';
 import Config from 'lib/Config';
 import pageRouter from 'lib/Router';
@@ -9,6 +12,7 @@ import reactRouteRegister from 'lib/ReactRouteRegister';
 import App from 'containers/App/App';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { ApolloProvider } from 'react-apollo';
+import i18n from 'i18n';
 
 /**
  * Bootstraps routes
@@ -27,6 +31,9 @@ class BootRoutes {
     // using page.js routing for this request.
     const base = Config.get('absoluteBaseUrl');
     pageRouter.setAbsoluteBase(base);
+
+    this.handleBeforeRoute = this.handleBeforeRoute.bind(this);
+    this.handleBeforeUnload = this.handleBeforeUnload.bind(this);
   }
 
   /**
@@ -78,7 +85,7 @@ class BootRoutes {
       component: App,
     });
     let history = syncHistoryWithStore(
-      useRouterHistory(createHistory)({
+      useRouterHistory(useBeforeUnload(createHistory))({
         basename: Config.get('baseUrl'),
       }),
       this.store
@@ -92,6 +99,9 @@ class BootRoutes {
       </ApolloProvider>,
       document.getElementsByClassName('cms-content')[0]
     );
+
+    history.listenBeforeUnload(this.handleBeforeUnload);
+    history.listenBefore(this.handleBeforeRoute);
   }
 
   /**
@@ -102,9 +112,17 @@ class BootRoutes {
     const store = this.store;
 
     pageRouter('*', (ctx, next) => {
-      // eslint-disable-next-line no-param-reassign
-      ctx.store = store;
-      next();
+      const msg = i18n._t(
+          'Admin.CONFIRMUNSAVED',
+          `Are you sure you want to navigate away from this page?\n\n
+          WARNING: Your changes have not been saved.\n\n
+          Press OK to continue, or Cancel to stay on the current page.`
+      );
+      if (!this.shouldConfirmBeforeRoute() || window.confirm(msg)) {
+        // eslint-disable-next-line no-param-reassign
+        ctx.store = store;
+        next();
+      }
     });
 
     // Register all top level routes.
@@ -140,7 +158,78 @@ class BootRoutes {
       });
     });
 
+    // Legacy support – make sure we don't overwrite the `onbeforeunload`
+    // handler in `LeftAndMain.EditForm.js` but run it after the new handler.
+    const currBeforeUnload = window.onbeforeunload;
+    window.onbeforeunload = () => {
+      if (this.shouldConfirmBeforeUnload()) {
+        return i18n._t('Admin.CONFIRMUNSAVEDSHORT', 'WARNING: Your changes have not been saved.');
+      }
+
+      if (typeof currBeforeUnload === 'function') {
+        return currBeforeUnload();
+      }
+
+      return null;
+    };
+
     pageRouter.start();
+  }
+
+  /**
+   * Return `true` if there are forms with unsaved changes. Return `false`
+   * otherwise.
+   *
+   * @return {Boolean}
+   */
+  shouldConfirmBeforeUnload() {
+    const state = this.store.getState();
+    const unsaveds = state.unsavedForms || {};
+    let ret = false;
+
+    if (unsaveds && Object.keys(unsaveds).length > 0) {
+      ret = true;
+    }
+
+    return ret;
+  }
+
+  /**
+   * Return `true` if the route the user is navigating away from contains forms
+   * with unsaved changes. Return `false` otherwise.
+   *
+   * @return {Boolean}
+   */
+  shouldConfirmBeforeRoute() {
+    const state = this.store.getState();
+    const unsaveds = state.unsavedForms || {};
+    const locationBeforeTransitions = state.routing.locationBeforeTransitions;
+    const pathname = locationBeforeTransitions && locationBeforeTransitions.pathname;
+    let ret = false;
+
+    if (unsaveds && pathname && Object.keys(unsaveds).find(form => unsaveds[form] === pathname)) {
+      ret = true;
+    }
+
+    return ret;
+  }
+
+  handleBeforeUnload() {
+    if (this.shouldConfirmBeforeUnload()) {
+      return i18n._t('Admin.CONFIRMUNSAVEDSHORT', 'WARNING: Your changes have not been saved.');
+    }
+
+    return null;
+  }
+
+  handleBeforeRoute() {
+    if (this.shouldConfirmBeforeRoute()) {
+      return i18n._t('Admin.CONFIRMUNSAVED', `Are you sure you want to navigate away
+          from this page?\n\nWARNING: Your changes have not been saved.\n\n
+          Press OK to continue, or Cancel to stay on the current page.`);
+    }
+
+    return null;
   }
 }
 

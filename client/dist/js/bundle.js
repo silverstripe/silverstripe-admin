@@ -103,7 +103,7 @@ return e.port1.onmessage=f,function(){return e.port2.postMessage(0)}}function p(
 return function(){return e(f,1)}}function f(){for(var e=0;e<G;e+=2){var t=re[e],n=re[e+1]
 t(n),re[e]=void 0,re[e+1]=void 0}G=0}function h(){try{var e=r,t=n(22)
 return X=t.runOnLoop||t.runOnContext,l()}catch(e){return p()}}function m(e,t){var n=arguments,r=this,o=new this.constructor(v)
-void 0===o[ie]&&M(o)
+void 0===o[ie]&&I(o)
 var i=r._state
 return i?!function(){var e=n[i-1]
 Q(function(){return R(i,o,e,r._result)})}():j(r,o,e,t),o}function y(e){var t=this
@@ -120,14 +120,14 @@ e._onerror=null,o[i]=t,o[i+se]=n,o[i+ue]=r,0===i&&e._state&&Q(x,e)}function x(e)
 if(0!==t.length){for(var r=void 0,o=void 0,i=e._result,a=0;a<t.length;a+=3)r=t[a],o=t[a+n],r?R(n,r,o,i):o(i)
 e._subscribers.length=0}}function F(){this.error=null}function D(e,t){try{return e(t)}catch(e){return ce.error=e,ce}}function R(e,t,n,r){var o=i(n),a=void 0,s=void 0,u=void 0,l=void 0
 if(o){if(a=D(n,r),a===ce?(l=!0,s=a.error,a=null):u=!0,t===a)return void k(t,b())}else a=r,u=!0
-t._state!==ae||(o&&u?P(t,a):l?k(t,s):e===se?S(t,a):e===ue&&k(t,a))}function A(e,t){try{t(function t(n){P(e,n)},function t(n){k(e,n)})}catch(t){k(e,t)}}function I(){return de++}function M(e){e[ie]=de++,
-e._state=void 0,e._result=void 0,e._subscribers=[]}function N(e,t){this._instanceConstructor=e,this.promise=new e(v),this.promise[ie]||M(this.promise),W(t)?(this._input=t,this.length=t.length,this._remaining=t.length,
+t._state!==ae||(o&&u?P(t,a):l?k(t,s):e===se?S(t,a):e===ue&&k(t,a))}function A(e,t){try{t(function t(n){P(e,n)},function t(n){k(e,n)})}catch(t){k(e,t)}}function M(){return de++}function I(e){e[ie]=de++,
+e._state=void 0,e._result=void 0,e._subscribers=[]}function N(e,t){this._instanceConstructor=e,this.promise=new e(v),this.promise[ie]||I(this.promise),W(t)?(this._input=t,this.length=t.length,this._remaining=t.length,
 this._result=new Array(this.length),0===this.length?S(this.promise,this._result):(this.length=this.length||0,this._enumerate(),0===this._remaining&&S(this.promise,this._result))):k(this.promise,L())}function L(){
 return new Error("Array Methods must be provided an Array")}function B(e){return new N(this,e).promise}function U(e){var t=this
 return new t(W(e)?function(n,r){for(var o=e.length,i=0;i<o;i++)t.resolve(e[i]).then(n,r)}:function(e,t){return t(new TypeError("You must pass an array to race."))})}function V(e){var t=this,n=new t(v)
 return k(n,e),n}function H(){throw new TypeError("You must pass a resolver function as the first argument to the promise constructor")}function $(){throw new TypeError("Failed to construct 'Promise': Please use the 'new' operator, this object constructor cannot be called as a function.")
 
-}function q(e){this[ie]=I(),this._result=this._state=void 0,this._subscribers=[],v!==e&&("function"!=typeof e&&H(),this instanceof q?A(this,e):$())}function K(){var e=void 0
+}function q(e){this[ie]=M(),this._result=this._state=void 0,this._subscribers=[],v!==e&&("function"!=typeof e&&H(),this instanceof q?A(this,e):$())}function K(){var e=void 0
 if("undefined"!=typeof o)e=o
 else if("undefined"!=typeof self)e=self
 else try{e=Function("return this")()}catch(e){throw new Error("polyfill failed because global object is unavailable in this environment")}var t=e.Promise
@@ -531,7 +531,7 @@ return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function s(e,t){if("funct
 e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}function u(e,t){var n=t.data?t.data.recordType:null
 
 
-return{config:e.config,records:n&&e.records[n]?e.records[n]:M}}function l(e){return{actions:(0,y.bindActionCreators)(I,e)}}Object.defineProperty(t,"__esModule",{value:!0})
+return{config:e.config,records:n&&e.records[n]?e.records[n]:I}}function l(e){return{actions:(0,y.bindActionCreators)(M,e)}}Object.defineProperty(t,"__esModule",{value:!0})
 var c=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
 r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),d=function e(t,n,r){null===t&&(t=Function.prototype)
 
@@ -540,7 +540,7 @@ var o=Object.getOwnPropertyDescriptor(t,n)
 if(void 0===o){var i=Object.getPrototypeOf(t)
 return null===i?void 0:e(i,n,r)}if("value"in o)return o.value
 var a=o.get
-if(void 0!==a)return a.call(r)},p=n(6),f=o(p),h=n(5),m=o(h),y=n(9),v=n(10),g=n(33),b=o(g),w=n(126),_=o(w),E=n(127),T=o(E),C=n(129),P=o(C),O=n(128),S=o(O),k=n(130),j=o(k),x=n(131),F=o(x),D=n(40),R=o(D),A=n(132),I=r(A),M={},N=function(e){
+if(void 0!==a)return a.call(r)},p=n(6),f=o(p),h=n(5),m=o(h),y=n(9),v=n(10),g=n(33),b=o(g),w=n(126),_=o(w),E=n(127),T=o(E),C=n(129),P=o(C),O=n(128),S=o(O),k=n(130),j=o(k),x=n(131),F=o(x),D=n(40),R=o(D),A=n(132),M=r(A),I={},N=function(e){
 function t(e){i(this,t)
 var n=a(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
 return n.deleteRecord=n.deleteRecord.bind(n),n.editRecord=n.editRecord.bind(n),n}return s(t,e),c(t,[{key:"componentDidMount",value:function e(){d(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"componentDidMount",this).call(this)
@@ -548,7 +548,7 @@ return n.deleteRecord=n.deleteRecord.bind(n),n.editRecord=n.editRecord.bind(n),n
 
 var n=this.props.data
 this.props.actions.fetchRecords(n.recordType,n.collectionReadEndpoint.method,n.collectionReadEndpoint.url)}},{key:"render",value:function e(){var t=this
-if(this.props.records===M)return f.default.createElement("div",null,m.default._t("CampaignAdmin.LOADING","Loading..."))
+if(this.props.records===I)return f.default.createElement("div",null,m.default._t("CampaignAdmin.LOADING","Loading..."))
 if(!Object.getOwnPropertyNames(this.props.records).length)return f.default.createElement("div",null,m.default._t("CampaignAdmin.NO_RECORDS","No campaigns created yet."))
 var n=f.default.createElement("th",{key:"holder",className:"grid-field__action-placeholder"}),r=this.props.data.columns.map(function(e){return f.default.createElement(P.default,{key:""+e.name},e.name)}),o=f.default.createElement(T.default,null,r.concat(n)),i=Object.keys(this.props.records).map(function(e){
 return t.createRow(t.props.records[e])})
@@ -925,14 +925,14 @@ disabled:f.PropTypes.bool,tree:f.PropTypes.shape(x.default.propTypes),visible:f.
 emptyString:f.PropTypes.string,valueObject:f.PropTypes.shape({id:f.PropTypes.number,title:f.PropTypes.string}),hasEmptyDefault:f.PropTypes.bool}),onLoadingError:f.PropTypes.func,actions:f.PropTypes.shape({
 treeDropdownField:f.PropTypes.shape({beginTreeUpdating:f.PropTypes.func,updateTreeFailed:f.PropTypes.func,updateTree:f.PropTypes.func,setVisible:f.PropTypes.func})})},A.defaultProps={value:"",extraClass:"",
 className:"",tree:{},visible:[],loading:[],failed:[]}
-var I=(0,m.connect)(l,c)(A)
-t.TreeDropdownField=A,t.ConnectedTreeDropdownField=I,t.default=(0,g.default)(I)},function(e,t,n){"use strict"
+var M=(0,m.connect)(l,c)(A)
+t.TreeDropdownField=A,t.ConnectedTreeDropdownField=M,t.default=(0,g.default)(M)},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t){var n={}
 for(var r in e)t.indexOf(r)>=0||Object.prototype.hasOwnProperty.call(e,r)&&(n[r]=e[r])
 return n}function i(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}function a(e){var t=typeof e
 return"string"===t?e:"object"===t?JSON.stringify(e):"number"===t||"boolean"===t?String(e):""}Object.defineProperty(t,"__esModule",{value:!0})
 var s=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]
-for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},u=n(6),l=r(u),c=n(3),d=r(c),p=n(168),f=r(p),h=n(164),m=r(h),y=n(169),v=r(y),g=n(170),b=r(g),w=n(172),_=r(w),E=n(173),T=r(E),C=n(174),P=r(C),O=n(175),S=r(O),k=n(176),j=r(k),x=n(177),F=r(x),D=n(178),R=r(D),A=l.default.PropTypes.oneOfType([l.default.PropTypes.string,l.default.PropTypes.node]),I=1,M=l.default.createClass({
+for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},u=n(6),l=r(u),c=n(3),d=r(c),p=n(168),f=r(p),h=n(164),m=r(h),y=n(169),v=r(y),g=n(170),b=r(g),w=n(172),_=r(w),E=n(173),T=r(E),C=n(174),P=r(C),O=n(175),S=r(O),k=n(176),j=r(k),x=n(177),F=r(x),D=n(178),R=r(D),A=l.default.PropTypes.oneOfType([l.default.PropTypes.string,l.default.PropTypes.node]),M=1,I=l.default.createClass({
 displayName:"Select",propTypes:{addLabelText:l.default.PropTypes.string,"aria-label":l.default.PropTypes.string,"aria-labelledby":l.default.PropTypes.string,arrowRenderer:l.default.PropTypes.func,autoBlur:l.default.PropTypes.bool,
 autofocus:l.default.PropTypes.bool,autosize:l.default.PropTypes.bool,backspaceRemoves:l.default.PropTypes.bool,backspaceToRemoveMessage:l.default.PropTypes.string,className:l.default.PropTypes.string,clearAllText:A,
 clearRenderer:l.default.PropTypes.func,clearValueText:A,clearable:l.default.PropTypes.bool,deleteRemoves:l.default.PropTypes.bool,delimiter:l.default.PropTypes.string,disabled:l.default.PropTypes.bool,
@@ -949,7 +949,7 @@ return{addLabelText:'Add "{label}"?',arrowRenderer:v.default,autosize:!0,backspa
 clearValueText:"Clear value",deleteRemoves:!0,delimiter:",",disabled:!1,escapeClearsValue:!0,filterOptions:b.default,ignoreAccents:!0,ignoreCase:!0,inputProps:{},isLoading:!1,joinValues:!1,labelKey:"label",
 matchPos:"any",matchProp:"any",menuBuffer:0,menuRenderer:_.default,multi:!1,noResultsText:"No results found",onBlurResetsInput:!0,onCloseResetsInput:!0,openAfterFocus:!1,optionComponent:F.default,pageSize:5,
 placeholder:"Select...",required:!1,scrollMenuIntoView:!0,searchable:!0,simpleValue:!1,tabSelectsValue:!0,valueComponent:R.default,valueKey:"value"}},getInitialState:function e(){return{inputValue:"",isFocused:!1,
-isOpen:!1,isPseudoFocused:!1,required:!1}},componentWillMount:function e(){this._instancePrefix="react-select-"+(this.props.instanceId||++I)+"-"
+isOpen:!1,isPseudoFocused:!1,required:!1}},componentWillMount:function e(){this._instancePrefix="react-select-"+(this.props.instanceId||++M)+"-"
 var t=this.getValueArray(this.props.value)
 this.props.required&&this.setState({required:this.handleRequired(t[0],this.props.multi)})},componentDidMount:function e(){this.props.autofocus&&this.focus()},componentWillReceiveProps:function e(t){var n=this.getValueArray(t.value,t)
 
@@ -1096,7 +1096,7 @@ className:"Select-aria-only","aria-live":"assertive"},this.props.backspaceToRemo
 },className:s,style:this.props.wrapperStyle},this.renderHiddenField(n),l.default.createElement("div",{ref:function(e){return t.control=e},className:"Select-control",style:this.props.style,onKeyDown:this.handleKeyDown,
 onMouseDown:this.handleMouseDown,onTouchEnd:this.handleTouchEnd,onTouchStart:this.handleTouchStart,onTouchMove:this.handleTouchMove},l.default.createElement("span",{className:"Select-multi-value-wrapper",
 id:this._instancePrefix+"-value"},this.renderValue(n,o),this.renderInput(n,i)),u,this.renderLoading(),this.renderClear(),this.renderArrow()),o?this.renderOuter(r,this.props.multi?null:n,a):null)}})
-t.default=M,e.exports=t.default},function(e,t,n){"use strict"
+t.default=I,e.exports=t.default},function(e,t,n){"use strict"
 var r=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]
 for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},o=n(6),i={position:"absolute",top:0,left:0,visibility:"hidden",height:0,overflow:"scroll",whiteSpace:"pre"},a=o.createClass({
 displayName:"AutosizeInput",propTypes:{className:o.PropTypes.string,defaultValue:o.PropTypes.any,inputClassName:o.PropTypes.string,inputStyle:o.PropTypes.object,minWidth:o.PropTypes.oneOfType([o.PropTypes.number,o.PropTypes.string]),
@@ -1321,8 +1321,8 @@ for(var S=0;S<y.length;S++){var k=s.indexOf(y[S])
 k!==-1&&(O===-1||k<O)&&(O=k)}O===-1&&(O=s.length),this.host=s.slice(0,O),s=s.slice(O),this.parseHost(),this.hostname=this.hostname||""
 var F="["===this.hostname[0]&&"]"===this.hostname[this.hostname.length-1]
 if(!F)for(var D=this.hostname.split(/\./),S=0,R=D.length;S<R;S++){var A=D[S]
-if(A&&!A.match(b)){for(var I="",M=0,N=A.length;M<N;M++)I+=A.charCodeAt(M)>127?"x":A[M]
-if(!I.match(b)){var L=D.slice(0,S),B=D.slice(S+1),U=A.match(w)
+if(A&&!A.match(b)){for(var M="",I=0,N=A.length;I<N;I++)M+=A.charCodeAt(I)>127?"x":A[I]
+if(!M.match(b)){var L=D.slice(0,S),B=D.slice(S+1),U=A.match(w)
 U&&(L.push(U[1]),B.unshift(U[2])),B.length&&(s="/"+B.join(".")+s),this.hostname=L.join(".")
 break}}}this.hostname.length>g?this.hostname="":this.hostname=this.hostname.toLowerCase(),F||(this.hostname=u.toASCII(this.hostname))
 var V=this.port?":"+this.port:"",H=this.hostname||""
@@ -1380,20 +1380,20 @@ return r+i}function l(e){for(var t=[],n=0,r=e.length,o,i;n<r;)o=e.charCodeAt(n++
 return t}function c(e){return s(e,function(e){var t=""
 return e>65535&&(e-=65536,t+=N(e>>>10&1023|55296),e=56320|1023&e),t+=N(e)}).join("")}function d(e){return e-48<10?e-22:e-65<26?e-65:e-97<26?e-97:T}function p(e,t){return e+22+75*(e<26)-((0!=t)<<5)}function f(e,t,n){
 var r=0
-for(e=n?M(e/S):e>>1,e+=M(e/t);e>I*P>>1;r+=T)e=M(e/I)
-return M(r+(I+1)*e/(e+O))}function h(e){var t=[],n=e.length,r,o=0,i=j,s=k,u,l,p,h,m,y,v,g,b
+for(e=n?I(e/S):e>>1,e+=I(e/t);e>M*P>>1;r+=T)e=I(e/M)
+return I(r+(M+1)*e/(e+O))}function h(e){var t=[],n=e.length,r,o=0,i=j,s=k,u,l,p,h,m,y,v,g,b
 for(u=e.lastIndexOf(x),u<0&&(u=0),l=0;l<u;++l)e.charCodeAt(l)>=128&&a("not-basic"),t.push(e.charCodeAt(l))
-for(p=u>0?u+1:0;p<n;){for(h=o,m=1,y=T;p>=n&&a("invalid-input"),v=d(e.charCodeAt(p++)),(v>=T||v>M((E-o)/m))&&a("overflow"),o+=v*m,g=y<=s?C:y>=s+P?P:y-s,!(v<g);y+=T)b=T-g,m>M(E/b)&&a("overflow"),m*=b
-r=t.length+1,s=f(o-h,r,0==h),M(o/r)>E-i&&a("overflow"),i+=M(o/r),o%=r,t.splice(o++,0,i)}return c(t)}function m(e){var t,n,r,o,i,s,u,c,d,h,m,y=[],v,g,b,w
+for(p=u>0?u+1:0;p<n;){for(h=o,m=1,y=T;p>=n&&a("invalid-input"),v=d(e.charCodeAt(p++)),(v>=T||v>I((E-o)/m))&&a("overflow"),o+=v*m,g=y<=s?C:y>=s+P?P:y-s,!(v<g);y+=T)b=T-g,m>I(E/b)&&a("overflow"),m*=b
+r=t.length+1,s=f(o-h,r,0==h),I(o/r)>E-i&&a("overflow"),i+=I(o/r),o%=r,t.splice(o++,0,i)}return c(t)}function m(e){var t,n,r,o,i,s,u,c,d,h,m,y=[],v,g,b,w
 for(e=l(e),v=e.length,t=j,n=0,i=k,s=0;s<v;++s)m=e[s],m<128&&y.push(N(m))
 for(r=o=y.length,o&&y.push(x);r<v;){for(u=E,s=0;s<v;++s)m=e[s],m>=t&&m<u&&(u=m)
-for(g=r+1,u-t>M((E-n)/g)&&a("overflow"),n+=(u-t)*g,t=u,s=0;s<v;++s)if(m=e[s],m<t&&++n>E&&a("overflow"),m==t){for(c=n,d=T;h=d<=i?C:d>=i+P?P:d-i,!(c<h);d+=T)w=c-h,b=T-h,y.push(N(p(h+w%b,0))),c=M(w/b)
+for(g=r+1,u-t>I((E-n)/g)&&a("overflow"),n+=(u-t)*g,t=u,s=0;s<v;++s)if(m=e[s],m<t&&++n>E&&a("overflow"),m==t){for(c=n,d=T;h=d<=i?C:d>=i+P?P:d-i,!(c<h);d+=T)w=c-h,b=T-h,y.push(N(p(h+w%b,0))),c=I(w/b)
 y.push(N(p(c,0))),i=f(n,g,r==o),n=0,++r}++n,++t}return y.join("")}function y(e){return u(e,function(e){return F.test(e)?h(e.slice(4).toLowerCase()):e})}function v(e){return u(e,function(e){return D.test(e)?"xn--"+m(e):e
 
 })}var g="object"==typeof t&&t&&!t.nodeType&&t,b="object"==typeof e&&e&&!e.nodeType&&e,w="object"==typeof o&&o
 w.global!==w&&w.window!==w&&w.self!==w||(i=w)
 var _,E=2147483647,T=36,C=1,P=26,O=38,S=700,k=72,j=128,x="-",F=/^xn--/,D=/[^\x20-\x7E]/,R=/[\x2E\u3002\uFF0E\uFF61]/g,A={overflow:"Overflow: input needs wider integers to process","not-basic":"Illegal input >= 0x80 (not a basic code point)",
-"invalid-input":"Invalid input"},I=T-C,M=Math.floor,N=String.fromCharCode,L
+"invalid-input":"Invalid input"},M=T-C,I=Math.floor,N=String.fromCharCode,L
 _={version:"1.3.2",ucs2:{decode:l,encode:c},decode:h,encode:m,toASCII:v,toUnicode:y},r=function(){return _}.call(t,n,t,e),!(void 0!==r&&(e.exports=r))}(this)}).call(t,n(25)(e),function(){return this}())
 
 },function(e,t){"use strict"
@@ -1836,10 +1836,10 @@ u&&"#"!=u?(u=u.split("?")[0],n.jstree("deselect_all"),n.jstree("uncheck_all"),e.
 s.loadPanel(u)):n.removeForm()}})}}),e(".cms-content .cms-content-fields").entwine({redraw:function e(){window.debug&&console.log("redraw",this.attr("class"),this.get(0))}}),e(".cms-content .cms-content-header, .cms-content .cms-content-actions").entwine({
 redraw:function e(){window.debug&&console.log("redraw",this.attr("class"),this.get(0)),this.height("auto"),this.height(this.innerHeight()-this.css("padding-top")-this.css("padding-bottom"))}})})},function(e,t,n){
 (function(e){"use strict"
-function t(e){return e&&e.__esModule?e:{default:e}}var r=n(1),o=t(r),i=n(5),a=t(i)
+function t(e){return e&&e.__esModule?e:{default:e}}var r=n(1),o=t(r),i=n(5),a=t(i),s=window.onbeforeunload
 window.onbeforeunload=function(e){var t=(0,o.default)(".cms-edit-form")
-if(t.trigger("beforesubmitform"),t.is(".changed")&&!t.is(".discardchanges"))return a.default._t("Admin.CONFIRMUNSAVEDSHORT")},o.default.entwine("ss",function(e){e(".cms-edit-form").entwine({PlaceholderHtml:"",
-ChangeTrackerOptions:{ignoreFieldSelector:".no-change-track, .ss-upload :input, .cms-navigator :input"},ValidationErrorShown:!1,onadd:function e(){var t=this
+return t.trigger("beforesubmitform"),t.is(".changed")&&!t.is(".discardchanges")?a.default._t("Admin.CONFIRMUNSAVEDSHORT"):"function"==typeof s?s():null},o.default.entwine("ss",function(e){e(".cms-edit-form").entwine({
+PlaceholderHtml:"",ChangeTrackerOptions:{ignoreFieldSelector:".no-change-track, .ss-upload :input, .cms-navigator :input"},ValidationErrorShown:!1,onadd:function e(){var t=this
 this.attr("autocomplete","off"),this._setupChangeTracker()
 for(var n in{action:!0,method:!0,enctype:!0,name:!0}){var r=this.find(":input[name=_form_"+n+"]")
 r&&(this.attr(n,r.val()),r.remove())}this.setValidationErrorShown(!1),this._super()},"from .cms-tabset":{onafterredrawtabs:function t(){if(this.hasClass("validationerror")){var n=this.find(".message.validation, .message.required").first().closest(".tab")
@@ -1847,7 +1847,7 @@ r&&(this.attr(n,r.val()),r.remove())}this.setValidationErrorShown(!1),this._supe
 
 e(".cms-container").clearCurrentTabState()
 var r=n.closest(".ss-tabset")
-r.length||(r=n.closest(".cms-tabset")),r.length?r.tabs("option","active",n.index(".tab")):this.getValidationErrorShown()||(this.setValidationErrorShown(!0),s(ss.i18n._t("Admin.VALIDATIONERROR","Validation Error")))
+r.length||(r=n.closest(".cms-tabset")),r.length?r.tabs("option","active",n.index(".tab")):this.getValidationErrorShown()||(this.setValidationErrorShown(!0),u(ss.i18n._t("Admin.VALIDATIONERROR","Validation Error")))
 
 }}},onremove:function e(){this.changetracker("destroy"),this._super()},onmatch:function e(){this._super()},onunmatch:function e(){this._super()},redraw:function e(){window.debug&&console.log("redraw",this.attr("class"),this.get(0)),
 this.add(this.find(".cms-tabset")).redrawTabs(),this.find(".cms-content-header").redraw()},_setupChangeTracker:function e(){this.changetracker(this.getChangeTrackerOptions())},confirmUnsavedChanges:function e(){
@@ -1881,7 +1881,7 @@ onmatch:function e(){"OnlyTheseUsers"===this.val()&&(this.is(":checked")?this.sh
 showList:function e(t){var n=this.closest(".field"),r=n.next().filter(".listbox")
 n.addClass("field--merge-below"),r[t?"show":"slideDown"](function(){r.css("overflow","visible")})},hideList:function e(t){var n=this.closest(".field"),r=n.next().filter(".listbox")
 r[t?"hide":"slideUp"](function(){n.removeClass("field--merge-below")}).css("overflow","hidden")}})})
-var s=function t(n){e.noticeAdd({text:n,type:"error",stayTime:5e3,inEffect:{left:"0",opacity:"show"}})}}).call(t,n(4))},function(e,t,n){"use strict"
+var u=function t(n){e.noticeAdd({text:n,type:"error",stayTime:5e3,inEffect:{left:"0",opacity:"show"}})}}).call(t,n(4))},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}var o=n(1),i=r(o)
 i.default.entwine("ss",function(e){e(".cms-panel.cms-menu").entwine({togglePanel:function t(n,r,o){e(".cms-menu-list").children("li").each(function(){n?e(this).children("ul").each(function(){e(this).removeClass("collapsed-flyout"),
 e(this).data("collapse")&&(e(this).removeData("collapse"),e(this).addClass("collapse"))}):e(this).children("ul").each(function(){e(this).addClass("collapsed-flyout"),e(this).hasClass("collapse"),e(this).removeClass("collapse"),
@@ -2413,12 +2413,12 @@ return o.setState("GridFieldPaginator",{currentPage:r}),o.reload(),!1}}})})},fun
 function r(e){if(e&&e.__esModule)return e
 var t={}
 if(null!=e)for(var n in e)Object.prototype.hasOwnProperty.call(e,n)&&(t[n]=e[n])
-return t.default=e,t}function o(e){return e&&e.__esModule?e:{default:e}}function i(){var e=m.default.get("absoluteBaseUrl"),t=(0,D.createNetworkInterface)({uri:e+"graphql/",opts:{credentials:"same-origin"
-}}),n=new R.default({shouldBatch:!0,addTypename:!0,dataIdFromObject:function e(t){return t.id>=0&&t.__typename?t.__typename+":"+t.id:null},networkInterface:t})
-t.use([{applyMiddleware:function e(t,n){var r=(0,A.printRequest)(t.request)
-t.options.headers=a({},t.options.headers,{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"}),t.options.body=M.default.stringify(a({},r,{variables:JSON.stringify(r.variables)})),n()}}]),
+return t.default=e,t}function o(e){return e&&e.__esModule?e:{default:e}}function i(){var e=m.default.get("absoluteBaseUrl"),t=(0,A.createNetworkInterface)({uri:e+"graphql/",opts:{credentials:"same-origin"
+}}),n=new M.default({shouldBatch:!0,addTypename:!0,dataIdFromObject:function e(t){return t.id>=0&&t.__typename?t.__typename+":"+t.id:null},networkInterface:t})
+t.use([{applyMiddleware:function e(t,n){var r=(0,I.printRequest)(t.request)
+t.options.headers=a({},t.options.headers,{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"}),t.options.body=L.default.stringify(a({},r,{variables:JSON.stringify(r.variables)})),n()}}]),
 v.default.add("config",_.default),v.default.add("form",p.reducer),v.default.add("schemas",T.default),v.default.add("records",P.default),v.default.add("breadcrumbs",S.default),v.default.add("routing",f.routerReducer),
-v.default.add("apollo",n.reducer()),v.default.add("treeDropdownField",F.default),j.default.start()
+v.default.add("apollo",n.reducer()),v.default.add("treeDropdownField",R.default),v.default.add("unsavedForms",j.default),F.default.start()
 var r={},o=(0,l.combineReducers)(v.default.getAll()),i=[d.default,n.middleware()],s=m.default.get("environment"),c=m.default.get("debugging"),h=l.applyMiddleware.apply(void 0,i),y=window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__,g=window.__REDUX_DEVTOOLS_EXTENSION__||window.devToolsExtension
 
 
@@ -2427,30 +2427,84 @@ var w=h(l.createStore),E=w(o,r)
 E.dispatch(b.setConfig(m.default.getAll())),window.ss=window.ss||{},window.ss.store=E,window.ss=window.ss||{},window.ss.apolloClient=n
 var C=new u.default(E,n)
 C.start(window.location.pathname),window.jQuery&&window.jQuery("body").addClass("js-react-boot")}var a=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]
-for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},s=n(243),u=o(s),l=n(9),c=n(265),d=o(c),p=n(119),f=n(264),h=n(197),m=o(h),y=n(266),v=o(y),g=n(267),b=r(g),w=n(269),_=o(w),E=n(270),T=o(E),C=n(271),P=o(C),O=n(272),S=o(O),k=n(273),j=o(k),x=n(293),F=o(x),D=n(294),R=o(D),A=n(295),I=n(23),M=o(I),N=n(20),L=o(N)
+for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},s=n(243),u=o(s),l=n(9),c=n(275),d=o(c),p=n(119),f=n(274),h=n(197),m=o(h),y=n(276),v=o(y),g=n(277),b=r(g),w=n(279),_=o(w),E=n(280),T=o(E),C=n(281),P=o(C),O=n(282),S=o(O),k=n(283),j=o(k),x=n(284),F=o(x),D=n(304),R=o(D),A=n(305),M=o(A),I=n(306),N=n(23),L=o(N),B=n(20),U=o(B)
 
 
-L.default.polyfill(),window.onload=i},function(e,t,n){"use strict"
+U.default.polyfill(),window.onload=i},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(t,"__esModule",{value:!0})
 var i=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
-r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),a=n(1),s=r(a),u=n(6),l=r(u),c=n(3),d=r(c),p=n(159),f=n(244),h=r(f),m=n(197),y=r(m),v=n(261),g=r(v),b=n(262),w=r(b),_=n(263),E=r(_),T=n(264),C=n(7),P=function(){
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),a=n(1),s=r(a),u=n(6),l=r(u),c=n(3),d=r(c),p=n(159),f=n(244),h=n(250),m=r(h),y=n(197),v=r(y),g=n(271),b=r(g),w=n(272),_=r(w),E=n(273),T=r(E),C=n(274),P=n(7),O=n(5),S=r(O),k=function(){
 function e(t,n){o(this,e),this.store=t,this.client=n
-var r=y.default.get("absoluteBaseUrl")
-g.default.setAbsoluteBase(r)}return i(e,[{key:"start",value:function e(t){this.matchesReactRoute(t)?this.initReactRouter():this.initLegacyRouter()}},{key:"matchesReactRoute",value:function e(t){var n=y.default.get("sections"),r=g.default.resolveURLToBase(t).replace(/\/$/,"")
+var r=v.default.get("absoluteBaseUrl")
+b.default.setAbsoluteBase(r),this.handleBeforeRoute=this.handleBeforeRoute.bind(this),this.handleBeforeUnload=this.handleBeforeUnload.bind(this)}return i(e,[{key:"start",value:function e(t){this.matchesReactRoute(t)?this.initReactRouter():this.initLegacyRouter()
+
+}},{key:"matchesReactRoute",value:function e(t){var n=v.default.get("sections"),r=b.default.resolveURLToBase(t).replace(/\/$/,"")
+return!!n.find(function(e){var t=b.default.resolveURLToBase(e.url).replace(/\/$/,"")
+return!!e.reactRouter&&r.match(t)})}},{key:"initReactRouter",value:function e(){_.default.updateRootRoute({component:T.default})
+var t=(0,C.syncHistoryWithStore)((0,p.useRouterHistory)((0,f.useBeforeUnload)(m.default))({basename:v.default.get("baseUrl")}),this.store)
+d.default.render(l.default.createElement(P.ApolloProvider,{store:this.store,client:this.client},l.default.createElement(p.Router,{history:t,routes:_.default.getRootRoute()})),document.getElementsByClassName("cms-content")[0]),
+t.listenBeforeUnload(this.handleBeforeUnload),t.listenBefore(this.handleBeforeRoute)}},{key:"initLegacyRouter",value:function e(){var t=this,n=v.default.get("sections"),r=this.store;(0,b.default)("*",function(e,n){
+var o=S.default._t("Admin.CONFIRMUNSAVED","Are you sure you want to navigate away from this page?\n\n\n          WARNING: Your changes have not been saved.\n\n\n          Press OK to continue, or Cancel to stay on the current page.")
 
 
-return!!n.find(function(e){var t=g.default.resolveURLToBase(e.url).replace(/\/$/,"")
-return!!e.reactRouter&&r.match(t)})}},{key:"initReactRouter",value:function e(){w.default.updateRootRoute({component:E.default})
-var t=(0,T.syncHistoryWithStore)((0,p.useRouterHistory)(h.default)({basename:y.default.get("baseUrl")}),this.store)
-d.default.render(l.default.createElement(C.ApolloProvider,{store:this.store,client:this.client},l.default.createElement(p.Router,{history:t,routes:w.default.getRootRoute()})),document.getElementsByClassName("cms-content")[0])
+t.shouldConfirmBeforeRoute()&&!window.confirm(o)||(e.store=r,n())})
+var o=null
+n.forEach(function(e){var t=b.default.resolveURLToBase(e.url)
+t=t.replace(/\/$/,""),t+="(/*?)?",(0,b.default)(t,function(e,t){if("complete"!==document.readyState||e.init)return void t()
+o||(o=window.location.pathname)
+var n=e.data&&e.data.__forceReload;(e.path!==o||n)&&(o=e.path.replace(/#.*$/,""),(0,s.default)(".cms-container").entwine("ss").handleStateChange(null,e.state))})})
+var i=window.onbeforeunload
+window.onbeforeunload=function(){return t.shouldConfirmBeforeUnload()?S.default._t("Admin.CONFIRMUNSAVEDSHORT","WARNING: Your changes have not been saved."):"function"==typeof i?i():null},b.default.start()
 
-}},{key:"initLegacyRouter",value:function e(){var t=y.default.get("sections"),n=this.store;(0,g.default)("*",function(e,t){e.store=n,t()})
-var r=null
-t.forEach(function(e){var t=g.default.resolveURLToBase(e.url)
-t=t.replace(/\/$/,""),t+="(/*?)?",(0,g.default)(t,function(e,t){if("complete"!==document.readyState||e.init)return void t()
-r||(r=window.location.pathname)
-var n=e.data&&e.data.__forceReload;(e.path!==r||n)&&(r=e.path.replace(/#.*$/,""),(0,s.default)(".cms-container").entwine("ss").handleStateChange(null,e.state))})}),g.default.start()}}]),e}()
-t.default=P},,,,,,,,,,,,,,,,,,function(e,t){e.exports=Router},function(e,t){e.exports=ReactRouteRegister},function(e,t,n){"use strict"
+}},{key:"shouldConfirmBeforeUnload",value:function e(){var t=this.store.getState(),n=t.unsavedForms||{},r=!1
+return n&&Object.keys(n).length>0&&(r=!0),r}},{key:"shouldConfirmBeforeRoute",value:function e(){var t=this.store.getState(),n=t.unsavedForms||{},r=t.routing.locationBeforeTransitions,o=r&&r.pathname,i=!1
+
+
+return n&&o&&Object.keys(n).find(function(e){return n[e]===o})&&(i=!0),i}},{key:"handleBeforeUnload",value:function e(){return this.shouldConfirmBeforeUnload()?S.default._t("Admin.CONFIRMUNSAVEDSHORT","WARNING: Your changes have not been saved."):null
+
+}},{key:"handleBeforeRoute",value:function e(){return this.shouldConfirmBeforeRoute()?S.default._t("Admin.CONFIRMUNSAVED","Are you sure you want to navigate away\n          from this page?\n\nWARNING: Your changes have not been saved.\n\n\n          Press OK to continue, or Cancel to stay on the current page."):null
+
+}}]),e}()
+t.default=k},function(e,t,n){"use strict"
+function r(e){return e&&e.__esModule?e:{default:e}}t.__esModule=!0
+var o=n(245),i=r(o),a=n(247),s=r(a),u=n(250),l=r(u)
+t.createHistory=l.default
+var c=n(262),d=r(c)
+t.createHashHistory=d.default
+var p=n(263),f=r(p)
+t.createMemoryHistory=f.default
+var h=n(264),m=r(h)
+t.useBasename=m.default
+var y=n(265),v=r(y)
+t.useBeforeUnload=v.default
+var g=n(266),b=r(g)
+t.useQueries=b.default
+var w=n(248),_=r(w)
+t.Actions=_.default
+var E=n(269),T=r(E)
+t.enableBeforeUnload=T.default
+var C=n(270),P=r(C)
+t.enableQueries=P.default
+var O=i.default(s.default,"Using createLocation without a history instance is deprecated; please use history.createLocation instead")
+t.createLocation=O},,,,,,,,,,,,,,,,,,,,,function(e,t,n){"use strict"
+function r(e){return e&&e.__esModule?e:{default:e}}function o(e){function t(t){var n=e()
+if("string"==typeof n)return(t||window.event).returnValue=n,n}return c.addEventListener(window,"beforeunload",t),function(){c.removeEventListener(window,"beforeunload",t)}}function i(e){return function(t){
+function n(){for(var e=void 0,t=0,n=d.length;null==e&&t<n;++t)e=d[t].call()
+return e}function r(e){return d.push(e),1===d.length&&l.canUseDOM&&(c=o(n)),function(){d=d.filter(function(t){return t!==e}),0===d.length&&c&&(c(),c=null)}}function i(e){l.canUseDOM&&d.indexOf(e)===-1&&(d.push(e),
+1===d.length&&(c=o(n)))}function s(e){d.length>0&&(d=d.filter(function(t){return t!==e}),0===d.length&&c())}var u=e(t),c=void 0,d=[]
+return a({},u,{listenBeforeUnload:r,registerBeforeUnloadHook:p.default(i,"registerBeforeUnloadHook is deprecated; use listenBeforeUnload instead"),unregisterBeforeUnloadHook:p.default(s,"unregisterBeforeUnloadHook is deprecated; use the callback returned from listenBeforeUnload instead")
+})}}t.__esModule=!0
+var a=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]
+for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},s=n(246),u=r(s),l=n(252),c=n(253),d=n(245),p=r(d)
+t.default=i,e.exports=t.default},,,,function(e,t,n){"use strict"
+function r(e){return e&&e.__esModule?e:{default:e}}t.__esModule=!0
+var o=n(245),i=r(o),a=n(265),s=r(a)
+t.default=i.default(s.default,"enableBeforeUnload is deprecated, use useBeforeUnload instead"),e.exports=t.default},function(e,t,n){"use strict"
+function r(e){return e&&e.__esModule?e:{default:e}}t.__esModule=!0
+var o=n(245),i=r(o),a=n(266),s=r(a)
+t.default=i.default(s.default,"enableQueries is deprecated, use useQueries instead"),e.exports=t.default},function(e,t){e.exports=Router},function(e,t){e.exports=ReactRouteRegister},function(e,t,n){"use strict"
+
+
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function i(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called")
 
 
@@ -2465,13 +2519,13 @@ function t(){return o(this,t),i(this,(t.__proto__||Object.getPrototypeOf(t)).app
 return t}}]),t}(d.default)
 t.default=p},function(e,t){e.exports=ReactRouterRedux},function(e,t){e.exports=ReduxThunk},function(e,t){e.exports=ReducerRegister},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e){return{type:a.default.SET_CONFIG,payload:{config:e}}}Object.defineProperty(t,"__esModule",{value:!0}),t.setConfig=o
-var i=n(268),a=r(i)},function(e,t){"use strict"
+var i=n(278),a=r(i)},function(e,t){"use strict"
 Object.defineProperty(t,"__esModule",{value:!0}),t.default={SET_CONFIG:"SET_CONFIG"}},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},t=arguments[1]
 switch(t.type){case l.default.SET_CONFIG:return(0,s.default)(i({},e,t.payload.config))
 default:return e}}Object.defineProperty(t,"__esModule",{value:!0})
 var i=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]
-for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},a=n(28),s=r(a),u=n(268),l=r(u)
+for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},a=n(28),s=r(a),u=n(278),l=r(u)
 t.default=o},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}function i(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:f,t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:null
 
@@ -2517,13 +2571,23 @@ default:return e}}Object.defineProperty(t,"__esModule",{value:!0})
 var i=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]
 for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},a=n(28),s=r(a),u=n(189),l=r(u),c=(0,s.default)([])
 t.default=o},function(e,t,n){"use strict"
+function r(e){return e&&e.__esModule?e:{default:e}}function o(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},t=arguments[1],n=new RegExp("^"+c.default.get("baseUrl")),r=window.location.pathname.replace(n,""),o=t.meta&&t.meta&&t.meta.form,a=i({},e)
+
+
+switch(t.type){case u.actionTypes.CHANGE:return a[o]=r,(0,s.default)(i({},a))
+case u.actionTypes.START_SUBMIT:return delete a[o],(0,s.default)(i({},a))
+case u.actionTypes.DESTROY:return o.forEach(function(e){delete a[e]}),(0,s.default)(i({},a))
+default:return(0,s.default)(i({},e))}}Object.defineProperty(t,"__esModule",{value:!0})
+var i=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]
+for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},a=n(28),s=r(a),u=n(119),l=n(197),c=r(l)
+t.default=o},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(t,"__esModule",{value:!0})
 var i=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
-r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),a=n(116),s=r(a),u=n(151),l=r(u),c=n(145),d=r(c),p=n(274),f=r(p),h=n(275),m=r(h),y=n(276),v=r(y),g=n(277),b=r(g),w=n(279),_=r(w),E=n(280),T=r(E),C=n(281),P=r(C),O=n(282),S=r(O),k=n(283),j=r(k),x=n(284),F=r(x),D=n(154),R=r(D),A=n(285),I=r(A),M=n(286),N=r(M),L=n(287),B=r(L),U=n(288),V=r(U),H=n(289),$=r(H),q=n(290),K=r(q),z=n(291),W=r(z),G=n(292),X=r(G),Y=n(166),Q=r(Y),J=function(){
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),a=n(116),s=r(a),u=n(151),l=r(u),c=n(145),d=r(c),p=n(285),f=r(p),h=n(286),m=r(h),y=n(287),v=r(y),g=n(288),b=r(g),w=n(290),_=r(w),E=n(291),T=r(E),C=n(292),P=r(C),O=n(293),S=r(O),k=n(294),j=r(k),x=n(295),F=r(x),D=n(154),R=r(D),A=n(296),M=r(A),I=n(297),N=r(I),L=n(298),B=r(L),U=n(299),V=r(U),H=n(300),$=r(H),q=n(301),K=r(q),z=n(302),W=r(z),G=n(303),X=r(G),Y=n(166),Q=r(Y),J=function(){
 function e(){o(this,e)}return i(e,[{key:"start",value:function e(){s.default.register("TextField",l.default),s.default.register("HiddenField",d.default),s.default.register("DateField",f.default),s.default.register("TimeField",m.default),
 s.default.register("DatetimeField",v.default),s.default.register("CheckboxField",b.default),s.default.register("CheckboxSetField",_.default),s.default.register("OptionsetField",T.default),s.default.register("GridField",P.default),
 s.default.register("FieldGroup",X.default),s.default.register("SingleSelectField",S.default),s.default.register("PopoverField",j.default),s.default.register("HeaderField",F.default),s.default.register("LiteralField",R.default),
-s.default.register("HtmlReadonlyField",I.default),s.default.register("LookupField",N.default),s.default.register("CompositeField",B.default),s.default.register("Tabs",$.default),s.default.register("TabItem",K.default),
+s.default.register("HtmlReadonlyField",M.default),s.default.register("LookupField",N.default),s.default.register("CompositeField",B.default),s.default.register("Tabs",$.default),s.default.register("TabItem",K.default),
 s.default.register("FormAction",W.default),s.default.register("LabelField",V.default),s.default.register("TreeDropdownField",Q.default)}}]),e}()
 t.default=new J},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function i(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called")
@@ -2575,7 +2639,7 @@ var o=Object.getOwnPropertyDescriptor(t,n)
 if(void 0===o){var i=Object.getPrototypeOf(t)
 return null===i?void 0:e(i,n,r)}if("value"in o)return o.value
 var a=o.get
-if(void 0!==a)return a.call(r)},c=n(6),d=r(c),p=n(152),f=r(p),h=n(274),m=n(231),y=r(m),v=n(232),g=r(v),b=n(5),w=r(b),_="LT",E=function(e){function t(){return o(this,t),i(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))
+if(void 0!==a)return a.call(r)},c=n(6),d=r(c),p=n(152),f=r(p),h=n(285),m=n(231),y=r(m),v=n(232),g=r(v),b=n(5),w=r(b),_="LT",E=function(e){function t(){return o(this,t),i(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))
 
 }return a(t,e),u(t,[{key:"getInputProps",value:function e(){var n=w.default.inject(w.default._t("Admin.FormatExample","Example: {format}"),{format:(0,y.default)().endOf("month").format(_)}),r={}
 return s(r,l(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"getInputProps",this).call(this)),s(r,{type:this.props.data.html5?"time":"text",placeholder:n}),r}},{key:"isMultiline",value:function e(){
@@ -2602,7 +2666,7 @@ var o=Object.getOwnPropertyDescriptor(t,n)
 if(void 0===o){var i=Object.getPrototypeOf(t)
 return null===i?void 0:e(i,n,r)}if("value"in o)return o.value
 var a=o.get
-if(void 0!==a)return a.call(r)},c=n(6),d=r(c),p=n(152),f=r(p),h=n(274),m=n(231),y=r(m),v=n(232),g=r(v),b=n(5),w=r(b),_="L LT",E=function(e){function t(){return o(this,t),i(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))
+if(void 0!==a)return a.call(r)},c=n(6),d=r(c),p=n(152),f=r(p),h=n(285),m=n(231),y=r(m),v=n(232),g=r(v),b=n(5),w=r(b),_="L LT",E=function(e){function t(){return o(this,t),i(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))
 
 }return a(t,e),u(t,[{key:"getInputProps",value:function e(){var n=w.default.inject(w.default._t("Admin.FormatExample","Example: {format}"),{format:(0,y.default)().endOf("month").format(_)})
 return s({},l(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"getInputProps",this).call(this),{type:this.props.data.html5?"datetime-local":"text",placeholder:n})}},{key:"isMultiline",value:function e(){
@@ -2625,7 +2689,7 @@ e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,wri
 value:!0})
 var s=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]
 for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},u=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
-r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),l=n(6),c=r(l),d=n(278),p=r(d),f=n(152),h=r(f),m=n(33),y=r(m),v=function(e){
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),l=n(6),c=r(l),d=n(289),p=r(d),f=n(152),h=r(f),m=n(33),y=r(m),v=function(e){
 function t(){return o(this,t),i(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))}return a(t,e),u(t,[{key:"render",value:function e(){var t=(0,h.default)(p.default)
 return c.default.createElement(t,s({},this.props,{type:"checkbox",hideLabels:!0}))}}]),t}(y.default)
 t.default=v},function(e,t,n){"use strict"
@@ -2661,7 +2725,7 @@ return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function a(e,t){if("funct
 e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}Object.defineProperty(t,"__esModule",{
 value:!0}),t.CheckboxSetField=void 0
 var s=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
-r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),u=n(6),l=r(u),c=n(33),d=r(c),p=n(278),f=r(p),h=n(152),m=r(h),y=function(e){
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),u=n(6),l=r(u),c=n(33),d=r(c),p=n(289),f=r(p),h=n(152),m=r(h),y=function(e){
 function t(e){o(this,t)
 var n=i(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
 return n.getItemKey=n.getItemKey.bind(n),n.getOptionProps=n.getOptionProps.bind(n),n.handleChange=n.handleChange.bind(n),n.getValues=n.getValues.bind(n),n}return a(t,e),s(t,[{key:"getItemKey",value:function e(t,n){
@@ -2684,7 +2748,7 @@ return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function a(e,t){if("funct
 e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}Object.defineProperty(t,"__esModule",{
 value:!0}),t.OptionsetField=void 0
 var s=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
-r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),u=n(6),l=r(u),c=n(33),d=r(c),p=n(278),f=r(p),h=n(152),m=r(h),y=function(e){
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),u=n(6),l=r(u),c=n(33),d=r(c),p=n(289),f=r(p),h=n(152),m=r(h),y=function(e){
 function t(e){o(this,t)
 var n=i(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))
 return n.getItemKey=n.getItemKey.bind(n),n.getOptionProps=n.getOptionProps.bind(n),n.handleChange=n.handleChange.bind(n),n}return a(t,e),s(t,[{key:"getItemKey",value:function e(t,n){return this.props.id+"-"+(t.value||"empty"+n)
@@ -2870,7 +2934,7 @@ var o=Object.getOwnPropertyDescriptor(t,n)
 if(void 0===o){var i=Object.getPrototypeOf(t)
 return null===i?void 0:e(i,n,r)}if("value"in o)return o.value
 var a=o.get
-if(void 0!==a)return a.call(r)},l=n(287),c=r(l),d=n(152),p=r(d),f=function(e){function t(){return o(this,t),i(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))}return a(t,e),s(t,[{key:"getClassName",
+if(void 0!==a)return a.call(r)},l=n(298),c=r(l),d=n(152),p=r(d),f=function(e){function t(){return o(this,t),i(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))}return a(t,e),s(t,[{key:"getClassName",
 value:function e(){return"field-group-component "+u(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"getClassName",this).call(this)}}]),t}(c.default)
 t.FieldGroup=f,t.default=(0,p.default)(f)},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e){if(Array.isArray(e)){for(var t=0,n=Array(e.length);t<e.length;t++)n[t]=e[t]

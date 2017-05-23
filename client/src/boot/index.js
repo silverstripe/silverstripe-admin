@@ -10,6 +10,7 @@ import ConfigReducer from 'state/config/ConfigReducer';
 import SchemaReducer from 'state/schema/SchemaReducer';
 import RecordsReducer from 'state/records/RecordsReducer';
 import BreadcrumbsReducer from 'state/breadcrumbs/BreadcrumbsReducer';
+import UnsavedFormsReducer from 'state/unsavedForms/UnsavedFormsReducer';
 import bootInjector from 'boot/BootInjector';
 import TreeDropdownFieldReducer from 'state/treeDropdownField/TreeDropdownFieldReducer';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
@@ -69,6 +70,7 @@ function appBoot() {
   reducerRegister.add('routing', routerReducer);
   reducerRegister.add('apollo', apolloClient.reducer());
   reducerRegister.add('treeDropdownField', TreeDropdownFieldReducer);
+  reducerRegister.add('unsavedForms', UnsavedFormsReducer);
 
   bootInjector.start();
 
