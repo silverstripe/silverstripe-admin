@@ -53,5 +53,3 @@ _.propTypes={show:d.PropTypes.bool,schemaUrl:d.PropTypes.string,onInsert:d.PropT
 var k=function e(t,n){function r(e){var r=e.config.sections.find(function(e){return e.name===t}),o=""+r.form[n].schemaUrl
 return{sectionConfig:r,schemaUrl:o}}return(0,v.connect)(r,l)(_)}
 t.InsertLinkModal=_,t.createInsertLinkModal=k,t.default=(0,v.connect)(function(){return{}},l)(_)},,,function(e,t){e.exports=FormBuilderModal},function(e,t){e.exports=SchemaActions}])
-
-//# sourceMappingURL=TinyMCE_sslink-external.js.map

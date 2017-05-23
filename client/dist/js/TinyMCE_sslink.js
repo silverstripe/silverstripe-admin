@@ -18,5 +18,3 @@ var i=function(){function n(n,t){for(var e=0;e<t.length;e++){var i=t[e]
 i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(n,i.key,i)}}return function(t,e,i){return e&&n(t.prototype,e),i&&n(t,i),t}}(),r=function(){function n(){
 e(this,n),this.actions={}}return i(n,[{key:"addAction",value:function n(t,e){this.actions[t]=this.getActions(t).concat([e])}},{key:"getActions",value:function n(t){return this.actions[t]||[]}}]),n}()
 window.ss=window.ss||{},window.ss.tinymceactions=window.ss.tinymceactions||new r,t.default=window.ss.tinymceactions}])
-
-//# sourceMappingURL=TinyMCE_sslink.js.map
