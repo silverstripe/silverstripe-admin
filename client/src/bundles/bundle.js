@@ -46,6 +46,9 @@ require('expose-loader?ReducerRegister!lib/ReducerRegister');
 require('expose-loader?ReactRouteRegister!lib/ReactRouteRegister');
 require('expose-loader?Router!lib/Router');
 require('expose-loader?TinyMCEActionRegistrar!lib/TinyMCEActionRegistrar');
+require('expose-loader?ShortcodeSerialiser!lib/ShortcodeSerialiser');
+require('expose-loader?InsertLinkModal!containers/InsertLinkModal/InsertLinkModal');
+
 
 // Legacy CMS
 require('../legacy/sspath.js');

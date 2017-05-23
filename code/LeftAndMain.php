@@ -28,7 +28,7 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\PrintableTransformation;
 use SilverStripe\Forms\HTMLEditor\HTMLEditorConfig;
-use SilverStripe\Forms\HTMLEditor\HTMLEditorField_Toolbar;
+use SilverStripe\Admin\ModalController;
 use SilverStripe\Forms\Schema\FormSchema;
 use SilverStripe\i18n\i18n;
 use SilverStripe\ORM\CMSPreviewable;
@@ -142,7 +142,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         'save',
         'printable',
         'show',
-        'EditorToolbar',
+        'Modals',
         'EditForm',
         'AddForm',
         'batchactions',
@@ -315,10 +315,10 @@ class LeftAndMain extends Controller implements PermissionProvider
             'url' => trim($this->Link(), '/'),
             'form' => [
                 'EditorExternalLink' => [
-                    'schemaUrl' => $this->Link('methodSchema/EditorToolbar/EditorExternalLink'),
+                    'schemaUrl' => $this->Link('methodSchema/Modals/EditorExternalLink'),
                 ],
                 'EditorEmailLink' => [
-                    'schemaUrl' => $this->Link('methodSchema/EditorToolbar/EditorEmailLink'),
+                    'schemaUrl' => $this->Link('methodSchema/Modals/EditorEmailLink'),
                 ],
             ],
         ];
@@ -1415,11 +1415,13 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * Return the CMS's HTML-editor toolbar
+     * Handler for all global modals
+     *
+     * @return ModalController
      */
-    public function EditorToolbar()
+    public function Modals()
     {
-        return HTMLEditorField_Toolbar::create($this, "EditorToolbar");
+        return ModalController::create($this, "Modals");
     }
 
     /**

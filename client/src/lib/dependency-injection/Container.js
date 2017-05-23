@@ -199,8 +199,8 @@ const sortMiddlewares = (middlewareList) => {
  * only for testing purposes.
  */
 const reset = (silent) => {
-  // eslint-disable-next-line no-console
   if (!silent) {
+    // eslint-disable-next-line no-console
     console.warn(`
       Injector.__reset__() should only be used in dev mode. Using
       this method in production will likely break.
