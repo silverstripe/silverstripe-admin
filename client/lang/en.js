@@ -29,6 +29,16 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.LINKLABEL_EXTERNALURL": "Link to external URL",
     "Admin.LINKLABEL_EMAIL": "Link to email address",
     "Admin.LINK_EXTERNAL": "Insert external link",
-    "Admin.LINK_EMAIL": "Insert email link"
+    "Admin.LINK_EMAIL": "Insert email link",
+    "Admin.WRITTEN_NUMBER_ZERO": "zero",
+    "Admin.WRITTEN_NUMBER_ONE": "one",
+    "Admin.WRITTEN_NUMBER_TWO": "two",
+    "Admin.WRITTEN_NUMBER_THREE": "three",
+    "Admin.WRITTEN_NUMBER_FOUR": "four",
+    "Admin.WRITTEN_NUMBER_FIVE": "five",
+    "Admin.WRITTEN_NUMBER_SIX": "six",
+    "Admin.WRITTEN_NUMBER_SEVEN": "seven",
+    "Admin.WRITTEN_NUMBER_EIGHT": "eight",
+    "Admin.WRITTEN_NUMBER_NINE": "nine",
 });
 }

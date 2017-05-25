@@ -48,6 +48,7 @@ require('expose-loader?Router!lib/Router');
 require('expose-loader?TinyMCEActionRegistrar!lib/TinyMCEActionRegistrar');
 require('expose-loader?ShortcodeSerialiser!lib/ShortcodeSerialiser');
 require('expose-loader?InsertLinkModal!containers/InsertLinkModal/InsertLinkModal');
+require('expose-loader?formatWrittenNumber!lib/formatWrittenNumber');
 
 
 // Legacy CMS

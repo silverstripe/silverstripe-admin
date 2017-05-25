@@ -54,6 +54,14 @@
   color: $body-color;
 }
 
+.list-group-item.active {
+  .list-group-item__heading {
+    @include media-breakpoint-up(lg) {
+      color: $white;
+    }
+  }
+}
+
 .list-group-item__thumbnail {
   width: 64px;
   height: auto;
