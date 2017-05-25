@@ -6,30 +6,37 @@ const inject = (Component, dependencies, mapDependenciesToProps) => {
   class Injected extends React.Component {
     render() {
       let props = {};
-      if (dependencies) {
-        if (!Array.isArray(dependencies)) {
-          throw new Error(`
-            withInjector() passed an argument for dependencies that is ${typeof dependencies}. 
-            Must be an array of named dependencies.
+      let deps = dependencies;
+      if (deps) {
+        if (!Array.isArray(deps)) {
+          if (typeof deps !== 'string') {
+            throw new Error(`
+            withInjector() passed an argument for dependencies that is ${typeof deps}. 
+            Must be a string or array of named dependencies.
           `);
+          }
+          deps = [deps];
         }
-        const resolved = dependencies.map(this.context.injector.get);
+        const resolved = deps.map(this.context.injector.get);
         if (mapDependenciesToProps && typeof mapDependenciesToProps === 'function') {
           props = mapDependenciesToProps(...resolved);
           if (typeof props !== 'object') {
             throw new Error(`
-              mapDepedenciesToProps parameter passed to withInjector() 
+              mapDepedenciesToProps parameter passed to inject() 
               should return an object that maps prop names to dependencies
              `);
           }
         } else {
           // If no mapping function is given, mirror the prop names and dependency names
-          for (let i = 0; i < dependencies.length; i++) {
-            props[dependencies[i]] = resolved[i];
+          for (let i = 0; i < deps.length; i++) {
+            props[deps[i]] = resolved[i];
           }
         }
       }
-      const newProps = Object.assign({}, this.props, props);
+      const newProps = {
+        ...this.props,
+        ...props,
+      };
       return <Component {...newProps} />;
     }
   }

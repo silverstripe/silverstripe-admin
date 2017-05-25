@@ -454,15 +454,15 @@ for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},
 
 },c=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n]
 r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),d=n(6),p=r(d),f=n(119),h=r(f),m=function e(t,n,r){
-var d=function(e){function d(){return i(this,d),a(this,(d.__proto__||Object.getPrototypeOf(d)).apply(this,arguments))}return s(d,e),c(d,[{key:"render",value:function e(){var i={}
-if(n){if(!Array.isArray(n))throw new Error("\n            withInjector() passed an argument for dependencies that is "+("undefined"==typeof n?"undefined":l(n))+". \n            Must be an array of named dependencies.\n          ")
+var d=function(e){function d(){return i(this,d),a(this,(d.__proto__||Object.getPrototypeOf(d)).apply(this,arguments))}return s(d,e),c(d,[{key:"render",value:function e(){var i={},a=n
+if(a){if(!Array.isArray(a)){if("string"!=typeof a)throw new Error("\n            withInjector() passed an argument for dependencies that is "+("undefined"==typeof a?"undefined":l(a))+". \n            Must be a string or array of named dependencies.\n          ")
 
 
-var a=n.map(this.context.injector.get)
-if(r&&"function"==typeof r){if(i=r.apply(void 0,o(a)),"object"!==("undefined"==typeof i?"undefined":l(i)))throw new Error("\n              mapDepedenciesToProps parameter passed to withInjector() \n              should return an object that maps prop names to dependencies\n             ")
+a=[a]}var s=a.map(this.context.injector.get)
+if(r&&"function"==typeof r){if(i=r.apply(void 0,o(s)),"object"!==("undefined"==typeof i?"undefined":l(i)))throw new Error("\n              mapDepedenciesToProps parameter passed to inject() \n              should return an object that maps prop names to dependencies\n             ")
 
-}else for(var s=0;s<n.length;s++)i[n[s]]=a[s]}var c=u({},this.props,i)
-return p.default.createElement(t,c)}}]),d}(p.default.Component)
+}else for(var c=0;c<a.length;c++)i[a[c]]=s[c]}var d=u({},this.props,i)
+return p.default.createElement(t,d)}}]),d}(p.default.Component)
 return d.contextTypes=h.default,d.displayName="inject(\n    "+(t.displayName||t.name||"Component")+"\n  )",d}
 t.default=m},function(e,t,n){"use strict"
 function r(e){return e&&e.__esModule?e:{default:e}}function o(e){if(Array.isArray(e)){for(var t=0,n=Array(e.length);t<e.length;t++)n[t]=e[t]

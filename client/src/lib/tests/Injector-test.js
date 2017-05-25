@@ -233,8 +233,17 @@ describe('Injector', () => {
     });
 
     it('maps dependencies', () => {
+      // eslint-disable-next-line react/prefer-stateless-function, react/no-multi-comp
+      class App extends React.Component {
+        render() {
+          // eslint-disable-next-line react/prop-types
+          return <div>{this.props.children}</div>
+        }
+      }
+      const Provider = provideInjector(App);
       const TestComponent = (props) => {
         expect(typeof props.a).toBe('function');
+        expect(props.a()).toBe('Test A');
         expect(props.a()).toBe('Test A');
         expect(typeof props.b).toBe('function');
         expect(props.b()).toBe('Test B');
@@ -255,19 +264,25 @@ describe('Injector', () => {
       Injector.register('b', () => 'Test B');
       Injector.load();
 
-      React.createElement(inject(
-        TestComponent,
-        ['ServiceA', 'ServiceB'],
-        (ServiceA, ServiceB) => ({
-          a: ServiceA,
-          b: ServiceB,
-        })
-      ));
-
-      React.createElement(inject(
+      const InjectA = inject(
         TestComponent,
         ['a', 'b']
-      ));
+      );
+
+      ReactTestUtils.renderIntoDocument(<Provider><InjectA normalProp="Proppy" /></Provider>);
+
+      const AnotherTest = (props) => {
+        expect(typeof props.ServiceA).toBe('function');
+        expect(props.ServiceA()).toBe('Test A');
+        return <div>test</div>;
+      };
+
+      const InjectB = inject(
+        AnotherTest,
+        'ServiceA'
+      );
+
+      ReactTestUtils.renderIntoDocument(<Provider><InjectB /></Provider>);
     });
   });
 });
