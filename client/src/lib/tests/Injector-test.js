@@ -237,7 +237,7 @@ describe('Injector', () => {
       class App extends React.Component {
         render() {
           // eslint-disable-next-line react/prop-types
-          return <div>{this.props.children}</div>
+          return <div>{this.props.children}</div>;
         }
       }
       const Provider = provideInjector(App);
@@ -273,10 +273,14 @@ describe('Injector', () => {
 
       const AnotherTest = (props) => {
         expect(typeof props.ServiceA).toBe('function');
+        // eslint-disable-next-line new-cap
         expect(props.ServiceA()).toBe('Test A');
         return <div>test</div>;
       };
 
+      AnotherTest.propTypes = {
+        ServiceA: React.PropTypes.any,
+      };
       const InjectB = inject(
         AnotherTest,
         'ServiceA'
