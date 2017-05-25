@@ -1,24 +1,13 @@
 /* global jest, jasmine, describe, beforeEach, it, pit, expect, process */
 jest.unmock('../Injector');
 
-import Injector, { provideInjector, withInjector } from '../Injector';
+import Injector, { provideInjector, withInjector, inject } from '../Injector';
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 
 beforeEach(() => {
-  Injector.__reset__();
+  Injector.__reset__(true);
 });
-
-const expectError = (func) => {
-  let error = null;
-  try {
-    func();
-  } catch (e) {
-    error = e;
-  }
-  expect(typeof error).toBe('object');
-  expect(error.message).toBeTruthy();
-};
 
 describe('Injector', () => {
   describe('Container API', () => {
@@ -26,8 +15,9 @@ describe('Injector', () => {
       it('should throw if the injector is accessed before it is loaded', () => {
         const TestService = () => 'test service';
         Injector.register('TestService', TestService);
-        expectError(() => Injector.get('TestService'));
+        expect(() => Injector.get('TestService')).toThrow();
         Injector.load();
+        expect(typeof Injector.get('TestService')).toBe('function');
         expect(Injector.get('TestService')()).toBe('test service');
       });
     });
@@ -35,46 +25,37 @@ describe('Injector', () => {
       const TestService = () => 'test service';
       Injector.register('TestService', TestService);
       const NewService = () => 'new service';
-      expectError(() => Injector.register('TestService', NewService));
+      expect(() => Injector.register('TestService', NewService)).toThrow();
       Injector.register('TestService', NewService, { force: true });
       Injector.load();
+      expect(typeof Injector.get('TestService')).toBe('function');
       expect(Injector.get('TestService')()).toBe('new service');
     });
     it('should throw if you try to mutate the DI container after load', () => {
       const TestService = () => 'test service';
       Injector.register('TestService', TestService);
       Injector.load();
-      expectError(() => Injector.register('Foo', () => {}));
+      expect(() => Injector.register('Foo', () => {})).toThrow();
     });
   });
   describe('Updating', () => {
-    it('should throw if you try to update the DI container after load', () => {
+    it('should throw if you try to transform the DI container after load', () => {
       const TestService = () => 'test service';
       Injector.register('TestService', TestService);
       Injector.load();
-      expectError(() => Injector.update(
-        {
-          name: 'test',
-        },
-        () => {}
-      ));
+      expect(() => Injector.transform('test', () => {})).toThrow();
     });
     it('should throw on bad metadata', () => {
       const TestService = () => 'test service';
       Injector.register('TestService', TestService);
       Injector.load();
-      expectError(() => Injector.update(
-        {
-          foo: 'test',
-        },
-        () => {}
-      ));
+      expect(() => Injector.transform('test', () => {})).toThrow();
     });
     it('should override components', () => {
       const TestComponent = () => <h2>Test</h2>;
       Injector.register('TestComponent', TestComponent);
       const HOC = (Component) => () => <div className="hoc"><Component /></div>;
-      Injector.update({ name: 'test' }, update => update('TestComponent', HOC));
+      Injector.transform('test', update => update('TestComponent', HOC));
       Injector.load();
       const Service = Injector.get('TestComponent');
       // eslint-disable-next-line react/prefer-stateless-function, react/no-multi-comp
@@ -94,7 +75,7 @@ describe('Injector', () => {
       const TestComponent1 = () => <h2>Test</h2>;
       Injector.register('TestComponent1', TestComponent1);
       const HOC1 = (TestComponent) => () => <div className="hoc"><TestComponent /></div>;
-      Injector.update({ name: 'test' }, update => update('TestComponent1', HOC1));
+      Injector.transform('test', update => update('TestComponent1', HOC1));
       // eslint-disable-next-line react/prefer-stateless-function, react/no-multi-comp
       class TestComponent2 extends React.Component {
         render() {
@@ -114,12 +95,12 @@ describe('Injector', () => {
         return TestClass;
       };
 
-      Injector.update({ name: 'test' }, update => update('TestComponent2', HOC2));
+      Injector.transform('test', update => update('TestComponent2', HOC2, 'Besto'));
       Injector.load();
       const Service1 = Injector.get('TestComponent1');
       expect(Service1.displayName).toBe('test(TestComponent1)');
       const Service2 = Injector.get('TestComponent2');
-      expect(Service2.displayName).toBe('test(Testo)');
+      expect(Service2.displayName).toBe('Besto(Testo)');
     });
     it('resolves priorities', () => {
       const OriginalComponent = ({ title }) => <h2>{title}</h2>;
@@ -135,27 +116,22 @@ describe('Injector', () => {
       const HOC_B = (Original) => (props) => <Original title={`B${props.title}`} />;
 
       // Ensure that ABC is applied in reverse (CBA), since the HOCs prepend
-      Injector.update(
-        {
-          name: 'module-b',
-          after: 'module-c',
-          before: 'module-a',
-        },
-        update => update('Original', HOC_B)
+      Injector.transform(
+        'middle',
+        (update) => update('Original', HOC_B),
+        { after: 'front', before: 'back' }
       );
-      Injector.update(
-        {
-          name: 'module-a',
-          after: 'module-c',
-        },
-        update => update('Original', HOC_A)
+
+      Injector.transform(
+        'front',
+        (update) => update('Original', HOC_C),
+        { before: 'back' }
       );
-      Injector.update(
-        {
-          name: 'module-c',
-          before: 'module-b',
-        },
-        update => update('Original', HOC_C)
+
+      Injector.transform(
+        'back',
+        (update) => update('Original', HOC_A),
+        { after: 'front' }
       );
 
       Injector.load();
@@ -170,6 +146,48 @@ describe('Injector', () => {
       const rendered = ReactTestUtils.renderIntoDocument(<TestComponent />);
       const h2 = ReactTestUtils.findRenderedDOMComponentWithTag(rendered, 'h2');
       expect(h2.innerHTML).toBe('ABCDEFG');
+    });
+    it('allows wildcards', () => {
+      const OriginalComponent = (title) => title;
+      Injector.register('Original', OriginalComponent);
+      const HOC_RED = (original) => (title) => original(`${title}_RED`);
+      const HOC_ORANGE = (original) => (title) => original(`${title}_ORANGE`);
+      const HOC_YELLOW = (original) => (title) => original(`${title}_YELLOW`);
+      const HOC_GREEN = (original) => (title) => original(`${title}_GREEN`);
+      const HOC_BLUE = (original) => (title) => original(`${title}_BLUE`);
+      const HOC_INDIGO = (original) => (title) => original(`${title}_INDIGO`);
+      const HOC_VIOLET = (original) => (title) => original(`${title}_VIOLET`);
+
+      Injector.transform(
+        'violet',
+        (update) => update('Original', HOC_VIOLET),
+        { after: '*' }
+      );
+
+      Injector.transform(
+        'roy',
+        (update) => {
+          update('Original', HOC_RED);
+          update('Original', HOC_ORANGE);
+          update('Original', HOC_YELLOW);
+        },
+        { before: '*' }
+      );
+
+      Injector.transform(
+        'middle',
+        (update) => {
+          update('Original', HOC_GREEN);
+          update('Original', HOC_BLUE);
+          update('Original', HOC_INDIGO);
+        },
+        { after: 'roy', before: 'violet' }
+      );
+
+      Injector.load();
+
+      const injected = Injector.get('Original');
+      expect(injected('RAINBOW')).toBe('RAINBOW_RED_ORANGE_YELLOW_GREEN_BLUE_INDIGO_VIOLET');
     });
   });
   describe('Top-level HOCs', () => {
@@ -212,6 +230,44 @@ describe('Injector', () => {
       );
 
       expect(tag).toBeTruthy();
+    });
+
+    it('maps dependencies', () => {
+      const TestComponent = (props) => {
+        expect(typeof props.a).toBe('function');
+        expect(props.a()).toBe('Test A');
+        expect(typeof props.b).toBe('function');
+        expect(props.b()).toBe('Test B');
+        expect(props.normalProp).toBe('Proppy');
+
+        return <div>test</div>;
+      };
+
+      TestComponent.propTypes = {
+        a: React.PropTypes.any,
+        b: React.PropTypes.any,
+        normalProp: React.PropTypes.any,
+      };
+
+      Injector.register('ServiceA', () => 'Test A');
+      Injector.register('ServiceB', () => 'Test B');
+      Injector.register('a', () => 'Test A');
+      Injector.register('b', () => 'Test B');
+      Injector.load();
+
+      React.createElement(inject(
+        TestComponent,
+        ['ServiceA', 'ServiceB'],
+        (ServiceA, ServiceB) => ({
+          a: ServiceA,
+          b: ServiceB,
+        })
+      ));
+
+      React.createElement(inject(
+        TestComponent,
+        ['a', 'b']
+      ));
     });
   });
 });

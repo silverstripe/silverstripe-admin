@@ -24,6 +24,4 @@ function provideInjector(Component) {
   return InjectorProvider;
 }
 
-export {
-  provideInjector,
-};
+export default provideInjector;

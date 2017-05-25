@@ -7,13 +7,38 @@ import { compose } from 'redux';
  */
 const middlewares = {};
 
+/**
+ * A map of service names to factories
+ * @type Object
+ */
 const container = {};
+
+/**
+ * @type {string}
+ */
+const BEFORE = 'before';
+
+/**
+ * @type {string}
+ */
+const AFTER = 'after';
+
+/**
+ * @type {string}
+ */
+const GRAPH_HEAD = '__HEAD__';
+
+/**
+ * @type {string}
+ */
+const GRAPH_TAIL = '__TAIL__';
 
 /**
  * A list of allowed priorities that can be specified as metadata
  * @type array
  */
-const PRIORITIES = ['before', 'after'];
+const PRIORITIES = [BEFORE, AFTER];
+
 /**
  * When true, DI is blocked
  * @type {boolean}
@@ -22,15 +47,12 @@ let initialised = false;
 
 /**
  * Validates the metadata passed to the injector customisation
- * @param object
+ * @param meta
  */
 const validateMeta = (meta) => {
-  if (typeof meta.name === undefined) {
-    throw new Error('Injector.update() called with no "name" property specified.');
-  }
   PRIORITIES.forEach(k => {
     if (
-      meta[k] !== undefined &&
+      typeof meta[k] !== 'undefined' &&
       (typeof meta[k] !== 'string' && !Array.isArray(meta[k]))
     ) {
       throw new Error(`Injector.update() key ${k} must be a string or array`);
@@ -54,32 +76,75 @@ const protect = (func) => (...params) => {
 /**
  * Creates a display name for a final composed component given all
  * the names of the mutations that affected it.
- * e.g. my-module(TextField)
+ * e.g. my-transformation(TextField)
  * @param original The original registered component
- * @param module The list of module names that modified the component
+ * @param transforms The list of transformation names that modified the component
  */
-const createDisplayName = (original, modules) => {
+const createDisplayName = (original, transforms) => {
   const componentName = (original.displayName || original.name || 'Component');
-  const names = [componentName, ...modules];
+  const names = [componentName, ...transforms];
 
   return names.reduce((acc, curr) => `${curr}(${acc})`);
 };
 
 /**
- * Ensures that the priority keys are arrays
- * @param middleware
+ * Ensures that the priority keys are arrays, and that before/after is set
+ * @param middlewareList
  * @returns object
  */
-const normaliseMiddleware = (middleware) => {
-  const normalised = { ...middleware };
-  PRIORITIES.forEach(k => {
-    if (!Array.isArray(middleware[k])) {
-      normalised[k] = middleware[k] ? [middleware[k]] : [];
-    } else {
-      normalised[k] = middleware[k];
+const normaliseMiddlewares = (middlewareList) => (
+  middlewareList.map(middleware => {
+    const normalised = { ...middleware };
+    // make sure before/after are at least empty arrays
+    PRIORITIES.forEach(k => {
+      if (!Array.isArray(middleware[k])) {
+        normalised[k] = middleware[k] ? [middleware[k]] : [];
+      } else {
+        normalised[k] = middleware[k];
+      }
+    });
+    // If no before/after is specified, put it between the head and tail
+    if (PRIORITIES.every(p => !normalised[p].length)) {
+      normalised[AFTER] = [GRAPH_HEAD];
+      normalised[BEFORE] = [GRAPH_TAIL];
+    }
+    return normalised;
+  })
+);
+
+/**
+ * Validates the use of a wildcard (*) specification on a middleware object.
+ * It should:
+ * -- Be singular
+ *  BAD: { after: ['*', 'something-else'] }
+ *  GOOD: { after: ['*'] }
+ * -- Be the only priority rule
+ *   BAD: { after: ['*'], before: 'something' }
+ *   GOOD: { after: ['*'] }
+ * @param middleware
+ * @returns The priority (before/after) of the wildcard being used
+ */
+const checkWildcard = (middleware) => {
+  let wildcard = null;
+  PRIORITIES.forEach(PRIORITY => {
+    if (middleware[PRIORITY].includes('*')) {
+      if (middleware[PRIORITY].length > 1) {
+        throw new Error(`
+          Key ${PRIORITY} on ${middleware.name} should only specify one key 
+          if using the "*" wildcard
+        `);
+      } else if (wildcard) {
+        throw new Error(`
+          Cannot specify a ${PRIORITY} rule on ${middleware.name} if a wildcard 
+          has been specified
+        `);
+      } else {
+        wildcard = PRIORITY;
+      }
     }
   });
-  return normalised;
+
+  return wildcard;
 };
 
 /**
@@ -89,30 +154,42 @@ const normaliseMiddleware = (middleware) => {
  * @returns {Array}
  */
 const sortMiddlewares = (middlewareList) => {
-  const graph = [];
+  /* Initialise the graph with head and tail placeholders so that customisations
+  with no before/after specified have a reference point */
+  const GRAPH_INIT = [GRAPH_HEAD, GRAPH_TAIL];
+  const graph = [GRAPH_INIT];
   let sortedMiddlewares = [];
+  // Ensure all the middleware objects have the right shape
+  const normalisedMiddlewares = normaliseMiddlewares(middlewareList);
+  normalisedMiddlewares.forEach(middleware => {
+    const { name } = middleware;
+    const wildcard = checkWildcard(middleware);
+    if (wildcard === AFTER) {
+      graph.push([GRAPH_TAIL, name]);
+    } else if (wildcard === BEFORE) {
+      graph.push([name, GRAPH_HEAD]);
+    } else {
+      // Everything, other than wildcards, goes between head and tail
+      // at a minimum
+      graph.push([name, GRAPH_TAIL]);
+      graph.push([GRAPH_HEAD, name]);
 
-  middlewareList.forEach(entry => {
-    const middleware = normaliseMiddleware(entry);
-    const { name, before, after } = middleware;
-    if (!before.length && !after.length) {
-      after.push('*');
+      middleware[BEFORE].forEach(beforeEntry => {
+        graph.push([name, beforeEntry]);
+      });
+      middleware[AFTER].forEach(afterEntry => {
+        graph.push([afterEntry, name]);
+      });
     }
-    before.forEach(beforeEntry => {
-      graph.push([name, beforeEntry]);
-    });
-    after.forEach(afterEntry => {
-      graph.push([afterEntry, name]);
-    });
   });
-
-  /** @var Array sortedByName */
-  const sortedByName = toposort(graph);
-  sortedByName.forEach(name => {
-    sortedMiddlewares = sortedMiddlewares.concat(
-      middlewareList.filter(m => m.name === name)
-    );
-  });
+  // Apply the topological sort and strip out the placeholders
+  toposort(graph)
+    .filter(item => !GRAPH_INIT.includes(item))
+    .forEach(name => {
+      sortedMiddlewares = sortedMiddlewares.concat(
+        middlewareList.filter(m => m.name === name)
+      );
+    });
 
   return sortedMiddlewares;
 };
@@ -121,7 +198,14 @@ const sortMiddlewares = (middlewareList) => {
  * Empties the state and restarts the injector. Should be used
  * only for testing purposes.
  */
-const reset = () => {
+const reset = (silent) => {
+  // eslint-disable-next-line no-console
+  if (!silent) {
+    console.warn(`
+      Injector.__reset__() should only be used in dev mode. Using
+      this method in production will likely break.
+    `);
+  }
   [middlewares, container].forEach(o => {
     // eslint-disable-next-line no-param-reassign
     Object.keys(o).forEach(k => delete o[k]);
@@ -136,7 +220,7 @@ const reset = () => {
  * @param meta An object of metadata
  * @param key The name of the dependency to customise
  * @param factory The function that will compose the dependency. Gets passed the
- * previous state of composition
+ *  previous state of composition
  */
 const customise = (meta, key, factory) => {
   validateMeta(meta);
@@ -184,22 +268,21 @@ const get = (key) => {
  * Updates the injector by callback. First parameter should contain
  * an object with keys for name, and (optional) "before" and "after" declarations
  * e.x.
- * Injector.update(
- *   {
- *     name: 'my-module',
- *     before: ['another-module']
- *   },
- *   wrap => {
- *      wrap('SomeComponent', MyNewComponentCreator);
- *   }
- * )
- * @param meta
+ * Injector.transform('my-transformation-name', (update) => {
+ *  update('SomeComponent', MyNewComponentCreator);
+ * }, { before: 'another-transform' });
+ * @param name The name of the transformation
  * @param callback
+ * @param priorities An object mapping priorities for the loading order:
+ *  { before: 'some-transformation', after: 'some-other-transformation' }
  */
-const update = (meta, callback) => {
+const transform = (name, callback, priorities = {}) => {
+  const meta = { name, ...priorities };
   validateMeta(meta);
   callback(
-    (key, wrapper) => customise(meta, key, wrapper)
+    (key, wrapper, displayName) => {
+      customise({ ...meta, displayName }, key, wrapper);
+    }
   );
 };
 
@@ -212,7 +295,7 @@ const load = function load() {
       const sortedMiddlewares = sortMiddlewares(middlewares[key]);
       const service = container[key];
       const factories = sortedMiddlewares.map(m => m.factory);
-      const names = sortedMiddlewares.map(m => m.name);
+      const names = sortedMiddlewares.map(m => m.displayName || m.name);
       const composed = compose(...factories)(service);
       composed.displayName = createDisplayName(service, names);
       container[key] = composed;
@@ -222,14 +305,14 @@ const load = function load() {
 };
 
 // Public API
-const ContainerAPI = {
+const Container = {
   get,
   load,
-  update: protect(update),
+  transform: protect(transform),
   register: protect(register),
 };
 if (process.env.NODE_ENV !== 'production') {
-  ContainerAPI.__reset__ = reset;
+  Container.__reset__ = reset;
 }
 
-export default ContainerAPI;
+export default Container;

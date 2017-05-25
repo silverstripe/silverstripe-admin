@@ -1,10 +1,12 @@
-import { provideInjector } from './dependency-injection/provideInjector';
-import { withInjector } from './dependency-injection/withInjector';
-import ContainerAPI from './dependency-injection/container';
+import provideInjector from './dependency-injection/provideInjector';
+import withInjector from './dependency-injection/withInjector';
+import inject from './dependency-injection/inject';
+import Injector from './dependency-injection/Container';
 
 export {
   provideInjector,
   withInjector,
+  inject,
 };
 
-export default ContainerAPI;
+export default Injector;
