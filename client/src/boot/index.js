@@ -1,4 +1,5 @@
 import BootRoutes from './BootRoutes';
+import Injector from 'lib/Injector';
 import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { reducer as ReduxFormReducer } from 'redux-form';
@@ -11,7 +12,7 @@ import SchemaReducer from 'state/schema/SchemaReducer';
 import RecordsReducer from 'state/records/RecordsReducer';
 import BreadcrumbsReducer from 'state/breadcrumbs/BreadcrumbsReducer';
 import UnsavedFormsReducer from 'state/unsavedForms/UnsavedFormsReducer';
-import bootInjector from 'boot/BootInjector';
+import registerComponents from 'boot/registerComponents';
 import TreeDropdownFieldReducer from 'state/treeDropdownField/TreeDropdownFieldReducer';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { printRequest } from 'apollo-client/transport/networkInterface';
@@ -72,7 +73,11 @@ function appBoot() {
   reducerRegister.add('treeDropdownField', TreeDropdownFieldReducer);
   reducerRegister.add('unsavedForms', UnsavedFormsReducer);
 
-  bootInjector.start();
+  // Force this to the end of the execution queue to ensure it's last.
+  window.setTimeout(() => {
+    registerComponents();
+    Injector.load();
+  }, 0);
 
   const initialState = {};
   const rootReducer = combineReducers(reducerRegister.getAll());
@@ -125,5 +130,4 @@ function appBoot() {
     window.jQuery('body').addClass('js-react-boot');
   }
 }
-
 window.onload = appBoot;

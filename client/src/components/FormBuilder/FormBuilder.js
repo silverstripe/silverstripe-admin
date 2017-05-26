@@ -4,7 +4,7 @@ import schemaFieldValues, { schemaMerge, findField } from 'lib/schemaFieldValues
 import SilverStripeComponent from 'lib/SilverStripeComponent';
 import Validator from 'lib/Validator';
 import backend from 'lib/Backend';
-import injector from 'lib/Injector';
+import { withInjector } from 'lib/Injector';
 
 class FormBuilder extends SilverStripeComponent {
 
@@ -138,8 +138,8 @@ class FormBuilder extends SilverStripeComponent {
     let componentProps = props;
     // 'component' key is renamed to 'schemaComponent' in normalize*() methods
     const SchemaComponent = componentProps.schemaComponent !== null
-      ? injector.getComponentByName(componentProps.schemaComponent)
-      : injector.getComponentByDataType(componentProps.schemaType);
+      ? this.context.injector.get(componentProps.schemaComponent)
+      : this.getComponentForDataType(componentProps.schemaType);
 
     if (SchemaComponent === null) {
       return null;
@@ -199,6 +199,42 @@ class FormBuilder extends SilverStripeComponent {
 
       return <FieldComponent key={props.id} {...props} component={this.buildComponent} />;
     });
+  }
+
+  /**
+   * Default data type to component mappings.
+   * Used as a fallback when no component type is provided in the form schema.
+   *
+   * @param string dataType - The data type provided by the form schema.
+   * @return object|null
+   */
+  getComponentForDataType(dataType) {
+    const { injector: { get } } = this.context;
+    switch (dataType) {
+      case 'String':
+      case 'Text':
+        return get('TextField');
+      case 'Date':
+        return get('DateField');
+      case 'Time':
+        return get('TimeField');
+      case 'Datetime':
+        return get('DatetimeField');
+      case 'Hidden':
+        return get('HiddenField');
+      case 'SingleSelect':
+        return get('SingleSelectField');
+      case 'Custom':
+        return get('GridField');
+      case 'Structural':
+        return get('CompositeField');
+      case 'Boolean':
+        return get('CheckboxField');
+      case 'MultiSelect':
+        return get('CheckboxSetField');
+      default:
+        return null;
+    }
   }
 
   /**
@@ -385,4 +421,4 @@ FormBuilder.defaultProps = {
 };
 
 export { basePropTypes, schemaPropType };
-export default FormBuilder;
+export default withInjector(FormBuilder);

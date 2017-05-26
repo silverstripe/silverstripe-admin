@@ -1,5 +1,6 @@
 import React from 'react';
 import SilverStripeComponent from 'lib/SilverStripeComponent';
+import { provideInjector } from 'lib/Injector';
 
 /**
  * Empty container for the moment, will eventually contain the CMS menu`
@@ -8,9 +9,10 @@ import SilverStripeComponent from 'lib/SilverStripeComponent';
 class App extends SilverStripeComponent {
   render() {
     // TODO re-add <div className="app"> wrapper when applying to document.body
-    const Child = React.Children.only(this.props.children);
-    return (Child);
+    return <div>{this.props.children}</div>;
+    // const Child = React.Children.only(this.props.children);
+    // return (Child);
   }
 }
 
-export default App;
+export default provideInjector(App);
