@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import { ApolloProvider } from 'react-apollo';
 import jQuery from 'jquery';
 import { createInsertLinkModal } from 'containers/InsertLinkModal/InsertLinkModal';
+import { provideInjector } from 'lib/Injector';
 
 // Link to email address
 TinyMCEActionRegistrar.addAction('sslink', {
@@ -27,7 +28,7 @@ const plugin = {
 const modalId = 'insert-link__dialog-wrapper--email';
 const sectionConfigKey = 'SilverStripe\\Admin\\LeftAndMain';
 const formName = 'EditorEmailLink';
-const InsertLinkEmailModal = createInsertLinkModal(sectionConfigKey, formName);
+const InsertLinkEmailModal = provideInjector(createInsertLinkModal(sectionConfigKey, formName));
 
 jQuery.entwine('ss', ($) => {
   $('textarea.htmleditor').entwine({

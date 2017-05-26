@@ -2,7 +2,10 @@ import jQuery from 'jQuery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { provideInjector } from 'lib/Injector';
 import FormBuilderModal from 'components/FormBuilderModal/FormBuilderModal';
+
+const InjectableFormBuilderModal = provideInjector(FormBuilderModal);
 
 jQuery.entwine('ss', ($) => {
 	/**
@@ -67,7 +70,7 @@ jQuery.entwine('ss', ($) => {
 
       ReactDOM.render(
         <Provider store={store}>
-          <FormBuilderModal
+          <InjectableFormBuilderModal
             title="Add to campaign"
             show={show}
             handleSubmit={handleSubmit}

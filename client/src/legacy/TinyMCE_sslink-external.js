@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import { ApolloProvider } from 'react-apollo';
 import jQuery from 'jquery';
 import { createInsertLinkModal } from 'containers/InsertLinkModal/InsertLinkModal';
+import { provideInjector } from 'lib/Injector';
 
 // Link to external url
 TinyMCEActionRegistrar.addAction('sslink', {
@@ -27,7 +28,7 @@ const plugin = {
 const modalId = 'insert-link__dialog-wrapper--external';
 const sectionConfigKey = 'SilverStripe\\Admin\\LeftAndMain';
 const formName = 'EditorExternalLink';
-const InsertLinkExternalModal = createInsertLinkModal(sectionConfigKey, formName);
+const InsertLinkExternalModal = provideInjector(createInsertLinkModal(sectionConfigKey, formName));
 
 jQuery.entwine('ss', ($) => {
   $('textarea.htmleditor').entwine({
