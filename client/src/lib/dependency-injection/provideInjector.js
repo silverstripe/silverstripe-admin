@@ -1,5 +1,5 @@
 import React from 'react';
-import Injector from 'lib/Injector';
+import Injector from './Container';
 
 function provideInjector(Component) {
   class InjectorProvider extends React.Component {
