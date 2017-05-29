@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@silverstripe/webpack-config@^0.2":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@silverstripe/webpack-config/-/webpack-config-0.2.0.tgz#6f35fb6c16d8ee66f12ef20b2f3c06373081f878"
+"@silverstripe/webpack-config@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@silverstripe/webpack-config/-/webpack-config-0.2.2.tgz#a77361812731f894ea1d9ebdb57a0777e1c90a65"
   dependencies:
     autoprefixer "^6.4.0"
     babel-core "^6.24.1"
@@ -4233,11 +4233,11 @@ public-encrypt@^4.0.0:
     parse-asn1 "^5.0.0"
     randombytes "^2.0.1"
 
-punycode@1.3.2, punycode@^1.2.4:
+punycode@1.3.2:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.3.2.tgz#9653a036fb7c1ee42342f2325cceefea3926c48d"
 
-punycode@^1.4.1:
+punycode@^1.2.4, punycode@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
 
