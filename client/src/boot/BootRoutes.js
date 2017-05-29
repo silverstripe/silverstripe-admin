@@ -118,6 +118,7 @@ class BootRoutes {
           WARNING: Your changes have not been saved.\n\n
           Press OK to continue, or Cancel to stay on the current page.`
       );
+      // eslint-disable-next-line no-alert
       if (!this.shouldConfirmBeforeRoute() || window.confirm(msg)) {
         // eslint-disable-next-line no-param-reassign
         ctx.store = store;

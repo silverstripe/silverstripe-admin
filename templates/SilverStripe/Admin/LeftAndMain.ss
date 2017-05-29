@@ -16,8 +16,5 @@
 		$Content
 		$PreviewPanel
 	</div>
-
-	$EditorToolbar
-
 </body>
 </html>
