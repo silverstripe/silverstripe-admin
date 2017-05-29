@@ -5,15 +5,18 @@
   "directories": {
     "test": "tests"
   },
+  "bin": {
+    "webpack": "./node_modules/webpack/webpack.js"
+  },
   "engines": {
     "node": "^6.x"
   },
   "scripts": {
-    "build": "webpack --bail --progress",
-    "watch": "webpack --progress --config ./webpack-dev.config.js --watch",
-    "css": "WEBPACK_CHILD=css webpack",
+    "build": "NODE_ENV=production webpack -p --bail --progress",
+    "watch": "NODE_ENV=development webpack --watch --progress",
+    "css": "WEBPACK_CHILD=css npm run build",
     "test": "jest",
-    "coverage": "NODE_PATH=\"./client/src\" jest --coverage",
+    "coverage": "jest --coverage",
     "lint": "eslint client/src && sass-lint -v"
   },
   "repository": {
@@ -32,7 +35,7 @@
   "homepage": "https://github.com/silverstripe/silverstripe-admin",
   "dependencies": {
     "apollo-client": "^0.5.5",
-    "babel-polyfill": "^6.7.4",
+    "babel-polyfill": "^6.23.0",
     "bootstrap": "4.0.0-alpha.2",
     "chosen-js": "^1.5.1",
     "classnames": "^2.2.5",
@@ -45,10 +48,8 @@
     "isomorphic-fetch": "https://registry.npmjs.org/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz",
     "jquery-sizes": "^0.33.0",
     "json-js": "^1.1.2",
-    "json-loader": "^0.5.4",
     "merge": "^1.2.0",
-    "modernizr": "^3.4.0",
-    "modernizr-loader": "^1.0.1",
+    "modernizr": "^3.5.0",
     "moment": "^2.18.1",
     "page.js": "^4.13.3",
     "qs": "^6.1.0",
@@ -72,41 +73,25 @@
     "validator": "^6.1.0"
   },
   "devDependencies": {
-    "autoprefixer": "^6.4.0",
-    "babel-core": "^6.7.4",
-    "babel-jest": "^19.0.0",
-    "babel-loader": "^6.2.5",
-    "babel-plugin-transform-es2015-modules-umd": "^6.6.5",
-    "babel-plugin-transform-object-assign": "^6.5.0",
-    "babel-plugin-transform-object-rest-spread": "^6.8.0",
-    "babel-preset-es2015": "^6.6.0",
-    "babel-preset-react": "^6.5.0",
-    "css-loader": "^0.23.1",
+    "@silverstripe/webpack-config": "^0.2.2",
+    "babel-core": "^6.24.1",
+    "babel-jest": "^20.0.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2016": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "eslint": "^2.5.3",
     "eslint-config-airbnb": "^6.2.0",
     "eslint-plugin-react": "^4.2.3",
-    "expose-loader": "^0.7.1",
-    "extract-text-webpack-plugin": "^1.0.1",
-    "file-loader": "^0.9.0",
-    "imports-loader": "^0.6.5",
     "jest-cli": "^19.0.2",
-    "node-sass": "^3.8.0",
-    "postcss-loader": "^0.10.1",
-    "react-addons-test-utils": "15.3.1",
-    "redux-logger": "^2.6.1",
-    "resolve-url-loader": "^1.6.0",
-    "sass-lint": "^1.9.1",
-    "sass-loader": "^4.0.0",
-    "script-loader": "^0.7.0",
-    "url-loader": "^0.5.8",
-    "webpack": "^1.13.2"
+    "react-addons-test-utils": "15.3.1"
   },
   "jest": {
     "roots": [
       "client/src"
     ],
-    "modulePaths": [
-      "client/src"
+    "moduleDirectories": [
+      "client/src",
+      "node_modules"
     ],
     "testMatch": [
       "**/tests/**/*-test.js?(x)"
@@ -117,8 +102,9 @@
   },
   "babel": {
     "presets": [
-      "react",
-      "es2015"
+      "es2015",
+      "es2016",
+      "react"
     ],
     "plugins": [
       "transform-object-rest-spread"
