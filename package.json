@@ -5,6 +5,9 @@
   "directories": {
     "test": "tests"
   },
+  "bin": {
+    "webpack": "./node_modules/webpack/webpack.js"
+  },
   "engines": {
     "node": "^6.x"
   },
