@@ -11,7 +11,7 @@ import ConfigReducer from 'state/config/ConfigReducer';
 import SchemaReducer from 'state/schema/SchemaReducer';
 import RecordsReducer from 'state/records/RecordsReducer';
 import BreadcrumbsReducer from 'state/breadcrumbs/BreadcrumbsReducer';
-import UnsavedFormsReducer from 'state/unsavedForms/UnsavedFormsReducer';
+// import UnsavedFormsReducer from 'state/unsavedForms/UnsavedFormsReducer';
 import registerComponents from 'boot/registerComponents';
 import TreeDropdownFieldReducer from 'state/treeDropdownField/TreeDropdownFieldReducer';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
@@ -71,7 +71,8 @@ function appBoot() {
   reducerRegister.add('routing', routerReducer);
   reducerRegister.add('apollo', apolloClient.reducer());
   reducerRegister.add('treeDropdownField', TreeDropdownFieldReducer);
-  reducerRegister.add('unsavedForms', UnsavedFormsReducer);
+  // @todo - Restore this once we address https://github.com/silverstripe/silverstripe-admin/issues/90
+  // reducerRegister.add('unsavedForms', UnsavedFormsReducer);
 
   // Force this to the end of the execution queue to ensure it's last.
   window.setTimeout(() => {
