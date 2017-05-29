@@ -38,6 +38,7 @@ require('expose-loader?GraphQLTag!graphql-tag');
 require('expose-loader?GraphQLFragments!graphql-fragments');
 require('expose-loader?qs!qs');
 require('expose-loader?modernizr!modernizr');
+require('expose-loader?history!history');
 require('expose-loader?moment!moment');
 require('expose-loader?merge!merge');
 

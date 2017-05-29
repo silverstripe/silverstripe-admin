@@ -4,7 +4,7 @@ import $ from 'jQuery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router as ReactRouter, useRouterHistory } from 'react-router';
-import { useBeforeUnload } from 'history';
+import useBeforeUnload from 'history/lib/useBeforeUnload';
 import createHistory from 'history/lib/createBrowserHistory';
 import Config from 'lib/Config';
 import pageRouter from 'lib/Router';
