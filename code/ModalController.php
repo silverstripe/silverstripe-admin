@@ -16,7 +16,6 @@ class ModalController extends RequestHandler
 {
     private static $allowed_actions = array(
         'EditorExternalLink',
-        'EditorInternalLink',
         'EditorEmailLink',
     );
 

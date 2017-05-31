@@ -32,6 +32,7 @@ class FileSchemaHandler extends Component {
         this.props.actions.schema.setSchemaStateOverrides(schemaUrl, null);
       }
     }
+
     if (props && props.schemaUrl) {
       const attrs = Object.assign({}, props.fileAttributes);
 
@@ -61,8 +62,8 @@ class FileSchemaHandler extends Component {
 
 FileSchemaHandler.propTypes = {
   fileAttributes: PropTypes.object,
-  Component: PropTypes.element.isRequired,
-  schemaUrl: PropTypes.string.isRequired,
+  Component: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+  schemaUrl: PropTypes.string,
   actions: PropTypes.object,
 };
 
