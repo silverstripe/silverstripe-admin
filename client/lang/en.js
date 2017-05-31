@@ -16,6 +16,7 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.FormatExample": "Example: {format}",
     "Admin.NO_SIZE": "N/A",
     "Admin.CLOSE": "Close",
+    "Admin.CMS_LOGIN_TITLE": "Login",
     "Admin.CONFIRMUNSAVED": "Are you sure you want to navigate away from this page?\n\nWARNING: Your changes have not been saved.\n\nPress OK to continue, or Cancel to stay on the current page.",
     "Admin.CONFIRMUNSAVEDSHORT": "WARNING: Your changes have not been saved.",
     "Admin.VALIDATIONERROR": "Validation Error",
