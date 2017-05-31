@@ -16,6 +16,7 @@ describe('InsertLinkModal', () => {
     props = {
       onInsert: jest.fn(),
       onHide: jest.fn(),
+      setOverrides: jest.fn(),
     };
   });
 
