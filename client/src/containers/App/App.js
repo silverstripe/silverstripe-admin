@@ -9,7 +9,7 @@ import { provideInjector } from 'lib/Injector';
 class App extends SilverStripeComponent {
   render() {
     // TODO re-add <div className="app"> wrapper when applying to document.body
-    return <div>{this.props.children}</div>;
+    return <div className="app">{this.props.children}</div>;
     // const Child = React.Children.only(this.props.children);
     // return (Child);
   }
