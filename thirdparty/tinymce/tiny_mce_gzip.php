@@ -41,7 +41,7 @@ if (TinyMCE_Compressor::getParam("js")) {
 	 *  "expires"   => "1m",
 	 */
 		// CUSTOM SilverStripe
-		'cache_dir' => TEMP_FOLDER
+		'cache_dir' => TEMP_FOLDER.'/tinymce-cache'
 		// CUSTOM END
 	));
 
