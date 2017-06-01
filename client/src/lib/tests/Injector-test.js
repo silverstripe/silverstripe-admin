@@ -1,5 +1,6 @@
 /* global jest, jasmine, describe, beforeEach, it, pit, expect, process */
 jest.unmock('../Injector');
+jest.unmock('../dependency-injection/MiddlewareRegistry');
 
 import Injector, { provideInjector, withInjector, inject } from '../Injector';
 import React from 'react';
@@ -10,68 +11,8 @@ beforeEach(() => {
 });
 
 describe('Injector', () => {
-  describe('Container API', () => {
-    describe('Registering', () => {
-      it('should throw if the injector is accessed before it is loaded', () => {
-        const TestService = () => 'test service';
-        Injector.register('TestService', TestService);
-        expect(() => Injector.get('TestService')).toThrow();
-        Injector.load();
-        expect(typeof Injector.get('TestService')).toBe('function');
-        expect(Injector.get('TestService')()).toBe('test service');
-      });
-    });
-    it('should throw if you register the same service twice unless you force', () => {
-      const TestService = () => 'test service';
-      Injector.register('TestService', TestService);
-      const NewService = () => 'new service';
-      expect(() => Injector.register('TestService', NewService)).toThrow();
-      Injector.register('TestService', NewService, { force: true });
-      Injector.load();
-      expect(typeof Injector.get('TestService')).toBe('function');
-      expect(Injector.get('TestService')()).toBe('new service');
-    });
-    it('should throw if you try to mutate the DI container after load', () => {
-      const TestService = () => 'test service';
-      Injector.register('TestService', TestService);
-      Injector.load();
-      expect(() => Injector.register('Foo', () => {})).toThrow();
-    });
-  });
   describe('Updating', () => {
-    it('should throw if you try to transform the DI container after load', () => {
-      const TestService = () => 'test service';
-      Injector.register('TestService', TestService);
-      Injector.load();
-      expect(() => Injector.transform('test', () => {})).toThrow();
-    });
-    it('should throw on bad metadata', () => {
-      const TestService = () => 'test service';
-      Injector.register('TestService', TestService);
-      Injector.load();
-      expect(() => Injector.transform('test', () => {})).toThrow();
-    });
-    it('should override components', () => {
-      const TestComponent = () => <h2>Test</h2>;
-      Injector.register('TestComponent', TestComponent);
-      const HOC = (Component) => () => <div className="hoc"><Component /></div>;
-      Injector.transform('test', update => update('TestComponent', HOC));
-      Injector.load();
-      const Service = Injector.get('TestComponent');
-      // eslint-disable-next-line react/prefer-stateless-function, react/no-multi-comp
-      class TestClass extends React.Component {
-        render() {
-          return <Service />;
-        }
-      }
-      const rendered = ReactTestUtils.renderIntoDocument(<TestClass />);
-      const found = ReactTestUtils.findRenderedDOMComponentWithClass(
-        rendered,
-        'hoc'
-      );
-      expect(found).toBeTruthy();
-    });
-    it('should set a display name components', () => {
+    it('should set a display name on objects', () => {
       const TestComponent1 = () => <h2>Test</h2>;
       Injector.register('TestComponent1', TestComponent1);
       const HOC1 = (TestComponent) => () => <div className="hoc"><TestComponent /></div>;
@@ -189,6 +130,38 @@ describe('Injector', () => {
       const injected = Injector.get('Original');
       expect(injected('RAINBOW')).toBe('RAINBOW_RED_ORANGE_YELLOW_GREEN_BLUE_INDIGO_VIOLET');
     });
+    it('allows context', () => {
+      const service = (str) => str;
+      Injector.register('TestService', service);
+
+      const HOC1 = (original) => (str) => original(`${str}1`);
+      const HOC2 = (original) => (str) => original(`${str}2`);
+      const HOC3 = (original) => (str) => original(`${str}3`);
+      const HOCA = (original) => (str) => original(`${str}A`);
+      const HOCB = (original) => (str) => original(`${str}B`);
+      const HOCC = (original) => (str) => original(`${str}C`);
+
+      Injector.transform('numbers', update => {
+        update('TestService.Universe.World.Mathematics.Numbers', HOC1);
+        update('TestService.Universe.World.Mathematics.*', HOC2);
+        update('TestService.Universe.*.Mathematics', HOC2);
+        update('TestService.Universe', HOC3);
+      });
+      Injector.transform('letters', update => {
+        update('TestService.Universe.World.Language.Letters', HOCA);
+        update('TestService.Universe.World.Language.*', HOCB);
+        update('TestService.*.World.Language.*', HOCB);
+        update('TestService.*.World', HOCC);
+      }, { after: 'numbers' });
+
+      Injector.load();
+
+      const numberFactory = Injector.get('TestService', 'Universe.World.Mathematics.Numbers');
+      const letterFactory = Injector.get('TestService', 'Universe.World.Language.Letters');
+
+      expect(numberFactory('test_')).toBe('test_1223C');
+      expect(letterFactory('test_')).toBe('test_3ABBC');
+    });
   });
   describe('Top-level HOCs', () => {
     it('adds Injector to context', () => {
@@ -220,9 +193,9 @@ describe('Injector', () => {
       const InjectorProvider = provideInjector(App);
       const AwesomeFormWithInjector = withInjector(AwesomeForm);
       const rendered = ReactTestUtils.renderIntoDocument(
-          <InjectorProvider>
-            <AwesomeFormWithInjector />
-          </InjectorProvider>
+        <InjectorProvider>
+          <AwesomeFormWithInjector />
+        </InjectorProvider>
       );
       const tag = ReactTestUtils.findRenderedDOMComponentWithClass(
         rendered,

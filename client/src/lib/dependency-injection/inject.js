@@ -11,14 +11,14 @@ const inject = (Component, dependencies, mapDependenciesToProps) => {
         if (!Array.isArray(deps)) {
           if (typeof deps !== 'string') {
             throw new Error(`
-            withInjector() passed an argument for dependencies that is ${typeof deps}. 
+            withInjector() passed an argument for dependencies that is '${typeof deps}'. 
             Must be a string or array of named dependencies.
           `);
           }
           deps = [deps];
         }
         const resolved = deps.map(this.context.injector.get);
-        if (mapDependenciesToProps && typeof mapDependenciesToProps === 'function') {
+        if (typeof mapDependenciesToProps === 'function') {
           props = mapDependenciesToProps(...resolved);
           if (typeof props !== 'object') {
             throw new Error(`
@@ -28,9 +28,9 @@ const inject = (Component, dependencies, mapDependenciesToProps) => {
           }
         } else {
           // If no mapping function is given, mirror the prop names and dependency names
-          for (let i = 0; i < deps.length; i++) {
-            props[deps[i]] = resolved[i];
-          }
+          deps.forEach((dep, index) => {
+            props[dep] = resolved[index];
+          });
         }
       }
       const newProps = {

@@ -136,9 +136,13 @@ class FormBuilder extends SilverStripeComponent {
    */
   buildComponent(props) {
     let componentProps = props;
+    const schemaContext = this.props.schema.id
+      .split('/')
+      .map(part => `${part.charAt(0).toUpperCase()}${part.slice(1)}`)
+      .join('.');
     // 'component' key is renamed to 'schemaComponent' in normalize*() methods
     const SchemaComponent = componentProps.schemaComponent !== null
-      ? this.context.injector.get(componentProps.schemaComponent)
+      ? this.context.injector.get(componentProps.schemaComponent, schemaContext)
       : this.getComponentForDataType(componentProps.schemaType);
 
     if (SchemaComponent === null) {
