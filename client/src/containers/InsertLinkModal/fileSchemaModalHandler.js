@@ -27,13 +27,11 @@ class FileSchemaHandler extends Component {
   setOverrides(props = null) {
     if (!props) {
       // clear any overrides that may be in place
-      const schemaUrl = props && props.schemaUrl || this.props.schemaUrl;
+      const schemaUrl = this.props.schemaUrl;
       if (schemaUrl) {
         this.props.actions.schema.setSchemaStateOverrides(schemaUrl, null);
       }
-    }
-
-    if (props && props.schemaUrl) {
+    } else if (props.schemaUrl) {
       const attrs = Object.assign({}, props.fileAttributes);
 
       delete attrs.ID;
