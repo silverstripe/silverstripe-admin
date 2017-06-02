@@ -282,7 +282,7 @@ $.entwine('ss', function($) {
     }
   });
 
-  $('.grid-field .action.gridfield-button-print').entwine({
+  $('.grid-field .grid-print-button .action:button').entwine({
     UUID: null,
     onmatch: function() {
       this._super();
@@ -320,7 +320,7 @@ $.entwine('ss', function($) {
    * Useful e.g. for actions which rely on HTTP response headers being
    * interpreted natively by the browser, like file download triggers.
    */
-  $('.grid-field .action.no-ajax').entwine({
+  $('.grid-field .action.no-ajax, .grid-field .no-ajax .action:button').entwine({
     onclick: function(e){
       window.location.href = this.actionurl();
       e.preventDefault();
