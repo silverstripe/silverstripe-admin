@@ -460,7 +460,7 @@ abstract class ModelAdmin extends LeftAndMain
             return false;
         }
 
-        if (!$modelSNG->canCreate(Member::currentUser())) {
+        if (!$modelSNG->canCreate(Security::getCurrentUser())) {
             return false;
         }
 

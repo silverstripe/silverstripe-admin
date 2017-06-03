@@ -8,6 +8,7 @@ use SilverStripe\Forms\FormAction;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Permission;
+use SilverStripe\Security\Security;
 
 class CMSProfileController extends LeftAndMain
 {
@@ -22,7 +23,7 @@ class CMSProfileController extends LeftAndMain
 
     public function getEditForm($id = null, $fields = null)
     {
-        $this->setCurrentPageID(Member::currentUserID());
+        $this->setCurrentPageID(Security::getCurrentUser()->ID);
 
         $form = parent::getEditForm($id, $fields);
 
@@ -31,7 +32,7 @@ class CMSProfileController extends LeftAndMain
         }
 
         $form->Fields()->removeByName('LastVisited');
-        $form->Fields()->push(new HiddenField('ID', null, Member::currentUserID()));
+        $form->Fields()->push(new HiddenField('ID', null, Security::getCurrentUser()->ID));
         $form->Actions()->push(
             FormAction::create('save', _t('SilverStripe\\CMS\\Controllers\\CMSMain.SAVE', 'Save'))
                 ->addExtraClass('btn-primary font-icon-save')
@@ -40,7 +41,7 @@ class CMSProfileController extends LeftAndMain
 
         $form->Actions()->removeByName('action_delete');
 
-        if ($member = Member::currentUser()) {
+        if ($member = Security::getCurrentUser()) {
             $form->setValidator($member->getValidator());
         } else {
             $form->setValidator(Member::singleton()->getValidator());
@@ -58,7 +59,7 @@ class CMSProfileController extends LeftAndMain
     public function canView($member = null)
     {
         if (!$member && $member !== false) {
-            $member = Member::currentUser();
+            $member = Security::getCurrentUser();
         }
 
         // cms menus only for logged-in members
@@ -68,7 +69,7 @@ class CMSProfileController extends LeftAndMain
 
         // Check they can access the CMS and that they are trying to edit themselves
         if (Permission::checkMember($member, "CMS_ACCESS")
-            && $member->ID === Member::currentUserID()
+            && $member->ID === Security::getCurrentUser()->ID
         ) {
             return true;
         }
