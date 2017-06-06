@@ -17,7 +17,7 @@ window.onbeforeunload = function(e) {
     return currBeforeUnload();
   }
 
-  return null;
+  return undefined;
 };
 
 $.entwine('ss', function($){

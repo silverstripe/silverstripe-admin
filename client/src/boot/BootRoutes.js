@@ -171,7 +171,7 @@ class BootRoutes {
         return currBeforeUnload();
       }
 
-      return null;
+      return undefined;
     };
 
     pageRouter.start();

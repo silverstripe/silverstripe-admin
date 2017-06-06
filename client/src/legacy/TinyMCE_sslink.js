@@ -71,6 +71,8 @@ jQuery.entwine('ss', ($) => {
 
       this.insertLinkInEditor(attributes);
       this.close();
+
+      return Promise.resolve();
     },
 
     buildAttributes(data) {

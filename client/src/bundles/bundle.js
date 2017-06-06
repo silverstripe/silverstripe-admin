@@ -17,6 +17,7 @@ require('expose-loader?FormBuilder!components/FormBuilder/FormBuilder');
 require('expose-loader?FormBuilderLoader!containers/FormBuilderLoader/FormBuilderLoader');
 require('expose-loader?FormBuilderModal!components/FormBuilderModal/FormBuilderModal');
 require('expose-loader?InsertLinkModal!containers/InsertLinkModal/InsertLinkModal');
+require('expose-loader?FileSchemaModalHandler!containers/InsertLinkModal/fileSchemaModalHandler');
 require('expose-loader?RecordsActions!state/records/RecordsActions');
 require('expose-loader?GridField!components/GridField/GridField');
 require('expose-loader?GridFieldCell!components/GridField/GridFieldCell');
@@ -47,7 +48,6 @@ require('expose-loader?ReactRouteRegister!lib/ReactRouteRegister');
 require('expose-loader?Router!lib/Router');
 require('expose-loader?TinyMCEActionRegistrar!lib/TinyMCEActionRegistrar');
 require('expose-loader?ShortcodeSerialiser!lib/ShortcodeSerialiser');
-require('expose-loader?InsertLinkModal!containers/InsertLinkModal/InsertLinkModal');
 require('expose-loader?formatWrittenNumber!lib/formatWrittenNumber');
 
 
@@ -84,4 +84,4 @@ require('../legacy/HtmlEditorField.js');
 require('../legacy/TabSet.js');
 require('../legacy/GridField.js');
 
-require('../boot/index.js');
+require('boot');
