@@ -1,0 +1,11 @@
+/**
+ * Workaround for tooltip placement. React bootstrap add class `left`, `right`,
+ * `top` and `bottom` instead of `tooltip-left`, `tooltip-right`, `tooltip-top`
+ * and `tooltip-bottom`.
+ */
+@each $dir in left, right, top, bottom {
+  .tooltip.#{$dir} {
+    @extend .tooltip-#{$dir};
+  }
+}
+
