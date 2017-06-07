@@ -519,3 +519,16 @@
 		}
 	}
 }
+
+/**
+ * Mobile menu toggle
+ */
+.cms-content-header-info .cms-mobile-menu-toggle {
+  display: none;
+
+  @include media-breakpoint-down(sm) {
+    display: block;
+  }
+
+}
+

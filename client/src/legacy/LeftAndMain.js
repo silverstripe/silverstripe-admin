@@ -5,12 +5,18 @@ import $ from 'jQuery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import IframeDialog from 'components/IframeDialog/IframeDialog';
+import MobileMenuToggle from 'components/MobileMenuToggle/MobileMenuToggle';
 
 require('../legacy/ssui.core.js');
 
 $.noConflict();
 
 window.ss = window.ss || {};
+
+ReactDOM.render(
+  <MobileMenuToggle />,
+  $('#cms-mobile-menu-toggle-wrapper')[0]
+);
 
 /**
  * @func debounce
