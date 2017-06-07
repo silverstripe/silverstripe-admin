@@ -39,12 +39,17 @@ class TreeDropdownField extends Component {
   }
 
   componentDidMount() {
-    // Ensure root node is loaded, force invalidating the cache
-    this.loadTree([]);
+    // Ensure root node is loaded, force invalidating the cache when not readonly or disabled
+    if (!this.props.readOnly && !this.props.disabled) {
+      this.loadTree([]);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.data.cacheKey !== this.props.data.cacheKey) {
+    if (nextProps.data.cacheKey !== this.props.data.cacheKey
+      && !this.props.readOnly
+      && !this.props.disabled
+    ) {
       // invalidate the tree cache, as paths have changed
       this.loadTree([]);
     }
