@@ -13,11 +13,6 @@ $.noConflict();
 
 window.ss = window.ss || {};
 
-ReactDOM.render(
-  <MobileMenuToggle />,
-  $('#cms-mobile-menu-toggle-wrapper')[0]
-);
-
 /**
  * @func debounce
  * @param func {function} - The callback to invoke after `wait` milliseconds.

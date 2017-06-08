@@ -35,6 +35,10 @@
 .breadcrumb__container {
   max-height: $toolbar-height;
   overflow: hidden;
+
+  @include media-breakpoint-down(sm) {
+    margin-left: $toolbar-total-height;
+  }
 }
 
 .breadcrumb > li.breadcrumb__item--last, // TODO Fix Bootstrap clash

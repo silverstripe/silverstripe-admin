@@ -3,13 +3,12 @@
   $child-top-bottom: 30%;
   $child-height: 3px;
 
+  display: block;
   width: $toolbar-total-height;
   height: $toolbar-total-height;
-  position: absolute;
-  left: 0;
-  top: 0;
   background: $color-brand-bg;
   color: $white;
+  border: none;
 
   > span {
     position: absolute;

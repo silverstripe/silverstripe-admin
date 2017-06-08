@@ -92,6 +92,17 @@
 	background: $color-theme-bg;
 	width: $cms-menu-width;
 
+  @include media-breakpoint-down(sm) {
+    position: absolute;
+    left: -100%;
+    top: 0;
+    transition: 0.1s left;
+
+    &--open {
+      left: 0;
+    }
+  }
+
 	.cms-menu-list {
 		margin: 0;
 		list-style-type: none;
@@ -523,12 +534,15 @@
 /**
  * Mobile menu toggle
  */
-.cms-content-header-info .cms-mobile-menu-toggle {
+.cms-mobile-menu-toggle-wrapper {
   display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 100;
 
   @include media-breakpoint-down(sm) {
     display: block;
   }
-
 }
 

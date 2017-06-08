@@ -1,28 +1,33 @@
 import React from 'react';
 import { Component } from 'react';
+import * as mobileMenuActions from 'state/mobileMenu/MobileMenuActions';
+import { connect } from 'react-redux';
+import { bindActionCreators, compose } from 'redux';
+import { provideInjector } from 'lib/Injector';
 
 class MobileMenuToggle extends Component {
 
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this);
-    this.open = false;
   }
 
   handleClick(e) {
     e.preventDefault();
-    this.open = !this.open;
-    this.forceUpdate();
+
+    if (typeof this.props.onClick === 'function') {
+      this.props.onClick(e);
+    }
   }
 
   render() {
     const classes = ['cms-mobile-menu-toggle'];
-    if (this.open) {
+    if (this.props.isOpen) {
       classes.push('cms-mobile-menu-toggle--open');
     }
 
     return (
-      <a className={classes.join(' ')}
+      <button className={classes.join(' ')}
         href="#toggle-mobile-menu"
         onClick={this.handleClick}
       >
@@ -30,10 +35,14 @@ class MobileMenuToggle extends Component {
         <span></span>
         <span></span>
         <span></span>
-      </a>
+      </button>
     );
   }
 }
 
-export default MobileMenuToggle;
+MobileMenuToggle.propTypes = {
+  isOpen: React.PropTypes.bool,
+  onClick: React.PropTypes.func.isRequired,
+};
 
+export default MobileMenuToggle;
