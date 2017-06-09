@@ -456,7 +456,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function canView($member = null)
     {
         if (!$member && $member !== false) {
-            $member = Member::currentUser();
+            $member = Security::getCurrentUser();
         }
 
         // cms menus only for logged-in members
@@ -522,7 +522,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         ContentNegotiator::config()->update('enabled', false);
 
         // set language
-        $member = Member::currentUser();
+        $member = Security::getCurrentUser();
         if (!empty($member->Locale)) {
             i18n::set_locale($member->Locale);
         }
@@ -555,7 +555,7 @@ class LeftAndMain extends Controller implements PermissionProvider
                 }
             }
 
-            if (Member::currentUser()) {
+            if (Security::getCurrentUser()) {
                 Session::set("BackURL", null);
             }
 
@@ -592,8 +592,8 @@ class LeftAndMain extends Controller implements PermissionProvider
         }
 
         // Set the members html editor config
-        if (Member::currentUser()) {
-            HTMLEditorConfig::set_active_identifier(Member::currentUser()->getHtmlEditorConfigForCMS());
+        if (Security::getCurrentUser()) {
+            HTMLEditorConfig::set_active_identifier(Security::getCurrentUser()->getHtmlEditorConfigForCMS());
         }
 
         // Set default values in the config if missing.  These things can't be defined in the config
@@ -923,7 +923,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     {
         if (!isset($this->_cache_MainMenu) || !$cached) {
             // Don't accidentally return a menu if you're not logged in - it's used to determine access.
-            if (!Member::currentUser()) {
+            if (!Security::getCurrentUser()) {
                 return new ArrayList();
             }
 

@@ -14,6 +14,7 @@ use SilverStripe\Security\Member;
 use IteratorAggregate;
 use ReflectionClass;
 use ArrayIterator;
+use SilverStripe\Security\Security;
 
 /**
  * The object manages the main CMS menu. See {@link LeftAndMain::init()} for
@@ -242,7 +243,7 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
 
     /**
      * Get all menu items that the passed member can view.
-     * Defaults to {@link Member::currentUser()}.
+     * Defaults to {@link Security::getCurrentUser()}.
      *
      * @param Member $member
      * @return array
@@ -250,7 +251,7 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
     public static function get_viewable_menu_items($member = null)
     {
         if (!$member && $member !== false) {
-            $member = Member::currentUser();
+            $member = Security::getCurrentUser();
         }
 
         $viewableMenuItems = array();
