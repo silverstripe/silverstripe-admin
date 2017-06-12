@@ -69,12 +69,26 @@
       display: none;
     }
 
-    .cms-login-status,
     .cms-sitename {
+
+      .cms-sitename__link {
+        left: calc(50% - 12px);
+      }
+
+      .cms-sitename__title {
+        display: none;
+      }
+    }
+
+    .cms-login-status {
       padding: 12px 18px 11px;
 
       span {
         display: none;
+      }
+
+      .cms-login-status__logout-link {
+        right: auto;
       }
     }
 
@@ -89,6 +103,10 @@
     background-color: $color-theme-bg;
     box-shadow: inset $color-separator -1px 0 0;
     position: relative;
+
+    @include media-breakpoint-down(sm) {
+      display: none;
+    }
 
     a,
     a.toggle-expand {
@@ -211,9 +229,12 @@
   transition: padding .2s;
   min-height: $toolbar-total-height;
   transition: padding .2s;
+  font-weight: bold;
+  line-height: 16px;
+  padding: 6px 0;
 
-  .cms-sitename__version {
-    display: none;
+  @include media-breakpoint-down(sm) {
+    text-align: center;
   }
 
   .cms-sitename__link {
@@ -222,20 +243,29 @@
     bottom: $grid-y;
     display: block;
     width: 24px;
+    left: 12px;
     background: $application-logo-small no-repeat center center;
     text-indent: -9999em;
     padding: 0 1px;
   }
 
-  .cms-sitename__name {
-    font-weight: bold;
-    line-height: 16px;
-    padding: 6px 0;
-    margin-left: 32px;
+  .cms-sitename__title {
+    color: $white;
+    display: block;
+    margin: 12px 1em 12px 42px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    @include media-breakpoint-down(sm) {
+      margin-left: $toolbar-total-height;
+      margin-right: $toolbar-total-height;
+    }
   }
 }
 
 .cms-login-status {
+  position: relative;
   padding: $grid-y*1.5 8px;
   line-height: 16px;
   font-size: $font-size-sm;
@@ -243,12 +273,18 @@
   min-height: $toolbar-total-height;
 
   .cms-login-status__logout-link {
-    float: left;
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    margin-top: -0.9em;
     font-size: 16px;
     height: 28px;
     padding: 6px 8px 6px 5px;
-    opacity: .9;
     color: #fff;
+
+    @include media-breakpoint-down(sm) {
+      font-size: 15px;
+    }
 
     &:hover,
     &:focus {
@@ -259,7 +295,14 @@
   }
 
   .cms-login-status__profile {
-    padding: 6px 0 6px 26px;
+    float: left;
+    padding: 6px 0 6px 12px;
+
+    i {
+      font-size: 15px;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
   }
 }
 
@@ -526,7 +569,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 100;
+  z-index: 10001;
 
   @include media-breakpoint-down(sm) {
     display: block;
