@@ -24,7 +24,6 @@
 @import "legacy/forms";
 @import "legacy/style";
 @import "legacy/tree";
-@import "legacy/menu";
 @import "legacy/preview";
 @import "legacy/actionTabs";
 @import "legacy/ModelAdmin";
@@ -41,6 +40,8 @@
 @import "legacy/TreeDropdownField";
 
 // Components
+@import "../components/Menu/Menu";
+@import "../components/MobileMenuToggle/MobileMenuToggle";
 @import "../components/Accordion/Accordion";
 @import "../components/FieldGroup/FieldGroup";
 @import "../components/ListGroup/ListGroup";
@@ -60,7 +61,6 @@
 @import "../components/Form/Form";
 @import "../components/Modal/Modal";
 @import "../components/TreeDropdownField/TreeDropdownField";
-@import "../components/MobileMenuToggle/MobileMenuToggle";
 
 
 // Layout and sections

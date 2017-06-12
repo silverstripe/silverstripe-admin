@@ -1,4 +1,4 @@
-<ul class="cms-menu-list">
+<ul class="cms-menu__list">
 	<% loop $MainMenu %>
 		<li class="$LinkingMode $FirstLast <% if $LinkingMode == 'link' %><% else %>opened<% end_if %>" id="Menu-$Code" title="$Title.ATT">
 			<a href="$Link" $AttributesHTML>

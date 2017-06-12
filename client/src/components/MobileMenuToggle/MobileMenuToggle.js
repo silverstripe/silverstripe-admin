@@ -1,9 +1,5 @@
 import React from 'react';
 import { Component } from 'react';
-import * as mobileMenuActions from 'state/mobileMenu/MobileMenuActions';
-import { connect } from 'react-redux';
-import { bindActionCreators, compose } from 'redux';
-import { provideInjector } from 'lib/Injector';
 
 class MobileMenuToggle extends Component {
 

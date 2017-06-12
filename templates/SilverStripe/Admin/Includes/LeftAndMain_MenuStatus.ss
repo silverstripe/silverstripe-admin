@@ -1,9 +1,9 @@
 <div class="cms-login-status">
-	<a href="$LogoutURL" class="logout-link font-icon-logout" title="<%t SilverStripe\Admin\LeftAndMain.LOGOUT 'Log out' %>"></a>
+	<a href="$LogoutURL" class="cms-login-status__logout-link font-icon-logout" title="<%t SilverStripe\Admin\LeftAndMain.LOGOUT 'Log out' %>"></a>
 	<% with $CurrentMember %>
-		<span>
+		<span class="cms-login-status__profile">
 			<%t SilverStripe\Admin\LeftAndMain.Hello 'Hi' %>
-			<a href="{$AdminURL}myprofile" class="profile-link">
+			<a href="{$AdminURL}myprofile" class="cms-login-status__profile-link">
 				<% if $FirstName && $Surname %>$FirstName $Surname<% else_if $FirstName %>$FirstName<% else %>$Email<% end_if %>
 			</a>
 		</span>

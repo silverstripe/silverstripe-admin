@@ -4,10 +4,10 @@ import ACTION_TYPES from './MobileMenuActionTypes';
 const initialState = deepFreeze({});
 
 function reducer(state = initialState, action) {
-  switch (action.type) {
+  const isOpen = !!(state && state.isOpen);
 
+  switch (action.type) {
     case ACTION_TYPES.TOGGLE_MENU:
-      const isOpen = !!(state && state.isOpen)
       return deepFreeze(Object.assign({}, state, { isOpen: !isOpen }));
 
     default:
