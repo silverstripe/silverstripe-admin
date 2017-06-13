@@ -33,7 +33,6 @@ require('expose-loader?ListGroupItem!components/ListGroup/ListGroupItem');
 require('expose-loader?TextField!components/TextField/TextField');
 require('expose-loader?LiteralField!components/LiteralField/LiteralField');
 require('expose-loader?Toolbar!components/Toolbar/Toolbar');
-require('expose-loader?LoginDialog!components/LoginDialog/LoginDialog');
 require('expose-loader?Breadcrumb!components/Breadcrumb/Breadcrumb');
 require('expose-loader?TreeDropdownFieldNode!components/TreeDropdownField/TreeDropdownFieldNode');
 require('expose-loader?TreeDropdownFieldMenu!components/TreeDropdownField/TreeDropdownFieldMenu');

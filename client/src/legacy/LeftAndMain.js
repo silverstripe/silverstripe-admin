@@ -4,11 +4,9 @@
 import $ from 'jQuery';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import LoginDialog from 'components/LoginDialog/LoginDialog';
+import IframeDialog from 'components/IframeDialog/IframeDialog';
 
 require('../legacy/ssui.core.js');
-
-var windowWidth, windowHeight;
 
 $.noConflict();
 
@@ -999,10 +997,15 @@ $.entwine('ss', function($) {
         BackURL: window.location.href,
       });
 
-      // todo add URL to iframe
       ReactDOM.render(
-        <LoginDialog className="login-dialog" bodyClassName="login-dialog__body"
-          iframeClassName="login-dialog__body__iframe" show={show} url={url}
+        <IframeDialog
+          title={i18n._t('Admin.CMS_LOGIN_TITLE', 'Login')}
+          className="login-dialog"
+          bodyClassName="login-dialog__body"
+          iframeId="login-dialog-iframe"
+          iframeClassName="login-dialog__body__iframe"
+          show={show}
+          url={url}
         />,
         this[0]
       );
