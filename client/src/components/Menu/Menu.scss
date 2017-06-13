@@ -10,16 +10,20 @@
 .cms-menu {
   z-index: 80;
   background: $color-theme-bg;
-  width: $cms-menu-width;
+  // Add `!important` to ignore width set in `.cms-panel` entwine`
+  width: $cms-menu-width !important;
 
   @include media-breakpoint-down(sm) {
     position: absolute;
-    left: -100%;
     top: 0;
-    transition: 0.1s left;
+    left: -100%;
+    width: calc(100% - 59px) !important;
+    transition: 0.3s left ease-in;
 
     &--open {
       left: 0;
+      height: 100% !important;
+      box-shadow: 1px 0 10px rgba(0, 0, 0, 0.2);
     }
   }
 
@@ -33,68 +37,70 @@
     height: calc(100% - #{$toolbar-total-height * 3}) !important; // account for logo, logout and south bar
   }
 
-  &.collapsed {
-    width: $cms-menu-width-collapsed !important; // Using important because JavaScript is overriding this value
-    cursor: auto;
-    z-index: 1000;
+  @include media-breakpoint-up(md) {
+    &.collapsed {
+      width: $cms-menu-width-collapsed !important; // Using important because JavaScript is overriding this value
+      cursor: auto;
+      z-index: 1000;
 
-    .cms-panel-header {
-      width: 30px;
+      .cms-panel-header {
+        width: 30px;
 
-      span {
+        span {
+          display: none;
+        }
+      }
+
+      .cms-menu__list {
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        li {
+          width: 100%;
+          float: left;
+
+          ul {
+            display: none;
+          }
+
+          a {
+            padding-left: 18px;
+            padding-right: 18px;
+          }
+        }
+      }
+
+      span.text {
         display: none;
       }
-    }
 
-    .cms-menu__list {
-      overflow-x: hidden;
-      overflow-y: auto;
+      .cms-sitename {
 
-      li {
-        width: 100%;
-        float: left;
+        .cms-sitename__link {
+          left: calc(50% - 12px);
+        }
 
-        ul {
+        .cms-sitename__title {
+          display: none;
+        }
+      }
+
+      .cms-login-status {
+        padding: 12px 18px 11px;
+
+        span {
           display: none;
         }
 
-        a {
-          padding-left: 18px;
-          padding-right: 18px;
+        .cms-login-status__logout-link {
+          right: auto;
         }
       }
-    }
 
-    span.text {
-      display: none;
-    }
-
-    .cms-sitename {
-
-      .cms-sitename__link {
-        left: calc(50% - 12px);
+      .sticky-toggle {
+        background-position: 12px center;
+        width: 40px;
       }
-
-      .cms-sitename__title {
-        display: none;
-      }
-    }
-
-    .cms-login-status {
-      padding: 12px 18px 11px;
-
-      span {
-        display: none;
-      }
-
-      .cms-login-status__logout-link {
-        right: auto;
-      }
-    }
-
-    .sticky-toggle {
-      background-position: 12px center;
-      width: 40px;
     }
   }
 
@@ -194,8 +200,10 @@
     margin-top: 1px;
   }
 
-  &.collapsed .child-flyout-indicator {
-    margin-top: -29px;
+  @include media-breakpoint-up(md) {
+    &.collapsed .child-flyout-indicator {
+      margin-top: -29px;
+    }
   }
 }
 
@@ -296,10 +304,14 @@
 
   .cms-login-status__profile {
     float: left;
-    padding: 6px 0 6px 12px;
+    padding: 6px 0 6px 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: calc(100% - 30px);
+    white-space: nowrap;
 
     i {
-      font-size: 15px;
+      font-size: 16px;
       vertical-align: middle;
       margin-right: 6px;
     }
@@ -315,8 +327,10 @@
   transition: all .2s;
   color: darken($base-menu-bg, 44%);
 
-  .collapsed & {
-    left: 22px;
+  @include media-breakpoint-up(md) {
+    .collapsed & {
+      left: 22px;
+    }
   }
 }
 
