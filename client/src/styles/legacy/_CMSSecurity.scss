@@ -1,63 +1,32 @@
-.cms-security {
-
-	h1 {
-		margin: 45px 40px 5px 25px;
-		font-size: 1.9em;
-		line-height: 1.2;
-		font-weight: bold;
-	}
-
-	.Content {
-		margin: 0 50px 0 25px;
-	}
-
-	.Form {
-		margin: 0 25px;
-
-		.field {
-			border: 0 none;
-			box-shadow: none;
-			margin: 0;
-			padding: 0;
-
-			label.left {
-				float: none;
-				width: auto;
-			}
-			.middleColumn {
-				margin: 0;
-			}
-		}
-
-		#Password {
-			width: 300px;
-			float: left;
-		}
-
-		#ForgotPassword {
-			float: left;
-			padding: 40px 0 0 10px;
-		}
-
-		#Remember {
-			clear: both;
-		}
-
-		.btn-toolbar {
-			padding: 20px 0 0 0;
-
-			#doLogout {
-				line-height: 28px;
-				margin: 0 0 0 10px;
-			}
-		}
-	}
+// modal styles
+.login-dialog__body {
+  // Ensure no padding so that status messages can be fixed to the top of the iframe
+  padding: 0;
 }
 
-.leftandmain-logindialog-dialog .ui-dialog-titlebar-close {
-	display: none;
+.login-dialog__body__iframe {
+  width: 100%;
+  height: 350px;
 }
 
-.leftandmain-logindialog-overlay {
-	opacity: 0.8;
+.cms-security__container {
+  // Make up for missingp padding from modal
+  padding-top: 20px;
+  padding-bottom: 20px;
+  align-items: center;
+}
+
+.cms-security__container__error {
+  // Remove side-borders
+  border-right: 0 none;
+  border-left: 0 none;
+  border-radius: 0;
+}
+
+.cms-security__container__form {
+  width: 350px;
+}
+
+.cms-security__container__form__forgotPassword {
+  padding: 20px 5px;
 }

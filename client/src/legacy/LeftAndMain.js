@@ -2,10 +2,11 @@
  * File: LeftAndMain.js
  */
 import $ from 'jQuery';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import IframeDialog from 'components/IframeDialog/IframeDialog';
 
 require('../legacy/ssui.core.js');
-
-var windowWidth, windowHeight;
 
 $.noConflict();
 
@@ -940,7 +941,7 @@ $.entwine('ss', function($) {
       } else {
         for(var i=0;i<s.length;i++) {
           if(s.key(i).match(/^tabs-/)) s.removeItem(s.key(i));
-      }
+        }
       }
     },
 
@@ -959,78 +960,71 @@ $.entwine('ss', function($) {
     },
 
     showLoginDialog: function() {
-      var tempid = $('body').data('member-tempid'),
-        dialog = $('.leftandmain-logindialog'),
-        url = 'CMSSecurity/login';
-
       // Force regeneration of any existing dialog
-      if(dialog.length) dialog.remove();
+      let dialog = $('.leftandmain__login-dialog');
+      if (dialog.length) {
+        dialog.destroy();
+      }
 
-      // Join url params
-      url = $.path.addSearchParams(url, {
-        'tempid': tempid,
-        'BackURL': window.location.href
-      });
-
-      // Show a placeholder for instant feedback. Will be replaced with actual
-      // form dialog once its loaded.
-      dialog = $('<div class="leftandmain-logindialog"></div>');
-      dialog.attr('id', new Date().getTime());
-      dialog.data('url', url);
+      // Create container
+      dialog = $('<div class="leftandmain__login-dialog" />');
       $('body').append(dialog);
-    }
+      dialog.open();
+    },
   });
 
-  // Login dialog page
-  $('.leftandmain-logindialog').entwine({
-    onmatch: function() {
-      this._super();
+  /**
+   * Login dialog page
+   * Selector must match string in CMSSecurity_success.ss message callback
+  */
+  $('.leftandmain__login-dialog').entwine({
+    destroy() {
+      this.close();
+      this.remove();
+    },
+    close() {
+      this.renderModal(false);
+    },
+    open() {
+      this.renderModal(true);
+    },
 
-      // Create jQuery dialog
-      this.ssdialog({
-        iframeUrl: this.data('url'),
-        dialogClass: "leftandmain-logindialog-dialog",
-        autoOpen: true,
-        minWidth: 500,
-        maxWidth: 500,
-        minHeight: 370,
-        maxHeight: 400,
-        closeOnEscape: false,
-        open: function() {
-          $('.ui-widget-overlay').addClass('leftandmain-logindialog-overlay');
-        },
-        close: function() {
-          $('.ui-widget-overlay').removeClass('leftandmain-logindialog-overlay');
-        }
+    renderModal(show) {
+      // Build properties
+      const tempid = $('body').data('member-tempid');
+      const url = $.path.addSearchParams('CMSSecurity/login', {
+        tempid,
+        BackURL: window.location.href,
       });
+
+      ReactDOM.render(
+        <IframeDialog
+          title={i18n._t('Admin.CMS_LOGIN_TITLE', 'Login')}
+          className="login-dialog"
+          bodyClassName="login-dialog__body"
+          iframeId="login-dialog-iframe"
+          iframeClassName="login-dialog__body__iframe"
+          show={show}
+          url={url}
+        />,
+        this[0]
+      );
     },
-    onunmatch: function() {
-      this._super();
-    },
-    open: function() {
-      this.ssdialog('open');
-    },
-    close: function() {
-      this.ssdialog('close');
-    },
-    toggle: function(bool) {
-      if(this.is(':visible')) this.close();
-      else this.open();
-    },
+
     /**
      * Callback activated by CMSSecurity_success.ss
      */
-    reauthenticate: function(data) {
+    reauthenticate(data) {
       // Replace all SecurityID fields with the given value
-      if(typeof(data.SecurityID) !== 'undefined') {
+      if (typeof(data.SecurityID) !== 'undefined') {
         $(':input[name=SecurityID]').val(data.SecurityID);
       }
       // Update TempID for current user
-      if(typeof(data.TempID) !== 'undefined') {
+      if (typeof(data.TempID) !== 'undefined') {
         $('body').data('member-tempid', data.TempID);
       }
       this.close();
-    }
+    },
   });
 
   /**
