@@ -23,9 +23,12 @@ class MobileMenuToggle extends Component {
     }
 
     return (
-      <button className={classes.join(' ')}
+      <button
+        className={classes.join(' ')}
         href="#toggle-mobile-menu"
         onClick={this.handleClick}
+        aria-controls={this.props.controls}
+        aria-expanded={!!this.props.isOpen}
       >
         <span></span>
         <span></span>
@@ -39,6 +42,7 @@ class MobileMenuToggle extends Component {
 MobileMenuToggle.propTypes = {
   isOpen: React.PropTypes.bool,
   onClick: React.PropTypes.func.isRequired,
+  controls: React.PropTypes.string,
 };
 
 export default MobileMenuToggle;

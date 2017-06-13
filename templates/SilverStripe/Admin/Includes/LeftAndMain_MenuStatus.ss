@@ -10,4 +10,5 @@
 	<% end_with %>
 
 	<a href="$LogoutURL" class="cms-login-status__logout-link font-icon-logout" title="<%t SilverStripe\Admin\LeftAndMain.LOGOUT 'Log out' %>"></a>
+    <a href="{$AdminURL}myprofile" class="cms-login-status__profile-mobile-icon font-icon-torso"></a>
 </div>

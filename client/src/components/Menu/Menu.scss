@@ -88,8 +88,13 @@
       .cms-login-status {
         padding: 12px 18px 11px;
 
-        span {
+        span,
+        .cms-login-status__logout-link {
           display: none;
+        }
+
+        .cms-login-status__profile-mobile-icon {
+          display: block;
         }
 
         .cms-login-status__logout-link {
@@ -280,18 +285,19 @@
   transition: padding .2s;
   min-height: $toolbar-total-height;
 
-  .cms-login-status__logout-link {
+  .cms-login-status__logout-link,
+  .cms-login-status__profile-mobile-icon {
     position: absolute;
     top: 50%;
     right: 5px;
     margin-top: -0.9em;
-    font-size: 16px;
+    font-size: 13px;
     height: 28px;
     padding: 6px 8px 6px 5px;
     color: #fff;
 
     @include media-breakpoint-down(sm) {
-      font-size: 15px;
+      font-size: 16px;
     }
 
     &:hover,
@@ -300,6 +306,13 @@
       text-decoration: none;
     }
 
+  }
+
+  .cms-login-status__profile-mobile-icon {
+    display: none;
+    margin-top: -0.8em;
+    font-size: 20px;
+    right: 12px;
   }
 
   .cms-login-status__profile {
@@ -311,7 +324,7 @@
     white-space: nowrap;
 
     i {
-      font-size: 16px;
+      font-size: 18px;
       vertical-align: middle;
       margin-right: 6px;
     }

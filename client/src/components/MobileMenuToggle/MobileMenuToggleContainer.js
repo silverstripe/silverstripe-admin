@@ -22,13 +22,19 @@ class MobileMenuToggleContainer extends Component {
   }
 
   render() {
-    return <MobileMenuToggle isOpen={this.props.isOpen} onClick={this.handleClick} />;
+    return (
+      <MobileMenuToggle
+        isOpen={this.props.isOpen}
+        onClick={this.handleClick}
+        controls={this.props.controls}
+      />);
   }
 }
 
 MobileMenuToggleContainer.propTypes = {
   isOpen: React.PropTypes.bool,
   actions: React.PropTypes.object,
+  controls: React.PropTypes.string,
 };
 
 MobileMenuToggleContainer.defaultProps = {

@@ -35,6 +35,7 @@ $.entwine('ss', function($){
         const state = store.getState();
         const isOpen = !!(state.mobileMenu && state.mobileMenu.isOpen);
         $this.toggleClass('cms-menu--open', isOpen);
+        $this.attr('aria-expanded', isOpen);
       });
     },
 

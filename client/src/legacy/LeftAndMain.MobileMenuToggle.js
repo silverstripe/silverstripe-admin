@@ -10,7 +10,7 @@ $.entwine('ss', function($){
       const menuToggleWrapper = $('.cms-mobile-menu-toggle-wrapper');
       if (menuToggleWrapper.length > 0) {
         ReactDOM.render(
-          <MobileMenuToggleContainer store={window.ss.store} />,
+          <MobileMenuToggleContainer store={window.ss.store} controls="cms-menu" />,
           menuToggleWrapper[0]
         );
       }
