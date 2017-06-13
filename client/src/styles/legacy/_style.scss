@@ -91,7 +91,7 @@ body.cms {
   padding-left: $panel-padding-x;
   padding-right: $panel-padding-x;
   min-width: 100%;
-  z-index: 60;
+  z-index: $zindex-cms-content-header;
   min-height: $toolbar-total-height;
   background: {
     image: url("../images/textures/cms_content_header.png");

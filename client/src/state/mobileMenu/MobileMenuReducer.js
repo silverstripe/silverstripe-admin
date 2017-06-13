@@ -10,6 +10,12 @@ function reducer(state = initialState, action) {
     case ACTION_TYPES.TOGGLE_MENU:
       return deepFreeze(Object.assign({}, state, { isOpen: !isOpen }));
 
+    case ACTION_TYPES.OPEN_MENU:
+      return deepFreeze(Object.assign({}, state, { isOpen: true }));
+
+    case ACTION_TYPES.CLOSE_MENU:
+      return deepFreeze(Object.assign({}, state, { isOpen: false }));
+
     default:
       return state;
 

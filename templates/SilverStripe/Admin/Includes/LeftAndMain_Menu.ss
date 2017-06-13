@@ -12,3 +12,5 @@
 		<% include SilverStripe\\Admin\\LeftAndMain_MenuToggle %>
 	</div>
 </div>
+
+<button class="fill-height fill-width cms-menu-mobile-overlay" aria-controls="cms-menu" aria-expanded="false"></button>

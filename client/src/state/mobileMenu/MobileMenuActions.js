@@ -6,3 +6,17 @@ export function toggleMobileMenu() {
     payload: null,
   };
 }
+
+export function openMobileMenu() {
+  return {
+    type: ACTION_TYPES.OPEN_MENU,
+    payload: null,
+  };
+}
+
+export function closeMobileMenu() {
+  return {
+    type: ACTION_TYPES.CLOSE_MENU,
+    payload: null,
+  };
+}

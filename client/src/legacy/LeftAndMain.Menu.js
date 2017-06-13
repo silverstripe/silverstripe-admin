@@ -27,17 +27,6 @@ $.entwine('ss', function($){
    * - 'select': Fires when a menu item is selected (on any level).
    */
   $('.cms-panel.cms-menu').entwine({
-    onmatch: function() {
-      const store = window.ss.store;
-      const $this = $(this);
-
-      store.subscribe(() => {
-        const state = store.getState();
-        const isOpen = !!(state.mobileMenu && state.mobileMenu.isOpen);
-        $this.toggleClass('cms-menu--open', isOpen);
-        $this.attr('aria-expanded', isOpen);
-      });
-    },
 
     togglePanel: function(doExpand, silent, doSaveState) {
       //apply or unapply the flyout formatting, should only apply to cms-menu-list when the current collapsed panal is the cms menu.

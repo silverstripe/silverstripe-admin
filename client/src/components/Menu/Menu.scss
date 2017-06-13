@@ -8,7 +8,7 @@
  */
 
 .cms-menu {
-  z-index: 80;
+  z-index: $zindex-menu;
   background: $color-theme-bg;
   // Add `!important` to ignore width set in `.cms-panel` entwine`
   width: $cms-menu-width !important;
@@ -18,7 +18,7 @@
     top: 0;
     left: -100%;
     width: calc(100% - 59px) !important;
-    transition: 0.3s left ease-in;
+    transition: left $transition-speed-fast ease-in;
 
     &--open {
       left: 0;
@@ -140,7 +140,7 @@
     background-repeat: no-repeat;
     background-position: 16px center;
     border: 0;
-    transition: position .2s;
+    transition: position $transition-speed-fast;
     margin-top: -$spacer-xs;
     margin-left: -$grid-gutter-width-half;
     z-index: 2;
@@ -212,6 +212,21 @@
   }
 }
 
+.cms-menu-mobile-overlay {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.05);
+  z-index: $zindex-cms-content-header + 1;
+  border: 0;
+}
+
+.cms-menu + .cms-menu-mobile-overlay {
+  display: none;
+}
+
+.cms-menu.cms-menu--open + .cms-menu-mobile-overlay {
+  display: block;
+}
+
 .cms-menu__header {
   position: relative !important;
   top: auto !important;
@@ -239,9 +254,9 @@
   padding: $grid-y*1.5 8px;
   position: relative;
   vertical-align: middle;
-  transition: padding .2s;
+  transition: padding $transition-speed-fast;
   min-height: $toolbar-total-height;
-  transition: padding .2s;
+  transition: padding $transition-speed-fast;
   font-weight: bold;
   line-height: 16px;
   padding: 6px 0;
@@ -282,7 +297,7 @@
   padding: $grid-y*1.5 8px;
   line-height: 16px;
   font-size: $font-size-sm;
-  transition: padding .2s;
+  transition: padding $transition-speed-fast;
   min-height: $toolbar-total-height;
 
   .cms-login-status__logout-link,
@@ -337,7 +352,7 @@
   margin-top: -1px;
   left: 13px;
   font-size: $font-size-lg;
-  transition: all .2s;
+  transition: all $transition-speed-fast;
   color: darken($base-menu-bg, 44%);
 
   @include media-breakpoint-up(md) {
@@ -368,7 +383,7 @@
       background-color: $base-menu-bg;
       cursor: pointer;
       position: relative;
-      transition: padding .2s;
+      transition: padding $transition-speed-fast;
       text-decoration: none;
       box-shadow: inset $color-separator -1px 0 0;
 
@@ -398,7 +413,7 @@
           font-size: 10px;
           margin-left: 6px;
           color: darken($base-menu-bg, 44%);
-          transition: opacity .25s ease-in-out;
+          transition: opacity $transition-speed-fast ease-in-out;
         }
 
         &:hover .text::after {
@@ -596,7 +611,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 10001;
+  z-index: $zindex-menu + 1;
 
   @include media-breakpoint-down(sm) {
     display: block;

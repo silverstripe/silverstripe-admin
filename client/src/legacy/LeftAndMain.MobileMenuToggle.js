@@ -1,5 +1,6 @@
 import $ from 'jQuery';
 import MobileMenuToggleContainer from 'components/MobileMenuToggle/MobileMenuToggleContainer';
+import { closeMobileMenu } from 'state/mobileMenu/MobileMenuActions';
 import ReactDOM from 'react-dom';
 
 $.entwine('ss', function($){
@@ -14,8 +15,29 @@ $.entwine('ss', function($){
           menuToggleWrapper[0]
         );
       }
+
+      const store = window.ss.store;
+      const menu = $('.cms-menu');
+      const menuOverlay = $('.cms-menu-mobile-overlay');
+      store.subscribe(() => {
+        const state = store.getState();
+        const isOpen = !!(state.mobileMenu && state.mobileMenu.isOpen);
+        menu
+          .toggleClass('cms-menu--open', isOpen)
+          .attr('aria-expanded', isOpen);
+        menuOverlay.attr('aria-expanded', isOpen);
+      });
     }
   });
+
+  $('.cms-menu-mobile-overlay').entwine({
+    onclick: function() {
+      window.ss &&
+      window.ss.store &&
+      window.ss.store.dispatch(closeMobileMenu());
+    }
+  });
+
 
 
 });
