@@ -62,6 +62,10 @@
   padding-bottom: $spacer-xs;
   min-height: auto;
 
+  .btn {
+    transition: font-size 0s;
+  }
+
   @include media-breakpoint-down(md) {
 
     // If toolbar has too many items for smaller screens
@@ -77,6 +81,16 @@
       }
 
       .btn::before {
+        margin-right: 0;
+      }
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    .btn {
+      font-size: 0;
+
+      &:before {
         margin-right: 0;
       }
     }
