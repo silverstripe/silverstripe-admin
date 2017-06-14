@@ -86,19 +86,17 @@
       }
 
       .cms-login-status {
-        padding: 12px 18px 11px;
 
-        span,
+        .cms-login-status__profile-link {
+          width: auto;
+
+          i {
+            padding-left: 8px;
+          }
+        }
+
         .cms-login-status__logout-link {
           display: none;
-        }
-
-        .cms-login-status__profile-mobile-icon {
-          display: block;
-        }
-
-        .cms-login-status__logout-link {
-          right: auto;
         }
       }
 
@@ -224,7 +222,9 @@
 }
 
 .cms-menu.cms-menu--open + .cms-menu-mobile-overlay {
-  display: block;
+  @include media-breakpoint-down(sm) {
+    display: block;
+  }
 }
 
 .cms-menu__header {
@@ -294,26 +294,22 @@
 
 .cms-login-status {
   position: relative;
-  padding: $grid-y*1.5 8px;
   line-height: 16px;
   font-size: $font-size-sm;
   transition: padding $transition-speed-fast;
   min-height: $toolbar-total-height;
 
-  .cms-login-status__logout-link,
-  .cms-login-status__profile-mobile-icon {
+  .cms-login-status__logout-link {
     position: absolute;
-    top: 50%;
-    right: 5px;
-    margin-top: -0.9em;
-    font-size: 13px;
-    height: 28px;
-    padding: 6px 8px 6px 5px;
+    top: 0;
+    right: 0;
+    font-size: 14px;
+    width: 50px;
+    height: 100%;
     color: #fff;
-
-    @include media-breakpoint-down(sm) {
-      font-size: 16px;
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &:hover,
     &:focus {
@@ -323,25 +319,40 @@
 
   }
 
-  .cms-login-status__profile-mobile-icon {
-    display: none;
-    margin-top: -0.8em;
-    font-size: 20px;
-    right: 12px;
-  }
-
-  .cms-login-status__profile {
-    float: left;
-    padding: 6px 0 6px 6px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: calc(100% - 30px);
-    white-space: nowrap;
+  .cms-login-status__profile-link {
+    position: absolute;
+    left: 0;
+    right: 50px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 8px;
+    color: $white;
 
     i {
+      position: absolute;
+      left: 13px;
       font-size: 18px;
       vertical-align: middle;
       margin-right: 6px;
+      padding-left: 0;
+      transition: padding $transition-speed-fast;
+
+      @include media-breakpoint-down(sm) {
+        left: 18px;
+      }
+    }
+
+    span {
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-left: 29px;
+
+      @include media-breakpoint-down(sm) {
+        padding-left: 36px;
+      }
     }
   }
 }
@@ -359,6 +370,10 @@
     .collapsed & {
       left: 22px;
     }
+  }
+
+  @include media-breakpoint-down(sm) {
+    left: 20px;
   }
 }
 
@@ -424,6 +439,10 @@
       .text {
         display: block;
         margin-left: 30px;
+
+        @include media-breakpoint-down(sm) {
+          margin-left: 38px;
+        }
       }
 
       span.toggle-children {

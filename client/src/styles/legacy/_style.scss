@@ -792,7 +792,7 @@ body.cms {
 
 .cms-content-actions {
 	margin: 0;
-	z-index: 999;
+	z-index: $zindex-cms-content-actions;
 	border-top: 1px solid $border-color;
 	height: $toolbar-total-height;
 	min-height: $toolbar-total-height;
