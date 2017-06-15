@@ -147,6 +147,25 @@ body.cms {
   }
 }
 
+.cms-content-header {
+
+	@include media-breakpoint-down(sm) {
+		.cms-content-header-nav {
+			display: block;
+		}
+
+		// CMS admin
+		.cms-content-header-nav .breadcrumbs-wrapper,
+		.cms-content-header-nav .cms-content-header-tabs,
+		// Model admin
+		.breadcrumbs-wrapper,
+		.cms-content-header-tabs,
+		.cms-content-header-info {
+			float: none;
+		}
+	}
+}
+
 .cms-edit-form.CMSMain {
   padding: 0;
 }
