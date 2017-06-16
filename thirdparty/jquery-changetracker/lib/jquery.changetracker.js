@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // Copyright (c) 2009, SilverStripe Ltd.
 // All rights reserved.
 // 
@@ -56,8 +58,8 @@
       if ($.meta) options = $.extend({}, options, this.data());
 
       // Flag indicating this form was dirtied by an external component
-      var dirty = false;
-      
+      self.data('dirty', false);
+            
       // Get value from field for purposes of change tracking
       var fieldValue = function($field) {
         // Get radio
@@ -73,53 +75,86 @@
         return $field.val();
       }
 
+      /**
+       * Get serialised value for this form
+       */
+      var formValue = function () {
+        var value = [];
+        self.getFields().each(function() {
+          var name = $(this).prop('name');
+          if (name) {
+            value.push({
+              name: name,
+              value: fieldValue($(this))
+            });
+          }
+        });
+        return JSON.stringify(value);
+      };
+      
+      // Check global serialized state
+      var initialState = formValue();
+      
+      // Detect changes to the form
+      var isChanged = function () {
+        return self.data('dirty') || initialState !== formValue();
+      };
+      
+      // Handler for detecting global changes
+      var detectChanges = function() {
+        var changed = isChanged();
+        self.toggleClass(options.changedCssClass, changed);
+      };
+
       var onchange = function(e) {
         var $field = $(e.target);
         var origVal = $field.data('changetracker.origVal'), newVal;
 
         // Determine value based on field type
-        newVal = fieldValue($field);
+        var newVal = fieldValue($field);
 
         // Determine changed state based on value comparisons
-        if(origVal === null || newVal != origVal) {
+        if (origVal === null || newVal !== origVal) {
           $field.addClass(options.changedCssClass);
           self.addClass(options.changedCssClass);
         } else {
           $field.removeClass(options.changedCssClass);
           // Unset changed state on all radio buttons of the same name
-          if($field.is(':radio')) {
+          if ($field.is(':radio')) {
             self.find(':radio[name=' + $field.attr('name') + ']').removeClass(options.changedCssClass);
           }
-          // Only unset form state if no other fields are changed as well and the form isn't explicitly dirty
-          if(!dirty && !self.getFields().filter('.' + options.changedCssClass).length) {
-            self.removeClass(options.changedCssClass);
-          }
+          
+          // Perform global change detection on the form
+          detectChanges();
         }
       };
 
-      // setup original values
-      var fields = this.getFields(), origVal;
-      fields.filter(':radio,:checkbox').bind('click.changetracker', onchange);
-      fields.not(':radio,:checkbox').bind('change.changetracker', onchange);
-      fields.each(function() {
-        origVal = fieldValue($(this));
+      // Delegate handlers
+      self.on('click.changetracker', options.fieldSelector , onchange);
+      self.on('change.changetracker', options.fieldSelector , onchange);
+      
+      // Bind observer to subtree
+      self.on('change.changetracker', detectChanges);
+      
+      // Set initial state
+      this.getFields().each(function() {
+        var origVal = fieldValue($(this));
         $(this).data('changetracker.origVal', origVal);
       });
 
-      self.bind('dirty.changetracker', function() {
-        dirty = true;
-        self.addClass(options.changedCssClass);
+      // Set dirty handler
+      self.on('dirty.changetracker', function() {
+        self.data('dirty', true);
+        detectChanges();
       });
 
       this.data('changetracker', true);
     };
 
     this.destroy = function() {
-      this.getFields()
-        .unbind('.changetracker')
-        .removeClass(options.changedCssClass)
-        .removeData('changetracker.origVal');
-      this.unbind('.changetracker')
+      this.reset();
+      this
+        .off('.changetracker')
         .removeData('changetracker');
     };
 
@@ -131,7 +166,9 @@
         self.resetField(this);
       });
 
-      this.removeClass(options.changedCssClass);
+      this
+        .data('dirty', false)
+        .removeClass(options.changedCssClass);
     };
 
     /**
@@ -141,14 +178,18 @@
      * @param DOMElement field
      */
     this.resetField = function(field) {
-      return $(field).removeData('changetracker.origVal').removeClass('changed');
+      return $(field)
+        .removeData('changetracker.origVal')
+        .removeClass(options.changedCssClass);
     };
 
     /**
      * @return jQuery Collection of fields
      */
     this.getFields = function() {
-      return this.find(options.fieldSelector).not(options.ignoreFieldSelector);
+      return this
+        .find(options.fieldSelector)
+        .not(options.ignoreFieldSelector);
     };
 
     // Support invoking "public" methods as string arguments
