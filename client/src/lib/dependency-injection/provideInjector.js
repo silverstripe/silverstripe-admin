@@ -4,11 +4,14 @@ import Injector from './Container';
 function provideInjector(Component) {
   class InjectorProvider extends React.Component {
     getChildContext() {
-      const react = Injector.react;
+      const { react, form } = Injector;
       const { get } = react;
 
       return {
-        injector: { get: get.bind(react) },
+        injector: {
+          get: get.bind(react),
+          validate: form.getValidation.bind(form),
+        },
       };
     }
 

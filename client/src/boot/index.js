@@ -6,13 +6,13 @@ import { reducer as ReduxFormReducer } from 'redux-form';
 import { routerReducer } from 'react-router-redux';
 import Config from 'lib/Config';
 import buildApolloClient from 'boot/buildApolloClient';
+import applyFormMiddleware from '../lib/dependency-injection/applyFormMiddleware';
 import ReducerRegister from 'lib/ReducerRegister';
 import { setConfig } from 'state/config/ConfigActions';
 import ConfigReducer from 'state/config/ConfigReducer';
 import SchemaReducer from 'state/schema/SchemaReducer';
 import RecordsReducer from 'state/records/RecordsReducer';
 import BreadcrumbsReducer from 'state/breadcrumbs/BreadcrumbsReducer';
-// import UnsavedFormsReducer from 'state/unsavedForms/UnsavedFormsReducer';
 import registerComponents from 'boot/registerComponents';
 import TreeDropdownFieldReducer from 'state/treeDropdownField/TreeDropdownFieldReducer';
 import applyDevtools from 'boot/applyDevtools';
@@ -23,9 +23,15 @@ function appBoot() {
   const baseUrl = Config.get('absoluteBaseUrl');
   const apolloClient = buildApolloClient(baseUrl);
 
+  const FormReducer = applyFormMiddleware(
+    combineReducers({
+      formState: ReduxFormReducer,
+      formSchemas: SchemaReducer,
+    })
+  );
+
   ReducerRegister.add('config', ConfigReducer);
-  ReducerRegister.add('form', ReduxFormReducer);
-  ReducerRegister.add('schemas', SchemaReducer);
+  ReducerRegister.add('form', FormReducer);
   ReducerRegister.add('records', RecordsReducer);
   ReducerRegister.add('breadcrumbs', BreadcrumbsReducer);
   ReducerRegister.add('routing', routerReducer);
@@ -53,10 +59,6 @@ function appBoot() {
   // Set the initial config state.
   store.dispatch(setConfig(Config.getAll()));
 
-  // Bootstrap routing
-  const routes = new BootRoutes(store, apolloClient);
-  routes.start(window.location.pathname);
-
   // Expose store stuff for legacy use
   window.ss.store = store;
   window.ss.apolloClient = apolloClient;
@@ -67,10 +69,14 @@ function appBoot() {
     window.jQuery('body').addClass('js-react-boot');
   }
 
+  // Bootstrap routing
+  const routes = new BootRoutes(store, apolloClient);
+
   // Force this to the end of the execution queue to ensure it's last.
   window.setTimeout(() => {
     registerComponents();
     Injector.load();
+    routes.start(window.location.pathname);
   }, 0);
 }
 window.onload = appBoot;

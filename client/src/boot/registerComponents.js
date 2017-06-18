@@ -1,3 +1,4 @@
+import { Field as ReduxFormField } from 'redux-form';
 import Injector from 'lib/Injector';
 import TextField from 'components/TextField/TextField';
 import HiddenField from 'components/HiddenField/HiddenField';
@@ -21,28 +22,35 @@ import TabItem from 'components/Tabs/TabItem';
 import FormAction from 'components/FormAction/FormAction';
 import FieldGroup from 'components/FieldGroup/FieldGroup';
 import TreeDropdownField from 'components/TreeDropdownField/TreeDropdownField';
+import Form from 'components/Form/Form';
+import ReduxForm from 'containers/Form/Form';
 
 export default () => {
-  Injector.react.register('TextField', TextField);
-  Injector.react.register('HiddenField', HiddenField);
-  Injector.react.register('DateField', DateField);
-  Injector.react.register('TimeField', TimeField);
-  Injector.react.register('DatetimeField', DatetimeField);
-  Injector.react.register('CheckboxField', CheckboxField);
-  Injector.react.register('CheckboxSetField', CheckboxSetField);
-  Injector.react.register('OptionsetField', OptionsetField);
-  Injector.react.register('GridField', GridField);
-  Injector.react.register('FieldGroup', FieldGroup);
-  Injector.react.register('SingleSelectField', SingleSelectField);
-  Injector.react.register('PopoverField', PopoverField);
-  Injector.react.register('HeaderField', HeaderField);
-  Injector.react.register('LiteralField', LiteralField);
-  Injector.react.register('HtmlReadonlyField', HtmlReadonlyField);
-  Injector.react.register('LookupField', LookupField);
-  Injector.react.register('CompositeField', CompositeField);
-  Injector.react.register('Tabs', Tabs);
-  Injector.react.register('TabItem', TabItem);
-  Injector.react.register('FormAction', FormAction);
-  Injector.react.register('LabelField', LabelField);
-  Injector.react.register('TreeDropdownField', TreeDropdownField);
+  Injector.react.registerMany({
+    TextField,
+    HiddenField,
+    DateField,
+    TimeField,
+    DatetimeField,
+    CheckboxField,
+    CheckboxSetField,
+    OptionsetField,
+    GridField,
+    FieldGroup,
+    SingleSelectField,
+    PopoverField,
+    HeaderField,
+    LiteralField,
+    HtmlReadonlyField,
+    LookupField,
+    CompositeField,
+    Tabs,
+    TabItem,
+    FormAction,
+    LabelField,
+    TreeDropdownField,
+    ReduxForm,
+    ReduxFormField,
+    Form,
+  });
 };

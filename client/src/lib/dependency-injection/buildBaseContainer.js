@@ -81,18 +81,29 @@ const buildBaseContainer = () => ({
     if (this.initialised) {
       throw new Error('Cannot mutate DI container after it has been initialised');
     }
-    this.factories = Object.keys(this.services)
-      .reduce((factories, key) => ({
-        ...factories,
-        [key]: (this.middlewareRegistries[key])
-          ? (context) => (
-            this.middlewareRegistries[key]
-              .setService(this.services[key])
-              .sort()
-              .getFactory(context)
-          )
-          : () => this.services[key],
-      }), {});
+
+    this.factories = Object.entries(this.services)
+      .reduce((factories, [key, service]) => {
+        const middleware = this.middlewareRegistries[key];
+        if (middleware) {
+          middleware
+            .setService(service)
+            .sort();
+
+          return {
+            ...factories,
+            [key]: (context) => (
+              middleware
+                .getFactory(context)
+            ),
+          };
+        }
+        return {
+          ...factories,
+          [key]: () => service,
+        };
+      }, {});
+
     this.initialised = true;
   },
 
@@ -132,8 +143,9 @@ const buildBaseContainer = () => ({
     if (this.initialised) {
       throw new Error('Cannot mutate DI container after it has been initialised');
     }
-    const existing = Object.keys(this.services).filter((service) => (
-      Object.keys(service).indexOf(service) > -1
+
+    const existing = Object.keys(map).filter((service) => (
+      Object.keys(this.services).includes(service)
     ));
     if (existing.length && force !== true) {
       const list = existing.join(', ');
@@ -166,11 +178,19 @@ const buildBaseContainer = () => ({
     if (this.initialised) {
       throw new Error('Cannot mutate DI container after it has been initialised');
     }
-    callback(
-      (key, wrapper, displayName) => {
-        this.customise({ name, ...priorities, displayName }, key, wrapper);
-      }
-    );
+    callback(this.createTransformer(name, priorities));
+  },
+
+  /**
+   * Creates a customise() function for a transformation
+   * @param {string} name
+   * @param {object} priorities
+   * @returns {function}
+   */
+  createTransformer(name, priorities) {
+    return (key, wrapper) => {
+      this.customise({ name, ...priorities }, key, wrapper);
+    };
   },
 });
 

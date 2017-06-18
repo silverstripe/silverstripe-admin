@@ -23,6 +23,19 @@ const buildReactContainer = (base = buildBaseContainer()) => ({
 
     return service;
   },
+
+  /**
+   * Creates a customise() function for a transformation
+   * @param {string} name
+   * @param {object} priorities
+   * @returns {function}
+   */
+  createTransformer(name, priorities) {
+    return (key, wrapper, displayName) => {
+      this.customise({ name, ...priorities, displayName }, key, wrapper);
+    };
+  },
+
 });
 
 export default buildReactContainer;

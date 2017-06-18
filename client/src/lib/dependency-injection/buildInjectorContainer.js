@@ -29,21 +29,21 @@ const buildInjectorContainer = () => ({
       Otherwise, invoke the register() function with { force: true } as the third argument.
      `);
     }
-    if (!value ||
-      typeof value.load !== 'function' ||
-      typeof value.customise !== 'function' ||
-      typeof value.get !== 'function' ||
-      typeof value.register !== 'function'
-    ) {
+
+    if (typeof this[key] !== 'undefined') {
       throw new Error(`
-      Tried to register service ${key} that is not a valid object, Injector requires an object
-      which contains the following methods:
-        - load
-        - customise
-        - get
-        - register
+      Tried to register service ${key} which is a reserved keyword. This would affect the behaviour
+      of this API class, so it is forbidden to register with Injector.
       `);
     }
+    const requiredMethods = ['load', 'createTransformer', 'get', 'register'];
+    if (!requiredMethods.every(method => typeof value[method] === 'function')) {
+      throw new Error(`
+      Tried to register service ${key} that is not a valid object, Injector requires an object
+      which contains the following methods: ${requiredMethods.join(', ')}
+      `);
+    }
+
     this.services[key] = value;
 
     // globally expose the service as well
@@ -82,9 +82,7 @@ const buildInjectorContainer = () => ({
 
         return {
           ...updateContainer,
-          [serviceName]: (key, wrapper, displayName) => {
-            service.customise({ name, ...priorities, displayName }, key, wrapper);
-          },
+          [serviceName]: service.createTransformer(name, priorities),
         };
       },
       {}

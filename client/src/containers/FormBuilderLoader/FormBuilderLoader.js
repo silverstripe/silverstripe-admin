@@ -4,8 +4,6 @@ import { bindActionCreators } from 'redux';
 import fetch from 'isomorphic-fetch';
 import deepFreeze from 'deep-freeze-strict';
 import {
-  Field as ReduxFormField,
-  reduxForm,
   SubmissionError,
   destroy as reduxDestroyForm,
   autofill,
@@ -14,8 +12,9 @@ import {
 import { findField } from 'lib/schemaFieldValues';
 import * as schemaActions from 'state/schema/SchemaActions';
 import merge from 'merge';
-import Form from 'components/Form/Form';
 import FormBuilder, { basePropTypes, schemaPropType } from 'components/FormBuilder/FormBuilder';
+import getIn from 'redux-form/lib/structure/plain/getIn';
+import { inject } from 'lib/Injector';
 
 class FormBuilderLoader extends Component {
 
@@ -92,7 +91,12 @@ class FormBuilderLoader extends Component {
           if (schema) {
             // Strip errors out of schema response in preparation for setSchema and SubmissionError
             schema = this.reduceSchemaErrors(schema);
-            this.props.actions.schema.setSchema(this.props.schemaUrl, schema);
+
+            this.props.actions.schema.setSchema(
+              this.props.schemaUrl,
+              schema,
+              this.props.identifier
+            );
 
             const schemaRef = schema.schema || this.props.schema.schema;
             if (schema.state) {
@@ -277,7 +281,11 @@ class FormBuilderLoader extends Component {
               state: this.overrideStateData(formSchema.state),
             }
           );
-          this.props.actions.schema.setSchema(this.props.schemaUrl, overriddenSchema);
+          this.props.actions.schema.setSchema(
+            this.props.schemaUrl,
+            overriddenSchema,
+            this.props.identifier
+          );
 
           return overriddenSchema;
         }
@@ -321,7 +329,7 @@ class FormBuilderLoader extends Component {
     }
 
     const props = Object.assign({}, this.props, {
-      form: this.props.schemaUrl,
+      form: this.props.identifier,
       onSubmitSuccess: this.props.onSubmitSuccess,
       handleSubmit: this.handleSubmit,
       onAutofill: this.handleAutofill,
@@ -335,6 +343,7 @@ FormBuilderLoader.propTypes = Object.assign({}, basePropTypes, {
     schema: PropTypes.object,
     reduxFrom: PropTypes.object,
   }),
+  identifier: PropTypes.string.isRequired,
   schemaUrl: PropTypes.string.isRequired,
   schema: schemaPropType,
   form: PropTypes.string,
@@ -342,23 +351,18 @@ FormBuilderLoader.propTypes = Object.assign({}, basePropTypes, {
   onFetchingSchema: PropTypes.func,
 });
 
-FormBuilderLoader.defaultProps = {
-  // Perform this *outside* of render() to avoid re-rendering of the whole DOM structure
-  // every time render() is triggered.
-  baseFormComponent: reduxForm()(Form),
-  baseFieldComponent: ReduxFormField,
-};
-
 function mapStateToProps(state, ownProps) {
-  const schema = state.schemas[ownProps.schemaUrl];
+  const schema = state.form.formSchemas[ownProps.schemaUrl];
 
-  const reduxFormState = state.form && state.form[ownProps.schemaUrl];
+  const reduxFormState =
+    state.form &&
+    state.form.formState &&
+    getIn(state.form.formState, ownProps.identifier);
   const submitting = reduxFormState && reduxFormState.submitting;
   const values = reduxFormState && reduxFormState.values;
 
   const stateOverrides = schema && schema.stateOverride;
   const loading = schema && schema.metadata && schema.metadata.loading;
-
   return { schema, submitting, values, stateOverrides, loading };
 }
 
@@ -371,4 +375,16 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormBuilderLoader);
+const ConnectedFormBuilderLoader = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FormBuilderLoader);
+
+export default inject(
+  ['ReduxForm', 'ReduxFormField'],
+  (Form, Field) => ({
+    baseFormComponent: Form,
+    baseFieldComponent: Field,
+  }),
+  ({ identifier }) => identifier
+)(ConnectedFormBuilderLoader);

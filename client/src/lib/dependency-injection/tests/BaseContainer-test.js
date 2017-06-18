@@ -83,6 +83,5 @@ describe('BaseContainer', () => {
       expect(Service).toBe('HOC');
       expect(TestComponent).not.toBeCalled();
     });
-
   });
 });

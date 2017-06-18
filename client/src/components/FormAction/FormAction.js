@@ -1,6 +1,7 @@
 import React from 'react';
 import SilverStripeComponent from 'lib/SilverStripeComponent';
 import castStringToElement from 'lib/castStringToElement';
+import cx from 'classnames';
 
 class FormAction extends SilverStripeComponent {
   constructor(props) {
@@ -43,41 +44,31 @@ class FormAction extends SilverStripeComponent {
    * @returns string
    */
   getButtonClasses() {
-    const buttonClasses = ['btn'];
-
+    const buttonClasses = {
+      btn: true,
+      'btn--no-text': (typeof this.props.title !== 'string'),
+      'btn--loading': this.props.loading,
+      disabled: this.props.disabled,
+    };
     // Add 'type' class
     const style = this.getButtonStyle();
 
     if (style) {
-      buttonClasses.push(`btn-${style}`);
-    }
-
-    // If there is no text
-    if (typeof this.props.title !== 'string') {
-      buttonClasses.push('btn--no-text');
+      buttonClasses[`btn-${style}`] = true;
     }
 
     // Add icon class
     const icon = this.getIcon();
     if (icon) {
-      buttonClasses.push(`font-icon-${icon}`);
+      buttonClasses[`font-icon-${icon}`] = true;
     }
 
-    // Add loading class
-    if (this.props.loading) {
-      buttonClasses.push('btn--loading');
-    }
-
-    // Add disabled class
-    if (this.props.disabled) {
-      buttonClasses.push('disabled');
-    }
 
     if (typeof this.props.extraClass === 'string') {
-      buttonClasses.push(this.props.extraClass);
+      buttonClasses[this.props.extraClass] = true;
     }
 
-    return buttonClasses.join(' ');
+    return cx(buttonClasses);
   }
 
   /**

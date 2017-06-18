@@ -249,7 +249,6 @@ class MiddlewareRegistry {
       }
       this._factoryCache[context] = factory;
     }
-
     return this._factoryCache[context];
   }
 }

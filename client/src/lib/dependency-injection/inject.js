@@ -1,24 +1,27 @@
 import React from 'react';
 import injectorContext from './injectorContext';
 
-const inject = (Component, dependencies, mapDependenciesToProps) => {
+const inject = (dependencies, mapDependenciesToProps, contextArg) => (Component) => {
   // eslint-disable-next-line react/prefer-stateless-function
   class Injected extends React.Component {
     render() {
       let props = {};
+      const context = typeof contextArg === 'function' ?
+        contextArg(this.props) :
+        contextArg;
       let deps = dependencies;
       if (deps) {
         if (!Array.isArray(deps)) {
           if (typeof deps !== 'string') {
             throw new Error(`
-            withInjector() passed an argument for dependencies that is '${typeof deps}'. 
+            withInjector() passed an argument for dependencies that is ${typeof deps}. 
             Must be a string or array of named dependencies.
           `);
           }
           deps = [deps];
         }
-        const resolved = deps.map(this.context.injector.get);
-        if (typeof mapDependenciesToProps === 'function') {
+        const resolved = deps.map(dep => this.context.injector.get(dep, context));
+        if (mapDependenciesToProps && typeof mapDependenciesToProps === 'function') {
           props = mapDependenciesToProps(...resolved);
           if (typeof props !== 'object') {
             throw new Error(`
@@ -28,9 +31,9 @@ const inject = (Component, dependencies, mapDependenciesToProps) => {
           }
         } else {
           // If no mapping function is given, mirror the prop names and dependency names
-          deps.forEach((dep, index) => {
-            props[dep] = resolved[index];
-          });
+          for (let i = 0; i < deps.length; i++) {
+            props[deps[i]] = resolved[i];
+          }
         }
       }
       const newProps = {
