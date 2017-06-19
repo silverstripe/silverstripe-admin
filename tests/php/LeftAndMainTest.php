@@ -65,7 +65,7 @@ class LeftAndMainTest extends FunctionalTest
     public function testExtraCssAndJavascript()
     {
         $admin = $this->objFromFixture(Member::class, 'admin');
-        $this->session()->inst_set('loggedInAs', $admin->ID);
+        $this->session()->set('loggedInAs', $admin->ID);
         $response = $this->get('admin/security');
 
         $this->assertRegExp(
@@ -86,7 +86,7 @@ class LeftAndMainTest extends FunctionalTest
     public function testLeftAndMainSubclasses()
     {
         $adminuser = $this->objFromFixture(Member::class, 'admin');
-        $this->session()->inst_set('loggedInAs', $adminuser->ID);
+        $this->session()->set('loggedInAs', $adminuser->ID);
 
         $this->resetMenu();
         $menuItems = LeftAndMain::singleton()->MainMenu(false);
@@ -108,7 +108,7 @@ class LeftAndMainTest extends FunctionalTest
             $this->assertRegExp('/<body[^>]*>/i', $response->getBody(), "$link should contain <body> tag");
         }
 
-        $this->session()->inst_set('loggedInAs', null);
+        $this->session()->set('loggedInAs', null);
     }
 
     public function testCanView()
@@ -118,7 +118,7 @@ class LeftAndMainTest extends FunctionalTest
         $allcmssectionsuser = $this->objFromFixture(Member::class, 'allcmssectionsuser');
 
         // anonymous user
-        $this->session()->inst_set('loggedInAs', null);
+        $this->session()->set('loggedInAs', null);
         $this->resetMenu();
         $menuItems = LeftAndMain::singleton()->MainMenu(false);
         $this->assertEquals(
@@ -174,6 +174,6 @@ class LeftAndMainTest extends FunctionalTest
             'Administrators can access Security Admin'
         );
 
-        $this->session()->inst_set('loggedInAs', null);
+        $this->session()->set('loggedInAs', null);
     }
 }
