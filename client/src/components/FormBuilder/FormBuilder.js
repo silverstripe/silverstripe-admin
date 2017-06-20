@@ -412,7 +412,7 @@ const basePropTypes = {
     'schema', 'state', 'errors', 'auto',
   ])),
   identifier(props, propName, componentName) {
-    if (!/^[A-Za-z0-9_\.]+$/.test(props[propName])) {
+    if (!/^[A-Za-z0-9_.]+$/.test(props[propName])) {
       return new Error(`
         Invalid identifier supplied to ${componentName}. Must be a set of
         dot-separated alphanumeric strings.

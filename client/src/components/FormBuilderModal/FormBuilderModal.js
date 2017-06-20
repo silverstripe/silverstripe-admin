@@ -43,6 +43,7 @@ class FormBuilderModal extends SilverStripeComponent {
         handleSubmit={this.handleSubmit}
         handleAction={this.props.handleAction}
         onLoadingError={this.handleLoadingError}
+        identifier={this.props.identifier}
       />
     );
   }
@@ -193,6 +194,7 @@ FormBuilderModal.propTypes = {
   responseClassGood: React.PropTypes.string,
   responseClassBad: React.PropTypes.string,
   showErrorMessage: React.PropTypes.bool,
+  identifier: React.PropTypes.string,
 };
 
 FormBuilderModal.defaultProps = {

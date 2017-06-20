@@ -29,8 +29,7 @@ const buildInjectorContainer = () => ({
       Otherwise, invoke the register() function with { force: true } as the third argument.
      `);
     }
-
-    if (typeof this[key] !== 'undefined') {
+    if (typeof this[key] !== 'undefined' && !this.services[key]) {
       throw new Error(`
       Tried to register service ${key} which is a reserved keyword. This would affect the behaviour
       of this API class, so it is forbidden to register with Injector.
@@ -57,8 +56,8 @@ const buildInjectorContainer = () => ({
     if (this.initialised) {
       throw new Error('Cannot mutate DI container after it has been initialised');
     }
-    Object.keys(this.services)
-      .forEach(key => this.services[key].load());
+    Object.values(this.services)
+      .forEach(service => service.load());
 
     this.initialised = true;
   },
@@ -76,15 +75,11 @@ const buildInjectorContainer = () => ({
       throw new Error('Cannot mutate DI container after it has been initialised');
     }
 
-    const updater = Object.keys(this.services).reduce(
-      (updateContainer, serviceName) => {
-        const service = this.services[serviceName];
-
-        return {
-          ...updateContainer,
-          [serviceName]: service.createTransformer(name, priorities),
-        };
-      },
+    const updater = Object.entries(this.services).reduce(
+      (updateContainer, [serviceName, service]) => ({
+        ...updateContainer,
+        [serviceName]: service.createTransformer(name, priorities),
+      }),
       {}
     );
     callback(updater);

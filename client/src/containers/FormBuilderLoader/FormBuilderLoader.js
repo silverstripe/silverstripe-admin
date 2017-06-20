@@ -318,7 +318,7 @@ class FormBuilderLoader extends Component {
    * @param value
    */
   handleAutofill(field, value) {
-    this.props.actions.reduxForm.autofill(this.props.schemaUrl, field, value);
+    this.props.actions.reduxForm.autofill(this.props.identifier, field, value);
   }
 
   render() {

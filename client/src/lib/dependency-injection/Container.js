@@ -4,6 +4,7 @@ import buildReducerContainer from './buildReducerContainer';
 import buildFormContainer from './buildFormContainer';
 
 const Injector = buildInjectorContainer();
+
 Injector.register('react', buildReactContainer());
 Injector.register('reducer', buildReducerContainer());
 Injector.register('form', buildFormContainer());
