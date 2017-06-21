@@ -9,7 +9,7 @@ import BreadcrumbsReducer from 'state/breadcrumbs/BreadcrumbsReducer';
 import TreeDropdownFieldReducer from 'state/treeDropdownField/TreeDropdownFieldReducer';
 import applyFormMiddleware from 'lib/dependency-injection/applyFormMiddleware';
 import MobileMenuReducer from 'state/mobileMenu/MobileMenuReducer';
-// import UnsavedFormsReducer from 'state/unsavedForms/UnsavedFormsReducer';
+import UnsavedFormsReducer from 'state/unsavedForms/UnsavedFormsReducer';
 
 export default (extra = {}) => {
   const FormReducer = combineReducers({
@@ -25,8 +25,7 @@ export default (extra = {}) => {
     routing: routerReducer,
     treeDropdownField: TreeDropdownFieldReducer,
     mobileMenu: MobileMenuReducer,
-    // @todo - Restore this once we address https://github.com/silverstripe/silverstripe-admin/issues/90
-    // unsavedForms: UnsavedFormsReducer,
+    unsavedForms: UnsavedFormsReducer,
     ...extra,
   });
 

@@ -186,13 +186,8 @@ class BootRoutes {
   shouldConfirmBeforeUnload() {
     const state = this.store.getState();
     const unsaveds = state.unsavedForms || {};
-    let ret = false;
 
-    if (unsaveds && Object.keys(unsaveds).length > 0) {
-      ret = true;
-    }
-
-    return ret;
+    return this.shouldNotifyUnsavedChanges(Object.keys(unsaveds));
   }
 
   /**
@@ -206,13 +201,21 @@ class BootRoutes {
     const unsaveds = state.unsavedForms || {};
     const locationBeforeTransitions = state.routing.locationBeforeTransitions;
     const pathname = locationBeforeTransitions && locationBeforeTransitions.pathname;
-    let ret = false;
+    const schemaToCheck = Object.keys(unsaveds).find(form => unsaveds[form] === pathname);
 
-    if (unsaveds && pathname && Object.keys(unsaveds).find(form => unsaveds[form] === pathname)) {
-      ret = true;
-    }
+    return this.shouldNotifyUnsavedChanges([schemaToCheck]);
+  }
 
-    return ret;
+  /**
+   * @param array
+   */
+  shouldNotifyUnsavedChanges(schemasToCheck) {
+    const state = this.store.getState();
+
+    return schemasToCheck.filter((schema) => {
+      const schemaObj = state.schemas[schema];
+      return schemaObj && schemaObj.state && schemaObj.state.notifyUnsavedChanges;
+    }).length > 0;
   }
 
   handleBeforeUnload() {
