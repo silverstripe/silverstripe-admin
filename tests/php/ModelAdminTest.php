@@ -2,6 +2,8 @@
 
 namespace SilverStripe\Admin\Tests;
 
+use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Control\Session;
 use SilverStripe\Security\Permission;
 use SilverStripe\Dev\FunctionalTest;
 
@@ -30,6 +32,9 @@ class ModelAdminTest extends FunctionalTest
     public function testExportFieldsDefaultIsSummaryFields()
     {
         $admin = new ModelAdminTest\ContactAdmin();
+        $request = new HTTPRequest('GET', '/');
+        $request->setSession(new Session([]));
+        $admin->setRequest($request);
         $admin->doInit();
         $this->assertEquals(
             $admin->getExportFields(),
@@ -40,6 +45,9 @@ class ModelAdminTest extends FunctionalTest
     public function testExportFieldsOverloadedMethod()
     {
         $admin = new ModelAdminTest\PlayerAdmin();
+        $request = new HTTPRequest('GET', '/');
+        $request->setSession(new Session([]));
+        $admin->setRequest($request);
         $admin->doInit();
         $this->assertEquals($admin->getExportFields(), array(
             'Name' => 'Name',
