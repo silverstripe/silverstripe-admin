@@ -17,7 +17,7 @@ class CMSProfileControllerTest extends FunctionalTest
     {
         $member = $this->objFromFixture(Member::class, 'user1');
         $anotherMember = $this->objFromFixture(Member::class, 'user2');
-        $this->session()->inst_set('loggedInAs', $member->ID);
+        $this->session()->set('loggedInAs', $member->ID);
 
         $response = $this->post('admin/myprofile/EditForm', array(
             'action_save' => 1,
@@ -38,7 +38,7 @@ class CMSProfileControllerTest extends FunctionalTest
     public function testMemberEditsOwnProfile()
     {
         $member = $this->objFromFixture(Member::class, 'user3');
-        $this->session()->inst_set('loggedInAs', $member->ID);
+        $this->session()->set('loggedInAs', $member->ID);
 
         $response = $this->post('admin/myprofile/EditForm', array(
             'action_save' => 1,
@@ -64,7 +64,7 @@ class CMSProfileControllerTest extends FunctionalTest
         ]);
 
         $member = $this->objFromFixture(Member::class, 'user1');
-        $this->session()->inst_set('loggedInAs', $member->ID);
+        $this->session()->set('loggedInAs', $member->ID);
 
         $response = $this->post('admin/myprofile/EditForm', array(
             'action_save' => 1,

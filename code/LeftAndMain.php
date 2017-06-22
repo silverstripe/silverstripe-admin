@@ -3,56 +3,53 @@
 namespace SilverStripe\Admin;
 
 use BadMethodCallException;
+use InvalidArgumentException;
 use LogicException;
+use Psr\SimpleCache\CacheInterface;
+use ReflectionClass;
 use SilverStripe\CMS\Controllers\SilverStripeNavigator;
 use SilverStripe\Control\ContentNegotiator;
-use SilverStripe\Control\Director;
-use SilverStripe\Control\HTTPResponse;
-use SilverStripe\Control\Session;
-use SilverStripe\Control\HTTPRequest;
-use SilverStripe\Control\HTTPResponse_Exception;
 use SilverStripe\Control\Controller;
+use SilverStripe\Control\Director;
+use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Control\HTTPResponse;
+use SilverStripe\Control\HTTPResponse_Exception;
 use SilverStripe\Control\PjaxResponseNegotiator;
-use SilverStripe\Core\Convert;
-use SilverStripe\Core\Config\Config;
-use Psr\SimpleCache\CacheInterface;
 use SilverStripe\Core\ClassInfo;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Core\Convert;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\Deprecation;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\Form;
+use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\HiddenField;
+use SilverStripe\Forms\HTMLEditor\HTMLEditorConfig;
 use SilverStripe\Forms\HTMLEditor\TinyMCEConfig;
 use SilverStripe\Forms\LiteralField;
-use SilverStripe\Forms\FormAction;
-use SilverStripe\Forms\FieldList;
-use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\PrintableTransformation;
-use SilverStripe\Forms\HTMLEditor\HTMLEditorConfig;
-use SilverStripe\Admin\ModalController;
 use SilverStripe\Forms\Schema\FormSchema;
 use SilverStripe\i18n\i18n;
+use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\CMSPreviewable;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\ORM\Hierarchy\Hierarchy;
 use SilverStripe\ORM\SS_List;
-use SilverStripe\ORM\ValidationResult;
-use SilverStripe\Versioned\Versioned;
-use SilverStripe\ORM\DataModel;
 use SilverStripe\ORM\ValidationException;
-use SilverStripe\ORM\ArrayList;
-use SilverStripe\ORM\FieldType\DBField;
-use SilverStripe\ORM\DataObject;
-use SilverStripe\Security\SecurityToken;
+use SilverStripe\ORM\ValidationResult;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Permission;
-use SilverStripe\Security\Security;
 use SilverStripe\Security\PermissionProvider;
-use SilverStripe\View\SSViewer;
-use SilverStripe\View\Requirements;
-use SilverStripe\View\ArrayData;
-use ReflectionClass;
-use InvalidArgumentException;
+use SilverStripe\Security\Security;
+use SilverStripe\Security\SecurityToken;
 use SilverStripe\SiteConfig\SiteConfig;
+use SilverStripe\Versioned\Versioned;
+use SilverStripe\View\ArrayData;
+use SilverStripe\View\Requirements;
+use SilverStripe\View\SSViewer;
 
 /**
  * LeftAndMain is the parent class of all the two-pane views in the CMS.
@@ -556,7 +553,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             }
 
             if (Security::getCurrentUser()) {
-                Session::set("BackURL", null);
+                $this->getRequest()->getSession()->clear("BackURL");
             }
 
             // if no alternate menu items have matched, return a permission error
@@ -671,10 +668,10 @@ class LeftAndMain extends Controller implements PermissionProvider
         Versioned::set_stage(Versioned::DRAFT);
     }
 
-    public function handleRequest(HTTPRequest $request, DataModel $model = null)
+    public function handleRequest(HTTPRequest $request)
     {
         try {
-            $response = parent::handleRequest($request, $model);
+            $response = parent::handleRequest($request);
         } catch (ValidationException $e) {
             // Nicer presentation of model-level validation errors
             $msgs = _t('SilverStripe\\Admin\\LeftAndMain.ValidationError', 'Validation error') . ': '
@@ -1559,20 +1556,20 @@ class LeftAndMain extends Controller implements PermissionProvider
         }
         if ($this->getRequest()->requestVar('ID') && is_numeric($this->getRequest()->requestVar('ID'))) {
             return $this->getRequest()->requestVar('ID');
-        } elseif ($this->getRequest()->requestVar('CMSMainCurrentPageID') && is_numeric($this->getRequest()->requestVar('CMSMainCurrentPageID'))) {
+        }
+
+        if ($this->getRequest()->requestVar('CMSMainCurrentPageID') && is_numeric($this->getRequest()->requestVar('CMSMainCurrentPageID'))) {
             // see GridFieldDetailForm::ItemEditForm
             return $this->getRequest()->requestVar('CMSMainCurrentPageID');
-        } elseif (isset($this->urlParams['ID']) && is_numeric($this->urlParams['ID'])) {
+        }
+
+        if (isset($this->urlParams['ID']) && is_numeric($this->urlParams['ID'])) {
             return $this->urlParams['ID'];
         }
 
-
         /** @deprecated */
-        if (Session::get($this->sessionNamespace() . ".currentPage")) {
-            return Session::get($this->sessionNamespace() . ".currentPage");
-        }
-
-        return null;
+        $session = $this->getRequest()->getSession();
+        return $session->get($this->sessionNamespace() . ".currentPage") ?: null;
     }
 
     /**
@@ -1588,7 +1585,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         $this->pageID = $id;
         $id = (int)$id;
         /** @deprecated */
-        Session::set($this->sessionNamespace() . ".currentPage", $id);
+        $this->getRequest()->getSession()->set($this->sessionNamespace() . ".currentPage", $id);
     }
 
     /**

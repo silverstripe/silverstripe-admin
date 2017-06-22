@@ -2,12 +2,11 @@
 
 namespace SilverStripe\Admin;
 
+use SilverStripe\Control\Controller;
 use SilverStripe\Control\Director;
 use SilverStripe\Control\HTTPRequest;
-use SilverStripe\Control\Controller;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Injector\Injector;
-use SilverStripe\ORM\DataModel;
 use SilverStripe\View\TemplateGlobalProvider;
 
 class AdminRootController extends Controller implements TemplateGlobalProvider
@@ -29,9 +28,9 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
      */
     public static function get_admin_route()
     {
-        $rules = Director::config()->rules;
+        $rules = Director::config()->get('rules');
         $adminRoute = array_search(__CLASS__, $rules);
-        return $adminRoute ?: static::config()->url_base;
+        return $adminRoute ?: static::config()->get('url_base');
     }
 
     /**
@@ -102,34 +101,30 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
         }
     }
 
-    public function handleRequest(HTTPRequest $request, DataModel $model)
+    public function handleRequest(HTTPRequest $request)
     {
         // If this is the final portion of the request (i.e. the URL is just /admin), direct to the default panel
         if ($request->allParsed()) {
-            $segment = Config::forClass($this->config()->default_panel)
+            $segment = Config::forClass($this->config()->get('default_panel'))
                 ->get('url_segment');
 
             $this->redirect(Controller::join_links(self::admin_url(), $segment, '/'));
             return $this->getResponse();
-        } // Otherwise
-        else {
-            $rules = self::rules();
-            foreach ($rules as $pattern => $controller) {
-                if (($arguments = $request->match($pattern, true)) !== false) {
-                    /** @var LeftAndMain $controllerObj */
-                    $controllerObj = Injector::inst()->create($controller);
-                    $controllerObj->setSession($this->session);
-
-                    return $controllerObj->handleRequest($request, $model);
-                }
-            }
-            // Fall back to methods defined on LeftAndMain
-            $controllerObj = Injector::inst()->create(LeftAndMain::class);
-            $controllerObj->setSession($this->session);
-            return $controllerObj->handleRequest($request, $model);
         }
 
-        return $this->httpError(404, 'Not found');
+        // Otherwise
+        $rules = self::rules();
+        foreach ($rules as $pattern => $controller) {
+            if (($arguments = $request->match($pattern, true)) !== false) {
+                /** @var LeftAndMain $controllerObj */
+                $controllerObj = Injector::inst()->create($controller);
+                return $controllerObj->handleRequest($request);
+            }
+        }
+
+        // Fall back to methods defined on LeftAndMain
+        $controllerObj = Injector::inst()->create(LeftAndMain::class);
+        return $controllerObj->handleRequest($request);
     }
 
     /**
