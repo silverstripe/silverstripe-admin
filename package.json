@@ -6,7 +6,8 @@
     "test": "tests"
   },
   "bin": {
-    "webpack": "./node_modules/webpack/webpack.js"
+    "webpack": "./node_modules/webpack/webpack.js",
+    "webpack-dev-server": "./node_modules/webpack-dev-server/webpack-dev-server.js"
   },
   "engines": {
     "node": "^6.x"
@@ -14,6 +15,7 @@
   "scripts": {
     "build": "yarn && NODE_ENV=production webpack -p --bail --progress",
     "watch": "NODE_ENV=development webpack --watch --progress",
+    "serve": "NODE_ENV=development webpack-dev-server",
     "css": "WEBPACK_CHILD=css npm run build",
     "test": "jest",
     "coverage": "jest --coverage",
@@ -108,6 +110,9 @@
     ],
     "plugins": [
       "transform-object-rest-spread"
-    ]
+    ],
+    "webpack-dev-server": {
+      "port": 3000
+    }
   }
 }
