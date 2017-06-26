@@ -1,11 +1,11 @@
 import buildInjectorContainer from './buildInjectorContainer';
-import buildReactContainer from './buildReactContainer';
+import buildComponentContainer from './buildComponentContainer';
 import buildReducerContainer from './buildReducerContainer';
 import buildFormContainer from './buildFormContainer';
 
 const Injector = buildInjectorContainer();
 
-Injector.register('react', buildReactContainer());
+Injector.register('component', buildComponentContainer());
 Injector.register('reducer', buildReducerContainer());
 Injector.register('form', buildFormContainer());
 

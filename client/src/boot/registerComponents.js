@@ -26,7 +26,7 @@ import Form from 'components/Form/Form';
 import ReduxForm from 'containers/Form/Form';
 
 export default () => {
-  Injector.react.registerMany({
+  Injector.component.registerMany({
     TextField,
     HiddenField,
     DateField,

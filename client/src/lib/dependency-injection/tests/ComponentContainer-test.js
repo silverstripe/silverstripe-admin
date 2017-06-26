@@ -1,12 +1,12 @@
 /* global jest, jasmine, describe, beforeEach, it, pit, expect, process */
-import buildReactContainer from '../buildReactContainer';
+import buildComponentContainer from '../buildComponentContainer';
 import React from 'react';
 
-describe('ReactContainer', () => {
+describe('ComponentContainer', () => {
   let registry = null;
 
   beforeEach(() => {
-    registry = buildReactContainer();
+    registry = buildComponentContainer();
   });
 
   describe('get()', () => {

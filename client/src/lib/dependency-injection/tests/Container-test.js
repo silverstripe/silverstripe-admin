@@ -8,14 +8,14 @@ jest.mock('../buildInjectorContainer', () => function mockInjector() {
   };
 });
 jest.mock('../buildBaseContainer', () => () => 'base');
-jest.mock('../buildReactContainer', () => () => 'react');
+jest.mock('../buildComponentContainer', () => () => 'component');
 jest.mock('../buildReducerContainer', () => () => 'reducer');
 
 describe('Container', () => {
   it('should load with react service by default', () => {
     const container = require('../Container').default;
 
-    expect(container.react).toBe('registered');
+    expect(container.component).toBe('registered');
   });
 
   it('should be a singleton', () => {

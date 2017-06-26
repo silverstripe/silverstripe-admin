@@ -1,6 +1,6 @@
 import buildBaseContainer from './buildBaseContainer';
 
-const buildReactContainer = (base = buildBaseContainer()) => ({
+const buildComponentContainer = (base = buildBaseContainer()) => ({
   ...base,
   /**
    * Extends base.get to add a displayName to the service
@@ -38,4 +38,4 @@ const buildReactContainer = (base = buildBaseContainer()) => ({
 
 });
 
-export default buildReactContainer;
+export default buildComponentContainer;
