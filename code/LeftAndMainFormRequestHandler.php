@@ -10,7 +10,7 @@ use SilverStripe\Forms\FormRequestHandler;
  * Allows CMS forms to be decorated with additional context arguments.
  * By injecting additional IDs into the form link, LeftAndMain subclasses
  * can avoid relying on session state to record current page ID.
- * {@see CMSMain} for example usage.
+ * {@see SilverStripe\Admin\CMSMain} for example usage.
  */
 class LeftAndMainFormRequestHandler extends FormRequestHandler
 {

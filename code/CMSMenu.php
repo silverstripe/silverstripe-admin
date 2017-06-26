@@ -17,17 +17,17 @@ use ArrayIterator;
 use SilverStripe\Security\Security;
 
 /**
- * The object manages the main CMS menu. See {@link LeftAndMain::init()} for
+ * The object manages the main CMS menu. See {@link SilverStripe\Admin\LeftAndMain::init()} for
  * example usage.
  *
  * The menu will be automatically populated with menu items for subclasses of
- * {@link LeftAndMain}. That is, for each class in the CMS that creates an
+ * {@link SilverStripe\Admin\LeftAndMain}. That is, for each class in the CMS that creates an
  * administration panel, a CMS menu item will be created. The default
  * configuration will also include a 'help' link to the SilverStripe user
  * documentation.
  *
- * Additional CMSMenu items can be added through {@link LeftAndMainExtension::init()}
- * extensions added to {@link LeftAndMain}.
+ * Additional CMSMenu items can be added through {@link SilverStripe\Admin\LeftAndMainExtension::init()}
+ * extensions added to {@link SilverStripe\Admin\LeftAndMain}.
  */
 class CMSMenu implements IteratorAggregate, i18nEntityProvider
 {
@@ -58,7 +58,7 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
 
     /**
      * Generate CMS main menu items by collecting valid
-     * subclasses of {@link LeftAndMain}
+     * subclasses of {@link SilverStripe\Admin\LeftAndMain}
      */
     public static function populate_menu()
     {
@@ -70,7 +70,7 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
      *
      * @param string $controllerClass The class name of the controller
      * @todo A director rule is added when a controller link is added, but it won't be removed
-     *          when the item is removed. Functionality needed in {@link Director}.
+     *          when the item is removed. Functionality needed in {@link SilverStripe\Control\Director}.
      */
     public static function add_controller($controllerClass)
     {
@@ -100,7 +100,7 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
         $link = Controller::join_links($urlBase, $urlSegment) . '/';
 
         // doesn't work if called outside of a controller context (e.g. in _config.php)
-        // as the locale won't be detected properly. Use {@link LeftAndMain->MainMenu()} to update
+        // as the locale won't be detected properly. Use {@link SilverStripe\Admin\LeftAndMain::MainMenu()} to update
         // titles for existing menu entries
         $menuTitle = LeftAndMain::menu_title($controllerClass);
 
@@ -111,7 +111,7 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
     /**
      * Add an arbitrary URL to the CMS menu.
      *
-     * @param string $code A unique identifier (used to create a CSS ID and its key in {@link $menu_items})
+     * @param string $code A unique identifier (used to create a CSS ID and its key in {@link self::$menu_items})
      * @param string $menuTitle The link's title in the CMS menu
      * @param string $url The url of the link
      * @param integer $priority The menu priority (sorting order) of the menu item.  Higher priorities will be further
@@ -129,10 +129,10 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
     /**
      * Add a navigation item to the main administration menu showing in the top bar.
      *
-     * uses {@link CMSMenu::$menu_items}
+     * uses {@link self::$menu_items}
      *
      * @param string $code Unique identifier for this menu item (e.g. used by {@link replace_menu_item()} and
-     *                    {@link remove_menu_item}. Also used as a CSS-class for icon customization.
+     *                    {@link self::remove_menu_item}. Also used as a CSS-class for icon customization.
      * @param string $menuTitle Localized title showing in the menu bar
      * @param string $url A relative URL that will be linked in the menu bar.
      * @param string $controllerClass The controller class for this menu, used to check permisssions.
@@ -243,7 +243,7 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
 
     /**
      * Get all menu items that the passed member can view.
-     * Defaults to {@link Security::getCurrentUser()}.
+     * Defaults to {@link SilverStripe\Security\Security::getCurrentUser()}.
      *
      * @param Member $member
      * @return array
@@ -312,11 +312,11 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
     /**
      * Replace a navigation item to the main administration menu showing in the top bar.
      *
-     * @param string $code Unique identifier for this menu item (e.g. used by {@link replace_menu_item()} and
-     *                    {@link remove_menu_item}. Also used as a CSS-class for icon customization.
+     * @param string $code Unique identifier for this menu item (e.g. used by {@link self::replace_menu_item()} and
+     *                    {@link self::remove_menu_item}. Also used as a CSS-class for icon customization.
      * @param string $menuTitle Localized title showing in the menu bar
      * @param string $url A relative URL that will be linked in the menu bar.
-     *                    Make sure to add a matching route via {@link Director::$rules} to this url.
+     *                    Make sure to add a matching route via {@link SilverStripe\Control\Director::$rules} to this url.
      * @param string $controllerClass The controller class for this menu, used to check permisssions.
      *                    If blank, it's assumed that this is public, and always shown to users who
      *                    have the rights to access some other part of the admin area.
@@ -369,7 +369,7 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
      *
      * Sorted by url_priority config.
      *
-     * @todo A variation of this function could probably be moved to {@link ClassInfo}
+     * @todo A variation of this function could probably be moved to {@link SilverStripe\Core\ClassInfo}
      * @param string $root The root class to begin finding subclasses
      * @param boolean $recursive Look for subclasses recursively?
      * @param string $sort Name of config on which to sort. Can be 'menu_priority' or 'url_priority'

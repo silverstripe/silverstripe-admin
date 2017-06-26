@@ -22,7 +22,7 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
 
     /**
      * Convenience function to return the admin route config.
-     * Looks for the {@link Director::$rules} for the current admin Controller.
+     * Looks for the {@link SilverStripe\Control\Director::$rules} for the current admin Controller.
      *
      * @return string
      */

@@ -848,7 +848,7 @@ class LeftAndMain extends Controller implements PermissionProvider
 
     /**
      * Return the web font icon class name for this interface icon. Uses the
-     * built in SilveStripe webfont. {@see menu_icon_for_class()} for providing
+     * built in SilveStripe webfont. {@see self::menu_icon_for_class()} for providing
      * a background image.
      *
      * @param string $class.
