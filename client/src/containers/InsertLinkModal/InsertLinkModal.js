@@ -10,7 +10,9 @@ class InsertLinkModal extends Component {
     super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    props.setOverrides(props.show ? props : null);
+    if (!props.show) {
+      props.setOverrides(null);
+    }
   }
 
   componentWillReceiveProps(props) {
