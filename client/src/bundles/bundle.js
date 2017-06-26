@@ -44,7 +44,6 @@ require('expose-loader?Badge!components/Badge/Badge');
 require('expose-loader?Preview!components/Preview/Preview');
 require('expose-loader?Config!lib/Config');
 require('expose-loader?DataFormat!lib/DataFormat');
-require('expose-loader?ReducerRegister!lib/ReducerRegister');
 require('expose-loader?ReactRouteRegister!lib/ReactRouteRegister');
 require('expose-loader?Router!lib/Router');
 require('expose-loader?TinyMCEActionRegistrar!lib/TinyMCEActionRegistrar');

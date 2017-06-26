@@ -2,6 +2,7 @@ import buildBaseContainer from './buildBaseContainer';
 
 const buildComponentContainer = (base = buildBaseContainer()) => ({
   ...base,
+
   /**
    * Extends base.get to add a displayName to the service
    *
@@ -35,7 +36,6 @@ const buildComponentContainer = (base = buildBaseContainer()) => ({
       this.customise({ name, ...priorities, displayName }, key, wrapper);
     };
   },
-
 });
 
 export default buildComponentContainer;

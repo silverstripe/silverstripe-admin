@@ -29,7 +29,7 @@ const buildBaseContainer = () => ({
    * Gets a dependency
    * @param {string} key
    * @param {string} context A dot-separated context specification
-   * @returns {XML} Component
+   * @returns {object} Component
    */
   get(key, context) {
     if (!this.initialised) {
@@ -143,9 +143,9 @@ const buildBaseContainer = () => ({
     if (this.initialised) {
       throw new Error('Cannot mutate DI container after it has been initialised');
     }
-
-    const existing = Object.keys(map).filter((service) => (
-      Object.keys(this.services).includes(service)
+    const mapKeys = Object.keys(map);
+    const existing = Object.keys(this.services).filter((service) => (
+      mapKeys.includes(service)
     ));
     if (existing.length && force !== true) {
       const list = existing.join(', ');

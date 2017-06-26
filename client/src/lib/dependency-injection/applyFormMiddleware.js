@@ -20,15 +20,13 @@ const applyFormMiddleware = (reducer) => (state, action) => {
   if (!formState) {
     return reducedState;
   }
-  const schemaKey = Object.keys(reducedState.formSchemas).find(k => (
-    reducedState.formSchemas[k].name === formName)
-  );
+  const [schemaKey, schema] = Object.entries(reducedState.formSchemas)
+    .find(([, schemaEntry]) => schemaEntry.name === formName);
 
   if (!schemaKey) {
     return reducedState;
   }
 
-  const schema = reducedState.formSchemas[schemaKey];
   const schemaState = schema.state;
   const manager = new SchemaStateManager(schemaState);
   let newState = {

@@ -29,12 +29,14 @@ const buildInjectorContainer = () => ({
       Otherwise, invoke the register() function with { force: true } as the third argument.
      `);
     }
+
     if (typeof this[key] !== 'undefined' && !this.services[key]) {
       throw new Error(`
       Tried to register service ${key} which is a reserved keyword. This would affect the behaviour
       of this API class, so it is forbidden to register with Injector.
       `);
     }
+
     const requiredMethods = ['load', 'createTransformer', 'get', 'register'];
     if (!requiredMethods.every(method => typeof value[method] === 'function')) {
       throw new Error(`

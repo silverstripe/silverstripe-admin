@@ -135,7 +135,7 @@ class FormBuilder extends SilverStripeComponent {
           return formSchema;
         })
         .catch((reason) => {
-          // TODO Generic CMS error reporting
+          // @todo Generic CMS error reporting
           this.setState({ submittingAction: null });
           throw reason;
         });
@@ -228,7 +228,8 @@ class FormBuilder extends SilverStripeComponent {
    * Default data type to component mappings.
    * Used as a fallback when no component type is provided in the form schema.
    *
-   * @param string dataType - The data type provided by the form schema.
+   * @param {string} dataType - The data type provided by the form schema.
+   * @param {string} name - name of the field component
    * @return object|null
    */
   getComponentForDataType(dataType, name) {
