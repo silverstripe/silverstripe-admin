@@ -3,20 +3,21 @@ import SchemaStateManager from '../SchemaStateManager';
 
 describe('SchemaStateManager', () => {
   let manager = null;
-  const state = {
-    fields: [
-      {
-        id: 'field-1',
-        name: 'Field One',
-      },
-      {
-        id: 'field-2',
-        name: 'Field Two',
-      },
-    ],
-  };
+  let state = null;
 
   beforeEach(() => {
+    state = {
+      fields: [
+        {
+          id: 'field-1',
+          name: 'Field One',
+        },
+        {
+          id: 'field-2',
+          name: 'Field Two',
+        },
+      ],
+    };
     manager = new SchemaStateManager(state);
   });
   it('Constructs', () => {

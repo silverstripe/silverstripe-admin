@@ -1,6 +1,7 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 import { inject } from 'lib/Injector';
+import getFormState from 'lib/getFormState';
 
 const InjectableForm = (props) => {
   const FormComponent = props.formComponent;
@@ -22,7 +23,5 @@ const InjectedForm = inject(
 )(InjectableForm);
 
 export default reduxForm({
-  getFormState(state) {
-    return state.form.formState;
-  },
+  getFormState,
 })(InjectedForm);

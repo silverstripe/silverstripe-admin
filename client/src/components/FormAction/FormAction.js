@@ -1,7 +1,7 @@
 import React from 'react';
 import SilverStripeComponent from 'lib/SilverStripeComponent';
 import castStringToElement from 'lib/castStringToElement';
-import cx from 'classnames';
+import classnames from 'classnames';
 
 class FormAction extends SilverStripeComponent {
   constructor(props) {
@@ -68,7 +68,7 @@ class FormAction extends SilverStripeComponent {
       buttonClasses[this.props.extraClass] = true;
     }
 
-    return cx(buttonClasses);
+    return classnames(buttonClasses);
   }
 
   /**

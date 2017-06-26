@@ -3,7 +3,7 @@ import getIn from 'redux-form/lib/structure/plain/getIn';
 import setIn from 'redux-form/lib/structure/plain/setIn';
 import SchemaStateManager from './SchemaStateManager';
 
-export default (reducer) => (state, action) => {
+const applyFormMiddleware = (reducer) => (state, action) => {
   const reducedState = reducer(state, action);
   if (!action.meta || !action.meta.form) {
     return reducedState;
@@ -30,7 +30,7 @@ export default (reducer) => (state, action) => {
 
   const schema = reducedState.formSchemas[schemaKey];
   const schemaState = schema.state;
-  const manager = new SchemaStateManager(schemaState, formState);
+  const manager = new SchemaStateManager(schemaState);
   let newState = {
     ...reducedState,
   };
@@ -41,6 +41,7 @@ export default (reducer) => (state, action) => {
     ...updates,
   });
 
-
   return newState;
 };
+
+export default applyFormMiddleware;

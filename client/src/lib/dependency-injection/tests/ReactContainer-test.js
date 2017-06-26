@@ -12,9 +12,7 @@ describe('ReactContainer', () => {
   describe('get()', () => {
     it('should set a display name on objects', () => {
       const TestComponent1 = () => <h2>Test</h2>;
-      registry.register('TestComponent1', TestComponent1);
       const HOC1 = (TestComponent) => () => <div className="hoc"><TestComponent /></div>;
-      registry.transform('test', update => update('TestComponent1', HOC1));
       // eslint-disable-next-line react/prefer-stateless-function, react/no-multi-comp
       class TestComponent2 extends React.Component {
         render() {
@@ -22,7 +20,6 @@ describe('ReactContainer', () => {
         }
       }
       TestComponent2.displayName = 'Testo';
-      registry.register('TestComponent2', TestComponent2);
       const HOC2 = (TestComponent) => {
         // eslint-disable-next-line react/prefer-stateless-function, react/no-multi-comp
         class TestClass extends React.Component {
@@ -34,11 +31,16 @@ describe('ReactContainer', () => {
         return TestClass;
       };
 
+      registry.register('TestComponent1', TestComponent1);
+      registry.register('TestComponent2', TestComponent2);
+      registry.transform('test', update => update('TestComponent1', HOC1));
       registry.transform('test', update => update('TestComponent2', HOC2, 'Besto'));
       registry.load();
+
       const Service1 = registry.get('TestComponent1');
-      expect(Service1.displayName).toBe('test(TestComponent1)');
       const Service2 = registry.get('TestComponent2');
+
+      expect(Service1.displayName).toBe('test(TestComponent1)');
       expect(Service2.displayName).toBe('Besto(Testo)');
     });
   });

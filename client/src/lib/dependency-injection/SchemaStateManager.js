@@ -1,9 +1,9 @@
-import cx from 'classnames';
-
+import classnames from 'classnames';
+import createClassMap from '../createClassMap';
 /**
  * An API for updating schema state
  */
-export default class {
+class SchemaStateManager {
 
   /**
    * Constructor
@@ -15,22 +15,22 @@ export default class {
 
   /**
    * Gets a field given its name attribute
-   * @param {string} field
+   * @param {string} fieldName
    * @return {object}
    */
-  getFieldByName(field) {
-    return this.schemaState.fields.find(f => f.name === field);
+  getFieldByName(fieldName) {
+    return this.schemaState.fields.find(field => field.name === fieldName);
   }
 
   /**
    * Updates a field by callback
    * @param {string} fieldName
    * @param {function} updater
-   * @returns {this}
+   * @returns {SchemaStateManager}
    */
   mutateField(fieldName, updater) {
     const fieldList = this.schemaState.fields || [];
-    const fieldIndex = fieldList.findIndex(f => f.name === fieldName);
+    const fieldIndex = fieldList.findIndex(field => field.name === fieldName);
     if (fieldIndex < 0) {
       return this;
     }
@@ -46,7 +46,7 @@ export default class {
    * Merges properties into a field
    * @param {string} fieldName
    * @param {object} update
-   * @returns {this}
+   * @returns {SchemaStateManager}
    */
   updateField(fieldName, update) {
     return this.mutateField(fieldName, (field) => ({
@@ -59,11 +59,11 @@ export default class {
    * Updates multiple fields given a map of fieldname
    * to mutation
    * @param {object} updates
-   * @returns {this}
+   * @returns {SchemaStateManager}
    */
   updateFields(updates) {
-    Object.keys(updates).forEach(k => {
-      this.updateField(k, updates[k]);
+    Object.keys(updates).forEach(key => {
+      this.updateField(key, updates[key]);
     });
 
     return this;
@@ -73,7 +73,7 @@ export default class {
    * Sets a component for a field
    * @param {string} fieldName
    * @param {string} component The component as registered in Injector
-   * @returns {this}
+   * @returns {SchemaStateManager}
    */
   setFieldComponent(fieldName, component) {
     return this.updateField(fieldName, { component });
@@ -84,20 +84,15 @@ export default class {
    * @param {string} fieldName
    * @param {string} className
    * @param {boolean} active
-   * @returns {this}
+   * @returns {SchemaStateManager}
    */
   setFieldClass(fieldName, className, active = true) {
     return this.mutateField(fieldName, (field) => {
-      const classConfig = {};
-      if (field.extraClass) {
-        field.extraClass.split(' ').forEach(c => {
-          classConfig[c.trim()] = true;
-        });
-      }
+      const classConfig = createClassMap(field.extraClass);
       classConfig[className] = active;
       return {
         ...field,
-        extraClass: cx(classConfig),
+        extraClass: classnames(classConfig),
       };
     });
   }
@@ -106,7 +101,7 @@ export default class {
    * Adds a CSS class to a field
    * @param {string} fieldName
    * @param {string} className
-   * @returns {this}
+   * @returns {SchemaStateManager}
    */
   addFieldClass(fieldName, className) {
     return this.setFieldClass(fieldName, className, true);
@@ -116,7 +111,7 @@ export default class {
    * Removes a CSS class from a field
    * @param {string} fieldName
    * @param {string} className
-   * @returns {this}
+   * @returns {SchemaStateManager}
    */
   removeFieldClass(fieldName, className) {
     return this.setFieldClass(fieldName, className, false);
@@ -130,3 +125,5 @@ export default class {
     return this.schemaState;
   }
 }
+
+export default SchemaStateManager;
