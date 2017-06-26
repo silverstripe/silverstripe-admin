@@ -41,7 +41,7 @@ function appBoot() {
   ReducerRegister.add('treeDropdownField', TreeDropdownFieldReducer);
   // @todo - Restore this once we address https://github.com/silverstripe/silverstripe-admin/issues/90
   // ReducerRegister.add('unsavedForms', UnsavedFormsReducer);
-  reducerRegister.add('mobileMenu', MobileMenuReducer);
+  ReducerRegister.add('mobileMenu', MobileMenuReducer);
 
   // Force this to the end of the execution queue to ensure it's last.
   window.setTimeout(() => {
