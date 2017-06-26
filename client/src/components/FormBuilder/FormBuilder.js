@@ -41,16 +41,33 @@ class FormBuilder extends SilverStripeComponent {
       return {};
     }
 
+    const validationMiddleware = this.context.injector.validate(
+      this.props.identifier
+    );
+
+    let middlewareValidationResult = {};
+    if (validationMiddleware) {
+      middlewareValidationResult = validationMiddleware(values, {}) || {};
+    }
+
     const validator = new Validator(values);
 
-    return Object.entries(values).reduce((prev, curr) => {
+    const validation = Object.entries(values).reduce((prev, curr) => {
       const [key] = curr;
       const field = findField(this.props.schema.schema.fields, key);
 
-      const { valid, errors } = validator.validateFieldSchema(field);
-
+      let { valid, errors } = validator.validateFieldSchema(field);
+      let middlewareErrors = middlewareValidationResult[key];
+      valid = valid && !middlewareErrors;
       if (valid) {
         return prev;
+      }
+
+      if (middlewareErrors) {
+        if (!Array.isArray(middlewareErrors)) {
+          middlewareErrors = [middlewareErrors];
+        }
+        errors = [...errors, ...middlewareErrors];
       }
 
       // so if there are multiple errors, it will be listed in html spans
@@ -58,13 +75,16 @@ class FormBuilder extends SilverStripeComponent {
         <span key={index} className="form__validation-message">{message}</span>
       ));
 
-      return Object.assign({}, prev, {
+      return {
+        ...prev,
         [key]: {
           type: 'error',
           value: { react: errorHtml },
         },
-      });
+      };
     }, {});
+
+    return validation;
   }
 
   /**
@@ -135,11 +155,20 @@ class FormBuilder extends SilverStripeComponent {
    * @returns {*}
    */
   buildComponent(props) {
-    let componentProps = props;
+    // Inline `input` props into main field props
+    // (each component can pick and choose the props required for it's <input>
+    // See http://redux-form.com/6.0.5/docs/api/Field.md/#input-props
+    const componentProps = {
+      ...props,
+      ...props.input,
+    };
+    delete componentProps.input;
+    const { identifier } = this.props;
+    const { name } = componentProps;
     // 'component' key is renamed to 'schemaComponent' in normalize*() methods
     const SchemaComponent = componentProps.schemaComponent !== null
-      ? this.context.injector.get(componentProps.schemaComponent)
-      : this.getComponentForDataType(componentProps.schemaType);
+      ? this.context.injector.get(componentProps.schemaComponent, `${identifier}.${name}`)
+      : this.getComponentForDataType(componentProps.schemaType, name);
 
     if (SchemaComponent === null) {
       return null;
@@ -147,11 +176,6 @@ class FormBuilder extends SilverStripeComponent {
       throw Error(`Component not found in injector: ${componentProps.schemaComponent}`);
     }
 
-    // Inline `input` props into main field props
-    // (each component can pick and choose the props required for it's <input>
-    // See http://redux-form.com/6.0.5/docs/api/Field.md/#input-props
-    componentProps = Object.assign({}, componentProps, componentProps.input);
-    delete componentProps.input;
 
     // Provides container components a place to hook in
     // and apply customisations to scaffolded components.
@@ -175,7 +199,6 @@ class FormBuilder extends SilverStripeComponent {
     const FieldComponent = this.props.baseFieldComponent;
     return fields.map((field) => {
       let props = field;
-
       if (field.children) {
         props = Object.assign(
           {},
@@ -208,8 +231,10 @@ class FormBuilder extends SilverStripeComponent {
    * @param string dataType - The data type provided by the form schema.
    * @return object|null
    */
-  getComponentForDataType(dataType) {
-    const { injector: { get } } = this.context;
+  getComponentForDataType(dataType, name) {
+    const { identifier } = this.props;
+    const get = (type) => this.context.injector.get(type, `${identifier}.${name}`);
+
     switch (dataType) {
       case 'String':
       case 'Text':
@@ -276,39 +301,18 @@ class FormBuilder extends SilverStripeComponent {
       const fieldState = (state && state.fields)
         ? state.fields.find((item) => item.id === field.id)
         : {};
-
       const data = merge.recursive(
         true,
         schemaMerge(field, fieldState),
         // Overlap with redux-form prop handling : createFieldProps filters out the 'component' key
-        { schemaComponent: field.component }
+        {
+          schemaComponent: (fieldState && fieldState.component)
+            ? fieldState.component
+            : field.component,
+        }
       );
-
       if (field.children) {
         data.children = this.normalizeFields(field.children, state);
-      }
-
-      return data;
-    });
-  }
-
-  /**
-   * Ensure that keys don't conflict with redux-form expectations.
-   *
-   * @param {array} actions
-   * @return {array}
-   */
-  normalizeActions(actions) {
-    return actions.map((action) => {
-      const data = merge.recursive(
-        true,
-        action,
-        // Overlap with redux-form prop handling : createFieldProps filters out the 'component' key
-        { schemaComponent: action.component }
-      );
-
-      if (action.children) {
-        data.children = this.normalizeActions(action.children);
       }
 
       return data;
@@ -346,7 +350,7 @@ class FormBuilder extends SilverStripeComponent {
       form, // required as redux-form identifier
       afterMessages,
       fields: this.normalizeFields(schema.fields, state),
-      actions: this.normalizeActions(schema.actions),
+      actions: this.normalizeFields(schema.actions, state),
       attributes,
       data: schema.data,
       initialValues: schemaFieldValues(schema, state),
@@ -407,6 +411,17 @@ const basePropTypes = {
   responseRequestedSchema: PropTypes.arrayOf(PropTypes.oneOf([
     'schema', 'state', 'errors', 'auto',
   ])),
+  identifier(props, propName, componentName) {
+    if (!/^[A-Za-z0-9_.]+$/.test(props[propName])) {
+      return new Error(`
+        Invalid identifier supplied to ${componentName}. Must be a set of
+        dot-separated alphanumeric strings.
+      `);
+    }
+
+    return null;
+  },
+
 };
 
 FormBuilder.propTypes = Object.assign({}, basePropTypes, {

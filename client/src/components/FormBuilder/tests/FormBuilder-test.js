@@ -12,26 +12,30 @@ import FormBuilder from '../FormBuilder';
 import schemaFieldValues, { findField, schemaMerge } from 'lib/schemaFieldValues';
 
 describe('FormBuilder', () => {
-  const baseProps = {
-    form: 'MyForm',
-    baseFormComponent: () => <form />,
-    baseFieldComponent: (props) => {
-      // eslint-disable-next-line react/prop-types
-      const Component = props.component;
-      return <Component {...props} />;
-    },
-    schema: {
-      id: 'MyForm',
+  let baseProps = null;
+
+  beforeEach(() => {
+    baseProps = {
+      form: 'MyForm',
+      baseFormComponent: () => <form />,
+      baseFieldComponent: (props) => {
+        // eslint-disable-next-line react/prop-types
+        const Component = props.component;
+        return <Component {...props} />;
+      },
       schema: {
-        attributes: {},
-        fields: [],
-        actions: [],
+        id: 'MyForm',
+        schema: {
+          attributes: {},
+          fields: [],
+          actions: [],
+        },
+        state: {
+          fields: [],
+        },
       },
-      state: {
-        fields: [],
-      },
-    },
-  };
+    };
+  });
 
   describe('mergeFieldData()', () => {
     it('should deep merge properties on the originalobject', () => {
@@ -68,7 +72,11 @@ describe('FormBuilder', () => {
 
   describe('getFieldValues()', () => {
     let fieldValues = null;
-    const props = Object.assign({}, baseProps);
+    let props = null;
+
+    beforeEach(() => {
+      props = { ...baseProps };
+    });
 
     it('should retrieve field values based on schema', () => {
       props.schema.schema.fields = [
@@ -90,9 +98,11 @@ describe('FormBuilder', () => {
 
   describe('handleSubmit', () => {
     let formBuilder = null;
-    const props = baseProps;
+    let props = null;
 
     beforeEach(() => {
+      props = { ...baseProps };
+
       formBuilder = ReactTestUtils.renderIntoDocument(<FormBuilder {...props} />);
 
       props.schema.schema.fields = [

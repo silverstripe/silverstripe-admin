@@ -13,13 +13,7 @@ export function schemaMerge(schema, state) {
   if (typeof state === 'undefined') {
     return schema;
   }
-  return merge.recursive(true, schema, {
-    data: state.data,
-    source: state.source,
-    message: state.message,
-    valid: state.valid,
-    value: state.value,
-  });
+  return merge.recursive(true, schema, state);
 }
 
 /**

@@ -80,6 +80,7 @@ jQuery.entwine('ss', ($) => {
             className="add-to-campaign-modal"
             responseClassBad="modal__response modal__response--error"
             responseClassGood="modal__response modal__response--good"
+            identifier="Admin.AddToCampaign"
           />
         </Provider>,
         this[0]

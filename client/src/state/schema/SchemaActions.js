@@ -8,10 +8,14 @@ import ACTION_TYPES from './SchemaActionTypes';
  * @param {int} id
  * @param {object} schema - JSON schema for the layout.
  */
-export function setSchema(id, schema) {
+export function setSchema(id, schema, name) {
   return {
     type: ACTION_TYPES.SET_SCHEMA,
-    payload: Object.assign({ id }, schema),
+    payload: {
+      id,
+      ...schema,
+      name,
+    },
   };
 }
 

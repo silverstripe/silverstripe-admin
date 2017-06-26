@@ -68,6 +68,7 @@ jQuery.entwine('ss', ($) => {
             bodyClassName="modal__dialog"
             className="insert-link__dialog-wrapper--external"
             fileAttributes={attrs}
+            identifier="Admin.InsertLinkExternalModal"
           />
         </ApolloProvider>,
         this[0]
