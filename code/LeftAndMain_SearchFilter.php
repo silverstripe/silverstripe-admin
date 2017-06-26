@@ -12,14 +12,14 @@ interface LeftAndMain_SearchFilter
 {
 
     /**
-     * Method on {@link Hierarchy} objects which is used to traverse into children relationships.
+     * Method on {@link SilverStripe\ORM\Hierarchy} objects which is used to traverse into children relationships.
      *
      * @return string
      */
     public function getChildrenMethod();
 
     /**
-     * Method on {@link Hierarchy} objects which is used find the number of children for a parent page
+     * Method on {@link SilverStripe\ORM\Hierarchy} objects which is used find the number of children for a parent page
      *
      * @return string
      */
