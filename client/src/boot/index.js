@@ -20,7 +20,6 @@ function appBoot() {
   registerReducers({
     apollo: apolloReducer,
   });
-
   const middleware = [
     thunkMiddleware,
     apolloClient.middleware(),

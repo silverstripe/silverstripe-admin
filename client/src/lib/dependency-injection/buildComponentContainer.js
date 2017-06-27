@@ -1,5 +1,19 @@
 import buildBaseContainer from './buildBaseContainer';
 
+/**
+ * Creates a display name for a final composed component given all
+ * the names of the mutations that affected it.
+ * e.g. my-transformation(TextField)
+ * @param original The original registered component
+ * @param transforms The list of transformation names that modified the component
+ */
+const createDisplayName = (original, transforms) => {
+  const componentName = (original.displayName || original.name || 'Component');
+  const names = [componentName, ...transforms];
+
+  return names.reduce((acc, curr) => `${curr}(${acc})`);
+};
+
 const buildComponentContainer = (base = buildBaseContainer()) => ({
   ...base,
 
@@ -36,6 +50,21 @@ const buildComponentContainer = (base = buildBaseContainer()) => ({
       this.customise({ name, ...priorities, displayName }, key, wrapper);
     };
   },
+
+  /**
+   * Creates a factory method for a service, incorporating all the given middleware.
+   * @param {mixed} service
+   * @param {array} middlewareMatches
+   * @returns {function}
+   */
+  getFactory(service, middlewareMatches) {
+    const factory = base.getFactory.call(this, service, middlewareMatches);
+    const names = middlewareMatches.map(middleware => middleware.displayName || middleware.name);
+    factory.displayName = createDisplayName(service, names);
+
+    return factory;
+  },
+
 });
 
 export default buildComponentContainer;

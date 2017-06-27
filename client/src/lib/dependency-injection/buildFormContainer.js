@@ -1,4 +1,5 @@
 import buildBaseContainer from './buildBaseContainer';
+import SchemaStateManager from './SchemaStateManager';
 
 const SCHEMA_MIDDLEWARE_SERVICE = 'FormSchemaMiddleware';
 const VALIDATION_MIDDLEWARE_SERVICE = 'FormValidationMiddleware';
@@ -10,8 +11,8 @@ const buildFormContainer = (base = buildBaseContainer()) => ({
    * The two middleware services are loaded by default
    */
   services: {
-    [SCHEMA_MIDDLEWARE_SERVICE]: (state) => state,
-    [VALIDATION_MIDDLEWARE_SERVICE]: (values, errors) => errors,
+    SCHEMA_MIDDLEWARE_SERVICE,
+    VALIDATION_MIDDLEWARE_SERVICE
   },
 
   /**
@@ -65,6 +66,43 @@ const buildFormContainer = (base = buildBaseContainer()) => ({
       addValidation: factory(VALIDATION_MIDDLEWARE_SERVICE),
     };
   },
+
+  getFactory(service, middlewareMatches) {
+    const factories = middlewareMatches.map(middleware => middleware.factory);
+    if (service === SCHEMA_MIDDLEWARE_SERVICE) {
+      return this.getSchemaReducer(factories);
+    } else if (service === VALIDATION_MIDDLEWARE_SERVICE) {
+      return this.getValidationReducer(factories);
+    } else {
+      throw new Error(`Invalid service for form injector: ${service}`);
+    }
+  },
+
+  getSchemaReducer(factories) {
+    return (values, schemaState) => {
+      return factories.reduce((currentState, currentFactory) => {
+        const manager = new SchemaStateManager(currentState);
+        const modifications = currentFactory(values, manager);
+        return {
+          ...currentState,
+          ...modifications,
+        };
+      }, schemaState);
+    };
+  },
+
+  getValidationReducer(factories) {
+    return (values, errors = {}) => {
+      return factories.reduce((currentErrors, currentFactory) => {
+        const modifications = currentFactory(values, errors);
+        return {
+          ...currentErrors,
+          ...modifications,
+        };
+      }, errors);
+    };
+  },
+
 
 });
 

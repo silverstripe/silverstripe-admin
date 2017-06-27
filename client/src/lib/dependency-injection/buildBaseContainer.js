@@ -1,4 +1,5 @@
-import MiddlewareRegistry from './MiddlewareRegistry';
+import MiddlewareRegistry, { GLOBAL_CONTEXT } from './MiddlewareRegistry';
+import { compose } from 'redux';
 
 const buildBaseContainer = () => ({
   /**
@@ -18,6 +19,8 @@ const buildBaseContainer = () => ({
    * @type {object}
    */
   factories: {},
+
+  factoryCache: {},
 
   /**
    * When true, DI is blocked
@@ -89,16 +92,18 @@ const buildBaseContainer = () => ({
       .reduce((factories, [key, service]) => {
         const middleware = this.middlewareRegistries[key];
         if (middleware) {
-          middleware
-            .setService(service)
-            .sort();
+          middleware.sort();
 
           return {
             ...factories,
-            [key]: (context) => (
-              middleware
-                .getFactory(context)
-            ),
+            [key]: (context = GLOBAL_CONTEXT) => {
+              const cacheKey = `${key}__${context}`;
+              if (!this.factoryCache[cacheKey]) {
+                const matches = middleware.getMatchesForContext(context);
+                this.factoryCache[cacheKey] = this.getFactory(service, matches);
+              }
+              return this.factoryCache[cacheKey];
+            },
           };
         }
         return {
@@ -191,6 +196,17 @@ const buildBaseContainer = () => ({
     return (key, wrapper) => {
       this.customise({ name, ...priorities }, key, wrapper);
     };
+  },
+
+  /**
+   * Creates a factory method for a service, incorporating all the given middleware.
+   * @param {mixed} service
+   * @param {array} middlewareMatches
+   * @returns {function}
+   */
+  getFactory(service, middlewareMatches) {
+    const middlewares = middlewareMatches.map(m => m.factory);
+    return compose(...middlewares)(service);
   },
 });
 
