@@ -43,12 +43,6 @@ function appBoot() {
   // ReducerRegister.add('unsavedForms', UnsavedFormsReducer);
   ReducerRegister.add('mobileMenu', MobileMenuReducer);
 
-  // Force this to the end of the execution queue to ensure it's last.
-  window.setTimeout(() => {
-    registerComponents();
-    Injector.load();
-  }, 0);
-
   const rootReducer = combineReducers(ReducerRegister.getAll());
   const middleware = [
     thunkMiddleware,
