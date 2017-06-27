@@ -15,7 +15,7 @@ describe('Container', () => {
   it('should load with react service by default', () => {
     const container = require('../Container').default;
 
-    expect(container.react).toBe('registered react');
+    expect(container.component).toBe('registered component');
   });
 
   it('should be a singleton', () => {
