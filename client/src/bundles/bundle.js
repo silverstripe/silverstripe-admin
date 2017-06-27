@@ -50,6 +50,7 @@ require('expose-loader?Router!lib/Router');
 require('expose-loader?TinyMCEActionRegistrar!lib/TinyMCEActionRegistrar');
 require('expose-loader?ShortcodeSerialiser!lib/ShortcodeSerialiser');
 require('expose-loader?formatWrittenNumber!lib/formatWrittenNumber');
+require('expose-loader?MobileMenuToggle!components/MobileMenuToggle/MobileMenuToggle');
 
 
 // Legacy CMS
@@ -62,6 +63,7 @@ require('../legacy/LeftAndMain.Tree.js');
 require('../legacy/LeftAndMain.Content.js');
 require('../legacy/LeftAndMain.EditForm.js');
 require('../legacy/LeftAndMain.Menu.js');
+require('../legacy/LeftAndMain.MobileMenuToggle.js');
 require('../legacy/LeftAndMain.Preview.js');
 require('../legacy/LeftAndMain.BatchActions.js');
 require('../legacy/LeftAndMain.FieldHelp.js');

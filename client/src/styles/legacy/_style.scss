@@ -87,10 +87,11 @@ body.cms {
 // }
 
 .cms-content-header { // Todo: should add .container-fluid to markup or extend .container-fluid
+  position: relative;
   padding-left: $panel-padding-x;
   padding-right: $panel-padding-x;
   min-width: 100%;
-  z-index: 60;
+  z-index: $zindex-cms-content-header;
   min-height: $toolbar-total-height;
   background: {
     image: url("../images/textures/cms_content_header.png");
@@ -254,6 +255,11 @@ body.cms {
  * CMS Breadcrumbs
  * ----------------------------------------------------------------- */
 .breadcrumbs-wrapper {
+
+  @include media-breakpoint-down(sm) {
+    margin-left: $toolbar-total-height;
+  }
+
 	.crumb,
 	.sep {
 		font-size: $font-size-xs;
@@ -786,7 +792,7 @@ body.cms {
 
 .cms-content-actions {
 	margin: 0;
-	z-index: 999;
+	z-index: $zindex-cms-content-actions;
 	border-top: 1px solid $border-color;
 	height: $toolbar-total-height;
 	min-height: $toolbar-total-height;

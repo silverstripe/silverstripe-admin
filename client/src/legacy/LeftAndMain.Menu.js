@@ -12,7 +12,7 @@ $.entwine('ss', function($){
    *
    * Example:
    *
-   * <ul class="cms-menu-list">
+   * <ul class="cms-menu__list">
    *  <li><a href="#">Item 1</a></li>
    *  <li class="current opened">
    *  <a href="#">Item 2</a>
@@ -27,9 +27,10 @@ $.entwine('ss', function($){
    * - 'select': Fires when a menu item is selected (on any level).
    */
   $('.cms-panel.cms-menu').entwine({
+
     togglePanel: function(doExpand, silent, doSaveState) {
-      //apply or unapply the flyout formatting, should only apply to cms-menu-list when the current collapsed panal is the cms menu.
-      $('.cms-menu-list').children('li').each(function(){
+      //apply or unapply the flyout formatting, should only apply to cms-menu__list when the current collapsed panal is the cms menu.
+      $('.cms-menu__list').children('li').each(function(){
         if (doExpand) { //expand
           $(this).children('ul').each(function() {
             $(this).removeClass('collapsed-flyout');
@@ -58,7 +59,7 @@ $.entwine('ss', function($){
         $('.collapsed').find('li').show();
 
         //hide all the flyout-indicator
-        $('.cms-menu-list').find('.child-flyout-indicator').hide();
+        $('.cms-menu__list').find('.child-flyout-indicator').hide();
       } else {  //collapse
         //hide the flyout only if it is not the current section
         $('.collapsed-flyout').find('li').each(function() {
@@ -67,7 +68,7 @@ $.entwine('ss', function($){
         });
 
         //show all the flyout-indicators
-        var par = $('.cms-menu-list ul.collapsed-flyout').parent();
+        var par = $('.cms-menu__list ul.collapsed-flyout').parent();
         if (par.children('.child-flyout-indicator').length === 0) par.append('<span class="child-flyout-indicator"></span>').fadeIn();
         par.children('.child-flyout-indicator').fadeIn();
       }
@@ -158,7 +159,7 @@ $.entwine('ss', function($){
     }
   });
 
-  $('.cms-menu-list').entwine({
+  $('.cms-menu__list').entwine({
     onmatch: function() {
       var self = this;
 
@@ -236,7 +237,7 @@ $.entwine('ss', function($){
   });
 
   /** Toggle the flyout panel to appear/disappear when mouse over */
-  $('.cms-menu-list li').entwine({
+  $('.cms-menu__list li').entwine({
     toggleFlyout: function(bool) {
       var fly = $(this);
 
@@ -282,16 +283,16 @@ $.entwine('ss', function($){
     }
   });
   //slight delay to prevent flyout closing from "sloppy mouse movement"
-  $('.cms-menu-list li').hoverIntent(function(){$(this).toggleFlyout(true);},function(){$(this).toggleFlyout(false);});
+  $('.cms-menu__list li').hoverIntent(function(){$(this).toggleFlyout(true);},function(){$(this).toggleFlyout(false);});
 
-  $('.cms-menu-list .toggle').entwine({
+  $('.cms-menu__list .toggle').entwine({
     onclick: function(e) {
       e.preventDefault();
       $(this).toogleFlyout(true);
     }
   });
 
-  $('.cms-menu-list li').entwine({
+  $('.cms-menu__list li').entwine({
     onmatch: function() {
       if(this.find('ul').length) {
         this.find('a:first').append('<span class="toggle-children"><span class="toggle-children-icon"></span></span>');
@@ -341,13 +342,13 @@ $.entwine('ss', function($){
     }
   });
 
-  $('.cms-menu-list *').entwine({
+  $('.cms-menu__list *').entwine({
     getMenu: function() {
-      return this.parents('.cms-menu-list:first');
+      return this.parents('.cms-menu__list:first');
     }
   });
 
-  $('.cms-menu-list li *').entwine({
+  $('.cms-menu__list li *').entwine({
     getMenuItem: function() {
       return this.parents('li:first');
     }
@@ -356,7 +357,7 @@ $.entwine('ss', function($){
   /**
    * Both primary and secondary nav.
    */
-  $('.cms-menu-list li a').entwine({
+  $('.cms-menu__list li a').entwine({
     onclick: function(e) {
       // Only catch left clicks, in order to allow opening in tabs.
       // Ignore external links, fallback to standard link behaviour
@@ -387,7 +388,7 @@ $.entwine('ss', function($){
     }
   });
 
-  $('.cms-menu-list li .toggle-children').entwine({
+  $('.cms-menu__list li .toggle-children').entwine({
     onclick: function(e) {
       var li = this.closest('li');
       li.toggle();
@@ -398,7 +399,7 @@ $.entwine('ss', function($){
   $('.cms .profile-link').entwine({
     onclick: function() {
       $('.cms-container').loadPanel(this.attr('href'));
-      $('.cms-menu-list li').removeClass('current').close();
+      $('.cms-menu__list li').removeClass('current').close();
       return false;
     }
   });

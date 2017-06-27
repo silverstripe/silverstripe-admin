@@ -1,0 +1,638 @@
+/**
+ * Styles for the left hand side menu and header for the admin panels.
+ *
+ * Take into consideration CSS selector performance.
+ *
+ * @package framework
+ * @subpackage admin
+ */
+
+.cms-menu {
+  z-index: $zindex-menu;
+  background: $color-theme-bg;
+  // Add `!important` to ignore width set in `.cms-panel` entwine`
+  width: $cms-menu-width !important;
+
+  @include media-breakpoint-down(sm) {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: calc(100% - 59px) !important;
+    transition: left $transition-speed-fast ease-in;
+
+    &--open {
+      left: 0;
+      height: 100% !important;
+      box-shadow: 1px 0 10px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .cms-panel-content {
+    box-shadow: inset #C1C7CC -1px 0 0;
+    overflow-x: hidden;
+    height: calc(100% - #{$toolbar-total-height * 3}) !important; // account for logo, logout and south bar
+  }
+
+  @include media-breakpoint-up(md) {
+    &.collapsed {
+      width: $cms-menu-width-collapsed !important; // Using important because JavaScript is overriding this value
+      cursor: auto;
+      z-index: 1000;
+
+      .cms-panel-header {
+        width: 30px;
+
+        span {
+          display: none;
+        }
+      }
+
+      .cms-menu__list {
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        li {
+          width: 100%;
+          float: left;
+
+          ul {
+            display: none;
+          }
+
+          a {
+            padding-left: 18px;
+            padding-right: 18px;
+          }
+        }
+      }
+
+      span.text {
+        display: none;
+      }
+
+      .cms-sitename {
+
+        .cms-sitename__link {
+          left: calc(50% - 12px);
+        }
+
+        .cms-sitename__title {
+          display: none;
+        }
+      }
+
+      .cms-login-status {
+
+        .cms-login-status__profile-link {
+          width: auto;
+
+          i {
+            padding-left: 8px;
+          }
+        }
+
+        .cms-login-status__logout-link {
+          display: none;
+        }
+      }
+
+      .sticky-toggle {
+        background-position: 12px center;
+        width: 40px;
+      }
+    }
+  }
+
+  .cms-panel-toggle {
+    height: $toolbar-total-height;
+    background-color: $color-theme-bg;
+    box-shadow: inset $color-separator -1px 0 0;
+    position: relative;
+
+    @include media-breakpoint-down(sm) {
+      display: none;
+    }
+
+    a,
+    a.toggle-expand {
+      float: right;
+      width: 50%;
+      padding-top: 14px;
+      padding-bottom: 14px;
+    }
+  }
+
+  .sticky-toggle {
+    float: left;
+    width: 52px;
+    height: 52px;
+    margin: 0;
+    padding: $grid-x;
+    text-indent: -999em;
+    background-color: transparent;
+    background-image: url("../images/sticky-toggle-off.png");
+    background-repeat: no-repeat;
+    background-position: 16px center;
+    border: 0;
+    transition: position $transition-speed-fast;
+    margin-top: -$spacer-xs;
+    margin-left: -$grid-gutter-width-half;
+    z-index: 2;
+
+    &:hover {
+      box-shadow: 0 0 0;
+
+      // When the button is hovered, show the status indicator
+      + .sticky-status-indicator {
+        display: block;
+      }
+    }
+
+    &.active {
+      background-image: url("../images/sticky-toggle-on.png");
+    }
+
+    .ui-button-text {
+      padding: 0;
+    }
+  }
+
+  .sticky-status-indicator {
+    display: none;
+    position: absolute;
+    top: 3px;
+    left: 10px;
+    font-size: 9px;
+    color: #555d60;
+    text-transform: uppercase;
+  }
+
+  // Sub menu (will also be available for profile)
+  .toggle-children {
+    display: inline-block;
+    float: right;
+    width: 20px;
+    height: 100%;
+    cursor: pointer;
+    padding-top: 17px;
+  }
+
+  .child-flyout-indicator,
+  .toggle-children-icon {
+    background-image: none;
+    border-color: darken(#ccdce6, 25%);
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    margin-top: 3px;
+    right: 8px;
+    z-index: 2;
+    -ms-transform: rotate(-45deg); /* IE 9 */
+    -webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */
+    transform: rotate(-45deg);
+    // display: none;  /* To be shown by javascript, see LeftAndMain.Panel.js */
+  }
+
+  .opened .toggle-children-icon {
+    margin-top: 1px;
+  }
+
+  @include media-breakpoint-up(md) {
+    &.collapsed .child-flyout-indicator {
+      margin-top: -29px;
+    }
+  }
+}
+
+.cms-menu-mobile-overlay {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.05);
+  z-index: $zindex-cms-content-header + 1;
+  border: 0;
+}
+
+.cms-menu + .cms-menu-mobile-overlay {
+  display: none;
+}
+
+.cms-menu.cms-menu--open + .cms-menu-mobile-overlay {
+  @include media-breakpoint-down(sm) {
+    display: block;
+  }
+}
+
+.cms-menu__header {
+  position: relative !important;
+  top: auto !important;
+  height: auto !important;		// Required for JLayout
+  padding: 0;
+  line-height: 24px;
+  background-color: $color-brand-bg;
+  min-height: $toolbar-total-height*2;
+
+  span {
+    color: $color-text-light;
+    display: block;
+    padding-left: 26px;
+
+    a {
+      color: white;
+      display: inline;
+    }
+  }
+}
+
+.cms-sitename {
+  border-bottom: 1px solid darken($color-brand-bg, 4%);
+  overflow: hidden;
+  padding: $grid-y*1.5 8px;
+  position: relative;
+  vertical-align: middle;
+  transition: padding $transition-speed-fast;
+  min-height: $toolbar-total-height;
+  transition: padding $transition-speed-fast;
+  font-weight: bold;
+  line-height: 16px;
+  padding: 6px 0;
+
+  @include media-breakpoint-down(sm) {
+    text-align: center;
+  }
+
+  .cms-sitename__link {
+    position: absolute;
+    top: $grid-y;
+    bottom: $grid-y;
+    display: block;
+    width: 24px;
+    left: 12px;
+    background: $application-logo-small no-repeat center center;
+    text-indent: -9999em;
+    padding: 0 1px;
+  }
+
+  .cms-sitename__title {
+    color: $white;
+    display: block;
+    margin: 12px 1em 12px 42px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    @include media-breakpoint-down(sm) {
+      margin-left: $toolbar-total-height;
+      margin-right: $toolbar-total-height;
+    }
+  }
+}
+
+.cms-login-status {
+  position: relative;
+  line-height: 16px;
+  font-size: $font-size-sm;
+  transition: padding $transition-speed-fast;
+  min-height: $toolbar-total-height;
+
+  .cms-login-status__logout-link {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 14px;
+    width: 50px;
+    height: 100%;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover,
+    &:focus {
+      opacity: 1;
+      text-decoration: none;
+    }
+
+  }
+
+  .cms-login-status__profile-link {
+    position: absolute;
+    left: 0;
+    right: 50px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 8px;
+    color: $white;
+
+    i {
+      position: absolute;
+      left: 13px;
+      font-size: 18px;
+      vertical-align: middle;
+      margin-right: 6px;
+      padding-left: 0;
+      transition: padding $transition-speed-fast;
+
+      @include media-breakpoint-down(sm) {
+        left: 18px;
+      }
+    }
+
+    span {
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-left: 29px;
+
+      @include media-breakpoint-down(sm) {
+        padding-left: 36px;
+      }
+    }
+  }
+}
+
+// SS4 menu font icons
+.menu__icon {
+  position: absolute;
+  margin-top: -1px;
+  left: 13px;
+  font-size: $font-size-lg;
+  transition: all $transition-speed-fast;
+  color: darken($base-menu-bg, 44%);
+
+  @include media-breakpoint-up(md) {
+    .collapsed & {
+      left: 22px;
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    left: 20px;
+  }
+}
+
+.cms-menu__list {
+  margin: 0;
+  list-style-type: none;
+  padding-left: 0;
+  box-shadow: inset $color-separator -1px 0 0;
+
+  a:focus,
+  a:active {
+    text-decoration: none;
+  }
+
+  li {
+
+    a {
+      display: block;
+      min-height: 50px;
+      color: $color-text-default;
+      padding: (2 * $grid-y) 5px (2 * $grid-y) 8px;
+      background-color: $base-menu-bg;
+      cursor: pointer;
+      position: relative;
+      transition: padding $transition-speed-fast;
+      text-decoration: none;
+      box-shadow: inset $color-separator -1px 0 0;
+
+      &:hover {
+        text-decoration: none;
+        background-color: $base-menu;
+        color: darken($color-text-dark, 5%);
+      }
+
+      &:focus,
+      &:active {
+        background-color: $base-menu;
+        text-decoration: none;
+      }
+
+      // External links
+      &[href^="//"],
+      &[href^="http://"],
+      &[href^="https://"] {
+        .text::after {
+          content: "@";
+          position: relative;
+          top: 2px;
+          font-family: silverstripe;
+          display: inline-block;
+          opacity: 0;
+          font-size: 10px;
+          margin-left: 6px;
+          color: darken($base-menu-bg, 44%);
+          transition: opacity $transition-speed-fast ease-in-out;
+        }
+
+        &:hover .text::after {
+          opacity: 1;
+        }
+      }
+
+      .text {
+        display: block;
+        margin-left: 30px;
+
+        @include media-breakpoint-down(sm) {
+          margin-left: 38px;
+        }
+      }
+
+      span.toggle-children {
+        top: 0;
+      }
+
+    }
+
+    &.current { //need to apply current stlye to flyout also (at least line height)
+
+      &>a {
+        background-color: $base-menu;
+
+        .toggle-children {
+          .toggle-children-icon {
+            @extend .icon-sprites-32x32;
+            @include sprite($sprites-32x32-menu-arrow-down);
+          }
+        }
+      }
+
+      a {
+        background-color: $base-menu;
+      }
+
+      ul {
+        border-top: 0;
+        display: block;
+      }
+
+      li {
+        background-color: $base-menu-bg;
+
+        a {
+          &.current,
+          &:hover {
+            background-color: $base-menu;
+          }
+        }
+
+      }
+    }
+
+    // Has sub menu
+    &.children {
+
+      .no-icon.text {
+        margin-left: 30px;
+      }
+
+      // Sub menu
+      ul li a {
+        font-size: 12px;
+        line-height: 18px;
+        height: 18px;
+        padding-top: 11px;
+        padding-bottom: 11px;
+        color: lighten($color-text-default, 10%);
+        background-color: $base-menu-bg;
+
+        span.text {
+          margin-left: 23px;
+        }
+      }
+
+      &.current {
+        > a {
+          background-color: transparent;
+
+          &:hover {
+            background-color: lighten($base-menu, 3%);
+          }
+        }
+      }
+
+      &.opened {
+        a:hover {
+          background-color: lighten($base-menu, 3%);
+        }
+
+        .current a {
+          background-color: $base-menu;
+        }
+
+        .opened .toggle-children-icon {
+          transform: rotate(45deg);
+        }
+      }
+    }
+
+    /* Style applied to the menu flyout only when the collapsed setting */
+    .collapsed-flyout {
+      left: 59px;
+      margin-top: -52px;
+      position: fixed;
+      width: 160px;
+      z-index: 1;
+      display: none;
+
+      .icon {
+        display: none;
+      }
+
+      li {
+        a {
+          background: $base-menu-bg;
+          box-shadow: none;
+          padding: 10px 0;
+          height: 40px;
+          line-height: 18px;
+
+          &:hover,
+          &:active {
+            background: lighten($base-menu, 3%);
+          }
+        }
+
+        &.children a {
+          font-size: 13px;
+          height: 18px;
+          cursor: default;
+        }
+
+        &.current {
+          a {
+            background-color: $base-menu;
+          }
+
+          &.children a {
+            background-color: $base-menu-bg;
+          }
+        }
+      }
+    }
+  }
+
+  &.collapsed {
+
+    .toggle-children {
+      display: none;
+    }
+
+    .opened {
+      ul.collapsed-flyout {
+        border-radius: 0 2px 2px 0 ;
+        border: 1px solid #d2d5d8;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+        li {
+          &.clone {
+            a {
+              padding: 15px 0 15px 70px;
+              margin-left: -60px;
+              margin-right: 0;
+              box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+              span.text {
+                margin-left: -10px;
+              }
+            }
+          }
+
+          a span.text {
+            display: block;
+            margin-left: 0;
+          }
+        }
+      }
+
+      .child-flyout-indicator {
+        position: fixed;
+        left: 196px;
+        transform: rotate(45deg);
+        margin-top: -33px;
+      }
+    }
+  }
+}
+
+/**
+ * Mobile menu toggle
+ */
+.cms-mobile-menu-toggle-wrapper {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: $zindex-menu + 1;
+
+  @include media-breakpoint-down(sm) {
+    display: block;
+  }
+}
