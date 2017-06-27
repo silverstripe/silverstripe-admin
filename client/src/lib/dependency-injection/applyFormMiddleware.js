@@ -3,7 +3,7 @@ import getIn from 'redux-form/lib/structure/plain/getIn';
 import setIn from 'redux-form/lib/structure/plain/setIn';
 import SchemaStateManager from './SchemaStateManager';
 
-const applyFormMiddleware = (reducer) => (state, action) => {
+const applyFormMiddleware = (reducer) => () => (state, action) => {
   const reducedState = reducer(state, action);
   if (!action.meta || !action.meta.form) {
     return reducedState;

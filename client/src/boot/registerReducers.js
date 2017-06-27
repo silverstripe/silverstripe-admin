@@ -12,12 +12,10 @@ import MobileMenuReducer from 'state/mobileMenu/MobileMenuReducer';
 // import UnsavedFormsReducer from 'state/unsavedForms/UnsavedFormsReducer';
 
 export default (extra = {}) => {
-  const FormReducer = applyFormMiddleware(
-    combineReducers({
-      formState: ReduxFormReducer,
-      formSchemas: SchemaReducer,
-    })
-  );
+  const FormReducer = combineReducers({
+    formState: ReduxFormReducer,
+    formSchemas: SchemaReducer,
+  });
 
   Injector.reducer.registerMany({
     config: ConfigReducer,
@@ -30,5 +28,9 @@ export default (extra = {}) => {
     // @todo - Restore this once we address https://github.com/silverstripe/silverstripe-admin/issues/90
     // unsavedForms: UnsavedFormsReducer,
     ...extra,
+  });
+
+  Injector.transform('admin', (updater) => {
+    updater.reducer('form', applyFormMiddleware);
   });
 };
