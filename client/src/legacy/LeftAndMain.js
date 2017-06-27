@@ -5,7 +5,6 @@ import $ from 'jQuery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import IframeDialog from 'components/IframeDialog/IframeDialog';
-import MobileMenuToggle from 'components/MobileMenuToggle/MobileMenuToggle';
 
 require('../legacy/ssui.core.js');
 

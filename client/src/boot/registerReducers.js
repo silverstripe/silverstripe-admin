@@ -8,6 +8,7 @@ import RecordsReducer from 'state/records/RecordsReducer';
 import BreadcrumbsReducer from 'state/breadcrumbs/BreadcrumbsReducer';
 import TreeDropdownFieldReducer from 'state/treeDropdownField/TreeDropdownFieldReducer';
 import applyFormMiddleware from 'lib/dependency-injection/applyFormMiddleware';
+import MobileMenuReducer from 'state/mobileMenu/MobileMenuReducer';
 // import UnsavedFormsReducer from 'state/unsavedForms/UnsavedFormsReducer';
 
 export default (extra = {}) => {
@@ -25,6 +26,7 @@ export default (extra = {}) => {
     breadcrumbs: BreadcrumbsReducer,
     routing: routerReducer,
     treeDropdownField: TreeDropdownFieldReducer,
+    mobileMenu: MobileMenuReducer,
     // @todo - Restore this once we address https://github.com/silverstripe/silverstripe-admin/issues/90
     // unsavedForms: UnsavedFormsReducer,
     ...extra,

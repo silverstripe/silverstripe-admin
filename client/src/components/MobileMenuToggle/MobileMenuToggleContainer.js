@@ -1,4 +1,4 @@
-import * as mobileMenuActions from 'state/mobileMenu/MobileMenuActions';
+import { toggleMobileMenu } from 'state/mobileMenu/MobileMenuActions';
 import { connect } from 'react-redux';
 import MobileMenuToggle from './MobileMenuToggle';
 
@@ -8,7 +8,7 @@ export default connect(
   }),
   dispatch => ({
     onClick() {
-      dispatch(mobileMenuActions.toggleMobileMenu());
+      dispatch(toggleMobileMenu());
     },
   })
 )(MobileMenuToggle);
