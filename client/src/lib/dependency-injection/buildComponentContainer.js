@@ -57,10 +57,10 @@ const buildComponentContainer = (base = buildBaseContainer()) => ({
    * @param {array} middlewareMatches
    * @returns {function}
    */
-  getFactory(service, middlewareMatches) {
-    const factory = base.getFactory.call(this, service, middlewareMatches);
+  getFactory(key, middlewareMatches) {
+    const factory = base.getFactory.call(this, key, middlewareMatches);
     const names = middlewareMatches.map(middleware => middleware.displayName || middleware.name);
-    factory.displayName = createDisplayName(service, names);
+    factory.displayName = createDisplayName(this.services[key], names);
 
     return factory;
   },

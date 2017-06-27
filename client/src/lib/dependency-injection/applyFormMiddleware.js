@@ -11,7 +11,6 @@ const applyFormMiddleware = (reducer) => () => (state, action) => {
 
   const formName = action.meta.form;
   const formSchemaMiddleware = Injector.form.getSchema(formName);
-
   if (!formSchemaMiddleware) {
     return reducedState;
   }
@@ -31,7 +30,6 @@ const applyFormMiddleware = (reducer) => () => (state, action) => {
   let newState = {
     ...reducedState,
   };
-
   const updates = formSchemaMiddleware(formState.values, schemaState);
   newState = setIn(newState, `formSchemas.${schemaKey}.state`, {
     ...schemaState,

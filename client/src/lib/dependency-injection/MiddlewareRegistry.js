@@ -189,7 +189,7 @@ class MiddlewareRegistry {
    * @param {string} context
    * @returns {Array}
    */
-  getMatchesForContext(context) {
+  getMatchesForContext(context = GLOBAL_CONTEXT) {
     if (!this._contextCache[context]) {
       const requestedContext = context.split('.');
       this._contextCache[context] = this._middlewares.filter(middleware => (
@@ -204,4 +204,5 @@ class MiddlewareRegistry {
   }
 }
 
+export { GLOBAL_CONTEXT };
 export default MiddlewareRegistry;

@@ -2920,8 +2920,9 @@ var buildBaseContainer = function buildBaseContainer() {
             var cacheKey = key + '__' + context;
             if (!_this.factoryCache[cacheKey]) {
               var matches = middleware.getMatchesForContext(context);
-              _this.factoryCache[cacheKey] = _this.getFactory(service, matches);
+              _this.factoryCache[cacheKey] = _this.getFactory(key, matches);
             }
+
             return _this.factoryCache[cacheKey];
           }));
         }
@@ -2979,7 +2980,8 @@ var buildBaseContainer = function buildBaseContainer() {
         _this3.customise(_extends({ name: name }, priorities), key, wrapper);
       };
     },
-    getFactory: function getFactory(service, middlewareMatches) {
+    getFactory: function getFactory(key, middlewareMatches) {
+      var service = this.services[key];
       var middlewares = middlewareMatches.map(function (m) {
         return m.factory;
       });
@@ -13871,7 +13873,6 @@ var applyFormMiddleware = function applyFormMiddleware(reducer) {
 
     var formName = action.meta.form;
     var formSchemaMiddleware = _Injector2.default.form.getSchema(formName);
-
     if (!formSchemaMiddleware) {
       return reducedState;
     }
@@ -13891,7 +13892,6 @@ var applyFormMiddleware = function applyFormMiddleware(reducer) {
     var schema = reducedState.formSchemas[schemaKey];
     var schemaState = schema.state;
     var newState = _extends({}, reducedState);
-
     var updates = formSchemaMiddleware(formState.values, schemaState);
     newState = (0, _setIn2.default)(newState, 'formSchemas.' + schemaKey + '.state', _extends({}, schemaState, updates));
 
@@ -13961,12 +13961,12 @@ var buildComponentContainer = function buildComponentContainer() {
         _this.customise(_extends({ name: name }, priorities, { displayName: displayName }), key, wrapper);
       };
     },
-    getFactory: function getFactory(service, middlewareMatches) {
-      var factory = base.getFactory.call(this, service, middlewareMatches);
+    getFactory: function getFactory(key, middlewareMatches) {
+      var factory = base.getFactory.call(this, key, middlewareMatches);
       var names = middlewareMatches.map(function (middleware) {
         return middleware.displayName || middleware.name;
       });
-      factory.displayName = createDisplayName(service, names);
+      factory.displayName = createDisplayName(this.services[key], names);
 
       return factory;
     }
@@ -13999,16 +13999,17 @@ var _SchemaStateManager2 = _interopRequireDefault(_SchemaStateManager);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var SCHEMA_MIDDLEWARE_SERVICE = 'FormSchemaMiddleware';
 var VALIDATION_MIDDLEWARE_SERVICE = 'FormValidationMiddleware';
 
 var buildFormContainer = function buildFormContainer() {
+  var _services;
+
   var base = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (0, _buildBaseContainer2.default)();
   return _extends({}, base, {
-    services: {
-      SCHEMA_MIDDLEWARE_SERVICE: SCHEMA_MIDDLEWARE_SERVICE,
-      VALIDATION_MIDDLEWARE_SERVICE: VALIDATION_MIDDLEWARE_SERVICE
-    },
+    services: (_services = {}, _defineProperty(_services, SCHEMA_MIDDLEWARE_SERVICE, function () {}), _defineProperty(_services, VALIDATION_MIDDLEWARE_SERVICE, function () {}), _services),
 
     getSchema: function getSchema(context) {
       var _base$get;
@@ -14042,16 +14043,16 @@ var buildFormContainer = function buildFormContainer() {
         addValidation: factory(VALIDATION_MIDDLEWARE_SERVICE)
       };
     },
-    getFactory: function getFactory(service, middlewareMatches) {
+    getFactory: function getFactory(key, middlewareMatches) {
       var factories = middlewareMatches.map(function (middleware) {
         return middleware.factory;
       });
-      if (service === SCHEMA_MIDDLEWARE_SERVICE) {
+      if (key === SCHEMA_MIDDLEWARE_SERVICE) {
         return this.getSchemaReducer(factories);
-      } else if (service === VALIDATION_MIDDLEWARE_SERVICE) {
+      } else if (key === VALIDATION_MIDDLEWARE_SERVICE) {
         return this.getValidationReducer(factories);
       } else {
-        throw new Error('Invalid service for form injector: ' + service);
+        throw new Error('Invalid service for form injector: ' + key);
       }
     },
     getSchemaReducer: function getSchemaReducer(factories) {

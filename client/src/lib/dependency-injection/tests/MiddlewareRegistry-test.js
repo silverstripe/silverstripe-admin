@@ -1,66 +1,14 @@
 /* global jest, jasmine, describe, beforeEach, it, pit, expect, process */
 
 import MiddlewareRegistry from '../MiddlewareRegistry';
-
+import { compose } from 'redux';
 
 describe('MiddlwareRegistry', () => {
   let registry = null;
   let service = null;
-
   beforeEach(() => {
     registry = new MiddlewareRegistry();
     service = (str) => str;
-    registry.setService(service);
-  });
-
-  describe('getFactory()', () => {
-    it('throws if no service is defined', () => {
-      registry.setService(null);
-      registry.add(
-        { name: 'test' },
-        () => {}
-      );
-      expect(() => registry.getFactory()).toThrow();
-    });
-
-    it('creates factories for contexts', () => {
-      const HOC1 = (original) => (str) => original(`${str}1`);
-      const HOC2 = (original) => (str) => original(`${str}2`);
-      const HOC3 = (original) => (str) => original(`${str}3`);
-      const HOCA = (original) => (str) => original(`${str}A`);
-      const HOCB = (original) => (str) => original(`${str}B`);
-      const HOCC = (original) => (str) => original(`${str}C`);
-
-      registry.add({ name: '1', before: '*' }, HOC1, ['Universe', '*', 'Mathematics']);
-      registry.add({ name: '2', after: '1' }, HOC2, ['Universe', 'World', 'Mathematics']);
-      registry.add({ name: '3', after: '*' }, HOC3, ['Universe', 'World', '*', 'Numbers']);
-
-      registry.add({ name: 'A', before: '*' }, HOCA, ['Universe', '*', 'Language']);
-      registry.add({ name: 'B', after: 'A' }, HOCB, ['Universe', 'World', 'Language']);
-      registry.add({ name: 'C', after: '*' }, HOCC, ['Universe', 'World', '*', 'Letters']);
-
-      registry.sort();
-
-      const numberFactory = registry.getFactory('Universe.World.Mathematics.Numbers');
-      const letterFactory = registry.getFactory('Universe.World.Language.Letters');
-
-      expect(numberFactory('Numbers_')).toBe('Numbers_123');
-      expect(letterFactory('Letters_')).toBe('Letters_ABC');
-    });
-
-    it('caches factories', () => {
-      spyOn(registry, 'getMatchesForContext').and.callThrough();
-
-      const HOC1 = (original) => (str) => original(`${str}1`);
-      registry.add({ name: '1', before: '*' }, HOC1, ['Universe']);
-
-      registry.getFactory('Universe.World.Mathematics.Numbers');
-      registry.getFactory('Universe.World.Language.Letters');
-      registry.getFactory('Universe.World.Mathematics.Numbers');
-      registry.getFactory('Universe.World.Mathematics.Numbers');
-
-      expect(registry.getMatchesForContext.calls.count()).toBe(2);
-    });
   });
 
   describe('add()', () => {
@@ -129,12 +77,23 @@ describe('MiddlwareRegistry', () => {
 
       registry.sort();
 
-      const factory = registry.getFactory();
+      const matches = registry.getMatchesForContext().map(m => m.factory);
+      const factory = compose(...matches)(service);
       expect(factory('DEFG')).toBe('ABCDEFG');
     });
   });
 
   describe('getMatchesForContext()', () => {
+    it('caches contexts', () => {
+      const HOC1 = (original) => (str) => original(`${str}1`);
+      registry.add({ name: '1', before: '*' }, HOC1, ['Universe']);
+      const matches = registry.getMatchesForContext('Universe.World.Mathematics.Numbers');
+      const matches2 = registry.getMatchesForContext('Universe.World.Mathematics.Numbers');
+      const matches3 = registry.getMatchesForContext('Universe.World.Mathematics.Numbers');
+      expect(matches2).toBe(matches);
+      expect(matches3).toBe(matches);
+    });
+
     it('matches contexts', () => {
       registry.add({ name: 'global' }, () => {});
       registry.add({ name: 'wellington' }, () => {}, ['Earth', 'Australasia', 'NZ', 'Wellington']);
@@ -186,9 +145,10 @@ describe('MiddlwareRegistry', () => {
 
       registry.sort();
 
-      const numberFactory = registry.getFactory('Universe.World.Mathematics.Numbers');
-      const letterFactory = registry.getFactory('Universe.World.Language.Letters');
-
+      const numberMatches = registry.getMatchesForContext('Universe.World.Mathematics.Numbers');
+      const letterMatches = registry.getMatchesForContext('Universe.World.Language.Letters');
+      const numberFactory = compose(...numberMatches.map(m => m.factory))(service);
+      const letterFactory = compose(...letterMatches.map(m => m.factory))(service);
       expect(numberFactory('test_')).toBe('test_1223C');
       expect(letterFactory('test_')).toBe('test_3ABBC');
     });
@@ -216,7 +176,8 @@ describe('MiddlwareRegistry', () => {
 
       registry.sort();
 
-      const factory = registry.getFactory();
+      const matches = registry.getMatchesForContext().map(m => m.factory);
+      const factory = compose(...matches)(service);
       expect(factory('RAINBOW')).toBe('RAINBOW_RED_ORANGE_YELLOW_GREEN_BLUE_INDIGO_VIOLET');
     });
   });

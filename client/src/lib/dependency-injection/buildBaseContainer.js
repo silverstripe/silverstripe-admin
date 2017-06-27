@@ -87,7 +87,6 @@ const buildBaseContainer = () => ({
    */
   load() {
     this.isProtected();
-
     this.factories = Object.entries(this.services)
       .reduce((factories, [key, service]) => {
         const middleware = this.middlewareRegistries[key];
@@ -100,8 +99,9 @@ const buildBaseContainer = () => ({
               const cacheKey = `${key}__${context}`;
               if (!this.factoryCache[cacheKey]) {
                 const matches = middleware.getMatchesForContext(context);
-                this.factoryCache[cacheKey] = this.getFactory(service, matches);
+                this.factoryCache[cacheKey] = this.getFactory(key, matches);
               }
+
               return this.factoryCache[cacheKey];
             },
           };
@@ -204,7 +204,8 @@ const buildBaseContainer = () => ({
    * @param {array} middlewareMatches
    * @returns {function}
    */
-  getFactory(service, middlewareMatches) {
+  getFactory(key, middlewareMatches) {
+    const service = this.services[key];
     const middlewares = middlewareMatches.map(m => m.factory);
     return compose(...middlewares)(service);
   },

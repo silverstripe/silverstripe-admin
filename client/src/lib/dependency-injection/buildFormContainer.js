@@ -11,8 +11,8 @@ const buildFormContainer = (base = buildBaseContainer()) => ({
    * The two middleware services are loaded by default
    */
   services: {
-    SCHEMA_MIDDLEWARE_SERVICE,
-    VALIDATION_MIDDLEWARE_SERVICE
+    [SCHEMA_MIDDLEWARE_SERVICE]: () => {},
+    [VALIDATION_MIDDLEWARE_SERVICE]: () => {},
   },
 
   /**
@@ -67,14 +67,14 @@ const buildFormContainer = (base = buildBaseContainer()) => ({
     };
   },
 
-  getFactory(service, middlewareMatches) {
+  getFactory(key, middlewareMatches) {
     const factories = middlewareMatches.map(middleware => middleware.factory);
-    if (service === SCHEMA_MIDDLEWARE_SERVICE) {
+    if (key === SCHEMA_MIDDLEWARE_SERVICE) {
       return this.getSchemaReducer(factories);
-    } else if (service === VALIDATION_MIDDLEWARE_SERVICE) {
+    } else if (key === VALIDATION_MIDDLEWARE_SERVICE) {
       return this.getValidationReducer(factories);
     } else {
-      throw new Error(`Invalid service for form injector: ${service}`);
+      throw new Error(`Invalid service for form injector: ${key}`);
     }
   },
 
