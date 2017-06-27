@@ -463,7 +463,7 @@ $.entwine('ss', function($){
    */
   $('.cms-edit-form [name="CanViewType"], ' +
     '.cms-edit-form [name="CanEditType"], ' +
-    '.cms-edit-form #CanCreateTopLevelType').entwine({
+    '.cms-edit-form [name="CanCreateTopLevelType"]').entwine({
     onmatch: function () {
       if (this.val() === 'OnlyTheseUsers') {
         if (this.is(':checked')) {
@@ -483,21 +483,29 @@ $.entwine('ss', function($){
     showList: function (instant) {
       const holder = this.closest('.field');
       const list = holder.next().filter('.listbox');
-
       holder.addClass('field--merge-below');
-      list[instant ? 'show' : 'slideDown'](() => {
-        // jquery adding overflow:hidden in hide, this will break listbox display
-        list.css('overflow','visible');
-      });
+      if (instant) {
+        list.show().css('overflow', 'visible');
+      } else {
+        list.slideDown(() => {
+          // jquery adding overflow:hidden in hide, this will break listbox display
+          list.css('overflow', 'visible');
+        });
+      }
     },
     hideList: function (instant) {
       const holder = this.closest('.field');
       const list = holder.next().filter('.listbox');
-
-      list[instant ? 'hide' : 'slideUp'](() => {
+      list.css('overflow', 'hidden');
+      if (instant) {
+        list.hide().css('display', 'none');
         holder.removeClass('field--merge-below');
-     }).css('overflow','hidden');
-    }
+      } else {
+        list.slideUp(() => {
+          holder.removeClass('field--merge-below');
+        });
+      }
+    },
   });
 
 });
