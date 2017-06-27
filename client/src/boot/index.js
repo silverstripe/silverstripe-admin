@@ -58,7 +58,7 @@ function appBoot() {
   const debugging = Config.get('debugging');
   let runMiddleware = applyMiddleware(...middleware);
 
-  if (process.env.NODE_ENV !== 'production' && debugging) {
+  if (debugging) {
     runMiddleware = applyDevtools(runMiddleware);
   }
 
