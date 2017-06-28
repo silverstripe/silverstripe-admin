@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import classNames from 'classnames';
+import classnames from 'classnames';
 
 class MobileMenuToggle extends Component {
 
@@ -18,7 +18,7 @@ class MobileMenuToggle extends Component {
   }
 
   render() {
-    const classes = classNames({
+    const classes = classnames({
       'cms-mobile-menu-toggle': true,
       'cms-mobile-menu-toggle--open': this.props.isOpen,
     });

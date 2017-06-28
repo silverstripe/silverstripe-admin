@@ -1,12 +1,12 @@
 /* global jest, jasmine, describe, beforeEach, it, pit, expect, process */
 
-jest.mock('../buildInjectorContainer', () => function mockInjector() {
-  return {
+jest.mock('../buildInjectorContainer',
+  () => () => ({
     register(arg) {
-      this[arg] = 'registered';
+      this[arg] = `registered ${arg}`;
     },
-  };
-});
+  })
+);
 jest.mock('../buildBaseContainer', () => () => 'base');
 jest.mock('../buildComponentContainer', () => () => 'component');
 jest.mock('../buildReducerContainer', () => () => 'reducer');
@@ -15,7 +15,7 @@ describe('Container', () => {
   it('should load with react service by default', () => {
     const container = require('../Container').default;
 
-    expect(container.component).toBe('registered');
+    expect(container.component).toBe('registered component');
   });
 
   it('should be a singleton', () => {
@@ -26,6 +26,6 @@ describe('Container', () => {
 
     container1.register('bob');
 
-    expect(container2.bob).toBe('registered');
+    expect(container2.bob).toBe('registered bob');
   });
 });

@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@silverstripe/webpack-config@^0.2.5":
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/@silverstripe/webpack-config/-/webpack-config-0.2.5.tgz#8efe913d712391185c75daac52e585182a984d70"
+"@silverstripe/webpack-config@^0.2.6":
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/@silverstripe/webpack-config/-/webpack-config-0.2.6.tgz#1919594b861bea4d0cd30868f1b4476fa266aa1f"
   dependencies:
     autoprefixer "^6.4.0"
     babel-core "^6.24.1"

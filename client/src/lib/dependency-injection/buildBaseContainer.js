@@ -25,11 +25,17 @@ const buildBaseContainer = () => ({
    */
   initialised: false,
 
+  isProtected() {
+    if (this.initialised) {
+      throw new Error('Cannot mutate DI container after it has been initialised');
+    }
+  },
+
   /**
    * Gets a dependency
    * @param {string} key
    * @param {string} context A dot-separated context specification
-   * @returns {XML} Component
+   * @returns {object} Component
    */
   get(key, context) {
     if (!this.initialised) {
@@ -55,9 +61,8 @@ const buildBaseContainer = () => ({
    *  previous state of composition
    */
   customise(meta, key, factory) {
-    if (this.initialised) {
-      throw new Error('Cannot mutate DI container after it has been initialised');
-    }
+    this.isProtected();
+
     const [serviceName, ...context] = key.split('.');
     let registry = this.middlewareRegistries[serviceName];
     if (!registry) {
@@ -78,9 +83,7 @@ const buildBaseContainer = () => ({
    * Resolve all of the middleware constraints and freeze the DI layer
    */
   load() {
-    if (this.initialised) {
-      throw new Error('Cannot mutate DI container after it has been initialised');
-    }
+    this.isProtected();
 
     this.factories = Object.entries(this.services)
       .reduce((factories, [key, service]) => {
@@ -116,9 +119,8 @@ const buildBaseContainer = () => ({
    * @param {boolean} force - Whether to force the given key to override an existing key
    */
   register(key, value, { force } = {}) {
-    if (this.initialised) {
-      throw new Error('Cannot mutate DI container after it has been initialised');
-    }
+    this.isProtected();
+
     if (this.services[key] && force !== true) {
       throw new Error(`
       Tried to register service ${key} more than once. This practice is discouraged. Consider
@@ -140,12 +142,11 @@ const buildBaseContainer = () => ({
    * @param {boolean} force - Whether to force the given key to override an existing key
    */
   registerMany(map, { force } = {}) {
-    if (this.initialised) {
-      throw new Error('Cannot mutate DI container after it has been initialised');
-    }
+    this.isProtected();
 
-    const existing = Object.keys(map).filter((service) => (
-      Object.keys(this.services).includes(service)
+    const mapKeys = Object.keys(map);
+    const existing = Object.keys(this.services).filter((service) => (
+      mapKeys.includes(service)
     ));
     if (existing.length && force !== true) {
       const list = existing.join(', ');
@@ -175,9 +176,8 @@ const buildBaseContainer = () => ({
    *  { before: 'some-transformation', after: 'some-other-transformation' }
    */
   transform(name, callback, priorities = {}) {
-    if (this.initialised) {
-      throw new Error('Cannot mutate DI container after it has been initialised');
-    }
+    this.isProtected();
+
     callback(this.createTransformer(name, priorities));
   },
 

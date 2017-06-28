@@ -1,7 +1,6 @@
 /* global jest, jasmine, describe, beforeEach, it, pit, expect, process */
 
 import buildInjectorContainer from '../buildInjectorContainer';
-buildInjectorContainer();
 
 describe('InjectorContainer', () => {
   let container = null;
