@@ -46,6 +46,13 @@ const inject = (dependencies, mapDependenciesToProps, getContext) => (Component)
           : dependencies.forEach((dep, index) => {
             props[dep] = resolved[index];
           });
+
+        if (!props || typeof props !== 'object') {
+          throw new Error(`
+            mapDepedenciesToProps parameter passed to inject()
+            should return an object that maps prop names to dependencies
+          `);
+        }
       }
       const newProps = {
         ...this.props,

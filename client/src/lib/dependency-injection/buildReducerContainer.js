@@ -11,9 +11,8 @@ const buildReducerContainer = (base = buildBaseContainer()) => ({
   store: null,
 
   setStore(store) {
-    if (this.initialised) {
-      throw new Error('Cannot mutate DI container after it has been initialised');
-    }
+    this.isProtected();
+
     this.store = store;
   },
 
@@ -28,9 +27,8 @@ const buildReducerContainer = (base = buildBaseContainer()) => ({
    *  previous state of composition
    */
   customise(meta, key, factory) {
-    if (this.initialised) {
-      throw new Error('Cannot mutate DI container after it has been initialised');
-    }
+    this.isProtected();
+
     let registry = this.middlewareRegistries[key];
     if (!registry) {
       registry = new MiddlewareRegistry();

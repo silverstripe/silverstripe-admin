@@ -13,6 +13,7 @@ describe('ReducerContainer', () => {
       services: {},
       factories: {},
       initialised: false,
+      isProtected: jest.fn(),
     });
     store = {
       getState: jest.fn(() => ({ name: 'global state' })),
@@ -21,9 +22,10 @@ describe('ReducerContainer', () => {
 
   describe('setStore()', () => {
     it('should throw an error after initialising', () => {
-      expect(() => container.setStore(store)).not.toThrow();
-      container.initialised = true;
-      expect(() => container.setStore(store)).toThrow();
+      expect(container.isProtected).not.toBeCalled();
+
+      container.setStore(store);
+      expect(container.isProtected).toBeCalled();
     });
   });
 
