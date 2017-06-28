@@ -173,9 +173,6 @@
 .font-icon-folder-add:before {
   content: "\53";
 }
-.font-icon-silverstripe:before {
-  content: "\4d";
-}
 .font-icon-thumbnails:before {
   content: "\57";
 }
@@ -275,9 +272,6 @@
 .font-icon-help-circled:before {
   content: "\3b";
 }
-.font-icon-block:before {
-  content: "\3c";
-}
 .font-icon-icon-enlarge:before {
   content: "\3d";
 }
@@ -289,4 +283,49 @@
 }
 .font-icon-external-link:before {
   content: "\40";
+}
+.font-icon-attention:before {
+  content: "\5b";
+}
+.font-icon-block:before {
+  content: "\3c";
+}
+.font-icon-up-circled:before {
+  content: "\5d";
+}
+.font-icon-clock:before {
+  content: "\5e";
+}
+.font-icon-spinner:before {
+  content: "\5f";
+}
+.font-icon-menu-campaigns:before {
+  content: "\60";
+}
+.font-icon-menu-files:before {
+  content: "\7b";
+}
+.font-icon-menu-help:before {
+  content: "\7c";
+}
+.font-icon-menu-modaladmin:before {
+  content: "\7d";
+}
+.font-icon-menu-pages:before {
+  content: "\7e";
+}
+.font-icon-menu-reports:before {
+  content: "\5c";
+}
+.font-icon-menu-security:before {
+  content: "\e000";
+}
+.font-icon-menu-settings:before {
+  content: "\e001";
+}
+.font-icon-sort:before {
+  content: "\e002";
+}
+.font-icon-silverstripe:before {
+  content: "\4d";
 }
