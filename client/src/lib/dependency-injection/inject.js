@@ -40,12 +40,14 @@ const inject = (dependencies, mapDependenciesToProps, getContext) => (Component)
       if (dependencies) {
         const resolved = dependencies.map(dep => this.context.injector.get(dep, context));
 
-        props = (mapDependenciesToProps)
-          ? mapDependenciesToProps(...resolved)
+        if (mapDependenciesToProps) {
+          props = mapDependenciesToProps(...resolved);
+        } else {
           // If no mapping function is given, mirror the prop names and dependency names
-          : dependencies.forEach((dep, index) => {
+          dependencies.forEach((dep, index) => {
             props[dep] = resolved[index];
           });
+        }
 
         if (!props || typeof props !== 'object') {
           throw new Error(`
