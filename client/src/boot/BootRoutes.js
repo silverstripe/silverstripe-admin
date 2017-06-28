@@ -13,6 +13,8 @@ import App from 'containers/App/App';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { ApolloProvider } from 'react-apollo';
 import i18n from 'i18n';
+import { isDirty } from 'redux-form';
+import getFormState from 'lib/getFormState';
 
 /**
  * Bootstraps routes
@@ -90,6 +92,9 @@ class BootRoutes {
       }),
       this.store
     );
+    history.listenBeforeUnload(this.handleBeforeUnload);
+    history.listenBefore(this.handleBeforeRoute);
+
     ReactDOM.render(
       <ApolloProvider store={this.store} client={this.client}>
         <ReactRouter
@@ -99,9 +104,6 @@ class BootRoutes {
       </ApolloProvider>,
       document.getElementsByClassName('cms-content')[0]
     );
-
-    history.listenBeforeUnload(this.handleBeforeUnload);
-    history.listenBefore(this.handleBeforeRoute);
   }
 
   /**
@@ -119,7 +121,7 @@ class BootRoutes {
           Press OK to continue, or Cancel to stay on the current page.`
       );
       // eslint-disable-next-line no-alert
-      if (!this.shouldConfirmBeforeRoute() || window.confirm(msg)) {
+      if (!this.shouldConfirmBeforeUnload() || window.confirm(msg)) {
         // eslint-disable-next-line no-param-reassign
         ctx.store = store;
         next();
@@ -185,37 +187,22 @@ class BootRoutes {
    */
   shouldConfirmBeforeUnload() {
     const state = this.store.getState();
-    const unsaveds = state.unsavedForms || {};
+    const forms = state.unsavedForms || [];
+    const schemas = state.form.formSchemas;
 
-    return this.shouldNotifyUnsavedChanges(Object.keys(unsaveds));
-  }
+    const changedForms = forms.filter((form) => {
+      const schema = Object.values(schemas).find(item => item.name === form.name);
 
-  /**
-   * Return `true` if the route the user is navigating away from contains forms
-   * with unsaved changes. Return `false` otherwise.
-   *
-   * @return {Boolean}
-   */
-  shouldConfirmBeforeRoute() {
-    const state = this.store.getState();
-    const unsaveds = state.unsavedForms || {};
-    const locationBeforeTransitions = state.routing.locationBeforeTransitions;
-    const pathname = locationBeforeTransitions && locationBeforeTransitions.pathname;
-    const schemaToCheck = Object.keys(unsaveds).find(form => unsaveds[form] === pathname);
+      const notify = schema && schema.state && schema.state.notifyUnsavedChanges;
 
-    return this.shouldNotifyUnsavedChanges([schemaToCheck]);
-  }
+      if (!notify) {
+        return false;
+      }
 
-  /**
-   * @param array
-   */
-  shouldNotifyUnsavedChanges(schemasToCheck) {
-    const state = this.store.getState();
+      return isDirty(form.name, getFormState)(state);
+    });
 
-    return schemasToCheck.filter((schema) => {
-      const schemaObj = state.schemas[schema];
-      return schemaObj && schemaObj.state && schemaObj.state.notifyUnsavedChanges;
-    }).length > 0;
+    return changedForms.length > 0;
   }
 
   handleBeforeUnload() {
@@ -223,17 +210,17 @@ class BootRoutes {
       return i18n._t('Admin.CONFIRMUNSAVEDSHORT', 'WARNING: Your changes have not been saved.');
     }
 
-    return null;
+    return undefined;
   }
 
   handleBeforeRoute() {
-    if (this.shouldConfirmBeforeRoute()) {
+    if (this.shouldConfirmBeforeUnload()) {
       return i18n._t('Admin.CONFIRMUNSAVED', `Are you sure you want to navigate away
           from this page?\n\nWARNING: Your changes have not been saved.\n\n
           Press OK to continue, or Cancel to stay on the current page.`);
     }
 
-    return null;
+    return undefined;
   }
 }
 

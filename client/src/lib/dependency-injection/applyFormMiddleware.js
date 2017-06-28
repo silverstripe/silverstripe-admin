@@ -36,7 +36,18 @@ const applyFormMiddleware = (reducer) => () => (state, action) => {
   const updates = formSchemaMiddleware(formState.values, manager);
   newState = setIn(newState, `formSchemas.${schemaKey}.state`, {
     ...schemaState,
-    ...updates,
+    fields: schemaState.fields.map((field) => {
+      const update = updates[field.name];
+
+      if (typeof update === 'undefined') {
+        return field;
+      }
+
+      return {
+        ...field,
+        value: update,
+      };
+    }),
   });
 
   return newState;
