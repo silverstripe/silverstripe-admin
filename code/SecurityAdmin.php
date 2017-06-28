@@ -203,9 +203,9 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
     public function memberimport()
     {
         Requirements::clear();
-        Requirements::javascript(FRAMEWORK_ADMIN_DIR . '/client/dist/js/vendor.js');
-        Requirements::javascript(ltrim(FRAMEWORK_ADMIN_DIR . '/client/dist/js/MemberImportForm.js', '/'));
-        Requirements::css(ltrim(FRAMEWORK_ADMIN_DIR . '/client/dist/styles/bundle.css', '/'));
+        Requirements::javascript('silverstripe/admin: client/dist/js/vendor.js');
+        Requirements::javascript('silverstripe/admin: client/dist/js/MemberImportForm.js');
+        Requirements::css('silverstripe/admin: client/dist/styles/bundle.css');
 
         return $this->renderWith('BlankPage', array(
             'Form' => $this->MemberImportForm()->forTemplate(),
@@ -235,9 +235,9 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
     public function groupimport()
     {
         Requirements::clear();
-        Requirements::javascript(FRAMEWORK_ADMIN_DIR . '/client/dist/js/vendor.js');
-        Requirements::javascript(ltrim(FRAMEWORK_ADMIN_DIR . '/client/dist/js/MemberImportForm.js', '/'));
-        Requirements::css(ltrim(FRAMEWORK_ADMIN_DIR . '/client/dist/styles/bundle.css', '/'));
+        Requirements::javascript('silverstripe/admin: client/dist/js/vendor.js');
+        Requirements::javascript('silverstripe/admin: client/dist/js/MemberImportForm.js');
+        Requirements::css('silverstripe/admin: client/dist/styles/bundle.css');
 
         return $this->renderWith('BlankPage', array(
             'Content' => ' ',

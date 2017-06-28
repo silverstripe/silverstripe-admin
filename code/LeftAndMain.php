@@ -19,6 +19,7 @@ use SilverStripe\Core\ClassInfo;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Convert;
 use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Core\Manifest\ModuleLoader;
 use SilverStripe\Dev\Deprecation;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
@@ -603,20 +604,21 @@ class LeftAndMain extends Controller implements PermissionProvider
             window.ss.config = " . $this->getCombinedClientConfig() . ";
         ");
 
-        Requirements::javascript(FRAMEWORK_ADMIN_DIR . '/client/dist/js/vendor.js');
-        Requirements::javascript(FRAMEWORK_ADMIN_DIR . '/client/dist/js/bundle.js');
-        Requirements::css(ltrim(FRAMEWORK_ADMIN_DIR . '/client/dist/styles/bundle.css', '/'));
+        Requirements::javascript('silverstripe/admin: client/dist/js/vendor.js');
+        Requirements::javascript('silverstripe/admin: client/dist/js/bundle.js');
+        Requirements::css('silverstripe/admin: client/dist/styles/bundle.css');
 
-        Requirements::add_i18n_javascript(FRAMEWORK_ADMIN_DIR . '/client/lang', false, true);
+        $module = ModuleLoader::getModule('silverstripe/admin');
+        Requirements::add_i18n_javascript($module->getRelativeResourcePath('client/lang'), false, true);
 
         if (LeftAndMain::config()->uninherited('session_keepalive_ping')) {
-            Requirements::javascript(FRAMEWORK_ADMIN_DIR . '/client/dist/js/LeftAndMain.Ping.js');
+            Requirements::javascript('silverstripe/admin: client/dist/js/LeftAndMain.Ping.js');
         }
 
         if (Director::isDev()) {
             // TODO Confuses jQuery.ondemand through document.write()
-            Requirements::javascript(ADMIN_THIRDPARTY_DIR . '/jquery-entwine/src/jquery.entwine.inspector.js');
-            Requirements::javascript(FRAMEWORK_ADMIN_DIR . '/client/dist/js/leaktools.js');
+            Requirements::javascript('silverstripe/admin: thirdparty/jquery-entwine/src/jquery.entwine.inspector.js');
+            Requirements::javascript('silverstripe/admin: client/dist/js/leaktools.js');
         }
 
         // Custom requirements
@@ -1518,7 +1520,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         $form->setActions(null);
 
         Requirements::clear();
-        Requirements::css(FRAMEWORK_ADMIN_DIR . '/dist/css/LeftAndMain_printable.css');
+        Requirements::css('silverstripe/admin: dist/css/LeftAndMain_printable.css');
         return array(
             "PrintForm" => $form
         );
@@ -1647,13 +1649,15 @@ class LeftAndMain extends Controller implements PermissionProvider
         $modules = array(
             'silverstripe/framework' => array(
                 'title' => 'Framework',
-                'versionFile' => FRAMEWORK_PATH . '/silverstripe_version',
+                'versionFile' => ModuleLoader::getModule('silverstripe/framework')
+                    ->getResourcePath('silverstripe_version'),
             )
         );
-        if (defined('CMS_PATH')) {
+        if (class_exists('SilverStripe\\CMS\\Model\\SiteTree')) {
             $modules['silverstripe/cms'] = array(
                 'title' => 'CMS',
-                'versionFile' => CMS_PATH . '/silverstripe_version',
+                'versionFile' => ModuleLoader::getModule('silverstripe/cms')
+                    ->getResourcePath('silverstripe_version'),
             );
         }
 

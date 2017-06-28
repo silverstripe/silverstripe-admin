@@ -76,9 +76,9 @@ class MemberImportForm extends Form
 
         parent::__construct($controller, $name, $fields, $actions, $validator);
 
-        Requirements::javascript(FRAMEWORK_ADMIN_DIR . '/client/dist/js/vendor.js');
-        Requirements::javascript(FRAMEWORK_ADMIN_DIR . '/client/dist/js/MemberImportForm.js');
-        Requirements::css(FRAMEWORK_ADMIN_DIR . '/client/dist/styles/bundle.css');
+        Requirements::javascript('silverstripe/admin:client/dist/js/vendor.js');
+        Requirements::javascript('silverstripe/admin:client/dist/js/MemberImportForm.js');
+        Requirements::css('silverstripe/admin:client/dist/styles/bundle.css');
 
         $this->addExtraClass('cms');
         $this->addExtraClass('import-form');
