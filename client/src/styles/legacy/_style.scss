@@ -135,6 +135,10 @@ body.cms {
       float: left;
       min-width: 24px; // Safari fix
     }
+
+    .view-controls .btn {
+      margin-right: -10px;
+    }
   }
 
   // Reset to default styles
