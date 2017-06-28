@@ -157,6 +157,8 @@ class MiddlewareRegistry {
   add(meta, factory, contextList) {
     validateMeta(meta);
 
+    // Invalidate the cache when new middlewares are added
+    this._contextCache = {};
     let context = contextList;
     if (!context || !context.length) {
       context = GLOBAL_CONTEXT;
@@ -199,10 +201,8 @@ class MiddlewareRegistry {
         ))
       ));
     }
-
     return this._contextCache[context];
   }
 }
-
 export { GLOBAL_CONTEXT };
 export default MiddlewareRegistry;
