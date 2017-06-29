@@ -67,7 +67,7 @@ class FormBuilderLoader extends Component {
       // we will reload the schema anyway when we mount again, this is here so that redux-form
       // doesn't preload previous data mistakenly. (since it only accepts initialised values)
       reduxDestroyForm(schemaUrl);
-      this.props.actions.schema.setSchema(schemaUrl, null);
+      this.props.actions.schema.setSchema(schemaUrl, null, this.props.identifier);
     }
   }
 
