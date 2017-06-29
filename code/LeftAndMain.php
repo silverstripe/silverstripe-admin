@@ -57,7 +57,7 @@ use SilverStripe\View\SSViewer;
  * If you are wanting to add more areas to the CMS, you can do it by subclassing LeftAndMain.
  *
  * This is essentially an abstract class which should be subclassed.
- * See {@link CMSMain} for a good example.
+ * See {@link SilverStripe\CMS\Controllers\CMSMain} for a good example.
  */
 class LeftAndMain extends Controller implements PermissionProvider
 {
@@ -85,7 +85,7 @@ class LeftAndMain extends Controller implements PermissionProvider
 
     /**
      * @config
-     * @var string Used by {@link AdminRootController} to augment Director route rules for sub-classes of LeftAndMain
+     * @var string Used by {@link SilverStripe\Admin\AdminRootController} to augment Director route rules for sub-classes of LeftAndMain
      */
     private static $url_rule = '/$Action/$ID/$OtherID';
 
@@ -1016,7 +1016,7 @@ class LeftAndMain extends Controller implements PermissionProvider
 
     /**
      * @todo Wrap in CMSMenu instance accessor
-     * @return ArrayData A single menu entry (see {@link MainMenu})
+     * @return ArrayData A single menu entry (see {@link MainMenu()})
      */
     public function MenuCurrentItem()
     {
@@ -1248,7 +1248,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      * method in an entwine subclass. This method can accept a record identifier,
      * selected either in custom logic, or through {@link currentPageID()}.
      * The form usually construct itself from {@link DataObject->getCMSFields()}
-     * for the specific managed subclass defined in {@link LeftAndMain::$tree_class}.
+     * for the specific managed subclass defined in {@link SilverStripe\Admin\LeftAndMain::$tree_class}.
      *
      * @param HTTPRequest $request Passed if executing a HTTPRequest directly on the form.
      * If empty, this is invoked as $EditForm in the template
@@ -1262,7 +1262,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * Calls {@link SiteTree->getCMSFields()} by default to determine the form fields to display.
+     * Calls {@link SilverStripe\CMS\Model\SiteTree->getCMSFields()} by default to determine the form fields to display.
      *
      * @param int $id
      * @param FieldList $fields
@@ -1791,8 +1791,8 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * Same as {@link ViewableData->CSSClasses()}, but with a changed name
-     * to avoid problems when using {@link ViewableData->customise()}
+     * Same as {@link SilverStripe\View\ViewableData->CSSClasses()}, but with a changed name
+     * to avoid problems when using {@link SilverStripe\View\ViewableData->customise()}
      * (which always returns "ArrayData" from the $original object).
      *
      * @return String

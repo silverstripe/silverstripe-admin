@@ -51,7 +51,7 @@ class CMSBatchActionHandler extends RequestHandler
 
     /**
      * @var String $recordClass The classname that should be affected
-     * by any batch changes. Needs to be set in the actual {@link CMSBatchAction}
+     * by any batch changes. Needs to be set in the actual {@link SilverStripe\Admin\CMSBatchAction}
      * implementations as well.
      */
     protected $recordClass = SiteTree::class;
@@ -74,7 +74,7 @@ class CMSBatchActionHandler extends RequestHandler
 
     /**
      * Register a new batch action.  Each batch action needs to be represented by a subclass
-     * of {@link CMSBatchAction}.
+     * of {@link SilverStripe\Admin\CMSBatchAction}.
      *
      * @param string $urlSegment The URL Segment of the batch action - the URL used to process this
      * action will be admin/pages/batchactions/(urlSegment)

@@ -10,10 +10,10 @@ use SilverStripe\ORM\FieldType\DBHTMLText;
 /**
  * A simple CMS menu item.
  *
- * Items can be added to the menu through custom {@link LeftAndMainExtension}
- * classes and {@link CMSMenu}.
+ * Items can be added to the menu through custom {@link SilverStripe\Admin\LeftAndMainExtension}
+ * classes and {@link SilverStripe\Admin\CMSMenu}.
  *
- * @see CMSMenu
+ * @see SilverStripe\Admin\CMSMenu
  */
 class CMSMenuItem
 {

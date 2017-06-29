@@ -94,7 +94,7 @@ abstract class ModelAdmin extends LeftAndMain
     );
 
     /**
-     * @var string The {@link \SilverStripe\ORM\DataObject} sub-class being managed during this object's lifetime.
+     * @var string The {@link DataObject} sub-class being managed during this object's lifetime.
      */
     protected $modelClass;
 
@@ -115,7 +115,7 @@ abstract class ModelAdmin extends LeftAndMain
     /**
      * List of all {@link DataObject}s which can be imported through
      * a subclass of {@link BulkLoader} (mostly CSV data).
-     * By default {@link CsvBulkLoader} is used, assuming a standard mapping
+     * By default {@link SilverStripe\Dev\CsvBulkLoader} is used, assuming a standard mapping
      * of column names to {@link DataObject} properties/relations.
      *
      * e.g. "BlogEntry" => "BlogEntryCsvBulkLoader"
@@ -158,7 +158,7 @@ abstract class ModelAdmin extends LeftAndMain
     }
 
     /**
-     * Overrides {@link \SilverStripe\Admin\LeftAndMain} to ensure the active model class (the DataObject we are
+     * Overrides {@link SilverStripe\Admin\LeftAndMain} to ensure the active model class (the DataObject we are
      * currently viewing) is included in the URL.
      *
      * @inheritdoc
@@ -172,13 +172,13 @@ abstract class ModelAdmin extends LeftAndMain
     }
 
     /**
-     * Produces an edit form that includes a default {@link \SilverStripe\Forms\GridField\GridField} for the currently
-     * active {@link \SilverStripe\ORM\DataObject}. The GridField will show data from the currently active `modelClass`
+     * Produces an edit form that includes a default {@link GridField} for the currently
+     * active {@link DataObject}. The GridField will show data from the currently active `modelClass`
      * only (see {@link self::init()}).
      *
      * @param int|null $id
      * @param \SilverStripe\Forms\FieldList $fields
-     * @return \SilverStripe\Forms\Form A Form object with one tab per {@link \SilverStripe\Forms\GridField\GridField}
+     * @return \SilverStripe\Forms\Form A Form object with one tab per {@link GridField}
      */
     public function getEditForm($id = null, $fields = null)
     {
@@ -229,7 +229,7 @@ abstract class ModelAdmin extends LeftAndMain
     }
 
     /**
-     * Define which fields are used in the {@link getEditForm} GridField export.
+     * Define which fields are used in the {@link getEditForm()} GridField export.
      * By default, it uses the summary fields from the model definition.
      *
      * @return array
@@ -297,7 +297,7 @@ abstract class ModelAdmin extends LeftAndMain
 
     /**
      * You can override how ModelAdmin returns DataObjects by either overloading this method, or defining an extension
-     * to ModelAdmin that implements the `updateList` method (and takes a {@link \SilverStripe\ORM\DataList} as the
+     * to ModelAdmin that implements the `updateList` method (and takes a {@link SilverStripe\ORM\DataList} as the
      * first argument).
      *
      * For example, you might want to do this if this particular ModelAdmin should only ever show objects where an
@@ -414,7 +414,7 @@ abstract class ModelAdmin extends LeftAndMain
     /**
      * Returns all importers defined in {@link self::$model_importers}.
      * If none are defined, we fall back to {@link self::managed_models}
-     * with a default {@link CsvBulkLoader} class. In this case the column names of the first row
+     * with a default {@link SilverStripe\Dev\CsvBulkLoader} class. In this case the column names of the first row
      * in the CSV file are assumed to have direct mappings to properties on the object.
      *
      * @return array Map of model class names to importer instances

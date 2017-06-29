@@ -14,7 +14,7 @@ use SilverStripe\Forms\Form;
 use SilverStripe\View\Requirements;
 
 /**
- * Imports {@link Member} records by CSV upload, as defined in
+ * Imports {@link SilverStripe\Security\Member} records by CSV upload, as defined in
  * {@link MemberCsvBulkLoader}.
  */
 class MemberImportForm extends Form
