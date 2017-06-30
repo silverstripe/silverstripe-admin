@@ -40,6 +40,7 @@ require('expose-loader?TreeDropdownFieldMenu!components/TreeDropdownField/TreeDr
 require('expose-loader?TreeDropdownField!components/TreeDropdownField/TreeDropdownField');
 require('expose-loader?BreadcrumbsActions!state/breadcrumbs/BreadcrumbsActions');
 require('expose-loader?RecordsActionTypes!state/records/RecordsActionTypes');
+require('expose-loader?UnsavedFormsActions!state/unsavedForms/UnsavedFormsActions');
 require('expose-loader?Badge!components/Badge/Badge');
 require('expose-loader?Preview!components/Preview/Preview');
 require('expose-loader?Config!lib/Config');

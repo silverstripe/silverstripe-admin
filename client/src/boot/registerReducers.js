@@ -7,9 +7,9 @@ import SchemaReducer from 'state/schema/SchemaReducer';
 import RecordsReducer from 'state/records/RecordsReducer';
 import BreadcrumbsReducer from 'state/breadcrumbs/BreadcrumbsReducer';
 import TreeDropdownFieldReducer from 'state/treeDropdownField/TreeDropdownFieldReducer';
-import applyFormMiddleware from 'lib/dependency-injection/applyFormMiddleware';
 import MobileMenuReducer from 'state/mobileMenu/MobileMenuReducer';
 import UnsavedFormsReducer from 'state/unsavedForms/UnsavedFormsReducer';
+import applyFormMiddleware from 'lib/dependency-injection/applyFormMiddleware';
 
 export default (extra = {}) => {
   const FormReducer = combineReducers({
