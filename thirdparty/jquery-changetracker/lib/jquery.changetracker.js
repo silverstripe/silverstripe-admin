@@ -72,7 +72,15 @@
           return $field.is(':checked') ? 1 : 0;
         }
         
-        return $field.val();
+        var value = $field.val();
+
+        if (value && value.replace) {
+          // remove TinyMCE injected new lines for block tags, which give false positives for change detection
+          // and leading to really bad UX experiences
+          return value.replace(/>[\n\r]+</g, '><');
+        }
+
+        return value;
       }
 
       /**
@@ -97,7 +105,9 @@
       
       // Detect changes to the form
       var isChanged = function () {
-        return self.data('dirty') || initialState !== formValue();
+        const changed = self.data('dirty') || initialState !== formValue();
+
+        return changed;
       };
       
       // Handler for detecting global changes
