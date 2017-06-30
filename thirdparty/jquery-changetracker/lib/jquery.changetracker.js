@@ -72,7 +72,17 @@
           return $field.is(':checked') ? 1 : 0;
         }
         
-        return $field.val();
+        var value = $field.val();
+
+        if (value && value.replace) {
+          // remove TinyMCE injected new lines for block tags, which give false positives for change detection
+          // and leading to really bad UX experiences
+          return value
+            .replace(/>[\n\r]+/g, '>')
+            .replace(/[\n\r]+</g, '<');
+        }
+
+        return value;
       }
 
       /**
