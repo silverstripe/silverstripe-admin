@@ -77,7 +77,9 @@
         if (value && value.replace) {
           // remove TinyMCE injected new lines for block tags, which give false positives for change detection
           // and leading to really bad UX experiences
-          return value.replace(/>[\n\r]+</g, '><');
+          return value
+            .replace(/>[\n\r]+/g, '>')
+            .replace(/[\n\r]+</g, '<');
         }
 
         return value;
@@ -105,9 +107,7 @@
       
       // Detect changes to the form
       var isChanged = function () {
-        const changed = self.data('dirty') || initialState !== formValue();
-
-        return changed;
+        return self.data('dirty') || initialState !== formValue();
       };
       
       // Handler for detecting global changes
