@@ -1,13 +1,15 @@
 import deepFreeze from 'deep-freeze-strict';
 import { actionTypes as reduxFormActionTypes } from 'redux-form';
+import ACTION_TYPES from './UnsavedFormsActionTypes';
 
 /**
  * State is (unsaved) a form schema to pathname map
  */
 function unsavedFormsReducer(state = [], action) {
-  const formName = action.meta && action.meta && action.meta.form;
+  const formName = action.meta && action.meta.form;
 
   switch (action.type) {
+    case ACTION_TYPES.ADD_FORM_CHANGED:
     case reduxFormActionTypes.CHANGE: {
       return deepFreeze([
         ...state.filter(form => form.name !== formName),
@@ -15,6 +17,7 @@ function unsavedFormsReducer(state = [], action) {
       ]);
     }
 
+    case ACTION_TYPES.REMOVE_FORM_CHANGED:
     case reduxFormActionTypes.STOP_SUBMIT: {
       return deepFreeze([
         ...state.filter(form => form.name !== formName),
