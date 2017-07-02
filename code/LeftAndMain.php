@@ -663,6 +663,13 @@ class LeftAndMain extends Controller implements PermissionProvider
         $dummy = null;
         $this->extend('init', $dummy);
 
+        // Load the editor with original user themes before overwriting
+        // them with admin themes
+        $themes = HTMLEditorConfig::config()->get('user_themes');
+        if (empty($themes)) {
+            HTMLEditorConfig::config()->set('user_themes', SSViewer::get_themes());
+        }
+
         // Assign default cms theme and replace user-specified themes
         SSViewer::set_themes(LeftAndMain::config()->uninherited('admin_themes'));
 
