@@ -7,7 +7,7 @@
   },
   "bin": {
     "webpack": "./node_modules/webpack/webpack.js",
-    "webpack-dev-server": "./node_modules/webpack-dev-server/webpack-dev-server.js"
+    "webpack-dev-server": "./node_modules/@silverstripe/webpack-config/webpack-dev-server/webpack-dev-server.js"
   },
   "engines": {
     "node": "^6.x"
@@ -72,10 +72,11 @@
     "tether": "^1.3.2",
     "toposort": "^1.0.3",
     "url": "^0.11.0",
-    "validator": "^6.1.0"
+    "validator": "^6.1.0",
+    "webpack-dev-server": "^2.5.0"
   },
   "devDependencies": {
-    "@silverstripe/webpack-config": "^0.2.6",
+    "@silverstripe/webpack-config": "git://github.com/open-sausages/webpack-config.git#experimental/webpack-dev-server",
     "babel-core": "^6.24.1",
     "babel-jest": "^20.0.3",
     "babel-preset-es2015": "^6.24.1",

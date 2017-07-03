@@ -22,7 +22,6 @@ const PATHS = {
   LEGACY_SRC: Path.resolve('client/src/legacy'),
 };
 const devServer = createDevServer(ENV, 3000);
-console.log(devServer);
 const config = [
   {
     name: 'js',
