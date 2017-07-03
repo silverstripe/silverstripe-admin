@@ -81,20 +81,35 @@ describe('BaseContainer', () => {
 
     it('should load the middleware with a factory call', () => {
       container.middlewareRegistries.test = {
-        setService: jest.fn(() => container.middlewareRegistries.test),
         sort: jest.fn(() => container.middlewareRegistries.test),
-        getFactory: jest.fn(),
+        getMatchesForContext: jest.fn(() => ['match']),
       };
+      container.getFactory = jest.fn(() => null);
       container.services.test = 'service';
 
       container.load();
       expect(container.initialised).toBe(true);
-      expect(container.middlewareRegistries.test.setService).toBeCalledWith('service');
       expect(container.middlewareRegistries.test.sort).toBeCalled();
-      expect(container.middlewareRegistries.test.getFactory).not.toBeCalled();
 
       container.factories.test('mycontext.here');
-      expect(container.middlewareRegistries.test.getFactory).toBeCalledWith('mycontext.here');
+      expect(container.middlewareRegistries.test.getMatchesForContext)
+        .toBeCalledWith('mycontext.here');
+      expect(container.getFactory).toBeCalledWith('test', ['match']);
+    });
+
+    it('should compose factories', () => {
+      const TestService = (num) => `Answer is ${num}`;
+      container.register('TestService', TestService);
+      container.middlewareRegistries.TestService = {
+        sort: () => {},
+        getMatchesForContext: () => ([
+          { factory: (next) => (num) => next(1 + num) },
+          { factory: (next) => (num) => next(2 + num) },
+        ]),
+      };
+      container.load();
+      const service = container.get('TestService');
+      expect(service(2)).toBe('Answer is 5');
     });
   });
 
