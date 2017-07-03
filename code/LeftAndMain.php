@@ -155,7 +155,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     ];
 
     private static $dependencies = [
-        'FormSchema' => '%$FormSchema'
+        'FormSchema' => '%$'.FormSchema::class,
     ];
 
     /**
