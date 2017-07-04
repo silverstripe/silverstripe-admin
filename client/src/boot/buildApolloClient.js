@@ -7,6 +7,9 @@ function buildApolloClient(baseUrl) {
     uri: `${baseUrl}graphql/`,
     opts: {
       credentials: 'same-origin',
+      headers: {
+        accept: 'application/json',
+      },
     },
   });
   const apolloClient = new ApolloClient({
