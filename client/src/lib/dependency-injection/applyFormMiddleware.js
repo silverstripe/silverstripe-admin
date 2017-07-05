@@ -1,10 +1,15 @@
 import Injector from '../Injector';
 import getIn from 'redux-form/lib/structure/plain/getIn';
 import setIn from 'redux-form/lib/structure/plain/setIn';
+import { actionTypes } from 'redux-form';
+
+const omittedActions = [
+  actionTypes.REGISTER_FIELD,
+];
 
 const applyFormMiddleware = (reducer) => () => (state, action) => {
   const reducedState = reducer(state, action);
-  if (!action.meta || !action.meta.form) {
+  if (!action.meta || !action.meta.form || omittedActions.includes(action.type)) {
     return reducedState;
   }
 

@@ -11,8 +11,8 @@ const buildFormContainer = (base = buildBaseContainer()) => ({
    * The two middleware services are loaded by default
    */
   services: {
-    [SCHEMA_MIDDLEWARE_SERVICE]: () => {},
-    [VALIDATION_MIDDLEWARE_SERVICE]: () => {},
+    [SCHEMA_MIDDLEWARE_SERVICE]: (values, state) => state,
+    [VALIDATION_MIDDLEWARE_SERVICE]: (values, errors = {}) => errors,
   },
 
   /**

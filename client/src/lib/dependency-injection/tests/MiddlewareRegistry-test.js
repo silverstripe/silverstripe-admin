@@ -1,10 +1,10 @@
 /* global jest, jasmine, describe, beforeEach, it, pit, expect, process */
 
 import MiddlewareRegistry from '../MiddlewareRegistry';
-import { compose } from 'redux';
 
 describe('MiddlwareRegistry', () => {
   let registry = null;
+  // eslint-disable-next-line no-unused-vars
   let service = null;
   beforeEach(() => {
     registry = new MiddlewareRegistry();
@@ -77,9 +77,13 @@ describe('MiddlwareRegistry', () => {
 
       registry.sort();
 
-      const matches = registry.getMatchesForContext().map(m => m.factory);
-      const factory = compose(...matches)(service);
-      expect(factory('DEFG')).toBe('ABCDEFG');
+      const matches = registry.getMatchesForContext();
+      expect(matches[0].name).toBe('front');
+      expect(matches[0].factory).toBe(HOC_C);
+      expect(matches[1].name).toBe('middle');
+      expect(matches[1].factory).toBe(HOC_B);
+      expect(matches[2].name).toBe('back');
+      expect(matches[2].factory).toBe(HOC_A);
     });
   });
 
@@ -147,10 +151,16 @@ describe('MiddlwareRegistry', () => {
 
       const numberMatches = registry.getMatchesForContext('Universe.World.Mathematics.Numbers');
       const letterMatches = registry.getMatchesForContext('Universe.World.Language.Letters');
-      const numberFactory = compose(...numberMatches.map(m => m.factory))(service);
-      const letterFactory = compose(...letterMatches.map(m => m.factory))(service);
-      expect(numberFactory('test_')).toBe('test_1223C');
-      expect(letterFactory('test_')).toBe('test_3ABBC');
+      expect(numberMatches[0].factory).toBe(HOC1);
+      expect(numberMatches[1].factory).toBe(HOC2);
+      expect(numberMatches[2].factory).toBe(HOC2);
+      expect(numberMatches[3].factory).toBe(HOC3);
+
+      expect(letterMatches[0].factory).toBe(HOC3);
+      expect(letterMatches[1].factory).toBe(HOCA);
+      expect(letterMatches[2].factory).toBe(HOCB);
+      expect(letterMatches[3].factory).toBe(HOCB);
+      expect(letterMatches[4].factory).toBe(HOCC);
     });
 
     it('allows wildcards', () => {
@@ -176,9 +186,14 @@ describe('MiddlwareRegistry', () => {
 
       registry.sort();
 
-      const matches = registry.getMatchesForContext().map(m => m.factory);
-      const factory = compose(...matches)(service);
-      expect(factory('RAINBOW')).toBe('RAINBOW_RED_ORANGE_YELLOW_GREEN_BLUE_INDIGO_VIOLET');
+      const matches = registry.getMatchesForContext();
+      expect(matches[0].factory).toBe(HOC_RED);
+      expect(matches[1].factory).toBe(HOC_ORANGE);
+      expect(matches[2].factory).toBe(HOC_YELLOW);
+      expect(matches[3].factory).toBe(HOC_GREEN);
+      expect(matches[4].factory).toBe(HOC_BLUE);
+      expect(matches[5].factory).toBe(HOC_INDIGO);
+      expect(matches[6].factory).toBe(HOC_VIOLET);
     });
   });
 });
