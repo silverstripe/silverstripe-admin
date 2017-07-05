@@ -27,7 +27,8 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.x-dev"
+      "1.x-dev": "1.0.x-dev",
+      "dev-master": "2.x-dev"
     },
     "installer-name": "silverstripe-admin"
   },
