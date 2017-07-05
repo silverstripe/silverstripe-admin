@@ -1,0 +1,8 @@
+---
+Name: silverstripe-admin-injector
+---
+SilverStripe\Core\Injector\Injector:
+  SilverStripe\WebpackDevServer\ModuleDevServer.admin:
+    class: SilverStripe\WebpackDevServer\ModuleDevServer
+    constructor:
+      0: 'silverstripe/admin'

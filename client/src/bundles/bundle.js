@@ -1,6 +1,5 @@
 // Legacy translation handler
 require('i18n.js');
-
 // Expose fields (see webpack config for matching "externals" config)
 require('expose-loader?SilverStripeComponent!lib/SilverStripeComponent');
 require('expose-loader?Backend!lib/Backend');

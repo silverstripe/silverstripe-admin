@@ -61,7 +61,7 @@ const config = [
   {
     name: 'css',
     entry: {
-      bundle: devServer.entry(`${PATHS.SRC}/styles/bundle.scss`),
+      bundle: devServer.entry(`${PATHS.SRC}/styles/bundle.js`),
       editor: `${PATHS.SRC}/styles/editor.scss`,
       GridField_print: `${PATHS.SRC}/styles/legacy/GridField_print.scss`,
     },
