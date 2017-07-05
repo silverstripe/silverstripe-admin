@@ -43,7 +43,6 @@ export function updateTree(fieldId, path, tree) {
   };
 }
 
-
 /**
  * Mark a tree as failed
  *
@@ -55,5 +54,12 @@ export function updateTreeFailed(fieldId, path) {
   return {
     type: ACTION_TYPES.TREEFIELD_UPDATE_FAILED,
     payload: { fieldId, path },
+  };
+}
+
+export function setSearch(fieldId, search) {
+  return {
+    type: ACTION_TYPES.TREEFIELD_SET_SEARCH,
+    payload: { fieldId, search },
   };
 }

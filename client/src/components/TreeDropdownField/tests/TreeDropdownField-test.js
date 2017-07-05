@@ -1,4 +1,4 @@
-/* global jest, describe, beforeEach, it, expect */
+/* global jest, describe, beforeEach, it, expect, setTimeout */
 
 jest.mock('components/TreeDropdownField/TreeDropdownFieldMenu');
 jest.mock('isomorphic-fetch', () =>
@@ -86,9 +86,44 @@ describe('TreeDropdownField', () => {
           updateTreeFailed: jest.fn(),
           updateTree: jest.fn(),
           setVisible: jest.fn(),
+          setSearch: jest.fn(),
         },
       },
     };
+  });
+
+  describe('handleSearchReset()', () => {
+    beforeEach(() => {
+      field = ReactTestUtils.renderIntoDocument(
+        <TreeDropdownField {...props} />
+      );
+    });
+
+    it('should clear search on reset', () => {
+      field.handleSearchReset();
+
+      expect(props.actions.treeDropdownField.setSearch).toBeCalled();
+    });
+  });
+
+  describe('handleSearchReset()', () => {
+    beforeEach(() => {
+      field = ReactTestUtils.renderIntoDocument(
+        <TreeDropdownField {...props} />
+      );
+    });
+
+    it('should set search after a delay', () => {
+      jest.useFakeTimers();
+      field.handleSearchChange('searching');
+
+      expect(setTimeout).toBeCalled();
+
+      const callback = setTimeout.mock.calls[0][0];
+      callback();
+
+      expect(props.actions.treeDropdownField.setSearch).toBeCalledWith(props.id, 'searching');
+    });
   });
 
   describe('getVisibleTree()', () => {
@@ -244,10 +279,41 @@ describe('TreeDropdownField', () => {
       );
       field.handleBack = jest.fn();
       field.handleNavigate = jest.fn();
+      field.handleSearchReset = jest.fn();
+    });
+
+    it('should not navigate if a search is active', () => {
+      field.selectField.getFocusedOption = jest.fn(() => null);
+      field.hasSearch = () => true;
+
+      const event = document.createEvent('Event');
+      event.keyCode = 37;
+
+      field.handleKeyDown(event);
+
+      expect(field.selectField.getFocusedOption).not.toBeCalled();
+      expect(field.handleBack).not.toBeCalled();
+      expect(field.handleNavigate).not.toBeCalled();
+      expect(field.handleSearchReset).not.toBeCalled();
+    });
+
+    it('should reset search if escape is pressed', () => {
+      field.selectField.getFocusedOption = jest.fn(() => null);
+      field.hasSearch = () => true;
+
+      const event = document.createEvent('Event');
+      event.keyCode = 27;
+
+      field.handleKeyDown(event);
+
+      expect(field.handleSearchReset).toBeCalled();
+      expect(field.selectField.getFocusedOption).not.toBeCalled();
+      expect(field.handleBack).not.toBeCalled();
+      expect(field.handleNavigate).not.toBeCalled();
     });
 
     it('should not call anything without a focus', () => {
-      field.selectField.getFocusedOption = () => (null);
+      field.selectField.getFocusedOption = jest.fn(() => null);
 
       const event = document.createEvent('Event');
       event.keyCode = 37;
@@ -393,7 +459,7 @@ describe('TreeDropdownField', () => {
       expect(options.length).toBe(2);
     });
 
-    it('should not include the root option when on the root path', () => {
+    it('should include the root option when on the root path', () => {
       props.visible = [];
       props.data.hasEmptyDefault = true;
       field = ReactTestUtils.renderIntoDocument(
@@ -402,6 +468,20 @@ describe('TreeDropdownField', () => {
       const options = field.getDropdownOptions();
 
       expect(options.length).toBe(3);
+    });
+
+    it('should not include the root option when on the root path with a search', () => {
+      props.visible = [];
+      props.data.showSearch = true;
+      props.data.hasEmptyDefault = true;
+      props.search = 'searching';
+
+      field = ReactTestUtils.renderIntoDocument(
+        <TreeDropdownField {...props} />
+      );
+      const options = field.getDropdownOptions();
+
+      expect(options.length).toBe(2);
     });
   });
 });

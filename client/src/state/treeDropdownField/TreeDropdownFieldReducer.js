@@ -20,6 +20,8 @@ const initialFieldState = deepFreeze({
   loading: [],
   // Array of nodes that were loaded, but failed to load (don't try to reload)
   failed: [],
+  // Search term for looking for specific nodes
+  search: '',
 });
 
 /**
@@ -35,25 +37,19 @@ function mergeTree(base, path, tree) {
   if (path.length === 0) {
     return tree;
   }
-  const subPath = path;
-  const nextID = subPath.shift();
-  const children = [];
-  let found = 0;
-  base.children.forEach((subTree) => {
-    if (subTree.id === nextID) {
-      found++;
-      children.push(mergeTree(subTree, subPath, tree));
-    } else {
-      children.push(subTree);
-    }
-  });
-  // Return merged children
-  if (found) {
-    return deepFreeze({}, base, { children });
+  const [nextID, ...subPath] = path;
+  if (!base.children) {
+    return base;
   }
-  // eslint-disable-next-line no-console
-  console.warn(`Could not find ${nextID} in tree to merge`);
-  return base;
+
+  return deepFreeze({
+    ...base,
+    children: base.children.map((subTree) => (
+      (subTree.id === nextID)
+        ? mergeTree(subTree, subPath, tree)
+        : subTree
+    )),
+  });
 }
 
 /**
@@ -154,6 +150,13 @@ export default function treeDropdownFieldReducer(state = initialState, action = 
           field.failed,
           idFromPath(action.payload.path)
         ),
+      }));
+    }
+
+    case ACTION_TYPES.TREEFIELD_SET_SEARCH: {
+      return reduceField((field) => ({
+        ...field,
+        search: action.payload.search,
       }));
     }
 

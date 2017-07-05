@@ -10,6 +10,9 @@ import TreeDropdownFieldMenu from 'components/TreeDropdownField/TreeDropdownFiel
 import TreeDropdownFieldNode from 'components/TreeDropdownField/TreeDropdownFieldNode';
 import url from 'url';
 import { FormControl } from 'react-bootstrap-ss';
+import { mapHighlight } from 'lib/castStringToElement';
+
+const SEARCH_DELAY = 500; // ms
 
 class TreeDropdownField extends Component {
 
@@ -20,38 +23,51 @@ class TreeDropdownField extends Component {
     this.render = this.render.bind(this);
     this.renderMenu = this.renderMenu.bind(this);
     this.renderOption = this.renderOption.bind(this);
+
     // Getters
     this.getBreadcrumbs = this.getBreadcrumbs.bind(this);
     this.getDropdownOptions = this.getDropdownOptions.bind(this);
     this.getSelectedOption = this.getSelectedOption.bind(this);
     this.getVisibleTree = this.getVisibleTree.bind(this);
+
     // Events
     this.handleBack = this.handleBack.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleNavigate = this.handleNavigate.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.handleSearchReset = this.handleSearchReset.bind(this);
+
     // Helpers
     this.callFetch = this.callFetch.bind(this);
     this.lazyLoad = this.lazyLoad.bind(this);
     this.findTreeByID = this.findTreeByID.bind(this);
     this.findTreeByPath = this.findTreeByPath.bind(this);
     this.findTreePath = this.findTreePath.bind(this);
+
+    this.searchTimer = null;
   }
 
   componentDidMount() {
     // Ensure root node is loaded, force invalidating the cache when not readonly or disabled
     if (!this.props.readOnly && !this.props.disabled) {
-      this.loadTree([]);
+      this.loadTree([], true, this.props.search);
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.data.cacheKey !== this.props.data.cacheKey
-      && !this.props.readOnly
-      && !this.props.disabled
-    ) {
+    if (this.props.readOnly || this.props.disabled) {
+      return;
+    }
+
+    if (nextProps.data.cacheKey !== this.props.data.cacheKey) {
       // invalidate the tree cache, as paths have changed
-      this.loadTree([]);
+      this.loadTree([], false, nextProps.search);
+    }
+
+    if (this.props.search !== nextProps.search) {
+      // invalidate the tree cache, as paths have changed
+      this.loadTree(nextProps.visible, false, nextProps.search);
     }
   }
 
@@ -75,6 +91,9 @@ class TreeDropdownField extends Component {
     // No more path means this is the complete tree
     let node = this.props.tree;
     for (const next of this.props.visible) {
+      if (!node.children) {
+        break;
+      }
       node = node.children.find((child) => (child.id === next));
       if (!node) {
         break;
@@ -132,7 +151,7 @@ class TreeDropdownField extends Component {
       options.unshift(selectedOption);
     }
 
-    if (this.props.data.hasEmptyDefault && !this.props.visible.length) {
+    if (this.props.data.hasEmptyDefault && !this.props.visible.length && !this.hasSearch()) {
       options.unshift({
         id: '',
         title: this.props.data.emptyString,
@@ -156,11 +175,15 @@ class TreeDropdownField extends Component {
    * Call to make the fetching happen
    *
    * @param {Array} path to load
-   * @returns {*}
+   * @param {string} search
+   * @returns {Promise}
    */
-  callFetch(path) {
+  callFetch(path, search = '') {
     const fetchURL = url.parse(this.props.data.urlTree, true);
-    fetchURL.search = '';
+    if (this.props.data.showSearch && search.length) {
+      fetchURL.query.search = search;
+      fetchURL.query.flatList = '1';
+    }
     if (path.length) {
       fetchURL.query.ID = path[path.length - 1];
     }
@@ -293,14 +316,14 @@ class TreeDropdownField extends Component {
       }
     }
 
-    return this.loadTree(path);
+    return this.loadTree(path, false);
   }
 
-  loadTree(path) {
+  loadTree(path, loadNewPath, search) {
     // Mark as loading
     this.props.actions.treeDropdownField.beginTreeUpdating(this.props.id, path);
 
-    return this.callFetch(path)
+    return this.callFetch(path, search)
       .then((treeData) => {
         const firstLoad = Object.keys(this.props.tree).length === 0;
 
@@ -309,7 +332,7 @@ class TreeDropdownField extends Component {
 
         // If this is the first time the tree has been loaded, then ensure
         // the selected visible node is highlighted
-        if (firstLoad && this.props.value && path.length === 0) {
+        if (loadNewPath || (firstLoad && this.props.value && path.length === 0)) {
           const newPath = this.findTreePath(treeData, this.props.value);
           if (newPath) {
             // Revert one level to show parent
@@ -335,6 +358,35 @@ class TreeDropdownField extends Component {
       });
   }
 
+  hasSearch() {
+    return this.props.data.showSearch && Boolean(this.props.search);
+  }
+
+  filterOptions(options, filter, values) {
+    // TODO: change this to use prop when multi-select is implemented
+    const multiSelect = false;
+    if (!multiSelect) {
+      return options;
+    }
+    // From react-select docs:
+    // For multi-select inputs, when providing a custom filterOptions method,
+    // remember to exclude current values from the returned array of options.
+    return options.filter((option) => !option.id || !values.includes(option.id));
+  }
+
+  handleSearchReset() {
+    clearTimeout(this.searchTimer);
+    this.props.actions.treeDropdownField.setSearch(this.props.id, '');
+  }
+
+  handleSearchChange(value) {
+    clearTimeout(this.searchTimer);
+    // delay setting a search value, so ajax requests do not hammer the server
+    this.searchTimer = setTimeout(() => {
+      this.props.actions.treeDropdownField.setSearch(this.props.id, value);
+    }, SEARCH_DELAY);
+  }
+
   /**
    * Handles changes to the text field's value.
    *
@@ -358,6 +410,9 @@ class TreeDropdownField extends Component {
     event.stopPropagation();
     event.preventDefault();
 
+    if (this.hasSearch()) {
+      return;
+    }
     // Find parent path
     let path = this.findTreePath(this.props.tree, id);
     if (!path) {
@@ -378,6 +433,15 @@ class TreeDropdownField extends Component {
    * @param {Event} event
    */
   handleKeyDown(event) {
+    // ignore handling keys if searching
+    if (this.hasSearch()) {
+      // if escape is pressed, clear the search term
+      if (event.keyCode === 27) {
+        this.handleSearchReset(event);
+      }
+      return;
+    }
+
     // Only handle keys when an item is focused
     const focused = this.selectField.getFocusedOption();
     if (!focused) {
@@ -407,6 +471,9 @@ class TreeDropdownField extends Component {
     event.stopPropagation();
     event.preventDefault();
 
+    if (this.hasSearch()) {
+      return;
+    }
     // Find id in existing path, otherwise adding it to the end
     let path = this.props.visible;
 
@@ -446,6 +513,7 @@ class TreeDropdownField extends Component {
         breadcrumbs={breadcrumbs}
         renderMenuOptions={renderMenuOptions}
         onBack={this.handleBack}
+        search={this.hasSearch()}
       />
     );
   }
@@ -459,24 +527,41 @@ class TreeDropdownField extends Component {
   renderOption(tree) {
     // @todo - render child properly
     let button = null;
-    if (tree.count) {
+    if (tree.count && !this.hasSearch()) {
       const handleNavigate = (event) => this.handleNavigate(event, tree.id);
       button = (
-        <button className="treedropdownfield__option-button"
+        <button
+          className="treedropdownfield__option-button fill-width"
           onClick={handleNavigate}
           onMouseDown={handleNavigate}
-          onTouchEnd={handleNavigate}
+          onTouchStart={handleNavigate}
         >
-          <span className="treedropdownfield__option-count" >{tree.count}</span>
-          <span className="icon font-icon-list" />
+          <span className="treedropdownfield__option-count-icon font-icon-right-open-big" />
         </button>
       );
     }
+
+    const title = (this.props.search.length)
+      ? mapHighlight(tree.title, this.props.search, 'b')
+      : tree.title;
+    let subtitle = null;
+
+    if (this.hasSearch()) {
+      subtitle = tree.contextString;
+
+      if (!subtitle && this.props.data.hasEmptyDefault && !this.props.visible.length) {
+        subtitle = this.props.data.emptyString;
+      }
+    }
+
     return (
-      <div className="treedropdownfield__option flexbox-area-grow fill-width">
-        <span className="treedropdownfield__option__title flexbox-area-grow">
-          {tree.title}
-        </span>
+      <div className="treedropdownfield__option fill-width">
+        <div className="treedropdownfield__option-title-box flexbox-area-grow fill-height">
+          <span className="treedropdownfield__option-title">{title}</span>
+          { subtitle &&
+          <span className="treedropdownfield__option-context">{subtitle}</span>
+          }
+        </div>
         {button}
       </div>
     );
@@ -493,12 +578,21 @@ class TreeDropdownField extends Component {
       : 'treedropdownfield';
     const options = this.getDropdownOptions(this.props.value);
     const value = (this.props.value === 0) ? '' : this.props.value;
+    const resetValue = (this.props.data.hasEmptyDefault && !this.props.visible.length)
+      ? ''
+      : null;
+    const showSearch = (typeof this.props.data.showSearch !== 'undefined')
+      ? this.props.data.showSearch
+      : false;
 
     if (this.props.readOnly || this.props.disabled) {
       // fallback to a textbox for readonly and disabled status
       // react-select isn't ideal for display
       const option = this.props.data.valueObject;
-      const title = option && option.title || this.props.data.emptyString;
+      let title = option && option.title;
+      if (typeof title === 'undefined' || title === null) {
+        title = this.props.data.emptyString;
+      }
       return (
         <div className={className}>
           <span>{title}</span>
@@ -514,16 +608,21 @@ class TreeDropdownField extends Component {
 
     return (
       <Select
-        searchable={false}
+        searchable={showSearch}
         className={className}
         name={this.props.name}
         options={options}
         inputProps={inputProps}
         menuRenderer={this.renderMenu}
+        filterOptions={this.filterOptions}
         optionRenderer={this.renderOption}
         onChange={this.handleChange}
+        onOpen={this.handleSearchReset}
+        onBlurResetsInput
         onInputKeyDown={this.handleKeyDown}
+        onInputChange={this.handleSearchChange}
         value={value}
+        resetValue={resetValue}
         ref={(select) => { this.selectField = select; }}
         placeholder={this.props.data.emptyString}
         labelKey="title"
@@ -554,14 +653,18 @@ TreeDropdownField.propTypes = {
       title: PropTypes.string,
     }),
     hasEmptyDefault: PropTypes.bool,
+    showSearch: PropTypes.bool,
   }),
   onLoadingError: PropTypes.func,
+  search: PropTypes.string,
   actions: PropTypes.shape({
     treeDropdownField: PropTypes.shape({
       beginTreeUpdating: PropTypes.func,
       updateTreeFailed: PropTypes.func,
       updateTree: PropTypes.func,
       setVisible: PropTypes.func,
+      setSearch: PropTypes.func,
+      resetTreefield: PropTypes.func,
     }),
   }),
 };
@@ -588,8 +691,9 @@ function mapStateToProps(state, ownprops) {
     const visible = field.visible || [];
     const loading = field.loading || [];
     const failed = field.failed || [];
+    const search = (typeof field.search === 'string') ? field.search : '';
 
-    return { tree, visible, loading, failed };
+    return { tree, visible, loading, failed, search };
   }
   return {};
 }
