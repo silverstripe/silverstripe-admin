@@ -1,4 +1,5 @@
 import buildBaseContainer from './buildBaseContainer';
+import SchemaStateManager from './SchemaStateManager';
 
 const SCHEMA_MIDDLEWARE_SERVICE = 'FormSchemaMiddleware';
 const VALIDATION_MIDDLEWARE_SERVICE = 'FormValidationMiddleware';
@@ -10,8 +11,27 @@ const buildFormContainer = (base = buildBaseContainer()) => ({
    * The two middleware services are loaded by default
    */
   services: {
-    [SCHEMA_MIDDLEWARE_SERVICE]: (state) => state,
-    [VALIDATION_MIDDLEWARE_SERVICE]: (values, errors) => errors,
+    [SCHEMA_MIDDLEWARE_SERVICE]: (values, state) => state,
+    [VALIDATION_MIDDLEWARE_SERVICE]: (values, errors = {}) => errors,
+  },
+
+  /**
+   * Registration of new services is not allowed
+   */
+  register() {
+    throw new Error(`
+      Attempted to register a service on Injector.form. This container accepts only two
+      services by design (${SCHEMA_MIDDLEWARE_SERVICE} and ${VALIDATION_MIDDLEWARE_SERVICE}) 
+      for updating form schema and adding validation, respectively. Consider using a more
+      generic container, e.g. Injector.reducer.
+    `);
+  },
+
+  /**
+   * Registration of new services is not allowed
+   */
+  registerMany() {
+    this.register();
   },
 
   /**
@@ -66,6 +86,64 @@ const buildFormContainer = (base = buildBaseContainer()) => ({
     };
   },
 
+  /**
+   * Creates a factory function for the given service
+   * @param {string} key
+   * @param {array} middlewareMatches
+   * @returns {function}
+   */
+  getFactory(key, middlewareMatches) {
+    const factories = middlewareMatches.map(middleware => middleware.factory);
+    if (key === SCHEMA_MIDDLEWARE_SERVICE) {
+      return this.getSchemaReducer(factories);
+    } else if (key === VALIDATION_MIDDLEWARE_SERVICE) {
+      return this.getValidationReducer(factories);
+    }
+    throw new Error(`Invalid service for form injector: ${key}`);
+  },
+
+  /**
+   * Crates a function that runs a series of state transformations
+   * against the schema state and returns the new state
+   *
+   * @param {array} factories
+   * @returns {function}
+   */
+  getSchemaReducer(factories) {
+    return (values, schemaState) =>
+      factories.reduce((currentState, currentFactory) => {
+        const manager = new SchemaStateManager(currentState);
+        const modifications = currentFactory(values, manager);
+        return {
+          ...currentState,
+          ...modifications,
+        };
+      }, schemaState);
+  },
+
+  /**
+   * Crates a function that runs a series of validations
+   * against the form state and returns the validation result
+   *
+   * @param {array} factories
+   * @returns {function}
+   */
+  getValidationReducer(factories) {
+    return (values, errors = {}) =>
+      factories.reduce((currentErrors, currentFactory) => {
+        const modifications = currentFactory(values, errors);
+        return {
+          ...currentErrors,
+          ...modifications,
+        };
+      }, errors);
+  },
+
 });
+
+export {
+  SCHEMA_MIDDLEWARE_SERVICE,
+  VALIDATION_MIDDLEWARE_SERVICE,
+};
 
 export default buildFormContainer;

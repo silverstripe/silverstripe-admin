@@ -1,17 +1,20 @@
 import Injector from '../Injector';
 import getIn from 'redux-form/lib/structure/plain/getIn';
 import setIn from 'redux-form/lib/structure/plain/setIn';
-import SchemaStateManager from './SchemaStateManager';
+import { actionTypes } from 'redux-form';
+
+const omittedActions = [
+  actionTypes.REGISTER_FIELD,
+];
 
 const applyFormMiddleware = (reducer) => () => (state, action) => {
   const reducedState = reducer(state, action);
-  if (!action.meta || !action.meta.form) {
+  if (!action.meta || !action.meta.form || omittedActions.includes(action.type)) {
     return reducedState;
   }
 
   const formName = action.meta.form;
   const formSchemaMiddleware = Injector.form.getSchema(formName);
-
   if (!formSchemaMiddleware) {
     return reducedState;
   }
@@ -28,27 +31,18 @@ const applyFormMiddleware = (reducer) => () => (state, action) => {
   }
 
   const schemaState = schema.state;
-  const manager = new SchemaStateManager(schemaState);
   let newState = {
     ...reducedState,
   };
+  const updates = formSchemaMiddleware(formState.values, schemaState);
+  if (!Array.isArray(updates.fields)) {
+    throw new Error(`
+      One more calls to alterSchema did not return a properly formed schema state
+      object. Check your calls to Injector.transform() which could affect '${schemaKey}'.
+    `);
+  }
 
-  const updates = formSchemaMiddleware(formState.values, manager);
-  newState = setIn(newState, `formSchemas.${schemaKey}.state`, {
-    ...schemaState,
-    fields: schemaState.fields.map((field) => {
-      const update = updates[field.name];
-
-      if (typeof update === 'undefined') {
-        return field;
-      }
-
-      return {
-        ...field,
-        value: update,
-      };
-    }),
-  });
+  newState = setIn(newState, `formSchemas.${schemaKey}.state`, updates);
 
   return newState;
 };
