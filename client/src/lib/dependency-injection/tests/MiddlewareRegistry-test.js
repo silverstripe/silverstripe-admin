@@ -22,10 +22,10 @@ describe('MiddlwareRegistry', () => {
       registry.add({ name: 'bar' }, () => {}, 'test');
 
       const empty = registry._middlewares.find(m => m.name === 'empty');
-      expect(empty.context).toBe('__GLOBAL__');
+      expect(empty.context).toEqual(['__GLOBAL__']);
 
       const unknown = registry._middlewares.find(m => m.name === 'unknown');
-      expect(unknown.context).toBe('__GLOBAL__');
+      expect(unknown.context).toEqual(['__GLOBAL__']);
 
       const bar = registry._middlewares.find(m => m.name === 'bar');
       expect(bar.context).toEqual(['test']);

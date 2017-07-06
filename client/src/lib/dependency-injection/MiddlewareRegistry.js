@@ -161,7 +161,7 @@ class MiddlewareRegistry {
     this._contextCache = {};
     let context = contextList;
     if (!context || !context.length) {
-      context = GLOBAL_CONTEXT;
+      context = [GLOBAL_CONTEXT];
     } else if (!Array.isArray(context)) {
       context = [context];
     }
@@ -195,7 +195,7 @@ class MiddlewareRegistry {
     if (!this._contextCache[context]) {
       const requestedContext = context.split('.');
       this._contextCache[context] = this._middlewares.filter(middleware => (
-        middleware.context === GLOBAL_CONTEXT ||
+        middleware.context[0] === GLOBAL_CONTEXT ||
         middleware.context.every((part, index) => (
           part === WILDCARD || requestedContext[index] === part
         ))
@@ -204,5 +204,7 @@ class MiddlewareRegistry {
     return this._contextCache[context];
   }
 }
+
 export { GLOBAL_CONTEXT };
+
 export default MiddlewareRegistry;
