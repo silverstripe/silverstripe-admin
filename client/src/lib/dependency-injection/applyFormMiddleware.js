@@ -35,6 +35,13 @@ const applyFormMiddleware = (reducer) => () => (state, action) => {
     ...reducedState,
   };
   const updates = formSchemaMiddleware(formState.values, schemaState);
+  if (!Array.isArray(updates.fields)) {
+    throw new Error(`
+      One more calls to alterSchema did not return a properly formed schema state
+      object. Check your calls to Injector.transform().
+    `);
+  }
+
   newState = setIn(newState, `formSchemas.${schemaKey}.state`, updates);
 
   return newState;
