@@ -43,6 +43,7 @@ require('expose-loader?RecordsActionTypes!state/records/RecordsActionTypes');
 require('expose-loader?UnsavedFormsActions!state/unsavedForms/UnsavedFormsActions');
 require('expose-loader?Badge!components/Badge/Badge');
 require('expose-loader?Preview!components/Preview/Preview');
+require('expose-loader?Focusedzone!components/Focusedzone/Focusedzone');
 require('expose-loader?Config!lib/Config');
 require('expose-loader?DataFormat!lib/DataFormat');
 require('expose-loader?ReactRouteRegister!lib/ReactRouteRegister');
