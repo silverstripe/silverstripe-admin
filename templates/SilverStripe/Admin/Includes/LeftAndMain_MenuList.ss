@@ -5,7 +5,7 @@
 				<% if IconClass %>
 					<span class="menu__icon $IconClass"></span>
 				<% else %>
-					<span class="icon icon-16 icon-{$Icon}">&nbsp;</span>
+					<span class="menu__icon icon icon-16 icon-{$Icon}">&nbsp;</span>
 				<% end_if %>
 				<span class="text">$Title</span>
 			</a>
