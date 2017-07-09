@@ -1,28 +1,29 @@
+// sass-lint:disable no-css-comments
 /**
  * Styles for the left hand side menu and header for the admin panels.
  *
  * Take into consideration CSS selector performance.
  *
- * @package framework
- * @subpackage admin
+ * @package admin
  */
+// sass-lint:enable no-css-comments
 
 .cms-menu {
   z-index: $zindex-menu;
   background: $color-theme-bg;
   // Add `!important` to ignore width set in `.cms-panel` entwine`
-  width: $cms-menu-width !important;
+  width: $cms-menu-width !important; // sass-lint:disable-line no-important
 
   @include media-breakpoint-down(sm) {
     position: absolute;
     top: 0;
     left: -100%;
-    width: calc(100% - 59px) !important;
+    width: calc(100% - 59px) !important; // sass-lint:disable-line no-important
     transition: left $transition-speed-fast ease-in;
 
     &--open {
       left: 0;
-      height: 100% !important;
+      height: 100% !important; // sass-lint:disable-line no-important
       box-shadow: 1px 0 10px rgba(0, 0, 0, 0.2);
     }
   }
@@ -34,12 +35,14 @@
   .cms-panel-content {
     box-shadow: inset #C1C7CC -1px 0 0;
     overflow-x: hidden;
-    height: calc(100% - #{$toolbar-total-height * 3}) !important; // account for logo, logout and south bar
+    // account for logo, logout and south bar
+    height: calc(100% - #{$toolbar-total-height * 3}) !important; // sass-lint:disable-line no-important
   }
 
   @include media-breakpoint-up(md) {
     &.collapsed {
-      width: $cms-menu-width-collapsed !important; // Using important because JavaScript is overriding this value
+      // Using important because JavaScript is overriding this value
+      width: $cms-menu-width-collapsed !important; // sass-lint:disable-line no-important
       cursor: auto;
       z-index: 1000;
 
@@ -193,10 +196,10 @@
     margin-top: 3px;
     right: 8px;
     z-index: 2;
-    -ms-transform: rotate(-45deg); /* IE 9 */
-    -webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */
+    -ms-transform: rotate(-45deg); // IE 9
+    -webkit-transform: rotate(-45deg); // Chrome, Safari, Opera
     transform: rotate(-45deg);
-    // display: none;  /* To be shown by javascript, see LeftAndMain.Panel.js */
+    // display: none;  // To be shown by javascript, see LeftAndMain.Panel.js
   }
 
   .opened .toggle-children-icon {
@@ -228,9 +231,10 @@
 }
 
 .cms-menu__header {
-  position: relative !important;
-  top: auto !important;
-  height: auto !important;		// Required for JLayout
+  position: relative !important; // sass-lint:disable-line no-important
+  top: auto !important; // sass-lint:disable-line no-important
+  // Required for JLayout
+  height: auto !important; // sass-lint:disable-line no-important
   padding: 0;
   line-height: 24px;
   background-color: $color-brand-bg;
@@ -458,7 +462,7 @@
 
         .toggle-children {
           .toggle-children-icon {
-            @extend .icon-sprites-32x32;
+            @extend .icon-sprites-32x32; // sass-lint:disable-line no-extends
             @include sprite($sprites-32x32-menu-arrow-down);
           }
         }
@@ -533,7 +537,7 @@
       }
     }
 
-    /* Style applied to the menu flyout only when the collapsed setting */
+    // Style applied to the menu flyout only when the collapsed setting
     .collapsed-flyout {
       left: 59px;
       margin-top: -52px;
@@ -591,24 +595,20 @@
         border: 1px solid #d2d5d8;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
-        li {
-          &.clone {
-            a {
-              padding: 15px 0 15px 70px;
-              margin-left: -60px;
-              margin-right: 0;
-              box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        li.clone a {
+          padding: 15px 0 15px 70px;
+          margin-left: -60px;
+          margin-right: 0;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
-              span.text {
-                margin-left: -10px;
-              }
-            }
+          span.text {
+            margin-left: -10px;
           }
+        }
 
-          a span.text {
-            display: block;
-            margin-left: 0;
-          }
+        li a span.text {
+          display: block;
+          margin-left: 0;
         }
       }
 
@@ -622,9 +622,7 @@
   }
 }
 
-/**
- * Mobile menu toggle
- */
+// Mobile menu toggle
 .cms-mobile-menu-toggle-wrapper {
   display: none;
   position: absolute;

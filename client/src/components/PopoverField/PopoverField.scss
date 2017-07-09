@@ -10,7 +10,8 @@
   }
 
   .arrow {
-    @extend .popover-arrow; // Temp uses Bootstrap 3 class name, until React Bootstrap has been updated to Bootstrap 4
+    // Temp uses Bootstrap 3 class name, until React Bootstrap has been updated to Bootstrap 4
+    @extend .popover-arrow;
   }
 }
 
@@ -18,7 +19,8 @@
 
   // Unable to use classes within the popover, so we use elements to style
   ul {
-    padding-left: 0 !important; // TODO remove important by removing nesting of lists
+    // TODO remove important by removing nesting of lists
+    padding-left: 0 !important;
     list-style-type: none;
     margin-left: -#{$popover-padding} + 1px; // minus border
     margin-right: -#{$popover-padding} + 1px;

@@ -1,11 +1,13 @@
+// sass-lint:disable no-css-comments
 /**
  * Workaround for tooltip placement. React bootstrap add class `left`, `right`,
  * `top` and `bottom` instead of `tooltip-left`, `tooltip-right`, `tooltip-top`
  * and `tooltip-bottom`.
  */
+// sass-lint:enable no-css-comments
 @each $dir in left, right, top, bottom {
   .tooltip.#{$dir} {
-    @extend .tooltip-#{$dir};
+    @extend .tooltip-#{$dir}; // sass-lint:disable-line no-extends
   }
 }
 

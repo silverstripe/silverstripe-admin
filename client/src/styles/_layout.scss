@@ -22,8 +22,8 @@ body {
 
 // TODO move out of layout
 @include media-breakpoint-down(md) {
-  .CMSPageEditController,
-  .CMSPageSettingsController {
+  .CMSPageEditController, // sass-lint:disable-line class-name-format
+  .CMSPageSettingsController { // sass-lint:disable-line class-name-format
     &.has-panel .cms-content-tools {
       display: none;
     }

@@ -3,7 +3,7 @@ $state-danger-bg: #f2dede;
 $state-danger-border: darken($state-danger-bg, 5%);
 $text-color: #fff;
 
-body.mceContentBody a.ss-broken {
+body.mceContentBody a.ss-broken { // sass-lint:disable-line class-name-format
   background-color: $state-danger-bg;
   border: 1px $state-danger-border solid;
   color: $text-color;

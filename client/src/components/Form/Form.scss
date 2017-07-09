@@ -148,7 +148,7 @@
 .form__field-holder input.readonly,
 .form__field-holder span.readonly,
 .readonly .form__field-holder > div {
-  @extend .form-control-static;
+  @extend .form-control-static; // sass-lint:disable-line no-extends
 }
 
 // Fix for IE inputs not holding line-height
