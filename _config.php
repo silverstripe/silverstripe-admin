@@ -9,14 +9,11 @@ use SilverStripe\Admin\CMSProfileController;
 use SilverStripe\Forms\HTMLEditor\TinyMCEConfig;
 
 // Default CMS HTMLEditorConfig
-TinyMCEConfig::get('cms')->setOptions(array(
+$tinyMCEDefaultOptionsMap = [
     'friendly_name' => 'Default CMS',
     'priority' => '50',
-
     'body_class' => 'typography',
-
     'contextmenu' => "sslink ssmedia inserttable | cell row column deletetable",
-
     'use_native_selects' => false,
     'valid_elements' => "@[id|class|style|title],a[id|rel|rev|dir|tabindex|accesskey|type|name|href|target|title"
         . "|class],-strong/-b[class],-em/-i[class],-strike[class],-u[class],#p[id|dir|class|align|style],-ol[class],"
@@ -34,7 +31,21 @@ TinyMCEConfig::get('cms')->setOptions(array(
     'extended_valid_elements' => "img[class|src|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name"
         . "|usemap|data*],iframe[src|name|width|height|align|frameborder|marginwidth|marginheight|scrolling],"
         . "object[width|height|data|type],param[name|value],map[class|name|id],area[shape|coords|href|target|alt]"
-));
+];
+
+$tinyMCEOptions = [];
+$tinyMCEConfig = TinyMCEConfig::get('cms');
+
+// This allows modules that come before silverstripe-admin alphabetically to still influence the config
+foreach ($tinyMCEDefaultOptionsMap as $option => $value) {
+    if ($moduleValue = $tinyMCEConfig->getOption($option)) {
+        $tinyMCEOptions[$option] = $moduleValue;
+    } else {
+        $tinyMCEOptions[$option] = $value;
+    }
+}
+
+TinyMCEConfig::get('cms')->setOptions($tinyMCEOptions);
 
 // Avoid creating global variables
 call_user_func(function () {
