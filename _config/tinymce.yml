@@ -1,0 +1,7 @@
+---
+Name: admintinymce
+---
+SilverStripe\Forms\HTMLEditor\TinyMCEConfig:
+  base_dir: 'silverstripe/admin:thirdparty/tinymce'
+  editor_css:
+    - 'silverstripe/admin:client/dist/styles/editor.css'
