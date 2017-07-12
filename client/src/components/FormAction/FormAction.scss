@@ -13,15 +13,19 @@
 
 // General buttons
 .btn {
-  margin-right: $spacer-x * .5; // 8px
+  margin-right: $btn-spacing;
   position: relative;
   box-shadow: none;
+
+  .btn-toolbar & {
+    margin-right: 0;
+  }
 }
 
 // Button icons
 .btn[class*="font-icon-"]::before {
   position: relative;
-  margin-right: 6px;
+  margin-right: $btn-icon-spacing;
   line-height: $line-height-base;
   font-size: $font-size-lg;
   float: left;
@@ -142,7 +146,7 @@
   }
 }
 
-.btn-primary-outline {
+.btn-primary-outline {   // Todo: update to B4 convention .btn-outline-primary
   border-color: lighten($btn-primary-border, 10%);
 
   &:hover,
@@ -228,7 +232,7 @@
 
 // Grouped buttons
 .btn-group {
-  margin-right: $spacer-x * .75; // 12px
+  margin-right: $btn-spacing;
 
   .btn {
     margin-right: 0;

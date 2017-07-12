@@ -133,7 +133,7 @@
     float: left;
     width: 52px;
     height: 52px;
-    margin: 0;
+    margin: -$spacer-xs 0 0 -$grid-gutter-width-half;
     padding: $grid-x;
     text-indent: -999em;
     background-color: transparent;
@@ -142,8 +142,6 @@
     background-position: 16px center;
     border: 0;
     transition: position $transition-speed-fast;
-    margin-top: -$spacer-xs;
-    margin-left: -$grid-gutter-width-half;
     z-index: 2;
 
     &:hover {
@@ -255,12 +253,10 @@
 .cms-sitename {
   border-bottom: 1px solid darken($color-brand-bg, 4%);
   overflow: hidden;
-  padding: $grid-y*1.5 8px;
   position: relative;
   vertical-align: middle;
   transition: padding $transition-speed-fast;
   min-height: $toolbar-total-height;
-  transition: padding $transition-speed-fast;
   font-weight: bold;
   line-height: 16px;
   padding: 6px 0;
@@ -279,6 +275,10 @@
     background: $application-logo-small no-repeat center center;
     text-indent: -9999em;
     padding: 0 1px;
+
+    &:hover {
+      opacity: .9;
+    }
   }
 
   .cms-sitename__title {
@@ -288,6 +288,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    &:hover {
+      opacity: .9;
+    }
 
     @include media-breakpoint-down(sm) {
       margin-left: $toolbar-total-height;
@@ -307,7 +311,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    font-size: 14px;
+    font-size: $font-size-h3;
     width: 50px;
     height: 100%;
     color: #fff;
@@ -317,7 +321,7 @@
 
     &:hover,
     &:focus {
-      opacity: 1;
+      opacity: .9;
       text-decoration: none;
     }
 
@@ -366,7 +370,7 @@
   position: absolute;
   margin-top: -1px;
   left: 13px;
-  font-size: $font-size-lg;
+  font-size: $font-size-h3;
   transition: all $transition-speed-fast;
   color: darken($base-menu-bg, 44%);
 

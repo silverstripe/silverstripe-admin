@@ -1,3 +1,4 @@
+// TODO ensure .toolbar is used globally and remove toolbar--"modifier" classes from following block
 .toolbar,
 .toolbar--north,
 .toolbar--content,
@@ -8,12 +9,23 @@
   .btn-toolbar {
     margin-top: 0;
     margin-bottom: 0;
-    margin-left: -5px;
-    margin-right: -5px;
 
-    .pull-xs-left .btn-primary {
-      margin-left: 5px;
+    // Replicate regular buttons in .btn-toolbar
+    > .grid-print-button,
+    > .grid-csv-button {
+      margin-left: $btn-spacing;
     }
+
+    .btn-secondary:first-child,
+    .btn-link:first-child,
+    .grid-csv-button:first-child,
+    .grid-print-button:first-child {
+      margin-left: calc(#{$btn-spacing} - #{$btn-padding-x});
+    }
+  }
+
+  .btn {
+    margin-bottom: 0;
   }
 }
 
@@ -27,31 +39,6 @@
   width: 100%;
 }
 
-// TEMP overrides color of links in JqueryUI widgets
-// required in modal toolbar eg. insert from URL link)
-.toolbar {
-
-  a.btn {
-    color: $body-color-light;
-  }
-
-  a.btn-primary {
-    color: #fff;
-  }
-
-  .btn {
-    margin-bottom: 0;
-  }
-
-  // If the first button isn't a btn with BG the icon should align with margin
-  .btn-toolbar > {
-    .btn-secondary:first-child,
-    .grid-csv-button:first-child,
-    .grid-print-button:first-child {
-      margin-left: -5px;
-    }
-  }
-}
 
 // Secondary content actions eg. Add page button
 .toolbar--content {
