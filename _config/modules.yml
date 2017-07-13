@@ -5,4 +5,4 @@ Before: modules-framework
 ---
 SilverStripe\Core\Manifest\ModuleManifest:
   module_priority:
-    - silverstripe\admin
+    - silverstripe/admin
