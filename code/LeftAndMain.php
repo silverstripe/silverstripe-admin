@@ -1443,7 +1443,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     {
         $templates = $this->getTemplatesWithSuffix('_Tools');
         if ($templates) {
-            $viewer = new SSViewer($templates);
+            $viewer = SSViewer::create($templates);
             return $viewer->process($this);
         } else {
             return false;
@@ -1465,7 +1465,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     {
         $templates = $this->getTemplatesWithSuffix('_EditFormTools');
         if ($templates) {
-            $viewer = new SSViewer($templates);
+            $viewer = SSViewer::create($templates);
             return $viewer->process($this);
         } else {
             return false;
