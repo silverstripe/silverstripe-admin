@@ -335,7 +335,7 @@ class TreeDropdownField extends Component {
    * @param {String} search A search term to use
    * @return {Promise}
    */
-  loadTree(path, loadNewPath, search) {
+  loadTree(path, loadNewPath, search = '') {
     // Mark as loading
     this.props.actions.treeDropdownField.beginTreeUpdating(this.props.id, path);
 

@@ -9,7 +9,7 @@
   border-radius: $border-radius;
   background: none;
   // needed to override the width rule in .fill-width
-  width: auto!important; // sass-lint:disable-line no-important
+  width: auto !important; // sass-lint:disable-line no-important
   max-width: 25%;
   margin: -4px -5px -4px 5px;
   padding: 4px 5px 4px 4px;
