@@ -73,7 +73,7 @@ class Focusedzone extends Component {
   }
 
   render() {
-    return <div classClass={this.props.className}>{this.props.children}</div>;
+    return <div className={this.props.className}>{this.props.children}</div>;
   }
 }
 

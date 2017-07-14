@@ -1,33 +1,42 @@
 @import "~react-select/dist/react-select.css";
 
-// options
+.treedropdownfield__option+.treedropdownfield__option {
+  border-top: 1px solid $border-color-light;
+}
+
 .treedropdownfield__option-button {
-  border: 0;
+  border: 1px solid $border-color-light;
+  border-radius: $border-radius;
   background: none;
-  min-width: 40px;
-  margin: -8px -10px -8px 10px;
-  padding-right: 10px;
+  // needed to override the width rule in .fill-width
+  width: auto !important; // sass-lint:disable-line no-important
+  max-width: 25%;
+  margin: -4px -5px -4px 5px;
+  padding: 4px 5px 4px 4px;
 
   &:hover {
     background: $btn-secondary-bg;
   }
 }
 
-.treedropdownfield__option-count {
-  padding: 0 10px;
+.treedropdownfield__option-count-icon {
+  padding: 0 ($spacer-x / 2);
+  line-height: 0.8;
 }
 
 .treedropdownfield__menu-loading {
-  padding: 0 0 0 8px;
+  padding: 2px 0 0 8px;
 }
 
 // breadcrumbs
 .treedropdownfield__breadcrumbs {
-  background: $background-main;
+  color: $white;
+  background: $gray-dark;
   border-bottom: 1px solid #e6e6e6; // Select.js border color
+  font-weight: $headings-font-weight;
 
   &:hover {
-    background: $btn-secondary-bg;
+    background: lighten($gray-dark, 20%);
   }
 }
 
@@ -35,6 +44,11 @@
   border: 0;
   background: none;
   width: 30px;
-  margin: -8px 0 -8px -10px;
-  padding-left: 10px;
+  padding: 0 10px 0 0;
+  line-height: 0.8;
+}
+
+.treedropdownfield__option-context {
+  color: $gray;
+  font-size: $font-size-sm;
 }

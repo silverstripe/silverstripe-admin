@@ -22,17 +22,16 @@ class TreeDropdownFieldMenu extends Component {
    * @param {Event} event
    */
   handleBack(event) {
-    event.stopPropagation();
-    event.preventDefault();
     if (typeof this.props.onBack === 'function') {
       this.props.onBack(event);
+    } else {
+      event.stopPropagation();
+      event.preventDefault();
     }
   }
 
   /**
    * Render breadcrumbs
-   *
-   * @return {XML}
    */
   renderBreadcrumbs() {
     if (this.props.breadcrumbs.length === 0) {
@@ -41,14 +40,16 @@ class TreeDropdownFieldMenu extends Component {
 
     // Join titles with ' / '
     const breadcrumbs = this.props.breadcrumbs.map((item) => item.title).join(' / ');
+    const icon = (this.props.search) ? 'font-icon-search' : 'font-icon-left-open-big';
     const button = (
         <button className="treedropdownfield__breadcrumbs-button">
-          <span className="icon font-icon-level-up" />
+          <span className={`icon ${icon}`} />
         </button>
       );
 
     return (
-      <div className="Select-option treedropdownfield__breadcrumbs flexbox-area-grow fill-width"
+      <div
+        className="Select-option treedropdownfield__breadcrumbs flexbox-area-grow fill-width"
         onClick={this.handleBack}
       >
         {button}
@@ -103,7 +104,7 @@ class TreeDropdownFieldMenu extends Component {
         isDisabled={tree.disabled}
         isFocused={isFocused}
         isSelected={isSelected}
-        key={`option-${index}-${tree.id}`}
+        key={`option-${tree.id}-${index}`}
         onFocus={onFocus}
         onSelect={onSelect}
         option={tree}
@@ -168,6 +169,7 @@ TreeDropdownFieldMenu.propTypes = {
   tree: PropTypes.shape(TreeDropdownFieldNode.propTypes),
   renderMenuOptions: PropTypes.object,
   onBack: PropTypes.func,
+  search: PropTypes.bool,
 };
 
 export default TreeDropdownFieldMenu;
