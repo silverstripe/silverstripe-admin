@@ -60,14 +60,22 @@ class TreeDropdownField extends Component {
       return;
     }
 
-    if (nextProps.data.cacheKey !== this.props.data.cacheKey) {
-      // invalidate the tree cache, as paths have changed
-      this.loadTree([], false, nextProps.search);
-    }
+    let reload = false;
+    let visible = [];
 
     if (this.props.search !== nextProps.search) {
+      // invalidate the tree cache
+      reload = true;
+      visible = nextProps.visible;
+    }
+
+    if (nextProps.data.cacheKey !== this.props.data.cacheKey) {
       // invalidate the tree cache, as paths have changed
-      this.loadTree(nextProps.visible, false, nextProps.search);
+      reload = true;
+    }
+
+    if (reload) {
+      this.loadTree(visible, false, nextProps.search);
     }
   }
 
@@ -319,6 +327,14 @@ class TreeDropdownField extends Component {
     return this.loadTree(path, false);
   }
 
+  /**
+   * Sets callbacks and necessary state changes around a `callFetch()`
+   *
+   * @param {Array} path A list of ids denoting the path the user has browsed in to
+   * @param {Boolean} loadNewPath A flag to force the selected visible node to be highlighted
+   * @param {String} search A search term to use
+   * @return {Promise}
+   */
   loadTree(path, loadNewPath, search) {
     // Mark as loading
     this.props.actions.treeDropdownField.beginTreeUpdating(this.props.id, path);
@@ -358,10 +374,23 @@ class TreeDropdownField extends Component {
       });
   }
 
+  /**
+   * Returns whether a search is actively happening
+   *
+   * @return {Boolean}
+   */
   hasSearch() {
     return this.props.data.showSearch && Boolean(this.props.search);
   }
 
+  /**
+   * A filter for the list of options so determine what is shown and what isn't
+   *
+   * @param {Object[]} options
+   * @param {String} filter The search string entered, generally ignored by this component
+   * @param {String|Array} values A value or list of values selected
+   * @return {Object[]}
+   */
   filterOptions(options, filter, values) {
     // TODO: change this to use prop when multi-select is implemented
     const multiSelect = false;
@@ -374,11 +403,20 @@ class TreeDropdownField extends Component {
     return options.filter((option) => !option.id || !values.includes(option.id));
   }
 
+  /**
+   * Reset the search value
+   */
   handleSearchReset() {
     clearTimeout(this.searchTimer);
     this.props.actions.treeDropdownField.setSearch(this.props.id, '');
   }
 
+  /**
+   * Sets the search value, handles throttling/debouncing so that API calls is not
+   * fired after every keypress
+   *
+   * @param {String} value
+   */
   handleSearchChange(value) {
     clearTimeout(this.searchTimer);
     // delay setting a search value, so ajax requests do not hammer the server
@@ -390,11 +428,13 @@ class TreeDropdownField extends Component {
   /**
    * Handles changes to the text field's value.
    *
-   * @param {Object} value - New value / option
+   * @param {Object|Array} option - New value / option
    */
-  handleChange(value) {
+  handleChange(option) {
+    // TODO option could be an array for multi-select mode
+
     // Get node ID from object
-    const id = value ? value.id : null;
+    const id = option ? option.id : null;
     if (typeof this.props.onChange === 'function') {
       this.props.onChange(id);
     }
@@ -492,7 +532,6 @@ class TreeDropdownField extends Component {
    * for details on renderMenuOptions
    *
    * @param {Object} renderMenuOptions - Options passed from Select.js
-   * @return {XML}
    */
   renderMenu(renderMenuOptions) {
     // Build root node
