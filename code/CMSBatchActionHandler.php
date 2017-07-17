@@ -89,7 +89,7 @@ class CMSBatchActionHandler extends RequestHandler
             );
         }
 
-        Config::inst()->update(
+        Config::modify()->merge(
             CMSBatchActionHandler::class,
             'batch_actions',
             array(
