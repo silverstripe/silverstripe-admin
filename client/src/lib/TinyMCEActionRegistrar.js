@@ -9,6 +9,8 @@ class TinyMCEActionRegistrar {
 
     this.editorCommandsToUrlTestsMap = {
     };
+
+    this.defaultCommand = 'sslinkexternal';
   }
 
   /**
@@ -45,8 +47,14 @@ class TinyMCEActionRegistrar {
     return this;
   }
 
+  setDefaultCommand(command) {
+    this.defaultCommand = command;
+
+    return this;
+  }
+
   getDefaultCommand() {
-    return 'sslinkexternal';
+    return this.defaultCommand;
   }
 
   /**

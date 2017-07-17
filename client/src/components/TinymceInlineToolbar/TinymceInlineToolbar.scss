@@ -1,13 +1,13 @@
 // By default, inline toolbar stays above the tag with arrow point down.
 .mce-container.mce-inline-toolbar {
-  $toolbar-shadow-color: rgba(0, 0, 0, 0.2);
+  $toolbar-shadow-color: rgba(0, 0, 0, 0.3);
   $arrow-side-offset: 15px;
 
   position: absolute;
 
   .mce-container-body {
     background-color: $white;
-    box-shadow: 0 0 20px $toolbar-shadow-color;
+    box-shadow: 0 2px 10px $toolbar-shadow-color;
     border-radius: 5px;
 
     &:before,
@@ -51,6 +51,10 @@
       button {
         padding-right: 25px;
       }
+    }
+
+    &:hover .mce-txt {
+      text-decoration: underline;
     }
   }
 
