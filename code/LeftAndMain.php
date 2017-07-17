@@ -20,6 +20,7 @@ use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Convert;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Core\Manifest\ModuleLoader;
+use SilverStripe\Core\Manifest\VersionProvider;
 use SilverStripe\Dev\Deprecation;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
@@ -156,6 +157,7 @@ class LeftAndMain extends Controller implements PermissionProvider
 
     private static $dependencies = [
         'FormSchema' => '%$'.FormSchema::class,
+        'versionProvider' => '%$'.VersionProvider::class,
     ];
 
     /**
@@ -262,6 +264,11 @@ class LeftAndMain extends Controller implements PermissionProvider
      * @var PjaxResponseNegotiator
      */
     protected $responseNegotiator;
+
+    /**
+     * @var VersionProvider
+     */
+    protected $versionProvider;
 
     /**
      * Gets the combined configuration of all LeafAndMain subclasses required by the client app.
@@ -1643,73 +1650,12 @@ class LeftAndMain extends Controller implements PermissionProvider
 
     /**
      * Return the version number of this application.
-     * Uses the number in <mymodule>/silverstripe_version
-     * (automatically replaced by build scripts).
-     * If silverstripe_version is empty,
-     * then attempts to get it from composer.lock
      *
      * @return string
      */
     public function CMSVersion()
     {
-        $versions = array();
-        $modules = array(
-            'silverstripe/framework' => array(
-                'title' => 'Framework',
-                'versionFile' => ModuleLoader::getModule('silverstripe/framework')
-                    ->getResourcePath('silverstripe_version'),
-            )
-        );
-        if (class_exists('SilverStripe\\CMS\\Model\\SiteTree')) {
-            $modules['silverstripe/cms'] = array(
-                'title' => 'CMS',
-                'versionFile' => ModuleLoader::getModule('silverstripe/cms')
-                    ->getResourcePath('silverstripe_version'),
-            );
-        }
-
-        // Tries to obtain version number from composer.lock if it exists
-        $composerLockPath = BASE_PATH . '/composer.lock';
-        if (file_exists($composerLockPath)) {
-            $cache = Injector::inst()->get(CacheInterface::class . '.LeftAndMain_CMSVersion');
-            $cacheKey = (string)filemtime($composerLockPath);
-            $versions = $cache->get($cacheKey);
-            if ($versions) {
-                $versions = json_decode($versions, true);
-            } else {
-                $versions = array();
-            }
-            if (!$versions && $jsonData = file_get_contents($composerLockPath)) {
-                $lockData = json_decode($jsonData);
-                if ($lockData && isset($lockData->packages)) {
-                    foreach ($lockData->packages as $package) {
-                        if (array_key_exists($package->name, $modules)
-                            && isset($package->version)
-                        ) {
-                            $versions[$package->name] = $package->version;
-                        }
-                    }
-                    $cache->set($cacheKey, json_encode($versions));
-                }
-            }
-        }
-
-        // Fall back to static version file
-        foreach ($modules as $moduleName => $moduleSpec) {
-            if (!isset($versions[$moduleName])) {
-                if ($staticVersion = file_get_contents($moduleSpec['versionFile'])) {
-                    $versions[$moduleName] = $staticVersion;
-                } else {
-                    $versions[$moduleName] = _t('SilverStripe\\Admin\\LeftAndMain.VersionUnknown', 'Unknown');
-                }
-            }
-        }
-
-        $out = array();
-        foreach ($modules as $moduleName => $moduleSpec) {
-            $out[] = $modules[$moduleName]['title'] . ': ' . $versions[$moduleName];
-        }
-        return implode(', ', $out);
+        return $this->versionProvider->getVersion();
     }
 
     /**
