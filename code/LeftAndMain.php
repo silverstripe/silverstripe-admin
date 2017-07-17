@@ -157,7 +157,7 @@ class LeftAndMain extends Controller implements PermissionProvider
 
     private static $dependencies = [
         'FormSchema' => '%$'.FormSchema::class,
-        'versionProvider' => '%$'.VersionProvider::class,
+        'VersionProvider' => '%$'.VersionProvider::class,
     ];
 
     /**
@@ -1655,7 +1655,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     public function CMSVersion()
     {
-        return $this->versionProvider->getVersion();
+        return $this->getVersionProvider()->getVersion();
     }
 
     /**
@@ -1809,5 +1809,27 @@ class LeftAndMain extends Controller implements PermissionProvider
         }
 
         return $perms;
+    }
+
+    /**
+     * Set the SilverStripe version provider to use
+     *
+     * @param VersionProvider $provider
+     * @return $this
+     */
+    public function setVersionProvider(VersionProvider $provider)
+    {
+        $this->versionProvider = $provider;
+        return $this;
+    }
+
+    /**
+     * Get the SilverStripe version provider
+     *
+     * @return VersionProvider
+     */
+    public function getVersionProvider()
+    {
+        return $this->versionProvider;
     }
 }
