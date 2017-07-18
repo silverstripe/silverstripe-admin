@@ -5,6 +5,7 @@ import { actionTypes } from 'redux-form';
 
 const omittedActions = [
   actionTypes.REGISTER_FIELD,
+  actionTypes.DESTROY,
 ];
 
 const applyFormMiddleware = (reducer) => () => (state, action) => {
@@ -23,8 +24,15 @@ const applyFormMiddleware = (reducer) => () => (state, action) => {
   if (!formState) {
     return reducedState;
   }
-  const [schemaKey, schema] = Object.entries(reducedState.formSchemas)
-    .find(([, schemaEntry]) => schemaEntry.name === formName);
+
+  const schemaEntry = Object.entries(reducedState.formSchemas)
+    .find(([, entry]) => entry.name === formName);
+
+  if (!schemaEntry) {
+    return reducedState;
+  }
+
+  const [schemaKey, schema] = schemaEntry;
 
   if (!schemaKey) {
     return reducedState;
