@@ -1,0 +1,107 @@
+// By default, inline toolbar stays above the tag with arrow point down.
+.mce-container.mce-inline-toolbar {
+  $toolbar-shadow-color: rgba(0, 0, 0, 0.3);
+  $arrow-side-offset: 15px;
+
+  position: absolute;
+
+  .mce-container-body {
+    background-color: $white;
+    box-shadow: 0 2px 10px $toolbar-shadow-color;
+    border-radius: 5px;
+
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      display: block;
+      background: transparent;
+      border: 10px solid transparent;
+      width: 0;
+      height: 0;
+      border-top-color: $white;
+      top: 100%;
+      left: 50%;
+      margin-left: -10px;
+    }
+
+    &:before {
+      border-top-color: lighten($toolbar-shadow-color, 60%);
+      margin-top: 1px;
+    }
+  }
+
+  .mce-btn {
+    background: $white;
+    border: 0;
+
+    button {
+      color: $link-color;
+      font-size: $font-size-root;
+      padding: 15px 10px;
+    }
+
+    &:first-child {
+      button {
+        padding-left: 25px;
+      }
+    }
+
+    &:last-child {
+      button {
+        padding-right: 25px;
+      }
+    }
+
+    &:hover .mce-txt {
+      text-decoration: underline;
+    }
+  }
+
+  // When there's no space for the toolbar to go above the tag
+  &.mce-arrow-up {
+
+    .mce-container-body {
+
+      &:before,
+      &:after {
+        border-top-color: transparent;
+        border-bottom-color: $white;
+        top: -20px;
+      }
+
+      &:before {
+        margin-top: -1px;
+        border-bottom-color: lighten($toolbar-shadow-color, 60%);
+      }
+    }
+  }
+
+  // When there's no space on the left hand side
+  &.mce-arrow-left {
+
+    .mce-container-body {
+
+      &:before,
+      &:after {
+        left: $arrow-side-offset + 10;
+      }
+    }
+  }
+
+  // When there's no space on the right hand side
+  &.mce-arrow-right {
+
+    .mce-container-body {
+
+      &:before,
+      &:after {
+        left: auto;
+        right: $arrow-side-offset;
+      }
+    }
+  }
+
+}
+
+
