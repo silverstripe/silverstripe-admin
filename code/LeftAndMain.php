@@ -532,17 +532,19 @@ class LeftAndMain extends Controller implements PermissionProvider
             i18n::set_locale($member->Locale);
         }
 
-        // can't be done in cms/_config.php as locale is not set yet
-        CMSMenu::add_link(
-            'Help',
-            _t('SilverStripe\\Admin\\LeftAndMain.HELP', 'Help', 'Menu title'),
-            LeftAndMain::config()->uninherited('help_link'),
-            -2,
-            array(
-                'target' => '_blank'
-            ),
-            'font-icon-help-circled'
-        );
+        if ($helpLink = LeftAndMain::config()->uninherited('help_link')) {
+            // can't be done in cms/_config.php as locale is not set yet
+            CMSMenu::add_link(
+                'Help',
+                _t('SilverStripe\\Admin\\LeftAndMain.HELP', 'Help', 'Menu title'),
+                $helpLink,
+                -2,
+                array(
+                    'target' => '_blank'
+                ),
+                'font-icon-help-circled'
+            );
+        }
 
         // Allow customisation of the access check by a extension
         // Also all the canView() check to execute Controller::redirect()
