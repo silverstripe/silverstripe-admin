@@ -71,15 +71,24 @@
         if($field.is(':checkbox')) {
           return $field.is(':checked') ? 1 : 0;
         }
-        
+
         var value = $field.val();
 
-        if (value && value.replace) {
-          // remove TinyMCE injected new lines for block tags, which give false positives for change detection
-          // and leading to really bad UX experiences
-          return value
-            .replace(/>[\n\r]+/g, '>')
-            .replace(/[\n\r]+</g, '<');
+        if ($field && $field.hasClass('htmleditor')) {
+          var editorClass = $field.data('editor') || 'default';
+
+          // in case there are other editor class types
+          switch (editorClass) {
+            case 'tinyMCE':
+            case 'default':
+              var config = $.extend({ forced_root_block: 'p' }, $field.data('config'));
+
+              var serializer = new tinymce.html.Serializer(config);
+              var parser = new tinymce.html.DomParser(config);
+
+              value = serializer.serialize(parser.parse(value));
+              break;
+          }
         }
 
         return value;
