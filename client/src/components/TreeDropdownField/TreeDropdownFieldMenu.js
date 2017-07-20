@@ -79,15 +79,13 @@ class TreeDropdownFieldMenu extends Component {
       optionClassName,
       optionComponent,
       optionRenderer,
-      valueArray,
       onOptionRef,
     } = this.props.renderMenuOptions;
 
     // mostly copied from defaultMenuRenderer.js
     let Option = optionComponent;
-    let isSelected = valueArray.findIndex(
-      (nextNode) => (nextNode.id === tree.id)
-    ) > -1;
+
+    let isSelected = this.props.value.includes(tree.id);
     let isFocused = focusedOption && tree.id === focusedOption.id;
     let optionClass = classNames(optionClassName, {
       treedropdownfield__option: true,
@@ -146,11 +144,14 @@ class TreeDropdownFieldMenu extends Component {
 
     // Breadcrumbs
     const breadcrumbs = this.renderBreadcrumbs();
+    const options = this.props.renderMenuOptions && this.props.renderMenuOptions.options;
 
     // Render child items in this level
-    const children = this.props.tree.children.map(
-      (nextChild, i) => this.renderOption(nextChild, i)
-    );
+    const children = (options)
+      ? options
+        .filter(option => option.title !== null)
+        .map(this.renderOption)
+      : null;
 
     return (
       <div className="treedropdownfield__menu">
@@ -170,6 +171,7 @@ TreeDropdownFieldMenu.propTypes = {
   renderMenuOptions: PropTypes.object,
   onBack: PropTypes.func,
   search: PropTypes.bool,
+  value: PropTypes.array,
 };
 
 export default TreeDropdownFieldMenu;
