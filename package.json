@@ -15,7 +15,7 @@
   "scripts": {
     "build": "yarn && NODE_ENV=production webpack -p --bail --progress",
     "watch": "NODE_ENV=development webpack --watch --progress",
-    "serve": "NODE_ENV=development webpack-dev-server",
+    "serve": "NODE_ENV=devserver webpack-dev-server",
     "css": "WEBPACK_CHILD=css npm run build",
     "test": "jest",
     "coverage": "jest --coverage",

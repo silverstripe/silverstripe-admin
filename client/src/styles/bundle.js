@@ -1,1 +1,1 @@
-import './bundle.scss';
+import './bundle.scss'
