@@ -11,10 +11,15 @@ class FormAction extends SilverStripeComponent {
   }
 
   render() {
+    let title = this.props.title;
+
+    if (this.getSavedTitle() && !this.props.changed) {
+      title = this.getSavedTitle();
+    }
     return (
       <button {...this.getButtonProps()}>
         {this.getLoadingIcon()}
-        {castStringToElement('span', this.props.title)}
+        {castStringToElement('span', title)}
       </button>
     );
   }
@@ -57,18 +62,38 @@ class FormAction extends SilverStripeComponent {
       buttonClasses[`btn-${style}`] = true;
     }
 
-    // Add icon class
-    const icon = this.getIcon();
-    if (icon) {
-      buttonClasses[`font-icon-${icon}`] = true;
+    const savedClasses = this.getSavedClasses();
+    if (savedClasses && !this.props.changed) {
+      savedClasses.split(' ').forEach((cl) => {
+        buttonClasses[`btn-${cl}`] = true;
+      });
     }
 
+    // Add icon class
+    const icon = this.getIcon();
+    const savedIcon = this.getSavedIcon();
+    if (this.isConstructive() && !this.props.changed && savedIcon) {
+      buttonClasses[`font-icon-${savedIcon}`] = true;
+    } else if (icon) {
+      buttonClasses[`font-icon-${icon}`] = true;
+    }
 
     if (typeof this.props.extraClass === 'string') {
       buttonClasses[this.props.extraClass] = true;
     }
 
     return classnames(buttonClasses);
+  }
+
+  /**
+   * @return {boolean}
+   */
+  isConstructive() {
+    const extraClasses = this.props.extraClass.split(' ');
+    return (
+      this.props.name === 'action_save' ||
+      extraClasses.find(className => className === 'ss-ui-action-constructive')
+    );
   }
 
   /**
@@ -93,9 +118,7 @@ class FormAction extends SilverStripeComponent {
       return null;
     }
 
-    if (this.props.name === 'action_save' ||
-        extraClasses.find((className) => className === 'ss-ui-action-constructive')
-    ) {
+    if (this.isConstructive()) {
       return 'primary';
     }
 
@@ -110,6 +133,26 @@ class FormAction extends SilverStripeComponent {
   getIcon() {
     // In case this is specified directly
     return this.props.icon || this.props.data.icon || null;
+  }
+
+  /**
+   * Get saved title
+   *
+   * @return {String}|null
+   */
+  getSavedTitle() {
+    // In case this is specified directly
+    return this.props.savedTitle || this.props.data.savedTitle || null;
+  }
+
+  getSavedIcon() {
+    // In case this is specified directly
+    return this.props.savedIcon || this.props.data.savedIcon || null;
+  }
+
+  getSavedClasses() {
+    // In case this is specified directly
+    return this.props.savedClasses || this.props.data.savedClasses || null;
   }
 
   /**
@@ -149,10 +192,15 @@ FormAction.propTypes = {
   name: React.PropTypes.string,
   handleClick: React.PropTypes.func,
   title: React.PropTypes.string,
+  // Action text when there's no changes detected in the form
+  savedTitle: React.PropTypes.string,
+  savedIcon: React.PropTypes.string,
+  savedClasses: React.PropTypes.string,
   type: React.PropTypes.string,
   loading: React.PropTypes.bool,
   icon: React.PropTypes.string,
   disabled: React.PropTypes.bool,
+  changed: React.PropTypes.bool,
   data: React.PropTypes.oneOfType([
     React.PropTypes.array,
     React.PropTypes.shape({
@@ -165,11 +213,13 @@ FormAction.propTypes = {
 
 FormAction.defaultProps = {
   title: '',
+  savedTitle: null,
   icon: '',
   extraClass: '',
   attributes: {},
   data: {},
   disabled: false,
+  changed: false,
 };
 
 export default FormAction;
