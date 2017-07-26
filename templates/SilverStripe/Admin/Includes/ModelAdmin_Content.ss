@@ -33,6 +33,15 @@
 		$Tools
 
 		<div class="cms-content-view">
+			<% if $SearchSummary %>
+				<p class="message notice">
+						<a href="$Link" class="clear-search btn btn-notice font-icon-cancel">Clear search</a>
+            Search results for
+					<% loop $SearchSummary %>
+						$Field<% if $Value %>: <strong>$Value</strong><% end_if %>
+					<% end_loop %>
+				</p>
+			<% end_if %>
 			$EditForm
 		</div>
 	</div>
