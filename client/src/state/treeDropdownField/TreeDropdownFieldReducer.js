@@ -22,6 +22,8 @@ const initialFieldState = deepFreeze({
   failed: [],
   // Search term for looking for specific nodes
   search: '',
+  // a cache of selected items that may undesirably disappear due to browsing or searching
+  selectedValues: [],
 });
 
 /**
@@ -157,6 +159,19 @@ export default function treeDropdownFieldReducer(state = initialState, action = 
       return reduceField((field) => ({
         ...field,
         search: action.payload.search,
+      }));
+    }
+
+    case ACTION_TYPES.TREEFIELD_ADD_SELECTED_VALUES: {
+      const values = action.payload.values || [];
+      return reduceField(field => ({
+        ...field,
+        selectedValues: [
+          ...field.selectedValues.filter(value =>
+            !values.find(item => item.id === value.id)
+          ),
+          ...values,
+        ].sort((a, b) => a.id - b.id),
       }));
     }
 

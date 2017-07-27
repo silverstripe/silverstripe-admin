@@ -63,3 +63,10 @@ export function setSearch(fieldId, search) {
     payload: { fieldId, search },
   };
 }
+
+export function addSelectedValues(fieldId, values) {
+  return {
+    type: ACTION_TYPES.TREEFIELD_ADD_SELECTED_VALUES,
+    payload: { fieldId, values },
+  };
+}

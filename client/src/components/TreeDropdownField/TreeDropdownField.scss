@@ -52,3 +52,34 @@
   color: $gray;
   font-size: $font-size-sm;
 }
+
+.treedropdownfield__option--selected {
+  background: $gray-light;
+}
+
+.treedropdownfield__option-title--highlighted {
+  font-weight: bold;
+}
+
+// sass-lint:disable class-name-format
+.Select--multi .Select-value {
+  color: $body-color;
+  background-color: $white;
+  border-color: $input-border-focus;
+  border-radius: $border-radius;
+
+  &-icon {
+    font-size: $font-size-lg;
+    padding: 0 5px 2px;
+    border-color: $input-border-focus;
+  }
+}
+
+.Select-option.is-selected {
+  background-color: $gray-lighter;
+}
+
+.Select-option.is-focused {
+  background-color: $gray-light;
+}
+// sass-lint:enable class-name-format

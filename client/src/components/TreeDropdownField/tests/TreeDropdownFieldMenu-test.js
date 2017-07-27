@@ -61,6 +61,7 @@ describe('TreeDropdownField', () => {
         { id: 5, title: 'page five' },
         { id: 7, title: 'page seven' },
       ],
+      value: [5],
     };
   });
 
@@ -153,6 +154,7 @@ describe('TreeDropdownField', () => {
         // eslint-disable-next-line react/prop-types
         optionComponent: ({ option, className }) => <div className={className}>{option.id}</div>,
         onOptionRef: jest.fn(),
+        options: props.tree.children,
       };
       field = ReactTestUtils.renderIntoDocument(
         <TreeDropdownFieldMenu {...props} />

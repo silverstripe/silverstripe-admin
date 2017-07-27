@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import fetch from 'isomorphic-fetch';
 import Select from 'react-select';
-import i18n from 'i18n';
 import * as treeDropdownFieldActions from 'state/treeDropdownField/TreeDropdownFieldActions';
 import TreeDropdownFieldMenu from 'components/TreeDropdownField/TreeDropdownFieldMenu';
 import TreeDropdownFieldNode from 'components/TreeDropdownField/TreeDropdownFieldNode';
@@ -14,8 +13,12 @@ import { mapHighlight } from 'lib/castStringToElement';
 
 const SEARCH_DELAY = 500; // ms
 
-class TreeDropdownField extends Component {
+// legacy value for multi-select's empty value
+const MULTI_EMPTY_VALUE = 'unchanged';
 
+const SINGLE_EMPTY_VALUE = 0;
+
+class TreeDropdownField extends Component {
   constructor(props) {
     super(props);
 
@@ -27,7 +30,6 @@ class TreeDropdownField extends Component {
     // Getters
     this.getBreadcrumbs = this.getBreadcrumbs.bind(this);
     this.getDropdownOptions = this.getDropdownOptions.bind(this);
-    this.getSelectedOption = this.getSelectedOption.bind(this);
     this.getVisibleTree = this.getVisibleTree.bind(this);
 
     // Events
@@ -41,6 +43,7 @@ class TreeDropdownField extends Component {
     // Helpers
     this.callFetch = this.callFetch.bind(this);
     this.lazyLoad = this.lazyLoad.bind(this);
+    this.filterOptions = this.filterOptions.bind(this);
     this.findTreeByID = this.findTreeByID.bind(this);
     this.findTreeByPath = this.findTreeByPath.bind(this);
     this.findTreePath = this.findTreePath.bind(this);
@@ -51,7 +54,29 @@ class TreeDropdownField extends Component {
   componentDidMount() {
     // Ensure root node is loaded, force invalidating the cache when not readonly or disabled
     if (!this.props.readOnly && !this.props.disabled) {
-      this.loadTree([], true, this.props.search);
+      this.loadTree([], this.props.search)
+        .then((treeData) => {
+          // If this is the first time the tree has been loaded, then ensure
+          // the selected visible node is highlighted
+          if (this.props.data.multiple && this.props.value) {
+            const newPath = this.findTreePath(treeData, this.props.value);
+            if (newPath) {
+              // Revert one level to show parent
+              newPath.pop();
+              this.props.actions.treeDropdownField.setVisible(this.props.id, newPath);
+            }
+          }
+        });
+    }
+
+    const id = this.props.id;
+    const values = (this.props.data.multiple)
+      ? this.props.data.valueObjects || []
+      : [this.props.data.valueObject];
+    const selected = values.filter((item) => item);
+
+    if (selected.length) {
+      this.props.actions.treeDropdownField.addSelectedValues(id, selected);
     }
   }
 
@@ -75,7 +100,7 @@ class TreeDropdownField extends Component {
     }
 
     if (reload) {
-      this.loadTree(visible, false, nextProps.search);
+      this.loadTree(visible, nextProps.search);
     }
   }
 
@@ -112,52 +137,14 @@ class TreeDropdownField extends Component {
   }
 
   /**
-   * Find or mock option for selected value, suitable for use by react-tree to display the
-   * selected value. Note that a mocked object will be returned if the selected node isn't
-   * able to be found in the loaded tree.
-   *
-   * @return {Object} - The selected option object, or null if not selected.
-   */
-  getSelectedOption() {
-    if (!this.props.value) {
-      return null;
-    }
-    // Find node from loaded tree to pull out label
-    const selectedOption = this.findTreeByID(this.props.tree, this.props.value);
-    if (selectedOption) {
-      return selectedOption;
-    }
-    // Find node from data.valueObject
-    if (this.props.data.valueObject && this.props.data.valueObject.id === this.props.value) {
-      return this.props.data.valueObject;
-    }
-    // Mock selected option
-    return {
-      id: this.props.value,
-      title: i18n._t('Admin.TREEDROPDOWN_LOADING', 'Loading...'),
-      disabled: false,
-    };
-  }
-
-  /**
    * Gets array of options to pass to the react-dropdown component
    *
    * @return {Array}
    */
-  getDropdownOptions(value) {
-    // force renderMenu() to handle rendering even if options are empty
+  getDropdownOptions() {
+    const value = this.props.value;
     const node = this.getVisibleTree();
-    const options = node ? node.children.slice(0) : [];
-
-    // Ensure selected value exists in the option
-    if (value) {
-      // Get selected option
-      let selectedOption = options.find((option) => (option.id === value));
-      if (!selectedOption) {
-        selectedOption = this.getSelectedOption();
-      }
-      options.unshift(selectedOption);
-    }
+    let options = node ? [...node.children] : [];
 
     if (this.props.data.hasEmptyDefault && !this.props.visible.length && !this.hasSearch()) {
       options.unshift({
@@ -167,7 +154,29 @@ class TreeDropdownField extends Component {
       });
     }
 
-    if (options && options.length) {
+    if (this.props.selectedValues) {
+      const selectedOptions = this.props.selectedValues
+        .filter(selected => {
+          const selectedValue = selected.id === value
+            || (Array.isArray(value) && value.find(item => item === selected.id));
+
+          if (!selectedValue) {
+            return false;
+          }
+          const option = options.find(item => item.id === selected.id);
+
+          return !option;
+        });
+
+      if (selectedOptions.length) {
+        options = [
+          ...selectedOptions,
+          ...options,
+        ];
+      }
+    }
+
+    if (options.length) {
       return options;
     }
 
@@ -241,7 +250,7 @@ class TreeDropdownField extends Component {
    */
   findTreeByID(tree, id) {
     // No valid tree
-    if (!tree || Object.keys(tree).length === 0) {
+    if (!id || !tree || !tree.children || Object.keys(tree).length === 0) {
       return null;
     }
     // Found node
@@ -308,8 +317,9 @@ class TreeDropdownField extends Component {
   lazyLoad(path) {
     // If any ancestor node in visible chain is either loading or failed then abort re-load
     const foundPrev = path.find((pathNode) => (
-      [...this.props.loading, ...this.props.failed]
-        .indexOf(pathNode) > -1
+      this.props.loading.indexOf(pathNode) > -1
+        // TODO: investigate whether failed should not retry
+      || this.props.failed.indexOf(pathNode) > -1
     ));
     if (foundPrev) {
       return Promise.resolve({});
@@ -317,45 +327,30 @@ class TreeDropdownField extends Component {
 
     // If ancestor node is already loaded (and non-empty) then don't re-trigger
     const foundTree = this.findTreeByPath(this.props.tree, path);
-    if (foundTree) {
-      // Return if there are no children, or they are loaded
-      if (foundTree.count === 0 || foundTree.children.length) {
-        return Promise.resolve({});
-      }
+    // Return if there are no children, or they are loaded
+    if (foundTree && (foundTree.count === 0 || foundTree.children.length)) {
+      return Promise.resolve({});
     }
 
-    return this.loadTree(path, false);
+    return this.loadTree(path);
   }
 
   /**
    * Sets callbacks and necessary state changes around a `callFetch()`
    *
    * @param {Array} path A list of ids denoting the path the user has browsed in to
-   * @param {Boolean} loadNewPath A flag to force the selected visible node to be highlighted
    * @param {String} search A search term to use
    * @return {Promise}
    */
-  loadTree(path, loadNewPath, search = '') {
+  loadTree(path, search = '') {
     // Mark as loading
     this.props.actions.treeDropdownField.beginTreeUpdating(this.props.id, path);
 
     return this.callFetch(path, search)
       .then((treeData) => {
-        const firstLoad = Object.keys(this.props.tree).length === 0;
-
         // Populate tree
         this.props.actions.treeDropdownField.updateTree(this.props.id, path, treeData);
 
-        // If this is the first time the tree has been loaded, then ensure
-        // the selected visible node is highlighted
-        if (loadNewPath || (firstLoad && this.props.value && path.length === 0)) {
-          const newPath = this.findTreePath(treeData, this.props.value);
-          if (newPath) {
-            // Revert one level to show parent
-            newPath.pop();
-            this.props.actions.treeDropdownField.setVisible(this.props.id, newPath);
-          }
-        }
         return treeData;
       })
       .catch((error) => {
@@ -391,16 +386,21 @@ class TreeDropdownField extends Component {
    * @param {String|Array} values A value or list of values selected
    * @return {Object[]}
    */
-  filterOptions(options, filter, values) {
-    // TODO: change this to use prop when multi-select is implemented
-    const multiSelect = false;
-    if (!multiSelect) {
-      return options;
-    }
-    // From react-select docs:
-    // For multi-select inputs, when providing a custom filterOptions method,
-    // remember to exclude current values from the returned array of options.
-    return options.filter((option) => !option.id || !values.includes(option.id));
+  filterOptions(options) {
+    const parent = this.getVisibleTree();
+
+    return options.filter((option) => {
+      const title = option.title && option.title.toLocaleLowerCase();
+      // using this.props.search so that we do not get flash of filtered current content
+      const search = this.props.search.toLocaleLowerCase();
+
+      // need to do some checks for the selected options, so that they do not show unnecessarily
+      return (search)
+        // only show option if matches search filter
+        ? title && title.includes(search)
+        // only show option if it belongs in the current visible tree
+        : !parent || !option.id || parent.children.find((child) => child.id === option.id);
+    });
   }
 
   /**
@@ -428,15 +428,35 @@ class TreeDropdownField extends Component {
   /**
    * Handles changes to the text field's value.
    *
-   * @param {Object|Array} option - New value / option
+   * @param {Object|Array} value - New value / option
    */
-  handleChange(option) {
-    // TODO option could be an array for multi-select mode
+  handleChange(value) {
+    let mappedValue = null;
 
-    // Get node ID from object
-    const id = option ? option.id : null;
+    this.handleSearchReset();
+    if (this.props.data.multiple) {
+      mappedValue = MULTI_EMPTY_VALUE;
+
+      if (value && value.length) {
+        const uniqueValues = value && value.filter((item, index) => value.indexOf(item) === index);
+        mappedValue = uniqueValues.map(item => item.id);
+
+        this.props.actions.treeDropdownField.addSelectedValues(this.props.id, uniqueValues);
+      }
+    } else {
+      // Get node ID from object
+      const id = value ? value.id : null;
+      const tree = this.getVisibleTree() || this.props.tree;
+      const object = tree.children.find(item => item.id === id);
+      if (object) {
+        this.props.actions.treeDropdownField.addSelectedValues(this.props.id, [object]);
+      }
+
+      mappedValue = id || SINGLE_EMPTY_VALUE;
+    }
+
     if (typeof this.props.onChange === 'function') {
-      this.props.onChange(id);
+      this.props.onChange(mappedValue);
     }
   }
 
@@ -535,24 +555,24 @@ class TreeDropdownField extends Component {
    */
   renderMenu(renderMenuOptions) {
     // Build root node
-    const visibleTree = this.getVisibleTree();
-    const tree = Object.assign({}, visibleTree, {
-      // we only want to show options with a title
-      children: this.getDropdownOptions().filter((option) => option.title !== null),
-    });
-    const loading = this.props.loading.indexOf(tree.id || 0) > -1;
-    const failed = this.props.failed.indexOf(tree.id || 0) > -1;
+    const visibleTree = this.getVisibleTree() || {};
+    const loading = this.props.loading.indexOf(visibleTree.id || 0) > -1;
+    const failed = this.props.failed.indexOf(visibleTree.id || 0) > -1;
     const breadcrumbs = this.getBreadcrumbs();
+    const value = (this.props.data.multiple)
+      ? this.props.value
+      : [this.props.value];
 
     return (
       <TreeDropdownFieldMenu
         loading={loading}
         failed={failed}
-        tree={tree}
+        tree={visibleTree}
         breadcrumbs={breadcrumbs}
         renderMenuOptions={renderMenuOptions}
         onBack={this.handleBack}
         search={this.hasSearch()}
+        value={value}
       />
     );
   }
@@ -564,7 +584,6 @@ class TreeDropdownField extends Component {
    * @param {Object} tree - Tree being rendered
    */
   renderOption(tree) {
-    // @todo - render child properly
     let button = null;
     if (tree.count && !this.hasSearch()) {
       const handleNavigate = (event) => this.handleNavigate(event, tree.id);
@@ -580,11 +599,14 @@ class TreeDropdownField extends Component {
       );
     }
 
+    const Highlight = ({ children }) => (
+      <span className="treedropdownfield__option-title--highlighted">{children}</span>
+    );
     const title = (this.props.search.length)
-      ? mapHighlight(tree.title, this.props.search, 'b')
+      ? mapHighlight(tree.title, this.props.search, Highlight)
       : tree.title;
-    let subtitle = null;
 
+    let subtitle = null;
     if (this.hasSearch()) {
       subtitle = tree.contextString;
 
@@ -606,7 +628,12 @@ class TreeDropdownField extends Component {
     );
   }
 
-  render() {
+  /**
+   * Fallback to a textbox for readonly and disabled status react-select isn't ideal for display
+   *
+   * @return {React}
+   */
+  renderReadOnly() {
     const inputProps = {
       id: this.props.id,
       readOnly: this.props.readOnly,
@@ -615,8 +642,55 @@ class TreeDropdownField extends Component {
     const className = this.props.extraClass
       ? `treedropdownfield ${this.props.extraClass}`
       : 'treedropdownfield';
-    const options = this.getDropdownOptions(this.props.value);
-    const value = (this.props.value === 0) ? '' : this.props.value;
+    let title = (this.props.data.hasEmptyDefault) ? this.props.data.emptyString : '';
+    const selected = this.props.selectedValues;
+
+    if (this.props.data.multiple) {
+      const values = this.props.value
+        .map((value) => (
+          // assumes all selected values had been populated into `props.selectedValues`
+          selected.find((item) => item.id === value) ||
+          value
+        ));
+
+      title = values.map(value => value.title).join(', ');
+    } else {
+      const value = selected.find((item) => item.id === this.props.value);
+      title = this.props.value;
+
+      if (value && typeof value.title === 'string') {
+        title = value.title;
+      }
+    }
+
+    return (
+      <div className={className}>
+        <span className="treedropdownfield__title">{title}</span>
+        <FormControl
+          type="hidden"
+          name={this.props.name}
+          value={this.props.value}
+          {...inputProps}
+        />
+      </div>
+    );
+  }
+
+  render() {
+    if (this.props.readOnly || this.props.disabled) {
+      return this.renderReadOnly();
+    }
+
+    const inputProps = {
+      id: this.props.id,
+    };
+    const className = this.props.extraClass
+      ? `treedropdownfield ${this.props.extraClass}`
+      : 'treedropdownfield';
+    const options = this.getDropdownOptions();
+    const value = (this.props.data.multiple)
+      ? this.props.selectedValues.filter(item => this.props.value.includes(item.id))
+      : this.props.value;
     const resetValue = (this.props.data.hasEmptyDefault && !this.props.visible.length)
       ? ''
       : null;
@@ -624,30 +698,10 @@ class TreeDropdownField extends Component {
       ? this.props.data.showSearch
       : false;
 
-    if (this.props.readOnly || this.props.disabled) {
-      // fallback to a textbox for readonly and disabled status
-      // react-select isn't ideal for display
-      const option = this.props.data.valueObject;
-      let title = option && option.title;
-      if (typeof title === 'undefined' || title === null) {
-        title = this.props.data.emptyString;
-      }
-      return (
-        <div className={className}>
-          <span>{title}</span>
-          <FormControl
-            type="hidden"
-            name={this.props.name}
-            value={this.props.value}
-            {...inputProps}
-          />
-        </div>
-      );
-    }
-
     return (
       <Select
         searchable={showSearch}
+        multi={this.props.data.multiple}
         className={className}
         name={this.props.name}
         options={options}
@@ -660,6 +714,7 @@ class TreeDropdownField extends Component {
         onBlurResetsInput
         onInputKeyDown={this.handleKeyDown}
         onInputChange={this.handleSearchChange}
+        isLoading={Boolean(this.props.loading.length)}
         value={value}
         resetValue={resetValue}
         ref={(select) => { this.selectField = select; }}
@@ -676,35 +731,32 @@ TreeDropdownField.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.array,
+  ]),
   readOnly: PropTypes.bool,
   disabled: PropTypes.bool,
   tree: PropTypes.shape(TreeDropdownFieldNode.propTypes), // Root node of tree
   visible: PropTypes.array, // Path to visible node
   loading: PropTypes.array, // List of nodes marked as loading
   failed: PropTypes.array, // List of nodes that failed to load
+  selectedValues: PropTypes.array,
   data: PropTypes.shape({
     cacheKey: PropTypes.string,
     urlTree: PropTypes.string.isRequired,
     emptyString: PropTypes.string,
-    valueObject: PropTypes.shape({
-      id: PropTypes.number,
-      title: PropTypes.string,
-    }),
+    valueObject: PropTypes.shape(TreeDropdownFieldNode.propTypes),
+    valueObjects: PropTypes.arrayOf(PropTypes.shape(TreeDropdownFieldNode.propTypes)),
     hasEmptyDefault: PropTypes.bool,
     showSearch: PropTypes.bool,
+    multiple: PropTypes.bool,
   }),
   onLoadingError: PropTypes.func,
   search: PropTypes.string,
   actions: PropTypes.shape({
-    treeDropdownField: PropTypes.shape({
-      beginTreeUpdating: PropTypes.func,
-      updateTreeFailed: PropTypes.func,
-      updateTree: PropTypes.func,
-      setVisible: PropTypes.func,
-      setSearch: PropTypes.func,
-      resetTreefield: PropTypes.func,
-    }),
+    treeDropdownField: PropTypes.object,
   }),
 };
 
@@ -719,22 +771,30 @@ TreeDropdownField.defaultProps = {
   failed: [],
 };
 
-function mapStateToProps(state, ownprops) {
-  const id = ownprops.id;
-  const field = (state.treeDropdownField && state.treeDropdownField.fields)
+function mapStateToProps(state, ownProps) {
+  const id = ownProps.id;
+  const field = (state.treeDropdownField.fields[id])
     ? state.treeDropdownField.fields[id]
-    : null;
+    : {
+      tree: {},
+      visible: [],
+      loading: [],
+      failed: [],
+      search: '',
+      selectedValues: [],
+    };
 
-  if (field) {
-    const tree = field.tree || {};
-    const visible = field.visible || [];
-    const loading = field.loading || [];
-    const failed = field.failed || [];
-    const search = (typeof field.search === 'string') ? field.search : '';
+  let value = ownProps.value;
 
-    return { tree, visible, loading, failed, search };
+  if (ownProps.data.multiple && ownProps.value === MULTI_EMPTY_VALUE) {
+    value = [];
   }
-  return {};
+
+  if (!ownProps.data.multiple && ownProps.value === SINGLE_EMPTY_VALUE) {
+    value = '';
+  }
+
+  return { ...field, value };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -747,6 +807,6 @@ function mapDispatchToProps(dispatch) {
 
 const ConnectedTreeDropdownField = connect(mapStateToProps, mapDispatchToProps)(TreeDropdownField);
 
-export { TreeDropdownField, ConnectedTreeDropdownField };
+export { TreeDropdownField, ConnectedTreeDropdownField, MULTI_EMPTY_VALUE, SINGLE_EMPTY_VALUE };
 
 export default fieldHolder(ConnectedTreeDropdownField);

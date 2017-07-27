@@ -9,7 +9,7 @@ jest.mock('isomorphic-fetch', () =>
 
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
-import { TreeDropdownField } from '../TreeDropdownField';
+import { TreeDropdownField, MULTI_EMPTY_VALUE, SINGLE_EMPTY_VALUE } from '../TreeDropdownField';
 
 describe('TreeDropdownField', () => {
   let props = null;
@@ -80,6 +80,7 @@ describe('TreeDropdownField', () => {
           },
         ],
       },
+      search: '',
       actions: {
         treeDropdownField: {
           beginTreeUpdating: jest.fn(),
@@ -87,9 +88,61 @@ describe('TreeDropdownField', () => {
           updateTree: jest.fn(),
           setVisible: jest.fn(),
           setSearch: jest.fn(),
+          addSelectedValues: jest.fn(),
         },
       },
+      selectedValues: [],
     };
+  });
+
+  describe('componentDidMount()', () => {
+    describe('single-select', () => {
+      it('should add valueObject to selectedValues', () => {
+        props.data.valueObject = { id: 67 };
+        field = ReactTestUtils.renderIntoDocument(
+          <TreeDropdownField {...props} />
+        );
+
+        expect(props.actions.treeDropdownField.addSelectedValues).toBeCalledWith(
+          props.id,
+          [{ id: 67 }]
+        );
+      });
+
+      it('should not call selectedValues without a valueObject', () => {
+        field = ReactTestUtils.renderIntoDocument(
+          <TreeDropdownField {...props} />
+        );
+
+        expect(props.actions.treeDropdownField.addSelectedValues).not.toBeCalled();
+      });
+    });
+
+    describe('multi-select', () => {
+      beforeEach(() => {
+        props.data.multiple = true;
+      });
+
+      it('should add valueObjects to selectedValues', () => {
+        props.data.valueObjects = [{ id: 67 }, { id: 12 }];
+        field = ReactTestUtils.renderIntoDocument(
+          <TreeDropdownField {...props} />
+        );
+
+        expect(props.actions.treeDropdownField.addSelectedValues).toBeCalledWith(
+          props.id,
+          [{ id: 67 }, { id: 12 }]
+        );
+      });
+
+      it('should not call selectedValues without a valueObjects', () => {
+        field = ReactTestUtils.renderIntoDocument(
+          <TreeDropdownField {...props} />
+        );
+
+        expect(props.actions.treeDropdownField.addSelectedValues).not.toBeCalled();
+      });
+    });
   });
 
   describe('handleSearchReset()', () => {
@@ -106,7 +159,7 @@ describe('TreeDropdownField', () => {
     });
   });
 
-  describe('handleSearchReset()', () => {
+  describe('handleSearchChange()', () => {
     beforeEach(() => {
       field = ReactTestUtils.renderIntoDocument(
         <TreeDropdownField {...props} />
@@ -123,6 +176,81 @@ describe('TreeDropdownField', () => {
       callback();
 
       expect(props.actions.treeDropdownField.setSearch).toBeCalledWith(props.id, 'searching');
+    });
+  });
+
+  describe('handleChange()', () => {
+    describe('single-select', () => {
+      beforeEach(() => {
+        props.onChange = jest.fn();
+        props.visible = [7];
+
+        field = ReactTestUtils.renderIntoDocument(
+          <TreeDropdownField {...props} />
+        );
+
+        field.handleSearchReset = jest.fn();
+        field.props.actions.treeDropdownField.addSelectedValues = jest.fn();
+      });
+
+      it('should return the id for the selected value', () => {
+        field.handleChange({ id: 15 });
+
+        expect(field.handleSearchReset).toBeCalled();
+        expect(field.props.onChange).toBeCalledWith(15);
+        expect(field.props.actions.treeDropdownField.addSelectedValues).toBeCalledWith(
+          props.id,
+          [
+            {
+              id: 15,
+              title: 'page fifteen',
+              count: 0,
+              children: [],
+            },
+          ]
+        );
+      });
+
+      it('should return "0" for no selected value', () => {
+        field.handleChange(null);
+
+        expect(field.handleSearchReset).toBeCalled();
+        expect(field.props.onChange).toBeCalledWith(SINGLE_EMPTY_VALUE);
+        expect(field.props.actions.treeDropdownField.addSelectedValues).not.toBeCalled();
+      });
+    });
+
+    describe('multi-select', () => {
+      beforeEach(() => {
+        props.data.multiple = true;
+        props.onChange = jest.fn();
+
+        field = ReactTestUtils.renderIntoDocument(
+          <TreeDropdownField {...props} />
+        );
+
+        field.handleSearchReset = jest.fn();
+        field.props.actions.treeDropdownField.addSelectedValues = jest.fn();
+      });
+
+      it('should return an array of ids for the selected values', () => {
+        field.handleChange([{ id: 15 }, { id: 65 }]);
+
+        expect(field.handleSearchReset).toBeCalled();
+        expect(field.props.onChange).toBeCalledWith([15, 65]);
+        expect(field.props.actions.treeDropdownField.addSelectedValues).toBeCalledWith(
+          props.id,
+          [{ id: 15 }, { id: 65 }]
+        );
+      });
+
+      it('should return "unchanged" for no selected values', () => {
+        field.handleChange([]);
+
+        expect(field.handleSearchReset).toBeCalled();
+        expect(field.props.onChange).toBeCalledWith(MULTI_EMPTY_VALUE);
+        expect(field.props.actions.treeDropdownField.addSelectedValues).not.toBeCalled();
+      });
     });
   });
 
@@ -418,14 +546,14 @@ describe('TreeDropdownField', () => {
     it('should include the selected value/title if node has no children', () => {
       props.visible = [7, 27];
       props.value = 35;
-      props.data.valueObject = {
+      props.selectedValues = [{
         id: 35,
         title: 'Selected',
-      };
+      }];
       field = ReactTestUtils.renderIntoDocument(
         <TreeDropdownField {...props} />
       );
-      const options = field.getDropdownOptions(35);
+      const options = field.getDropdownOptions();
 
       expect(options.length).toBe(1);
       expect(options[0].id).toBe(35);
@@ -435,14 +563,15 @@ describe('TreeDropdownField', () => {
     it('should include the selected value/title appended to list', () => {
       props.visible = [5, 9];
       props.value = 15;
-      props.data.valueObject = {
+      props.selectedValues = [{
         id: 15,
         title: 'page fifteen',
-      };
+      }];
       field = ReactTestUtils.renderIntoDocument(
         <TreeDropdownField {...props} />
       );
-      const options = field.getDropdownOptions(35);
+
+      const options = field.getDropdownOptions();
 
       expect(options.length).toBe(3);
       expect(options[0].id).toBe(15);
@@ -482,6 +611,52 @@ describe('TreeDropdownField', () => {
       const options = field.getDropdownOptions();
 
       expect(options.length).toBe(2);
+    });
+  });
+
+  describe('filterOptions()', () => {
+    let options = null;
+
+    beforeEach(() => {
+      options = [
+        { id: 57 },
+        { id: 68, title: 'sixty eight' },
+        { id: 5, title: 'five' },
+      ];
+    });
+
+    it('should not filter any options if search is not set and no "parent"', () => {
+      field = ReactTestUtils.renderIntoDocument(
+        <TreeDropdownField {...props} />
+      );
+      field.getVisibleTree = () => null;
+
+      const newOptions = field.filterOptions(options);
+
+      expect(newOptions).toEqual(options);
+    });
+
+    it('should filter options not belonging to a parent when no search', () => {
+      field = ReactTestUtils.renderIntoDocument(
+        <TreeDropdownField {...props} />
+      );
+      field.getVisibleTree = () => props.tree;
+
+      const newOptions = field.filterOptions(options);
+
+      expect(newOptions).toEqual([{ id: 5, title: 'five' }]);
+    });
+
+    it('should filter titles that do not contain "i"', () => {
+      props.search = 'i';
+      field = ReactTestUtils.renderIntoDocument(
+        <TreeDropdownField {...props} />
+      );
+      field.getVisibleTree = () => null;
+
+      const newOptions = field.filterOptions(options);
+
+      expect(newOptions).toEqual(options.filter(item => item.id !== 57));
     });
   });
 });

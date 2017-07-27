@@ -1,12 +1,22 @@
 import React from 'react';
 
+/**
+ * Searches the given string and highlights/marks instances of needle found
+ * with the given tag
+ *
+ * @param {string} haystack
+ * @param {string} needle
+ * @param {React|string} Tag
+ * @return {Array}
+ */
 export function mapHighlight(haystack, needle, Tag) {
   let index = 0;
   let search = haystack;
   const results = [];
+  const part = needle.toLocaleLowerCase();
 
   while (index !== -1) {
-    index = search.toLocaleLowerCase().indexOf(needle.toLocaleLowerCase());
+    index = search.toLocaleLowerCase().indexOf(part);
 
     if (index !== -1) {
       const next = index + needle.length;
