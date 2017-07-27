@@ -150,7 +150,7 @@ class BootRoutes {
 
         // Verify that this is a true state change. E.g. not a hash change.
         // This emulates behaviour of old html history.js
-        const forceReload = ctx.data && ctx.data.__forceReload;
+        const forceReload = ctx.state && ctx.state.__forceReload;
         if (ctx.path !== lastPath || forceReload) {
           // Load the panel and stop processing routes.
           lastPath = ctx.path.replace(/#.*$/, '');

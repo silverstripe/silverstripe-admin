@@ -260,6 +260,20 @@ abstract class ModelAdmin extends LeftAndMain
     }
 
     /**
+     * Gets a list of fields that have been searched
+     *
+     * @return SilverStripe\ORM\ArrayList
+     */
+    public function SearchSummary()
+    {
+        $context = $this->getSearchContext();
+        $params = $this->getRequest()->requestVar('q') ?: [];
+        $context->setSearchParams($params);
+
+        return $context->getSummary();
+    }
+
+    /**
      * @return \SilverStripe\Forms\Form|bool
      */
     public function SearchForm()
@@ -276,9 +290,9 @@ abstract class ModelAdmin extends LeftAndMain
             "SearchForm",
             $context->getSearchFields(),
             new FieldList(
-                FormAction::create('search', _t(__CLASS__.'.APPLY_FILTER', 'Apply Filter'))
+                FormAction::create('search', _t(__CLASS__ . '.APPLY_FILTER', 'Apply Filter'))
                     ->setUseButtonTag(true)->addExtraClass('btn-primary'),
-                FormAction::create('clearsearch', _t(__CLASS__.'.RESET', 'Reset'))
+                FormAction::create('clearsearch', _t(__CLASS__ . '.RESET', 'Reset'))
                     ->setAttribute('type', 'reset')
                     ->setUseButtonTag(true)->addExtraClass('btn-secondary')
             ),
@@ -340,17 +354,16 @@ abstract class ModelAdmin extends LeftAndMain
 
 
     /**
-
      * @return \SilverStripe\ORM\ArrayList An ArrayList of all managed models to build the tabs for this ModelAdmin
      */
     protected function getManagedModelTabs()
     {
         $models = $this->getManagedModels();
-        $forms  = new ArrayList();
+        $forms = new ArrayList();
 
         foreach ($models as $class => $options) {
-            $forms->push(new ArrayData(array (
-                'Title'     => $options['title'],
+            $forms->push(new ArrayData(array(
+                'Title' => $options['title'],
                 'ClassName' => $class,
                 'Link' => $this->Link($this->sanitiseClassName($class)),
                 'LinkOrCurrent' => ($class == $this->modelClass) ? 'current' : 'link'
@@ -533,7 +546,8 @@ abstract class ModelAdmin extends LeftAndMain
     public function import($data, $form, $request)
     {
         if (!$this->showImportForm || (is_array($this->showImportForm)
-                && !in_array($this->modelClass, $this->showImportForm))) {
+                && !in_array($this->modelClass, $this->showImportForm))
+        ) {
             return false;
         }
 
