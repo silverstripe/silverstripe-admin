@@ -8,10 +8,12 @@ jest.mock('redux-form', () => ({
   isInvalid: (name, getFormState) => (state) => !getFormState(state)[name].valid,
 }));
 
+jest.mock('../../getFormState', () => (state) => state && state.form || {});
+
 describe('FormStateManager', () => {
   let manager = null;
   let schema = null;
-  let reduxFormState = null;
+  let globalState = null;
   beforeEach(() => {
     schema = {
       name: 'TestForm',
@@ -29,23 +31,25 @@ describe('FormStateManager', () => {
       },
     };
 
-    reduxFormState = {
-      values: {
-        test: 'yes',
-        uncle: 'cheese',
+    globalState = {
+      form: {
+        TestForm: {
+          values: {
+            test: 'yes',
+            uncle: 'cheese',
+          },
+          dirty: true,
+          valid: true,
+        },
       },
-      dirty: true,
-      valid: true,
     };
 
-    manager = new FormStateManager(schema, reduxFormState);
+    manager = new FormStateManager(schema, globalState);
   });
   it('Constructs', () => {
     expect(manager.getState()).not.toBe(schema);
-    expect(manager.getState().state.fields.length).toBe(2);
-    expect(manager.mockGlobalState).toEqual({
-      TestForm: reduxFormState,
-    });
+    expect(manager.getState().fields.length).toBe(2);
+    expect(manager.globalState).toBe(globalState);
   });
 
   it('Gets fields', () => {
@@ -59,7 +63,7 @@ describe('FormStateManager', () => {
       ...field,
       newField: 'test',
     }));
-    expect(manager.getState().state.fields[0].newField).toBe('test');
+    expect(manager.getState().fields[0].newField).toBe('test');
     expect(manager.getFieldByName('Field One').newField).toBe('test');
     const prev = manager.getState();
     manager.mutateField('fail', (field) => ({
@@ -73,7 +77,7 @@ describe('FormStateManager', () => {
     manager.updateField('Field Two', {
       testField: 'foo',
     });
-    expect(manager.getState().state.fields[1].testField).toBe('foo');
+    expect(manager.getState().fields[1].testField).toBe('foo');
     expect(manager.getFieldByName('Field Two').testField).toBe('foo');
   });
 
@@ -90,7 +94,7 @@ describe('FormStateManager', () => {
       },
     });
 
-    const newState = manager.getState().state;
+    const newState = manager.getState();
     expect(newState.fields[0].a).toBe('first');
     expect(newState.fields[1].b).toBe('second');
     expect(manager.getFieldByName('Fail')).toBeFalsy();
@@ -98,8 +102,8 @@ describe('FormStateManager', () => {
 
   it('Sets field components', () => {
     manager.setFieldComponent('Field One', 'TextField');
-    expect(manager.getState().state.fields[0].component).toBeTruthy();
-    expect(manager.getState().state.fields[0].component).toBe('TextField');
+    expect(manager.getState().fields[0].component).toBeTruthy();
+    expect(manager.getState().fields[0].component).toBe('TextField');
   });
 
   it('Sets field classes', () => {
@@ -111,7 +115,7 @@ describe('FormStateManager', () => {
       .setFieldClass('Field One', 'carlino', false)
       .getState();
 
-    expect(newState.state.fields[0].extraClass).toBe('uncle cheese');
+    expect(newState.fields[0].extraClass).toBe('uncle cheese');
   });
 
   it('Uses redux-form selectors', () => {
