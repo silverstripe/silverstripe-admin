@@ -1,6 +1,5 @@
 import buildBaseContainer from './buildBaseContainer';
-import SchemaStateManager from './SchemaStateManager';
-
+import FormStateManager from './FormStateManager';
 const SCHEMA_MIDDLEWARE_SERVICE = 'FormSchemaMiddleware';
 const VALIDATION_MIDDLEWARE_SERVICE = 'FormValidationMiddleware';
 
@@ -11,7 +10,7 @@ const buildFormContainer = (base = buildBaseContainer()) => ({
    * The two middleware services are loaded by default
    */
   services: {
-    [SCHEMA_MIDDLEWARE_SERVICE]: (values, state) => state,
+    [SCHEMA_MIDDLEWARE_SERVICE]: (state) => state,
     [VALIDATION_MIDDLEWARE_SERVICE]: (values, errors = {}) => errors,
   },
 
@@ -103,22 +102,22 @@ const buildFormContainer = (base = buildBaseContainer()) => ({
   },
 
   /**
-   * Crates a function that runs a series of state transformations
+   * Creates a function that runs a series of state transformations
    * against the schema state and returns the new state
    *
    * @param {array} factories
    * @returns {function}
    */
   getSchemaReducer(factories) {
-    return (values, schemaState) =>
+    return (schema, globalState) =>
       factories.reduce((currentState, currentFactory) => {
-        const manager = new SchemaStateManager(currentState);
-        const modifications = currentFactory(values, manager);
+        const manager = new FormStateManager(currentState, globalState);
+        const modifications = currentFactory(manager);
         return {
           ...currentState,
           ...modifications,
         };
-      }, schemaState);
+      }, schema);
   },
 
   /**

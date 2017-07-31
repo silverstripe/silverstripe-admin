@@ -1,16 +1,31 @@
 import classnames from 'classnames';
 import createClassMap from '../createClassMap';
+import getFormState from '../getFormState';
+import {
+  getFormValues,
+  isDirty,
+  isPristine,
+  isValid,
+  isInvalid,
+} from 'redux-form';
+
 /**
  * An API for updating schema state
  */
-class SchemaStateManager {
+class FormStateManager {
 
   /**
    * Constructor
-   * @param {object} schemaState
+   * @param {object} schema
    */
-  constructor(schemaState) {
-    this.schemaState = { ...schemaState };
+  constructor(schema, globalState) {
+    this.schema = {
+      ...schema,
+      state: {
+        ...schema.state,
+      },
+    };
+    this.globalState = globalState;
   }
 
   /**
@@ -19,17 +34,17 @@ class SchemaStateManager {
    * @return {object}
    */
   getFieldByName(fieldName) {
-    return this.schemaState.fields.find(field => field.name === fieldName);
+    return this.schema.state.fields.find(field => field.name === fieldName);
   }
 
   /**
    * Updates a field by callback
    * @param {string} fieldName
    * @param {function} updater
-   * @returns {SchemaStateManager}
+   * @returns {FormStateManager}
    */
   mutateField(fieldName, updater) {
-    const fieldList = this.schemaState.fields || [];
+    const fieldList = this.schema.state.fields || [];
     const fieldIndex = fieldList.findIndex(field => field.name === fieldName);
     if (fieldIndex < 0) {
       return this;
@@ -37,7 +52,7 @@ class SchemaStateManager {
     const field = fieldList[fieldIndex];
     const fields = [...fieldList];
     fields[fieldIndex] = { ...updater(field) };
-    this.schemaState.fields = fields;
+    this.schema.state.fields = fields;
 
     return this;
   }
@@ -46,7 +61,7 @@ class SchemaStateManager {
    * Merges properties into a field
    * @param {string} fieldName
    * @param {object} update
-   * @returns {SchemaStateManager}
+   * @returns {FormStateManager}
    */
   updateField(fieldName, update) {
     return this.mutateField(fieldName, (field) => ({
@@ -59,7 +74,7 @@ class SchemaStateManager {
    * Updates multiple fields given a map of fieldname
    * to mutation
    * @param {object} updates
-   * @returns {SchemaStateManager}
+   * @returns {FormStateManager}
    */
   updateFields(updates) {
     Object.keys(updates).forEach(key => {
@@ -73,7 +88,7 @@ class SchemaStateManager {
    * Sets a component for a field
    * @param {string} fieldName
    * @param {string} component The component as registered in Injector
-   * @returns {SchemaStateManager}
+   * @returns {FormStateManager}
    */
   setFieldComponent(fieldName, component) {
     return this.updateField(fieldName, { component });
@@ -84,7 +99,7 @@ class SchemaStateManager {
    * @param {string} fieldName
    * @param {string} className
    * @param {boolean} active
-   * @returns {SchemaStateManager}
+   * @returns {FormStateManager}
    */
   setFieldClass(fieldName, className, active = true) {
     return this.mutateField(fieldName, (field) => {
@@ -101,7 +116,7 @@ class SchemaStateManager {
    * Adds a CSS class to a field
    * @param {string} fieldName
    * @param {string} className
-   * @returns {SchemaStateManager}
+   * @returns {FormStateManager}
    */
   addFieldClass(fieldName, className) {
     return this.setFieldClass(fieldName, className, true);
@@ -111,10 +126,74 @@ class SchemaStateManager {
    * Removes a CSS class from a field
    * @param {string} fieldName
    * @param {string} className
-   * @returns {SchemaStateManager}
+   * @returns {FormStateManager}
    */
   removeFieldClass(fieldName, className) {
     return this.setFieldClass(fieldName, className, false);
+  }
+
+  /**
+   * Gets a map of form field names to their values
+   * @returns {object}
+   */
+  getValues() {
+    return getFormValues(
+        this.schema.name,
+        getFormState
+      )(this.globalState) || {};
+  }
+
+  /**
+   * Gets the value of a single form field
+   * @param fieldName
+   * @returns {string}
+   */
+  getValue(fieldName) {
+    return this.getValues()[fieldName];
+  }
+
+  /**
+   * Returns true if any form fields have been altered from their original state
+   * @returns {boolean}
+   */
+  isDirty() {
+    return isDirty(
+      this.schema.name,
+      getFormState
+    )(this.globalState);
+  }
+
+  /**
+   * Returns true if no form fields have been altered from their original state
+   * @returns {boolean}
+   */
+  isPristine() {
+    return isPristine(
+      this.schema.name,
+      getFormState
+    )(this.globalState);
+  }
+
+  /**
+   * Returns true if the form passes all of its validation rules
+   * @returns {boolean}
+   */
+  isValid() {
+    return isValid(
+      this.schema.name,
+      getFormState
+    )(this.globalState);
+  }
+
+  /**
+   * Returns true if the form fails validation
+   * @returns {boolean}
+   */
+  isInvalid() {
+    return isInvalid(
+      this.schema.name,
+      getFormState
+    )(this.globalState);
   }
 
   /**
@@ -122,8 +201,9 @@ class SchemaStateManager {
    * @returns {object}
    */
   getState() {
-    return this.schemaState;
+    return this.schema.state;
   }
+
 }
 
-export default SchemaStateManager;
+export default FormStateManager;
