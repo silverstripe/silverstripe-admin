@@ -244,17 +244,22 @@ class FormBuilderLoader extends Component {
     // using `this.state.fetching` caused race-condition issues.
     this.props.actions.schema.setSchemaLoading(this.props.schemaUrl, true);
 
+    if (typeof this.props.onFetchingSchema === 'function') {
+      this.props.onFetchingSchema();
+    }
+
     return this.callFetch(headerValues)
       .then(formSchema => {
         this.props.actions.schema.setSchemaLoading(this.props.schemaUrl, false);
 
-        if (typeof this.props.onFetchingSchema === 'function') {
-          this.props.onFetchingSchema();
-        }
-
-        if (formSchema.errors &&
-          typeof this.props.onLoadingError === 'function') {
-          return this.props.onLoadingError(formSchema);
+        if (formSchema.errors) {
+          if (typeof this.props.onLoadingError === 'function') {
+            this.props.onLoadingError(formSchema);
+          }
+        } else {
+          if (typeof this.props.onLoadingSuccess === 'function') {
+            this.props.onLoadingSuccess();
+          }
         }
 
         if (typeof formSchema.id !== 'undefined') {
