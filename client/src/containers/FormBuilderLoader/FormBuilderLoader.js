@@ -1,11 +1,10 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { compose, bindActionCreators } from 'redux';
 import fetch from 'isomorphic-fetch';
 import deepFreeze from 'deep-freeze-strict';
 import {
   SubmissionError,
-  destroy as reduxDestroyForm,
   autofill,
   initialize,
 } from 'redux-form';
@@ -21,7 +20,6 @@ class FormBuilderLoader extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.clearSchema = this.clearSchema.bind(this);
     this.reduceSchemaErrors = this.reduceSchemaErrors.bind(this);
     this.handleAutofill = this.handleAutofill.bind(this);
   }
@@ -32,13 +30,8 @@ class FormBuilderLoader extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.schemaUrl !== prevProps.schemaUrl) {
-      this.clearSchema(prevProps.schemaUrl);
       this.fetch();
     }
-  }
-
-  componentWillUnmount() {
-    this.clearSchema(this.props.schemaUrl);
   }
 
   /**
@@ -60,15 +53,6 @@ class FormBuilderLoader extends Component {
       });
     }
     return messages;
-  }
-
-  clearSchema(schemaUrl) {
-    if (schemaUrl) {
-      // we will reload the schema anyway when we mount again, this is here so that redux-form
-      // doesn't preload previous data mistakenly. (since it only accepts initialised values)
-      reduxDestroyForm(schemaUrl);
-      this.props.actions.schema.setSchema(schemaUrl, null, this.props.identifier);
-    }
   }
 
   /**
@@ -260,17 +244,22 @@ class FormBuilderLoader extends Component {
     // using `this.state.fetching` caused race-condition issues.
     this.props.actions.schema.setSchemaLoading(this.props.schemaUrl, true);
 
+    if (typeof this.props.onFetchingSchema === 'function') {
+      this.props.onFetchingSchema();
+    }
+
     return this.callFetch(headerValues)
       .then(formSchema => {
         this.props.actions.schema.setSchemaLoading(this.props.schemaUrl, false);
 
-        if (typeof this.props.onFetchingSchema === 'function') {
-          this.props.onFetchingSchema();
-        }
-
-        if (formSchema.errors &&
-          typeof this.props.onLoadingError === 'function') {
-          return this.props.onLoadingError(formSchema);
+        if (formSchema.errors) {
+          if (typeof this.props.onLoadingError === 'function') {
+            this.props.onLoadingError(formSchema);
+          }
+        } else {
+          if (typeof this.props.onLoadingSuccess === 'function') {
+            this.props.onLoadingSuccess();
+          }
         }
 
         if (typeof formSchema.id !== 'undefined') {
@@ -375,16 +364,19 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const ConnectedFormBuilderLoader = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FormBuilderLoader);
+export { FormBuilderLoader };
 
-export default inject(
-  ['ReduxForm', 'ReduxFormField'],
-  (Form, Field) => ({
-    baseFormComponent: Form,
-    baseFieldComponent: Field,
-  }),
-  ({ identifier }) => identifier
-)(ConnectedFormBuilderLoader);
+export default compose(
+  inject(
+    ['ReduxForm', 'ReduxFormField'],
+    (Form, Field) => ({
+      baseFormComponent: Form,
+      baseFieldComponent: Field,
+    }),
+    ({ identifier }) => identifier
+  ),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(FormBuilderLoader);
