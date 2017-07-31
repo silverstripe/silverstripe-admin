@@ -1,28 +1,55 @@
 /* global jest, jasmine, describe, beforeEach, it, pit, expect, process */
-import SchemaStateManager from '../SchemaStateManager';
+import FormStateManager from '../FormStateManager';
+jest.mock('redux-form', () => ({
+  isDirty: (name, getFormState) => (state) => getFormState(state)[name].dirty,
+  isPristine: (name, getFormState) => (state) => !getFormState(state)[name].dirty,
+  getFormValues: (name, getFormState) => (state) => getFormState(state)[name].values,
+  isValid: (name, getFormState) => (state) => getFormState(state)[name].valid,
+  isInvalid: (name, getFormState) => (state) => !getFormState(state)[name].valid,
+}));
 
-describe('SchemaStateManager', () => {
+jest.mock('../../getFormState', () => (state) => state && state.form || {});
+
+describe('FormStateManager', () => {
   let manager = null;
-  let state = null;
-
+  let schema = null;
+  let globalState = null;
   beforeEach(() => {
-    state = {
-      fields: [
-        {
-          id: 'field-1',
-          name: 'Field One',
-        },
-        {
-          id: 'field-2',
-          name: 'Field Two',
-        },
-      ],
+    schema = {
+      name: 'TestForm',
+      state: {
+        fields: [
+          {
+            id: 'field-1',
+            name: 'Field One',
+          },
+          {
+            id: 'field-2',
+            name: 'Field Two',
+          },
+        ],
+      },
     };
-    manager = new SchemaStateManager(state);
+
+    globalState = {
+      form: {
+        TestForm: {
+          values: {
+            test: 'yes',
+            uncle: 'cheese',
+          },
+          dirty: true,
+          valid: true,
+        },
+      },
+    };
+
+    manager = new FormStateManager(schema, globalState);
   });
   it('Constructs', () => {
-    expect(manager.getState()).not.toBe(state);
+    expect(manager.getState()).not.toBe(schema);
     expect(manager.getState().fields.length).toBe(2);
+    expect(manager.globalState).toBe(globalState);
   });
 
   it('Gets fields', () => {
@@ -89,5 +116,18 @@ describe('SchemaStateManager', () => {
       .getState();
 
     expect(newState.fields[0].extraClass).toBe('uncle cheese');
+  });
+
+  it('Uses redux-form selectors', () => {
+    expect(manager.getValues()).toEqual({
+      test: 'yes',
+      uncle: 'cheese',
+    });
+    expect(manager.getValue('uncle')).toBe('cheese');
+    expect(manager.getValue('nothing')).toBeUndefined();
+    expect(manager.isDirty()).toBe(true);
+    expect(manager.isPristine()).toBe(false);
+    expect(manager.isValid()).toBe(true);
+    expect(manager.isInvalid()).toBe(false);
   });
 });

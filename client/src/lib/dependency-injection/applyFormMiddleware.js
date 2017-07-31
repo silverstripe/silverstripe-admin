@@ -8,7 +8,7 @@ const omittedActions = [
   actionTypes.DESTROY,
 ];
 
-const applyFormMiddleware = (reducer) => () => (state, action) => {
+const applyFormMiddleware = (reducer) => (getGlobalState) => (state, action) => {
   const reducedState = reducer(state, action);
   if (!action.meta || !action.meta.form || omittedActions.includes(action.type)) {
     return reducedState;
@@ -38,12 +38,12 @@ const applyFormMiddleware = (reducer) => () => (state, action) => {
     return reducedState;
   }
 
-  const schemaState = schema.state;
   let newState = {
     ...reducedState,
   };
-  const updates = formSchemaMiddleware(formState.values, schemaState);
-  if (!Array.isArray(updates.fields)) {
+  const updates = formSchemaMiddleware(schema, getGlobalState());
+
+  if (!updates.state || !Array.isArray(updates.state.fields)) {
     throw new Error(`
       One more calls to alterSchema did not return a properly formed schema state
       object. Check your calls to Injector.transform() which could affect '${schemaKey}'.

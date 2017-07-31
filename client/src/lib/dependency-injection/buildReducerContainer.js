@@ -38,9 +38,9 @@ const buildReducerContainer = (base = buildBaseContainer()) => ({
       };
     }
     const enhancedFactory = (service) => {
-      const state = this.store && this.store.getState();
+      const getState = this.store && this.store.getState;
 
-      return factory(service)(state);
+      return factory(service)(getState);
     };
     registry.add(
       meta,
