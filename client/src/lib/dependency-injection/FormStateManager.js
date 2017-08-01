@@ -18,6 +18,7 @@ class FormStateManager {
   /**
    * Constructor
    * @param {object} schema
+   * @param {object} reduxFormState
    */
   constructor(schema, reduxFormState) {
     this.schema = {
@@ -50,8 +51,9 @@ class FormStateManager {
     if (fieldIndex < 0) {
       return this;
     }
-    const field = fieldList[fieldIndex];
+
     const fields = [...fieldList];
+    const field = { ...fieldList[fieldIndex] };
     fields[fieldIndex] = { ...updater(field) };
     this.schema.state.fields = fields;
 
