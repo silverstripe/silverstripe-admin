@@ -8,7 +8,7 @@ const omittedActions = [
   actionTypes.DESTROY,
 ];
 
-const applyFormMiddleware = (reducer) => (getGlobalState) => (state, action) => {
+const applyFormMiddleware = (reducer) => () => (state, action) => {
   const reducedState = reducer(state, action);
   if (!action.meta || !action.meta.form || omittedActions.includes(action.type)) {
     return reducedState;
@@ -20,8 +20,8 @@ const applyFormMiddleware = (reducer) => (getGlobalState) => (state, action) => 
     return reducedState;
   }
 
-  const formState = getIn(reducedState.formState, formName);
-  if (!formState) {
+  const reduxFormState = getIn(reducedState.formState, formName);
+  if (!reduxFormState) {
     return reducedState;
   }
 
@@ -32,7 +32,7 @@ const applyFormMiddleware = (reducer) => (getGlobalState) => (state, action) => 
     return reducedState;
   }
 
-  const [schemaKey, schema] = schemaEntry;
+  const [schemaKey, formSchemaState] = schemaEntry;
 
   if (!schemaKey) {
     return reducedState;
@@ -41,7 +41,7 @@ const applyFormMiddleware = (reducer) => (getGlobalState) => (state, action) => 
   let newState = {
     ...reducedState,
   };
-  const updates = formSchemaMiddleware(schema, getGlobalState());
+  const updates = formSchemaMiddleware(formSchemaState, reduxFormState);
 
   if (!updates.state || !Array.isArray(updates.state.fields)) {
     throw new Error(`
@@ -50,7 +50,7 @@ const applyFormMiddleware = (reducer) => (getGlobalState) => (state, action) => 
     `);
   }
 
-  newState = setIn(newState, `formSchemas.${schemaKey}.state`, updates);
+  newState = setIn(newState, `formSchemas.${schemaKey}`, updates);
 
   return newState;
 };

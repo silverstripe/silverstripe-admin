@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import createClassMap from '../createClassMap';
-import getFormState from '../getFormState';
+import setIn from 'redux-form/lib/structure/plain/setIn';
 import {
   getFormValues,
   isDirty,
@@ -9,6 +9,7 @@ import {
   isInvalid,
 } from 'redux-form';
 
+const getFormState = state => state;
 /**
  * An API for updating schema state
  */
@@ -18,14 +19,14 @@ class FormStateManager {
    * Constructor
    * @param {object} schema
    */
-  constructor(schema, globalState) {
+  constructor(schema, reduxFormState) {
     this.schema = {
       ...schema,
       state: {
         ...schema.state,
       },
     };
-    this.globalState = globalState;
+    this.mockGlobalState = setIn({}, schema.name, reduxFormState);
   }
 
   /**
@@ -140,7 +141,7 @@ class FormStateManager {
     return getFormValues(
         this.schema.name,
         getFormState
-      )(this.globalState) || {};
+      )(this.mockGlobalState) || {};
   }
 
   /**
@@ -160,7 +161,7 @@ class FormStateManager {
     return isDirty(
       this.schema.name,
       getFormState
-    )(this.globalState);
+    )(this.mockGlobalState);
   }
 
   /**
@@ -171,7 +172,7 @@ class FormStateManager {
     return isPristine(
       this.schema.name,
       getFormState
-    )(this.globalState);
+    )(this.mockGlobalState);
   }
 
   /**
@@ -182,7 +183,7 @@ class FormStateManager {
     return isValid(
       this.schema.name,
       getFormState
-    )(this.globalState);
+    )(this.mockGlobalState);
   }
 
   /**
@@ -193,7 +194,7 @@ class FormStateManager {
     return isInvalid(
       this.schema.name,
       getFormState
-    )(this.globalState);
+    )(this.mockGlobalState);
   }
 
   /**
@@ -201,7 +202,7 @@ class FormStateManager {
    * @returns {object}
    */
   getState() {
-    return this.schema.state;
+    return this.schema;
   }
 
 }

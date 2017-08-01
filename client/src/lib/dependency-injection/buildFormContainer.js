@@ -109,15 +109,15 @@ const buildFormContainer = (base = buildBaseContainer()) => ({
    * @returns {function}
    */
   getSchemaReducer(factories) {
-    return (schema, globalState) =>
+    return (formSchemaState, reduxFormState) =>
       factories.reduce((currentState, currentFactory) => {
-        const manager = new FormStateManager(currentState, globalState);
+        const manager = new FormStateManager(currentState, reduxFormState);
         const modifications = currentFactory(manager);
         return {
           ...currentState,
           ...modifications,
         };
-      }, schema);
+      }, formSchemaState);
   },
 
   /**
