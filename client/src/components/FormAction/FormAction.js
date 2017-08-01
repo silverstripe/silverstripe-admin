@@ -13,9 +13,6 @@ class FormAction extends SilverStripeComponent {
   render() {
     let title = this.props.title;
 
-    if (this.getSavedTitle() && !this.props.changed) {
-      title = this.getSavedTitle();
-    }
     return (
       <button {...this.getButtonProps()}>
         {this.getLoadingIcon()}
@@ -62,19 +59,9 @@ class FormAction extends SilverStripeComponent {
       buttonClasses[`btn-${style}`] = true;
     }
 
-    const savedClasses = this.getSavedClasses();
-    if (savedClasses && !this.props.changed) {
-      savedClasses.split(' ').forEach((cl) => {
-        buttonClasses[`btn-${cl}`] = true;
-      });
-    }
-
     // Add icon class
     const icon = this.getIcon();
-    const savedIcon = this.getSavedIcon();
-    if (this.isConstructive() && !this.props.changed && savedIcon) {
-      buttonClasses[`font-icon-${savedIcon}`] = true;
-    } else if (icon) {
+    if (icon) {
       buttonClasses[`font-icon-${icon}`] = true;
     }
 
@@ -136,26 +123,6 @@ class FormAction extends SilverStripeComponent {
   }
 
   /**
-   * Get saved title
-   *
-   * @return {String}|null
-   */
-  getSavedTitle() {
-    // In case this is specified directly
-    return this.props.savedTitle || this.props.data.savedTitle || null;
-  }
-
-  getSavedIcon() {
-    // In case this is specified directly
-    return this.props.savedIcon || this.props.data.savedIcon || null;
-  }
-
-  getSavedClasses() {
-    // In case this is specified directly
-    return this.props.savedClasses || this.props.data.savedClasses || null;
-  }
-
-  /**
    * Returns markup for the loading icon
    *
    * @returns object|null
@@ -192,10 +159,6 @@ FormAction.propTypes = {
   name: React.PropTypes.string,
   handleClick: React.PropTypes.func,
   title: React.PropTypes.string,
-  // Action text when there's no changes detected in the form
-  savedTitle: React.PropTypes.string,
-  savedIcon: React.PropTypes.string,
-  savedClasses: React.PropTypes.string,
   type: React.PropTypes.string,
   loading: React.PropTypes.bool,
   icon: React.PropTypes.string,
@@ -213,13 +176,11 @@ FormAction.propTypes = {
 
 FormAction.defaultProps = {
   title: '',
-  savedTitle: null,
   icon: '',
   extraClass: '',
   attributes: {},
   data: {},
   disabled: false,
-  changed: false,
 };
 
 export default FormAction;

@@ -322,7 +322,6 @@ class FormBuilderLoader extends Component {
       onSubmitSuccess: this.props.onSubmitSuccess,
       handleSubmit: this.handleSubmit,
       onAutofill: this.handleAutofill,
-      changed: this.props.changed,
     });
 
     return <FormBuilder {...props} />;
@@ -354,11 +353,7 @@ function mapStateToProps(state, ownProps) {
 
   const stateOverrides = schema && schema.stateOverride;
   const loading = schema && schema.metadata && schema.metadata.loading;
-  const changed = !!(
-    state.unsavedForms &&
-    state.unsavedForms.find(form => ownProps.identifier === form.name)
-  );
-  return { schema, submitting, values, stateOverrides, loading, changed };
+  return { schema, submitting, values, stateOverrides, loading };
 }
 
 function mapDispatchToProps(dispatch) {

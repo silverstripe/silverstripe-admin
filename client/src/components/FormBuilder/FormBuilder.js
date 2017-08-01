@@ -284,7 +284,6 @@ class FormBuilder extends SilverStripeComponent {
         }
       }
 
-      props.changed = this.props.changed;
       return this.buildComponent(props);
     });
   }
@@ -370,7 +369,6 @@ class FormBuilder extends SilverStripeComponent {
       persistentSubmitErrors,
       validate: this.validateForm,
       autoFocus,
-      changed: this.props.changed,
     };
 
     return <BaseFormComponent {...props} />;
@@ -431,13 +429,11 @@ FormBuilder.propTypes = Object.assign({}, basePropTypes, {
   form: PropTypes.string.isRequired,
   schema: schemaPropType.isRequired,
   autoFocus: PropTypes.bool,
-  changed: PropTypes.bool,
 });
 
 FormBuilder.defaultProps = {
   responseRequestedSchema: ['auto'],
   autoFocus: false,
-  changed: false,
 };
 
 export { basePropTypes, schemaPropType };
