@@ -60,8 +60,9 @@ describe('ReducerContainer', () => {
       const factory = jest.fn((service) => {
         expect(service.name).toBe('service');
 
-        return (globalState) => {
-          expect(globalState.name).toBe('global state');
+        return (getGlobalState) => {
+          expect(typeof getGlobalState).toBe('function');
+          expect(getGlobalState().name).toBe('global state');
         };
       });
 

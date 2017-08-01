@@ -20,8 +20,8 @@ const applyFormMiddleware = (reducer) => () => (state, action) => {
     return reducedState;
   }
 
-  const formState = getIn(reducedState.formState, formName);
-  if (!formState) {
+  const reduxFormState = getIn(reducedState.formState, formName);
+  if (!reduxFormState) {
     return reducedState;
   }
 
@@ -32,25 +32,25 @@ const applyFormMiddleware = (reducer) => () => (state, action) => {
     return reducedState;
   }
 
-  const [schemaKey, schema] = schemaEntry;
+  const [schemaKey, formSchemaState] = schemaEntry;
 
   if (!schemaKey) {
     return reducedState;
   }
 
-  const schemaState = schema.state;
   let newState = {
     ...reducedState,
   };
-  const updates = formSchemaMiddleware(formState.values, schemaState);
-  if (!Array.isArray(updates.fields)) {
+  const updates = formSchemaMiddleware(formSchemaState, reduxFormState);
+
+  if (!updates.state || !Array.isArray(updates.state.fields)) {
     throw new Error(`
       One more calls to alterSchema did not return a properly formed schema state
       object. Check your calls to Injector.transform() which could affect '${schemaKey}'.
     `);
   }
 
-  newState = setIn(newState, `formSchemas.${schemaKey}.state`, updates);
+  newState = setIn(newState, `formSchemas.${schemaKey}`, updates);
 
   return newState;
 };

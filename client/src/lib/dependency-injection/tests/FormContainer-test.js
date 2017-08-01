@@ -35,11 +35,11 @@ describe('FormContainer', () => {
   describe('reducers', () => {
     it('Creates a schema reducer', () => {
       const reducer = registry.getSchemaReducer([
-        (values, manager) => ({ ...manager.getState(), foo: 'bar' }),
-        (values, manager) => ({ ...manager.getState(), qux: 'baz' }),
-        (values, manager) => ({ ...manager.getState(), testPasses: true }),
+        (manager) => ({ ...manager.getState(), foo: 'bar' }),
+        (manager) => ({ ...manager.getState(), qux: 'baz' }),
+        (manager) => ({ ...manager.getState(), testPasses: true }),
       ]);
-      const result = reducer({}, { uncle: 'cheese', testPasses: false });
+      const result = reducer({ uncle: 'cheese', testPasses: false }, {});
       expect(result.foo).toBe('bar');
       expect(result.qux).toBe('baz');
       expect(result.testPasses).toBe(true);
