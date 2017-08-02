@@ -14,8 +14,8 @@ export default () => {
           });
           return {
             ...field,
-            title: isPristine ? field.data.pristineTitle : field.data.dirtyTitle,
-            icon: isPristine ? field.data.pristineIcon : field.data.dirtyIcon,
+            title: (isPristine ? field.data.pristineTitle : field.data.dirtyTitle) || field.title,
+            icon: (isPristine ? field.data.pristineIcon : field.data.dirtyIcon) || field.icon,
             extraClass: classes,
           };
         });
