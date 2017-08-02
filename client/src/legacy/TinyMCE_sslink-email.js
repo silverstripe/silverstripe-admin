@@ -60,6 +60,8 @@ jQuery.entwine('ss', ($) => {
       const handleHide = () => this.close();
       const handleInsert = (...args) => this.handleInsert(...args);
       const attrs = this.getOriginalAttributes();
+      const selectionContent = tinymce.activeEditor.selection.getContent() || '';
+
       // create/update the react component
       ReactDOM.render(
         <ApolloProvider store={store} client={client}>
@@ -72,6 +74,7 @@ jQuery.entwine('ss', ($) => {
             className="insert-link__dialog-wrapper--email"
             fileAttributes={attrs}
             identifier="Admin.InsertLinkEmailModal"
+            requireLinkText={selectionContent.trim() === ''}
           />
         </ApolloProvider>,
         this[0]

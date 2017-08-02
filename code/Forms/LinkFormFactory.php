@@ -26,6 +26,12 @@ abstract class LinkFormFactory implements FormFactory
         $this->constructExtensions();
     }
 
+    public function requireLinkTextField($controller)
+    {
+        $requireLinkText = $controller->getRequest()->getVar('requireLinkText');
+        return isset($requireLinkText);
+    }
+
     /**
      * @param RequestHandler $controller
      * @param string $name

@@ -68,6 +68,7 @@ InsertLinkModal.propTypes = {
   onHide: PropTypes.func.isRequired,
   setOverrides: PropTypes.func.isRequired,
   actions: PropTypes.object,
+  requireLinkText: PropTypes.bool,
 };
 
 InsertLinkModal.defaultProps = {};
@@ -81,12 +82,13 @@ function mapDispatchToProps(dispatch) {
 }
 
 const createInsertLinkModal = (sectionConfigKey, formName) => {
-  function mapStateToProps(state) {
+  function mapStateToProps(state, ownProps) {
     const sectionConfig = state.config.sections
       .find((section) => section.name === sectionConfigKey);
+    const requireTextFieldUrl = ownProps.requireLinkText ? '?requireLinkText' : '';
 
     // get the schemaUrl to use as a key for overrides
-    const schemaUrl = `${sectionConfig.form[formName].schemaUrl}`;
+    const schemaUrl = `${sectionConfig.form[formName].schemaUrl}${requireTextFieldUrl}`;
 
     return {
       sectionConfig,

@@ -5,6 +5,7 @@ namespace SilverStripe\Admin\Forms;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\RequiredFields;
 
 class EditorExternalLinkFormFactory extends LinkFormFactory
 {
@@ -23,6 +24,19 @@ class EditorExternalLinkFormFactory extends LinkFormFactory
             ),
         ]);
 
+        if ($this->requireLinkTextField($controller)) {
+            $fields->insertAfter('Link', TextField::create('Text', _t(__CLASS__.'.LINKTEXT', 'Link text')));
+        }
+
         return $fields;
+    }
+
+    protected function getValidator($controller, $name, $context)
+    {
+        if ($this->requireLinkTextField($controller)) {
+            return RequiredFields::create('Text');
+        }
+
+        return null;
     }
 }
