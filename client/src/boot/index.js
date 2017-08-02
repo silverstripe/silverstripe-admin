@@ -8,7 +8,7 @@ import { setConfig } from 'state/config/ConfigActions';
 import registerComponents from 'boot/registerComponents';
 import registerReducers from 'boot/registerReducers';
 import applyDevtools from 'boot/applyDevtools';
-import transforms from './transforms';
+import applyTransforms from 'boot/applyTransforms';
 
 window.ss = window.ss || {};
 
@@ -56,7 +56,7 @@ function appBoot() {
   const routes = new BootRoutes(store, apolloClient);
 
   // Apply any injector transformations
-  transforms();
+  applyTransforms();
 
   // Force this to the end of the execution queue to ensure it's last.
   window.setTimeout(() => {
