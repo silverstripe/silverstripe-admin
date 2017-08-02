@@ -8,6 +8,7 @@ import {
   isValid,
   isInvalid,
 } from 'redux-form';
+import { schemaMerge, findField } from 'lib/schemaFieldValues';
 
 const getFormState = state => state;
 /**
@@ -21,10 +22,16 @@ class FormStateManager {
    * @param {object} reduxFormState
    */
   constructor(schema, reduxFormState) {
+    const state = schema.state || {};
+    const fields = state.fields || [];
+
     this.schema = {
       ...schema,
       state: {
-        ...schema.state,
+        ...state,
+        fields: [
+          ...fields,
+        ],
       },
     };
     this.mockGlobalState = setIn({}, schema.name, reduxFormState);
@@ -36,7 +43,16 @@ class FormStateManager {
    * @return {object}
    */
   getFieldByName(fieldName) {
-    return this.schema.state.fields.find(field => field.name === fieldName);
+    const schemaForm = {
+      fields: [],
+      actions: [],
+      ...this.schema.schema,
+    };
+    const fields = [...schemaForm.fields, ...schemaForm.actions];
+    const schema = findField(fields, fieldName);
+    const state = this.schema.state.fields.find(field => field.name === fieldName);
+
+    return schemaMerge(schema, state);
   }
 
   /**
@@ -48,13 +64,15 @@ class FormStateManager {
   mutateField(fieldName, updater) {
     const fieldList = this.schema.state.fields || [];
     const fieldIndex = fieldList.findIndex(field => field.name === fieldName);
+
     if (fieldIndex < 0) {
       return this;
     }
 
     const fields = [...fieldList];
-    const field = { ...fieldList[fieldIndex] };
-    fields[fieldIndex] = { ...updater(field) };
+    const field = this.getFieldByName(fieldName);
+    fields[fieldIndex] = schemaMerge(field, updater(field));
+
     this.schema.state.fields = fields;
 
     return this;
