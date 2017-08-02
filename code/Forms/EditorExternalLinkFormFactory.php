@@ -24,7 +24,7 @@ class EditorExternalLinkFormFactory extends LinkFormFactory
             ),
         ]);
 
-        if ($this->requireLinkTextField($controller)) {
+        if ($context['RequireLinkText']) {
             $fields->insertAfter('Link', TextField::create('Text', _t(__CLASS__.'.LINKTEXT', 'Link text')));
         }
 
@@ -33,7 +33,7 @@ class EditorExternalLinkFormFactory extends LinkFormFactory
 
     protected function getValidator($controller, $name, $context)
     {
-        if ($this->requireLinkTextField($controller)) {
+        if ($context['RequireLinkText']) {
             return RequiredFields::create('Text');
         }
 
