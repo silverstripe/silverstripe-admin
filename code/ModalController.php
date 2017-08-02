@@ -2,9 +2,8 @@
 
 namespace SilverStripe\Admin;
 
-use SilverStripe\Admin\Forms\EditorExternalLinkFormFactory;
 use SilverStripe\Admin\Forms\EditorEmailLinkFormFactory;
-use SilverStripe\CMS\Forms\InternalLinkFormFactory;
+use SilverStripe\Admin\Forms\EditorExternalLinkFormFactory;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\RequestHandler;
 use SilverStripe\Forms\Form;
@@ -45,6 +44,11 @@ class ModalController extends RequestHandler
 
         $this->controller = $controller;
         $this->name = $name;
+    }
+
+    public function getRequest()
+    {
+        return $this->controller->getRequest();
     }
 
     /**
