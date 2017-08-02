@@ -11,7 +11,7 @@ class FormAction extends SilverStripeComponent {
   }
 
   render() {
-    let title = this.props.title;
+    const title = this.props.title;
 
     return (
       <button {...this.getButtonProps()}>
@@ -75,7 +75,7 @@ class FormAction extends SilverStripeComponent {
   /**
    * @return {boolean}
    */
-  isConstructive() {
+  isPrimary() {
     const extraClasses = this.props.extraClass.split(' ');
     return (
       this.props.name === 'action_save' ||
@@ -105,7 +105,7 @@ class FormAction extends SilverStripeComponent {
       return null;
     }
 
-    if (this.isConstructive()) {
+    if (this.isPrimary()) {
       return 'primary';
     }
 
@@ -163,7 +163,6 @@ FormAction.propTypes = {
   loading: React.PropTypes.bool,
   icon: React.PropTypes.string,
   disabled: React.PropTypes.bool,
-  changed: React.PropTypes.bool,
   data: React.PropTypes.oneOfType([
     React.PropTypes.array,
     React.PropTypes.shape({
