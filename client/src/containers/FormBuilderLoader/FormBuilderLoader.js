@@ -323,6 +323,7 @@ class FormBuilderLoader extends Component {
       handleSubmit: this.handleSubmit,
       onAutofill: this.handleAutofill,
     });
+
     return <FormBuilder {...props} />;
   }
 }

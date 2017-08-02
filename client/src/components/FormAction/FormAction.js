@@ -11,10 +11,12 @@ class FormAction extends SilverStripeComponent {
   }
 
   render() {
+    const title = this.props.title;
+
     return (
       <button {...this.getButtonProps()}>
         {this.getLoadingIcon()}
-        {castStringToElement('span', this.props.title)}
+        {castStringToElement('span', title)}
       </button>
     );
   }
@@ -63,12 +65,22 @@ class FormAction extends SilverStripeComponent {
       buttonClasses[`font-icon-${icon}`] = true;
     }
 
-
     if (typeof this.props.extraClass === 'string') {
       buttonClasses[this.props.extraClass] = true;
     }
 
     return classnames(buttonClasses);
+  }
+
+  /**
+   * @return {boolean}
+   */
+  isPrimary() {
+    const extraClasses = this.props.extraClass.split(' ');
+    return (
+      this.props.name === 'action_save' ||
+      extraClasses.find(className => className === 'ss-ui-action-constructive')
+    );
   }
 
   /**
@@ -93,9 +105,7 @@ class FormAction extends SilverStripeComponent {
       return null;
     }
 
-    if (this.props.name === 'action_save' ||
-        extraClasses.find((className) => className === 'ss-ui-action-constructive')
-    ) {
+    if (this.isPrimary()) {
       return 'primary';
     }
 
