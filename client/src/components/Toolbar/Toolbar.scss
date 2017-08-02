@@ -75,7 +75,10 @@
 
   @include media-breakpoint-down(sm) {
     .btn {
-      font-size: 0;
+      // Hide text on small devices if the button has an icon
+      &[class*="font-icon-"] {
+        font-size: 0;
+      }
 
       &:before {
         margin-right: 0;
