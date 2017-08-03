@@ -4,9 +4,9 @@ require('i18n.js');
 // Expose fields (see webpack config for matching "externals" config)
 require('expose-loader?SilverStripeComponent!lib/SilverStripeComponent');
 require('expose-loader?Backend!lib/Backend');
+require('expose-loader?schemaFieldValues!lib/schemaFieldValues');
 require('expose-loader?Injector!lib/Injector');
 require('expose-loader?reduxFieldReducer!lib/reduxFieldReducer');
-require('expose-loader?schemaFieldValues!lib/schemaFieldValues');
 require('expose-loader?getFormState!lib/getFormState');
 require('expose-loader?FormAlert!components/FormAlert/FormAlert');
 require('expose-loader?FieldHolder!components/FieldHolder/FieldHolder');
