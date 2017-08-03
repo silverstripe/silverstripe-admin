@@ -70,6 +70,6 @@ abstract class LinkFormFactory implements FormFactory
 
     public function getRequiredContext()
     {
-        return [];
+        return [ 'RequireLinkText' ];
     }
 }

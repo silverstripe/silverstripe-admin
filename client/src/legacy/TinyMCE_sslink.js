@@ -86,7 +86,7 @@ jQuery.entwine('ss', ($) => {
     handleInsert(data) {
       const attributes = this.buildAttributes(data);
 
-      this.insertLinkInEditor(attributes);
+      this.insertLinkInEditor(attributes, data.Text);
       this.close();
 
       return Promise.resolve();
@@ -103,9 +103,9 @@ jQuery.entwine('ss', ($) => {
       };
     },
 
-    insertLinkInEditor(attributes) {
+    insertLinkInEditor(attributes, linkText) {
       const editor = this.getElement().getEditor();
-      editor.insertLink(attributes);
+      editor.insertLink(attributes, null, linkText);
       editor.addUndo();
       editor.repaint();
     },

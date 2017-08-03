@@ -197,8 +197,13 @@ ss.editorWrappers.tinyMCE = (function() {
      *
      * Parameters: {Object} attrs
      */
-    insertLink: function(attrs, opts) {
-      this.getInstance().execCommand("mceInsertLink", false, attrs, opts);
+    insertLink: function(attrs, opts, linkText) {
+      if (linkText) {
+        const linkEl = this.getInstance().dom.create('a', attrs, linkText);
+        this.getInstance().selection.setNode(linkEl);
+      } else {
+        this.getInstance().execCommand("mceInsertLink", false, attrs, opts);
+      }
     },
     /**
      * Remove the link from the currently selected node (if any).
