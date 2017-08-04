@@ -33,20 +33,22 @@ describe('schemaReducer', () => {
     it('should set the stateOverride for a given form', () => {
       const initialState = { };
 
-      const stateOverride = [
-        { id: 'Text', name: 'Text', value: 'Bob here' },
-        { id: 'Age', name: 'Age', value: '99' },
-      ];
+      const stateOverride = {
+        fields: [
+          { id: 'Text', name: 'Text', value: 'Bob here' },
+          { id: 'Age', name: 'Age', value: '99' },
+        ],
+      };
       const newState = schemaReducer(initialState, {
         type,
         payload: { id: 'MySchema', stateOverride },
       });
 
       const override = newState.MySchema.stateOverride;
-      expect(override[0].name).toBe('Text');
-      expect(override[0].value).toBe('Bob here');
-      expect(override[1].name).toBe('Age');
-      expect(override.length).toBe(2);
+      expect(override.fields[0].name).toBe('Text');
+      expect(override.fields[0].value).toBe('Bob here');
+      expect(override.fields[1].name).toBe('Age');
+      expect(override.fields.length).toBe(2);
     });
   });
 

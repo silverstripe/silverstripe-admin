@@ -8,7 +8,7 @@ import {
   autofill,
   initialize,
 } from 'redux-form';
-import { findField } from 'lib/schemaFieldValues';
+import schemaFieldValues from 'lib/schemaFieldValues';
 import * as schemaActions from 'state/schema/SchemaActions';
 import merge from 'merge';
 import FormBuilder, { basePropTypes, schemaPropType } from 'components/FormBuilder/FormBuilder';
@@ -84,20 +84,7 @@ class FormBuilderLoader extends Component {
 
             const schemaRef = schema.schema || this.props.schema.schema;
             if (schema.state) {
-              const formData = schema.state.fields.reduce((tempData, state) => {
-                if (!schemaRef) {
-                  return tempData;
-                }
-
-                const field = findField(schemaRef.fields, state.name);
-
-                if (!field || field.schemaType === 'Structural' || field.readOnly === true) {
-                  return tempData;
-                }
-                return Object.assign({}, tempData, {
-                  [state.name]: state.value,
-                });
-              }, {});
+              const formData = schemaFieldValues(schemaRef, schema.state);
               this.props.actions.reduxForm.initialize(this.props.identifier, formData);
             }
           }
@@ -222,24 +209,18 @@ class FormBuilderLoader extends Component {
    * @return {Object} Promise from the AJAX request.
    */
   fetch(schema = true, state = true, errors = true) {
-    // Note: `errors` is only valid for submissions, not schema requests, so omitted here
-    const headerValues = ['auto'];
-
-    if (schema) {
-      headerValues.push('schema');
-    }
-
-    if (state) {
-      headerValues.push('state');
-    }
-
-    if (errors) {
-      headerValues.push('errors');
-    }
-
     if (this.props.loading) {
       return Promise.resolve({});
     }
+
+    // Note: `errors` is only valid for submissions, not schema requests, so omitted here
+    const headerValues = [
+      'auto',
+      schema && 'schema',
+      state && 'state',
+      errors && 'errors',
+    ].filter(header => header);
+
 
     // using `this.state.fetching` caused race-condition issues.
     this.props.actions.schema.setSchemaLoading(this.props.schemaUrl, true);
@@ -262,11 +243,10 @@ class FormBuilderLoader extends Component {
           }
         }
 
-        if (typeof formSchema.id !== 'undefined') {
+        if (typeof formSchema.id !== 'undefined' && formSchema.state) {
           const overriddenSchema = Object.assign({},
             formSchema,
             {
-              id: this.props.schemaUrl,
               state: this.overrideStateData(formSchema.state),
             }
           );
@@ -274,6 +254,18 @@ class FormBuilderLoader extends Component {
             this.props.schemaUrl,
             overriddenSchema,
             this.props.identifier
+          );
+
+          const schemaData = formSchema.schema || this.props.schema.schema;
+          const formData = schemaFieldValues(schemaData, overriddenSchema.state);
+
+          // need to initialize the form again in case it was loaded before
+          // this will re-trigger Injector.form APIs, reset values and reset pristine state as well
+          this.props.actions.reduxForm.initialize(
+            this.props.identifier,
+            formData,
+            false,
+            { keepSubmitSucceeded: true }
           );
 
           return overriddenSchema;

@@ -8,6 +8,8 @@ import ACTION_TYPES from './SchemaActionTypes';
  * @param {string} id - URL or id for schema
  * @param {object} schema - JSON schema for the layout.
  * @param {string} name - identifier used for form and redux-form
+ *
+ *@return {object}
  */
 export function setSchema(id, schema = {}, name) {
   return {
