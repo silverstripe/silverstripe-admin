@@ -15,8 +15,8 @@ export function setSchema(id, schema = {}, name) {
   return {
     type: ACTION_TYPES.SET_SCHEMA,
     payload: {
-      id,
       ...schema,
+      id,
       name,
     },
   };
