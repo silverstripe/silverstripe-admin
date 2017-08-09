@@ -20,7 +20,7 @@
     .btn-link:first-child,
     .grid-csv-button:first-child,
     .grid-print-button:first-child {
-      margin-left: calc(#{$btn-spacing} - #{$btn-padding-x});
+      margin-left: calc(#{$btn-spacing} - #{$input-btn-padding-x});
     }
   }
 
@@ -48,6 +48,7 @@
   padding-top: $spacer-xs;
   padding-bottom: $spacer-xs;
   min-height: auto;
+  width: auto; // override 100% width due to negative margin
 
   .btn {
     transition: font-size 0s;
@@ -98,9 +99,9 @@
 
 .toolbar__back-button {
   float: left;
-  margin: $spacer-xs $spacer-x / 2 $spacer-xs #{-$spacer-xs};
-  padding-left: $spacer-x / 4;
-  padding-right: $spacer-x / 4;
+  margin: $spacer-xs $spacer / 2 $spacer-xs #{-$spacer-xs};
+  padding-left: $spacer / 4;
+  padding-right: $spacer / 4;
   min-width: 24px; // Safari fix
   color: $body-color-light; // TEMP: Needed for anchor buttons to override legacy styles
 

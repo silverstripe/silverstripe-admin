@@ -7,7 +7,7 @@
 // sass-lint:enable no-css-comments
 @each $dir in left, right, top, bottom {
   .tooltip.#{$dir} {
-    @extend .tooltip-#{$dir}; // sass-lint:disable-line no-extends
+    @extend .bs-tooltip-#{$dir}; // sass-lint:disable-line no-extends
   }
 }
 

@@ -20,7 +20,7 @@
 }
 
 .treedropdownfield__option-count-icon {
-  padding: 0 ($spacer-x / 2);
+  padding: 0 ($spacer / 2);
   line-height: 0.8;
 }
 
@@ -31,12 +31,12 @@
 // breadcrumbs
 .treedropdownfield__breadcrumbs {
   color: $white;
-  background: $gray-dark;
+  background: $gray-700;
   border-bottom: 1px solid #e6e6e6; // Select.js border color
   font-weight: $headings-font-weight;
 
   &:hover {
-    background: lighten($gray-dark, 20%);
+    background: $gray-600;
   }
 }
 
@@ -49,12 +49,12 @@
 }
 
 .treedropdownfield__option-context {
-  color: $gray;
+  color: $gray-600;
   font-size: $font-size-sm;
 }
 
 .treedropdownfield__option--selected {
-  background: $gray-light;
+  background: $gray-300;
 }
 
 .treedropdownfield__option-title--highlighted {
@@ -65,21 +65,21 @@
 .Select--multi .Select-value {
   color: $body-color;
   background-color: $white;
-  border-color: $input-border-focus;
+  border-color: $input-focus-border-color;
   border-radius: $border-radius;
 
   &-icon {
     font-size: $font-size-lg;
     padding: 0 5px 2px;
-    border-color: $input-border-focus;
+    border-color: $input-focus-border-color;
   }
 }
 
 .Select-option.is-selected {
-  background-color: $gray-lighter;
+  background-color: $gray-200;
 }
 
 .Select-option.is-focused {
-  background-color: $gray-light;
+  background-color: $gray-300;
 }
 // sass-lint:enable class-name-format

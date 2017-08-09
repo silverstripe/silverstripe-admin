@@ -14,6 +14,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   direction: rtl;
+  padding-top: 7px;
 
   .toolbar & {
     padding-bottom: 0;
@@ -62,7 +63,7 @@
 .breadcrumb__item--last .breadcrumb__item-title,
 .breadcrumb__item-title--last {
   margin: 0;
-  font-size: $font-size-h3;
+  font-size: $h3-font-size;
   font-weight: normal;
   line-height: 24px;
   @include text-truncate;

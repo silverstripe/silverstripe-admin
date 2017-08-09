@@ -2,7 +2,6 @@
 
 import React from 'react';
 import SilverStripeComponent from 'lib/SilverStripeComponent';
-import 'bootstrap-collapse';
 
 class AccordionBlock extends SilverStripeComponent {
   render() {
@@ -15,7 +14,7 @@ class AccordionBlock extends SilverStripeComponent {
     const groupProps = {
       id: listIDAttr,
       'aria-expanded': true,
-      className: 'list-group list-group-flush collapse in',
+      className: 'list-group list-group-flush collapse show',
       role: 'tabpanel',
       'aria-labelledby': headerID,
     };

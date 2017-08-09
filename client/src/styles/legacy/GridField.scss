@@ -32,7 +32,7 @@
       margin-bottom: 0;
 
       .action {
-        margin-bottom: $spacer-y * .75;
+        margin-bottom: $spacer * .75;
       }
     }
 
@@ -40,7 +40,7 @@
 
       tr.ui-selected,
       tr.ui-selecting {
-        background: $table-bg-accent !important;
+        background: $table-accent-bg !important;
       }
 
       td {
@@ -58,11 +58,11 @@
 
     .pull-xs-right > * {
       float: right;
-      margin-left: $spacer-x / 2;
+      margin-left: $spacer / 2;
     }
 
     .pull-xs-left > * {
-      margin-right: $spacer-x / 2;
+      margin-right: $spacer / 2;
       float: left;
     }
 
@@ -140,7 +140,7 @@
             }
 
             &:hover {
-              background-color: darken($table-bg-hover, 4%);
+              background-color: darken($table-hover-bg, 4%);
             }
           }
         }
@@ -160,7 +160,8 @@
             margin-left: 10px;
             margin-right: 6px;
             margin-top: -1px;
-            border-radius: 2px, 2px;
+            border-radius: 2px 2px;
+            font-weight: normal;
           }
 
           span.badge.status-modified {
@@ -238,8 +239,8 @@
         &.extra {
           position: relative;
           background: $table-bg-tools;
-          padding-top: $table-sm-cell-padding;
-          padding-bottom: $table-sm-cell-padding;
+          padding-top: $table-cell-padding-sm;
+          padding-bottom: $table-cell-padding-sm;
 
           &:last-child {
             width: 1%;
@@ -269,7 +270,7 @@
             &.hover-alike,
             &:hover {
               color: $white;
-              background-color: darken($gray-dark, 10);
+              background-color: $gray-800;
             }
           }
 
@@ -353,8 +354,8 @@
       display: inline;
 
       &:focus {
-        border-color: $input-border-focus;
-        box-shadow: $input-box-shadow-focus;
+        border-color: $input-focus-border-color;
+        box-shadow: $input-focus-box-shadow;
       }
     }
   }

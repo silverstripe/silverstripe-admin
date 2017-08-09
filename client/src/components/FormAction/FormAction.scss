@@ -3,8 +3,8 @@
 
 // Button wrapper
 .btn-toolbar {
-  margin-top: $spacer-y;
-  margin-bottom: $spacer-y;
+  margin-top: $spacer;
+  margin-bottom: $spacer;
 
   fieldset + & {
     margin-top: 0;
@@ -26,7 +26,7 @@
 .btn[class*="font-icon-"]::before {
   position: relative;
   margin-right: $btn-icon-spacing;
-  line-height: $line-height-base;
+  line-height: $input-btn-line-height;
   font-size: $font-size-lg;
   float: left;
 }
@@ -72,10 +72,10 @@
 .btn--hide-text {
   text-indent: -90000px;
   overflow: hidden;
-  min-width: calc(#{$btn-padding-x} * 2 + #{$font-size-lg}); // Fix Safari, enough to show icon and include padding
+  min-width: calc(#{$input-btn-padding-x} * 2 + #{$font-size-lg}); // Fix Safari, enough to show icon and include padding
 
   &.btn-sm {
-    min-width: calc(#{$btn-padding-x-sm} * 2 + #{$font-size-lg}); // Fix Safari, enough to show icon and include padding
+    min-width: calc(#{$input-btn-padding-x-sm} * 2 + #{$font-size-lg}); // Fix Safari, enough to show icon and include padding
   }
 
   &[class*=font-icon-]::before {
@@ -97,7 +97,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: $gray;
+    background: $gray-600;
     display: inline-block;
     margin: 0 2px;
     animation: loading-icon 1.2s infinite ease-in-out both;
@@ -146,7 +146,7 @@
   }
 }
 
-.btn-primary-outline {   // Todo: update to B4 convention .btn-outline-primary
+.btn-outline-primary {
   border-color: lighten($btn-primary-border, 10%);
 
   &:hover,
@@ -189,7 +189,7 @@
   }
 }
 
-.btn-secondary-outline {
+.btn-outline-secondary {
   color: $btn-secondary-color;
 
   &:hover,
@@ -197,7 +197,7 @@
   &:active,
   &:active:focus,
   &:active:hover {
-    background-color: $gray-lighter;
+    background-color: $gray-200;
     color: $btn-secondary-color;
   }
 
@@ -264,7 +264,7 @@
 }
 
 button.close {
-  padding: $btn-padding-y $btn-padding-x;
+  padding: $input-btn-padding-y $input-btn-padding-x;
 }
 
 // Apply to things like panel close btn
@@ -282,6 +282,6 @@ button.close {
 }
 
 // Main Save & Publish actions for edit page
-.btn-secondary-outline.font-icon-check-mark {
+.btn-outline-secondary.font-icon-check-mark {
   color: green;
 }

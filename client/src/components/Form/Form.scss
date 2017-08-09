@@ -1,5 +1,5 @@
 .form {
-  padding-bottom: $spacer-y;
+  padding-bottom: $spacer;
 }
 
 .form--fill-height {
@@ -45,11 +45,11 @@
 }
 
 .form__divider::after {
-  margin: $spacer-y 0;
+  margin: $spacer 0;
 }
 
 .form-group::after {
-  margin: $spacer-y 0 #{-$spacer-y};
+  margin: $spacer 0 #{-$spacer};
 }
 
 // Remove underline and column offset
@@ -65,7 +65,7 @@
 }
 
 .form-group {
-  padding-bottom: $spacer-y;
+  padding-bottom: $spacer;
 
   .form-group {
     padding-bottom: 0;
@@ -88,7 +88,7 @@
 
   // TODO Fix for when the .form-group--no-label class is used but there is actually a label
   &.form-group--no-label:not(.stacked) .form__field-label + .form__field-holder {
-    @include make-col-offset(0);
+    margin-left: 0;
   }
 }
 
@@ -122,15 +122,18 @@
 // TODO convert all readonly fields to inputs,
 // and remove .form-control-static class from them
 .form-control-static {
+  padding-top: $input-padding-y;
+  padding-bottom: $input-padding-y;
   padding-left: $input-padding-x;
   padding-right: $input-padding-x;
-  background-color: $input-bg-disabled;
-  border: 1px solid darken($input-bg-disabled, 3%);
+  margin-bottom: 0;
+  background-color: $input-disabled-bg;
+  border: 1px solid darken($input-disabled-bg, 3%);
   max-width: $input-max-width;
   @include border-radius($input-border-radius);
 
   &:focus {
-    border-color: $input-border-focus;
+    border-color: $input-focus-border-color;
     outline: none;
   }
 }
@@ -171,7 +174,7 @@ input.radio {
 // Nested as only as a fix for date fields within the filter panel
 .form__fieldgroup > .form__fieldgroup-item {
   display: inline-block;
-  margin-right: $spacer-x / 2;
+  margin-right: $spacer / 2;
   margin-top: 8px;
   min-width: 166px;
   vertical-align: bottom; // Align fields with no labels
@@ -204,8 +207,8 @@ input.radio {
       .form__field-holder .form-group {
         .form__field-holder,
         .form__field-label {
-          @include make-col();
-          @include make-col-span(12);
+          @include make-col-ready();
+          @include make-col(12);
         }
 
         .form__field-holder {
@@ -215,19 +218,19 @@ input.radio {
 
         // TODO make label display on the right side like normal .form__field-extra-label
         .form__field-extra-label {
-          @include make-col-span(12);
-          @include make-col-offset(0);
+          @include make-col(12);
+          margin-left: 0;
         }
       }
 
       &::after {
-        margin: $spacer-y $grid-gutter-width-half #{-$spacer-y};
+        margin: $spacer $grid-gutter-width-half #{-$spacer};
         width: calc(100% - #{$grid-gutter-width}); // IE10 fix for avoiding horizontal scrollbars
       }
 
       &:not(.stacked) {
         .form__field-label {
-          @include make-col-span(3);
+          @include make-col(3);
           // Override the `<label>` default with .form-control-label styles
           padding-top: $input-padding-y;
           padding-bottom: $input-padding-y;
@@ -236,8 +239,8 @@ input.radio {
         }
 
         .form__field-holder {
-          @include make-col();
-          @include make-col-span(9);
+          @include make-col-ready();
+          @include make-col(9);
         }
       }
     }
@@ -254,29 +257,29 @@ input.radio {
     }
 
     .form__field-label {
-      @include make-col();
-      @include make-col-span(12);
+      @include make-col-ready();
+      @include make-col(12);
     }
 
     .stacked .form__field-holder {
-      @include make-col();
-      @include make-col-span(12);
+      @include make-col-ready();
+      @include make-col(12);
       max-width: 100%;
     }
 
     // Outer CompositeField doesn't have label but inner CompositeField does
     .form-group--no-label .form-group .form__field-holder {
-      @include make-col-offset(0);
+      margin-left: 0;
     }
 
     .form__field-extra-label {
-      @include make-col();
-      @include make-col-span(9);
-      @include make-col-offset(3);
+      @include make-col-ready();
+      @include make-col(9);
+      @include make-col-offset(2);
 
       // IE10 Possibly scrollbar effects the width to push columns
       @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-        @include make-col-offset(0);
+        margin-left: 0;
       }
     }
 
@@ -289,15 +292,15 @@ input.radio {
   @include media-breakpoint-up($breakpoint-inline-limit-width) {
     .form-group:not(.stacked) {
       .form__field-label {
-        @include make-col-span(2);
+        @include make-col(2);
       }
 
       .form__field-holder {
-        @include make-col-span(8);
+        @include make-col(8);
 
         // IE10 Possibly scrollbar effects the width to push columns
         @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-          @include make-col-span(6);
+          @include make-col(6);
         }
       }
     }
@@ -309,36 +312,36 @@ input.radio {
     }
 
     .stacked .form__field-holder {
-      @include make-col-span(10);
+      @include make-col(10);
     }
 
     // HTML editor to expand to maximise to the space
     // Max-width to visually match other stacked fields + label
     .form-group.htmleditor .form__field-holder {
-      @include make-col-span(12);
+      @include make-col(12);
       max-width: calc(#{$input-max-width} + 16.66667%);
     }
 
     .form__field-extra-label {
-      @include make-col-span(2);
-      @include make-col-offset(0);
+      @include make-col(2);
+      margin-left: 0;
     }
   }
 
   @include media-breakpoint-up($breakpoint-inline-limit-width-max) {
     .form-group:not(.stacked) {
       .form__field-holder {
-        @include make-col-span(7);
+        @include make-col(7);
       }
     }
 
     .form__field-extra-label {
-      @include make-col-span(3);
-      @include make-col-offset(0);
+      @include make-col(3);
+      margin-left: 0;
 
       // IE10 Possibly scrollbar effects the width to push columns
       @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-        @include make-col-span(1);
+        @include make-col(1);
       }
     }
   }
@@ -354,14 +357,14 @@ input[type=month] {
 
     // Reduce huge line-height for BS date-fields
     @media screen and (-webkit-min-device-pixel-ratio: 0) {
-      line-height: $line-height;
+      line-height: $line-height-base;
     }
   }
 }
 
 // fix vertical-align of add-ons
 .input-group-addon {
-  line-height: $line-height;
+  line-height: $line-height-base;
 }
 
 // TEMPORARY
