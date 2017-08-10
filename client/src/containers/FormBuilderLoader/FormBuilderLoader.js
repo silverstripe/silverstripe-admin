@@ -255,10 +255,18 @@ class FormBuilderLoader extends Component {
               state: this.overrideStateData(formSchema.state),
             }
           );
+
           this.props.actions.schema.setSchema(
             this.props.schemaUrl,
             overriddenSchema,
-            this.getIdentifier()
+            // Mock the will-be shape of the props so that the identifier is right
+            createIdentifier({
+              ...this.props,
+              schema: {
+                ...this.props.schema,
+                ...overriddenSchema,
+              },
+            })
           );
 
           const schemaData = formSchema.schema || this.props.schema.schema;
