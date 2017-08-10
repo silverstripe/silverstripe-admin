@@ -8,7 +8,7 @@ const applyTransforms = () => {
       updater.form.alterSchema('*', form => {
         form.mutateField('action_save', (field) => {
           const isPristine = form.isPristine();
-
+console.log(isPristine);
           // set pristine and dirty classes if they're defined
           const classes = (field.extraClass)
             ? field.extraClass.split(' ').reduce((prev, className) => ({

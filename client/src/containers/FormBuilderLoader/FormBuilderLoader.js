@@ -14,6 +14,7 @@ import merge from 'merge';
 import FormBuilder, { basePropTypes, schemaPropType } from 'components/FormBuilder/FormBuilder';
 import getIn from 'redux-form/lib/structure/plain/getIn';
 import { inject } from 'lib/Injector';
+import createIdentifier from './createIdentifier';
 
 class FormBuilderLoader extends Component {
 
@@ -55,6 +56,10 @@ class FormBuilderLoader extends Component {
     return messages;
   }
 
+  getIdentifier() {
+    return createIdentifier(this.props);
+  }
+
   /**
    * Handles updating the schema after response is received and gathering server-side validation
    * messages.
@@ -79,13 +84,13 @@ class FormBuilderLoader extends Component {
             this.props.actions.schema.setSchema(
               this.props.schemaUrl,
               schema,
-              this.props.identifier
+              this.getIdentifier()
             );
 
             const schemaRef = schema.schema || this.props.schema.schema;
             if (schema.state) {
               const formData = schemaFieldValues(schemaRef, schema.state);
-              this.props.actions.reduxForm.initialize(this.props.identifier, formData);
+              this.props.actions.reduxForm.initialize(this.getIdentifier(), formData);
             }
           }
           return schema;
@@ -253,7 +258,7 @@ class FormBuilderLoader extends Component {
           this.props.actions.schema.setSchema(
             this.props.schemaUrl,
             overriddenSchema,
-            this.props.identifier
+            this.getIdentifier()
           );
 
           const schemaData = formSchema.schema || this.props.schema.schema;
@@ -262,7 +267,7 @@ class FormBuilderLoader extends Component {
           // need to initialize the form again in case it was loaded before
           // this will re-trigger Injector.form APIs, reset values and reset pristine state as well
           this.props.actions.reduxForm.initialize(
-            this.props.identifier,
+            this.getIdentifier(),
             formData,
             false,
             { keepSubmitSucceeded: true }
@@ -299,7 +304,7 @@ class FormBuilderLoader extends Component {
    * @param value
    */
   handleAutofill(field, value) {
-    this.props.actions.reduxForm.autofill(this.props.identifier, field, value);
+    this.props.actions.reduxForm.autofill(this.getIdentifier(), field, value);
   }
 
   render() {
@@ -310,7 +315,7 @@ class FormBuilderLoader extends Component {
     }
 
     const props = Object.assign({}, this.props, {
-      form: this.props.identifier,
+      form: this.getIdentifier(),
       onSubmitSuccess: this.props.onSubmitSuccess,
       handleSubmit: this.handleSubmit,
       onAutofill: this.handleAutofill,
@@ -339,7 +344,7 @@ function mapStateToProps(state, ownProps) {
   const reduxFormState =
     state.form &&
     state.form.formState &&
-    getIn(state.form.formState, ownProps.identifier);
+    getIn(state.form.formState, createIdentifier(ownProps));
   const submitting = reduxFormState && reduxFormState.submitting;
   const values = reduxFormState && reduxFormState.values;
 
