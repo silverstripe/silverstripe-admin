@@ -612,6 +612,45 @@ describe('TreeDropdownField', () => {
 
       expect(options.length).toBe(2);
     });
+
+    it('should show the path for the selected option', () => {
+      props.visible = [7, 27];
+      props.data.showSelectedPath = true;
+      props.value = 35;
+      props.selectedValues = [{
+        id: 35,
+        title: 'Selected',
+        titlePath: 'Selected full path',
+      }];
+      field = ReactTestUtils.renderIntoDocument(
+        <TreeDropdownField {...props} />
+      );
+      const options = field.getDropdownOptions();
+
+      expect(options.length).toBe(1);
+      expect(options[0].id).toBe(35);
+      expect(options[0].title).toBe('Selected full path');
+    });
+
+    it('should not show the path for the selected option if it is opened', () => {
+      props.visible = [7, 27];
+      props.data.showSelectedPath = true;
+      props.value = 35;
+      props.selectedValues = [{
+        id: 35,
+        title: 'Selected',
+        titlePath: 'Selected full path',
+      }];
+      field = ReactTestUtils.renderIntoDocument(
+        <TreeDropdownField {...props} />
+      );
+      field.state.opened = true;
+      const options = field.getDropdownOptions();
+
+      expect(options.length).toBe(1);
+      expect(options[0].id).toBe(35);
+      expect(options[0].title).toBe('Selected');
+    });
   });
 
   describe('filterOptions()', () => {
@@ -657,6 +696,25 @@ describe('TreeDropdownField', () => {
       const newOptions = field.filterOptions(options);
 
       expect(newOptions).toEqual(options.filter(item => item.id !== 57));
+    });
+  });
+
+  describe('getPath()', () => {
+    it('should return a breadcrumb path separated by /', () => {
+      field = ReactTestUtils.renderIntoDocument(
+        <TreeDropdownField {...props} />
+      );
+      const path = field.getPath(26);
+
+      expect(path).toBe('page five/page nine/page twenty-six/');
+    });
+    it('should return a blank if path is not found', () => {
+      field = ReactTestUtils.renderIntoDocument(
+        <TreeDropdownField {...props} />
+      );
+      const path = field.getPath(255);
+
+      expect(path).toBe('');
     });
   });
 });

@@ -6,6 +6,7 @@ TreeDropdownFieldNode.propTypes = {
   // ID field could be string
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   title: PropTypes.string, // item label
+  titlePath: PropTypes.string, // full path using the titles
   // Marking information
   disabled: PropTypes.bool,
   parentid: PropTypes.number,

@@ -39,6 +39,8 @@ class TreeDropdownField extends Component {
     this.handleNavigate = this.handleNavigate.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleSearchReset = this.handleSearchReset.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
 
     // Helpers
     this.callFetch = this.callFetch.bind(this);
@@ -47,6 +49,10 @@ class TreeDropdownField extends Component {
     this.findTreeByID = this.findTreeByID.bind(this);
     this.findTreeByPath = this.findTreeByPath.bind(this);
     this.findTreePath = this.findTreePath.bind(this);
+
+    this.state = {
+      opened: false,
+    };
 
     this.searchTimer = null;
   }
@@ -58,7 +64,7 @@ class TreeDropdownField extends Component {
         .then((treeData) => {
           // If this is the first time the tree has been loaded, then ensure
           // the selected visible node is highlighted
-          if (this.props.data.multiple && this.props.value) {
+          if (!this.props.data.multiple && this.props.value) {
             const newPath = this.findTreePath(treeData, this.props.value);
             if (newPath) {
               // Revert one level to show parent
@@ -118,12 +124,15 @@ class TreeDropdownField extends Component {
    *
    * @return {Array}
    */
-  getBreadcrumbs() {
+  getBreadcrumbs(path = this.props.visible) {
     const breadcrumbs = [];
 
+    if (!path) {
+      return breadcrumbs;
+    }
     // No more path means this is the complete tree
     let node = this.props.tree;
-    for (const next of this.props.visible) {
+    for (const next of path) {
       if (!node.children) {
         break;
       }
@@ -154,26 +163,26 @@ class TreeDropdownField extends Component {
       });
     }
 
-    if (this.props.selectedValues) {
-      const selectedOptions = this.props.selectedValues
-        .filter(selected => {
-          const selectedValue = selected.id === value
-            || (Array.isArray(value) && value.find(item => item === selected.id));
+    const selectedOptions = this.props.selectedValues
+      .filter(selected => (
+        selected.id === value ||
+        (Array.isArray(value) && value.find(item => item === selected.id))
+      ));
 
-          if (!selectedValue) {
-            return false;
-          }
-          const option = options.find(item => item.id === selected.id);
-
-          return !option;
-        });
-
-      if (selectedOptions.length) {
-        options = [
-          ...selectedOptions,
-          ...options,
-        ];
-      }
+    if (!this.state.opened && this.props.data.showSelectedPath) {
+      options = selectedOptions
+        .map(selected => ({
+          ...selected,
+          title: selected.titlePath || selected.title,
+        }));
+    } else if (selectedOptions.length) {
+      options = [
+        ...selectedOptions
+          .filter(selected => (
+            !options.find(item => item.id === selected.id)
+          )),
+        ...options,
+      ];
     }
 
     if (options.length) {
@@ -186,6 +195,14 @@ class TreeDropdownField extends Component {
       title: null,
       disabled: true,
     }];
+  }
+
+  getPath(id) {
+    const treePath = this.findTreePath(this.props.tree, id);
+    const breadcrumbs = this.getBreadcrumbs(treePath);
+
+    return breadcrumbs
+      .reduce((prev, path) => `${prev}${path.title}/`, '');
   }
 
   /**
@@ -403,6 +420,16 @@ class TreeDropdownField extends Component {
     });
   }
 
+  handleOpen() {
+    this.setState({ opened: true });
+
+    this.handleSearchReset();
+  }
+
+  handleClose() {
+    this.setState({ opened: false });
+  }
+
   /**
    * Reset the search value
    */
@@ -438,7 +465,8 @@ class TreeDropdownField extends Component {
       mappedValue = MULTI_EMPTY_VALUE;
 
       if (value && value.length) {
-        const uniqueValues = value && value.filter((item, index) => value.indexOf(item) === index);
+        const uniqueValues = value && value
+            .filter((item, index) => value.indexOf(item) === index);
         mappedValue = uniqueValues.map(item => item.id);
 
         this.props.actions.treeDropdownField.addSelectedValues(this.props.id, uniqueValues);
@@ -447,8 +475,14 @@ class TreeDropdownField extends Component {
       // Get node ID from object
       const id = value ? value.id : null;
       const tree = this.getVisibleTree() || this.props.tree;
-      const object = tree.children.find(item => item.id === id);
+      let object = tree.children.find(item => item.id === id);
       if (object) {
+        if (this.props.data.showSelectedPath) {
+          object = {
+            ...object,
+            titlePath: this.getPath(id),
+          };
+        }
         this.props.actions.treeDropdownField.addSelectedValues(this.props.id, [object]);
       }
 
@@ -710,7 +744,8 @@ class TreeDropdownField extends Component {
         filterOptions={this.filterOptions}
         optionRenderer={this.renderOption}
         onChange={this.handleChange}
-        onOpen={this.handleSearchReset}
+        onOpen={this.handleOpen}
+        onClose={this.handleClose}
         onBlurResetsInput
         onInputKeyDown={this.handleKeyDown}
         onInputChange={this.handleSearchChange}
@@ -752,6 +787,7 @@ TreeDropdownField.propTypes = {
     hasEmptyDefault: PropTypes.bool,
     showSearch: PropTypes.bool,
     multiple: PropTypes.bool,
+    showSelectedPath: PropTypes.bool,
   }),
   onLoadingError: PropTypes.func,
   search: PropTypes.string,
