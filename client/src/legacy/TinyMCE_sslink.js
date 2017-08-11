@@ -109,9 +109,12 @@ jQuery.entwine('ss', ($) => {
       editor.addUndo();
       editor.repaint();
 
+      const instance = editor.getInstance();
+      const selection = instance.selection;
+
       // Workaround to editing a link that is just inserted issue.
       // What it does here is deselecting the link text in the editor
-      setTimeout(() => tinymce.activeEditor.selection.collapse(), 0);
+      setTimeout(() => selection && selection.collapse(), 0);
     },
 
     getOriginalAttributes() {
