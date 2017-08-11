@@ -108,6 +108,13 @@ jQuery.entwine('ss', ($) => {
       editor.insertLink(attributes, null, linkText);
       editor.addUndo();
       editor.repaint();
+
+      const instance = editor.getInstance();
+      const selection = instance.selection;
+
+      // Workaround to editing a link that is just inserted issue.
+      // What it does here is deselecting the link text in the editor
+      setTimeout(() => selection && selection.collapse(), 0);
     },
 
     getOriginalAttributes() {
