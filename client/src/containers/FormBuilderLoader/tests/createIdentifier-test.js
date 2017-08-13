@@ -1,27 +1,29 @@
 /* global jest, describe, beforeEach, it, expect */
 
-jest.unmock('../createIdentifier');
+jest.unmock('../FormBuilderLoader');
 
-import createIdentifier from '../createIdentifier';
+import { FormBuilderLoader } from '../FormBuilderLoader';
 
 describe('createIdentifier', () => {
   it('concatenates the identifier prop with the schema name prop', () => {
+    FormBuilderLoader.propTypes = {};
+    const form = new FormBuilderLoader();
     let props = {};
-    expect(createIdentifier(props)).toBe('');
+    expect(form.getIdentifier(props)).toBe('');
     props = { identifier: 'one' };
-    expect(createIdentifier(props)).toBe('one');
+    expect(form.getIdentifier(props)).toBe('one');
     props = {
       identifier: 'one.two',
       schema: 'three',
     };
-    expect(createIdentifier(props)).toBe('one.two');
+    expect(form.getIdentifier(props)).toBe('one.two');
     props = {
       identifier: 'one.two',
       schema: {
         schema: 'three',
       },
     };
-    expect(createIdentifier(props)).toBe('one.two');
+    expect(form.getIdentifier(props)).toBe('one.two');
     props = {
       identifier: 'one.two',
       schema: {
@@ -30,6 +32,15 @@ describe('createIdentifier', () => {
         },
       },
     };
-    expect(createIdentifier(props)).toBe('one.two.three');
+    expect(form.getIdentifier(props)).toBe('one.two.three');
+    props = {
+      identifier: null,
+      schema: {
+        schema: {
+          name: 'three',
+        },
+      },
+    };
+    expect(form.getIdentifier(props)).toBe('three');
   });
 });

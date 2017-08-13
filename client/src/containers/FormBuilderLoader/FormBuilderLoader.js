@@ -14,7 +14,21 @@ import merge from 'merge';
 import FormBuilder, { basePropTypes, schemaPropType } from 'components/FormBuilder/FormBuilder';
 import getIn from 'redux-form/lib/structure/plain/getIn';
 import { inject } from 'lib/Injector';
-import createIdentifier from './createIdentifier';
+
+/**
+ * Creates a dot-separated identifier for forms generated
+ * with schemas (e.g. FormBuilderLoader)
+ *
+ * @param {string} identifier
+ * @param {object} schema
+ * @returns {string}
+ */
+function createFormIdentifierFromProps({ identifier, schema = {} }) {
+  return [
+    identifier,
+    schema.schema && schema.schema.name,
+  ].filter(id => id).join('.');
+}
 
 class FormBuilderLoader extends Component {
 
@@ -56,8 +70,8 @@ class FormBuilderLoader extends Component {
     return messages;
   }
 
-  getIdentifier() {
-    return createIdentifier(this.props);
+  getIdentifier(props = this.props) {
+    return createFormIdentifierFromProps(props);
   }
 
   /**
@@ -260,7 +274,7 @@ class FormBuilderLoader extends Component {
             this.props.schemaUrl,
             overriddenSchema,
             // Mock the will-be shape of the props so that the identifier is right
-            createIdentifier({
+            createFormIdentifierFromProps({
               ...this.props,
               schema: {
                 ...this.props.schema,
@@ -348,11 +362,11 @@ FormBuilderLoader.propTypes = Object.assign({}, basePropTypes, {
 
 function mapStateToProps(state, ownProps) {
   const schema = state.form.formSchemas[ownProps.schemaUrl];
-
+  const identifier = createFormIdentifierFromProps(ownProps);
   const reduxFormState =
     state.form &&
     state.form.formState &&
-    getIn(state.form.formState, createIdentifier(ownProps));
+    getIn(state.form.formState, identifier);
   const submitting = reduxFormState && reduxFormState.submitting;
   const values = reduxFormState && reduxFormState.values;
 
