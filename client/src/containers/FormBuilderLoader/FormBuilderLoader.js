@@ -15,6 +15,21 @@ import FormBuilder, { basePropTypes, schemaPropType } from 'components/FormBuild
 import getIn from 'redux-form/lib/structure/plain/getIn';
 import { inject } from 'lib/Injector';
 
+/**
+ * Creates a dot-separated identifier for forms generated
+ * with schemas (e.g. FormBuilderLoader)
+ *
+ * @param {string} identifier
+ * @param {object} schema
+ * @returns {string}
+ */
+function createFormIdentifierFromProps({ identifier, schema = {} }) {
+  return [
+    identifier,
+    schema.schema && schema.schema.name,
+  ].filter(id => id).join('.');
+}
+
 class FormBuilderLoader extends Component {
 
   constructor(props) {
@@ -55,6 +70,10 @@ class FormBuilderLoader extends Component {
     return messages;
   }
 
+  getIdentifier(props = this.props) {
+    return createFormIdentifierFromProps(props);
+  }
+
   /**
    * Handles updating the schema after response is received and gathering server-side validation
    * messages.
@@ -79,13 +98,13 @@ class FormBuilderLoader extends Component {
             this.props.actions.schema.setSchema(
               this.props.schemaUrl,
               schema,
-              this.props.identifier
+              this.getIdentifier()
             );
 
             const schemaRef = schema.schema || this.props.schema.schema;
             if (schema.state) {
               const formData = schemaFieldValues(schemaRef, schema.state);
-              this.props.actions.reduxForm.initialize(this.props.identifier, formData);
+              this.props.actions.reduxForm.initialize(this.getIdentifier(), formData);
             }
           }
           return schema;
@@ -250,10 +269,18 @@ class FormBuilderLoader extends Component {
               state: this.overrideStateData(formSchema.state),
             }
           );
+
           this.props.actions.schema.setSchema(
             this.props.schemaUrl,
             overriddenSchema,
-            this.props.identifier
+            // Mock the will-be shape of the props so that the identifier is right
+            createFormIdentifierFromProps({
+              ...this.props,
+              schema: {
+                ...this.props.schema,
+                ...overriddenSchema,
+              },
+            })
           );
 
           const schemaData = formSchema.schema || this.props.schema.schema;
@@ -262,7 +289,7 @@ class FormBuilderLoader extends Component {
           // need to initialize the form again in case it was loaded before
           // this will re-trigger Injector.form APIs, reset values and reset pristine state as well
           this.props.actions.reduxForm.initialize(
-            this.props.identifier,
+            this.getIdentifier(),
             formData,
             false,
             { keepSubmitSucceeded: true }
@@ -299,7 +326,7 @@ class FormBuilderLoader extends Component {
    * @param value
    */
   handleAutofill(field, value) {
-    this.props.actions.reduxForm.autofill(this.props.identifier, field, value);
+    this.props.actions.reduxForm.autofill(this.getIdentifier(), field, value);
   }
 
   render() {
@@ -310,7 +337,7 @@ class FormBuilderLoader extends Component {
     }
 
     const props = Object.assign({}, this.props, {
-      form: this.props.identifier,
+      form: this.getIdentifier(),
       onSubmitSuccess: this.props.onSubmitSuccess,
       handleSubmit: this.handleSubmit,
       onAutofill: this.handleAutofill,
@@ -335,11 +362,11 @@ FormBuilderLoader.propTypes = Object.assign({}, basePropTypes, {
 
 function mapStateToProps(state, ownProps) {
   const schema = state.form.formSchemas[ownProps.schemaUrl];
-
+  const identifier = createFormIdentifierFromProps(ownProps);
   const reduxFormState =
     state.form &&
     state.form.formState &&
-    getIn(state.form.formState, ownProps.identifier);
+    getIn(state.form.formState, identifier);
   const submitting = reduxFormState && reduxFormState.submitting;
   const values = reduxFormState && reduxFormState.values;
 
