@@ -14,6 +14,7 @@ import merge from 'merge';
 import FormBuilder, { basePropTypes, schemaPropType } from 'components/FormBuilder/FormBuilder';
 import getIn from 'redux-form/lib/structure/plain/getIn';
 import { inject } from 'lib/Injector';
+import getFormState from 'lib/getFormState';
 
 /**
  * Creates a dot-separated identifier for forms generated
@@ -362,11 +363,9 @@ FormBuilderLoader.propTypes = Object.assign({}, basePropTypes, {
 
 function mapStateToProps(state, ownProps) {
   const schema = state.form.formSchemas[ownProps.schemaUrl];
-  const identifier = createFormIdentifierFromProps(ownProps);
-  const reduxFormState =
-    state.form &&
-    state.form.formState &&
-    getIn(state.form.formState, identifier);
+  const identifier = createFormIdentifierFromProps({ ...ownProps, schema });
+  const reduxFormState = getIn(getFormState(state), identifier);
+
   const submitting = reduxFormState && reduxFormState.submitting;
   const values = reduxFormState && reduxFormState.values;
 
