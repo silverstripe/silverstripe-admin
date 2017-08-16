@@ -115,6 +115,7 @@
     background-color: $color-theme-bg;
     box-shadow: inset $color-separator -1px 0 0;
     position: relative;
+    padding-left: 0;
 
     @include media-breakpoint-down(sm) {
       display: none;
