@@ -4,4 +4,21 @@
     border: 0;
     border-radius: 0;
   }
+
+  &.alert-i {
+    position: relative;
+    padding-left: 3.5em;
+
+    &:before {
+      content: "i";
+      font-family: baskerville;
+      position: absolute;
+      left: 20px;
+      top: 10px;
+      font-size: 2em;
+      font-style: italic;
+      font-weight: 600;
+    }
+  }
+
 }
