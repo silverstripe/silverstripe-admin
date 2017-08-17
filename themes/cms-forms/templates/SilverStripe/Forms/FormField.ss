@@ -1,1 +1,1 @@
-<input $AttributesHTML <% include SilverStripe/Forms/AriaAttributes %> />%>
+<input $AttributesHTML('class') class="form-control $extraClass" <% include SilverStripe/Forms/AriaAttributes %> />

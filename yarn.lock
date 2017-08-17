@@ -952,9 +952,9 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-bootstrap@4.0.0-alpha.2:
-  version "4.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.0.0-alpha.2.tgz#1238dd5c482d2545f2be78ab0d98731eb93e50c1"
+bootstrap@4.0.0-beta:
+  version "4.0.0-beta"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.0.0-beta.tgz#dc5928175d2e71310bc668cf9e05a907211b72a6"
 
 brace-expansion@^1.1.7:
   version "1.1.7"
@@ -4315,9 +4315,9 @@ react-apollo@^0.7.0:
     lodash.pick "^4.4.0"
     object-assign "^4.0.1"
 
-react-bootstrap-ss@^0.30.8:
-  version "0.30.8"
-  resolved "https://registry.yarnpkg.com/react-bootstrap-ss/-/react-bootstrap-ss-0.30.8.tgz#1064ce85cbfae686ee827d43ca58030b1998c234"
+react-bootstrap-ss@^0.30.9:
+  version "0.30.9"
+  resolved "https://registry.yarnpkg.com/react-bootstrap-ss/-/react-bootstrap-ss-0.30.9.tgz#87d34dda4832030d8d87f2d1495f742a15c813dd"
   dependencies:
     babel-runtime "^6.11.6"
     classnames "^2.2.5"

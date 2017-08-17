@@ -14,7 +14,7 @@ h1 {
   margin-left: -$grid-gutter-width-half;
   margin-right: -$grid-gutter-width-half;
   min-width: calc(100% + #{$grid-gutter-width});
-  margin-bottom: $spacer-y * 2;
+  margin-bottom: $spacer * 2;
   border-top: 0;
 
   th {
@@ -47,12 +47,12 @@ h1 {
     background-color: $white;
 
     tr.even {
-      background: $table-bg-accent; // can be altered in viariables
+      background: $table-accent-bg; // can be altered in viariables
     }
 
     tr:hover,
     tr.even:hover {
-      background: $table-bg-hover;
+      background: $table-hover-bg;
     }
 
     tr:first-child td {
@@ -82,7 +82,7 @@ th {
 }
 
 // Bootstrap badge
-.label {
+.badge {
   text-transform: uppercase;
   font-size: $font-size-xxs;
   font-weight: 400;

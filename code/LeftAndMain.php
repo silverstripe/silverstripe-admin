@@ -615,6 +615,8 @@ class LeftAndMain extends Controller implements PermissionProvider
 
         Requirements::javascript('silverstripe/admin: client/dist/js/vendor.js');
         Requirements::javascript('silverstripe/admin: client/dist/js/bundle.js');
+        Requirements::javascript('silverstripe/admin: thirdparty/bootstrap/js/dist/util.js');
+        Requirements::javascript('silverstripe/admin: thirdparty/bootstrap/js/dist/collapse.js');
         Requirements::css('silverstripe/admin: client/dist/styles/bundle.css');
 
         $module = ModuleLoader::getModule('silverstripe/admin');
@@ -1515,7 +1517,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             ),
             new FieldList(
                 FormAction::create('submit', _t(__CLASS__.'.SUBMIT_BUTTON_LABEL', "Go"))
-                    ->addExtraClass('btn-secondary-outline')
+                    ->addExtraClass('btn-outline-secondary')
             )
         );
         $form->addExtraClass('cms-batch-actions form--no-dividers');

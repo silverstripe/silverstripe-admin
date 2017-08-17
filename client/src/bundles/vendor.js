@@ -30,7 +30,6 @@ require('expose-loader?ReactBootstrap!react-bootstrap-ss');
 require('expose-loader?ReactAddonsCssTransitionGroup!react-addons-css-transition-group');
 require('expose-loader?ReactAddonsTestUtils!react-addons-test-utils');
 require('expose-loader?Page!page.js');
-require('expose-loader?BootstrapCollapse!bootstrap/dist/js/umd/collapse.js');
 require('expose-loader?validator!validator');
 require('expose-loader?ApolloClient!apollo-client');
 require('expose-loader?ReactApollo!react-apollo');

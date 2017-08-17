@@ -272,7 +272,7 @@ form.small .field, .field.small {
 
   .chosen-container-active {
     .chosen-single {
-      border: 1px solid $input-border-focus;
+      border: 1px solid $input-focus-border-color;
     }
 
     &.chosen-with-drop .chosen-single {
@@ -281,7 +281,7 @@ form.small .field, .field.small {
   }
 
   .chosen-drop {
-    border-color: $input-border-focus;
+    border-color: $input-focus-border-color;
     border-radius: 0 0 $input-border-radius $input-border-radius;
   }
 
@@ -379,7 +379,7 @@ form.small .field, .field.small {
 			border: none;
 		}
 		&.loading {
-			background: transparent url("../../images/network-save.gif") no-repeat $grid-x center;
+			background: transparent url("../images/network-save.gif") no-repeat $grid-x center;
 			.ui-button-text {
 				padding-left: 16px /* icon */ + ($grid-x/2);
 			}
@@ -397,7 +397,7 @@ input.loading, button.loading,
 input.ui-state-default.loading, .ui-widget-content input.ui-state-default.loading,
 .ui-widget-header input.ui-state-default.loading {
 	.ui-icon {
-		background: transparent url("../../images/network-save.gif") no-repeat 0 0;
+		background: transparent url("../images/network-save.gif") no-repeat 0 0;
 	}
 
 	color: lighten($color-text-dark, 20%);
@@ -408,7 +408,7 @@ input.ui-state-default.loading, .ui-widget-content input.ui-state-default.loadin
 input.loading,
 button.loading {
 	&.ss-ui-action-constructive .ui-icon {
-		background: transparent url("../../images/network-save-constructive.gif") no-repeat 0 0;
+		background: transparent url("../images/network-save-constructive.gif") no-repeat 0 0;
 	}
 }
 
@@ -498,7 +498,7 @@ button.loading {
 	&[class*="font-icon-"],
 	&[class^="font-icon-"],
 	&.ss-ui-button-constructive[class*="font-icon-"] {
-		padding: $btn-padding-y $btn-padding-x;
+		padding: $input-btn-padding-y $input-btn-padding-x;
 		vertical-align: middle;
 		box-shadow: none;
 		border: 0;
@@ -532,7 +532,7 @@ button.loading {
 			margin-right: 5px;
 			margin-top: 0;
 			vertical-align: top;
-			line-height: $line-height-base;
+			line-height: $line-height-root;
 		}
 
 		&.ui-state-focus {
@@ -584,7 +584,7 @@ button.loading {
 }
 
 .ss-ui-loading-icon {
-	background: url("../../images/network-save.gif") no-repeat;
+	background: url("../images/network-save.gif") no-repeat;
 	display: block;
 	width: 16px;
 	height: 16px;

@@ -312,7 +312,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    font-size: $font-size-h3;
+    font-size: $h3-font-size;
     width: 50px;
     height: 100%;
     color: #fff;
@@ -371,7 +371,7 @@
   position: absolute;
   margin-top: -1px;
   left: 13px;
-  font-size: $font-size-h3;
+  font-size: $h3-font-size;
   transition: all $transition-speed-fast;
   color: darken($base-menu-bg, 44%);
 

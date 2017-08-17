@@ -42,7 +42,7 @@
   .modal-title {
     // margin-top: $spacer-sm / 3;
     line-height: 32px;
-    font-size: $font-size-h2;
+    font-size: $h2-font-size;
     font-weight: normal;
   }
 }
@@ -89,11 +89,11 @@
 
   span::before {
     font-family: silverstripe;
-    margin-bottom: $spacer-y;
+    margin-bottom: $spacer;
     font-size: 48px;
     line-height: 40px;
     display: block;
-    padding-bottom: $spacer-y;
+    padding-bottom: $spacer;
   }
 }
 

@@ -513,7 +513,7 @@ abstract class ModelAdmin extends LeftAndMain
 
         $actions = new FieldList(
             FormAction::create('import', _t('SilverStripe\\Admin\\ModelAdmin.IMPORT', 'Import from CSV'))
-                ->addExtraClass('btn btn-secondary-outline font-icon-upload')
+                ->addExtraClass('btn btn-outline-secondary font-icon-upload')
         );
 
         $form = new Form(
