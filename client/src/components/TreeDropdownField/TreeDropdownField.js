@@ -202,7 +202,7 @@ class TreeDropdownField extends Component {
     const breadcrumbs = this.getBreadcrumbs(treePath);
 
     return breadcrumbs
-      .reduce((prev, path) => `${prev}${path.title}/`, '');
+      .reduce((prev, path) => `${prev}${path.contextString || ''}${path.title}/`, '');
   }
 
   /**
