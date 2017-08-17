@@ -131,7 +131,7 @@
             padding-bottom: $table-cell-padding;
             padding-left: $grid-gutter-width-half;
             height: calc(#{$table-cell-padding * 2} + #{$line-height-base});
-            line-height: $line-height-base;
+            line-height: $line-height-root;
             border-radius: 0;
             display: block;
 

@@ -196,3 +196,6 @@ $transition-speed-fast:   .3s;
 // Normal input padding (for some reason, bootstrap ties this to btn-padding)
 $input-padding-y: .5385rem; // 7px
 $input-padding-x: $input-btn-padding-x;
+
+// line height to be based off the root height
+$line-height-root: $line-height-base * 1rem;

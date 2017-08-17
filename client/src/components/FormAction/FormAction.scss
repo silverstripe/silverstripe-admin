@@ -26,7 +26,7 @@
 .btn[class*="font-icon-"]::before {
   position: relative;
   margin-right: $btn-icon-spacing;
-  line-height: $input-btn-line-height;
+  line-height: $line-height-root;
   font-size: $font-size-lg;
   float: left;
 }
