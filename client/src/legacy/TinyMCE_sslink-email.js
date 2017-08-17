@@ -16,6 +16,7 @@ TinyMCEActionRegistrar
     text: i18n._t('Admin.LINKLABEL_EMAIL', 'Link to email address'),
     // eslint-disable-next-line no-console
     onclick: (editor) => editor.execCommand(commandName),
+    priority: 51,
   })
   .addCommandWithUrlTest(commandName, /^mailto:/);
 
