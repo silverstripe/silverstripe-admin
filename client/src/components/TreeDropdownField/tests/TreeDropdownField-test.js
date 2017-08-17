@@ -10,6 +10,7 @@ jest.mock('isomorphic-fetch', () =>
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 import { TreeDropdownField, MULTI_EMPTY_VALUE, SINGLE_EMPTY_VALUE } from '../TreeDropdownField';
+import mockTree from './mockTree';
 
 describe('TreeDropdownField', () => {
   let props = null;
@@ -22,64 +23,7 @@ describe('TreeDropdownField', () => {
       data: {
         urlTree: 'url-callback',
       },
-      tree: {
-        id: 0,
-        title: 'root',
-        count: 2,
-        children: [
-          {
-            id: 5,
-            title: 'page five',
-            count: 2,
-            children: [
-              {
-                id: 9,
-                title: 'page nine',
-                count: 2,
-                children: [
-                  {
-                    id: 14,
-                    title: 'page fourteen',
-                    count: 0,
-                    children: [],
-                  },
-                  {
-                    id: 26,
-                    title: 'page twenty-six',
-                    count: 5,
-                    children: [],
-                  },
-                ],
-              },
-              {
-                id: 11,
-                title: 'page eleven',
-                count: 0,
-                children: [],
-              },
-            ],
-          },
-          {
-            id: 7,
-            title: 'page seven',
-            count: 2,
-            children: [
-              {
-                id: 27,
-                title: 'page twenty-seven',
-                count: 0,
-                children: [],
-              },
-              {
-                id: 15,
-                title: 'page fifteen',
-                count: 0,
-                children: [],
-              },
-            ],
-          },
-        ],
-      },
+      tree: mockTree,
       search: '',
       actions: {
         treeDropdownField: {
@@ -258,15 +202,15 @@ describe('TreeDropdownField', () => {
     it('should call findTreeByPath()', () => {
       props.tree = {};
       props.visible = [1];
+      props.findTreeByPath = jest.fn();
 
       field = ReactTestUtils.renderIntoDocument(
         <TreeDropdownField {...props} />
       );
-      field.findTreeByPath = jest.fn();
 
       field.getVisibleTree();
 
-      expect(field.findTreeByPath).toBeCalledWith(props.tree, props.visible);
+      expect(props.findTreeByPath).toBeCalledWith(props.tree, props.visible);
     });
   });
 
@@ -292,37 +236,6 @@ describe('TreeDropdownField', () => {
 
       expect(breadcrumbs[0].id).toBe(props.visible[0]);
       expect(breadcrumbs[1]).toBeFalsy();
-    });
-  });
-
-  describe('findTreeByPath()', () => {
-    beforeEach(() => {
-      field = ReactTestUtils.renderIntoDocument(
-        <TreeDropdownField {...props} />
-      );
-    });
-
-    it('should return the root tree with an empty path provided', () => {
-      const node = field.findTreeByPath(props.tree, []);
-
-      expect(node).toBe(props.tree);
-    });
-
-    it('should return null with an empty tree', () => {
-      const node = field.findTreeByPath({}, []);
-
-      expect(node).toBe(null);
-    });
-
-    it('should give the proper node in the hierarchy', () => {
-      const path = [5, 9];
-      field = ReactTestUtils.renderIntoDocument(
-        <TreeDropdownField {...props} />
-      );
-      const node = field.findTreeByPath(props.tree, path);
-
-      expect(node.id).toBe(9);
-      expect(node.title).toBe('page nine');
     });
   });
 
