@@ -5,7 +5,6 @@ namespace SilverStripe\Admin;
 use BadMethodCallException;
 use InvalidArgumentException;
 use LogicException;
-use Psr\SimpleCache\CacheInterface;
 use ReflectionClass;
 use SilverStripe\CMS\Controllers\SilverStripeNavigator;
 use SilverStripe\Control\ContentNegotiator;
@@ -156,8 +155,8 @@ class LeftAndMain extends Controller implements PermissionProvider
     ];
 
     private static $dependencies = [
-        'FormSchema' => '%$'.FormSchema::class,
-        'VersionProvider' => '%$'.VersionProvider::class,
+        'FormSchema' => '%$' . FormSchema::class,
+        'VersionProvider' => '%$' . VersionProvider::class,
     ];
 
     /**
@@ -229,7 +228,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      * LeftAndMain:
      *   extra_requirements_css:
      *     - mysite/css/mystyle.css:
-    *          media: screen
+     *          media: screen
      * </code>
      *
      * @config
@@ -365,16 +364,19 @@ class LeftAndMain extends Controller implements PermissionProvider
         $itemID = $request->param('ItemID');
 
         if (!$formName) {
-            return (new HTTPResponse('Missing request params', 400));
+            $this->jsonError(400, 'Missing request params');
+            return null;
         }
 
         $formMethod = "get{$formName}";
         if (!$this->hasMethod($formMethod)) {
-            return (new HTTPResponse('Form not found', 404));
+            $this->jsonError(404, 'Form not found');
+            return null;
         }
 
         if (!$this->hasAction($formName)) {
-            return (new HTTPResponse('Form not accessible', 401));
+            $this->jsonError(401, 'Form not accessible');
+            return null;
         }
 
         if ($itemID) {
@@ -386,6 +388,48 @@ class LeftAndMain extends Controller implements PermissionProvider
         return $this->getSchemaResponse($schemaID, $form);
     }
 
+    /**
+     * Return an error HTTPResponse encoded as json
+     *
+     * @param int $errorCode
+     * @param string $errorMessage
+     * @return HTTPResponse
+     * @throws HTTPResponse_Exception
+     */
+    public function jsonError($errorCode, $errorMessage = null)
+    {
+        // Build error from message
+        $error = [
+            'type' => 'error',
+            'code' => $errorCode,
+        ];
+        if ($errorMessage) {
+            $error['value'] = $errorMessage;
+        }
+
+        // Support explicit error handling with status = error, or generic message handling
+        // with a message of type = error
+        $result = [
+            'status' => 'error',
+            'errors' => [$error]
+        ];
+        $response = HTTPResponse::create(json_encode($result), $errorCode)
+            ->addHeader('Content-Type', 'application/json');
+
+        // Call a handler method such as onBeforeHTTPError404
+        $this->extend("onBeforeJSONError{$errorCode}", $request, $response);
+
+        // Call a handler method such as onBeforeHTTPError, passing 404 as the first arg
+        $this->extend('onBeforeJSONError', $errorCode, $request, $response);
+
+        // Throw a new exception
+        throw new HTTPResponse_Exception($response);
+    }
+
+    /**
+     * @param HTTPRequest $request
+     * @return HTTPResponse
+     */
     public function methodSchema($request)
     {
         $method = $request->param('Method');
@@ -393,22 +437,27 @@ class LeftAndMain extends Controller implements PermissionProvider
         $itemID = $request->param('ItemID');
 
         if (!$formName || !$method) {
-            return (new HTTPResponse('Missing request params', 400));
+            $this->jsonError(400, 'Missing request params');
+            return null;
         }
 
         if (!$this->hasMethod($method)) {
-            return (new HTTPResponse('Method not found', 404));
+            $this->jsonError(404, 'Method not found');
+            return null;
         }
         if (!$this->hasAction($method)) {
-            return (new HTTPResponse('Method not accessible', 401));
+            $this->jsonError(401, 'Method not accessible');
+            return null;
         }
 
         $methodItem = $this->{$method}();
         if (!$methodItem->hasMethod($formName)) {
-            return (new HTTPResponse('Form not found', 404));
+            $this->jsonError(404, 'Form not found');
+            return null;
         }
         if (!$methodItem->hasAction($formName)) {
-            return (new HTTPResponse('Form not accessible', 401));
+            $this->jsonError(401, 'Form not accessible');
+            return null;
         }
 
         $form = $methodItem->{$formName}($itemID);
@@ -536,7 +585,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             // can't be done in cms/_config.php as locale is not set yet
             CMSMenu::add_link(
                 'Help',
-                _t('SilverStripe\\Admin\\LeftAndMain.HELP', 'Help', 'Menu title'),
+                _t(__CLASS__ . '.HELP', 'Help', 'Menu title'),
                 $helpLink,
                 -2,
                 array(
@@ -569,16 +618,16 @@ class LeftAndMain extends Controller implements PermissionProvider
             // if no alternate menu items have matched, return a permission error
             $messageSet = array(
                 'default' => _t(
-                    'SilverStripe\\Admin\\LeftAndMain.PERMDEFAULT',
+                    __CLASS__ . '.PERMDEFAULT',
                     "You must be logged in to access the administration area; please enter your credentials below."
                 ),
                 'alreadyLoggedIn' => _t(
-                    'SilverStripe\\Admin\\LeftAndMain.PERMALREADY',
+                    __CLASS__ . '.PERMALREADY',
                     "I'm sorry, but you can't access that part of the CMS.  If you want to log in as someone else, do"
                     . " so below."
                 ),
                 'logInAgain' => _t(
-                    'SilverStripe\\Admin\\LeftAndMain.PERMAGAIN',
+                    __CLASS__ . '.PERMAGAIN',
                     "You have been logged out of the CMS.  If you would like to log in again, enter a username and"
                     . " password below."
                 ),
@@ -694,7 +743,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             $response = parent::handleRequest($request);
         } catch (ValidationException $e) {
             // Nicer presentation of model-level validation errors
-            $msgs = _t('SilverStripe\\Admin\\LeftAndMain.ValidationError', 'Validation error') . ': '
+            $msgs = _t(__CLASS__ . '.ValidationError', 'Validation error') . ': '
                 . $e->getMessage();
             $e = new HTTPResponse_Exception($msgs, 403);
             $errorResponse = $e->getResponse();
@@ -871,7 +920,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      * built in SilveStripe webfont. {@see menu_icon_for_class()} for providing
      * a background image.
      *
-     * @param string $class.
+     * @param string $class .
      * @return string
      */
     public static function menu_icon_class_for_class($class)
@@ -970,7 +1019,7 @@ class LeftAndMain extends Controller implements PermissionProvider
                         if ($this->Link() == $menuItem->url) {
                             $linkingmode = "current";
 
-                        // default menu is the one with a blank {@link url_segment}
+                            // default menu is the one with a blank {@link url_segment}
                         } elseif (singleton($menuItem->controller)->stat('url_segment') == '') {
                             if ($this->Link() == AdminRootController::admin_url()) {
                                 $linkingmode = "current";
@@ -1203,7 +1252,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         $this->extend('onAfterSave', $record);
         $this->setCurrentPageID($record->ID);
 
-        $message = _t('SilverStripe\\Admin\\LeftAndMain.SAVEDUP', 'Saved.');
+        $message = _t(__CLASS__ . '.SAVEDUP', 'Saved.');
         if ($this->getSchemaRequested()) {
             $schemaId = Controller::join_links($this->Link('schema/DetailEditForm'), $id);
             // Ensure that newly created records have all their data loaded back into the form.
@@ -1250,7 +1299,10 @@ class LeftAndMain extends Controller implements PermissionProvider
 
         $record->delete();
 
-        $this->getResponse()->addHeader('X-Status', rawurlencode(_t('SilverStripe\\Admin\\LeftAndMain.DELETED', 'Deleted.')));
+        $this->getResponse()->addHeader(
+            'X-Status',
+            rawurlencode(_t(__CLASS__ . '.DELETED', 'Deleted.'))
+        );
         return $this->getResponseNegotiator()->respond(
             $this->getRequest(),
             array('currentform' => array($this, 'EmptyForm'))
@@ -1343,8 +1395,8 @@ class LeftAndMain extends Controller implements PermissionProvider
                 if ($record->hasMethod('canEdit') && $record->canEdit()) {
                     $actions->push(
                         FormAction::create('save', _t('SilverStripe\\CMS\\Controllers\\CMSMain.SAVE', 'Save'))
-                           ->addExtraClass('btn btn-primary')
-                           ->addExtraClass('font-icon-add-circle')
+                            ->addExtraClass('btn btn-primary')
+                            ->addExtraClass('font-icon-add-circle')
                     );
                 }
                 if ($record->hasMethod('canDelete') && $record->canDelete()) {
@@ -1497,7 +1549,8 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function BatchActionsForm()
     {
         $actions = $this->batchactions()->batchActionList();
-        $actionsMap = array('-1' => _t('SilverStripe\\Admin\\LeftAndMain.DropdownBatchActionsDefault', 'Choose an action...')); // Placeholder action
+        // Placeholder action
+        $actionsMap = ['-1' => _t(__CLASS__ . '.DropdownBatchActionsDefault', 'Choose an action...')];
         foreach ($actions as $action) {
             $actionsMap[$action->Link] = $action->Title;
         }
@@ -1513,10 +1566,13 @@ class LeftAndMain extends Controller implements PermissionProvider
                     $actionsMap
                 )
                     ->setAttribute('autocomplete', 'off')
-                    ->setAttribute('data-placeholder', _t('SilverStripe\\Admin\\LeftAndMain.DropdownBatchActionsDefault', 'Choose an action...'))
+                    ->setAttribute(
+                        'data-placeholder',
+                        _t(__CLASS__ . '.DropdownBatchActionsDefault', 'Choose an action...')
+                    )
             ),
             new FieldList(
-                FormAction::create('submit', _t(__CLASS__.'.SUBMIT_BUTTON_LABEL', "Go"))
+                FormAction::create('submit', _t(__CLASS__ . '.SUBMIT_BUTTON_LABEL', "Go"))
                     ->addExtraClass('btn-outline-secondary')
             )
         );
@@ -1771,9 +1827,9 @@ class LeftAndMain extends Controller implements PermissionProvider
     {
         $perms = array(
             "CMS_ACCESS_LeftAndMain" => array(
-                'name' => _t(__CLASS__.'.ACCESSALLINTERFACES', 'Access to all CMS sections'),
+                'name' => _t(__CLASS__ . '.ACCESSALLINTERFACES', 'Access to all CMS sections'),
                 'category' => _t('SilverStripe\\Security\\Permission.CMS_ACCESS_CATEGORY', 'CMS Access'),
-                'help' => _t(__CLASS__.'.ACCESSALLINTERFACESHELP', 'Overrules more specific access settings.'),
+                'help' => _t(__CLASS__ . '.ACCESSALLINTERFACESHELP', 'Overrules more specific access settings.'),
                 'sort' => -100
             )
         );

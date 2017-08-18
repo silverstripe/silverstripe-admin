@@ -25,6 +25,7 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.ERRORINTRANSACTION": "An error occured while fetching data from the server\n Please try again later.",
     "Admin.DELETECONFIRMMESSAGE": "Are you sure you want to delete this record?",
     "Admin.EXPANDPANEL": "Expand panel",
-    "Admin.COLLAPSEPANEL": "Collapse panel"
+    "Admin.COLLAPSEPANEL": "Collapse panel",
+    "Admin.UNKNOWN_ERROR": "An unknown error has occurred."
 });
 }
