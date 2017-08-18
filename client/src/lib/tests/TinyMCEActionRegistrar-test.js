@@ -31,4 +31,15 @@ describe('TinyMCEActionRegistrar', () => {
       expect(cmdExt).toBe('sslinkexternal');
     });
   });
+
+  describe('getSortedActions() should return sorted actions', () => {
+    TinyMCEActionRegistrar.addAction('menuTest', { text: 'Apple', priority: 10 });
+    TinyMCEActionRegistrar.addAction('menuTest', { text: 'Two', priority: 50 });
+    TinyMCEActionRegistrar.addAction('menuTest', { text: 'One', priority: 50 });
+    TinyMCEActionRegistrar.addAction('menuTest', { text: 'Five', priority: 51 });
+
+    const sortedActions = TinyMCEActionRegistrar.getSortedActions('menuTest');
+    const output = sortedActions.map(item => item.text);
+    expect(output).toEqual(['Five', 'One', 'Two', 'Apple']);
+  });
 });

@@ -17,22 +17,34 @@ class TinyMCEActionRegistrar {
    * Register a new action for a menu item, and trigger callback
    *
    * @param {String} menu Name of top level menu item
-   * @param {Object} action Menu action option
+   * @param {Object} action Menu action option, with custom "priority" property
    * @return {TinyMCEActionRegistrar}
    */
   addAction(menu, action) {
-    this.actions[menu] = this.getActions(menu).concat([action]);
+    const priority = action.priority || 50;
+    this.actions[menu] = this.getActions(menu).concat([{ ...action, priority }]);
     return this;
   }
 
   /**
-   * Get list of actions for this menu
+   * Get list of actions for this menu, sorted by first by priority and then text
    *
    * @param {String} menu
    * @return {Array}
    */
   getActions(menu) {
     return this.actions[menu] || [];
+  }
+
+  getSortedActions(menu) {
+    const actions = this.getActions(menu);
+    return actions.sort((a, b) => {
+      if (a.priority !== b.priority) {
+        return a.priority < b.priority;
+      }
+
+      return a.text.toLocaleLowerCase() > b.text.toLocaleLowerCase();
+    });
   }
 
   /**

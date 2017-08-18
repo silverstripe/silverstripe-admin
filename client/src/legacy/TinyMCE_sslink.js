@@ -11,7 +11,7 @@ const plugin = {
    * @param {Object} editor
    */
   init(editor) {
-    const actions = TinyMCEActionRegistrar.getActions('sslink')
+    const actions = TinyMCEActionRegistrar.getSortedActions('sslink')
       .map(action => Object.assign(
         {},
         action,
