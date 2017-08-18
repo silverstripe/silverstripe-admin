@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@silverstripe/webpack-config@^0.2.6":
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/@silverstripe/webpack-config/-/webpack-config-0.2.6.tgz#1919594b861bea4d0cd30868f1b4476fa266aa1f"
+"@silverstripe/webpack-config@^0.2.9":
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/@silverstripe/webpack-config/-/webpack-config-0.2.9.tgz#45d10f576f01718023b9ee480391c67652f65ac0"
   dependencies:
     autoprefixer "^6.4.0"
     babel-core "^6.24.1"
@@ -4315,9 +4315,9 @@ react-apollo@^0.7.0:
     lodash.pick "^4.4.0"
     object-assign "^4.0.1"
 
-react-bootstrap-ss@^0.30.9:
-  version "0.30.9"
-  resolved "https://registry.yarnpkg.com/react-bootstrap-ss/-/react-bootstrap-ss-0.30.9.tgz#87d34dda4832030d8d87f2d1495f742a15c813dd"
+react-bootstrap-ss@^0.30.10:
+  version "0.30.10"
+  resolved "https://registry.yarnpkg.com/react-bootstrap-ss/-/react-bootstrap-ss-0.30.10.tgz#ff138192b39d17a5fce6093cdc3102a422742113"
   dependencies:
     babel-runtime "^6.11.6"
     classnames "^2.2.5"
