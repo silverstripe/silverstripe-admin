@@ -1,3 +1,4 @@
+import i18n from 'i18n';
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { compose, bindActionCreators } from 'redux';
@@ -213,10 +214,35 @@ class FormBuilderLoader extends Component {
    */
   callFetch(headerValues) {
     return fetch(this.props.schemaUrl, {
-      headers: { 'X-FormSchema-Request': headerValues.join(',') },
+      headers: {
+        'X-FormSchema-Request': headerValues.join(','),
+        Accept: 'application/json',
+      },
       credentials: 'same-origin',
     })
-      .then(response => response.json());
+      .then((response) => {
+        if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        return new Promise(
+          (resolve, reject) => response
+            .json()
+            .then((json) => {
+              reject({
+                status: response.status,
+                statusText: response.statusText,
+                json,
+              });
+            })
+            .catch(() => {
+              reject({
+                status: response.status,
+                statusText: response.statusText,
+                json: {},
+              });
+            })
+        );
+      });
   }
 
   /**
@@ -303,18 +329,49 @@ class FormBuilderLoader extends Component {
       .catch((error) => {
         this.props.actions.schema.setSchemaLoading(this.props.schemaUrl, false);
         if (typeof this.props.onLoadingError === 'function') {
-          return this.props.onLoadingError({
-            errors: [
-              {
-                value: error.message,
-                type: 'error',
-              },
-            ],
-          });
+          return this.props.onLoadingError(this.normaliseError(error));
         }
         // Assign onLoadingError to suppress this
         throw error;
       });
+  }
+
+  /**
+   * Convert error to a json object to pass to onLoadingError
+   *
+   * @param {Object} error
+   */
+  normaliseError(error) {
+    // JSON result contains errors.
+    // See LeftAndMain::jsonError() for format
+    if (error.json && error.json.errors) {
+      return error.json;
+    }
+
+    // Standard http errors
+    if (error.status && error.statusText) {
+      return {
+        errors: [
+          {
+            code: error.status,
+            value: error.statusText,
+            type: 'error',
+          },
+        ],
+      };
+    }
+
+    // Handle exception
+    const message = error.message
+      || i18n._t('Admin.UNKNOWN_ERROR', 'An unknown error has occurred.');
+    return {
+      errors: [
+        {
+          value: message,
+          type: 'error',
+        },
+      ],
+    };
   }
 
   /**
