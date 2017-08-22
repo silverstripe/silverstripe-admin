@@ -10,6 +10,7 @@ import TreeDropdownFieldNode from 'components/TreeDropdownField/TreeDropdownFiel
 import url from 'url';
 import { FormControl } from 'react-bootstrap-ss';
 import { mapHighlight } from 'lib/castStringToElement';
+import { findTreeByPath, findTreeByID, findTreePath } from './treeUtils';
 
 const SEARCH_DELAY = 500; // ms
 
@@ -46,9 +47,6 @@ class TreeDropdownField extends Component {
     this.callFetch = this.callFetch.bind(this);
     this.lazyLoad = this.lazyLoad.bind(this);
     this.filterOptions = this.filterOptions.bind(this);
-    this.findTreeByID = this.findTreeByID.bind(this);
-    this.findTreeByPath = this.findTreeByPath.bind(this);
-    this.findTreePath = this.findTreePath.bind(this);
 
     this.state = {
       opened: false,
@@ -65,7 +63,7 @@ class TreeDropdownField extends Component {
           // If this is the first time the tree has been loaded, then ensure
           // the selected visible node is highlighted
           if (!this.props.data.multiple && this.props.value) {
-            const newPath = this.findTreePath(treeData, this.props.value);
+            const newPath = this.props.findTreePath(treeData, this.props.value);
             if (newPath) {
               // Revert one level to show parent
               newPath.pop();
@@ -116,7 +114,7 @@ class TreeDropdownField extends Component {
    * @return {Object}
    */
   getVisibleTree() {
-    return this.findTreeByPath(this.props.tree, this.props.visible);
+    return this.props.findTreeByPath(this.props.tree, this.props.visible);
   }
 
   /**
@@ -198,7 +196,7 @@ class TreeDropdownField extends Component {
   }
 
   getPath(id) {
-    const treePath = this.findTreePath(this.props.tree, id);
+    const treePath = this.props.findTreePath(this.props.tree, id);
     const breadcrumbs = this.getBreadcrumbs(treePath);
 
     return breadcrumbs
@@ -230,101 +228,6 @@ class TreeDropdownField extends Component {
   }
 
   /**
-   * Given a tree and a path of IDs find the nested node
-   *
-   * @param {Object} tree
-   * @param {Array} path
-   * @return {Object} Nested tree
-   */
-  findTreeByPath(tree, path) {
-    // No valid tree
-    if (!tree || Object.keys(tree).length === 0) {
-      return null;
-    }
-    // No more path means this is the complete tree
-    if (path.length === 0) {
-      return tree;
-    }
-    const subPath = path.slice(0);
-    const nextID = subPath.shift();
-    const subTree = tree.children.find((nextSubTree) => (nextSubTree.id === nextID));
-
-    // Deepen search
-    if (subTree) {
-      return this.findTreeByPath(subTree, subPath);
-    }
-
-    // No tree found
-    return null;
-  }
-
-  /**
-   * Find a tree by id
-   *
-   * @param {Object} tree - Tree to search
-   * @param {*} id - id property of node to find path for
-   * @return {Object} - The tree if found, or null if not found.
-   */
-  findTreeByID(tree, id) {
-    // No valid tree
-    if (!id || !tree || !tree.children || Object.keys(tree).length === 0) {
-      return null;
-    }
-    // Found node
-    if (tree.id === id) {
-      return tree;
-    }
-    for (const child of tree.children) {
-      // Search children
-      const found = this.findTreeByID(child, id);
-      if (found !== null) {
-        return found;
-      }
-    }
-    // No tree found
-    return null;
-  }
-
-  /**
-   * Finds path to the node in a tree
-   *
-   * @param {Object} tree - Tree to search
-   * @param {*} id - id property of node to find path for
-   * @return {Array} - The path to this node, or null if not found
-   */
-  findTreePath(tree, id) {
-    // root node
-    if (!id) {
-      return [];
-    }
-    // No valid tree
-    if (!tree || Object.keys(tree).length === 0) {
-      return null;
-    }
-    // Base case, stops recursion
-    if (tree.id === id) {
-      return [tree.id];
-    }
-    if (!tree.children) {
-      return null;
-    }
-    for (const child of tree.children) {
-      // Search children
-      const childPath = this.findTreePath(child, id);
-      // Node found in subtree, shift this id and return
-      if (childPath !== null) {
-        // Don't add root ID
-        if (tree.id) {
-          childPath.unshift(tree.id);
-        }
-        return childPath;
-      }
-    }
-    // No tree found
-    return null;
-  }
-
-  /**
    * Fetches data used to generate a form. This can be form schema and/or form state data.
    * When the response comes back the data is saved to state.
    *
@@ -343,7 +246,7 @@ class TreeDropdownField extends Component {
     }
 
     // If ancestor node is already loaded (and non-empty) then don't re-trigger
-    const foundTree = this.findTreeByPath(this.props.tree, path);
+    const foundTree = this.props.findTreeByPath(this.props.tree, path);
     // Return if there are no children, or they are loaded
     if (foundTree && (foundTree.count === 0 || foundTree.children.length)) {
       return Promise.resolve({});
@@ -508,7 +411,7 @@ class TreeDropdownField extends Component {
       return;
     }
     // Find parent path
-    let path = this.findTreePath(this.props.tree, id);
+    let path = this.props.findTreePath(this.props.tree, id);
     if (!path) {
       // Edge case: Path hasn't been loaded yet,
       // so append to current path
@@ -774,6 +677,8 @@ TreeDropdownField.propTypes = {
   readOnly: PropTypes.bool,
   disabled: PropTypes.bool,
   tree: PropTypes.shape(TreeDropdownFieldNode.propTypes), // Root node of tree
+  findTreeByPath: PropTypes.func, // Finds the node given the tree and a path
+  findTreePath: PropTypes.func, // Given an ID, find the path to the node
   visible: PropTypes.array, // Path to visible node
   loading: PropTypes.array, // List of nodes marked as loading
   failed: PropTypes.array, // List of nodes that failed to load
@@ -805,6 +710,8 @@ TreeDropdownField.defaultProps = {
   visible: [],
   loading: [],
   failed: [],
+  findTreeByPath,
+  findTreePath,
 };
 
 function mapStateToProps(state, ownProps) {
@@ -843,6 +750,14 @@ function mapDispatchToProps(dispatch) {
 
 const ConnectedTreeDropdownField = connect(mapStateToProps, mapDispatchToProps)(TreeDropdownField);
 
-export { TreeDropdownField, ConnectedTreeDropdownField, MULTI_EMPTY_VALUE, SINGLE_EMPTY_VALUE };
+export {
+  TreeDropdownField,
+  ConnectedTreeDropdownField,
+  MULTI_EMPTY_VALUE,
+  SINGLE_EMPTY_VALUE,
+  findTreePath,
+  findTreeByID,
+  findTreeByPath,
+};
 
 export default fieldHolder(ConnectedTreeDropdownField);
