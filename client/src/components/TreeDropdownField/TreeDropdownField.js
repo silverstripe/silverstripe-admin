@@ -63,7 +63,7 @@ class TreeDropdownField extends Component {
           // If this is the first time the tree has been loaded, then ensure
           // the selected visible node is highlighted
           if (!this.props.data.multiple && this.props.value) {
-            const newPath = findTreePath(treeData, this.props.value);
+            const newPath = this.props.findTreePath(treeData, this.props.value);
             if (newPath) {
               // Revert one level to show parent
               newPath.pop();
@@ -196,7 +196,7 @@ class TreeDropdownField extends Component {
   }
 
   getPath(id) {
-    const treePath = findTreePath(this.props.tree, id);
+    const treePath = this.props.findTreePath(this.props.tree, id);
     const breadcrumbs = this.getBreadcrumbs(treePath);
 
     return breadcrumbs
@@ -246,7 +246,7 @@ class TreeDropdownField extends Component {
     }
 
     // If ancestor node is already loaded (and non-empty) then don't re-trigger
-    const foundTree = findTreeByPath(this.props.tree, path);
+    const foundTree = this.props.findTreeByPath(this.props.tree, path);
     // Return if there are no children, or they are loaded
     if (foundTree && (foundTree.count === 0 || foundTree.children.length)) {
       return Promise.resolve({});
@@ -411,7 +411,7 @@ class TreeDropdownField extends Component {
       return;
     }
     // Find parent path
-    let path = findTreePath(this.props.tree, id);
+    let path = this.props.findTreePath(this.props.tree, id);
     if (!path) {
       // Edge case: Path hasn't been loaded yet,
       // so append to current path
@@ -677,7 +677,8 @@ TreeDropdownField.propTypes = {
   readOnly: PropTypes.bool,
   disabled: PropTypes.bool,
   tree: PropTypes.shape(TreeDropdownFieldNode.propTypes), // Root node of tree
-  findTreeByPath: PropTypes.func.isRequired, // Finds the node given the tree and a path
+  findTreeByPath: PropTypes.func, // Finds the node given the tree and a path
+  findTreePath: PropTypes.func, // Given an ID, find the path to the node
   visible: PropTypes.array, // Path to visible node
   loading: PropTypes.array, // List of nodes marked as loading
   failed: PropTypes.array, // List of nodes that failed to load
@@ -710,6 +711,7 @@ TreeDropdownField.defaultProps = {
   loading: [],
   failed: [],
   findTreeByPath,
+  findTreePath,
 };
 
 function mapStateToProps(state, ownProps) {
