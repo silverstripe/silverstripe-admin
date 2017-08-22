@@ -196,7 +196,7 @@ class TreeDropdownField extends Component {
   }
 
   getPath(id) {
-    const treePath = this.findTreePath(this.props.tree, id);
+    const treePath = findTreePath(this.props.tree, id);
     const breadcrumbs = this.getBreadcrumbs(treePath);
 
     return breadcrumbs
