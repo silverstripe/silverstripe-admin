@@ -189,7 +189,7 @@ abstract class ModelAdmin extends LeftAndMain
             $this->sanitiseClassName($this->modelClass),
             false,
             $list,
-            $fieldConfig = GridFieldConfig_RecordEditor::create($this->stat('page_length'))
+            $fieldConfig = GridFieldConfig_RecordEditor::create($this->config()->get('page_length'))
                 ->addComponent($exportButton)
                 ->removeComponentsByType(GridFieldFilterHeader::class)
                 ->addComponents(new GridFieldPrintButton('buttons-before-left'))
@@ -400,7 +400,7 @@ abstract class ModelAdmin extends LeftAndMain
      */
     public function getManagedModels()
     {
-        $models = $this->stat('managed_models');
+        $models = $this->config()->get('managed_models');
         if (is_string($models)) {
             $models = array($models);
         }
@@ -434,7 +434,7 @@ abstract class ModelAdmin extends LeftAndMain
      */
     public function getModelImporters()
     {
-        $importerClasses = $this->stat('model_importers');
+        $importerClasses = $this->config()->get('model_importers');
 
         // fallback to all defined models if not explicitly defined
         if (is_null($importerClasses)) {

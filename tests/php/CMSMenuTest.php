@@ -37,7 +37,7 @@ class CMSMenuTest extends SapphireTest implements TestOnly
         );
         $this->assertEquals(
             $menuItem->priority,
-            CMSMenuTest\LeftAndMainController::singleton()->stat('menu_priority'),
+            CMSMenuTest\LeftAndMainController::singleton()->config()->get('menu_priority'),
             'Controller menu item has the correct priority'
         );
         CMSMenu::clear_menu();
@@ -119,7 +119,7 @@ class CMSMenuTest extends SapphireTest implements TestOnly
             'Menu item has the correct controller class'
         );
         $this->assertEquals(
-            SecurityAdmin::singleton()->stat('menu_priority'),
+            SecurityAdmin::singleton()->config()->get('menu_priority'),
             $menuItem->priority,
             'Menu item has the correct priority'
         );
@@ -131,7 +131,7 @@ class CMSMenuTest extends SapphireTest implements TestOnly
         foreach ($menuItems as $menuItem) {
             $this->assertEquals(
                 $menuItem->priority,
-                singleton($menuItem->controller)->stat('menu_priority'),
+                singleton($menuItem->controller)->config()->get('menu_priority'),
                 "Menu item $menuItem->title has the correct priority"
             );
             $this->assertLessThanOrEqual($priority, $menuItem->priority, 'Menu item is of lower or equal priority');
