@@ -5,7 +5,7 @@ const Badge = ({ status, message, className }) => {
     return null;
   }
   return (
-    <span className={`${className || ''} label label-${status} label-pill`}>
+    <span className={`${className || ''} badge badge-${status} badge-pill`}>
       {message}
     </span>
   );
