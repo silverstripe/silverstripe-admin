@@ -682,7 +682,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         }
 
         // Custom requirements
-        $extraJs = $this->stat('extra_requirements_javascript');
+        $extraJs = $this->config()->get('extra_requirements_javascript');
 
         if ($extraJs) {
             foreach ($extraJs as $file => $config) {
@@ -694,7 +694,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             }
         }
 
-        $extraCss = $this->stat('extra_requirements_css');
+        $extraCss = $this->config()->get('extra_requirements_css');
 
         if ($extraCss) {
             foreach ($extraCss as $file => $config) {
@@ -707,7 +707,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             }
         }
 
-        $extraThemedCss = $this->stat('extra_requirements_themedCss');
+        $extraThemedCss = $this->config()->get('extra_requirements_themedCss');
 
         if ($extraThemedCss) {
             foreach ($extraThemedCss as $file => $config) {
@@ -1020,7 +1020,7 @@ class LeftAndMain extends Controller implements PermissionProvider
                             $linkingmode = "current";
 
                             // default menu is the one with a blank {@link url_segment}
-                        } elseif (singleton($menuItem->controller)->stat('url_segment') == '') {
+                        } elseif (singleton($menuItem->controller)->config()->get('url_segment') == '') {
                             if ($this->Link() == AdminRootController::admin_url()) {
                                 $linkingmode = "current";
                             }
@@ -1131,7 +1131,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     public function getRecord($id)
     {
-        $className = $this->stat('tree_class');
+        $className = $this->config()->get('tree_class');
         if (!$className) {
             return null;
         }
@@ -1227,7 +1227,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function save($data, $form)
     {
         $request = $this->getRequest();
-        $className = $this->stat('tree_class');
+        $className = $this->config()->get('tree_class');
 
         // Existing or new record?
         $id = $data['ID'];
@@ -1240,7 +1240,7 @@ class LeftAndMain extends Controller implements PermissionProvider
                 $this->httpError(404, "Bad record ID #" . (int)$id);
             }
         } else {
-            if (!singleton($this->stat('tree_class'))->canCreate()) {
+            if (!singleton($this->config()->get('tree_class'))->canCreate()) {
                 return Security::permissionFailure($this);
             }
             $record = $this->getNewItem($id, false);
@@ -1276,7 +1276,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     public function getNewItem($id, $setID = true)
     {
-        $class = $this->stat('tree_class');
+        $class = $this->config()->get('tree_class');
         $object = Injector::inst()->create($class);
         if ($setID) {
             $object->ID = $id;
@@ -1286,7 +1286,7 @@ class LeftAndMain extends Controller implements PermissionProvider
 
     public function delete($data, $form)
     {
-        $className = $this->stat('tree_class');
+        $className = $this->config()->get('tree_class');
 
         $id = $data['ID'];
         $record = DataObject::get_by_id($className, $id);
@@ -1371,7 +1371,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             $fields->push(new HiddenField('ClassName'));
         }
 
-        $tree_class = $this->stat('tree_class');
+        $tree_class = $this->config()->get('tree_class');
         if ($tree_class::has_extension(Hierarchy::class)
             && !$fields->dataFieldByName('ParentID')
         ) {
@@ -1540,7 +1540,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     public function batchactions()
     {
-        return new CMSBatchActionHandler($this, 'batchactions', $this->stat('tree_class'));
+        return new CMSBatchActionHandler($this, 'batchactions', $this->config()->get('tree_class'));
     }
 
     /**
@@ -1692,7 +1692,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     protected function sessionNamespace()
     {
-        $override = $this->stat('session_namespace');
+        $override = $this->config()->get('session_namespace');
         return $override ? $override : static::class;
     }
 
@@ -1751,7 +1751,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     public function ApplicationLink()
     {
-        return $this->stat('application_link');
+        return $this->config()->get('application_link');
     }
 
     /**
@@ -1770,7 +1770,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     public function getApplicationName()
     {
-        return $this->stat('application_name');
+        return $this->config()->get('application_name');
     }
 
     /**
