@@ -341,7 +341,7 @@ jQuery.entwine('ss', function($) {
         let dialog = $('#insert-media-react__dialog-wrapper');
 
         if (!dialog.length) {
-          dialog = $('<div id="insert-media-react__dialog-wrapper" />');
+          dialog = $('<div id="insert-media-react__dialog-wrapper" class="insert-link__dialog-wrapper" />');
           $('body').append(dialog);
         }
 
