@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
 
 class Breadcrumb extends Component {
   getLastCrumb() {
@@ -80,12 +79,6 @@ Breadcrumb.propTypes = {
   })),
 };
 
-function mapStateToProps(state) {
-  return {
-    crumbs: state.breadcrumbs,
-  };
-}
-
 export { Breadcrumb as Component };
 
-export default connect(mapStateToProps)(Breadcrumb);
+export default Breadcrumb;
