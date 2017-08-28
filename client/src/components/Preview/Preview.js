@@ -1,6 +1,7 @@
 import React from 'react';
 import i18n from 'i18n';
 import SilverStripeComponent from 'lib/SilverStripeComponent';
+import PopoverField from 'components/PopoverField/PopoverField';
 
 /**
  * Renders the right-hand collapsable change preview panel
@@ -81,6 +82,11 @@ class Preview extends SilverStripeComponent {
       >Back</button>
     );
 
+    const moreActions = this.props.moreActions && this.props.moreActions.length > 0 ?
+      <PopoverField data={{ placement: 'top' }} id="campaign-preview-popver" >
+      {this.props.moreActions}</PopoverField> :
+      null;
+
     // Combine elements
     return (
       <div className="flexbox-area-grow fill-height preview campaign-admin__campaign-preview">
@@ -89,6 +95,7 @@ class Preview extends SilverStripeComponent {
           { backButton }
           <div className="btn-toolbar">
             {toolbarButtons}
+            {moreActions}
           </div>
         </div>
       </div>
@@ -100,6 +107,7 @@ Preview.propTypes = {
   itemLinks: React.PropTypes.object,
   itemId: React.PropTypes.number,
   onBack: React.PropTypes.func,
+  moreActions: React.PropTypes.arrayOf(React.PropTypes.element),
 };
 
 export default Preview;
