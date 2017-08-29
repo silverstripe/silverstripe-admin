@@ -27,6 +27,13 @@ function recordsReducer(state = initialState, action) {
         throw new Error('Undefined record data given');
       }
       const records = state[recordType] || [];
+      // Conditionally replace or append
+      if (records.find((next) => next.ID === newRecord.ID)) {
+        return deepFreeze({
+          ...state,
+          [recordType]: records.map((next) => (next.ID === newRecord.ID ? newRecord : next)),
+        });
+      }
       return deepFreeze({
         ...state,
         [recordType]: [...records, newRecord],
@@ -39,7 +46,7 @@ function recordsReducer(state = initialState, action) {
         throw new Error('Undefined record type');
       }
       const records = state[recordType]
-        .filter((record) => record !== action.payload.id);
+        .filter((record) => record.ID !== action.payload.id);
 
       return deepFreeze({
         ...state,
