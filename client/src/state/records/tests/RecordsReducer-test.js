@@ -9,10 +9,14 @@ const ACTION_TYPES = require('../RecordsActionTypes').default;
 
 describe('recordsReducer', () => {
   describe('FETCH_RECORD_SUCCESS', () => {
-    const initialState = {
-      TypeA: [{ ID: 11, title: 'record a11' }, { ID: 12, title: 'record a12' }],
-      TypeB: [{ ID: 11, title: 'record b11' }],
-    };
+    let initialState = null;
+    beforeEach(() => {
+      initialState = {
+        TypeA: [{ ID: 11, title: 'record a11' }, { ID: 12, title: 'record a12' }],
+        TypeB: [{ ID: 11, title: 'record b11' }],
+      };
+    });
+
     it('adds a new record', () => {
       const nextState = recordsReducer(initialState, {
         type: ACTION_TYPES.FETCH_RECORD_SUCCESS,
@@ -44,16 +48,14 @@ describe('recordsReducer', () => {
   });
 
   describe('DELETE_RECORD_SUCCESS', () => {
-    const initialState = {
-      TypeA: [
-        { ID: 11 },
-        { ID: 12 },
-      ],
-      TypeB: [
-        { ID: 11 },
-        { ID: 12 },
-      ],
-    };
+    let initialState = null;
+
+    beforeEach(() => {
+      initialState = {
+        TypeA: [{ ID: 11 }, { ID: 12 }],
+        TypeB: [{ ID: 11 }, { ID: 12 }],
+      };
+    });
 
     it('removes records from the declared type', () => {
       const nextState = recordsReducer(initialState, {
