@@ -12,7 +12,7 @@ import GridFieldAction from './GridFieldAction';
 import FormConstants from 'components/Form/FormConstants';
 import * as actions from 'state/records/RecordsActions';
 
-const NotYetLoaded = {};
+const NotYetLoaded = [];
 
 /**
  * The component acts as a container for a grid field,
@@ -44,13 +44,12 @@ class GridField extends SilverStripeComponent {
   }
 
   render() {
-    // props.records is keyed by record identifiers
     if (this.props.records === NotYetLoaded) {
       // TODO Replace with better loading indicator
       return <div>{ i18n._t('CampaignAdmin.LOADING', 'Loading...') }</div>;
     }
 
-    if (!Object.getOwnPropertyNames(this.props.records).length) {
+    if (!this.props.records.length) {
       return <div>{ i18n._t('CampaignAdmin.NO_RECORDS', 'No campaigns created yet.') }</div>;
     }
 
@@ -60,8 +59,8 @@ class GridField extends SilverStripeComponent {
       <GridFieldHeaderCell key={`${column.name}`}>{column.name}</GridFieldHeaderCell>
     );
     const header = <GridFieldHeader>{headerCells.concat(actionPlaceholder)}</GridFieldHeader>;
-    const rows = Object.keys(this.props.records).map((key) =>
-      this.createRow(this.props.records[key])
+    const rows = this.props.records.map((record) =>
+      this.createRow(record)
     );
 
     return (
@@ -173,10 +172,10 @@ GridField.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  const recordType = ownProps.data ? ownProps.data.recordType : null;
+  const recordType = ownProps.data && ownProps.data.recordType;
   return {
     config: state.config,
-    records: recordType && state.records[recordType] ? state.records[recordType] : NotYetLoaded,
+    records: (recordType && state.records[recordType]) ? state.records[recordType] : NotYetLoaded,
   };
 }
 

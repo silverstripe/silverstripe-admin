@@ -1,5 +1,5 @@
 import ACTION_TYPES from './RecordsActionTypes';
-import backend from 'lib/Backend.js';
+import backend from 'lib/Backend';
 
 /**
  * Populate strings based on a whitelist.
@@ -8,21 +8,23 @@ import backend from 'lib/Backend.js';
  *
  * Example: populate("foo/bar/:id", {id: 123}) => "foo/bar/123"
  *
- * @param string str A template string with ":<name>" notation.
- * @param object Map of names to values
+ * @param {string} template A template string with ":<name>" notation.
+ * @param {object} params of names to values
  * @return string
  */
-function populate(str, params) {
-  const names = ['id'];
-  return names.reduce((acc, name) => acc.replace(`:${name}`, params[name]), str);
+function populate(template, params) {
+  return Object.keys(params)
+    .reduce((result, name) => (
+      result.replace(`:${name}`, params[name])
+    ), template);
 }
 
 /**
  * Retrieves all records
  *
- * @param string recordType Type of record (the "class name")
- * @param string method HTTP method
- * @param string url API endpoint
+ * @param {string} recordType Type of record (the "class name")
+ * @param {string} method HTTP method
+ * @param {string} url API endpoint
  */
 export function fetchRecords(recordType, method, url) {
   const payload = { recordType };
@@ -61,9 +63,9 @@ export function fetchRecords(recordType, method, url) {
 /**
  * Fetches a single record
  *
- * @param string recordType Type of record (the "class name")
- * @param string method HTTP method
- * @param string url API endpoint
+ * @param {string} recordType Type of record (the "class name")
+ * @param {string} method HTTP method
+ * @param {string} url API endpoint
  */
 export function fetchRecord(recordType, method, url) {
   const payload = { recordType };
@@ -105,7 +107,7 @@ export function fetchRecord(recordType, method, url) {
  * @param {number} id Database identifier
  * @param {string} method HTTP method
  * @param {string} url API endpoint
- * @param {object} Headers
+ * @param {object} headers
  */
 export function deleteRecord(recordType, id, method, url, headers = {}) {
   const payload = { recordType, id };
