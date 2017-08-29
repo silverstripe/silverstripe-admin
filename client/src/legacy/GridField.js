@@ -172,8 +172,8 @@ $.entwine('ss', function($) {
 
       // Set close action
       modal.find('[data-dismiss]').on('click', function() {
-        backdrop.removeClass('in');
-        modal.removeClass('in');
+        backdrop.removeClass('show');
+        modal.removeClass('show');
         setTimeout(function() {
           backdrop.remove();
         }, 150) // Simulate the bootstrap out-transition period
@@ -181,8 +181,8 @@ $.entwine('ss', function($) {
 
       // Fade each element in (use setTimeout to ensure initial render at opacity=0 works)
       setTimeout(function() {
-        backdrop.addClass('in');
-        modal.addClass('in');
+        backdrop.addClass('show');
+        modal.addClass('show');
       }, 0);
 
     }
