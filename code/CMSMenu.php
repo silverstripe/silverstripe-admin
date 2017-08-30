@@ -91,9 +91,10 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
         $urlBase = AdminRootController::admin_url();
         $urlSegment   = Config::inst()->get($controllerClass, 'url_segment');
         $menuPriority = Config::inst()->get($controllerClass, 'menu_priority');
+        $ignoreFromMenu = Config::inst()->get($controllerClass, 'ignore_menuitem');
 
-        // Don't add menu items defined the old way
-        if (!$urlSegment) {
+        // Don't add menu items defined the old way, or for controllers that are set to be ignored
+        if (!$urlSegment || $ignoreFromMenu) {
             return null;
         }
 
