@@ -71,8 +71,7 @@ fieldset {
   input.text,
   input.creditcard,
 	textarea,
-	select,
-	.TreeDropdownField {
+	select {
     @extend .form-control;
 	}
 
@@ -182,8 +181,7 @@ form.small .field, .field.small {
 
 	input.text,
 	textarea,
-	select,
-	.TreeDropdownField {
+	select {
 		width: auto;
 	}
 }
@@ -206,38 +204,6 @@ form.small .field, .field.small {
 }
 
 .field {
-
-  // TreeDropdowns
-  .TreeDropdownField {
-    max-width: $input-max-width;
-    vertical-align: bottom;
-
-		&.treedropdownfield-open-tree {
-			border-bottom-left-radius: 0;
-			border-bottom-right-radius: 0;
-      border-color: #66afe9;
-		}
-
-		&.treedropdownfield-with-rise {
-			-webkit-border-radius: 0 0 4px 4px;
-			-moz-border-radius: 0 0 4px 4px;
-			border-radius: 0 0 4px 4px;
-
-			.treedropdownfield-panel {
-				border: 1px solid lighten($color-medium-separator, 20%);
-				border-bottom: none;
-				-webkit-border-radius: 4px 4px 0 0;
-				-moz-border-radius: 4px 4px 0 0;
-				border-radius: 4px 4px 0 0;
-			}
-		}
-
-		// Hide badges, as they cost too much horizontal space,
-		// and mess up rendering for selected node title
-		.badge {
-			display: none;
-		}
-	}
 
 	/* dropdowns */
 
@@ -609,7 +575,7 @@ button.loading {
 			padding: 0 0 $grid-y 0;
 		}
 
-		.fieldgroup input.text, .fieldgroup textarea, .fieldgroup select, .fieldgroup .TreeDropdownField {
+		.fieldgroup input.text, .fieldgroup textarea, .fieldgroup select {
 			margin-left: 0;
 		}
 

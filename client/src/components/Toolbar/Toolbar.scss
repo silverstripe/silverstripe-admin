@@ -105,6 +105,10 @@
   min-width: 24px; // Safari fix
   color: $body-color-light; // TEMP: Needed for anchor buttons to override legacy styles
 
+  @include media-breakpoint-down(sm) {
+    margin-left: 42px;
+  }
+
   .toolbar--south & {
     margin-top: 0;
     margin-right: 5px;

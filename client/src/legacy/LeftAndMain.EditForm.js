@@ -482,7 +482,7 @@ $.entwine('ss', function($){
     },
     showList: function (instant) {
       const holder = this.closest('.field');
-      const list = holder.next().filter('.listbox');
+      const list = holder.next().filter('.listbox, .treedropdownfield');
       holder.addClass('field--merge-below');
       if (instant) {
         list.show().css('overflow', 'visible');
@@ -495,7 +495,7 @@ $.entwine('ss', function($){
     },
     hideList: function (instant) {
       const holder = this.closest('.field');
-      const list = holder.next().filter('.listbox');
+      const list = holder.next().filter('.listbox, .treedropdownfield');
       list.css('overflow', 'hidden');
       if (instant) {
         list.hide().css('display', 'none');
