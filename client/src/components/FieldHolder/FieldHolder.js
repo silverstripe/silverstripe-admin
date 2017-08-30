@@ -30,10 +30,18 @@ function fieldHolder(Field) {
      * @returns {Component}
      */
     renderMessage() {
-      const meta = this.props.meta;
-      const message = (meta) ? meta.error : null;
+      let message = null;
+      if (this.props.message && this.props.message.value) {
+        message = this.props.message;
+      }
 
-      if (!message || (meta && !meta.touched)) {
+      // If we have both meta and message, prefer meta only if form is dirty
+      const meta = this.props.meta;
+      if (meta && meta.error && meta.touched && (!message || meta.dirty)) {
+        message = meta.error;
+      }
+
+      if (!message) {
         return null;
       }
 

@@ -52,6 +52,62 @@ describe('FieldHolder', () => {
       expect(message).toBe(null);
     });
 
+    it('should render message property', () => {
+      props.message = {
+        value: 'hello!',
+        type: 'errro',
+      };
+
+      component = ReactTestUtils.renderIntoDocument(
+        <Holder {...props} />
+      );
+
+      const title = component.renderMessage();
+      expect(title.props.value).toBe('hello!');
+    });
+
+    it('should let meta error override message if dirty', () => {
+      props.message = {
+        value: 'hello!',
+        type: 'errro',
+      };
+      props.meta = {
+        error: {
+          value: 'My error',
+        },
+        touched: true,
+        dirty: true,
+      };
+
+      component = ReactTestUtils.renderIntoDocument(
+        <Holder {...props} />
+      );
+
+      const title = component.renderMessage();
+      expect(title.props.value).toBe('My error');
+    });
+
+    it('should let message override meta error override if not dirty', () => {
+      props.message = {
+        value: 'hello!',
+        type: 'errro',
+      };
+      props.meta = {
+        error: {
+          value: 'My error',
+        },
+        touched: true,
+        dirty: false,
+      };
+
+      component = ReactTestUtils.renderIntoDocument(
+        <Holder {...props} />
+      );
+
+      const title = component.renderMessage();
+      expect(title.props.value).toBe('hello!');
+    });
+
     it('should not return anything if not touched', () => {
       props.meta = {
         error: 'My error',
