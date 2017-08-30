@@ -94,17 +94,20 @@ class FormBuilderLoader extends Component {
         .then(formSchema => {
           let schema = formSchema;
           if (schema) {
-            // Strip errors out of schema response in preparation for setSchema and SubmissionError
-            schema = this.reduceSchemaErrors(schema);
+            // Before modifying schema, check if the schema state is provided explicitly
+            const explicitUpdatedState = typeof schema.state !== 'undefined';
 
+            // Merge any errors into the current state to update messages and alerts
+            schema = this.reduceSchemaErrors(schema);
             this.props.actions.schema.setSchema(
               this.props.schemaUrl,
               schema,
               this.getIdentifier()
             );
 
-            const schemaRef = schema.schema || this.props.schema.schema;
-            if (schema.state) {
+            // If state is updated in server response, re-initialize redux form state
+            if (explicitUpdatedState) {
+              const schemaRef = schema.schema || this.props.schema.schema;
               const formData = schemaFieldValues(schemaRef, schema.state);
               this.props.actions.reduxForm.initialize(this.getIdentifier(), formData);
             }
@@ -116,7 +119,7 @@ class FormBuilderLoader extends Component {
     if (typeof this.props.handleSubmit === 'function') {
       promise = this.props.handleSubmit(data, action, newSubmitFn);
     } else {
-      promise = submitFn();
+      promise = newSubmitFn();
     }
 
     if (!promise) {

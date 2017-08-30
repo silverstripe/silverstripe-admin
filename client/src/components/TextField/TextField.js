@@ -33,6 +33,10 @@ class TextField extends SilverStripeComponent {
       autoFocus: this.props.autoFocus,
     };
 
+    if (this.props.attributes && !Array.isArray(this.props.attributes)) {
+      Object.assign(props, this.props.attributes);
+    }
+
     if (this.isMultiline()) {
       Object.assign(props, {
         componentClass: 'textarea',
@@ -87,6 +91,7 @@ TextField.propTypes = {
   placeholder: React.PropTypes.string,
   type: React.PropTypes.string,
   autoFocus: React.PropTypes.bool,
+  attributes: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.array]),
 };
 
 TextField.defaultProps = {
@@ -95,6 +100,7 @@ TextField.defaultProps = {
   extraClass: '',
   className: '',
   type: 'text',
+  attributes: {},
 };
 
 export { TextField };

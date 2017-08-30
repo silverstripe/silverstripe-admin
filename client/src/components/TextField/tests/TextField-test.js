@@ -63,4 +63,17 @@ describe('TextField', () => {
       expect(newProps.componentClass).toBe('textarea');
     });
   });
+
+  describe('attributes', () => {
+    it('should assign placeholder', () => {
+      props.attributes = {
+        placeholder: 'text',
+      };
+      const textField = ReactTestUtils.renderIntoDocument(
+        <TextField {...props} />
+      );
+      const newProps = textField.getInputProps();
+      expect(newProps.placeholder).toBe('text');
+    });
+  });
 });
