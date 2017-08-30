@@ -553,6 +553,10 @@ class LeftAndMain extends Controller implements PermissionProvider
     public static function getRequiredPermissions()
     {
         $class = get_called_class();
+        // If the user is accessing LeftAndMain directly, only generic permissions are required.
+        if ($class === self::class) {
+            return 'CMS_ACCESS';
+        }
         $code = Config::inst()->get($class, 'required_permission_codes');
         if ($code === false) {
             return false;
@@ -560,7 +564,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         if ($code) {
             return $code;
         }
-        return "CMS_ACCESS_" . $class;
+        return 'CMS_ACCESS_' . $class;
     }
 
     /**
