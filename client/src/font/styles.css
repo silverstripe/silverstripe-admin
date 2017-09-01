@@ -326,9 +326,6 @@
 .font-icon-sort:before {
   content: "\e003";
 }
-.font-icon-file-symlink-directory:before {
-  content: "\e002";
-}
 .font-icon-lock:before {
   content: "\e004";
 }
@@ -340,4 +337,7 @@
 }
 .font-icon-folder-move:before {
   content: "\e007";
+}
+.font-icon-drag-handle:before {
+  content: "\53";
 }
