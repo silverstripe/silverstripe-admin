@@ -655,6 +655,7 @@ class TreeDropdownField extends Component {
         isLoading={Boolean(this.props.loading.length)}
         value={value}
         resetValue={resetValue}
+        joinValues
         ref={(select) => { this.selectField = select; }}
         placeholder={this.props.data.emptyString}
         labelKey="title"
