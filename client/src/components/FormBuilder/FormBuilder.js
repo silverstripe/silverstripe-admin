@@ -161,6 +161,8 @@ class FormBuilder extends SilverStripeComponent {
     const componentProps = {
       ...props,
       ...props.input,
+      // required as reference for positional components like PopoverField
+      container: this,
     };
     delete componentProps.input;
     const { identifier } = this.props;

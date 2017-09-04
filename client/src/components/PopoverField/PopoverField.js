@@ -59,6 +59,7 @@ class PopoverField extends SilverStripeComponent {
         placement={placement} overlay={overlay}
         onEnter={this.handleShow}
         onExited={this.handleHide}
+        container={this.props.container}
       >
         <button {...buttonProps}>
           {this.props.title}
@@ -81,6 +82,7 @@ class PopoverField extends SilverStripeComponent {
 PopoverField.propTypes = {
   id: React.PropTypes.string,
   title: React.PropTypes.any,
+  container: React.PropTypes.any,
   data: React.PropTypes.oneOfType([
     React.PropTypes.array,
     React.PropTypes.shape({
