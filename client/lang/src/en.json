@@ -1,4 +1,5 @@
 {
+    "Admin.ADD_TO_CAMPAIGN": "Add to campaign",
     "Admin.BATCH_ARCHIVE_PROMPT": "You have {num} page(s) selected.\n\nAre you sure you want to archive these pages?\n\nThese pages and all of their children pages will be unpublished and sent to the archive.",
     "Admin.BATCH_DELETELIVE_PROMPT": "You have {num} page(s) selected.\n\nDo you really want to delete these pages from live?",
     "Admin.BATCH_DELETE_PROMPT": "You have {num} page(s) selected.\n\nAre you sure you want to delete these pages?\n\nThese pages and all of their children pages will be deleted and sent to the archive.",
