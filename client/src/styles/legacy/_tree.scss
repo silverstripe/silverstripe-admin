@@ -5,7 +5,7 @@
  * The styles are usually added through jstree.js on DOM load,
  * but we need it earlier in order to correctly display the uninitialized tree.
  */
-.cms, .TreeDropdownField .treedropdownfield-panel {
+.cms {
   .jstree {
     > ul > li {
       margin-left: 0px;

@@ -39,7 +39,7 @@
         }
     },
     "scripts": {
-        "lint": "phpcs --standard=tests/phpcs/ruleset.xml code/ tests/php/"
+        "lint": "phpcs code/ tests/php/"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

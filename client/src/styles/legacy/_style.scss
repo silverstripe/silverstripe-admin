@@ -1390,11 +1390,6 @@ form.member-profile-form {
   #Groups .middleColumn {
     margin-left: 0;
     width: 100%;
-
-    .TreeDropdownField {
-      width: 90%;
-      max-width: 90%;
-    }
   }
 
   // Same rules in .SecurityAdmin
@@ -1942,12 +1937,6 @@ body.cms-dialog {
           height: 14px;
           opacity: .8;
         }
-      }
-
-      .TreeDropdownField:not(.treedropdownfield-open-tree) {
-        background: 0;
-        box-shadow: none;
-        border-color: transparent;
       }
     }
   }

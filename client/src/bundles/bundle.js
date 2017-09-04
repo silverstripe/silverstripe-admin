@@ -80,7 +80,7 @@ require('../legacy/ConfirmedPasswordField.js');
 require('../legacy/SelectionGroup.js');
 require('../legacy/DateField.js');
 require('../legacy/ToggleCompositeField.js');
-require('../legacy/TreeDropdownField.js');
+require('../legacy/TreeDropdownField/TreeDropdownFieldEntwine.js');
 require('../legacy/DateField.js');
 require('../legacy/DatetimeField.js');
 require('../legacy/HtmlEditorField.js');
