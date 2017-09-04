@@ -12,9 +12,8 @@
 
 }
 
-[class^="font-icon-"]::before,
-[class*=" font-icon-"]::before {
-  // sass-lint:disable-block no-important
+[class^="font-icon-"]:before,
+[class*=" font-icon-"]:before {
   font-family: "silverstripe" !important;
   font-style: normal !important;
   font-weight: normal !important;
@@ -410,10 +409,6 @@
   content: "\e003";
 }
 
-.font-icon-file-symlink-directory:before {
-  content: "\e002";
-}
-
 .font-icon-lock:before {
   content: "\e004";
 }
@@ -428,4 +423,8 @@
 
 .font-icon-folder-move:before {
   content: "\e007";
+}
+
+.font-icon-drag-handle:before {
+  content: "\53";
 }
