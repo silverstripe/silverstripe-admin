@@ -9,19 +9,6 @@
   .btn-toolbar {
     margin-top: 0;
     margin-bottom: 0;
-
-    // Replicate regular buttons in .btn-toolbar
-    > .grid-print-button,
-    > .grid-csv-button {
-      margin-left: $btn-spacing;
-    }
-
-    .btn-secondary:first-child,
-    .btn-link:first-child,
-    .grid-csv-button:first-child,
-    .grid-print-button:first-child {
-      margin-left: calc(#{$btn-spacing} - #{$input-btn-padding-x});
-    }
   }
 
   .btn {
