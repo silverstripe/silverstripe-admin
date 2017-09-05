@@ -23,13 +23,14 @@
 
   .font-icon-check-mark-circle,
   .font-icon-cancel-circled,
-  .font-icon-disable-circled {
+  .font-icon-disable-circled,
+  .font-icon-plus-circled {
     font-size: 18px;
     position: relative;
     top: 2px;
   }
 
-  .font-icon-check-mark-circle {
+  .font-icon-check-mark-circle, .font-icon-plus-circled {
     color: $brand-success;
   }
 
