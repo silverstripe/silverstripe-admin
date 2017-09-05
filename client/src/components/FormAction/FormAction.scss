@@ -114,7 +114,7 @@
 }
 
 .btn--loading {
-  & > span,
+  & > .btn__title,
   &::before {
     visibility: hidden;
   }
