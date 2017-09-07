@@ -29,14 +29,16 @@ class PopoverField extends SilverStripeComponent {
   render() {
     const placement = this.getPlacement();
     const overlay = (
-      <Popover id={`${this.props.id}_Popover`} className={`fade in popover-${placement}`}
+      <Popover
+        id={`${this.props.id}_Popover`}
+        className={`fade in popover-${placement} ${this.props.popoverClassName}`}
         title={this.props.data.popoverTitle}
       >
         {this.props.children}
       </Popover>
     );
 
-    const buttonClasses = ['btn', 'btn-secondary'];
+    const buttonClasses = ['btn', 'btn-secondary', this.props.className];
     if (this.state.showing) {
       buttonClasses.push('btn--no-focus');
     }
@@ -83,6 +85,8 @@ PopoverField.propTypes = {
   id: React.PropTypes.string,
   title: React.PropTypes.any,
   container: React.PropTypes.any,
+  className: React.PropTypes.string,
+  popoverClassName: React.PropTypes.string,
   data: React.PropTypes.oneOfType([
     React.PropTypes.array,
     React.PropTypes.shape({
@@ -91,6 +95,12 @@ PopoverField.propTypes = {
       placement: React.PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
     }),
   ]),
+};
+
+PopoverField.defaultProps = {
+  data: {},
+  className: '',
+  popoverClassName: '',
 };
 
 export default PopoverField;

@@ -9,6 +9,7 @@ require('expose-loader?Injector!lib/Injector');
 require('expose-loader?reduxFieldReducer!lib/reduxFieldReducer');
 require('expose-loader?getFormState!lib/getFormState');
 require('expose-loader?FormAlert!components/FormAlert/FormAlert');
+require('expose-loader?PopoverField!components/PopoverField/PopoverField');
 require('expose-loader?FieldHolder!components/FieldHolder/FieldHolder');
 require('expose-loader?Form!components/Form/Form');
 require('expose-loader?FormConstants!components/Form/FormConstants');
