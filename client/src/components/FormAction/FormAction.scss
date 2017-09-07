@@ -28,7 +28,7 @@
   margin-right: $btn-icon-spacing;
   line-height: $line-height-root;
   font-size: $font-size-lg;
-  float: left;
+  top: 3px;
 }
 
 .btn--icon-danger:hover::before {
@@ -48,16 +48,15 @@
 
 .btn--icon-large[class*="font-icon-"]::before {
   font-size: 20px;
-  top: -1px;
+  top: 4px;
   position: relative;
 }
 
 .btn--icon-xl[class*="font-icon-"]::before {
   font-size: 22px;
-  top: -1px;
+  top: 5px;
   position: relative;
 }
-
 
 // For buttons with icon and no text, removes space after icon
 // TODO replace all .no-text classes for .btn--no-text
