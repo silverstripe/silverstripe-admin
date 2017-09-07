@@ -12,6 +12,10 @@
   border: 0;
 }
 
+.modal__dialog--scrollable {
+  overflow: auto;
+}
+
 
 // Modal header
 // Top section of the modal w/ title and dismiss
