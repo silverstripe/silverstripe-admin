@@ -22,6 +22,10 @@
   }
 }
 
+.btn--loading .btn__title {
+  visibility: hidden;
+}
+
 // Button icons
 .btn[class*="font-icon-"]::before {
   position: relative;
