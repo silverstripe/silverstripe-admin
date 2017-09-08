@@ -107,8 +107,13 @@
   max-width: $input-max-width;
 }
 
-.form__field-message-item {
+.form__field-message {
   display: block;
+  margin: 0.5em 0;
+
+  &--error {
+    color: $red;
+  }
 }
 
 .form__field-extra-label,
@@ -176,7 +181,6 @@ input.checkbox,
 input.radio {
   display: inline;
   margin-right: 6px;
-  margin-bottom: 0;
 }
 
 

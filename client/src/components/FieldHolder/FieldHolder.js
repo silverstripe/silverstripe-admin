@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import SilverStripeComponent from 'lib/SilverStripeComponent';
 import { FormGroup, InputGroup, ControlLabel } from 'react-bootstrap-ss';
 import castStringToElement from 'lib/castStringToElement';
-import FormAlert from 'components/FormAlert/FormAlert';
+import classnames from 'classnames';
 
 function fieldHolder(Field) {
   class FieldHolder extends SilverStripeComponent {
@@ -45,9 +45,12 @@ function fieldHolder(Field) {
         return null;
       }
 
-      return (
-        <FormAlert className="form__field-message" {...message} />
-      );
+      const classNames = classnames([
+        'form__field-message',
+        `form__field-message--${message.type}`,
+      ]);
+      const body = castStringToElement('div', message.value);
+      return <div className={classNames}>{body}</div>;
     }
 
     /**
@@ -115,7 +118,12 @@ function fieldHolder(Field) {
     }
 
     renderField() {
-      const field = <Field {...this.props} />;
+      const props = { ...this.props };
+      const hasErrors = Boolean(this.props.meta && this.props.meta.error);
+      if (hasErrors) {
+        props.extraClass = `${props.extraClass} is-invalid`;
+      }
+      const field = <Field { ...props} />;
       const prefix = this.props.data.prefix;
       const suffix = this.props.data.suffix;
       if (!prefix && !suffix) {

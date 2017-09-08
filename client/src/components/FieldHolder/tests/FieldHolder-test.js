@@ -62,8 +62,9 @@ describe('FieldHolder', () => {
         <Holder {...props} />
       );
 
-      const title = component.renderMessage();
-      expect(title.props.value).toBe('hello!');
+      const formMsg = ReactTestUtils
+        .findRenderedDOMComponentWithClass(component, 'form__field-message');
+      expect(formMsg.textContent).toBe('hello!');
     });
 
     it('should let meta error override message if dirty', () => {
@@ -83,8 +84,9 @@ describe('FieldHolder', () => {
         <Holder {...props} />
       );
 
-      const title = component.renderMessage();
-      expect(title.props.value).toBe('My error');
+      const formMsg = ReactTestUtils
+        .findRenderedDOMComponentWithClass(component, 'form__field-message');
+      expect(formMsg.textContent).toBe('My error');
     });
 
     it('should let message override meta error override if not dirty', () => {
@@ -104,8 +106,9 @@ describe('FieldHolder', () => {
         <Holder {...props} />
       );
 
-      const title = component.renderMessage();
-      expect(title.props.value).toBe('hello!');
+      const formMsg = ReactTestUtils
+        .findRenderedDOMComponentWithClass(component, 'form__field-message');
+      expect(formMsg.textContent).toBe('hello!');
     });
 
     it('should not return anything if not touched', () => {
