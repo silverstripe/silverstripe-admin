@@ -16,7 +16,7 @@ class FormAction extends SilverStripeComponent {
     return (
       <button {...this.getButtonProps()}>
         {this.getLoadingIcon()}
-        {castStringToElement('span', title)}
+        {castStringToElement('span', title, { className: 'btn__title' })}
       </button>
     );
   }
