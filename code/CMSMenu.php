@@ -342,11 +342,15 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
             $item->setAttributes($attributes);
         }
 
-        self::$menu_item_changes[] = array(
-            'type' => 'add',
-            'code' => $code,
-            'item' => $item,
-        );
+		//Verify exists indication to remove before add
+		if (!in_array(array('code' => $code,'type' => 'remove'), self::$menu_item_changes))
+		{
+			self::$menu_item_changes[] = array(
+				'type' => 'add',
+				'code' => $code,
+				'item' => $item
+			);
+		}
     }
 
     /**
