@@ -42,6 +42,10 @@ html [type="button"] {
   margin-left: 5px;
 }
 
+.btn-toolbar > .btn-group + .btn {
+  margin-left: -5px;
+}
+
 // Don't tie input padding to btn padding
 .form-control {
   padding: $input-padding-y $input-padding-x;
