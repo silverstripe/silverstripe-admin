@@ -21,7 +21,7 @@
   width: 1px;
 }
 
-.filter-buttons {
+.grid-field__filter-buttons {
   min-width: 68px;
 }
 
@@ -104,7 +104,7 @@
   }
 
   .grid-field__table {
-    .filter-header {
+    .grid-field__filter-header {
       .fieldholder-small {
         padding-bottom: 0;
       }
@@ -209,7 +209,7 @@
       }
     }
 
-    .filter-buttons .fieldgroup-field {
+    .grid-field__filter-buttons .fieldgroup-field {
       width: auto;
     }
 

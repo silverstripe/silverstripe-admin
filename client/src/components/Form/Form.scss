@@ -91,6 +91,11 @@
   &.form-group--no-label:not(.stacked) .form__field-label + .form__field-holder {
     margin-left: 0;
   }
+
+  &.field--merge-below:after {
+    border-bottom: 0;
+    box-shadow: none;
+  }
 }
 
 .form__field-label {
@@ -100,6 +105,10 @@
 
 .form__field-holder {
   max-width: $input-max-width;
+}
+
+.form__field-message-item {
+  display: block;
 }
 
 .form__field-extra-label,
