@@ -30,7 +30,7 @@
 .btn[class*="font-icon-"]::before {
   position: relative;
   margin-right: $btn-icon-spacing;
-  line-height: $line-height-root;
+  line-height: 1.3rem;
   font-size: $font-size-lg;
   top: 3px;
 }
@@ -58,8 +58,9 @@
 
 .btn--icon-xl[class*="font-icon-"]::before {
   font-size: 22px;
-  top: 5px;
+  top: 7px;
   position: relative;
+  line-height: 0.8rem;
 }
 
 // For buttons with icon and no text, removes space after icon
