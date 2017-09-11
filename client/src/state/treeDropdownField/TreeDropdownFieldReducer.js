@@ -1,6 +1,6 @@
 import deepFreeze from 'deep-freeze-strict';
-import ACTION_TYPES from './TreeDropdownFieldActionTypes';
 import getFieldReducer from 'lib/reduxFieldReducer';
+import ACTION_TYPES from './TreeDropdownFieldActionTypes';
 
 /**
  * Default state

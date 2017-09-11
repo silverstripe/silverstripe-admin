@@ -1,9 +1,7 @@
-import React from 'react';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import classnames from 'classnames';
 
 class MobileMenuToggle extends Component {
-
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this);
@@ -31,10 +29,10 @@ class MobileMenuToggle extends Component {
         aria-controls={this.props.controls}
         aria-expanded={!!this.props.isOpen}
       >
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+        <span />
+        <span />
+        <span />
+        <span />
       </button>
     );
   }

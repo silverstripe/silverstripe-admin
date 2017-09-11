@@ -1,7 +1,6 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 
-class LiteralField extends SilverStripeComponent {
+class LiteralField extends Component {
   /**
    * Sets the content into a dangerouslySetInnerHTML object
    *
@@ -30,9 +29,9 @@ class LiteralField extends SilverStripeComponent {
     return (
       <div
         {...this.getInputProps()}
+        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={this.getContent()}
-      >
-      </div>
+      />
     );
   }
 }

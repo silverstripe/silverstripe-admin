@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import i18n from 'i18n';
 import { Modal } from 'react-bootstrap-ss';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
 import FormBuilderLoader from 'containers/FormBuilderLoader/FormBuilderLoader';
 import castStringToElement from 'lib/castStringToElement';
 
 const noop = () => null;
 
-class FormBuilderModal extends SilverStripeComponent {
+class FormBuilderModal extends Component {
   constructor(props) {
     super(props);
 
@@ -15,20 +14,6 @@ class FormBuilderModal extends SilverStripeComponent {
     this.handleHide = this.handleHide.bind(this);
     this.clearResponse = this.clearResponse.bind(this);
     this.handleLoadingError = this.handleLoadingError.bind(this);
-  }
-
-  handleLoadingError(schema) {
-    const providesOnLoadingError = this.props.onLoadingError !== noop;
-    if (this.props.showErrorMessage || !providesOnLoadingError) {
-      const error = schema.errors && schema.errors[0];
-      this.setState({
-        response: error.value,
-        error: true,
-      });
-    }
-    if (providesOnLoadingError) {
-      this.props.onLoadingError(schema);
-    }
   }
 
   /**
@@ -74,6 +59,20 @@ class FormBuilderModal extends SilverStripeComponent {
         { castStringToElement('span', { html: this.state.response }) }
       </div>
     );
+  }
+
+  handleLoadingError(schema) {
+    const providesOnLoadingError = this.props.onLoadingError !== noop;
+    if (this.props.showErrorMessage || !providesOnLoadingError) {
+      const error = schema.errors && schema.errors[0];
+      this.setState({
+        response: error.value,
+        error: true,
+      });
+    }
+    if (providesOnLoadingError) {
+      this.props.onLoadingError(schema);
+    }
   }
 
   /**

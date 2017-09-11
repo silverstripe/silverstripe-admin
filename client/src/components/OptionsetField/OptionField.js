@@ -1,9 +1,8 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 import castStringToElement from 'lib/castStringToElement';
 import { Checkbox, Radio } from 'react-bootstrap-ss';
 
-class OptionField extends SilverStripeComponent {
+class OptionField extends Component {
   constructor(props) {
     super(props);
 
@@ -42,7 +41,7 @@ class OptionField extends SilverStripeComponent {
       this.props.extraClass,
     ];
 
-    if (!!this.props.value) {
+    if (this.props.value) {
       classNames.push('checked');
     }
 

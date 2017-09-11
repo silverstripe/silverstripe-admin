@@ -1,9 +1,7 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-class Breadcrumb extends SilverStripeComponent {
-
+class Breadcrumb extends Component {
   getLastCrumb() {
     return this.props.crumbs && this.props.crumbs[this.props.crumbs.length - 1];
   }
@@ -13,8 +11,8 @@ class Breadcrumb extends SilverStripeComponent {
       return null;
     }
 
-    return this.props.crumbs.slice(0, -1).map((crumb, index) => (
-      <li key={index} className="breadcrumb__item">
+    return this.props.crumbs.slice(0, -1).map((crumb) => (
+      <li key={crumb.text} className="breadcrumb__item">
         <a
           className="breadcrumb__item-title"
           href={crumb.href}
@@ -41,9 +39,14 @@ class Breadcrumb extends SilverStripeComponent {
       <div className="breadcrumb__item breadcrumb__item--last">
         <h2 className="breadcrumb__item-title">
           {crumb.text}
-          {crumb.icon &&
-          <span className={iconClassNames.join(' ')} onClick={crumb.icon.action} />
-          }
+          {crumb.icon && (
+            <span
+              className={iconClassNames.join(' ')}
+              role="button"
+              tabIndex={0}
+              onClick={crumb.icon.action}
+            />
+          )}
         </h2>
       </div>
     );

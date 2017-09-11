@@ -1,4 +1,4 @@
-/* global jest, jasmine, describe, beforeEach, it, pit, expect, process */
+/* global jest, jasmine, describe, beforeEach, it, expect, process */
 
 jest.dontMock('../Router.js');
 

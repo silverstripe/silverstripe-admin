@@ -1,8 +1,7 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 import castStringToElement from 'lib/castStringToElement';
 
-class CompositeField extends SilverStripeComponent {
+class CompositeField extends Component {
   /**
    * Builds the legend for a fieldset if it is defined
    *

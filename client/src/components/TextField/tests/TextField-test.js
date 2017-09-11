@@ -6,7 +6,7 @@ jest.unmock('../TextField');
 
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
-import { TextField } from '../TextField';
+import { Component as TextField } from '../TextField';
 
 describe('TextField', () => {
   let props = null;

@@ -21,7 +21,8 @@ describe('BreadcrumbsComponent', () => {
       props.crumbs = [
         { text: 'breadcrumb1', href: 'href1' },
         { text: 'breadcrumb2', href: 'href2' },
-        { text: 'breadcrumb3', href: 'href3',
+        { text: 'breadcrumb3',
+          href: 'href3',
           icon: {
             className: 'breadcrumb3icon',
             action: jest.genMockFunction(),

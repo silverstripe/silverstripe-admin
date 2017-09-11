@@ -33,7 +33,6 @@ function createFormIdentifierFromProps({ identifier, schema = {} }) {
 }
 
 class FormBuilderLoader extends Component {
-
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -286,10 +285,8 @@ class FormBuilderLoader extends Component {
           if (typeof this.props.onLoadingError === 'function') {
             this.props.onLoadingError(formSchema);
           }
-        } else {
-          if (typeof this.props.onLoadingSuccess === 'function') {
-            this.props.onLoadingSuccess();
-          }
+        } else if (typeof this.props.onLoadingSuccess === 'function') {
+          this.props.onLoadingSuccess();
         }
 
         if (typeof formSchema.id !== 'undefined' && formSchema.state) {
@@ -443,7 +440,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export { FormBuilderLoader };
+export { FormBuilderLoader as Component };
 
 export default compose(
   inject(

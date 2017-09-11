@@ -1,3 +1,5 @@
+// linter resolves to the wrong file
+// eslint-disable-next-line import/no-unresolved
 import validator from 'validator';
 
 /**

@@ -1,5 +1,4 @@
-import React, { PropTypes } from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component, PropTypes } from 'react';
 import { Alert } from 'react-bootstrap-ss';
 import castStringToElement from 'lib/castStringToElement';
 
@@ -7,7 +6,7 @@ import castStringToElement from 'lib/castStringToElement';
  * A wrapper for Alert messages in react-bootstrap.
  * Displays a given message.
  */
-class FormAlert extends SilverStripeComponent {
+class FormAlert extends Component {
   constructor(props) {
     super(props);
 
@@ -73,8 +72,8 @@ class FormAlert extends SilverStripeComponent {
   }
 
   render() {
-    // use this component's state
-    if (typeof this.props.visible !== 'boolean' && this.state.visible || this.props.visible) {
+    // @todo default this.props.visible as null
+    if ((typeof this.props.visible !== 'boolean' && this.state.visible) || this.props.visible) {
       // needs to be inside a div because the `Alert` component does some magic with props.children
       const body = castStringToElement('div', this.props.value);
       if (body) {

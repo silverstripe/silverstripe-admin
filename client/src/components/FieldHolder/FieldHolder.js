@@ -1,11 +1,10 @@
-import React, { PropTypes } from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component, PropTypes } from 'react';
 import { FormGroup, InputGroup, ControlLabel } from 'react-bootstrap-ss';
 import castStringToElement from 'lib/castStringToElement';
 import classnames from 'classnames';
 
 function fieldHolder(Field) {
-  class FieldHolder extends SilverStripeComponent {
+  class FieldHolder extends Component {
     /**
      * Gets the message from props or validation meta
      *
@@ -170,7 +169,6 @@ function fieldHolder(Field) {
         </FormGroup>
       );
     }
-
   }
 
   FieldHolder.propTypes = {

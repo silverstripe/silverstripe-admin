@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import OptionField from '../OptionsetField/OptionField';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
 
-class CheckboxField extends SilverStripeComponent {
+class CheckboxField extends Component {
   render() {
     // Build standard checkbox with fieldholder
     const FieldHolder = fieldHolder(OptionField);

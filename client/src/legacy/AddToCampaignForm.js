@@ -1,5 +1,6 @@
+/* global window */
 import i18n from 'i18n';
-import jQuery from 'jQuery';
+import jQuery from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -9,7 +10,7 @@ import FormBuilderModal from 'components/FormBuilderModal/FormBuilderModal';
 const InjectableFormBuilderModal = provideInjector(FormBuilderModal);
 
 jQuery.entwine('ss', ($) => {
-	/**
+  /**
    * Kick off an "add to campaign" dialog from the CMS actions.
    */
   $(
@@ -40,7 +41,7 @@ jQuery.entwine('ss', ($) => {
     },
   });
 
-	/**
+  /**
    * Uses React-Bootstrap in order to replicate the bootstrap styling and JavaScript behaviour.
    * The "add to campaign" dialog is used in a similar fashion in AssetAdmin.
    */

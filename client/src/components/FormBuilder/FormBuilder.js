@@ -1,13 +1,11 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import merge from 'merge';
 import schemaFieldValues, { schemaMerge, findField } from 'lib/schemaFieldValues';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
 import Validator from 'lib/Validator';
 import backend from 'lib/Backend';
 import { withInjector } from 'lib/Injector';
 
-class FormBuilder extends SilverStripeComponent {
-
+class FormBuilder extends Component {
   constructor(props) {
     super(props);
     const schemaStructure = props.schema.schema;
@@ -22,6 +20,45 @@ class FormBuilder extends SilverStripeComponent {
     this.handleAction = this.handleAction.bind(this);
     this.buildComponent = this.buildComponent.bind(this);
     this.validateForm = this.validateForm.bind(this);
+  }
+
+  /**
+   * Default data type to component mappings.
+   * Used as a fallback when no component type is provided in the form schema.
+   *
+   * @param {string} dataType - The data type provided by the form schema.
+   * @param {string} name - name of the field component
+   * @return object|null
+   */
+  getComponentForDataType(dataType, name) {
+    const { identifier } = this.props;
+    const get = (type) => this.context.injector.get(type, `${identifier}.${name}`);
+
+    switch (dataType) {
+      case 'String':
+      case 'Text':
+        return get('TextField');
+      case 'Date':
+        return get('DateField');
+      case 'Time':
+        return get('TimeField');
+      case 'Datetime':
+        return get('DatetimeField');
+      case 'Hidden':
+        return get('HiddenField');
+      case 'SingleSelect':
+        return get('SingleSelectField');
+      case 'Custom':
+        return get('GridField');
+      case 'Structural':
+        return get('CompositeField');
+      case 'Boolean':
+        return get('CheckboxField');
+      case 'MultiSelect':
+        return get('CheckboxSetField');
+      default:
+        return null;
+    }
   }
 
   /**
@@ -72,6 +109,7 @@ class FormBuilder extends SilverStripeComponent {
 
       // so if there are multiple errors, it will be listed in html spans
       const errorHtml = errors.map((message, index) => (
+        // eslint-disable-next-line react/no-array-index-key
         <span key={index} className="form__validation-message">{message}</span>
       ));
 
@@ -85,66 +123,6 @@ class FormBuilder extends SilverStripeComponent {
     }, {});
 
     return validation;
-  }
-
-  /**
-   * When the action is clicked on, records which action was clicked on
-   * This can allow for preventing the submit action, such as a custom action for the button
-   *
-   * @param {Event} event
-   */
-  handleAction(event) {
-    // Custom handlers
-    if (typeof this.props.handleAction === 'function') {
-      this.props.handleAction(event, this.props.values);
-    }
-
-    // Allow custom handlers to cancel event
-    if (!event.isPropagationStopped()) {
-      this.setState({ submittingAction: event.currentTarget.name });
-    }
-  }
-
-  /**
-   * Form submission handler passed to the Form Component as a prop.
-   * Provides a hook for controllers to access for state and provide custom functionality.
-   *
-   * @param {Object} data Processed and validated data from redux-form
-   * (originally retrieved through schemaFieldValues())
-   * @return {Promise|null}
-   */
-  handleSubmit(data) {
-    // Add form action data (or default to first action, same as browser behaviour)
-    const action = this.state.submittingAction
-      ? this.state.submittingAction
-      : this.props.schema.schema.actions[0].name;
-
-    const dataWithAction = Object.assign({}, data, {
-      [action]: 1,
-    });
-    const requestedSchema = this.props.responseRequestedSchema.join();
-    const headers = {
-      'X-Formschema-Request': requestedSchema,
-      'X-Requested-With': 'XMLHttpRequest',
-    };
-
-    const submitFn = (customData) =>
-      this.submitApi(customData || dataWithAction, headers)
-        .then(formSchema => {
-          this.setState({ submittingAction: null });
-          return formSchema;
-        })
-        .catch((reason) => {
-          // @todo Generic CMS error reporting
-          this.setState({ submittingAction: null });
-          throw reason;
-        });
-
-    if (typeof this.props.handleSubmit === 'function') {
-      return this.props.handleSubmit(dataWithAction, action, submitFn);
-    }
-
-    return submitFn();
   }
 
   /**
@@ -227,42 +205,63 @@ class FormBuilder extends SilverStripeComponent {
   }
 
   /**
-   * Default data type to component mappings.
-   * Used as a fallback when no component type is provided in the form schema.
+   * When the action is clicked on, records which action was clicked on
+   * This can allow for preventing the submit action, such as a custom action for the button
    *
-   * @param {string} dataType - The data type provided by the form schema.
-   * @param {string} name - name of the field component
-   * @return object|null
+   * @param {Event} event
    */
-  getComponentForDataType(dataType, name) {
-    const { identifier } = this.props;
-    const get = (type) => this.context.injector.get(type, `${identifier}.${name}`);
-
-    switch (dataType) {
-      case 'String':
-      case 'Text':
-        return get('TextField');
-      case 'Date':
-        return get('DateField');
-      case 'Time':
-        return get('TimeField');
-      case 'Datetime':
-        return get('DatetimeField');
-      case 'Hidden':
-        return get('HiddenField');
-      case 'SingleSelect':
-        return get('SingleSelectField');
-      case 'Custom':
-        return get('GridField');
-      case 'Structural':
-        return get('CompositeField');
-      case 'Boolean':
-        return get('CheckboxField');
-      case 'MultiSelect':
-        return get('CheckboxSetField');
-      default:
-        return null;
+  handleAction(event) {
+    // Custom handlers
+    if (typeof this.props.handleAction === 'function') {
+      this.props.handleAction(event, this.props.values);
     }
+
+    // Allow custom handlers to cancel event
+    if (!event.isPropagationStopped()) {
+      this.setState({ submittingAction: event.currentTarget.name });
+    }
+  }
+
+  /**
+   * Form submission handler passed to the Form Component as a prop.
+   * Provides a hook for controllers to access for state and provide custom functionality.
+   *
+   * @param {Object} data Processed and validated data from redux-form
+   * (originally retrieved through schemaFieldValues())
+   * @return {Promise|null}
+   */
+  handleSubmit(data) {
+    // Add form action data (or default to first action, same as browser behaviour)
+    const action = this.state.submittingAction
+      ? this.state.submittingAction
+      : this.props.schema.schema.actions[0].name;
+
+    const dataWithAction = Object.assign({}, data, {
+      [action]: 1,
+    });
+    const requestedSchema = this.props.responseRequestedSchema.join();
+    const headers = {
+      'X-Formschema-Request': requestedSchema,
+      'X-Requested-With': 'XMLHttpRequest',
+    };
+
+    const submitFn = (customData) =>
+      this.submitApi(customData || dataWithAction, headers)
+        .then(formSchema => {
+          this.setState({ submittingAction: null });
+          return formSchema;
+        })
+        .catch((reason) => {
+          // @todo Generic CMS error reporting
+          this.setState({ submittingAction: null });
+          throw reason;
+        });
+
+    if (typeof this.props.handleSubmit === 'function') {
+      return this.props.handleSubmit(dataWithAction, action, submitFn);
+    }
+
+    return submitFn();
   }
 
   /**

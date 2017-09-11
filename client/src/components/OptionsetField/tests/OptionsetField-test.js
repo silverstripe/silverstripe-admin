@@ -1,4 +1,4 @@
-/* global jest, describe, beforeEach, it, expect */
+/* global jest, describe, beforeEach, it, expect, Event */
 
 jest.unmock('react');
 jest.unmock('react-addons-test-utils');
@@ -6,7 +6,7 @@ jest.unmock('../OptionsetField');
 
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
-import { OptionsetField } from '../OptionsetField';
+import { Component as OptionsetField } from '../OptionsetField';
 
 describe('OptionsetField', () => {
   let props = null;

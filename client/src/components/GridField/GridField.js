@@ -1,8 +1,8 @@
-import React from 'react';
+/* global confirm */
+import React, { Component } from 'react';
 import i18n from 'i18n';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
 import GridFieldTable from './GridFieldTable';
 import GridFieldHeader from './GridFieldHeader';
 import GridFieldHeaderCell from './GridFieldHeaderCell';
@@ -22,8 +22,7 @@ const NotYetLoaded = [];
  * schema data to an API backend as a grid data source
  * @todo Replace "dumb" inner components with third party library (e.g. https://griddlegriddle.github.io)
  */
-class GridField extends SilverStripeComponent {
-
+class GridField extends Component {
   constructor(props) {
     super(props);
 
@@ -54,9 +53,9 @@ class GridField extends SilverStripeComponent {
     }
 
     // Placeholder to align the headers correctly with the content
-    const actionPlaceholder = <th key="holder" className={'grid-field__action-placeholder'}></th>;
+    const actionPlaceholder = <th key="holder" className="grid-field__action-placeholder" />;
     const headerCells = this.props.data.columns.map((column) =>
-      <GridFieldHeaderCell key={`${column.name}`}>{column.name}</GridFieldHeaderCell>
+      <GridFieldHeaderCell key={column.name}>{column.name}</GridFieldHeaderCell>
     );
     const header = <GridFieldHeader>{headerCells.concat(actionPlaceholder)}</GridFieldHeader>;
     const rows = this.props.records.map((record) =>
@@ -120,8 +119,8 @@ class GridField extends SilverStripeComponent {
   }
 
   /**
-   * @param object event
-   * @param number id
+   * @param {Event} event
+   * @param {number} id
    */
   deleteRecord(event, id) {
     event.preventDefault();
@@ -145,8 +144,8 @@ class GridField extends SilverStripeComponent {
   }
 
   /**
-   * @param object event
-   * @param number id
+   * @param {Event} event
+   * @param {number} id
    */
   editRecord(event, id) {
     event.preventDefault();
@@ -158,7 +157,6 @@ class GridField extends SilverStripeComponent {
 
     this.props.data.handleEditRecord(event, id);
   }
-
 }
 
 GridField.propTypes = {

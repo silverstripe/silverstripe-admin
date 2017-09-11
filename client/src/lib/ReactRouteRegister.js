@@ -1,4 +1,4 @@
-
+/* global window */
 /**
  * ReactRouteRegister is the interface developers should use to register routes with
  * the main client application. Routes should not be registered with react-router directly.
@@ -11,22 +11,21 @@
  * import MyComponent from 'containers/MyComponent';
  *
  * document.addEventListener('DOMContentLoaded', () => {
- *   	reactRouteRegister.add({
- *   	path: 'parent/route',
- *   	component: ParentComponent
+ *   reactRouteRegister.add({
+ *     path: 'parent/route',
+ *     component: ParentComponent
  *   });
  *   reactRouteRegister.add({
- *   	path: 'child/route',
- *   	component: ChildComponent
+ *     path: 'child/route',
+ *     component: ChildComponent
  *   }, ['parent/route']);
- * }
+ * });
  * ```
  * All routes registered with `ReactRouteRegister` are applied to react-router in `appBoot()`
  *
  * @class
  */
 class ReactRouteRegister {
-
   constructor() {
     this.reset();
   }

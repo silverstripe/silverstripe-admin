@@ -1,7 +1,6 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 
-class GridFieldAction extends SilverStripeComponent {
+class GridFieldAction extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);

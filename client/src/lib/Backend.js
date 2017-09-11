@@ -1,3 +1,4 @@
+/* global FormData */
 import fetch from 'isomorphic-fetch';
 import es6promise from 'es6-promise';
 import qs from 'qs';
@@ -200,7 +201,6 @@ function applySchemaToUrl(payloadSchema, url, data, opts = { setFromData: false 
 }
 
 class Backend {
-
   constructor() {
     // Allow mocking
     this.fetch = fetch;
@@ -411,7 +411,6 @@ class Backend {
     })
       .then(checkStatus);
   }
-
 }
 
 // Exported as a singleton so we can implement things like

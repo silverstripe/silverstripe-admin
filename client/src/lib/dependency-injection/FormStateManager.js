@@ -15,7 +15,6 @@ const getFormState = state => state;
  * An API for updating schema state
  */
 class FormStateManager {
-
   /**
    * Constructor
    * @param {object} schema
@@ -224,7 +223,6 @@ class FormStateManager {
   getState() {
     return this.schema;
   }
-
 }
 
 export default FormStateManager;

@@ -130,6 +130,7 @@ class TreeDropdownField extends Component {
     }
     // No more path means this is the complete tree
     let node = this.props.tree;
+    // eslint-disable-next-line no-restricted-syntax
     for (const next of path) {
       if (!node.children) {
         break;
@@ -755,7 +756,7 @@ function mapDispatchToProps(dispatch) {
 const ConnectedTreeDropdownField = connect(mapStateToProps, mapDispatchToProps)(TreeDropdownField);
 
 export {
-  TreeDropdownField,
+  TreeDropdownField as Component,
   ConnectedTreeDropdownField,
   MULTI_EMPTY_VALUE,
   SINGLE_EMPTY_VALUE,

@@ -2,7 +2,6 @@ import React, { PropTypes, Component } from 'react';
 import { Modal } from 'react-bootstrap-ss';
 
 class IframeDialog extends Component {
-
   renderHeader() {
     const title = this.props.title;
     if (title) {

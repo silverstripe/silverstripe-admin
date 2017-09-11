@@ -1,18 +1,12 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import { FormControl } from 'react-bootstrap-ss';
 
-class TextField extends SilverStripeComponent {
-
+class TextField extends Component {
   constructor(props) {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
-  }
-
-  render() {
-    return <FormControl {...this.getInputProps()} />;
   }
 
   /**
@@ -78,6 +72,10 @@ class TextField extends SilverStripeComponent {
       this.props.onChange(event, { id: this.props.id, value: event.target.value });
     }
   }
+
+  render() {
+    return <FormControl {...this.getInputProps()} />;
+  }
 }
 
 TextField.propTypes = {
@@ -103,6 +101,6 @@ TextField.defaultProps = {
   attributes: {},
 };
 
-export { TextField };
+export { TextField as Component };
 
 export default fieldHolder(TextField);

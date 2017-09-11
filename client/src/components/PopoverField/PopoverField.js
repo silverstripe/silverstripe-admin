@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Popover, OverlayTrigger } from 'react-bootstrap-ss';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
 
-class PopoverField extends SilverStripeComponent {
+class PopoverField extends Component {
   constructor(props) {
     super(props);
 
@@ -12,6 +11,16 @@ class PopoverField extends SilverStripeComponent {
     this.state = {
       showing: false,
     };
+  }
+
+  /**
+   * Get popup placement direction
+   *
+   * @returns {String}
+   */
+  getPlacement() {
+    const placement = this.props.data.placement;
+    return placement || 'bottom';
   }
 
   handleShow() {
@@ -57,8 +66,11 @@ class PopoverField extends SilverStripeComponent {
     }
 
     return (
-      <OverlayTrigger rootClose trigger="click"
-        placement={placement} overlay={overlay}
+      <OverlayTrigger
+        rootClose
+        trigger="click"
+        placement={placement}
+        overlay={overlay}
         onEnter={this.handleShow}
         onExited={this.handleHide}
         container={this.props.container}
@@ -68,16 +80,6 @@ class PopoverField extends SilverStripeComponent {
         </button>
       </OverlayTrigger>
     );
-  }
-
-  /**
-   * Get popup placement direction
-   *
-   * @returns {String}
-   */
-  getPlacement() {
-    const placement = this.props.data.placement;
-    return placement || 'bottom';
   }
 }
 

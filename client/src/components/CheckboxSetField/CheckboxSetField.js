@@ -1,10 +1,9 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 import OptionField from 'components/OptionsetField/OptionField';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 
 // a group of check boxes
-class CheckboxSetField extends SilverStripeComponent {
+class CheckboxSetField extends Component {
   constructor(props) {
     super(props);
 
@@ -132,6 +131,6 @@ CheckboxSetField.defaultProps = {
   value: [],
 };
 
-export { CheckboxSetField };
+export { CheckboxSetField as Component };
 
 export default fieldHolder(CheckboxSetField);

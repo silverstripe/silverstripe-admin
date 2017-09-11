@@ -1,11 +1,18 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 
-class GridFieldCell extends SilverStripeComponent {
-
+class GridFieldCell extends Component {
   constructor(props) {
     super(props);
+
     this.handleDrillDown = this.handleDrillDown.bind(this);
+  }
+
+  handleDrillDown(event) {
+    if (typeof this.props.handleDrillDown === 'undefined') {
+      return;
+    }
+
+    this.props.handleDrillDown(event);
   }
 
   render() {
@@ -24,16 +31,6 @@ class GridFieldCell extends SilverStripeComponent {
       <td {...props}>{this.props.children}</td>
     );
   }
-
-
-  handleDrillDown(event) {
-    if (typeof this.props.handleDrillDown === 'undefined') {
-      return;
-    }
-
-    this.props.handleDrillDown(event);
-  }
-
 }
 
 GridFieldCell.PropTypes = {

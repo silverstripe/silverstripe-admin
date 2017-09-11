@@ -1,9 +1,8 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 import castStringToElement from 'lib/castStringToElement';
 import classnames from 'classnames';
 
-class FormAction extends SilverStripeComponent {
+class FormAction extends Component {
   constructor(props) {
     super(props);
 

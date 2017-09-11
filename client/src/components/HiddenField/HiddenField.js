@@ -1,8 +1,7 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 import { FormControl } from 'react-bootstrap-ss';
 
-class HiddenField extends SilverStripeComponent {
+class HiddenField extends Component {
   /**
    * Fetches the properties for the field
    *

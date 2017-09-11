@@ -1,12 +1,24 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 
-class Toolbar extends SilverStripeComponent {
-
+class Toolbar extends Component {
   constructor(props) {
     super(props);
 
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+  }
+
+  /**
+   * Event handler for the back button.
+   *
+   * @param {Object} event
+   */
+  handleBackButtonClick(event) {
+    if (typeof this.props.handleBackButtonClick !== 'undefined') {
+      this.props.handleBackButtonClick(event);
+      return;
+    }
+
+    event.preventDefault();
   }
 
   render() {
@@ -29,26 +41,12 @@ class Toolbar extends SilverStripeComponent {
       <div className="toolbar toolbar--north">
         <div className="toolbar__navigation fill-width">
           {this.props.showBackButton &&
-            <button {...backButtonProps}></button>
+          <button {...backButtonProps} />
           }
           {this.props.children}
         </div>
       </div>
     );
-  }
-
-  /**
-   * Event handler for the back button.
-   *
-   * @param {Object} event
-   */
-  handleBackButtonClick(event) {
-    if (typeof this.props.handleBackButtonClick !== 'undefined') {
-      this.props.handleBackButtonClick(event);
-      return;
-    }
-
-    event.preventDefault();
   }
 }
 

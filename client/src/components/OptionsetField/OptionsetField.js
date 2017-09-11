@@ -1,9 +1,8 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 import OptionField from 'components/OptionsetField/OptionField';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 
-class OptionsetField extends SilverStripeComponent {
+class OptionsetField extends Component {
   constructor(props) {
     super(props);
 
@@ -101,6 +100,6 @@ OptionsetField.defaultProps = {
   itemClass: '',
 };
 
-export { OptionsetField };
+export { OptionsetField as Component };
 
 export default fieldHolder(OptionsetField);
