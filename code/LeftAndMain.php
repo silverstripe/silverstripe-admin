@@ -312,7 +312,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     public function getClientConfig()
     {
-        return [
+        $clientConfig = [
             // Trim leading/trailing slash to make it easier to concatenate URL
             // and use in routing definitions.
             'name' => static::class,
@@ -326,6 +326,10 @@ class LeftAndMain extends Controller implements PermissionProvider
                 ],
             ],
         ];
+
+        $this->extend('updateClientConfig', $clientConfig);
+
+        return $clientConfig;
     }
 
     /**
