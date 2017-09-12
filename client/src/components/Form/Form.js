@@ -92,6 +92,7 @@ Form.propTypes = {
     method: PropTypes.string.isRequired,
   }),
   fields: PropTypes.array.isRequired,
+  // props is named `handleSubmit` as it is recieved from redux-form
   handleSubmit: PropTypes.func,
   mapActionsToComponents: PropTypes.func.isRequired,
   mapFieldsToComponents: PropTypes.func.isRequired,

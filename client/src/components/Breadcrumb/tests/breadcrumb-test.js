@@ -25,7 +25,7 @@ describe('BreadcrumbsComponent', () => {
           href: 'href3',
           icon: {
             className: 'breadcrumb3icon',
-            action: jest.genMockFunction(),
+            onClick: jest.fn(),
           },
         },
       ];

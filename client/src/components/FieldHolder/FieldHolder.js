@@ -28,80 +28,6 @@ function fieldHolder(Field) {
     }
 
     /**
-     * Build description
-     *
-     * @returns {Component}
-     */
-    renderDescription() {
-      if (this.props.description === null) {
-        return null;
-      }
-
-      return castStringToElement(
-        'div',
-        this.props.description,
-        { className: 'form__field-description' }
-      );
-    }
-
-    /**
-     * Build a FormAlert
-     *
-     * @returns {Component}
-     */
-    renderMessage() {
-      const message = this.getMessage();
-      if (!message) {
-        return null;
-      }
-
-      const classNames = classnames([
-        'form__field-message',
-        `form__field-message--${message.type}`,
-      ]);
-      const body = castStringToElement('div', message.value);
-      return <div className={classNames}>{body}</div>;
-    }
-
-    /**
-     * Build title label
-     *
-     * @returns {Component}
-     */
-    renderLeftTitle() {
-      const labelText = this.props.leftTitle !== null
-        ? this.props.leftTitle
-        : this.props.title;
-
-      if (!labelText || this.props.hideLabels) {
-        return null;
-      }
-
-      return castStringToElement(
-        ControlLabel,
-        labelText,
-        { className: 'form__field-label' }
-      );
-    }
-
-    /**
-     * Build title label
-     *
-     * @returns {Component}
-     */
-    renderRightTitle() {
-      if (!this.props.rightTitle || this.props.hideLabels) {
-        return null;
-      }
-
-      return castStringToElement(
-        ControlLabel,
-        this.props.rightTitle,
-        { className: 'form__field-label' }
-      );
-    }
-
-    /**
      * Generates the properties for the field holder
      *
      * @returns {object}
@@ -127,6 +53,80 @@ function fieldHolder(Field) {
       };
     }
 
+    /**
+     * Build description
+     *
+     * @returns {React}
+     */
+    renderDescription() {
+      if (this.props.description === null) {
+        return null;
+      }
+
+      return castStringToElement(
+        'div',
+        this.props.description,
+        { className: 'form__field-description' }
+      );
+    }
+
+    /**
+     * Build a FormAlert
+     *
+     * @returns {React}
+     */
+    renderMessage() {
+      const message = this.getMessage();
+      if (!message) {
+        return null;
+      }
+
+      const classNames = classnames([
+        'form__field-message',
+        `form__field-message--${message.type}`,
+      ]);
+      const body = castStringToElement('div', message.value);
+      return <div className={classNames}>{body}</div>;
+    }
+
+    /**
+     * Build title label
+     *
+     * @returns {React}
+     */
+    renderLeftTitle() {
+      const labelText = this.props.leftTitle !== null
+        ? this.props.leftTitle
+        : this.props.title;
+
+      if (!labelText || this.props.hideLabels) {
+        return null;
+      }
+
+      return castStringToElement(
+        ControlLabel,
+        labelText,
+        { className: 'form__field-label' }
+      );
+    }
+
+    /**
+     * Build title label
+     *
+     * @returns {React}
+     */
+    renderRightTitle() {
+      if (!this.props.rightTitle || this.props.hideLabels) {
+        return null;
+      }
+
+      return castStringToElement(
+        ControlLabel,
+        this.props.rightTitle,
+        { className: 'form__field-label' }
+      );
+    }
+
     renderField() {
       const hasMessage = Boolean(this.getMessage());
       const props = {
@@ -137,7 +137,7 @@ function fieldHolder(Field) {
         ),
       };
 
-      const field = <Field { ...props} />;
+      const field = <Field {...props} />;
       const prefix = this.props.data.prefix;
       const suffix = this.props.data.suffix;
       if (!prefix && !suffix) {

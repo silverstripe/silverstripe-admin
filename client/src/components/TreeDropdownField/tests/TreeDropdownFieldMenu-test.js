@@ -129,9 +129,9 @@ describe('TreeDropdownField', () => {
       field = ReactTestUtils.renderIntoDocument(
         <TreeDropdownFieldMenu {...props} />
       );
-      const node = field.render();
+      const node = ReactTestUtils.scryRenderedDOMComponentsWithClass(field, 'Select-option')[0];
 
-      expect(node.props.children).toBe('Failed to load');
+      expect(node.textContent).toBe('Failed to load');
     });
 
     it('should notify if list is empty', () => {
@@ -142,9 +142,9 @@ describe('TreeDropdownField', () => {
       field = ReactTestUtils.renderIntoDocument(
         <TreeDropdownFieldMenu {...props} />
       );
-      const node = field.render();
+      const node = ReactTestUtils.scryRenderedDOMComponentsWithClass(field, 'Select-option')[0];
 
-      expect(node.props.children).toBe('No children');
+      expect(node.textContent).toBe('No children');
     });
 
     it('should return a list of the tree children plus breadcrumbs', () => {

@@ -9,17 +9,6 @@ class FormAction extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  render() {
-    const title = this.props.title;
-
-    return (
-      <button {...this.getButtonProps()}>
-        {this.getLoadingIcon()}
-        {castStringToElement('span', title, { className: 'btn__title' })}
-      </button>
-    );
-  }
-
   /**
    * Get props for the button
    *
@@ -69,17 +58,6 @@ class FormAction extends Component {
     }
 
     return classnames(buttonClasses);
-  }
-
-  /**
-   * @return {boolean}
-   */
-  isPrimary() {
-    const extraClasses = this.props.extraClass.split(' ');
-    return (
-      this.props.name === 'action_save' ||
-      extraClasses.find(className => className === 'ss-ui-action-constructive')
-    );
   }
 
   /**
@@ -141,22 +119,45 @@ class FormAction extends Component {
   }
 
   /**
+   * @return {boolean}
+   */
+  isPrimary() {
+    const extraClasses = this.props.extraClass.split(' ');
+    return (
+      this.props.name === 'action_save' ||
+      extraClasses.find(className => className === 'ss-ui-action-constructive')
+    );
+  }
+
+  /**
    * Event handler triggered when a user clicks the button.
    *
    * @param {Object} event
    * @return undefined
    */
   handleClick(event) {
-    if (typeof this.props.handleClick === 'function') {
-      this.props.handleClick(event, this.props.name || this.props.id);
+    if (typeof this.props.onClick === 'function') {
+      this.props.onClick(event, this.props.name || this.props.id);
     }
+  }
+
+  render() {
+    const title = this.props.title;
+
+    return (
+      <button {...this.getButtonProps()}>
+        {this.getLoadingIcon()}
+        {castStringToElement('span', title, { className: 'btn__title' })}
+      </button>
+    );
   }
 }
 
 FormAction.propTypes = {
   id: React.PropTypes.string,
   name: React.PropTypes.string,
-  handleClick: React.PropTypes.func,
+  onClick: React.PropTypes.func,
+  handleClick: () => { throw new Error('no longer used'); },
   title: React.PropTypes.string,
   type: React.PropTypes.string,
   loading: React.PropTypes.bool,

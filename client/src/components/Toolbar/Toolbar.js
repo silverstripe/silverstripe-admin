@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
 
 class Toolbar extends Component {
   constructor(props) {
@@ -13,8 +13,8 @@ class Toolbar extends Component {
    * @param {Object} event
    */
   handleBackButtonClick(event) {
-    if (typeof this.props.handleBackButtonClick !== 'undefined') {
-      this.props.handleBackButtonClick(event);
+    if (typeof this.props.onBackButtonClick !== 'undefined') {
+      this.props.onBackButtonClick(event);
       return;
     }
 
@@ -51,9 +51,10 @@ class Toolbar extends Component {
 }
 
 Toolbar.propTypes = {
-  handleBackButtonClick: React.PropTypes.func,
-  showBackButton: React.PropTypes.bool,
-  breadcrumbs: React.PropTypes.array,
+  handleBackButtonClick: () => { throw new Error('no longer used'); },
+  onBackButtonClick: PropTypes.func,
+  showBackButton: PropTypes.bool,
+  breadcrumbs: PropTypes.array,
 };
 
 Toolbar.defaultProps = {

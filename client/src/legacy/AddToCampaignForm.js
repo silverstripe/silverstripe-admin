@@ -76,8 +76,8 @@ jQuery.entwine('ss', ($) => {
           <InjectableFormBuilderModal
             title={title}
             show={show}
-            handleSubmit={handleSubmit}
-            handleHide={handleHide}
+            onSubmit={handleSubmit}
+            onHide={handleHide}
             schemaUrl={modalSchemaUrl}
             bodyClassName="modal__dialog"
             className="add-to-campaign-modal"

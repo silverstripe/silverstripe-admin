@@ -212,8 +212,8 @@ class FormBuilder extends Component {
    */
   handleAction(event) {
     // Custom handlers
-    if (typeof this.props.handleAction === 'function') {
-      this.props.handleAction(event, this.props.values);
+    if (typeof this.props.onAction === 'function') {
+      this.props.onAction(event, this.props.values);
     }
 
     // Allow custom handlers to cancel event
@@ -257,8 +257,8 @@ class FormBuilder extends Component {
           throw reason;
         });
 
-    if (typeof this.props.handleSubmit === 'function') {
-      return this.props.handleSubmit(dataWithAction, action, submitFn);
+    if (typeof this.props.onSubmit === 'function') {
+      return this.props.onSubmit(dataWithAction, action, submitFn);
     }
 
     return submitFn();
@@ -277,7 +277,7 @@ class FormBuilder extends Component {
       if (action.children) {
         props.children = this.mapActionsToComponents(action.children);
       } else {
-        props.handleClick = this.handleAction;
+        props.onClick = this.handleAction;
 
         // Reset through componentWillReceiveProps()
         if (this.props.submitting && this.state.submittingAction === action.name) {
@@ -396,8 +396,10 @@ const schemaPropType = PropTypes.shape({
 
 const basePropTypes = {
   createFn: PropTypes.func,
-  handleSubmit: PropTypes.func,
-  handleAction: PropTypes.func,
+  onSubmit: PropTypes.func,
+  handleSubmit: (props) => { if (props.handleSubmit) { throw new Error('handleSubmit: no longer used'); } },
+  onAction: PropTypes.func,
+  handleAction: (props) => { if (props.handleAction) { throw new Error('handleAction: no longer used'); } },
   asyncValidate: PropTypes.func,
   onSubmitFail: PropTypes.func,
   onSubmitSuccess: PropTypes.func,
@@ -437,5 +439,9 @@ FormBuilder.defaultProps = {
   autoFocus: false,
 };
 
-export { basePropTypes, schemaPropType };
+export {
+  FormBuilder as Component,
+  basePropTypes,
+  schemaPropType
+};
 export default withInjector(FormBuilder);

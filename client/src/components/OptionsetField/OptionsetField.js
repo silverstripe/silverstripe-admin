@@ -19,24 +19,8 @@ class OptionsetField extends Component {
    * @returns {string} key
    */
   getItemKey(item, index) {
-    return `${this.props.id}-${item.value || `empty${index}`}`;
-  }
-
-  /**
-   * Handler for sorting what the value of the field will be
-   *
-   * @param {Event} event
-   * @param {object} field
-   */
-  handleChange(event, field) {
-    if (typeof this.props.onChange === 'function') {
-      if (field.value === 1) {
-        const sourceItem = this.props.source
-          .find((item, index) => this.getItemKey(item, index) === field.id);
-
-        this.props.onChange(sourceItem.value);
-      }
-    }
+    const value = item.value || `empty${index}`;
+    return `${this.props.id}-${value}`;
   }
 
   /**
@@ -61,6 +45,23 @@ class OptionsetField extends Component {
       title: item.title,
       type: 'radio',
     };
+  }
+
+  /**
+   * Handler for sorting what the value of the field will be
+   *
+   * @param {Event} event
+   * @param {object} field
+   */
+  handleChange(event, field) {
+    if (typeof this.props.onChange === 'function') {
+      if (field.value === 1) {
+        const sourceItem = this.props.source
+          .find((item, index) => this.getItemKey(item, index) === field.id);
+
+        this.props.onChange(sourceItem.value);
+      }
+    }
   }
 
   render() {

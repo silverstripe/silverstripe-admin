@@ -18,17 +18,6 @@ class FormAlert extends Component {
   }
 
   /**
-   * Handler for when the message box is dismissed and hidden
-   */
-  handleDismiss() {
-    if (typeof this.props.onDismiss === 'function') {
-      this.props.onDismiss();
-    } else {
-      this.setState({ visible: false });
-    }
-  }
-
-  /**
    * Determines the style for the alert box to be shown based on messageType or other property
    * by default use "danger".
    *
@@ -69,6 +58,17 @@ class FormAlert extends Component {
       onDismiss: (this.props.closeLabel) ? this.handleDismiss : null,
       closeLabel: this.props.closeLabel,
     };
+  }
+
+  /**
+   * Handler for when the message box is dismissed and hidden
+   */
+  handleDismiss() {
+    if (typeof this.props.onDismiss === 'function') {
+      this.props.onDismiss();
+    } else {
+      this.setState({ visible: false });
+    }
   }
 
   render() {

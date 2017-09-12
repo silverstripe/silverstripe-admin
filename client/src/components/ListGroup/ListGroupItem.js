@@ -7,8 +7,8 @@ class ListGroupItem extends Component {
   }
 
   handleClick(event) {
-    if (this.props.handleClick) {
-      this.props.handleClick(event, this.props.handleClickArg);
+    if (this.props.onClick) {
+      this.props.onClick(event, this.props.onClickArg);
     }
   }
 
@@ -23,8 +23,10 @@ class ListGroupItem extends Component {
 }
 
 ListGroupItem.propTypes = {
-  handleClickArg: React.PropTypes.any,
-  handleClick: React.PropTypes.func,
+  onClickArg: React.PropTypes.any,
+  handleClickArg: () => { throw new Error('no longer used'); },
+  onClick: React.PropTypes.func,
+  handleClick: () => { throw new Error('no longer used'); },
 };
 
 export default ListGroupItem;

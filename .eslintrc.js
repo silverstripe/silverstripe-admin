@@ -45,6 +45,9 @@ module.exports = {
         "vars": "local"
       }
     ],
+      "react/no-danger": [
+        "error"
+      ],
     "react/forbid-prop-types": [
       "off"
     ],
@@ -59,9 +62,6 @@ module.exports = {
     ],
     "no-useless-escape": [
       "off"
-    ],
-    "react/no-danger": [
-      "error"
     ],
   }),
   "settings": {

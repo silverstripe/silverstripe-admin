@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames';
 
 class MobileMenuToggle extends Component {
@@ -27,7 +27,7 @@ class MobileMenuToggle extends Component {
         href="#toggle-mobile-menu"
         onClick={this.handleClick}
         aria-controls={this.props.controls}
-        aria-expanded={!!this.props.isOpen}
+        aria-expanded={Boolean(this.props.isOpen)}
       >
         <span />
         <span />
@@ -39,13 +39,12 @@ class MobileMenuToggle extends Component {
 }
 
 MobileMenuToggle.propTypes = {
-  isOpen: React.PropTypes.bool.isRequired,
-  onClick: React.PropTypes.func.isRequired,
-  controls: React.PropTypes.string,
+  isOpen: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+  controls: PropTypes.string,
 };
 
 MobileMenuToggle.defaultProps = {
-  isOpen: false,
   controls: '',
 };
 

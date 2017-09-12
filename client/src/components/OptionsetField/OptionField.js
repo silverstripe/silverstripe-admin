@@ -10,27 +10,6 @@ class OptionField extends Component {
   }
 
   /**
-   * React recommends using `onClick`, however react-bootstrap uses `onChange`
-   *
-   * @param {Event} event
-   */
-  handleChange(event) {
-    if (typeof this.props.onChange === 'function') {
-      // call onChange for `FormBuilder` to work
-      this.props.onChange(event, {
-        id: this.props.id,
-        value: event.target.checked ? 1 : 0,
-      });
-    } else if (typeof this.props.onClick === 'function') {
-      // for other React components which needs compatibility with this component
-      this.props.onClick(event, {
-        id: this.props.id,
-        value: event.target.checked ? 1 : 0,
-      });
-    }
-  }
-
-  /**
    * Fetches the properties for the field
    *
    * @returns {object} properties
@@ -55,6 +34,27 @@ class OptionField extends Component {
       checked: !!this.props.value,
       value: 1,
     };
+  }
+
+  /**
+   * React recommends using `onClick`, however react-bootstrap uses `onChange`
+   *
+   * @param {Event} event
+   */
+  handleChange(event) {
+    if (typeof this.props.onChange === 'function') {
+      // call onChange for `FormBuilder` to work
+      this.props.onChange(event, {
+        id: this.props.id,
+        value: event.target.checked ? 1 : 0,
+      });
+    } else if (typeof this.props.onClick === 'function') {
+      // for other React components which needs compatibility with this component
+      this.props.onClick(event, {
+        id: this.props.id,
+        value: event.target.checked ? 1 : 0,
+      });
+    }
   }
 
   render() {
@@ -90,7 +90,7 @@ OptionField.propTypes = {
   title: React.PropTypes.any,
   extraClass: React.PropTypes.string,
   id: React.PropTypes.string,
-  name: React.PropTypes.string.isRequired,
+  name: React.PropTypes.string,
   onChange: React.PropTypes.func,
   value: React.PropTypes.oneOfType([
     React.PropTypes.string,

@@ -15,7 +15,7 @@ describe('FormBuilderModal', () => {
     props = {
       title: '',
       show: false,
-      handleHide: jest.genMockFunction(),
+      onHide: jest.fn(),
       identifier: 'FormModalTest',
     };
   });

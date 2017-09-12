@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 class Breadcrumb extends Component {
@@ -44,7 +44,7 @@ class Breadcrumb extends Component {
               className={iconClassNames.join(' ')}
               role="button"
               tabIndex={0}
-              onClick={crumb.icon.action}
+              onClick={crumb.icon.onClick}
             />
           )}
         </h2>
@@ -67,7 +67,15 @@ class Breadcrumb extends Component {
 }
 
 Breadcrumb.propTypes = {
-  crumbs: React.PropTypes.array,
+  crumbs: PropTypes.arrayOf(PropTypes.shape({
+    onClick: PropTypes.func,
+    text: PropTypes.string,
+    icon: PropTypes.shape({
+      className: PropTypes.string,
+      onClick: PropTypes.func,
+      action: (props) => { if (props.action) { throw new Error('action: no longer used'); } },
+    })
+  })),
 };
 
 function mapStateToProps(state) {

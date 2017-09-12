@@ -6,6 +6,10 @@ class GridFieldAction extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+  handleClick(event) {
+    this.props.onClick(event, this.props.record.ID);
+  }
+
   render() {
     return (
       <button
@@ -14,14 +18,11 @@ class GridFieldAction extends Component {
       />
     );
   }
-
-  handleClick(event) {
-    this.props.handleClick(event, this.props.record.ID);
-  }
 }
 
 GridFieldAction.PropTypes = {
-  handleClick: React.PropTypes.func.isRequired,
+  handleClick: () => { throw new Error('no longer used'); },
+  Click: React.PropTypes.func.isRequired,
 };
 
 export default GridFieldAction;

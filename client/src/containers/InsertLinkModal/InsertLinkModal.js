@@ -30,12 +30,11 @@ class InsertLinkModal extends Component {
       {},
       this.props,
       {
-        handleSubmit: this.handleSubmit,
-        handleHide: this.props.onHide,
+        onSubmit: this.handleSubmit,
+        onHide: this.props.onHide,
         showErrorMessage: true,
       }
     );
-    delete props.onHide;
     delete props.onInsert;
     delete props.sectionConfig;
 

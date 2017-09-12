@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
-import FormBuilder from '../FormBuilder';
+import { Component as FormBuilder } from '../FormBuilder';
 import schemaFieldValues, { findField, schemaMerge } from 'lib/schemaFieldValues';
 
 describe('FormBuilder', () => {

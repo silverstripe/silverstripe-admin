@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 
 class GridFieldCell extends Component {
   constructor(props) {
@@ -8,22 +9,16 @@ class GridFieldCell extends Component {
   }
 
   handleDrillDown(event) {
-    if (typeof this.props.handleDrillDown === 'undefined') {
-      return;
+    if (typeof this.props.onDrillDown === 'function') {
+      this.props.onDrillDown(event);
     }
-
-    this.props.handleDrillDown(event);
   }
 
   render() {
-    const classNames = ['grid-field__cell'];
-
-    if (typeof this.props.className !== 'undefined') {
-      classNames.push(this.props.className);
-    }
+    const classNames = ['grid-field__cell', this.props.className];
 
     const props = {
-      className: classNames.join(' '),
+      className: classnames(classNames),
       onClick: this.handleDrillDown,
     };
 
@@ -35,8 +30,7 @@ class GridFieldCell extends Component {
 
 GridFieldCell.PropTypes = {
   className: React.PropTypes.string,
-  width: React.PropTypes.number,
-  handleDrillDown: React.PropTypes.func,
+  onDrillDown: React.PropTypes.func,
 };
 
 export default GridFieldCell;

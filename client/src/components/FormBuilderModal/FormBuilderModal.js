@@ -28,8 +28,8 @@ class FormBuilderModal extends Component {
     return (
       <FormBuilderLoader
         schemaUrl={this.props.schemaUrl}
-        handleSubmit={this.handleSubmit}
-        handleAction={this.props.handleAction}
+        onSubmit={this.handleSubmit}
+        onAction={this.props.onAction}
         onLoadingError={this.handleLoadingError}
         identifier={this.props.identifier}
       />
@@ -84,13 +84,26 @@ class FormBuilderModal extends Component {
     });
   }
 
+  handleLoadingError(schema) {
+    if (this.props.showErrorMessage) {
+      const error = schema.errors && schema.errors[0];
+      this.setState({
+        response: error.value,
+        error: true,
+      });
+    }
+    if (typeof this.props.onLoadingError === 'function') {
+      this.props.onLoadingError(schema);
+    }
+  }
+
   /**
    * Call the callback for hiding this Modal
    */
   handleHide() {
     this.clearResponse();
-    if (typeof this.props.handleHide === 'function') {
-      this.props.handleHide();
+    if (typeof this.props.onHide === 'function') {
+      this.props.onHide();
     }
   }
 
@@ -105,8 +118,8 @@ class FormBuilderModal extends Component {
   handleSubmit(data, action, submitFn) {
     this.clearResponse();
     let promise = null;
-    if (typeof this.props.handleSubmit === 'function') {
-      promise = this.props.handleSubmit(data, action, submitFn);
+    if (typeof this.props.onSubmit === 'function') {
+      promise = this.props.onSubmit(data, action, submitFn);
     } else {
       promise = submitFn();
     }
@@ -145,7 +158,7 @@ class FormBuilderModal extends Component {
       );
     }
 
-    if (typeof this.props.handleHide === 'function') {
+    if (typeof this.props.onHide === 'function') {
       return (
         <button
           type="button"
@@ -189,10 +202,13 @@ FormBuilderModal.propTypes = {
   title: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.bool]),
   className: React.PropTypes.string,
   bodyClassName: React.PropTypes.string,
-  handleHide: React.PropTypes.func,
+  onHide: React.PropTypes.func,
+  handleHide: (props) => { if (props.handleHide) { throw new Error('handleHide: no longer used'); } },
   schemaUrl: React.PropTypes.string,
-  handleSubmit: React.PropTypes.func,
-  handleAction: React.PropTypes.func,
+  handleSubmit: (props) => { if (props.handleSubmit) { throw new Error('handleSubmit: no longer used'); } },
+  onSubmit: React.PropTypes.func,
+  handleAction: (props) => { if (props.handleAction) { throw new Error('handleAction: no longer used'); } },
+  onAction: React.PropTypes.func,
   responseClassGood: React.PropTypes.string,
   responseClassBad: React.PropTypes.string,
   identifier: React.PropTypes.string,

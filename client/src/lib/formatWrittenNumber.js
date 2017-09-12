@@ -7,7 +7,7 @@ import i18n from 'i18n';
  */
 export default function formatWrittenNumber(num) {
   const parsed = Number(num);
-  if (parsed >= 0 && parsed < 10) {
+  if (num !== null && parsed >= 0 && parsed < 10) {
     return [
       i18n._t('Admin.WRITTEN_NUMBER_ZERO', 'zero'),
       i18n._t('Admin.WRITTEN_NUMBER_ONE', 'one'),

@@ -115,8 +115,8 @@ class FormBuilderLoader extends Component {
         })
     );
 
-    if (typeof this.props.handleSubmit === 'function') {
-      promise = this.props.handleSubmit(data, action, newSubmitFn);
+    if (typeof this.props.onSubmit === 'function') {
+      promise = this.props.onSubmit(data, action, newSubmitFn);
     } else {
       promise = newSubmitFn();
     }
@@ -397,7 +397,7 @@ class FormBuilderLoader extends Component {
     const props = Object.assign({}, this.props, {
       form: this.getIdentifier(),
       onSubmitSuccess: this.props.onSubmitSuccess,
-      handleSubmit: this.handleSubmit,
+      onSubmit: this.handleSubmit,
       onAutofill: this.handleAutofill,
     });
 
