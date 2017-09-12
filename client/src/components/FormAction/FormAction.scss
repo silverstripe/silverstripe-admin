@@ -168,6 +168,22 @@
   border-color: transparent;
   background-color: transparent;
 
+  // Disabled styles
+  &.disabled,
+  &.readonly,
+  &:disabled,
+  &[readonly] {
+    &,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active,
+    &:hover {
+      border-color: transparent;
+      background-color: transparent;
+    }
+  }
+
   &:hover {
     background-color: $btn-secondary-bg;
     border-color: transparent;
