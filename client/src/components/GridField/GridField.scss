@@ -188,7 +188,7 @@ div.grid-field__sort-field + .form__fieldgroup-item {
   margin-right: 0;
   height: calc(#{$line-height-base} + #{$table-cell-padding * 2}); // height of icon + spacing top and bottom
   vertical-align: top;
-  display: inline-block;
+  display: inline-flex;
   border-radius: 0;
 
   &:hover,
@@ -200,6 +200,7 @@ div.grid-field__sort-field + .form__fieldgroup-item {
   }
 
   &::before {
+    top: 0;
     color: lighten($body-color, 10%);
   }
 }
