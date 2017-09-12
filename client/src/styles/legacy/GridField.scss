@@ -340,6 +340,12 @@
   width: 260px;
   text-align: center;
 
+  @include media-breakpoint-down(sm) {
+    left: 0;
+    margin-left: 0;
+  }
+
+
   .pagination-page-number {
     text-align: center;
 
