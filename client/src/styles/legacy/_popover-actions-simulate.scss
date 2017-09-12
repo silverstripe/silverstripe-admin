@@ -3,8 +3,8 @@
   .popover-actions-simulate .ui-tabs-anchor {
     font-size: 0;
     width: 44px;
-    height: 30px;
-    margin-top: -3px;
+    height: 33px;
+    margin-top: -4px;
     padding: 0;
     display: flex;
     align-items: center;
@@ -22,7 +22,7 @@
       line-height: 1em;
       content: "9";
       font-size: 21px;
-      color: $dropdown-link-color;
+      color: $body-color-light;
       background-image: none !important;
       width: 100% !important;
       height: 1em !important;

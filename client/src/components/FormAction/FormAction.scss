@@ -30,7 +30,7 @@
 .btn[class*="font-icon-"]::before {
   position: relative;
   margin-right: $btn-icon-spacing;
-  line-height: $line-height-root;
+  line-height: 1.3rem;
   font-size: $font-size-lg;
   top: 3px;
 }
@@ -58,8 +58,9 @@
 
 .btn--icon-xl[class*="font-icon-"]::before {
   font-size: 22px;
-  top: 5px;
+  top: 7px;
   position: relative;
+  line-height: 0.8rem;
 }
 
 // For buttons with icon and no text, removes space after icon
@@ -72,18 +73,14 @@
 
 // Used buttons with text and icons, but you wan to hide the text only. eg. gridfield pagination
 // Could change to BS .text-hide { @include text-hide(); }, although slightly different
-.btn--hide-text {
-  text-indent: -90000px;
-  overflow: hidden;
-  min-width: calc(#{$input-btn-padding-x} * 2 + #{$font-size-lg}); // Fix Safari, enough to show icon and include padding
+.btn--hide-text[class*=font-icon-] {
 
-  &.btn-sm {
-    min-width: calc(#{$input-btn-padding-x-sm} * 2 + #{$font-size-lg}); // Fix Safari, enough to show icon and include padding
+  &:before {
+    margin-right: 0;
   }
 
-  &[class*=font-icon-]::before {
-    text-indent: 0;
-    margin-right: 0;
+  .btn__title {
+    display: none;
   }
 }
 
