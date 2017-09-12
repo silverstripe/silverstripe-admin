@@ -282,7 +282,7 @@ $.entwine('ss', function($) {
     }
   });
 
-  $('.grid-field .grid-print-button .action:button').entwine({
+  $('.grid-field .grid-print-button.action:button').entwine({
     UUID: null,
     onmatch: function() {
       this._super();
@@ -291,7 +291,7 @@ $.entwine('ss', function($) {
     onunmatch: function() {
       this._super();
     },
-    onclick: function(e){
+    onclick: function(e) {
       var url = this.actionurl();
       window.open(url);
       e.preventDefault();
