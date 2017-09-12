@@ -21,7 +21,7 @@ class GridFieldAction extends Component {
 }
 
 GridFieldAction.PropTypes = {
-  handleClick: () => { throw new Error('no longer used'); },
+  handleClick: (props) => { if (props.handleClick) { throw new Error('handleClick: no longer used'); } },
   Click: React.PropTypes.func.isRequired,
 };
 

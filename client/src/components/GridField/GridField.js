@@ -31,8 +31,6 @@ class GridField extends Component {
   }
 
   componentDidMount() {
-    super.componentDidMount();
-
     const data = this.props.data;
 
     this.props.actions.fetchRecords(
@@ -165,9 +163,9 @@ GridField.propTypes = {
     headerColumns: React.PropTypes.array,
     collectionReadEndpoint: React.PropTypes.object,
     onDrillDown: React.PropTypes.func,
-    handleDrillDown: () => { throw new Error('no longer used'); },
+    handleDrillDown: (props) => { if (props.handleDrillDown) { throw new Error('handleDrillDown: no longer used'); } },
     onEditRecord: React.PropTypes.func,
-    handleEditRecord: () => { throw new Error('no longer used'); },
+    handleEditRecord: (props) => { if (props.handleEditRecord) { throw new Error('handleEditRecord: no longer used'); } },
   }),
 };
 

@@ -5,7 +5,7 @@ jest.unmock('../Breadcrumb');
 // FYI: Changing these to import statements broke jest's automocking
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
-import { Breadcrumb } from '../Breadcrumb';
+import { Component as Breadcrumb } from '../Breadcrumb';
 
 describe('BreadcrumbsComponent', () => {
   let props = null;

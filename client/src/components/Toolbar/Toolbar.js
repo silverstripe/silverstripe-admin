@@ -51,7 +51,7 @@ class Toolbar extends Component {
 }
 
 Toolbar.propTypes = {
-  handleBackButtonClick: () => { throw new Error('no longer used'); },
+  handleBackButtonClick: (props) => { if (props.handleBackButtonClick) { throw new Error('handleBackButtonClick: no longer used'); } },
   onBackButtonClick: PropTypes.func,
   showBackButton: PropTypes.bool,
   breadcrumbs: PropTypes.array,

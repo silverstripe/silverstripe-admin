@@ -84,6 +84,6 @@ function mapStateToProps(state) {
   };
 }
 
-export { Breadcrumb };
+export { Breadcrumb as Component };
 
 export default connect(mapStateToProps)(Breadcrumb);
