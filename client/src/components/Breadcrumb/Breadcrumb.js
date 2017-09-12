@@ -55,11 +55,13 @@ class Breadcrumb extends Component {
   render() {
     return (
       <div className="breadcrumb__container fill-height flexbox-area-grow">
-        <div className="breadcrumb__list-container">
-          <ol className="breadcrumb">
-            {this.renderBreadcrumbs()}
-          </ol>
-        </div>
+        { this.props.crumbs.length > 1 &&
+          <div className="breadcrumb__list-container">
+            <ol className="breadcrumb">
+              {this.renderBreadcrumbs()}
+            </ol>
+          </div>
+        }
         {this.renderLastCrumb()}
       </div>
     );
