@@ -16,7 +16,7 @@ jQuery.entwine('ss', ($) => {
       this._super();
 
       const state = this.data('state') || {};
-      this.setValue(state.value);
+      this.setValue(state.value ? Number(state.value) : '');
 
       this.find(':input').remove();
       this.refresh();
