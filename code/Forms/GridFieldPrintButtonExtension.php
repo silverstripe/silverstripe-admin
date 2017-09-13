@@ -11,6 +11,6 @@ class GridFieldPrintButtonExtension extends Extension
     public function updatePrintData($data)
     {
         $module = ModuleLoader::getModule('silverstripe/admin');
-        Requirements::css($module->getResourcePath('client/dist/styles/GridField_print.css'));
+        Requirements::css($module->getRelativeResourcePath('client/dist/styles/GridField_print.css'));
     }
 }
