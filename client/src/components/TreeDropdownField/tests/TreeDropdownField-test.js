@@ -188,6 +188,17 @@ describe('TreeDropdownField', () => {
         );
       });
 
+      it('should ensure unique values are selected', () => {
+        field.handleChange([{ id: 15, title: 'orig' }, { id: 65 }, { id: 15, title: 'dupe' }]);
+
+        expect(field.handleSearchReset).toBeCalled();
+        expect(field.props.onChange).toBeCalledWith([15, 65]);
+        expect(field.props.actions.treeDropdownField.addSelectedValues).toBeCalledWith(
+          props.id,
+          [{ id: 15, title: 'orig' }, { id: 65 }]
+        );
+      });
+
       it('should return "unchanged" for no selected values', () => {
         field.handleChange([]);
 
