@@ -163,9 +163,7 @@ GridField.propTypes = {
     headerColumns: React.PropTypes.array,
     collectionReadEndpoint: React.PropTypes.object,
     onDrillDown: React.PropTypes.func,
-    handleDrillDown: (props) => { if (props.handleDrillDown) { throw new Error('handleDrillDown: no longer used'); } },
     onEditRecord: React.PropTypes.func,
-    handleEditRecord: (props) => { if (props.handleEditRecord) { throw new Error('handleEditRecord: no longer used'); } },
   }),
 };
 

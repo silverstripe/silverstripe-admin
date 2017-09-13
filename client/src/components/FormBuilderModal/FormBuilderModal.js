@@ -61,20 +61,6 @@ class FormBuilderModal extends Component {
     );
   }
 
-  handleLoadingError(schema) {
-    const providesOnLoadingError = this.props.onLoadingError !== noop;
-    if (this.props.showErrorMessage || !providesOnLoadingError) {
-      const error = schema.errors && schema.errors[0];
-      this.setState({
-        response: error.value,
-        error: true,
-      });
-    }
-    if (providesOnLoadingError) {
-      this.props.onLoadingError(schema);
-    }
-  }
-
   /**
    * Removes the response from the state
    */
@@ -85,14 +71,15 @@ class FormBuilderModal extends Component {
   }
 
   handleLoadingError(schema) {
-    if (this.props.showErrorMessage) {
+    const providesOnLoadingError = this.props.onLoadingError !== noop;
+    if (this.props.showErrorMessage || !providesOnLoadingError) {
       const error = schema.errors && schema.errors[0];
       this.setState({
         response: error.value,
         error: true,
       });
     }
-    if (typeof this.props.onLoadingError === 'function') {
+    if (providesOnLoadingError) {
       this.props.onLoadingError(schema);
     }
   }
@@ -203,11 +190,8 @@ FormBuilderModal.propTypes = {
   className: React.PropTypes.string,
   bodyClassName: React.PropTypes.string,
   onHide: React.PropTypes.func,
-  handleHide: (props) => { if (props.handleHide) { throw new Error('handleHide: no longer used'); } },
   schemaUrl: React.PropTypes.string,
-  handleSubmit: (props) => { if (props.handleSubmit) { throw new Error('handleSubmit: no longer used'); } },
   onSubmit: React.PropTypes.func,
-  handleAction: (props) => { if (props.handleAction) { throw new Error('handleAction: no longer used'); } },
   onAction: React.PropTypes.func,
   responseClassGood: React.PropTypes.string,
   responseClassBad: React.PropTypes.string,

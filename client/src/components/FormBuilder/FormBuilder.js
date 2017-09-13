@@ -397,9 +397,7 @@ const schemaPropType = PropTypes.shape({
 const basePropTypes = {
   createFn: PropTypes.func,
   onSubmit: PropTypes.func,
-  handleSubmit: (props) => { if (props.handleSubmit) { throw new Error('handleSubmit: no longer used'); } },
   onAction: PropTypes.func,
-  handleAction: (props) => { if (props.handleAction) { throw new Error('handleAction: no longer used'); } },
   asyncValidate: PropTypes.func,
   onSubmitFail: PropTypes.func,
   onSubmitSuccess: PropTypes.func,

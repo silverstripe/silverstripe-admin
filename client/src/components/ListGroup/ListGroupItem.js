@@ -24,9 +24,7 @@ class ListGroupItem extends Component {
 
 ListGroupItem.propTypes = {
   onClickArg: React.PropTypes.any,
-  handleClickArg: (props) => { if (props.handleClickArg) { throw new Error('handleClickArg: no longer used'); } },
   onClick: React.PropTypes.func,
-  handleClick: (props) => { if (props.handleClick) { throw new Error('handleClick: no longer used'); } },
 };
 
 export default ListGroupItem;

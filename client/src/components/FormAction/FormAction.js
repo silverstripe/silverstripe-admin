@@ -157,7 +157,6 @@ FormAction.propTypes = {
   id: React.PropTypes.string,
   name: React.PropTypes.string,
   onClick: React.PropTypes.func,
-  handleClick: (props) => { if (props.handleClick) { throw new Error('handleClick: no longer used'); } },
   title: React.PropTypes.string,
   type: React.PropTypes.string,
   loading: React.PropTypes.bool,
