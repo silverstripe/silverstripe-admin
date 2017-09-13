@@ -2,6 +2,13 @@
   margin-right: 4px;
   cursor: pointer;
 
+  &.disabled,
+  &.readonly,
+  &:disabled,
+  &[readonly] {
+    cursor: not-allowed;
+  }
+
   &.btn--last {
     margin-right: 0;
   }
