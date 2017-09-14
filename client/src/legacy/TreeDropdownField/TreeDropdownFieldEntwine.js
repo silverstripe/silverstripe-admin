@@ -3,7 +3,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from 'react-apollo';
 import { schemaMerge } from 'lib/schemaFieldValues';
-import { ConnectedTreeDropdownField } from 'components/TreeDropdownField/TreeDropdownField';
+import {
+  ConnectedTreeDropdownField,
+  MULTI_EMPTY_VALUE,
+} from 'components/TreeDropdownField/TreeDropdownField';
 import { provideInjector } from 'lib/Injector';
 
 const InjectableTreeDropdownField = provideInjector(ConnectedTreeDropdownField);
@@ -16,7 +19,18 @@ jQuery.entwine('ss', ($) => {
       this._super();
 
       const state = this.data('state') || {};
-      this.setValue(state.value ? Number(state.value) : '');
+      const schema = this.data('schema') || {};
+      const isMultiple = schema.data && schema.data.multiple;
+
+      if (isMultiple) {
+        this.setValue(
+          (state.value && state.value !== MULTI_EMPTY_VALUE)
+            ? state.value.map(next => Number(next))
+            : []
+        );
+      } else {
+        this.setValue(state.value ? Number(state.value) : '');
+      }
 
       this.find(':input').remove();
       this.refresh();

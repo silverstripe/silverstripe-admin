@@ -83,11 +83,15 @@ class TreeDropdownFieldMenu extends Component {
     } = this.props.renderMenuOptions;
 
     // mostly copied from defaultMenuRenderer.js
-    let Option = optionComponent;
+    const Option = optionComponent;
+    const value = this.props.value;
 
-    let isSelected = this.props.value.includes(tree.id);
-    let isFocused = focusedOption && tree.id === focusedOption.id;
-    let optionClass = classNames(optionClassName, {
+    let isSelected = value === tree.id;
+    if (Array.isArray(value)) {
+      isSelected = value.includes(tree.id);
+    }
+    const isFocused = focusedOption && tree.id === focusedOption.id;
+    const optionClass = classNames(optionClassName, {
       treedropdownfield__option: true,
       'Select-option': true,
       'is-selected': isSelected,
@@ -171,7 +175,11 @@ TreeDropdownFieldMenu.propTypes = {
   renderMenuOptions: PropTypes.object,
   onBack: PropTypes.func,
   search: PropTypes.bool,
-  value: PropTypes.array,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.array,
+  ]),
 };
 
 export default TreeDropdownFieldMenu;

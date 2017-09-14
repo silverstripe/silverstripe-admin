@@ -369,7 +369,7 @@ class TreeDropdownField extends Component {
 
       if (value && value.length) {
         const uniqueValues = value && value
-            .filter((item, index) => value.indexOf(item) === index);
+          .filter((item, index) => value.findIndex(next => next.id === item.id) === index);
         mappedValue = uniqueValues.map(item => item.id);
 
         this.props.actions.treeDropdownField.addSelectedValues(this.props.id, uniqueValues);
@@ -496,9 +496,6 @@ class TreeDropdownField extends Component {
     const loading = this.props.loading.indexOf(visibleTree.id || 0) > -1;
     const failed = this.props.failed.indexOf(visibleTree.id || 0) > -1;
     const breadcrumbs = this.getBreadcrumbs();
-    const value = (this.props.data.multiple)
-      ? this.props.value
-      : [this.props.value];
 
     return (
       <TreeDropdownFieldMenu
@@ -509,7 +506,7 @@ class TreeDropdownField extends Component {
         renderMenuOptions={renderMenuOptions}
         onBack={this.handleBack}
         search={this.hasSearch()}
-        value={value}
+        value={this.props.value}
       />
     );
   }
@@ -625,9 +622,15 @@ class TreeDropdownField extends Component {
       ? `treedropdownfield ${this.props.extraClass}`
       : 'treedropdownfield';
     const options = this.getDropdownOptions();
-    const value = (this.props.data.multiple)
-      ? this.props.selectedValues.filter(item => this.props.value.includes(item.id))
-      : this.props.value;
+    let value = this.props.value;
+
+    // Multiple select should be coerced to array
+    if (this.props.data.multiple) {
+      value = this.props.value
+        ? this.props.selectedValues.filter(item => value.includes(item.id))
+        : [];
+    }
+
     const resetValue = (this.props.data.hasEmptyDefault && !this.props.visible.length)
       ? ''
       : null;
