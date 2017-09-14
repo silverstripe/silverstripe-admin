@@ -91,7 +91,6 @@ $.entwine('ss', function($){
       this.height('auto');
       const paddingTop = parseInt(this.css('padding-top'));
       const paddingBottom = parseInt(this.css('padding-bottom'));
-      console.log('---', this.innerHeight());
       this.height(this.innerHeight() - paddingTop - paddingBottom);
     }
   });

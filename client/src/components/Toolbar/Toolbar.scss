@@ -1,4 +1,9 @@
 // TODO ensure .toolbar is used globally and remove toolbar--"modifier" classes from following block
+.toolbar {
+  display: flex;
+  align-items: center;
+}
+
 .toolbar,
 .toolbar--north,
 .toolbar--content,
@@ -87,7 +92,6 @@
 
 .toolbar__back-button {
   float: left;
-  margin: $spacer-xs $spacer / 2 $spacer-xs #{-$spacer-xs};
   padding-left: $spacer / 4;
   padding-right: $spacer / 4;
   min-width: 24px; // Safari fix
@@ -105,4 +109,6 @@
 
 .toolbar__navigation {
   position: relative;
+  display: flex;
+  align-items: center;
 }

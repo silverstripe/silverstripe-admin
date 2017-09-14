@@ -14,7 +14,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   direction: rtl;
-  padding-top: 7px;
+  padding-top: 0;
 
   .toolbar & {
     padding-bottom: 0;
@@ -39,6 +39,10 @@
 
   @include media-breakpoint-down(sm) {
     margin-left: $toolbar-total-height;
+
+    .toolbar__back-button + & {
+      margin-left: 0;
+    }
   }
 }
 
@@ -67,17 +71,6 @@
   font-weight: normal;
   line-height: 24px;
   @include text-truncate;
-}
-
-// If only the title is shown
-.breadcrumb__item {
-  &:only-child {
-    margin-top: 6px;
-  }
-
-  &:empty {
-    margin-top: 0;
-  }
 }
 
 .breadcrumb__icon::before {
