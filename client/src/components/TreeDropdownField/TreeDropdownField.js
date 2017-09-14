@@ -369,7 +369,7 @@ class TreeDropdownField extends Component {
 
       if (value && value.length) {
         const uniqueValues = value && value
-            .filter((item, index) => value.findIndex(next => next.id === item.id) === index);
+          .filter((item, index) => value.findIndex(next => next.id === item.id) === index);
         mappedValue = uniqueValues.map(item => item.id);
 
         this.props.actions.treeDropdownField.addSelectedValues(this.props.id, uniqueValues);
@@ -497,14 +497,6 @@ class TreeDropdownField extends Component {
     const failed = this.props.failed.indexOf(visibleTree.id || 0) > -1;
     const breadcrumbs = this.getBreadcrumbs();
 
-    // Always coerce value to array for menu (even if not multi-select)
-    let value = [];
-    if (this.props.value) {
-      value = Array.isArray(this.props.value)
-        ? this.props.value
-        : [this.props.value];
-    }
-
     return (
       <TreeDropdownFieldMenu
         loading={loading}
@@ -514,7 +506,7 @@ class TreeDropdownField extends Component {
         renderMenuOptions={renderMenuOptions}
         onBack={this.handleBack}
         search={this.hasSearch()}
-        value={value}
+        value={this.props.value}
       />
     );
   }
