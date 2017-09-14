@@ -5,6 +5,8 @@ import SilverStripeComponent from 'lib/SilverStripeComponent';
 import FormBuilderLoader from 'containers/FormBuilderLoader/FormBuilderLoader';
 import castStringToElement from 'lib/castStringToElement';
 
+const noop = () => null;
+
 class FormBuilderModal extends SilverStripeComponent {
   constructor(props) {
     super(props);
@@ -16,14 +18,15 @@ class FormBuilderModal extends SilverStripeComponent {
   }
 
   handleLoadingError(schema) {
-    if (this.props.showErrorMessage) {
+    const providesOnLoadingError = this.props.onLoadingError !== noop;
+    if (this.props.showErrorMessage || !providesOnLoadingError) {
       const error = schema.errors && schema.errors[0];
       this.setState({
         response: error.value,
         error: true,
       });
     }
-    if (typeof this.props.onLoadingError === 'function') {
+    if (providesOnLoadingError) {
       this.props.onLoadingError(schema);
     }
   }
@@ -61,9 +64,9 @@ class FormBuilderModal extends SilverStripeComponent {
     let className = '';
 
     if (this.state.error) {
-      className = this.props.responseClassBad || 'response error';
+      className = this.props.responseClassBad;
     } else {
-      className = this.props.responseClassGood || 'response good';
+      className = this.props.responseClassGood;
     }
 
     return (
@@ -193,13 +196,19 @@ FormBuilderModal.propTypes = {
   handleAction: React.PropTypes.func,
   responseClassGood: React.PropTypes.string,
   responseClassBad: React.PropTypes.string,
-  showErrorMessage: React.PropTypes.bool,
   identifier: React.PropTypes.string,
+  // Ignored and assumed true if onLoadingError is unassigned
+  showErrorMessage: React.PropTypes.bool,
+  onLoadingError: React.PropTypes.func,
 };
 
 FormBuilderModal.defaultProps = {
+  showErrorMessage: false,
+  onLoadingError: noop,
   show: false,
   title: null,
+  responseClassGood: 'alert alert-success',
+  responseClassBad: 'alert alert-danger',
 };
 
 export default FormBuilderModal;
