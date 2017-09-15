@@ -113,3 +113,8 @@ body {
 .cms .flexbox-display {
   display: flex; // Override JQuery UI, useful to override .ui-tabs-panel
 }
+
+.vertical-align-items {
+  display: flex;
+  align-items: center;
+}

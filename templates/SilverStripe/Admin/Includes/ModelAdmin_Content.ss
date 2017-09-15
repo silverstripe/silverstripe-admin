@@ -1,7 +1,7 @@
 <div class="cms-content fill-height flexbox-area-grow cms-tabset center $BaseCSSClasses" data-layout-type="border" data-pjax-fragment="Content">
 
-	<div class="cms-content-header north">
-		<div class="cms-content-header-info">
+	<div class="cms-content-header north vertical-align-items">
+		<div class="cms-content-header-info  vertical-align-items flexbox-area-grow">
 			<div class="breadcrumbs-wrapper">
 				<h2 id="page-title-heading">
 					<span class="cms-panel-link crumb last">

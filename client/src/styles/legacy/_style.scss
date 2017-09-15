@@ -115,9 +115,7 @@ body.cms {
   }
 
   .cms-content-header-info {
-    display: flex;
-    float: left;
-    padding-top: 5px;
+    height: 100%;
 
     & * {
       display: inline-block; // align back button and breadcrumbs
@@ -129,7 +127,6 @@ body.cms {
     }
 
     .cms-backlink {
-      margin-top: -7px;
       float: left;
       min-width: 24px; // Safari fix
     }
@@ -154,6 +151,10 @@ body.cms {
   @include media-breakpoint-down(sm) {
     .cms-content-header-nav {
       display: block;
+
+      > .cms-content-header-nav__left {
+        height: 52px;
+      }
     }
 
     // CMS admin
@@ -213,12 +214,7 @@ body.cms {
     }
   }
 
-  .cms-content-header-info {
-    padding-bottom: $grid-y;
-  }
-
   .section-heading {
-    margin-top: 8px;
     padding-left: 4px;
   }
 
@@ -235,13 +231,11 @@ body.cms {
 
   .breadcrumbs-wrapper {
     float: left;
-    padding-top: map_get($spacers, xs) / 2;
   }
 }
 
 .view-controls {
   margin-left: auto;
-  margin-top: 5px;
 
   .icon-button-group {
     .icon-button {
@@ -268,6 +262,7 @@ body.cms {
 }
 
 #page-title-heading {
+  margin: 0;
   line-height: 1.2em;
 }
 
@@ -278,6 +273,10 @@ body.cms {
 
   @include media-breakpoint-down(sm) {
     margin-left: $toolbar-total-height;
+
+    .toolbar__back-button + & {
+      margin-left: 0;
+    }
   }
 
   .crumb,
@@ -1094,6 +1093,7 @@ body.cms {
   }
 
   .cms-content-header-info {
+    height: 100%;
     float: none;
   }
 

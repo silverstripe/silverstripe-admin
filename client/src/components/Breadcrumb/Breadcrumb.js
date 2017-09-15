@@ -55,7 +55,7 @@ class Breadcrumb extends Component {
   render() {
     return (
       <div className="breadcrumb__container fill-height flexbox-area-grow">
-        { this.props.crumbs.length > 1 &&
+        { this.props.crumbs && this.props.crumbs.length > 1 &&
           <div className="breadcrumb__list-container">
             <ol className="breadcrumb">
               {this.renderBreadcrumbs()}

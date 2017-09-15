@@ -1,8 +1,8 @@
 <div id="settings-controller-cms-content" class="cms-content cms-tabset flexbox-area-grow fill-height $BaseCSSClasses" data-layout-type="border" data-pjax-fragment="Content">
 
-	<div class="cms-content-header">
+	<div class="cms-content-header vertical-align-items">
 		<% with $EditForm %>
-			<div class="cms-content-header-info">
+			<div class="cms-content-header-info flexbox-area-grow">
 				<% with $Controller %>
 					<% include SilverStripe\\Admin\\CMSBreadcrumbs %>
 				<% end_with %>
