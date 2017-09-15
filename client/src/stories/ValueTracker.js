@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { action } from '@storybook/addon-actions';
 
 const triggerAction = action('change');
-export default class ValueTracker extends Component {
+class ValueTracker extends Component {
   constructor(props) {
     super(props);
 
@@ -20,9 +21,9 @@ export default class ValueTracker extends Component {
   }
 
   render() {
-    const children = React.Children.map(this.props.story(), (child) => (
+    const children = React.Children.map(this.props.children, (child) => (
       React.cloneElement(child, {
-        value: this.state.value === null ? child.props.value : this.state.value,
+        value: this.state.value,
         onChange: (...args) => {
           if (child.props.onChange) {
             child.props.onChange(...args);
@@ -36,10 +37,12 @@ export default class ValueTracker extends Component {
 }
 
 ValueTracker.propTypes = {
-  story: PropTypes.func.isRequired,
+  children: PropTypes.any,
   value: PropTypes.any,
 };
 
 ValueTracker.defaultProps = {
   value: null,
 };
+
+export default ValueTracker;
