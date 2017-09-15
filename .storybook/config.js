@@ -1,6 +1,6 @@
 import { configure } from '@storybook/react';
 
-import '../client/dist/styles/bundle.css';
+import '../client/src/styles/bundle.scss';
 
 function loadStories() {
   require('../client/src/stories');

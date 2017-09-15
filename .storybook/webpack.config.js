@@ -1,46 +1,29 @@
 const path = require('path');
 const webpack = require('webpack');
-const moduleConfigs = require('../webpack.config.js');
+const webpackConfig = require('@silverstripe/webpack-config');
+const {
+  resolveJS,
+  moduleJS,
+  pluginJS,
+  moduleCSS,
+} = webpackConfig;
+
+const ENV = 'development';
+const PATHS = require('../webpack-vars');
 
 // See https://storybook.js.org/configurations/custom-webpack-config/#full-control-mode
 module.exports = (config, configType) => {
-  const jsModuleConfig = moduleConfigs.find((c) => c.name == 'js');
-  const cssModuleConfig = moduleConfigs.find((c) => c.name == 'css');
-
-  // Doesn't resolve externals (assumes every module is loaded through this path)
-
-  if (jsModuleConfig.resolve) {
-    config.resolve = jsModuleConfig.resolve;
-  }
+  config.resolve = resolveJS(ENV, PATHS);
 
   // Not copying other settings on modules key
   config.module.rules = [
-    ...config.module.rules,
-    // ...jsModuleConfig.module.rules,
-    ...cssModuleConfig.module.rules
+    ...moduleJS(ENV, PATHS).rules,
+    ...moduleCSS(ENV, PATHS, { useStyle: true }).rules,
   ];
 
   config.plugins = [
     ...config.plugins,
-    // ...jsModuleConfig.plugins
-    // TODO Allow more specialised webpack build (without duplicate plugins like DefinePlugin)
-    ...[
-      new webpack.ProvidePlugin({
-        jQuery: 'jquery',
-        $: 'jquery',
-      })
-    ],
-    ...cssModuleConfig.plugins
+    ...pluginJS(ENV),
   ];
 
-  console.log(config.module);
-
-  return config;
-
-  // TODO Doesn't support multiple configs
-  // See https://github.com/storybooks/storybook/blob/master/app/react/src/server/middleware.js#L25
-  // return [
-  //   jsConfig,
-  //   cssConfig
-  // ];
-};
+  return config;};
