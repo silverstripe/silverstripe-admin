@@ -524,7 +524,7 @@ class LeftAndMain extends Controller implements PermissionProvider
 
         // alternative extended checks
         if ($this->hasMethod('alternateAccessCheck')) {
-            $alternateAllowed = $this->alternateAccessCheck();
+            $alternateAllowed = $this->alternateAccessCheck($member);
             if ($alternateAllowed === false) {
                 return false;
             }
