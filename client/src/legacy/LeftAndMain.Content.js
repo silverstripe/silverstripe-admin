@@ -89,8 +89,8 @@ $.entwine('ss', function($){
 
       // Fix dimensions to actual extents, in preparation for a relayout via jslayout.
       this.height('auto');
-      const paddingTop = parseInt(this.css('padding-top'));
-      const paddingBottom = parseInt(this.css('padding-bottom'));
+      const paddingTop = parseInt(this.css('padding-top'), 10);
+      const paddingBottom = parseInt(this.css('padding-bottom'), 10);
       this.height(this.innerHeight() - paddingTop - paddingBottom);
     }
   });
