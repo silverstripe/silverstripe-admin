@@ -21,11 +21,6 @@ abstract class LinkFormFactory implements FormFactory
     use Injectable;
     use Configurable;
 
-    public function __construct()
-    {
-        $this->constructExtensions();
-    }
-
     /**
      * @param RequestHandler $controller
      * @param string $name

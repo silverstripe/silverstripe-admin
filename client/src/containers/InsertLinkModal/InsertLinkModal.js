@@ -32,6 +32,7 @@ class InsertLinkModal extends Component {
       {
         handleSubmit: this.handleSubmit,
         handleHide: this.props.onHide,
+        showErrorMessage: true,
       }
     );
     delete props.onHide;
@@ -69,6 +70,7 @@ InsertLinkModal.propTypes = {
   setOverrides: PropTypes.func.isRequired,
   actions: PropTypes.object,
   requireLinkText: PropTypes.bool,
+  currentPageID: PropTypes.number,
 };
 
 InsertLinkModal.defaultProps = {};
@@ -88,7 +90,8 @@ const createInsertLinkModal = (sectionConfigKey, formName) => {
     const requireTextFieldUrl = ownProps.requireLinkText ? '?requireLinkText' : '';
 
     // get the schemaUrl to use as a key for overrides
-    const schemaUrl = `${sectionConfig.form[formName].schemaUrl}${requireTextFieldUrl}`;
+    const schemaUrl = `${sectionConfig.form[formName].schemaUrl}${requireTextFieldUrl}`
+      .replace(/:pageid/, ownProps.currentPageID);
 
     return {
       sectionConfig,
