@@ -64,10 +64,19 @@ $.entwine('ss', function($) {
   $(window).on("message", function(e) {
     var target,
       event = e.originalEvent,
-      data = typeof event.data === 'object' ? event.data : JSON.parse(event.data);
+      data = null;
+      
+    try
+    {
+        data = typeof event.data === 'object' ? event.data : JSON.parse(event.data);
+    }
+    catch(e)
+    {
+        // Invalid json received
+    }
 
-    // Reject messages outside of the same origin
-    if($.path.parseUrl(window.location.href).domain !== $.path.parseUrl(event.origin).domain) return;
+    // Reject invalid data or messages outside of the same origin
+    if(!data || $.path.parseUrl(window.location.href).domain !== $.path.parseUrl(event.origin).domain) return;
 
     // Get target of this action
     target = typeof(data.target) === 'undefined'
