@@ -2,10 +2,31 @@ import React, { PropTypes } from 'react';
 import SilverStripeComponent from 'lib/SilverStripeComponent';
 import { FormGroup, InputGroup, ControlLabel } from 'react-bootstrap-ss';
 import castStringToElement from 'lib/castStringToElement';
-import FormAlert from 'components/FormAlert/FormAlert';
+import classnames from 'classnames';
 
 function fieldHolder(Field) {
   class FieldHolder extends SilverStripeComponent {
+    /**
+     * Gets the message from props or validation meta
+     *
+     * For object see castStringToElement
+     *
+     * @return {object|string|null}
+     */
+    getMessage() {
+      let message = null;
+      if (this.props.message && this.props.message.value) {
+        message = this.props.message;
+      }
+
+      // If we have both meta and message, prefer meta only if form is dirty
+      const meta = this.props.meta;
+      if (meta && meta.error && meta.touched && (!message || meta.dirty)) {
+        message = meta.error;
+      }
+
+      return message;
+    }
 
     /**
      * Build description
@@ -30,24 +51,17 @@ function fieldHolder(Field) {
      * @returns {Component}
      */
     renderMessage() {
-      let message = null;
-      if (this.props.message && this.props.message.value) {
-        message = this.props.message;
-      }
-
-      // If we have both meta and message, prefer meta only if form is dirty
-      const meta = this.props.meta;
-      if (meta && meta.error && meta.touched && (!message || meta.dirty)) {
-        message = meta.error;
-      }
-
+      const message = this.getMessage();
       if (!message) {
         return null;
       }
 
-      return (
-        <FormAlert className="form__field-message" {...message} />
-      );
+      const classNames = classnames([
+        'form__field-message',
+        `form__field-message--${message.type}`,
+      ]);
+      const body = castStringToElement('div', message.value);
+      return <div className={classNames}>{body}</div>;
     }
 
     /**
@@ -115,7 +129,16 @@ function fieldHolder(Field) {
     }
 
     renderField() {
-      const field = <Field {...this.props} />;
+      const hasMessage = Boolean(this.getMessage());
+      const props = {
+        ...this.props,
+        extraClass: classnames(
+          this.props.extraClass,
+          { 'is-valid': hasMessage }
+        ),
+      };
+
+      const field = <Field { ...props} />;
       const prefix = this.props.data.prefix;
       const suffix = this.props.data.suffix;
       if (!prefix && !suffix) {
