@@ -1,4 +1,4 @@
-import $ from 'jQuery';
+import $ from 'jquery';
 
 // Copyright (c) 2011 John Resig, http://jquery.com/
 

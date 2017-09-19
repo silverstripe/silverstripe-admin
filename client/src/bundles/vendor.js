@@ -12,7 +12,7 @@ require('json-js');
 // jQuery plugins require that the jQuery object is exposed as a global
 // webpack.ProvidePlugin is used to ensure that jQuery and $ are provided to all includes
 require('script-loader!../../../thirdparty/jquery/jquery.js');
-require('expose-loader?jQuery!jQuery');
+require('expose-loader?jQuery!jquery');
 
 // Expose the libraries as globals for other modules to access
 // Note that these are order-dependent - earlier items should not depend on later ones

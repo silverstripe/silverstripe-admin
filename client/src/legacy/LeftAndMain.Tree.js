@@ -2,7 +2,7 @@
  * File: LeftAndMain.Tree.js
  */
 
-import $ from 'jQuery';
+import $ from 'jquery';
 
 $.entwine('ss.tree', function($){
 

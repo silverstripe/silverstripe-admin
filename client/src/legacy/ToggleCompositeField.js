@@ -1,4 +1,4 @@
-import $ from 'jQuery';
+import $ from 'jquery';
 
 // entwine also required, but can't be included more than once without error
 require('../../../thirdparty/jquery-ui/jquery-ui.js');

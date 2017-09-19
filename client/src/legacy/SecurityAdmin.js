@@ -1,7 +1,7 @@
 /**
  * File: SecurityAdmin.js
  */
-import $ from 'jQuery';
+import $ from 'jquery';
 
 require('./LeftAndMain.js');
 require('./PermissionCheckboxSetField.js');
