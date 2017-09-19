@@ -91,6 +91,7 @@
   padding-right: $spacer / 4;
   min-width: 24px; // Safari fix
   color: $body-color-light; // TEMP: Needed for anchor buttons to override legacy styles
+  margin-left: -$spacer-xs;
 
   @include media-breakpoint-down(sm) {
     margin-left: 42px;
