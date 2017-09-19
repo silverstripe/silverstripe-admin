@@ -1,5 +1,5 @@
-import ACTION_TYPES from './RecordsActionTypes';
 import backend from 'lib/Backend';
+import ACTION_TYPES from './RecordsActionTypes';
 
 /**
  * Populate strings based on a whitelist.

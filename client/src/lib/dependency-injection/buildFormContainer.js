@@ -1,5 +1,6 @@
 import buildBaseContainer from './buildBaseContainer';
 import FormStateManager from './FormStateManager';
+
 const SCHEMA_MIDDLEWARE_SERVICE = 'FormSchemaMiddleware';
 const VALIDATION_MIDDLEWARE_SERVICE = 'FormValidationMiddleware';
 

@@ -1,4 +1,4 @@
-import $ from 'jQuery';
+import $ from 'jquery';
 import MobileMenuToggleContainer from 'components/MobileMenuToggle/MobileMenuToggleContainer';
 import { closeMobileMenu } from 'state/mobileMenu/MobileMenuActions';
 import ReactDOM from 'react-dom';

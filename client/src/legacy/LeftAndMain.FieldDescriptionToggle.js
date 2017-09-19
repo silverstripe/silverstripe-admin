@@ -2,7 +2,7 @@
  * Enable toggling (show/hide) of the field's description.
  */
 
-import $ from 'jQuery';
+import $ from 'jquery';
 
 $.entwine('ss', function ($) {
 

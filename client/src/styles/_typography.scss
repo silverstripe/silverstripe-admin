@@ -100,7 +100,7 @@ th {
   overflow-wrap: break-word;
   word-wrap: break-word;
 
-  -ms-word-break: break-all;
+  -ms-word-break: break-all; // sass-lint:disable-line no-misspelled-properties
   word-break: break-word;
 
   -ms-hyphens: auto;

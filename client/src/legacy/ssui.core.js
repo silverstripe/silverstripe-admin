@@ -1,4 +1,4 @@
-import $ from 'jQuery';
+import $ from 'jquery';
 
 require('../../../thirdparty/jquery-ui/jquery-ui.js');
 

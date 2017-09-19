@@ -1,11 +1,10 @@
-import React, { PropTypes } from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component, PropTypes } from 'react';
 import { FormGroup, InputGroup, ControlLabel } from 'react-bootstrap-ss';
 import castStringToElement from 'lib/castStringToElement';
 import classnames from 'classnames';
 
 function fieldHolder(Field) {
-  class FieldHolder extends SilverStripeComponent {
+  class FieldHolder extends Component {
     /**
      * Gets the message from props or validation meta
      *
@@ -26,80 +25,6 @@ function fieldHolder(Field) {
       }
 
       return message;
-    }
-
-    /**
-     * Build description
-     *
-     * @returns {Component}
-     */
-    renderDescription() {
-      if (this.props.description === null) {
-        return null;
-      }
-
-      return castStringToElement(
-        'div',
-        this.props.description,
-        { className: 'form__field-description' }
-      );
-    }
-
-    /**
-     * Build a FormAlert
-     *
-     * @returns {Component}
-     */
-    renderMessage() {
-      const message = this.getMessage();
-      if (!message) {
-        return null;
-      }
-
-      const classNames = classnames([
-        'form__field-message',
-        `form__field-message--${message.type}`,
-      ]);
-      const body = castStringToElement('div', message.value);
-      return <div className={classNames}>{body}</div>;
-    }
-
-    /**
-     * Build title label
-     *
-     * @returns {Component}
-     */
-    renderLeftTitle() {
-      const labelText = this.props.leftTitle !== null
-        ? this.props.leftTitle
-        : this.props.title;
-
-      if (!labelText || this.props.hideLabels) {
-        return null;
-      }
-
-      return castStringToElement(
-        ControlLabel,
-        labelText,
-        { className: 'form__field-label' }
-      );
-    }
-
-    /**
-     * Build title label
-     *
-     * @returns {Component}
-     */
-    renderRightTitle() {
-      if (!this.props.rightTitle || this.props.hideLabels) {
-        return null;
-      }
-
-      return castStringToElement(
-        ControlLabel,
-        this.props.rightTitle,
-        { className: 'form__field-label' }
-      );
     }
 
     /**
@@ -128,6 +53,85 @@ function fieldHolder(Field) {
       };
     }
 
+    /**
+     * Build description
+     *
+     * @returns {object}
+     */
+    renderDescription() {
+      if (this.props.description === null) {
+        return null;
+      }
+
+      return castStringToElement(
+        'div',
+        this.props.description,
+        { className: 'form__field-description' }
+      );
+    }
+
+    /**
+     * Build a FormAlert
+     *
+     * @returns {object}
+     */
+    renderMessage() {
+      const message = this.getMessage();
+      if (!message) {
+        return null;
+      }
+
+      const classNames = classnames([
+        'form__field-message',
+        `form__field-message--${message.type}`,
+      ]);
+      const body = castStringToElement('div', message.value);
+      return <div className={classNames}>{body}</div>;
+    }
+
+    /**
+     * Build title label
+     *
+     * @returns {object}
+     */
+    renderLeftTitle() {
+      const labelText = this.props.leftTitle !== null
+        ? this.props.leftTitle
+        : this.props.title;
+
+      if (!labelText || this.props.hideLabels) {
+        return null;
+      }
+
+      return castStringToElement(
+        ControlLabel,
+        labelText,
+        { className: 'form__field-label' }
+      );
+    }
+
+    /**
+     * Build title label
+     *
+     * @returns {object}
+     */
+    renderRightTitle() {
+      if (!this.props.rightTitle || this.props.hideLabels) {
+        return null;
+      }
+
+      return castStringToElement(
+        ControlLabel,
+        this.props.rightTitle,
+        { className: 'form__field-label' }
+      );
+    }
+
+    /**
+     * Render the actual field, or input group wrapper with prefix and suffix
+     *
+     * @return {object}
+     */
     renderField() {
       const hasMessage = Boolean(this.getMessage());
       const props = {
@@ -138,7 +142,7 @@ function fieldHolder(Field) {
         ),
       };
 
-      const field = <Field { ...props} />;
+      const field = <Field {...props} />;
       const prefix = this.props.data.prefix;
       const suffix = this.props.data.suffix;
       if (!prefix && !suffix) {
@@ -170,7 +174,6 @@ function fieldHolder(Field) {
         </FormGroup>
       );
     }
-
   }
 
   FieldHolder.propTypes = {

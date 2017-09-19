@@ -1,3 +1,4 @@
+/* global window */
 import BootRoutes from './BootRoutes';
 import Injector from 'lib/Injector';
 import { combineReducers, createStore, applyMiddleware } from 'redux';

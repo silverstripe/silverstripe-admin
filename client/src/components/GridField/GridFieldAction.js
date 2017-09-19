@@ -1,10 +1,13 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 
-class GridFieldAction extends SilverStripeComponent {
+class GridFieldAction extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event) {
+    this.props.onClick(event, this.props.record.ID);
   }
 
   render() {
@@ -15,14 +18,10 @@ class GridFieldAction extends SilverStripeComponent {
       />
     );
   }
-
-  handleClick(event) {
-    this.props.handleClick(event, this.props.record.ID);
-  }
 }
 
 GridFieldAction.PropTypes = {
-  handleClick: React.PropTypes.func.isRequired,
+  Click: React.PropTypes.func.isRequired,
 };
 
 export default GridFieldAction;

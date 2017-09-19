@@ -1,7 +1,7 @@
 /**
  * File: ModelAdmin.js
  */
-import $ from 'jQuery';
+import $ from 'jquery';
 
 require('./LeftAndMain.js');
 

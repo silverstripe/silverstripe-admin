@@ -1,12 +1,12 @@
-import $ from 'jQuery';
+import jQuery from 'jquery';
 import i18n from 'i18n';
 import moment from 'moment';
 import modernizr from 'modernizr';
 
 require('../../../thirdparty/jquery-entwine/dist/jquery.entwine-dist.js');
 
-$.entwine('ss', (jQuery) => {
-  jQuery('input[type=datetime-local]').entwine({
+jQuery.entwine('ss', ($) => {
+  $('input[type=datetime-local]').entwine({
     onadd() {
       // Browser supports type=date natively
       if (modernizr.inputtypes['datetime-local']) {
@@ -19,7 +19,7 @@ $.entwine('ss', (jQuery) => {
       }
 
       // Duplicate input field to store ISO value
-      const hiddenInput = jQuery(
+      const hiddenInput = $(
         '<input/>',
         { type: 'hidden', name: this.attr('name'), value: this.val() }
       );

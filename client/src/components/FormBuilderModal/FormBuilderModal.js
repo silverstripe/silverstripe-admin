@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import i18n from 'i18n';
 import { Modal } from 'react-bootstrap-ss';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
 import FormBuilderLoader from 'containers/FormBuilderLoader/FormBuilderLoader';
 import castStringToElement from 'lib/castStringToElement';
 
 const noop = () => null;
 
-class FormBuilderModal extends SilverStripeComponent {
+class FormBuilderModal extends Component {
   constructor(props) {
     super(props);
 
@@ -15,20 +14,6 @@ class FormBuilderModal extends SilverStripeComponent {
     this.handleHide = this.handleHide.bind(this);
     this.clearResponse = this.clearResponse.bind(this);
     this.handleLoadingError = this.handleLoadingError.bind(this);
-  }
-
-  handleLoadingError(schema) {
-    const providesOnLoadingError = this.props.onLoadingError !== noop;
-    if (this.props.showErrorMessage || !providesOnLoadingError) {
-      const error = schema.errors && schema.errors[0];
-      this.setState({
-        response: error.value,
-        error: true,
-      });
-    }
-    if (providesOnLoadingError) {
-      this.props.onLoadingError(schema);
-    }
   }
 
   /**
@@ -43,8 +28,8 @@ class FormBuilderModal extends SilverStripeComponent {
     return (
       <FormBuilderLoader
         schemaUrl={this.props.schemaUrl}
-        handleSubmit={this.handleSubmit}
-        handleAction={this.props.handleAction}
+        onSubmit={this.handleSubmit}
+        onAction={this.props.onAction}
         onLoadingError={this.handleLoadingError}
         identifier={this.props.identifier}
       />
@@ -85,13 +70,27 @@ class FormBuilderModal extends SilverStripeComponent {
     });
   }
 
+  handleLoadingError(schema) {
+    const providesOnLoadingError = this.props.onLoadingError !== noop;
+    if (this.props.showErrorMessage || !providesOnLoadingError) {
+      const error = schema.errors && schema.errors[0];
+      this.setState({
+        response: error.value,
+        error: true,
+      });
+    }
+    if (providesOnLoadingError) {
+      this.props.onLoadingError(schema);
+    }
+  }
+
   /**
    * Call the callback for hiding this Modal
    */
   handleHide() {
     this.clearResponse();
-    if (typeof this.props.handleHide === 'function') {
-      this.props.handleHide();
+    if (typeof this.props.onHide === 'function') {
+      this.props.onHide();
     }
   }
 
@@ -106,8 +105,8 @@ class FormBuilderModal extends SilverStripeComponent {
   handleSubmit(data, action, submitFn) {
     this.clearResponse();
     let promise = null;
-    if (typeof this.props.handleSubmit === 'function') {
-      promise = this.props.handleSubmit(data, action, submitFn);
+    if (typeof this.props.onSubmit === 'function') {
+      promise = this.props.onSubmit(data, action, submitFn);
     } else {
       promise = submitFn();
     }
@@ -146,7 +145,7 @@ class FormBuilderModal extends SilverStripeComponent {
       );
     }
 
-    if (typeof this.props.handleHide === 'function') {
+    if (typeof this.props.onHide === 'function') {
       return (
         <button
           type="button"
@@ -190,10 +189,10 @@ FormBuilderModal.propTypes = {
   title: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.bool]),
   className: React.PropTypes.string,
   bodyClassName: React.PropTypes.string,
-  handleHide: React.PropTypes.func,
+  onHide: React.PropTypes.func,
   schemaUrl: React.PropTypes.string,
-  handleSubmit: React.PropTypes.func,
-  handleAction: React.PropTypes.func,
+  onSubmit: React.PropTypes.func,
+  onAction: React.PropTypes.func,
   responseClassGood: React.PropTypes.string,
   responseClassBad: React.PropTypes.string,
   identifier: React.PropTypes.string,

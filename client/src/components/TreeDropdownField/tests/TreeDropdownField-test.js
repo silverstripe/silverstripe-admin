@@ -1,4 +1,4 @@
-/* global jest, describe, beforeEach, it, expect, setTimeout */
+/* global jest, describe, beforeEach, it, expect, setTimeout, document */
 
 jest.mock('components/TreeDropdownField/TreeDropdownFieldMenu');
 jest.mock('isomorphic-fetch', () =>
@@ -9,7 +9,7 @@ jest.mock('isomorphic-fetch', () =>
 
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
-import { TreeDropdownField, MULTI_EMPTY_VALUE, SINGLE_EMPTY_VALUE } from '../TreeDropdownField';
+import { Component as TreeDropdownField, MULTI_EMPTY_VALUE, SINGLE_EMPTY_VALUE } from '../TreeDropdownField';
 import mockTree from './mockTree';
 
 describe('TreeDropdownField', () => {

@@ -1,32 +1,19 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import i18n from 'i18n';
 import { FormControl } from 'react-bootstrap-ss';
 
-class SingleSelectField extends SilverStripeComponent {
-
+class SingleSelectField extends Component {
   constructor(props) {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
   }
 
-  render() {
-    let field = null;
-    if (this.props.readOnly) {
-      field = this.getReadonlyField();
-    } else {
-      field = this.getSelectField();
-    }
-
-    return field;
-  }
-
   /**
    * Builds the select field in readonly mode with current props
    *
-   * @returns {Component}
+   * @returns {object}
    */
   getReadonlyField() {
     let label = this.props.source
@@ -42,7 +29,7 @@ class SingleSelectField extends SilverStripeComponent {
   /**
    * Builds the select field with current props
    *
-   * @returns {Component}
+   * @returns {object}
    */
   getSelectField() {
     // .slice() to copy the array, because we could modify it with an empty item
@@ -102,12 +89,23 @@ class SingleSelectField extends SilverStripeComponent {
   /**
    * Handles changes to the select field's value.
    *
-   * @param {object} event
+   * @param {Event} event
    */
   handleChange(event) {
     if (typeof this.props.onChange === 'function') {
       this.props.onChange(event, { id: this.props.id, value: event.target.value });
     }
+  }
+
+  render() {
+    let field = null;
+    if (this.props.readOnly) {
+      field = this.getReadonlyField();
+    } else {
+      field = this.getSelectField();
+    }
+
+    return field;
   }
 }
 
@@ -141,6 +139,6 @@ SingleSelectField.defaultProps = {
   },
 };
 
-export { SingleSelectField };
+export { SingleSelectField as Component };
 
 export default fieldHolder(SingleSelectField);

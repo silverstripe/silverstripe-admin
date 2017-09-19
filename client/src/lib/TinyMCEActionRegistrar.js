@@ -1,9 +1,9 @@
+/* global window */
 /**
  * Acts as top level action registrar component for tinymce
  */
 
 class TinyMCEActionRegistrar {
-
   constructor() {
     this.actions = {};
 

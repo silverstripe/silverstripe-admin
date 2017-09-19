@@ -1,8 +1,7 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 import { Tab } from 'react-bootstrap-ss';
 
-class TabItem extends SilverStripeComponent {
+class TabItem extends Component {
   /**
    * Fetches the properties for the tab content
    *

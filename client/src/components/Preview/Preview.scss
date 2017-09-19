@@ -30,10 +30,6 @@
   position: relative;
 }
 
-.preview__file { // TODO files smaller than the given space need to be detected via js to give class --fits-space
-
-}
-
 .preview__file--fits-space {
   position: absolute;
   top: 50%;

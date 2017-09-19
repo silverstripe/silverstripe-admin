@@ -6,7 +6,7 @@
  * * Actions menu (Edit page actions)
  *
  */
-import $ from 'jQuery';
+import $ from 'jquery';
 
 $.entwine('ss', function($) {
   /**

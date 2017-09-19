@@ -6,7 +6,7 @@ jest.unmock('../LookupField');
 
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
-import { LookupField } from '../LookupField';
+import { Component as LookupField } from '../LookupField';
 
 describe('LookupField', () => {
   let props = null;

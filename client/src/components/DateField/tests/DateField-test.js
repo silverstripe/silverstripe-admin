@@ -12,7 +12,7 @@ jest.mock('modernizr', () => ({
 
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
-import { DateField } from '../DateField';
+import { Component as DateField } from '../DateField';
 
 describe('DateField without html5 date field support', () => {
   let props = null;

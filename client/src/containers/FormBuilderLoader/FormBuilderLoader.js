@@ -33,7 +33,6 @@ function createFormIdentifierFromProps({ identifier, schema = {} }) {
 }
 
 class FormBuilderLoader extends Component {
-
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -116,8 +115,8 @@ class FormBuilderLoader extends Component {
         })
     );
 
-    if (typeof this.props.handleSubmit === 'function') {
-      promise = this.props.handleSubmit(data, action, newSubmitFn);
+    if (typeof this.props.onSubmit === 'function') {
+      promise = this.props.onSubmit(data, action, newSubmitFn);
     } else {
       promise = newSubmitFn();
     }
@@ -286,10 +285,8 @@ class FormBuilderLoader extends Component {
           if (typeof this.props.onLoadingError === 'function') {
             this.props.onLoadingError(formSchema);
           }
-        } else {
-          if (typeof this.props.onLoadingSuccess === 'function') {
-            this.props.onLoadingSuccess();
-          }
+        } else if (typeof this.props.onLoadingSuccess === 'function') {
+          this.props.onLoadingSuccess();
         }
 
         if (typeof formSchema.id !== 'undefined' && formSchema.state) {
@@ -400,7 +397,7 @@ class FormBuilderLoader extends Component {
     const props = Object.assign({}, this.props, {
       form: this.getIdentifier(),
       onSubmitSuccess: this.props.onSubmitSuccess,
-      handleSubmit: this.handleSubmit,
+      onSubmit: this.handleSubmit,
       onAutofill: this.handleAutofill,
     });
 
@@ -443,7 +440,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export { FormBuilderLoader };
+export { FormBuilderLoader as Component };
 
 export default compose(
   inject(

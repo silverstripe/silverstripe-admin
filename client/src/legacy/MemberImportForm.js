@@ -1,7 +1,7 @@
 /**
  * File: MemberImportForm.js
  */
-import $ from 'jQuery';
+import $ from 'jquery';
 
 $.entwine('ss', function($){
   /**

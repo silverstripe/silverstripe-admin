@@ -32,7 +32,7 @@ const applyTransforms = () => {
   Injector.transform(
     'form-action-changed',
     (updater) => {
-      updater.form.alterSchema('*', form => {
+      updater.form.alterSchema('*', (form) => {
         form.mutateField('action_save', (field) => {
           const isPristine = form.isPristine();
 
@@ -46,7 +46,7 @@ const applyTransforms = () => {
 
         return form.getState();
       });
-    }
+    },
   );
 };
 

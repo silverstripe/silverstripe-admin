@@ -1,9 +1,8 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 import OptionField from 'components/OptionsetField/OptionField';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 
-class OptionsetField extends SilverStripeComponent {
+class OptionsetField extends Component {
   constructor(props) {
     super(props);
 
@@ -20,24 +19,8 @@ class OptionsetField extends SilverStripeComponent {
    * @returns {string} key
    */
   getItemKey(item, index) {
-    return `${this.props.id}-${item.value || `empty${index}`}`;
-  }
-
-  /**
-   * Handler for sorting what the value of the field will be
-   *
-   * @param {Event} event
-   * @param {object} field
-   */
-  handleChange(event, field) {
-    if (typeof this.props.onChange === 'function') {
-      if (field.value === 1) {
-        const sourceItem = this.props.source
-          .find((item, index) => this.getItemKey(item, index) === field.id);
-
-        this.props.onChange(sourceItem.value);
-      }
-    }
+    const value = item.value || `empty${index}`;
+    return `${this.props.id}-${value}`;
   }
 
   /**
@@ -62,6 +45,23 @@ class OptionsetField extends SilverStripeComponent {
       title: item.title,
       type: 'radio',
     };
+  }
+
+  /**
+   * Handler for sorting what the value of the field will be
+   *
+   * @param {Event} event
+   * @param {object} field
+   */
+  handleChange(event, field) {
+    if (typeof this.props.onChange === 'function') {
+      if (field.value === 1) {
+        const sourceItem = this.props.source
+          .find((item, index) => this.getItemKey(item, index) === field.id);
+
+        this.props.onChange(sourceItem.value);
+      }
+    }
   }
 
   render() {
@@ -101,6 +101,6 @@ OptionsetField.defaultProps = {
   itemClass: '',
 };
 
-export { OptionsetField };
+export { OptionsetField as Component };
 
 export default fieldHolder(OptionsetField);

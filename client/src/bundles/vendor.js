@@ -1,3 +1,8 @@
+/* eslint-disable
+ import/no-webpack-loader-syntax,
+ import/no-extraneous-dependencies,
+ import/no-unresolved
+*/
 // TODO Enable require(*.css) includes once https://github.com/webpack/extract-text-webpack-plugin/issues/179
 // is resolved. Included in bundle.scss for now.
 
@@ -7,7 +12,7 @@ require('json-js');
 // jQuery plugins require that the jQuery object is exposed as a global
 // webpack.ProvidePlugin is used to ensure that jQuery and $ are provided to all includes
 require('script-loader!../../../thirdparty/jquery/jquery.js');
-require('expose-loader?jQuery!jQuery');
+require('expose-loader?jQuery!jquery');
 
 // Expose the libraries as globals for other modules to access
 // Note that these are order-dependent - earlier items should not depend on later ones

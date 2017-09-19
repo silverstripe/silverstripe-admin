@@ -94,7 +94,6 @@ const checkWildcard = (middleware) => {
  * a factory. Factories are cached for each context.
  */
 class MiddlewareRegistry {
-
   /**
    * Constructor
    */

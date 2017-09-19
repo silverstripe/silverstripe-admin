@@ -1,4 +1,4 @@
-import $ from 'jQuery';
+import $ from 'jquery';
 
 var getHTML = function(el) {
   var clone = el.cloneNode(true);

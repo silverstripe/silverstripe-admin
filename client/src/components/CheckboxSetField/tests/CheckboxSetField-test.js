@@ -1,4 +1,4 @@
-/* global jest, describe, beforeEach, it, expect */
+/* global jest, describe, beforeEach, it, expect, Event */
 
 jest.unmock('react');
 jest.unmock('react-addons-test-utils');
@@ -7,7 +7,7 @@ jest.unmock('../CheckboxSetField');
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 // get non-default because it uses FieldHolder by default
-import { CheckboxSetField } from '../CheckboxSetField';
+import { Component as CheckboxSetField } from '../CheckboxSetField';
 
 describe('CheckboxSetField', () => {
   let props = null;

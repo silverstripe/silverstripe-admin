@@ -4,7 +4,6 @@
  * Inline / floating tinymce toolbar
  */
 class TinymceInlineToolbar {
-
   /**
    * @param  {Object} editor Tinymce editor instance
    * @param  {Array} buttons Array of button literal object

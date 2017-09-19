@@ -16,7 +16,7 @@ class InsertLinkModal extends Component {
   }
 
   componentWillReceiveProps(props) {
-    if (props.show && !this.props.show || !props.show && this.props.show) {
+    if ((props.show && !this.props.show) || (!props.show && this.props.show)) {
       props.setOverrides(props.show ? props : null);
     }
   }
@@ -30,12 +30,11 @@ class InsertLinkModal extends Component {
       {},
       this.props,
       {
-        handleSubmit: this.handleSubmit,
-        handleHide: this.props.onHide,
+        onSubmit: this.handleSubmit,
+        onHide: this.props.onHide,
         showErrorMessage: true,
       }
     );
-    delete props.onHide;
     delete props.onInsert;
     delete props.sectionConfig;
 

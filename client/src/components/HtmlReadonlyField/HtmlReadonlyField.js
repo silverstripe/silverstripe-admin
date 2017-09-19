@@ -1,10 +1,8 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import { FormControl } from 'react-bootstrap-ss';
 
-class HtmlReadonlyField extends SilverStripeComponent {
-
+class HtmlReadonlyField extends Component {
   constructor(props) {
     super(props);
 
@@ -39,11 +37,13 @@ class HtmlReadonlyField extends SilverStripeComponent {
 
   render() {
     return (
-      <FormControl.Static {...this.getInputProps()} dangerouslySetInnerHTML={this.getContent()}>
-      </FormControl.Static>
+      <FormControl.Static
+        {...this.getInputProps()}
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={this.getContent()}
+      />
     );
   }
-
 }
 
 HtmlReadonlyField.propTypes = {
@@ -59,6 +59,6 @@ HtmlReadonlyField.defaultProps = {
   className: '',
 };
 
-export { HtmlReadonlyField };
+export { HtmlReadonlyField as Component };
 
 export default fieldHolder(HtmlReadonlyField);

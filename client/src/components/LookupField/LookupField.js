@@ -1,10 +1,9 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 import { FormControl } from 'react-bootstrap-ss';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import i18n from 'i18n';
 
-class LookupField extends SilverStripeComponent {
+class LookupField extends Component {
   constructor(props) {
     super(props);
 
@@ -86,7 +85,7 @@ LookupField.defaultProps = {
   value: [],
 };
 
-export { LookupField };
+export { LookupField as Component };
 
 export default fieldHolder(LookupField);
 

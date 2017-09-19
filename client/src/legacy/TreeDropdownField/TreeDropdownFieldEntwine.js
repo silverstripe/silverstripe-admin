@@ -1,4 +1,5 @@
-import jQuery from 'jQuery';
+/* global window */
+import jQuery from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from 'react-apollo';

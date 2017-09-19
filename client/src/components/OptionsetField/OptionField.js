@@ -1,13 +1,39 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 import castStringToElement from 'lib/castStringToElement';
 import { Checkbox, Radio } from 'react-bootstrap-ss';
 
-class OptionField extends SilverStripeComponent {
+class OptionField extends Component {
   constructor(props) {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  /**
+   * Fetches the properties for the field
+   *
+   * @returns {object} properties
+   */
+  getInputProps() {
+    const classNames = [
+      this.props.className,
+      this.props.extraClass,
+    ];
+
+    if (this.props.value) {
+      classNames.push('checked');
+    }
+
+    return {
+      id: this.props.id,
+      name: this.props.name,
+      disabled: this.props.disabled,
+      readOnly: this.props.readOnly,
+      className: classNames.join(' '),
+      onChange: this.handleChange,
+      checked: !!this.props.value,
+      value: 1,
+    };
   }
 
   /**
@@ -29,33 +55,6 @@ class OptionField extends SilverStripeComponent {
         value: event.target.checked ? 1 : 0,
       });
     }
-  }
-
-  /**
-   * Fetches the properties for the field
-   *
-   * @returns {object} properties
-   */
-  getInputProps() {
-    const classNames = [
-      this.props.className,
-      this.props.extraClass,
-    ];
-
-    if (!!this.props.value) {
-      classNames.push('checked');
-    }
-
-    return {
-      id: this.props.id,
-      name: this.props.name,
-      disabled: this.props.disabled,
-      readOnly: this.props.readOnly,
-      className: classNames.join(' '),
-      onChange: this.handleChange,
-      checked: !!this.props.value,
-      value: 1,
-    };
   }
 
   render() {
@@ -91,7 +90,7 @@ OptionField.propTypes = {
   title: React.PropTypes.any,
   extraClass: React.PropTypes.string,
   id: React.PropTypes.string,
-  name: React.PropTypes.string.isRequired,
+  name: React.PropTypes.string,
   onChange: React.PropTypes.func,
   value: React.PropTypes.oneOfType([
     React.PropTypes.string,

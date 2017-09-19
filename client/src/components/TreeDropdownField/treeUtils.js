@@ -43,6 +43,7 @@ const findTreeByID = (tree, id) => {
   if (tree.id === id) {
     return tree;
   }
+  // eslint-disable-next-line no-restricted-syntax
   for (const child of tree.children) {
     // Search children
     const found = findTreeByID(child, id);
@@ -77,6 +78,7 @@ export const findTreePath = (tree, id) => {
   if (!tree.children) {
     return null;
   }
+  // eslint-disable-next-line no-restricted-syntax
   for (const child of tree.children) {
     // Search children
     const childPath = findTreePath(child, id);

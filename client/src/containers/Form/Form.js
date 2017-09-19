@@ -10,7 +10,7 @@ const InjectableForm = (props) => {
   };
   delete newProps.formComponent;
 
-  return <FormComponent { ...newProps } />;
+  return <FormComponent {...newProps} />;
 };
 
 InjectableForm.propTypes = {

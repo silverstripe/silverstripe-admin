@@ -1,6 +1,5 @@
 /* global document */
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 
 /**
  * Wrapper component that fires a handler (`onClickOut`) when a user clicks
@@ -29,7 +28,6 @@ import ReactDOM from 'react-dom';
  */
 
 class Focusedzone extends Component {
-
   constructor(props) {
     super(props);
 
@@ -45,7 +43,7 @@ class Focusedzone extends Component {
   }
 
   componentDidMount() {
-    const element = ReactDOM.findDOMNode(this);
+    const element = this.container;
 
     // Click event handlers on `el` and `document` will be both
     // triggered when user clicked inside the compoent's DOM. The
@@ -56,7 +54,7 @@ class Focusedzone extends Component {
   }
 
   componentWillUnmount() {
-    const element = ReactDOM.findDOMNode(this);
+    const element = this.container;
     element.removeEventListener('click', this.handleElementClick);
     document.removeEventListener('click', this.handleDocumentClick);
   }
@@ -73,7 +71,14 @@ class Focusedzone extends Component {
   }
 
   render() {
-    return <div className={this.props.className}>{this.props.children}</div>;
+    return (
+      <div
+        className={this.props.className}
+        ref={(container) => { this.container = container; }}
+      >
+        {this.props.children}
+      </div>
+    );
   }
 }
 

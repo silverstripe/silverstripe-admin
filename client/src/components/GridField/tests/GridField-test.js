@@ -1,13 +1,8 @@
 /* global jest, describe, beforeEach, it, expect */
 
-jest.dontMock('../GridField');
-jest.dontMock('../GridFieldTable');
-jest.dontMock('react');
-
-// FYI: Changing these to import statements broke jest's automocking
-const React = require('react');
-const ReactTestUtils = require('react-addons-test-utils');
-const GridFieldTable = require('../GridFieldTable').default;
+import React from 'react';
+import ReactTestUtils from 'react-addons-test-utils';
+import GridFieldTable from '../GridFieldTable';
 
 describe('GridFieldTable', () => {
   let props = null;
@@ -21,7 +16,7 @@ describe('GridFieldTable', () => {
     let gridfield = null;
 
     it('should return props.header if it is set', () => {
-      props.header = <tr className="header"></tr>;
+      props.header = <tr className="header" />;
 
       gridfield = ReactTestUtils.renderIntoDocument(
         <GridFieldTable {...props} />

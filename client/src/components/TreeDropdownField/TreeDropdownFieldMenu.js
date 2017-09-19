@@ -7,7 +7,6 @@ import TreeDropdownFieldNode from 'components/TreeDropdownField/TreeDropdownFiel
  * Level in a tree dropdown field
  */
 class TreeDropdownFieldMenu extends Component {
-
   constructor(props) {
     super(props);
     this.render = this.render.bind(this);
@@ -42,15 +41,17 @@ class TreeDropdownFieldMenu extends Component {
     const breadcrumbs = this.props.breadcrumbs.map((item) => item.title).join(' / ');
     const icon = (this.props.search) ? 'font-icon-search' : 'font-icon-left-open-big';
     const button = (
-        <button className="treedropdownfield__breadcrumbs-button">
-          <span className={`icon ${icon}`} />
-        </button>
-      );
+      <button className="treedropdownfield__breadcrumbs-button">
+        <span className={`icon ${icon}`} />
+      </button>
+    );
 
     return (
       <div
         className="Select-option treedropdownfield__breadcrumbs flexbox-area-grow fill-width"
         onClick={this.handleBack}
+        role="button"
+        tabIndex={0}
       >
         {button}
         <span className="treedropdownfield__breadcrumbs-crumbs flexbox-area-grow">
@@ -119,29 +120,37 @@ class TreeDropdownFieldMenu extends Component {
   }
 
   render() {
+    const classes = classNames([this.props.className, 'treedropdownfield__menu']);
+
     if (this.props.loading) {
       return (
-        <div className="Select-option flexbox-area-grow fill-width">
-          <span className="Select-loading-zone" aria-hidden="true">
-            <span className="Select-loading" />
-          </span>
-          <span className="treedropdownfield__menu-loading flexbox-area-grow">
-            {i18n._t('Admin.TREEDROPDOWN_LOADING', 'Loading...')}
-          </span>
+        <div className={classes}>
+          <div className="Select-option flexbox-area-grow fill-width">
+            <span className="Select-loading-zone" aria-hidden="true">
+              <span className="Select-loading" />
+            </span>
+            <span className="treedropdownfield__menu-loading flexbox-area-grow">
+              {i18n._t('Admin.TREEDROPDOWN_LOADING', 'Loading...')}
+            </span>
+          </div>
         </div>
       );
     }
     if (this.props.failed) {
       return (
-        <div className="Select-option">
-          {i18n._t('Admin.TREEDROPDOWN_FAILED', 'Failed to load')}
+        <div className={classes}>
+          <div className="Select-option">
+            {i18n._t('Admin.TREEDROPDOWN_FAILED', 'Failed to load')}
+          </div>
         </div>
       );
     }
     if (this.props.tree.count === 0) {
       return (
-        <div className="Select-option">
-          {i18n._t('Admin.TREEDROPDOWN_NO_CHILDREN', 'No children')}
+        <div className={classes}>
+          <div className="Select-option">
+            {i18n._t('Admin.TREEDROPDOWN_NO_CHILDREN', 'No children')}
+          </div>
         </div>
       );
     }
@@ -158,7 +167,7 @@ class TreeDropdownFieldMenu extends Component {
       : null;
 
     return (
-      <div className="treedropdownfield__menu">
+      <div className={classes}>
         {breadcrumbs}
         {children}
       </div>

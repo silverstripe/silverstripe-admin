@@ -1,7 +1,7 @@
 /**
  * File: LeftAndMain.js
  */
-import $ from 'jQuery';
+import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import IframeDialog from 'components/IframeDialog/IframeDialog';

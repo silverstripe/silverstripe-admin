@@ -1,6 +1,6 @@
-/* global window */
+/* global window, document */
 
-import $ from 'jQuery';
+import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router as ReactRouter, useRouterHistory } from 'react-router';
@@ -20,7 +20,6 @@ import getFormState from 'lib/getFormState';
  * Bootstraps routes
  */
 class BootRoutes {
-
   /**
    * @param {Object} store Redux store
    * @param {Object} client The Apollo client
@@ -86,7 +85,7 @@ class BootRoutes {
     reactRouteRegister.updateRootRoute({
       component: App,
     });
-    let history = syncHistoryWithStore(
+    const history = syncHistoryWithStore(
       useRouterHistory(useBeforeUnload(createHistory))({
         basename: Config.get('baseUrl'),
       }),

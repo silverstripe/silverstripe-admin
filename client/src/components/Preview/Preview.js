@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import i18n from 'i18n';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
 import PopoverField from 'components/PopoverField/PopoverField';
 
 /**
  * Renders the right-hand collapsable change preview panel
  */
-class Preview extends SilverStripeComponent {
-
+class Preview extends Component {
   constructor(props) {
     super(props);
 
@@ -22,7 +20,6 @@ class Preview extends SilverStripeComponent {
   }
 
   render() {
-    // @todo - Multiple preview views with toggle slider
     let body = null;
     let previewUrl = null;
     let previewType = '';
@@ -41,7 +38,7 @@ class Preview extends SilverStripeComponent {
     // Build actions
     let editUrl = null;
     const editKey = 'edit';
-    let toolbarButtons = [];
+    const toolbarButtons = [];
     if (this.props.itemLinks && this.props.itemLinks.edit) {
       editUrl = this.props.itemLinks.edit.href;
       toolbarButtons.push(
@@ -71,7 +68,7 @@ class Preview extends SilverStripeComponent {
         </div>
       );
     } else {
-      body = <iframe className="flexbox-area-grow preview__iframe" src={previewUrl}></iframe>;
+      body = <iframe className="flexbox-area-grow preview__iframe" src={previewUrl} />;
     }
 
     const backButton = (typeof this.props.onBack === 'function') && (
@@ -82,10 +79,13 @@ class Preview extends SilverStripeComponent {
       >Back</button>
     );
 
-    const moreActions = this.props.moreActions && this.props.moreActions.length > 0 ?
-      <PopoverField data={{ placement: 'top' }} id="campaign-preview-popver" >
-      {this.props.moreActions}</PopoverField> :
-      null;
+    const moreActions = this.props.moreActions && this.props.moreActions.length > 0
+      ? (
+        <PopoverField data={{ placement: 'top' }} id="campaign-preview-popver">
+          {this.props.moreActions}
+        </PopoverField>
+      )
+      : null;
 
     // Combine elements
     return (

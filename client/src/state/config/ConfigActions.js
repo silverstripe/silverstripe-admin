@@ -3,7 +3,7 @@ import ACTION_TYPES from './ConfigActionTypes';
 /**
  * Sets global config for the application.
  *
- * @param object config
+ * @param {object} config
  */
 export function setConfig(config) {
   return {
@@ -11,3 +11,4 @@ export function setConfig(config) {
     payload: { config },
   };
 }
+

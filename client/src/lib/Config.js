@@ -1,3 +1,4 @@
+/* global window */
 /**
  * Provides methods for interacting with the client config.
  * The client config is defined using the YAML/PHP config system.
@@ -8,7 +9,6 @@
  * @class
  */
 class Config {
-
   /**
    * Get a specific key from the configuration object.
    *
@@ -45,7 +45,6 @@ class Config {
   static getCurrentSection() {
 
   }
-
 }
 
 export default Config;

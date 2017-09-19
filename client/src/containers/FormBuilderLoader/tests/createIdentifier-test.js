@@ -2,7 +2,7 @@
 
 jest.unmock('../FormBuilderLoader');
 
-import { FormBuilderLoader } from '../FormBuilderLoader';
+import { Component as FormBuilderLoader } from '../FormBuilderLoader';
 
 describe('createIdentifier', () => {
   it('concatenates the identifier prop with the schema name prop', () => {

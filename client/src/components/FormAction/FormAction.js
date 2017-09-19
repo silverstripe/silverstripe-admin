@@ -1,24 +1,12 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 import castStringToElement from 'lib/castStringToElement';
 import classnames from 'classnames';
 
-class FormAction extends SilverStripeComponent {
+class FormAction extends Component {
   constructor(props) {
     super(props);
 
     this.handleClick = this.handleClick.bind(this);
-  }
-
-  render() {
-    const title = this.props.title;
-
-    return (
-      <button {...this.getButtonProps()}>
-        {this.getLoadingIcon()}
-        {castStringToElement('span', title, { className: 'btn__title' })}
-      </button>
-    );
   }
 
   /**
@@ -70,17 +58,6 @@ class FormAction extends SilverStripeComponent {
     }
 
     return classnames(buttonClasses);
-  }
-
-  /**
-   * @return {boolean}
-   */
-  isPrimary() {
-    const extraClasses = this.props.extraClass.split(' ');
-    return (
-      this.props.name === 'action_save' ||
-      extraClasses.find(className => className === 'ss-ui-action-constructive')
-    );
   }
 
   /**
@@ -142,22 +119,44 @@ class FormAction extends SilverStripeComponent {
   }
 
   /**
+   * @return {boolean}
+   */
+  isPrimary() {
+    const extraClasses = this.props.extraClass.split(' ');
+    return (
+      this.props.name === 'action_save' ||
+      extraClasses.find(className => className === 'ss-ui-action-constructive')
+    );
+  }
+
+  /**
    * Event handler triggered when a user clicks the button.
    *
    * @param {Object} event
    * @return undefined
    */
   handleClick(event) {
-    if (typeof this.props.handleClick === 'function') {
-      this.props.handleClick(event, this.props.name || this.props.id);
+    if (typeof this.props.onClick === 'function') {
+      this.props.onClick(event, this.props.name || this.props.id);
     }
+  }
+
+  render() {
+    const title = this.props.title;
+
+    return (
+      <button {...this.getButtonProps()}>
+        {this.getLoadingIcon()}
+        {castStringToElement('span', title, { className: 'btn__title' })}
+      </button>
+    );
   }
 }
 
 FormAction.propTypes = {
   id: React.PropTypes.string,
   name: React.PropTypes.string,
-  handleClick: React.PropTypes.func,
+  onClick: React.PropTypes.func,
   title: React.PropTypes.string,
   type: React.PropTypes.string,
   loading: React.PropTypes.bool,

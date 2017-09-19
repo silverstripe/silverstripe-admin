@@ -1,9 +1,7 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-class Breadcrumb extends SilverStripeComponent {
-
+class Breadcrumb extends Component {
   getLastCrumb() {
     return this.props.crumbs && this.props.crumbs[this.props.crumbs.length - 1];
   }
@@ -13,8 +11,8 @@ class Breadcrumb extends SilverStripeComponent {
       return null;
     }
 
-    return this.props.crumbs.slice(0, -1).map((crumb, index) => (
-      <li key={index} className="breadcrumb__item">
+    return this.props.crumbs.slice(0, -1).map((crumb) => (
+      <li key={crumb.text} className="breadcrumb__item">
         <a
           className="breadcrumb__item-title"
           href={crumb.href}
@@ -41,9 +39,14 @@ class Breadcrumb extends SilverStripeComponent {
       <div className="breadcrumb__item breadcrumb__item--last">
         <h2 className="breadcrumb__item-title">
           {crumb.text}
-          {crumb.icon &&
-          <span className={iconClassNames.join(' ')} onClick={crumb.icon.action} />
-          }
+          {crumb.icon && (
+            <span
+              className={iconClassNames.join(' ')}
+              role="button"
+              tabIndex={0}
+              onClick={crumb.icon.onClick}
+            />
+          )}
         </h2>
       </div>
     );
@@ -64,7 +67,15 @@ class Breadcrumb extends SilverStripeComponent {
 }
 
 Breadcrumb.propTypes = {
-  crumbs: React.PropTypes.array,
+  crumbs: PropTypes.arrayOf(PropTypes.shape({
+    onClick: PropTypes.func,
+    text: PropTypes.string,
+    icon: PropTypes.shape({
+      className: PropTypes.string,
+      onClick: PropTypes.func,
+      action: (props) => { if (props.action) { throw new Error('action: no longer used'); } },
+    })
+  })),
 };
 
 function mapStateToProps(state) {
@@ -73,6 +84,6 @@ function mapStateToProps(state) {
   };
 }
 
-export { Breadcrumb };
+export { Breadcrumb as Component };
 
 export default connect(mapStateToProps)(Breadcrumb);

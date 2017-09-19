@@ -1,10 +1,9 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 import OptionField from 'components/OptionsetField/OptionField';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 
 // a group of check boxes
-class CheckboxSetField extends SilverStripeComponent {
+class CheckboxSetField extends Component {
   constructor(props) {
     super(props);
 
@@ -46,30 +45,6 @@ class CheckboxSetField extends SilverStripeComponent {
   }
 
   /**
-   * Handler for sorting what the value of the field will be, this flows on from the
-   * OptionField (single checkbox) event handler and adding or removing the corresponding value the
-   * single checkbox represented to suit the multiple checkbox group.
-   *
-   * @param {Event} event
-   * @param {object} field
-   */
-  handleChange(event, field) {
-    if (typeof this.props.onChange === 'function') {
-      const oldValue = this.getValues();
-      const newValue = this.props.source
-        .filter((item, index) => {
-          if (this.getItemKey(item, index) === field.id) {
-            return field.value === 1;
-          }
-          return oldValue.indexOf(`${item.value}`) > -1;
-        })
-        .map((item) => `${item.value}`);
-
-      this.props.onChange(newValue);
-    }
-  }
-
-  /**
    * Fetches properties for an item
    *
    * @param {object} item
@@ -92,6 +67,30 @@ class CheckboxSetField extends SilverStripeComponent {
       title: item.title,
       type: 'checkbox',
     };
+  }
+
+  /**
+   * Handler for sorting what the value of the field will be, this flows on from the
+   * OptionField (single checkbox) event handler and adding or removing the corresponding value the
+   * single checkbox represented to suit the multiple checkbox group.
+   *
+   * @param {Event} event
+   * @param {object} field
+   */
+  handleChange(event, field) {
+    if (typeof this.props.onChange === 'function') {
+      const oldValue = this.getValues();
+      const newValue = this.props.source
+        .filter((item, index) => {
+          if (this.getItemKey(item, index) === field.id) {
+            return field.value === 1;
+          }
+          return oldValue.indexOf(`${item.value}`) > -1;
+        })
+        .map((item) => `${item.value}`);
+
+      this.props.onChange(newValue);
+    }
   }
 
   render() {
@@ -132,6 +131,6 @@ CheckboxSetField.defaultProps = {
   value: [],
 };
 
-export { CheckboxSetField };
+export { CheckboxSetField as Component };
 
 export default fieldHolder(CheckboxSetField);
