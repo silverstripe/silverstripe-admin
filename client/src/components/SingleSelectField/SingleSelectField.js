@@ -13,7 +13,7 @@ class SingleSelectField extends Component {
   /**
    * Builds the select field in readonly mode with current props
    *
-   * @returns {React}
+   * @returns {object}
    */
   getReadonlyField() {
     let label = this.props.source
@@ -29,7 +29,7 @@ class SingleSelectField extends Component {
   /**
    * Builds the select field with current props
    *
-   * @returns {React}
+   * @returns {object}
    */
   getSelectField() {
     // .slice() to copy the array, because we could modify it with an empty item

@@ -56,7 +56,7 @@ function fieldHolder(Field) {
     /**
      * Build description
      *
-     * @returns {React}
+     * @returns {object}
      */
     renderDescription() {
       if (this.props.description === null) {
@@ -73,7 +73,7 @@ function fieldHolder(Field) {
     /**
      * Build a FormAlert
      *
-     * @returns {React}
+     * @returns {object}
      */
     renderMessage() {
       const message = this.getMessage();
@@ -92,7 +92,7 @@ function fieldHolder(Field) {
     /**
      * Build title label
      *
-     * @returns {React}
+     * @returns {object}
      */
     renderLeftTitle() {
       const labelText = this.props.leftTitle !== null
@@ -113,7 +113,7 @@ function fieldHolder(Field) {
     /**
      * Build title label
      *
-     * @returns {React}
+     * @returns {object}
      */
     renderRightTitle() {
       if (!this.props.rightTitle || this.props.hideLabels) {
@@ -127,6 +127,11 @@ function fieldHolder(Field) {
       );
     }
 
+    /**
+     * Render the actual field, or input group wrapper with prefix and suffix
+     *
+     * @return {object}
+     */
     renderField() {
       const hasMessage = Boolean(this.getMessage());
       const props = {
