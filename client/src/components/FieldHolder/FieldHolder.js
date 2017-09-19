@@ -6,6 +6,27 @@ import classnames from 'classnames';
 
 function fieldHolder(Field) {
   class FieldHolder extends SilverStripeComponent {
+    /**
+     * Gets the message from props or validation meta
+     *
+     * For object see castStringToElement
+     *
+     * @return {object|string|null}
+     */
+    getMessage() {
+      let message = null;
+      if (this.props.message && this.props.message.value) {
+        message = this.props.message;
+      }
+
+      // If we have both meta and message, prefer meta only if form is dirty
+      const meta = this.props.meta;
+      if (meta && meta.error && meta.touched && (!message || meta.dirty)) {
+        message = meta.error;
+      }
+
+      return message;
+    }
 
     /**
      * Build description
@@ -30,17 +51,7 @@ function fieldHolder(Field) {
      * @returns {Component}
      */
     renderMessage() {
-      let message = null;
-      if (this.props.message && this.props.message.value) {
-        message = this.props.message;
-      }
-
-      // If we have both meta and message, prefer meta only if form is dirty
-      const meta = this.props.meta;
-      if (meta && meta.error && meta.touched && (!message || meta.dirty)) {
-        message = meta.error;
-      }
-
+      const message = this.getMessage();
       if (!message) {
         return null;
       }
@@ -118,11 +129,15 @@ function fieldHolder(Field) {
     }
 
     renderField() {
-      const props = { ...this.props };
-      const hasErrors = Boolean(this.props.meta && this.props.meta.error);
-      if (hasErrors) {
-        props.extraClass = `${props.extraClass} is-invalid`;
-      }
+      const hasMessage = Boolean(this.getMessage());
+      const props = {
+        ...this.props,
+        extraClass: classnames(
+          this.props.extraClass,
+          { 'is-valid': hasMessage }
+        ),
+      };
+
       const field = <Field { ...props} />;
       const prefix = this.props.data.prefix;
       const suffix = this.props.data.suffix;

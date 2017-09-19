@@ -59,7 +59,6 @@ class Form extends Component {
     );
 
     return (
-      // Needs `noValidate` here in order to prevent browser's message
       <form {...formProps}>
         {fields &&
           <fieldset>
