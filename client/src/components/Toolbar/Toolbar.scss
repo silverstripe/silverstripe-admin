@@ -78,6 +78,7 @@
 
 // Primary content actions
 .toolbar--south {
+  height: $toolbar-total-height;
   padding-top: $spacer-xs;
   padding-bottom: $spacer-xs;
   border-top: 1px solid $border-color;
