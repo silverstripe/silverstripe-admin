@@ -1,12 +1,26 @@
 .cms .btn {
+  $btn-line-height: 20px;
+
   margin-right: 4px;
   cursor: pointer;
+  line-height: $btn-line-height;
+  vertical-align: middle;
+
+  &[class*=font-icon-]:before {
+    top: 0;
+    line-height: $btn-line-height;
+    vertical-align: middle;
+  }
 
   &.disabled,
   &.readonly,
   &:disabled,
   &[readonly] {
     cursor: not-allowed;
+  }
+
+  .btn__title {
+    vertical-align: middle;
   }
 
   &.btn--last {
