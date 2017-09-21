@@ -1,8 +1,8 @@
 <% if $IncludeFormTag %>
 <form $FormAttributes data-layout-type="border">
 <% end_if %>
-	<div class="toolbar toolbar--north cms-content-header">
-		<div class="cms-content-header-info">
+	<div class="toolbar toolbar--north cms-content-header vertical-align-items">
+		<div class="cms-content-header-info flexbox-area-grow vertical-align-items">
 			<% include SilverStripe\\Admin\\BackLink_Button %>
 			<% with $Controller %>
 				<% include SilverStripe\\Admin\\CMSBreadcrumbs %>

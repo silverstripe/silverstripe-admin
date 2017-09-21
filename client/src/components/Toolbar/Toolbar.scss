@@ -78,6 +78,7 @@
 
 // Primary content actions
 .toolbar--south {
+  height: $toolbar-total-height;
   padding-top: $spacer-xs;
   padding-bottom: $spacer-xs;
   border-top: 1px solid $border-color;
@@ -87,11 +88,11 @@
 
 .toolbar__back-button {
   float: left;
-  margin: $spacer-xs $spacer / 2 $spacer-xs #{-$spacer-xs};
   padding-left: $spacer / 4;
   padding-right: $spacer / 4;
   min-width: 24px; // Safari fix
   color: $body-color-light; // TEMP: Needed for anchor buttons to override legacy styles
+  margin-left: -$spacer-xs;
 
   @include media-breakpoint-down(sm) {
     margin-left: 42px;
@@ -105,4 +106,6 @@
 
 .toolbar__navigation {
   position: relative;
+  display: flex;
+  align-items: center;
 }
