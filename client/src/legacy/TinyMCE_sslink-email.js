@@ -101,7 +101,7 @@ jQuery.entwine('ss', ($) => {
         ? hrefParts[1].match(/subject=([^&]+)/)
         : '';
       const subject = (subjectMatch)
-        ? subjectMatch[1]
+        ? decodeURIComponent(subjectMatch[1])
         : '';
 
       return {
