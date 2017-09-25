@@ -55,6 +55,21 @@ const config = [
     ],
   },
   {
+    name: 'i18n',
+    entry: {
+      'i18n': `${PATHS.SRC}/i18n.js`
+    },
+    output: {
+      path: PATHS.DIST,
+      filename: 'js/[name].js',
+    },
+    devtool: (ENV !== 'production') ? 'source-map' : '',
+    resolve: resolveJS(ENV, PATHS),
+    externals: externalJS(ENV, PATHS),
+    module: moduleJS(ENV, PATHS),
+    plugins: pluginJS(ENV, PATHS),
+  },
+  {
     name: 'css',
     entry: {
       bundle: `${PATHS.SRC}/styles/bundle.scss`,
