@@ -104,7 +104,7 @@ class TreeDropdownField extends Component {
     }
 
     if (reload) {
-      this.loadTree(visible, nextProps.search);
+      this.loadTree(visible, nextProps.search, nextProps);
     }
   }
 
@@ -211,9 +211,10 @@ class TreeDropdownField extends Component {
    * @param {string} search
    * @returns {Promise}
    */
-  callFetch(path, search = '') {
-    const fetchURL = url.parse(this.props.data.urlTree, true);
-    if (this.props.data.showSearch && search.length) {
+  callFetch(path, search = '', nextProps = null) {
+    const props = nextProps || this.props;
+    const fetchURL = url.parse(props.data.urlTree, true);
+    if (props.data.showSearch && search.length) {
       fetchURL.query.search = search;
       fetchURL.query.flatList = '1';
     }
@@ -221,6 +222,7 @@ class TreeDropdownField extends Component {
       fetchURL.query.ID = path[path.length - 1];
     }
     fetchURL.query.format = 'json';
+    fetchURL.search = null;
     const fetchURLString = url.format(fetchURL);
     return fetch(fetchURLString, {
       credentials: 'same-origin',
@@ -263,11 +265,11 @@ class TreeDropdownField extends Component {
    * @param {String} search A search term to use
    * @return {Promise}
    */
-  loadTree(path, search = '') {
+  loadTree(path, search = '', nextProps = null) {
     // Mark as loading
     this.props.actions.treeDropdownField.beginTreeUpdating(this.props.id, path);
 
-    return this.callFetch(path, search)
+    return this.callFetch(path, search, nextProps)
       .then((treeData) => {
         // Populate tree
         this.props.actions.treeDropdownField.updateTree(this.props.id, path, treeData);
