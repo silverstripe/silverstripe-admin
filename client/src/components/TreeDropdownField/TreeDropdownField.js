@@ -98,6 +98,11 @@ class TreeDropdownField extends Component {
       visible = nextProps.visible;
     }
 
+    if (nextProps.data.urlTree !== this.props.data.urlTree) {
+      // invalidate the tree cache, as url has changed
+      reload = true;
+    }
+
     if (nextProps.data.cacheKey !== this.props.data.cacheKey) {
       // invalidate the tree cache, as paths have changed
       reload = true;
