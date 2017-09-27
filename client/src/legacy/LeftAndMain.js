@@ -65,7 +65,7 @@ $.entwine('ss', function($) {
     var target,
       event = e.originalEvent,
       data = null;
-      
+
     try
     {
         data = typeof event.data === 'object' ? event.data : JSON.parse(event.data);

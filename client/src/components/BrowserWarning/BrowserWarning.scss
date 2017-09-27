@@ -1,0 +1,68 @@
+.browser-warning {
+  position: fixed;
+  color: $white;
+  background: $blue;
+  height: 100%;
+  width: 100%;
+  z-index: 100000;
+  top: 0;
+  left: 0;
+}
+
+.browser-warning__content {
+  text-align: center;
+  margin: 100px 0;
+  padding: 30px 30px;
+
+  a {
+    color: $white;
+    text-decoration: underline;
+  }
+
+  .ss-logo {
+    text-indent: -9999em;
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    background-image: url("../../images/ss-logo.png");
+    // `none` is for IE 8 and below
+    background-image: none, url("../../images/ss-logo.svg");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+  }
+}
+
+.browser-warning__list {
+  padding: 0;
+  margin-top: 70px;
+  list-style: none;
+
+  > li {
+    display: inline-block;
+    min-width: 130px;
+    margin: 0 15px;
+    padding-top: 75px;
+    background-size: 60px 60px;
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    margin-bottom: 30px;
+
+    &[data-browser="ie"] {
+      background-image: url("../../images/ie.png");
+      // `none` is for IE 8 and below
+      background-image: none, url("../../images/ie.svg");
+    }
+
+    &[data-browser="firefox"] {
+      background-image: url("../../images/firefox.png");
+      // `none` is for IE 8 and below
+      background-image: none, url("../../images/firefox.svg");
+    }
+
+    &[data-browser="chrome"] {
+      background-image: url("../../images/chrome.png");
+      // `none` is for IE 8 and below
+      background-image: none, url("../../images/chrome.svg");
+    }
+  }
+}
