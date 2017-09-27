@@ -209,10 +209,10 @@ class TreeDropdownField extends Component {
    *
    * @param {Array} path to load
    * @param {string} search
+   * @param {Object} props The props to be used by this method
    * @returns {Promise}
    */
-  callFetch(path, search = '', nextProps = null) {
-    const props = nextProps || this.props;
+  callFetch(path, search = '', props = this.props) {
     const fetchURL = url.parse(props.data.urlTree, true);
     if (props.data.showSearch && search.length) {
       fetchURL.query.search = search;
@@ -263,23 +263,24 @@ class TreeDropdownField extends Component {
    *
    * @param {Array} path A list of ids denoting the path the user has browsed in to
    * @param {String} search A search term to use
+   * @param {Object} props The props to be used by this method
    * @return {Promise}
    */
-  loadTree(path, search = '', nextProps = null) {
+  loadTree(path, search = '', props = this.props) {
     // Mark as loading
-    this.props.actions.treeDropdownField.beginTreeUpdating(this.props.id, path);
+    props.actions.treeDropdownField.beginTreeUpdating(props.id, path);
 
-    return this.callFetch(path, search, nextProps)
+    return this.callFetch(path, search, props)
       .then((treeData) => {
         // Populate tree
-        this.props.actions.treeDropdownField.updateTree(this.props.id, path, treeData);
+        props.actions.treeDropdownField.updateTree(props.id, path, treeData);
 
         return treeData;
       })
       .catch((error) => {
-        this.props.actions.treeDropdownField.updateTreeFailed(this.props.id, path);
-        if (typeof this.props.onLoadingError === 'function') {
-          return this.props.onLoadingError({
+        props.actions.treeDropdownField.updateTreeFailed(props.id, path);
+        if (typeof props.onLoadingError === 'function') {
+          return props.onLoadingError({
             errors: [
               {
                 value: error.message,
@@ -305,8 +306,6 @@ class TreeDropdownField extends Component {
    * A filter for the list of options so determine what is shown and what isn't
    *
    * @param {Object[]} options
-   * @param {String} filter The search string entered, generally ignored by this component
-   * @param {String|Array} values A value or list of values selected
    * @return {Object[]}
    */
   filterOptions(options) {
