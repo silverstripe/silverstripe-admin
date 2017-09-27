@@ -1,4 +1,4 @@
-<% require css("silverstripe-admin/client/dist/styles/browser-warning.css") %>
+<% require css('silverstripe/admin: client/dist/styles/browser-warning.css') %>
 
 <div id="browser-warning-wrapper" class="browser-warning-wrapper hide">
     <div class="browser-warning vertical-align-items">
@@ -20,7 +20,7 @@
     </div>
 </div>
 
-<% require javascript("silverstripe-admin/client/dist/js/browserWarning.js") %>
+<% require javascript('silverstripe/admin: client/dist/js/browserWarning.js') %>
 
 <!--[if lte IE 8]>
     <script>
