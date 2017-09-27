@@ -580,7 +580,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     {
         parent::init();
 
-        SSViewer::setRewriteHashLinks(false);
+        SSViewer::setRewriteHashLinksDefault(false);
         ContentNegotiator::setEnabled(false);
 
         // set language
