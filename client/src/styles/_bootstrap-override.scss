@@ -64,7 +64,11 @@ html [type="button"] {
 }
 
 .btn-toolbar > .btn-group + .btn {
-  margin-left: -5px;
+  margin-left: 0;
+}
+
+.btn-toolbar > .btn-group .btn-group {
+  margin-right: 0;
 }
 
 // Don't tie input padding to btn padding

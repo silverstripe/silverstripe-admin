@@ -8,6 +8,26 @@
   &:focus {
     outline: none;
   }
+
+  &.top, &.bottom {
+    .arrow {
+      margin-left: -5px;
+    }
+  }
+
+  &.top {
+    margin-top: -10px;
+  }
+
+  &.left, &.right {
+    .arrow {
+      margin-top: -3px;
+    }
+  }
+
+  &.left {
+    margin-left: -10px;
+  }
 }
 
 .popover-body {
