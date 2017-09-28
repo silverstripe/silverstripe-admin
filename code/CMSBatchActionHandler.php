@@ -27,6 +27,13 @@ class CMSBatchActionHandler extends RequestHandler
     /** @config */
     private static $batch_actions = array();
 
+    /**
+     * List of registered actions
+     *
+     * @var null
+     */
+    private static $registered_actions = null;
+
     private static $url_handlers = array(
         '$BatchAction/applicablepages' => 'handleApplicablePages',
         '$BatchAction/confirmation' => 'handleConfirmation',
@@ -73,6 +80,19 @@ class CMSBatchActionHandler extends RequestHandler
     }
 
     /**
+     * Get all registered actions
+     *
+     * @return array
+     */
+    public static function registeredActions()
+    {
+        if (isset(static::$registered_actions)) {
+            return static::$registered_actions;
+        }
+        return Config::inst()->get(static::class, 'batch_actions');
+    }
+
+    /**
      * Register a new batch action.  Each batch action needs to be represented by a subclass
      * of {@link CMSBatchAction}.
      *
@@ -89,16 +109,13 @@ class CMSBatchActionHandler extends RequestHandler
             );
         }
 
-        Config::modify()->merge(
-            CMSBatchActionHandler::class,
-            'batch_actions',
-            array(
-                $urlSegment => array(
-                    'class' => $batchActionClass,
-                    'recordClass' => $recordClass
-                )
-            )
-        );
+        // Merge registered action
+        $actions = static::registeredActions();
+        $actions[$urlSegment] = [
+            'class' => $batchActionClass,
+            'recordClass' => $recordClass
+        ];
+        static::$registered_actions = $actions;
     }
 
     public function Link($action = null)
@@ -278,7 +295,7 @@ class CMSBatchActionHandler extends RequestHandler
      */
     public function batchActions()
     {
-        $actions = $this->config()->batch_actions;
+        $actions = static::registeredActions();
         $recordClass = $this->recordClass;
         $actions = array_filter($actions, function ($action) use ($recordClass) {
             return $action['recordClass'] === $recordClass;

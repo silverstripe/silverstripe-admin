@@ -580,8 +580,8 @@ class LeftAndMain extends Controller implements PermissionProvider
     {
         parent::init();
 
-        SSViewer::config()->update('rewrite_hash_links', false);
-        ContentNegotiator::config()->update('enabled', false);
+        SSViewer::setRewriteHashLinksDefault(false);
+        ContentNegotiator::setEnabled(false);
 
         // set language
         $member = Security::getCurrentUser();
@@ -733,9 +733,9 @@ class LeftAndMain extends Controller implements PermissionProvider
 
         // Load the editor with original user themes before overwriting
         // them with admin themes
-        $themes = HTMLEditorConfig::config()->get('user_themes');
+        $themes = HTMLEditorConfig::getThemes();
         if (empty($themes)) {
-            HTMLEditorConfig::config()->set('user_themes', SSViewer::get_themes());
+            HTMLEditorConfig::setThemes(SSViewer::get_themes());
         }
 
         // Assign default cms theme and replace user-specified themes
