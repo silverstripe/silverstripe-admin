@@ -1,7 +1,7 @@
 {
     "name": "silverstripe/admin",
     "description": "SilverStripe admin interface",
-    "type": "silverstripe-module",
+    "type": "silverstripe-vendormodule",
     "homepage": "http://silverstripe.org",
     "license": "BSD-3-Clause",
     "keywords": [
@@ -20,7 +20,8 @@
     ],
     "require": {
         "silverstripe/framework": "^4@dev",
-        "silverstripe/versioned": "^1@dev"
+        "silverstripe/versioned": "^1@dev",
+        "silverstripe/vendor-plugin": "^1.0"
     },
     "require-dev": {
         "phpunit/PHPUnit": "~4.8"
@@ -30,7 +31,11 @@
             "1.x-dev": "1.0.x-dev",
             "dev-master": "2.x-dev"
         },
-        "installer-name": "silverstripe-admin"
+        "expose": [
+          "client/dist",
+          "client/lang",
+          "thirdparty"
+        ]
     },
     "autoload": {
         "psr-4": {
