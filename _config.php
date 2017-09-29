@@ -6,6 +6,8 @@
 
 use SilverStripe\Admin\CMSMenu;
 use SilverStripe\Admin\CMSProfileController;
+use SilverStripe\Core\Manifest\ModuleLoader;
+use SilverStripe\Core\Manifest\ModuleManifest;
 use SilverStripe\Forms\HTMLEditor\TinyMCEConfig;
 
 // Default CMS HTMLEditorConfig
@@ -49,21 +51,16 @@ TinyMCEConfig::get('cms')->setOptions($tinyMCEOptions);
 
 // Avoid creating global variables
 call_user_func(function () {
-    if (strcasecmp(__DIR__, BASE_PATH) === 0) {
-        // Admin is root
-        $clientPath = 'client';
-    } else {
-        // Asset-admin is subdir
-        $clientPath = basename(__DIR__) . '/client';
-    }
+    $module = ModuleLoader::inst()->getManifest()->getModule('silverstripe/admin');
+
     // Re-enable media dialog
     TinyMCEConfig::get('cms')
         ->enablePlugins(array(
             'contextmenu' => null,
             'image' => null,
-            'sslink' => "{$clientPath}/dist/js/TinyMCE_sslink.js",
-            'sslinkexternal' => "{$clientPath}/dist/js/TinyMCE_sslink-external.js",
-            'sslinkemail' => "{$clientPath}/dist/js/TinyMCE_sslink-email.js",
+            'sslink' => $module->getResource('client/dist/js/TinyMCE_sslink.js')->getURL(),
+            'sslinkexternal' => $module->getResource('client/dist/js/TinyMCE_sslink-external.js')->getURL(),
+            'sslinkemail' => $module->getResource('client/dist/js/TinyMCE_sslink-email.js')->getURL()
         ))
         ->setOption('contextmenu', 'sslink inserttable | cell row column deletetable');
 });
