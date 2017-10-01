@@ -9,7 +9,8 @@
     outline: none;
   }
 
-  &.top, &.bottom {
+  &.top,
+  &.bottom {
     .arrow {
       margin-left: -5px;
     }
@@ -19,7 +20,8 @@
     margin-top: -10px;
   }
 
-  &.left, &.right {
+  &.left,
+  &.right {
     .arrow {
       margin-top: -3px;
     }
