@@ -40,7 +40,7 @@ class PopoverField extends Component {
     const overlay = (
       <Popover
         id={`${this.props.id}_Popover`}
-        className={`fade in popover-${placement} ${this.props.popoverClassName}`}
+        className={`fade in bs-popover-${placement} ${this.props.popoverClassName}`}
         title={this.props.data.popoverTitle}
       >
         {this.props.children}
