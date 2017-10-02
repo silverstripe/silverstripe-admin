@@ -138,7 +138,7 @@ function fieldHolder(Field) {
         ...this.props,
         extraClass: classnames(
           this.props.extraClass,
-          { 'is-valid': hasMessage }
+          { 'is-invalid': hasMessage }
         ),
       };
 
