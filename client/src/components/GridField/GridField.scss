@@ -209,8 +209,16 @@ div.grid-field__sort-field + .form__fieldgroup-item {
   opacity: 0;
 }
 
-.ss-gridfield-item:hover .grid-field__icon-action--hidden-on-hover {
-  opacity: 1;
+.ss-gridfield-item {
+
+  &:hover .grid-field__icon-action--hidden-on-hover {
+    opacity: 1;
+  }
+
+  .ss-gridfield-badge {
+    color: $state-draft;
+    padding: 0;
+  }
 }
 
 // Grid-field body
