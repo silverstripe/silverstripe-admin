@@ -55,13 +55,13 @@ call_user_func(function () {
 
     // Re-enable media dialog
     TinyMCEConfig::get('cms')
-        ->enablePlugins(array(
+        ->enablePlugins([
             'contextmenu' => null,
             'image' => null,
-            'sslink' => $module->getResource('client/dist/js/TinyMCE_sslink.js')->getURL(),
-            'sslinkexternal' => $module->getResource('client/dist/js/TinyMCE_sslink-external.js')->getURL(),
-            'sslinkemail' => $module->getResource('client/dist/js/TinyMCE_sslink-email.js')->getURL()
-        ))
+            'sslink' => $module->getResource('client/dist/js/TinyMCE_sslink.js'),
+            'sslinkexternal' => $module->getResource('client/dist/js/TinyMCE_sslink-external.js'),
+            'sslinkemail' => $module->getResource('client/dist/js/TinyMCE_sslink-email.js'),
+        ])
         ->setOption('contextmenu', 'sslink inserttable | cell row column deletetable');
 });
 
