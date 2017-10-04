@@ -77,7 +77,7 @@
     "validator": "^6.1.0"
   },
   "devDependencies": {
-    "@silverstripe/webpack-config": "^0.3.0",
+    "@silverstripe/webpack-config": "^0.4.0",
     "babel-jest": "^20.0.3",
     "jest-cli": "^19.0.2"
   },
