@@ -90,7 +90,7 @@ jQuery.entwine('ss', ($) => {
         href = `${window.location.protocol}//${href}`;
       }
       // if it's just the hash, then remove the prefix
-      href = href.replace(/:\/\/(#.*)$/, '$2');
+      href = href.replace(/.*:\/\/(#.*)$/, '$1');
 
       // if it is just the prefix, then leave it blank
       if (href.match(/:\/\/$/)) {
