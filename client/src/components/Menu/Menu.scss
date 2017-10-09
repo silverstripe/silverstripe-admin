@@ -92,6 +92,11 @@
 
         .cms-login-status__profile-link {
           width: auto;
+          right: 0;
+
+          > span {
+            opacity: 0;
+          }
 
           i {
             padding-left: 8px;
@@ -224,10 +229,6 @@
 }
 
 .cms-menu__header {
-  position: relative !important; // sass-lint:disable-line no-important
-  top: auto !important; // sass-lint:disable-line no-important
-  // Required for JLayout
-  height: auto !important; // sass-lint:disable-line no-important
   padding: 0;
   line-height: 24px;
   background-color: $color-brand-bg;
@@ -255,6 +256,11 @@
   font-weight: bold;
   line-height: 16px;
   padding: 6px 0;
+
+  &:hover,
+  &:focus {
+    background-color: darken($color-brand-bg, 2);
+  }
 
   @include media-breakpoint-down(sm) {
     text-align: center;
@@ -306,8 +312,8 @@
     position: absolute;
     top: 0;
     right: 0;
-    font-size: $h3-font-size;
-    width: 50px;
+    font-size: $font-size-root + 2px;
+    width: 40px;
     height: 100%;
     color: #fff;
     display: flex;
@@ -318,19 +324,24 @@
     &:focus {
       opacity: .9;
       text-decoration: none;
+      background-color: darken($color-brand-bg, 2);
     }
-
   }
 
   .cms-login-status__profile-link {
     position: absolute;
     left: 0;
-    right: 50px;
+    right: 36px;
     display: flex;
     align-items: center;
     height: 100%;
-    padding: 0 8px;
+    padding: 0 0 0 8px;
     color: $white;
+
+    &:hover,
+    &:focus {
+      background-color: darken($color-brand-bg, 2);
+    }
 
     i {
       position: absolute;
