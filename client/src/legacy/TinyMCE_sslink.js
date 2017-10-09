@@ -54,6 +54,8 @@ jQuery.entwine('ss', ($) => {
 
     Data: {},
 
+    Bookmark: null,
+
     onunmatch() {
       // solves errors given by ReactDOM "no matched root found" error.
       this._clearModal();
@@ -65,6 +67,10 @@ jQuery.entwine('ss', ($) => {
     },
 
     open() {
+      // need to bookmark selection before modal opens, due to an IE11 bug where selection is lost
+      const editor = this.getElement().getEditor().getInstance();
+      this.setBookmark(editor.selection.getBookmark(2, true));
+
       this.renderModal(true);
     },
 
@@ -84,6 +90,10 @@ jQuery.entwine('ss', ($) => {
      * @private
      */
     handleInsert(data) {
+      // need to move to bookmarked selection before modal inserts, due to an IE11 bug
+      const editor = this.getElement().getEditor().getInstance();
+      editor.selection.moveToBookmark(this.getBookmark());
+
       const attributes = this.buildAttributes(data);
 
       this.insertLinkInEditor(attributes, data.Text);
