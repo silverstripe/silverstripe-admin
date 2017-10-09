@@ -16,8 +16,24 @@
   margin-right: $btn-spacing;
   position: relative;
   box-shadow: none;
+  cursor: pointer;
 
   .btn-toolbar & {
+    margin-right: 0;
+  }
+
+  &.disabled,
+  &.readonly,
+  &:disabled,
+  &[readonly] {
+    cursor: not-allowed;
+  }
+
+  .btn__title {
+    vertical-align: middle;
+  }
+
+  &.btn--last {
     margin-right: 0;
   }
 }
@@ -30,9 +46,9 @@
 .btn[class*="font-icon-"]::before {
   position: relative;
   margin-right: $btn-icon-spacing;
-  line-height: 1.3rem;
+  line-height: $line-height-base * $font-size-root;
+  vertical-align: middle;
   font-size: $font-size-lg;
-  top: 3px;
 }
 
 .btn--icon-danger:hover::before {
@@ -42,25 +58,18 @@
 // Gives button a larger icon
 .btn--icon-sm[class*="font-icon-"]::before {
   font-size: 14px;
-  position: relative;
 }
 
 .btn--icon-md[class*="font-icon-"]::before {
   font-size: 17px;
-  position: relative;
 }
 
 .btn--icon-large[class*="font-icon-"]::before {
   font-size: 20px;
-  top: 4px;
-  position: relative;
 }
 
 .btn--icon-xl[class*="font-icon-"]::before {
   font-size: 22px;
-  top: 7px;
-  position: relative;
-  line-height: 0.8rem;
 }
 
 // For buttons with icon and no text, removes space after icon
@@ -163,10 +172,11 @@
   }
 }
 
-
+// Todo: All secondary buttons need to change to use .btn-light
 .btn-secondary {
   border-color: transparent;
   background-color: transparent;
+  color: $body-color-light;
 
   // Disabled styles
   &.disabled,
@@ -181,32 +191,24 @@
     &:hover {
       border-color: transparent;
       background-color: transparent;
+      color: $body-color-light;
     }
   }
 
-  &:hover {
-    background-color: $btn-secondary-bg;
-    border-color: transparent;
-  }
-
+  &:hover,
   &:focus,
+  &.focus,
   &:active,
   &.active {
-    @include box-shadow(inset 0 0 2px rgba(0, 0, 0, .125));
     background-color: $btn-secondary-bg;
-    border-color: $btn-secondary-border;
-
-    &:hover,
-    &:focus,
-    &.focus {
-      background-color: $btn-secondary-bg;
-      border-color: $btn-secondary-border;
-    }
+    border-color: $btn-secondary-bg;
+    color: $body-color-light;
   }
 }
 
 .btn-outline-secondary {
   color: $btn-secondary-color;
+  border-color: $border-color;
 
   &:hover,
   &:focus,
@@ -215,6 +217,7 @@
   &:active:hover {
     background-color: $gray-200;
     color: $btn-secondary-color;
+    border-color: $border-color-dark;
   }
 
   .btn__circle {
