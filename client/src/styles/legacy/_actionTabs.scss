@@ -15,8 +15,9 @@ $border: 1px solid darken(#D9D9D9, 15%);
 
 .cms {
 	.ss-ui-action-tabset{
-		float:left;
 		position:relative;
+		display: inline-block;
+		vertical-align: middle;
 
 		/*
 			Styles for the tab-nav of the site tree implementation
@@ -215,7 +216,6 @@ $border: 1px solid darken(#D9D9D9, 15%);
 			of ss-ui-action-tabset
 		****************************************************************/
 		&.action-menus.ss-tabset {
-			margin-top: 4px;
 
 			//Style the tabs naivgation
 			ul.ui-tabs-nav{
@@ -234,7 +234,6 @@ $border: 1px solid darken(#D9D9D9, 15%);
 						outline:none;
 					}
 					a{
-						text-shadow: #fff 0 1px 1px;
 						color: $color-text-blue-link;
 						font-size: 13px;
 						font-weight: normal;
@@ -248,7 +247,6 @@ $border: 1px solid darken(#D9D9D9, 15%);
 							outline:none;
 						}
 						&:hover{
-							text-shadow: #fff 0 10px 10px;
 							color: darken($color-text-blue-link,8%);
 						}
 						/* Arrow */

@@ -70,7 +70,7 @@ $btn-primary-border: $btn-primary-bg;
 $btn-primary-shadow: darken($btn-primary-bg, 6%);
 
 $btn-secondary-color: $body-color-light;
-$btn-secondary-bg: #dee3e8;
+$btn-secondary-bg: lighten(#dee3e8, 2);
 $btn-secondary-border: $border-color-dark;
 
 // Forms

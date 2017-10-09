@@ -22,34 +22,58 @@
     border-bottom:none;
     position:relative;
     box-shadow: none;
-    margin: 7px 0 0 auto;
+    margin: 0 -10px 0 10px;
     padding: 0;
-    height: 28px;
+
+    &.preview-mode-selector {
+      .chosen-single {
+        padding-right: 10px;
+
+        > span {
+          width: 44px;
+        }
+
+        > div {
+          display: block;
+          width: 20px;
+        }
+      }
+    }
 
     .chosen-container {
       width: auto !important; //over-ride chosen inline styles for preview selector
     }
 
-    a.chosen-single {
-      width: 28px;
-      padding: 6px;
-      height: 28px;
-      margin: -2px 0 0;
+    .chosen-single {
+      padding: 5px 4px 5px 10px;
+      height: 32px;
       filter: none;  /* remove ie background */
       background: none;
-      border: none;
       box-shadow: none;
-      border-radius: 3px;
+      border-color: transparent;
+      border-radius: $btn-border-radius;
+
+      > span {
+        margin-right: 0;
+        font-size: 10px;
+        line-height: 10px;
+        vertical-align: top;
+        color: #717171;
+        white-space: normal;
+        width: 0;
+        display: inline-block;
+      }
 
       &::before {
         font-size: 18px;
-        margin-top: -1px;
-        margin-left: -1px;
+        line-height: 20px;
+        vertical-align: middle;
+        margin-right: 6px;
+        display: inline-block;
       }
 
       &:hover, &.chosen-single-with-drop  {
-        background-color: darken($color-widget-bg,6%);
-        box-shadow: 0 0 3px rgba(0, 0, 0, 0.05) inset, 0 1px 0 $box-shadow-shine;
+        background-color: #e4e8ec;
       }
       &.chosen-single-with-drop {
         border-radius: 0 0 3px 3px;
@@ -57,6 +81,12 @@
       div {
         display: none;
       }
+    }
+
+    .chosen-with-drop .chosen-single div b {
+      -ms-transform: rotate(180deg); /* IE 9 */
+      -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+      transform: rotate(180deg);
     }
 
     // Rise up from bottom instead of down from top
@@ -142,7 +172,7 @@
         }
 
         li.result-selected {
-          background: darken($color-widget-bg, 2%);
+          background: $btn-secondary-bg;
           color: $color-text;
 
           &.highlighted, &:hover, &:focus {
@@ -228,6 +258,10 @@
       }
     }
   }
+}
+
+.toolbar--south > .btn-toolbar > .preview-selector  {
+  margin-left: auto;
 }
 
 /* Styling for the preview screen sizes */

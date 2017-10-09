@@ -1,33 +1,3 @@
-.cms .btn {
-  $btn-line-height: 20px;
-
-  margin-right: 4px;
-  cursor: pointer;
-  line-height: $btn-line-height;
-  vertical-align: middle;
-
-  &[class*=font-icon-]:before {
-    top: 0;
-    line-height: $btn-line-height;
-    vertical-align: middle;
-  }
-
-  &.disabled,
-  &.readonly,
-  &:disabled,
-  &[readonly] {
-    cursor: not-allowed;
-  }
-
-  .btn__title {
-    vertical-align: middle;
-  }
-
-  &.btn--last {
-    margin-right: 0;
-  }
-}
-
 // Override normalize.ss
 html {
   font-size: $font-size-root;
@@ -36,21 +6,6 @@ html {
 button,
 html [type="button"] {
   -webkit-appearance: none;
-}
-
-// Fix for btn-secondary having transparent background
-.btn-secondary {
-  &,
-  &:hover {
-    color: $body-color-light;
-  }
-}
-
-.btn-outline-secondary {
-  &,
-  &:hover {
-    border-color: $border-color-dark;
-  }
 }
 
 // Fix list-group overriding .collapse style
