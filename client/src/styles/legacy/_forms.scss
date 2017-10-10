@@ -611,13 +611,19 @@ button.loading {
 	margin: $grid-y 0;
 
 	.ui-accordion-header {
-		font-weight: bold;
-		font-size: 12px;
+		padding-top: $spacer * .75;
+		padding-bottom: $spacer * .75;
+		border-radius: $border-radius-sm;
 
 		&.ui-state-default {
-			background-image: linear-gradient(lighten($color-shadow-light, 15%), $color-shadow-light);
-			text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+			background: $background-darker;
 		}
+
+		&.ui-state-active {
+			border-bottom-right-radius: 0;
+			border-bottom-left-radius: 0;
+		}
+
 		.ui-accordion-header-icon {
 			margin-top: -9px;
 		}
