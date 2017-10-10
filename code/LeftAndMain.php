@@ -19,6 +19,7 @@ use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Convert;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Core\Manifest\ModuleLoader;
+use SilverStripe\Core\Manifest\ModuleResourceLoader;
 use SilverStripe\Core\Manifest\VersionProvider;
 use SilverStripe\Dev\Deprecation;
 use SilverStripe\Forms\DropdownField;
@@ -675,9 +676,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         Requirements::javascript('silverstripe/admin: thirdparty/bootstrap/js/dist/util.js');
         Requirements::javascript('silverstripe/admin: thirdparty/bootstrap/js/dist/collapse.js');
         Requirements::css('silverstripe/admin: client/dist/styles/bundle.css');
-
-        $module = ModuleLoader::getModule('silverstripe/admin');
-        Requirements::add_i18n_javascript($module->getRelativeResourcePath('client/lang'), false, true);
+        Requirements::add_i18n_javascript('silverstripe/admin:client/lang', false, true);
 
         if (LeftAndMain::config()->uninherited('session_keepalive_ping')) {
             Requirements::javascript('silverstripe/admin: client/dist/js/LeftAndMain.Ping.js');
@@ -917,8 +916,9 @@ class LeftAndMain extends Controller implements PermissionProvider
     {
         $icon = Config::inst()->get($class, 'menu_icon');
         if (!empty($icon)) {
+            $iconURL = ModuleResourceLoader::resourceURL($icon);
             $class = strtolower(Convert::raw2htmlname(str_replace('\\', '-', $class)));
-            return ".icon.icon-16.icon-{$class} { background-image: url('{$icon}'); } ";
+            return ".icon.icon-16.icon-{$class} { background-image: url('{$iconURL}'); } ";
         }
         return '';
     }
