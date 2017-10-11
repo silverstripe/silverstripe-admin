@@ -1,4 +1,4 @@
-<div id="$HolderID" class="form-group field<% if $extraClass %> $extraClass<% end_if %>">
+<div id="$HolderID" class="form-group<% if $extraClass %> $extraClass<% end_if %>">
     <% if $Title %>
     	<label for="$ID" id="title-$ID" class="form__field-label">$Title</label>
     <% end_if %>
