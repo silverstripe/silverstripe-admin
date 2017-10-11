@@ -19,8 +19,8 @@
         }
     ],
     "require": {
-        "silverstripe/framework": "^4@dev",
-        "silverstripe/versioned": "^1@dev",
+        "silverstripe/framework": "^5@dev",
+        "silverstripe/versioned": "^2@dev",
         "silverstripe/vendor-plugin": "^1.0"
     },
     "require-dev": {
