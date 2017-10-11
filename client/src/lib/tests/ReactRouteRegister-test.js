@@ -3,7 +3,7 @@
 jest.unmock('deep-freeze-strict');
 jest.unmock('../ReactRouteRegister.js');
 
-import reactRouteRegister from '../ReactRouteRegister.js';
+import reactRouteRegister from '../ReactRouteRegister';
 
 const DummyComponent = () => {};
 

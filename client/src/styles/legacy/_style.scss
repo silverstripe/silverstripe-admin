@@ -10,7 +10,6 @@
 // create new SCSS files for larger components like the CMS menu or tree
 // (see _tree.scss and _menu.scss).
 
-
 // ----------------------------------------------------
 // Core Styles.
 // ---------------------------------------------------- */
@@ -26,7 +25,6 @@ body.cms {
   overflow: hidden;
 }
 
-
 // --------------------------------------------
 // Helpers
 // --------------------------------------------
@@ -38,7 +36,6 @@ body.cms {
 .cms-helper-hide-actions .btn-toolbar {
   @extend .hide;
 }
-
 
 // --------------------------------------------
 // Panels Styles
@@ -107,7 +104,7 @@ body.cms {
   }
 
   h2 {
-    font-size: $font-size-h4;
+    font-size: $h4-font-size;
     font-weight: bold;
     margin: 0;
     margin-bottom: $grid-x;
@@ -118,8 +115,7 @@ body.cms {
   }
 
   .cms-content-header-info {
-    float: left;
-    padding-top: 5px;
+    height: 100%;
 
     & * {
       display: inline-block; // align back button and breadcrumbs
@@ -128,12 +124,6 @@ body.cms {
     .section-icon {
       opacity: 0.2;
       background-repeat: no-repeat;
-    }
-
-    .cms-backlink {
-      margin-top: -7px;
-      float: left;
-      min-width: 24px; // Safari fix
     }
 
     .view-controls .btn {
@@ -153,21 +143,25 @@ body.cms {
 
 .cms-content-header {
 
-	@include media-breakpoint-down(sm) {
-		.cms-content-header-nav {
-			display: block;
-		}
+  @include media-breakpoint-down(sm) {
+    .cms-content-header-nav {
+      display: block;
 
-		// CMS admin
-		.cms-content-header-nav .breadcrumbs-wrapper,
-		.cms-content-header-nav .cms-content-header-tabs,
-		// Model admin
-		.breadcrumbs-wrapper,
-		.cms-content-header-tabs,
-		.cms-content-header-info {
-			float: none;
-		}
-	}
+      > .cms-content-header-nav__left {
+        height: 52px;
+      }
+    }
+
+    // CMS admin
+    .cms-content-header-nav .breadcrumbs-wrapper,
+    .cms-content-header-nav .cms-content-header-tabs,
+      // Model admin
+    .breadcrumbs-wrapper,
+    .cms-content-header-tabs,
+    .cms-content-header-info {
+      float: none;
+    }
+  }
 }
 
 .cms-edit-form.CMSMain {
@@ -179,7 +173,7 @@ body.cms {
   .column-hidden {
     display: none;
 
-    &+ .cms-preview {
+    & + .cms-preview {
       border-left: 0;
     }
   }
@@ -190,20 +184,19 @@ body.cms {
   width: 100%;
 }
 
-
 // We have a faux three column layout when displaying Page content in the CMS.
 .has-panel {
 
-	.cms-versions-form {
-		padding: $grid-gutter-width-half $grid-gutter-width-half $grid-gutter-width-half $grid-gutter-width-half;
-	}
+  .cms-versions-form {
+    padding: $grid-gutter-width-half $grid-gutter-width-half $grid-gutter-width-half $grid-gutter-width-half;
+  }
 
-	.cms-content-header.north {
-		&.collapsed {
-			.cms-content-header-info {
-				width: 60px;
-				text-align: center;
-			}
+  .cms-content-header.north {
+    &.collapsed {
+      .cms-content-header-info {
+        width: 60px;
+        text-align: center;
+      }
 
       .view-controls,
       .section-label {
@@ -216,12 +209,7 @@ body.cms {
     }
   }
 
-  .cms-content-header-info {
-    padding-bottom: $grid-y;
-  }
-
   .section-heading {
-    margin-top: 8px;
     padding-left: 4px;
   }
 
@@ -238,13 +226,11 @@ body.cms {
 
   .breadcrumbs-wrapper {
     float: left;
-    padding-top: $spacer-xs / 2;
   }
 }
 
 .view-controls {
-  float: right;
-  margin-top: 5px;
+  margin-left: auto;
 
   .icon-button-group {
     .icon-button {
@@ -271,6 +257,7 @@ body.cms {
 }
 
 #page-title-heading {
+  margin: 0;
   line-height: 1.2em;
 }
 
@@ -281,26 +268,31 @@ body.cms {
 
   @include media-breakpoint-down(sm) {
     margin-left: $toolbar-total-height;
+
+    .toolbar__back-button + & {
+      margin-left: 0;
+    }
   }
 
-	.crumb,
-	.sep {
-		font-size: $font-size-xs;
-		line-height: 18px;
-		font-weight: normal;
-	}
+  .crumb,
+  .sep {
+    font-size: $font-size-xs;
+    line-height: 18px;
+    font-weight: normal;
+    white-space: nowrap;
+  }
 
-	.crumb {
-		&.last {
-			display: block;
-			padding: 10px 0;
-			font-size: 1.2em;
-		}
-		.sep + {
-			padding-top: 8px;
-			padding-bottom: 8px;
-		}
-	}
+  .crumb {
+    &.last {
+      display: block;
+      padding: 10px 0;
+      font-size: 1.2em;
+    }
+    .sep + {
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+  }
 
   .sep {
     + .crumb.last {
@@ -309,7 +301,6 @@ body.cms {
     }
   }
 }
-
 
 .cms-tabset-nav-primary {
   display: inline-block;
@@ -326,7 +317,7 @@ body.cms {
  * ----------------------------------------------------------------- */
 
 .ui-button .ui-button-text {
-	line-height: $line-height;
+  line-height: $line-height-base;
 }
 
 .ui-button-text-only .ui-button-text {
@@ -334,19 +325,19 @@ body.cms {
 }
 
 .cms {
-	a.icon-button,
-	button.ss-ui-button.icon-button {
-		vertical-align: middle;
-		margin: 0 2px 0 0;
-		padding: 6px 8px;
-		font-size: 14px;
-		text-indent: 0;
-		text-shadow: none;
-		line-height: 1em;
-		color: $color-text;
-		background-color: transparent;
-		background-image: none;
-		border: 0;
+  a.icon-button,
+  button.ss-ui-button.icon-button {
+    vertical-align: middle;
+    margin: 0 2px 0 0;
+    padding: 6px 8px;
+    font-size: 14px;
+    text-indent: 0;
+    text-shadow: none;
+    line-height: 1em;
+    color: $color-text;
+    background-color: transparent;
+    background-image: none;
+    border: 0;
 
     &:hover,
     &:active,
@@ -368,7 +359,7 @@ body.cms {
 
     &.font-icon-search {
       padding: 5px 6px;
-      color:lighten($color-text, 10%);
+      color: lighten($color-text, 10%);
 
       &.active,
       &:active,
@@ -376,7 +367,6 @@ body.cms {
       &:hover {
         color: darken($color-text, 10%);
       }
-
 
       &:before {
         font-size: 18px;
@@ -408,7 +398,6 @@ body.cms {
     vertical-align: middle;
   }
 }
-
 
 .cms-content-header-tabs .icon-button-group > .ui-tabs-nav.cms-tabset-nav-primary {
   margin-top: 0;
@@ -495,44 +484,44 @@ body.cms {
   padding: 0;
   background: none;
 
-	.ui-tabs-panel {
-		padding: 0;
-		background: transparent; // default it's white
-		border: 0; // suppress default borders
+  .ui-tabs-panel {
+    padding: 0;
+    background: transparent; // default it's white
+    border: 0; // suppress default borders
 
     &.cms-edit-form {
       padding: 0;
       display: flex; // TODO remove once JQueryUI is removed
     }
 
-		.ui-tabs .ui-tabs-nav {
-			float: none;
-			border-bottom: 1px solid $nav-tabs-link-hover-border-color;
-			margin-bottom: $panel-padding-y;
-		}
-	}
+    .ui-tabs .ui-tabs-nav {
+      float: none;
+      border-bottom: 1px solid $nav-tabs-link-hover-border-color;
+      margin-bottom: $panel-padding-y;
+    }
+  }
 
-	.ui-tabs {
-		position: static;
-	}
+  .ui-tabs {
+    position: static;
+  }
 
   .ui-tabs-panel {
-		.toolbar--content {
-			margin-left: -20px;
-			margin-right: -20px;
+    .toolbar--content {
+      margin-left: -20px;
+      margin-right: -20px;
       padding-left: 20px;
       padding-right: 20px;
-		}
+    }
 
-		.alert + .grid-field {
-			margin-top: $panel-padding-y;
-		}
-	}
+    .alert + .grid-field {
+      margin-top: $panel-padding-y;
+    }
+  }
 
-	.ui-widget-header {
-		border: 0;
-		background: none;
-	}
+  .ui-widget-header {
+    border: 0;
+    background: none;
+  }
 
   .ui-tabs-nav {
     float: right;
@@ -564,7 +553,7 @@ body.cms {
         font-weight: normal;
         color: $color-text;
         padding: $nav-link-padding;
-        line-height: $line-height-base;
+        line-height: 20px; // Fix to ensure header extends to predictable size
 
         &.icon-button {
           @extend a.icon-button;
@@ -576,8 +565,8 @@ body.cms {
         margin-right: 0;
       }
 
-      &+li {
-        margin-left: $spacer-x / 2;
+      & + li {
+        margin-left: $spacer / 2;
       }
     }
 
@@ -609,8 +598,8 @@ body.cms {
 
       a {
         border-color: #66727d;
-        padding-left: $spacer-x / 4;
-        padding-right: $spacer-x / 4;
+        padding-left: $spacer / 4;
+        padding-right: $spacer / 4;
         color: $color-text;
       }
     }
@@ -650,7 +639,6 @@ body.cms {
   }
 }
 
-
 /**
  * Primary styles which sit on top right of screen.
  * TODO Only use one "primary" selector and fix HTMLEditorField TabSet addExtraClass()
@@ -658,9 +646,9 @@ body.cms {
 .ui-tabs.cms-tabset-primary .ui-tabs-nav,
 .ui-tabs .ui-tabs-nav.cms-tabset-nav-primary,
 .ui-tabs .cms-content-header-tabs .ui-tabs-nav {
-	margin-top: -$spacer-xs; // Same as toolbar padding
-	float: none; // parent container is already right floated
-	margin-bottom: 0;
+  margin-top: #{0 - map_get($spacers, xs)}; // Same as toolbar padding
+  float: none; // parent container is already right floated
+  margin-bottom: 0;
 
   li {
     margin-right: 0; // tabs are directly adjacent
@@ -689,7 +677,7 @@ body.cms {
 
     a,
     .nav-link {
-      border-bottom: $nav-tabs-link-border-width solid $nav-tabs-active-link-hover-color;
+      border-bottom: $nav-tabs-link-border-width solid $nav-tabs-link-active-color;
       padding: $nav-link-padding;
     }
   }
@@ -697,7 +685,7 @@ body.cms {
 
 .cms-content-header-tabs {
   float: right;
-  margin-top: $spacer-xs; // Same as toolbar padding
+  margin-top: map_get($spacers, xs); // Same as toolbar padding
 
   &.icon-button-group-tabs {
     margin-top: 12px;
@@ -723,8 +711,8 @@ body.cms {
     // Align tab content with gutter (supports multiple rows of tabs)
     margin: 0 0 -1px;
 
-    &+li {
-      margin-left: $spacer-x / 2;
+    & + li {
+      margin-left: $spacer / 2;
     }
   }
 
@@ -754,7 +742,7 @@ body.cms {
   width: 100%;
   height: 100%;
   z-index: 9999;
-  background: url("../../images/spinner.gif") no-repeat 50% 50%;
+  background: url("../images/spinner.gif") no-repeat 50% 50%;
 }
 
 // -----------------------------------------------
@@ -796,7 +784,7 @@ body.cms {
       border-radius: 5px;
       display: inline-block;
       zoom: 1;
-          *display: inline;
+      *display: inline;
     }
   }
 
@@ -814,21 +802,20 @@ body.cms {
  * -------------------------------------------- */
 
 .cms-content-actions {
-	margin: 0;
-	z-index: $zindex-cms-content-actions;
-	border-top: 1px solid $border-color;
-	height: $toolbar-total-height;
-	min-height: $toolbar-total-height;
-	max-height: $toolbar-total-height;
-	background-color: $tab-panel-texture-color;
-  padding: $spacer-xs 0;
+  margin: 0;
+  z-index: $zindex-cms-content-actions;
+  border-top: 1px solid $border-color;
+  height: $toolbar-total-height;
+  min-height: $toolbar-total-height;
+  max-height: $toolbar-total-height;
+  background-color: $tab-panel-texture-color;
+  padding: map_get($spacers, xs) 0;
 
   &.south .btn-toolbar {
     margin-top: 0;
     margin-bottom: 0;
   }
 }
-
 
 /** --------------------------------------------
  * Messages
@@ -843,47 +830,47 @@ body.cms {
   }
 
   &.warning {
-   @extend .alert-warning;
+    @extend .alert-warning;
   }
 
   &.error,
   &.bad,
   &.required,
   &.validation {
-  @extend .alert-danger;
+    @extend .alert-danger;
   }
 }
 
-.message {                        // White
+.message { // White
   display: block;
   clear: both;
-  margin-bottom: $spacer-y;
-  padding: $alert-padding;
+  margin-bottom: $spacer;
+  padding: $alert-padding-y $alert-padding-x;
   border: $alert-border-width solid #ccc;
-  background: #fff;                 // for browsers that don't understand rgba
-  background: rgba(#fff,0.5);
+  background: #fff; // for browsers that don't understand rgba
+  background: rgba(#fff, 0.5);
   @include border-radius($alert-border-radius);
 
-	.panel--padded > & {
-		margin-bottom: $grid-gutter-width-half;
-	}
+  .panel--padded > & {
+    margin-bottom: $grid-gutter-width-half;
+  }
 
-	&.notice {
-		background-color: lighten($color-notice,22%);	// Blue
-		border-color: $color-notice;
-	}
-	&.warning {											// Yellow
-		background-color: lighten($color-warning,47%);
-		border-color: $color-warning;
-	}
-	&.error, &.bad, &.required, &.validation {			// Red
-		background-color: lighten($color-error,24%);
-		border-color: $color-error;
-	}
-	&.good {											// Green
-		background-color: lighten($color-good,40%);
-		border-color: $color-good;
-	}
+  &.notice {
+    background-color: lighten($color-notice, 22%); // Blue
+    border-color: $color-notice;
+  }
+  &.warning { // Yellow
+    background-color: lighten($color-warning, 47%);
+    border-color: $color-warning;
+  }
+  &.error, &.bad, &.required, &.validation { // Red
+    background-color: lighten($color-error, 24%);
+    border-color: $color-error;
+  }
+  &.good { // Green
+    background-color: lighten($color-good, 40%);
+    border-color: $color-good;
+  }
 
   // Improve alignment and spacing of inner content
   > p,
@@ -896,7 +883,7 @@ body.cms {
 }
 
 .cms-edit-form .ui-tabs-panel .message {
-	margin: 0 0 $grid-x*2; // gets padding from tab panel
+  margin: 0 0 $grid-x*2; // gets padding from tab panel
 }
 
 .notice-item {
@@ -960,8 +947,6 @@ body.cms {
   }
 }
 
-
-
 /** --------------------------------------------
  * Page icons
  * -------------------------------------------- */
@@ -1005,7 +990,7 @@ body.cms {
     margin-left: -$panel-padding-x;
     margin-right: -$panel-padding-x;
     margin-bottom: 0;
-    padding: $spacer-xs $panel-padding-x #{$spacer-y * .75};
+    padding: map_get($spacers, xs) $panel-padding-x #{$spacer * .75};
     border-radius: $border-radius;
 
     &:hover,
@@ -1020,9 +1005,9 @@ body.cms {
     }
 
     &.disabled:hover {
-        background: none;
-      }
+      background: none;
     }
+  }
 
   input[type="radio"] {
     position: static;
@@ -1041,7 +1026,7 @@ body.cms {
   }
 
   .form__field-description {
-        font-style: italic;
+    font-style: italic;
   }
 }
 
@@ -1050,24 +1035,28 @@ body.cms {
  * -------------------------------------------- */
 
 .cms-content-toolbar {
+  &.toolbar {
+    // Override bootstrap .toolbar width: 100%
+    width: auto;
+  }
 
-	.cms-tree-view-modes {
-		float: right;
-		padding-top: $grid-y - 3;
+  .cms-tree-view-modes {
+    float: right;
+    padding-top: $grid-y - 3;
 
-		* {
-			display: inline-block;
+    * {
+      display: inline-block;
 
-			label {
-				color: $color-text-blue-link;
-			}
-		}
-	}
+      label {
+        color: $color-text-blue-link;
+      }
+    }
+  }
 
-	.cms-actions-tools-row {
-		clear: both;
-		margin-top: $spacer-xs;
-	}
+  .cms-actions-tools-row {
+    clear: both;
+    margin-top: map_get($spacers, xs);
+  }
 
   .tool-action {
     display: none;
@@ -1087,11 +1076,11 @@ body.cms {
  * panel
  */
 .cms-content-tools {
-	background: $tab-panel-texture-color;
-	width: $cms-panel-sm;
-	box-shadow: 1px 0 0 0 $border-color-dark;
-	z-index: 1000;
-	position: relative;
+  background: $tab-panel-texture-color;
+  width: $cms-panel-sm;
+  box-shadow: 1px 0 0 0 $border-color-dark;
+  z-index: 1000;
+  position: relative;
 
   &.collapsed .cms-content-header {
     padding-left: 0;
@@ -1099,6 +1088,7 @@ body.cms {
   }
 
   .cms-content-header-info {
+    height: 100%;
     float: none;
   }
 
@@ -1114,28 +1104,29 @@ body.cms {
     width: 300px;
 
     .btn-toolbar .ss-ui-action-constructive {
-      margin-right:5px; //accounts for the scrollbar in the filter - keeps the actions on one line instead of wrapping onto two.
+      margin-right: 5px; //accounts for the scrollbar in the filter - keeps the actions on one line instead of wrapping onto two.
     }
   }
 
   .cms-content-header h2 {
-      text-shadow: darken($color-widget-bg, 50%) -1px -1px 0;
-      width: $grid-x * 22 /* 24 - (padding on each side + margin) */;
-      color: lighten($color-widget-bg, 60%);
-      @include hide-text-overflow();
+    text-shadow: darken($color-widget-bg, 50%) -1px -1px 0;
+    width: $grid-x * 22 /* 24 - (padding on each side + margin) */
+  ;
+    color: lighten($color-widget-bg, 60%);
+    @include hide-text-overflow();
   }
 
-  h3,h4,h5 {
+  h3, h4, h5 {
     font-weight: bold;
     line-height: $grid-y * 2;
   }
   h3 {
-    font-size: $font-size-h5;
+    font-size: $h5-font-size;
   }
 
   h4 {
-    font-size: $font-size-h5;
-    margin:5px 0;
+    font-size: $h5-font-size;
+    margin: 5px 0;
   }
 
   .ui-widget-content {
@@ -1161,7 +1152,7 @@ body.cms {
         background-color: $component-active-bg;
         color: $color-text-light;
         border-top: 2px solid $component-active-bg;
-        }
+      }
       + .active td {
         border-color: $component-active-bg;
       }
@@ -1199,7 +1190,7 @@ body.cms {
   font-weight: normal;
   border: 1px $color-light-separator solid;
   background: #fff; //for browsers that don't understand rgba
-  background: rgba(#fff,0.5);
+  background: rgba(#fff, 0.5);
   text-shadow: none;
 }
 
@@ -1226,7 +1217,7 @@ body.cms {
 
 .cms-content-batchactions {
   float: left;
-  position:  relative;
+  position: relative;
   display: block;
 
   .view-mode-batchactions-wrapper {
@@ -1235,7 +1226,7 @@ body.cms {
     padding: 4px 6px;
     border: 1px solid #aaa;
     margin-bottom: 8px;
-    margin-right:-1px;
+    margin-right: -1px;
     background-color: #D9D9D9;
     background-image: linear-gradient(to bottom, #fff, #D9D9D9);
     border-top-left-radius: 4px;
@@ -1326,29 +1317,28 @@ body.cms {
 form.member-profile-form {
 
   #Root_Permissions {
-    clear:both;
+    clear: both;
     border-top: 1px solid darken($color-tab, 20%);
   }
 
   #Root_Main {
-    clear:both;
+    clear: both;
     border-top: 1px solid darken($color-tab, 20%);
     .cms-help-toggle {
       text-indent: -9999em;
       display: inline-block;
       width: 20px;
-      background:url(../images/question.png) no-repeat 0px 0px;
+      background: url(../images/question.png) no-repeat 0px 0px;
     }
   }
 
   #FavouritePageID {
-    margin-top:$grid-y;
+    margin-top: $grid-y;
   }
 
   #CsvFile .middleColumn {
     background: none !important;
   }
-
 
   .advanced h4 {
     margin-bottom: .5em;
@@ -1396,11 +1386,6 @@ form.member-profile-form {
   #Groups .middleColumn {
     margin-left: 0;
     width: 100%;
-
-    .TreeDropdownField {
-      width: 90%;
-      max-width: 90%;
-    }
   }
 
   // Same rules in .SecurityAdmin
@@ -1447,7 +1432,6 @@ form.member-profile-form {
   }
 }
 
-
 .cms {
   .cms-content {
     background: $tab-panel-texture-color;
@@ -1462,8 +1446,8 @@ form.member-profile-form {
 
     #Root_Main {
       .confirmedpassword {
-        border-bottom:none;
-        box-shadow:none;
+        border-bottom: none;
+        box-shadow: none;
       }
 
       .customFormat {
@@ -1476,27 +1460,25 @@ form.member-profile-form {
         text-indent: -9999em;
         display: inline-block;
         width: 20px;
-        background:url(../images/question.png) no-repeat 0px 0px;
+        background: url(../images/question.png) no-repeat 0px 0px;
       }
     }
 
     #Root_Permissions ul.optionset li {
-        float:none;
-      }
+      float: none;
     }
+  }
 
   form.member-profile-form {
     #Root .ui-tabs-nav {
       display: none;
     }
 
-  #Root_Main, #Root_Permissions {
-    border: none;
+    #Root_Main, #Root_Permissions {
+      border: none;
     }
   }
 }
-
-
 
 /** --------------------------------------------
  * "Settings" Form
@@ -1533,7 +1515,7 @@ form.member-profile-form {
       padding: 14px 0;
       text-decoration: none;
       line-height: 20px;
-      margin: -#{$spacer-xs} #{0 - $panel-padding-x};
+      margin: -#{map_get($spacers, xs)} #{0 - $panel-padding-x};
 
       span {
         display: inline-block;
@@ -1657,18 +1639,18 @@ form.member-profile-form {
   border-radius: $grid-y;
   overflow: visible;
   padding: 0;
-  box-shadow: 0px 0px 30px 10px rgba(0,0,0,.3);
+  box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, .3);
 
-    // Titlebar for pop-up dialog.
+  // Titlebar for pop-up dialog.
   .ui-dialog-titlebar.ui-widget-header {
-      font-size: $font-size-root +1;
+    font-size: $font-size-root +1;
     padding: 0;
     border: 0;
     background: transparent url(../images/textures/cms_content_header.png) repeat;
     box-shadow: $color-shadow-dark 0 0 ($grid-x / 2) inset;
 
     .ui-dialog-title {
-      position:absolute;
+      position: absolute;
     }
   }
 
@@ -1677,7 +1659,7 @@ form.member-profile-form {
     overflow: auto; // TODO Replace with proper $.layout grid
 
     &.loading {
-      background-image: url("../../images/spinner.gif");
+      background-image: url("../images/spinner.gif");
       background-position: 50% 50%;
       background-repeat: no-repeat;
     }
@@ -1694,13 +1676,13 @@ form.member-profile-form {
       float: right;
     }
 
-    .ui-tabs{
-      position:static;
+    .ui-tabs {
+      position: static;
       // Shift navigation upwards to be horizontally centered with dialog title.
       // Can't use floats since this title is in a different DOM parent sibling
       // Note: Does NOT apply to member profile form (unnecessary, since it doesn't have a dialog title)
       .ui-tabs-nav {
-        position:absolute;
+        position: absolute;
         top: 9px;
         // Tabs nav is included in scollbar. By absolutely positioning it off the edge,
         // we avoid tabs shifting position when scrollbar toggles
@@ -1719,7 +1701,7 @@ form.member-profile-form {
   }
 
   &.loading {
-    background-image: url("../../images/spinner.gif");
+    background-image: url("../images/spinner.gif");
     background-position: 50% 50%;
     background-repeat: no-repeat;
   }
@@ -1736,16 +1718,16 @@ form.member-profile-form {
 body.cms-dialog {
   overflow: auto;
   background: $tab-panel-texture-color;
-  position:relative;
+  position: relative;
 }
 
 /** --------------------------------------------
  * "Insert X" forms
  * -------------------------------------------- */
-.htmleditorfield-dialog{
-  &.ui-dialog-content{
-    padding:0;
-    position:relative;
+.htmleditorfield-dialog {
+  &.ui-dialog-content {
+    padding: 0;
+    position: relative;
     border-radius: 8px 8px 0 0;
   }
 
@@ -1753,7 +1735,7 @@ body.cms-dialog {
     text-align: left;
     margin-bottom: $grid-y;
 
-    &.CompositeField{
+    &.CompositeField {
       @include clearfix;
     }
 
@@ -1762,7 +1744,7 @@ body.cms-dialog {
       margin-bottom: $grid-y*1.5;
     }
 
-    div.remoteurl{
+    div.remoteurl {
       width: calc(100% - 100px);
       position: relative;
       display: inline-block;
@@ -1772,7 +1754,7 @@ body.cms-dialog {
         left: 0;
         top: 0;
         margin-bottom: 0;
-        line-height: $line-height;
+        line-height: $line-height-base;
         @extend .input-group-addon;
       }
 
@@ -1790,7 +1772,7 @@ body.cms-dialog {
 
       &:hover,
       &:active {
-        opacity:1;
+        opacity: 1;
       }
 
       &.ui-state-disabled {
@@ -1869,22 +1851,22 @@ body.cms-dialog {
   }
 
   .btn-toolbar {
-    padding:$grid-y $grid-x*2 ;
+    padding: $grid-y $grid-x*2;
 
     .ui-tabs-panel {
       padding: 0;
     }
   }
 
-  .details{
-    .file-url{
-      display:block;
-      width:300px;
+  .details {
+    .file-url {
+      display: block;
+      width: 300px;
       @include hide-text-overflow;
     }
 
     .cms-file-info {
-      .field{
+      .field {
         border: none;
         box-shadow: 0 0 0 rgba(0, 0, 0, 0);
       }
@@ -1952,18 +1934,12 @@ body.cms-dialog {
           opacity: .8;
         }
       }
-
-      .TreeDropdownField:not(.treedropdownfield-open-tree) {
-        background: 0;
-        box-shadow: none;
-        border-color: transparent;
-      }
     }
   }
 
   .ss-assetuploadfield .ss-uploadfield-editandorganize .ss-uploadfield-files .ss-uploadfield-item-info {
     background-color: grayscale(#5db4df);
-    background-image: linear-gradient(to bottom,  grayscale(#5db4df) 0%, grayscale(#5db1dd) 8%, grayscale(#439bcb) 50%, grayscale(#3f99cd) 54%, grayscale(#207db6) 96%, grayscale(#1e7cba) 100%);
+    background-image: linear-gradient(to bottom, grayscale(#5db4df) 0%, grayscale(#5db1dd) 8%, grayscale(#439bcb) 50%, grayscale(#3f99cd) 54%, grayscale(#207db6) 96%, grayscale(#1e7cba) 100%);
   }
 }
 
@@ -1981,8 +1957,6 @@ body.cms-dialog {
     top: 0;
   }
 }
-
-
 
 /** --------------------------------------------
  * Search forms (used in AssetAdmin, ModelAdmin, etc)
@@ -2004,10 +1978,9 @@ body.cms-dialog {
 
 .step-label .flyout {
   color: $brand-secondary;
-    font-weight: bold;
+  font-weight: bold;
   text-transform: uppercase;
 }
-
 
 /** --------------------------------------------
  * Item Edit Form
@@ -2017,9 +1990,9 @@ body.cms-dialog {
 
   // Preview might not always be available
   .cms-file-info-preview img {
-      max-width: $grid-x * 22; // Same as ".field label"
-      max-height: $grid-x * 16; // Fitting typical info displayed (~5 rows)
-      margin-bottom: $spacer-y;
+    max-width: $grid-x * 22; // Same as ".field label"
+    max-height: $grid-x * 16; // Fitting typical info displayed (~5 rows)
+    margin-bottom: $spacer;
   }
 }
 
@@ -2055,13 +2028,13 @@ form.small {
  * Users Members Admin
  * -------------------------------------------- */
 
- .members_grid {
+.members_grid {
   span button#action_gridfield_relationfind {
-    display:none; //hides find button - redundant functionality
+    display: none; //hides find button - redundant functionality
   }
   p button#action_export {
     span.btn-icon-download-csv {
-      height:17px; //exact height of icon
+      height: 17px; //exact height of icon
     }
   }
 }
@@ -2099,8 +2072,8 @@ form.small {
 /** --------------------------------------------
  * Buttons for FileUpload
  * -------------------------------------------- */
-.ss-uploadfield-item-edit-all .ui-button-text{
-  padding-right:0;
+.ss-uploadfield-item-edit-all .ui-button-text {
+  padding-right: 0;
 }
 
 .toggle-details-icon {
@@ -2111,21 +2084,21 @@ form.small {
     @extend .icon-sprites-32x32;
     @include sprite($sprites-32x32-menu-arrow-deselected-down);
 
-    display:inline-block;
-    width:8px;
-    height:8px;
-    padding-left:5px;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    padding-left: 5px;
   }
 
   &.opened {
     @extend .icon-sprites-32x32;
     @include sprite($sprites-32x32-menu-arrow-up);
 
-    .ss-uploadfield-item-edit-all &{
+    .ss-uploadfield-item-edit-all & {
       @extend .icon-sprites-32x32;
       @include sprite($sprites-32x32-menu-arrow-deselected-up);
 
-      display:inline-block;
+      display: inline-block;
     }
   }
 }
@@ -2135,6 +2108,6 @@ form.small {
  * May be shown js if needed.
  * -------------------------------------------- */
 .cms .btn-toolbar > .cms-preview-toggle-link,
-.cms .cms-navigator > .cms-preview-toggle-link{
-  display:none;
+.cms .cms-navigator > .cms-preview-toggle-link {
+  display: none;
 }

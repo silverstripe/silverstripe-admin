@@ -30,7 +30,7 @@ else {
 
 // Handle incoming request if it's a script call
 if (TinyMCE_Compressor::getParam("js")) {
-	$tempFolder = TEMP_FOLDER . '/tinymce-cache';
+	$tempFolder = TEMP_PATH . DIRECTORY_SEPARATOR . 'tinymce-cache';
 	if (!file_exists($tempFolder)) {
 		mkdir($tempFolder);
 	}

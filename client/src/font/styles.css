@@ -170,9 +170,6 @@
 .font-icon-upload:before {
   content: "\62";
 }
-.font-icon-folder-add:before {
-  content: "\53";
-}
 .font-icon-thumbnails:before {
   content: "\57";
 }
@@ -323,9 +320,24 @@
 .font-icon-menu-settings:before {
   content: "\e001";
 }
-.font-icon-sort:before {
-  content: "\e002";
-}
 .font-icon-silverstripe:before {
   content: "\4d";
+}
+.font-icon-sort:before {
+  content: "\e003";
+}
+.font-icon-lock:before {
+  content: "\e004";
+}
+.font-icon-cross-mark:before {
+  content: "\e005";
+}
+.font-icon-folder-add:before {
+  content: "\e006";
+}
+.font-icon-folder-move:before {
+  content: "\e007";
+}
+.font-icon-drag-handle:before {
+  content: "\53";
 }

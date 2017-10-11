@@ -1,6 +1,6 @@
 <% if $UseButtonTag %>
 	<button $getAttributesHTML('class') class="btn<% if $extraClass %> $extraClass<% end_if %>">
-		<% if $ButtonContent %>$ButtonContent<% else %><span>$Title.XML</span><% end_if %>
+		<% if $ButtonContent %>$ButtonContent<% else %><span class="btn__title">$Title.XML</span><% end_if %>
 	</button>
 <% else %>
 	<input $getAttributesHTML('class') class="btn<% if $extraClass %> $extraClass<% end_if %>"/>

@@ -68,7 +68,7 @@ class GroupImportForm extends Form
 
         if (!$actions) {
             $action = new FormAction('doImport', _t('SilverStripe\\Admin\\MemberImportForm.BtnImport', 'Import from CSV'));
-            $action->addExtraClass('btn btn-secondary-outline font-icon-upload');
+            $action->addExtraClass('btn btn-outline-secondary font-icon-upload');
             $actions = new FieldList($action);
         }
 

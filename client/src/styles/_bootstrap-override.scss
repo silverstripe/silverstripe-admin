@@ -1,9 +1,32 @@
-.cms .btn {
-  margin-right: 4px;
-
-  &.btn--last {
-    margin-right: 0;
-  }
+// Override normalize.ss
+html {
+  font-size: $font-size-root;
 }
 
+button,
+html [type="button"] {
+  -webkit-appearance: none;
+}
 
+// Fix list-group overriding .collapse style
+* .collapse {
+  display: none;
+}
+
+// Fix margin for btn in btn-toolbar without btn-group
+.btn-toolbar > .btn:not(:first-child) {
+  margin-left: 5px;
+}
+
+.btn-toolbar > .btn-group + .btn {
+  margin-left: 0;
+}
+
+.btn-toolbar > .btn-group .btn-group {
+  margin-right: 0;
+}
+
+// Don't tie input padding to btn padding
+.form-control {
+  padding: $input-padding-y $input-padding-x;
+}

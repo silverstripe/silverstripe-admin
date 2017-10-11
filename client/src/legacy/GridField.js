@@ -1,4 +1,4 @@
-import $ from 'jQuery';
+import $ from 'jquery';
 import i18n from 'i18n';
 
 require('../../../thirdparty/jquery-ui/jquery-ui.js');
@@ -48,14 +48,14 @@ $.entwine('ss', function($) {
           if(focusedElName) self.find(':input[name="' + focusedElName + '"]').focus();
 
           // Update filter
-          if(self.find('.filter-header').length) {
+          if(self.find('.grid-field__filter-header').length) {
             var content;
             if(ajaxOpts.data[0].filter=="show") {
               content = '<span class="non-sortable"></span>';
-              self.addClass('show-filter').find('.filter-header').show();
+              self.addClass('show-filter').find('.grid-field__filter-header').show();
             } else {
               content = '<button type="button" title="Open search and filter" name="showFilter" class="btn btn-secondary font-icon-search btn--no-text btn--icon-large grid-field__filter-open"></button>';
-              self.removeClass('show-filter').find('.filter-header').hide();
+              self.removeClass('show-filter').find('.grid-field__filter-header').hide();
             }
 
             self.find('.sortable-header th:last').html(content);
@@ -105,7 +105,7 @@ $.entwine('ss', function($) {
   $('.grid-field :button[name=showFilter]').entwine({
     onclick: function(e) {
       this.closest('.grid-field__table')
-        .find('.filter-header')
+        .find('.grid-field__filter-header')
         .show()
         .find(':input:first').focus(); // focus first search field
 
@@ -172,8 +172,8 @@ $.entwine('ss', function($) {
 
       // Set close action
       modal.find('[data-dismiss]').on('click', function() {
-        backdrop.removeClass('in');
-        modal.removeClass('in');
+        backdrop.removeClass('show');
+        modal.removeClass('show');
         setTimeout(function() {
           backdrop.remove();
         }, 150) // Simulate the bootstrap out-transition period
@@ -181,8 +181,8 @@ $.entwine('ss', function($) {
 
       // Fade each element in (use setTimeout to ensure initial render at opacity=0 works)
       setTimeout(function() {
-        backdrop.addClass('in');
-        modal.addClass('in');
+        backdrop.addClass('show');
+        modal.addClass('show');
       }, 0);
 
     }
@@ -282,7 +282,7 @@ $.entwine('ss', function($) {
     }
   });
 
-  $('.grid-field .grid-print-button .action:button').entwine({
+  $('.grid-field .grid-print-button.action:button').entwine({
     UUID: null,
     onmatch: function() {
       this._super();
@@ -291,7 +291,7 @@ $.entwine('ss', function($) {
     onunmatch: function() {
       this._super();
     },
-    onclick: function(e){
+    onclick: function(e) {
       var url = this.actionurl();
       window.open(url);
       e.preventDefault();
@@ -370,7 +370,7 @@ $.entwine('ss', function($) {
    * Catch submission event in filter input fields, and submit the correct button
    * rather than the whole form.
    */
-  $('.grid-field .filter-header :input').entwine({
+  $('.grid-field .grid-field__filter-header :input').entwine({
     onmatch: function() {
       var filterbtn = this.closest('.extra').find('.ss-gridfield-button-filter'),
         resetbtn = this.closest('.extra').find('.ss-gridfield-button-reset');
@@ -392,7 +392,7 @@ $.entwine('ss', function($) {
         resetbtn = this.closest('.extra').find('.ss-gridfield-button-reset');
 
       if(e.keyCode == '13') {
-        var btns = this.closest('.filter-header').find('.ss-gridfield-button-filter');
+        var btns = this.closest('.grid-field__filter-header').find('.ss-gridfield-button-filter');
         var filterState='show'; //filterstate should equal current state.
         if(this.hasClass('ss-gridfield-button-close')||!(this.closest('.grid-field').hasClass('show-filter'))){
           filterState='hidden';

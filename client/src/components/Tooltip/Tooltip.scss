@@ -1,11 +1,88 @@
+// sass-lint:disable no-css-comments
 /**
  * Workaround for tooltip placement. React bootstrap add class `left`, `right`,
  * `top` and `bottom` instead of `tooltip-left`, `tooltip-right`, `tooltip-top`
  * and `tooltip-bottom`.
  */
+// sass-lint:enable no-css-comments
 @each $dir in left, right, top, bottom {
   .tooltip.#{$dir} {
-    @extend .tooltip-#{$dir};
+    @extend .bs-tooltip-#{$dir}; // sass-lint:disable-line no-extends
   }
 }
 
+// sass-lint:disable no-css-comments
+/**
+ * Tooltip arrow style below is copied (unless stated otherwise) from Bootstrap
+ * v4 beta because there's a missmatch between classname in react-bootstrap and
+ * its counterpart in Bootstrap v4.
+ */
+.tooltip {
+  .tooltip-arrow {
+    position: absolute;
+    display: block;
+    width: 5px;
+    height: 5px;
+
+    &:before {
+      position: absolute;
+      border-color: rgba(0, 0, 0, 0);
+      border-style: solid;
+    }
+  }
+}
+
+.tooltip.left {
+  .tooltip-arrow {
+    margin-top: -1px; // Fine-tune the vertical position
+    right: 0;
+
+    &:before {
+      right: 0;
+      margin-top: -3px;
+      content: "";
+      border-width: 5px 0 5px 5px;
+      border-left-color: #000;
+    }
+  }
+}
+
+.tooltip.right {
+  .tooltip-arrow {
+    margin-top: -1px; // Fine-tune the vertical position
+    left: 0;
+
+    &:before {
+      margin-top: -3px;
+      content: "";
+      border-width: 5px 5px 5px 0;
+      border-right-color: #000;
+    }
+  }
+}
+
+.tooltip.top {
+  .tooltip-arrow {
+    bottom: 0;
+
+    &:before {
+      margin-left: -3px;
+      content: "";
+      border-width: 5px 5px 0;
+      border-top-color: #000;
+    }
+  }
+}
+
+.tooltip.bottom {
+  .tooltip-arrow {
+    top: 0;
+
+    &:before {
+      margin-left: -3px;
+      content: "";
+      border-width: 0 5px 5px;
+      border-bottom-color: #000;
+    }
+  }
+}

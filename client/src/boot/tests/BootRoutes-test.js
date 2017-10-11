@@ -1,10 +1,10 @@
-/* global jest, jasmine, describe, afterEach, it, expect */
+/* global jest, jasmine, describe, afterEach, it, expect, window */
 
 jest.unmock('../BootRoutes.js');
 jest.unmock('lib/Config');
 jest.unmock('lib/Router');
 
-import BootRoutes from '../BootRoutes.js';
+import BootRoutes from '../BootRoutes';
 
 describe('Bootroutes', () => {
   beforeEach(() => {

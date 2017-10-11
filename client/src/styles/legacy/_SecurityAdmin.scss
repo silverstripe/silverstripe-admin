@@ -2,7 +2,7 @@
 .permissioncheckboxsetfield_readonly {
 
   h5 {
-    margin-top: $spacer-y;
+    margin-top: $spacer;
   }
 
   label {
@@ -11,8 +11,8 @@
 
   .cms-content.cms-edit-form & {
     &.form-group--no-label > .form__field-holder--no-label {
-      @include make-col-offset(0);
-      @include make-col-span(12);
+      @include make-col(12);
+      margin-left: 0;
     }
   }
 
@@ -23,13 +23,14 @@
 
   .font-icon-check-mark-circle,
   .font-icon-cancel-circled,
-  .font-icon-disable-circled {
+  .font-icon-disable-circled,
+  .font-icon-plus-circled {
     font-size: 18px;
     position: relative;
     top: 2px;
   }
 
-  .font-icon-check-mark-circle {
+  .font-icon-check-mark-circle, .font-icon-plus-circled {
     color: $brand-success;
   }
 
@@ -38,7 +39,7 @@
   }
 
   .font-icon-disable-circle {
-  	color: $gray;
+  	color: $gray-600;
   }
 
   li {

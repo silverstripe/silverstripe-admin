@@ -1,7 +1,7 @@
 /**
  * File: ModelAdmin.js
  */
-import $ from 'jQuery';
+import $ from 'jquery';
 
 require('./LeftAndMain.js');
 
@@ -31,6 +31,14 @@ $.entwine('ss', function($){
     },
     onunmatch: function() {
       this._super();
+    }
+  });
+
+  $('.cms .btn.clear-search').entwine({
+    onclick: function (e) {
+      e.preventDefault();
+      var container = this.parents('.cms-container');
+      container.loadPanel(this.attr('href'), '', {}, true, false);
     }
   });
 });

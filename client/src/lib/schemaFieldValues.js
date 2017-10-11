@@ -25,20 +25,16 @@ export function schemaMerge(schema, state) {
  * @returns {object|undefined}
  */
 export function findField(fields, name) {
-  let result = null;
   if (!fields) {
-    return result;
+    return null;
   }
 
-  result = fields.find(field => field.name === name);
-
-  for (const field of fields) {
-    if (result) {
-      break;
+  return fields.reduce((prev, field) => {
+    if (prev) {
+      return prev;
     }
-    result = findField(field.children, name);
-  }
-  return result;
+    return findField(field.children, name);
+  }, fields.find(field => field.name === name));
 }
 
 /**

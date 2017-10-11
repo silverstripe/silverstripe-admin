@@ -1,6 +1,6 @@
 import React from 'react';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
-import { TextField } from '../TextField/TextField';
+import { Component as TextField } from '../TextField/TextField';
 import moment from 'moment';
 import modernizr from 'modernizr';
 import i18n from 'i18n';
@@ -8,7 +8,6 @@ import i18n from 'i18n';
 const localFormat = 'L';
 
 class DateField extends TextField {
-
   render() {
     return super.render();
   }
@@ -107,7 +106,6 @@ class DateField extends TextField {
     }
     return localDate;
   }
-
 }
 
 DateField.propTypes = {
@@ -121,6 +119,6 @@ DateField.defaultProps = {
   data: {},
 };
 
-export { DateField };
+export { DateField as Component };
 
 export default fieldHolder(DateField);

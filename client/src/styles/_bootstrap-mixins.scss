@@ -1,0 +1,5 @@
+// back-ported from bootstrap alpha to use in beta
+@mixin make-col-offset($size, $columns: $grid-columns) {
+  margin-left: percentage($size / $columns);
+}
+

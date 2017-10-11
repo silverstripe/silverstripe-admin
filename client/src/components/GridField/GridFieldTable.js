@@ -1,19 +1,6 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 
-class GridFieldTable extends SilverStripeComponent {
-
-  render() {
-    return (
-      <div className="grid-field">
-        <table className="table table-hover grid-field__table">
-          <thead>{this.generateHeader()}</thead>
-          <tbody>{this.generateRows()}</tbody>
-        </table>
-      </div>
-    );
-  }
-
+class GridFieldTable extends Component {
   /**
    * Generates the header component.
    *
@@ -54,6 +41,16 @@ class GridFieldTable extends SilverStripeComponent {
     return null;
   }
 
+  render() {
+    return (
+      <div className="grid-field">
+        <table className="table table-hover grid-field__table">
+          <thead>{this.generateHeader()}</thead>
+          <tbody>{this.generateRows()}</tbody>
+        </table>
+      </div>
+    );
+  }
 }
 
 GridFieldTable.propTypes = {

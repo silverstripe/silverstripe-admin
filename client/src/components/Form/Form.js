@@ -1,17 +1,14 @@
 import React, { PropTypes, Component } from 'react';
-import ReactDOM from 'react-dom';
 import FormAlert from 'components/FormAlert/FormAlert';
 
 class Form extends Component {
-
   componentDidMount() {
     if (!this.props.autoFocus) {
       return;
     }
 
-    const node = ReactDOM.findDOMNode(this);
-    if (node) {
-      const input = node.querySelector('input, select, textarea');
+    if (this.form) {
+      const input = this.form.querySelector('input, select, textarea');
       if (input) {
         input.focus();
       }
@@ -27,6 +24,7 @@ class Form extends Component {
     if (Array.isArray(this.props.messages)) {
       return this.props.messages.map((message, index) => (
         <FormAlert
+          // eslint-disable-next-line react/no-array-index-key
           key={index}
           className={!index ? 'message-box--panel-top' : ''}
           {...message}
@@ -59,7 +57,10 @@ class Form extends Component {
     );
 
     return (
-      <form {...formProps}>
+      <form
+        {...formProps}
+        ref={(form) => { this.form = form; }}
+      >
         {fields &&
           <fieldset>
             {messages}
@@ -76,7 +77,6 @@ class Form extends Component {
       </form>
     );
   }
-
 }
 
 Form.propTypes = {
@@ -92,6 +92,7 @@ Form.propTypes = {
     method: PropTypes.string.isRequired,
   }),
   fields: PropTypes.array.isRequired,
+  // props is named `handleSubmit` as it is recieved from redux-form
   handleSubmit: PropTypes.func,
   mapActionsToComponents: PropTypes.func.isRequired,
   mapFieldsToComponents: PropTypes.func.isRequired,

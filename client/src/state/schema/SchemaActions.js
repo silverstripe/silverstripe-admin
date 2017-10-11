@@ -5,15 +5,18 @@ import ACTION_TYPES from './SchemaActionTypes';
  * Note that the `state` key just determines the initial form field values,
  * and is overruled by redux-form behaviour (stored in separate reducer key)
  *
- * @param {int} id
+ * @param {string} id - URL or id for schema
  * @param {object} schema - JSON schema for the layout.
+ * @param {string} name - identifier used for form and redux-form
+ *
+ *@return {object}
  */
-export function setSchema(id, schema, name) {
+export function setSchema(id, schema = {}, name) {
   return {
     type: ACTION_TYPES.SET_SCHEMA,
     payload: {
-      id,
       ...schema,
+      id,
       name,
     },
   };

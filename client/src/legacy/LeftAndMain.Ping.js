@@ -1,7 +1,7 @@
 /**
  * File: LeftAndMain.Ping.js
  */
-import $ from 'jQuery';
+import $ from 'jquery';
 
 $.entwine('ss.ping', function($){
 

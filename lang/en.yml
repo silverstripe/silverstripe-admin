@@ -42,6 +42,8 @@ en:
     SUBMIT_BUTTON_LABEL: Go
     ValidationError: 'Validation error'
     VersionUnknown: Unknown
+    BROWSER_WARNING_HEADING: 'Unsupported browser'
+    BROWSER_WARNING_TEXT: 'You&apos;re using a web browser that&apos;s not supported by SilverStripe.<br />Please upgrade to one of the following options.'
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
     Auto: Auto
     ChangeViewMode: 'Change view mode'

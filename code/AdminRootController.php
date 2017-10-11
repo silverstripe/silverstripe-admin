@@ -53,27 +53,29 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
 
     /**
      * @var array
+     * @internal
+     *
      * Holds an array of url_pattern => controller k/v pairs, the same as Director::rules. However this is built
      * dynamically from introspecting on all the classes that derive from LeftAndMain.
      *
      * Don't access this directly - always access via the rules() accessor below, which will build this array
      * the first time it's accessed
      */
-    private static $_rules = null;
+    private static $adminRules = null;
 
     /**
      * Gets a list of url_pattern => controller k/v pairs for each LeftAndMain derived controller
      */
     public static function rules()
     {
-        if (self::$_rules === null) {
-            self::$_rules = array();
+        if (self::$adminRules === null) {
+            self::$adminRules = array();
 
             // Map over the array calling add_rule_for_controller on each
             $classes = CMSMenu::get_cms_classes(null, true, CMSMenu::URL_PRIORITY);
             array_map(array(__CLASS__, 'add_rule_for_controller'), $classes);
         }
-        return self::$_rules;
+        return self::$adminRules;
     }
 
     /**
@@ -95,8 +97,8 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
             $rule = $urlSegment . '//' . $urlRule;
 
             // ensure that the first call to add_rule_for_controller for a rule takes precedence
-            if (!isset(self::$_rules[$rule])) {
-                self::$_rules[$rule] = $controllerClass;
+            if (!isset(self::$adminRules[$rule])) {
+                self::$adminRules[$rule] = $controllerClass;
             }
         }
     }

@@ -1,14 +1,20 @@
+/* eslint-disable
+ import/no-webpack-loader-syntax,
+ import/no-extraneous-dependencies,
+ import/no-unresolved
+ */
 // Legacy translation handler
 require('i18n.js');
 
 // Expose fields (see webpack config for matching "externals" config)
 require('expose-loader?SilverStripeComponent!lib/SilverStripeComponent');
 require('expose-loader?Backend!lib/Backend');
+require('expose-loader?schemaFieldValues!lib/schemaFieldValues');
 require('expose-loader?Injector!lib/Injector');
 require('expose-loader?reduxFieldReducer!lib/reduxFieldReducer');
-require('expose-loader?schemaFieldValues!lib/schemaFieldValues');
 require('expose-loader?getFormState!lib/getFormState');
 require('expose-loader?FormAlert!components/FormAlert/FormAlert');
+require('expose-loader?PopoverField!components/PopoverField/PopoverField');
 require('expose-loader?FieldHolder!components/FieldHolder/FieldHolder');
 require('expose-loader?Form!components/Form/Form');
 require('expose-loader?FormConstants!components/Form/FormConstants');
@@ -17,8 +23,8 @@ require('expose-loader?SchemaActions!state/schema/SchemaActions');
 require('expose-loader?FormBuilder!components/FormBuilder/FormBuilder');
 require('expose-loader?FormBuilderLoader!containers/FormBuilderLoader/FormBuilderLoader');
 require('expose-loader?FormBuilderModal!components/FormBuilderModal/FormBuilderModal');
-require('expose-loader?InsertLinkModal!containers/InsertLinkModal/InsertLinkModal');
 require('expose-loader?FileSchemaModalHandler!containers/InsertLinkModal/fileSchemaModalHandler');
+require('expose-loader?InsertLinkModal!containers/InsertLinkModal/InsertLinkModal');
 require('expose-loader?RecordsActions!state/records/RecordsActions');
 require('expose-loader?GridField!components/GridField/GridField');
 require('expose-loader?GridFieldCell!components/GridField/GridFieldCell');
@@ -43,6 +49,7 @@ require('expose-loader?RecordsActionTypes!state/records/RecordsActionTypes');
 require('expose-loader?UnsavedFormsActions!state/unsavedForms/UnsavedFormsActions');
 require('expose-loader?Badge!components/Badge/Badge');
 require('expose-loader?Preview!components/Preview/Preview');
+require('expose-loader?Focusedzone!components/Focusedzone/Focusedzone');
 require('expose-loader?Config!lib/Config');
 require('expose-loader?DataFormat!lib/DataFormat');
 require('expose-loader?ReactRouteRegister!lib/ReactRouteRegister');
@@ -79,7 +86,7 @@ require('../legacy/ConfirmedPasswordField.js');
 require('../legacy/SelectionGroup.js');
 require('../legacy/DateField.js');
 require('../legacy/ToggleCompositeField.js');
-require('../legacy/TreeDropdownField.js');
+require('../legacy/TreeDropdownField/TreeDropdownFieldEntwine.js');
 require('../legacy/DateField.js');
 require('../legacy/DatetimeField.js');
 require('../legacy/HtmlEditorField.js');

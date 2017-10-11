@@ -1,7 +1,7 @@
 /**
  * File: LeftAndMain.js
  */
-import $ from 'jQuery';
+import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import IframeDialog from 'components/IframeDialog/IframeDialog';
@@ -64,10 +64,19 @@ $.entwine('ss', function($) {
   $(window).on("message", function(e) {
     var target,
       event = e.originalEvent,
-      data = typeof event.data === 'object' ? event.data : JSON.parse(event.data);
+      data = null;
 
-    // Reject messages outside of the same origin
-    if($.path.parseUrl(window.location.href).domain !== $.path.parseUrl(event.origin).domain) return;
+    try
+    {
+        data = typeof event.data === 'object' ? event.data : JSON.parse(event.data);
+    }
+    catch(e)
+    {
+        // Invalid json received
+    }
+
+    // Reject invalid data or messages outside of the same origin
+    if(!data || $.path.parseUrl(window.location.href).domain !== $.path.parseUrl(event.origin).domain) return;
 
     // Get target of this action
     target = typeof(data.target) === 'undefined'
@@ -1212,8 +1221,11 @@ $.entwine('ss', function($) {
   /**
    * Overload the default GridField behaviour (open a new URL in the browser)
    * with the CMS-specific ajax loading.
+   *
+   * To opt out of this overload by adding `cms-loading-ignore-url-params` html
+   * attribute to the grid field.
    */
-  $('.cms .grid-field').entwine({
+  $('.cms .grid-field:not([cms-loading-ignore-url-params])').entwine({
     showDetailView: function(url) {
       // Include any GET parameters from the current URL, as the view state might depend on it.
       // For example, a list prefiltered through external search criteria might be passed to GridField.

@@ -1,28 +1,29 @@
+// sass-lint:disable no-css-comments
 /**
  * Styles for the left hand side menu and header for the admin panels.
  *
  * Take into consideration CSS selector performance.
  *
- * @package framework
- * @subpackage admin
+ * @package admin
  */
+// sass-lint:enable no-css-comments
 
 .cms-menu {
   z-index: $zindex-menu;
   background: $color-theme-bg;
   // Add `!important` to ignore width set in `.cms-panel` entwine`
-  width: $cms-menu-width !important;
+  width: $cms-menu-width !important; // sass-lint:disable-line no-important
 
   @include media-breakpoint-down(sm) {
     position: absolute;
     top: 0;
     left: -100%;
-    width: calc(100% - 59px) !important;
+    width: calc(100% - 59px) !important; // sass-lint:disable-line no-important
     transition: left $transition-speed-fast ease-in;
 
     &--open {
       left: 0;
-      height: 100% !important;
+      height: 100% !important; // sass-lint:disable-line no-important
       box-shadow: 1px 0 10px rgba(0, 0, 0, 0.2);
     }
   }
@@ -34,12 +35,14 @@
   .cms-panel-content {
     box-shadow: inset #C1C7CC -1px 0 0;
     overflow-x: hidden;
-    height: calc(100% - #{$toolbar-total-height * 3}) !important; // account for logo, logout and south bar
+    // account for logo, logout and south bar
+    height: calc(100% - #{$toolbar-total-height * 3}) !important; // sass-lint:disable-line no-important
   }
 
   @include media-breakpoint-up(md) {
     &.collapsed {
-      width: $cms-menu-width-collapsed !important; // Using important because JavaScript is overriding this value
+      // Using important because JavaScript is overriding this value
+      width: $cms-menu-width-collapsed !important; // sass-lint:disable-line no-important
       cursor: auto;
       z-index: 1000;
 
@@ -89,6 +92,11 @@
 
         .cms-login-status__profile-link {
           width: auto;
+          right: 0;
+
+          > span {
+            opacity: 0;
+          }
 
           i {
             padding-left: 8px;
@@ -112,6 +120,7 @@
     background-color: $color-theme-bg;
     box-shadow: inset $color-separator -1px 0 0;
     position: relative;
+    padding-left: 0;
 
     @include media-breakpoint-down(sm) {
       display: none;
@@ -119,7 +128,6 @@
 
     a,
     a.toggle-expand {
-      float: right;
       width: 50%;
       padding-top: 14px;
       padding-bottom: 14px;
@@ -127,11 +135,6 @@
   }
 
   .sticky-toggle {
-    float: left;
-    width: 52px;
-    height: 52px;
-    margin: 0;
-    padding: $grid-x;
     text-indent: -999em;
     background-color: transparent;
     background-image: url("../images/sticky-toggle-off.png");
@@ -139,8 +142,6 @@
     background-position: 16px center;
     border: 0;
     transition: position $transition-speed-fast;
-    margin-top: -$spacer-xs;
-    margin-left: -$grid-gutter-width-half;
     z-index: 2;
 
     &:hover {
@@ -193,10 +194,10 @@
     margin-top: 3px;
     right: 8px;
     z-index: 2;
-    -ms-transform: rotate(-45deg); /* IE 9 */
-    -webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */
+    -ms-transform: rotate(-45deg); // IE 9
+    -webkit-transform: rotate(-45deg); // Chrome, Safari, Opera
     transform: rotate(-45deg);
-    // display: none;  /* To be shown by javascript, see LeftAndMain.Panel.js */
+    // display: none;  // To be shown by javascript, see LeftAndMain.Panel.js
   }
 
   .opened .toggle-children-icon {
@@ -228,9 +229,6 @@
 }
 
 .cms-menu__header {
-  position: relative !important;
-  top: auto !important;
-  height: auto !important;		// Required for JLayout
   padding: 0;
   line-height: 24px;
   background-color: $color-brand-bg;
@@ -251,15 +249,18 @@
 .cms-sitename {
   border-bottom: 1px solid darken($color-brand-bg, 4%);
   overflow: hidden;
-  padding: $grid-y*1.5 8px;
   position: relative;
   vertical-align: middle;
   transition: padding $transition-speed-fast;
   min-height: $toolbar-total-height;
-  transition: padding $transition-speed-fast;
   font-weight: bold;
   line-height: 16px;
   padding: 6px 0;
+
+  &:hover,
+  &:focus {
+    background-color: darken($color-brand-bg, 2);
+  }
 
   @include media-breakpoint-down(sm) {
     text-align: center;
@@ -275,6 +276,10 @@
     background: $application-logo-small no-repeat center center;
     text-indent: -9999em;
     padding: 0 1px;
+
+    &:hover {
+      opacity: .9;
+    }
   }
 
   .cms-sitename__title {
@@ -284,6 +289,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    &:hover {
+      opacity: .9;
+    }
 
     @include media-breakpoint-down(sm) {
       margin-left: $toolbar-total-height;
@@ -303,8 +312,8 @@
     position: absolute;
     top: 0;
     right: 0;
-    font-size: 14px;
-    width: 50px;
+    font-size: $font-size-root + 2px;
+    width: 40px;
     height: 100%;
     color: #fff;
     display: flex;
@@ -313,24 +322,30 @@
 
     &:hover,
     &:focus {
-      opacity: 1;
+      opacity: .9;
       text-decoration: none;
+      background-color: darken($color-brand-bg, 2);
     }
-
   }
 
   .cms-login-status__profile-link {
     position: absolute;
     left: 0;
-    right: 50px;
+    right: 36px;
     display: flex;
     align-items: center;
     height: 100%;
-    padding: 0 8px;
+    padding: 0 0 0 8px;
     color: $white;
+
+    &:hover,
+    &:focus {
+      background-color: darken($color-brand-bg, 2);
+    }
 
     i {
       position: absolute;
+      top: 17px;
       left: 13px;
       font-size: 18px;
       vertical-align: middle;
@@ -362,7 +377,7 @@
   position: absolute;
   margin-top: -1px;
   left: 13px;
-  font-size: $font-size-lg;
+  font-size: $h3-font-size;
   transition: all $transition-speed-fast;
   color: darken($base-menu-bg, 44%);
 
@@ -458,7 +473,7 @@
 
         .toggle-children {
           .toggle-children-icon {
-            @extend .icon-sprites-32x32;
+            @extend .icon-sprites-32x32; // sass-lint:disable-line no-extends
             @include sprite($sprites-32x32-menu-arrow-down);
           }
         }
@@ -533,7 +548,7 @@
       }
     }
 
-    /* Style applied to the menu flyout only when the collapsed setting */
+    // Style applied to the menu flyout only when the collapsed setting
     .collapsed-flyout {
       left: 59px;
       margin-top: -52px;
@@ -591,24 +606,20 @@
         border: 1px solid #d2d5d8;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
-        li {
-          &.clone {
-            a {
-              padding: 15px 0 15px 70px;
-              margin-left: -60px;
-              margin-right: 0;
-              box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        li.clone a {
+          padding: 15px 0 15px 70px;
+          margin-left: -60px;
+          margin-right: 0;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
-              span.text {
-                margin-left: -10px;
-              }
-            }
+          span.text {
+            margin-left: -10px;
           }
+        }
 
-          a span.text {
-            display: block;
-            margin-left: 0;
-          }
+        li a span.text {
+          display: block;
+          margin-left: 0;
         }
       }
 
@@ -622,9 +633,7 @@
   }
 }
 
-/**
- * Mobile menu toggle
- */
+// Mobile menu toggle
 .cms-mobile-menu-toggle-wrapper {
   display: none;
   position: absolute;

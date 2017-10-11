@@ -13,6 +13,8 @@
 
 // Base
 @import "bootstrap-override";
+@import "bootstrap-extend";
+@import "bootstrap-mixins";
 @import "typography";
 @import "fonts";
 
@@ -38,7 +40,6 @@
 @import "legacy/DatetimeField";
 @import "legacy/GridField";
 @import "legacy/SelectionGroup";
-@import "legacy/TreeDropdownField";
 
 // Components
 @import "../components/Menu/Menu";
@@ -48,7 +49,6 @@
 @import "../components/ListGroup/ListGroup";
 @import "../components/Breadcrumb/Breadcrumb";
 @import "../components/FormBuilderModal/FormBuilderModal";
-@import "../components/FieldHolder/FieldHolder";
 @import "../components/FormAction/FormAction";
 @import "../components/PopoverField/PopoverField";
 @import "../components/GridField/GridField";
@@ -62,7 +62,7 @@
 @import "../components/Form/Form";
 @import "../components/Modal/Modal";
 @import "../components/TreeDropdownField/TreeDropdownField";
-
+@import "../components/TinymceInlineToolbar/TinymceInlineToolbar";
 
 // Layout and sections
 @import "layout";

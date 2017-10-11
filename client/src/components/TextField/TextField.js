@@ -1,18 +1,12 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import { FormControl } from 'react-bootstrap-ss';
 
-class TextField extends SilverStripeComponent {
-
+class TextField extends Component {
   constructor(props) {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
-  }
-
-  render() {
-    return <FormControl {...this.getInputProps()} />;
   }
 
   /**
@@ -32,6 +26,10 @@ class TextField extends SilverStripeComponent {
       placeholder: this.props.placeholder,
       autoFocus: this.props.autoFocus,
     };
+
+    if (this.props.attributes && !Array.isArray(this.props.attributes)) {
+      Object.assign(props, this.props.attributes);
+    }
 
     if (this.isMultiline()) {
       Object.assign(props, {
@@ -74,6 +72,10 @@ class TextField extends SilverStripeComponent {
       this.props.onChange(event, { id: this.props.id, value: event.target.value });
     }
   }
+
+  render() {
+    return <FormControl {...this.getInputProps()} />;
+  }
 }
 
 TextField.propTypes = {
@@ -87,6 +89,7 @@ TextField.propTypes = {
   placeholder: React.PropTypes.string,
   type: React.PropTypes.string,
   autoFocus: React.PropTypes.bool,
+  attributes: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.array]),
 };
 
 TextField.defaultProps = {
@@ -95,8 +98,9 @@ TextField.defaultProps = {
   extraClass: '',
   className: '',
   type: 'text',
+  attributes: {},
 };
 
-export { TextField };
+export { TextField as Component };
 
 export default fieldHolder(TextField);

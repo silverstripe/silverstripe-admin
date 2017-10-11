@@ -1,6 +1,42 @@
 import React from 'react';
 
 /**
+ * Searches the given string and highlights/marks instances of needle found
+ * with the given tag
+ *
+ * @param {string} haystack
+ * @param {string} needle
+ * @param {React|string} Tag
+ * @return {Array}
+ */
+export function mapHighlight(haystack, needle, Tag) {
+  let index = 0;
+  let search = haystack;
+  const results = [];
+  const part = needle.toLocaleLowerCase();
+
+  while (index !== -1) {
+    index = search.toLocaleLowerCase().indexOf(part);
+
+    if (index !== -1) {
+      const next = index + needle.length;
+      const start = search.substring(0, index);
+      const found = search.substring(index, next);
+      const end = search.substring(next);
+
+      if (start.length) {
+        results.push(start);
+      }
+      results.push((Tag) ? <Tag key={results.length / 2}>{found}</Tag> : found);
+      search = end;
+    }
+  }
+  results.push(search);
+
+  return results;
+}
+
+/**
  * Safely cast string to container element. Supports custom HTML values.
  *
  * See DBField::getSchemaValue()
@@ -8,7 +44,6 @@ import React from 'react';
  * @param {String|Component} Container Container type
  * @param {*} value Form schema value
  * @param {object} props container props
- * @returns {XML}
  */
 export default function castStringToElement(Container, value, props = {}) {
   if (value && typeof value.react !== 'undefined') {

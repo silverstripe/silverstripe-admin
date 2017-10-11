@@ -1,14 +1,8 @@
 /* global jest, describe, expect, it, beforeEach */
 
-jest.unmock('merge');
-jest.unmock('lib/SilverStripeComponent');
-jest.unmock('lib/schemaFieldValues');
-jest.unmock('../FormBuilder');
-jest.unmock('redux-form');
-
-const React = require('react');
+import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
-import FormBuilder from '../FormBuilder';
+import { Component as FormBuilder } from '../FormBuilder';
 import schemaFieldValues, { findField, schemaMerge } from 'lib/schemaFieldValues';
 
 describe('FormBuilder', () => {
@@ -174,14 +168,22 @@ describe('FormBuilder', () => {
     it('should retrieve the field that is a grandchild in the fields list', () => {
       fields = [
         { id: 'fieldOne', name: 'fieldOne' },
-        { id: 'fieldTwo', name: 'fieldTwo', children: [
-          { id: 'fieldTwoOne', name: 'fieldTwoOne' },
-          { id: 'fieldTwoTwo', name: 'fieldTwoTwo', children: [
+        {
+          id: 'fieldTwo',
+          name: 'fieldTwo',
+          children: [
             { id: 'fieldTwoOne', name: 'fieldTwoOne' },
-            { id: 'fieldTwoTwo', name: 'fieldTwoTwo' },
-            { id: 'fieldTwoThree', name: 'fieldTwoThree' },
-          ] },
-        ] },
+            {
+              id: 'fieldTwoTwo',
+              name: 'fieldTwoTwo',
+              children: [
+                { id: 'fieldTwoOne', name: 'fieldTwoOne' },
+                { id: 'fieldTwoTwo', name: 'fieldTwoTwo' },
+                { id: 'fieldTwoThree', name: 'fieldTwoThree' },
+              ],
+            },
+          ],
+        },
         { id: 'fieldThree', name: 'fieldThree' },
         { id: 'fieldFour', name: 'fieldFour' },
       ];

@@ -1,8 +1,8 @@
-import React from 'react';
+/* global confirm */
+import React, { Component } from 'react';
 import i18n from 'i18n';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
 import GridFieldTable from './GridFieldTable';
 import GridFieldHeader from './GridFieldHeader';
 import GridFieldHeaderCell from './GridFieldHeaderCell';
@@ -12,7 +12,7 @@ import GridFieldAction from './GridFieldAction';
 import FormConstants from 'components/Form/FormConstants';
 import * as actions from 'state/records/RecordsActions';
 
-const NotYetLoaded = {};
+const NotYetLoaded = [];
 
 /**
  * The component acts as a container for a grid field,
@@ -22,8 +22,7 @@ const NotYetLoaded = {};
  * schema data to an API backend as a grid data source
  * @todo Replace "dumb" inner components with third party library (e.g. https://griddlegriddle.github.io)
  */
-class GridField extends SilverStripeComponent {
-
+class GridField extends Component {
   constructor(props) {
     super(props);
 
@@ -32,8 +31,6 @@ class GridField extends SilverStripeComponent {
   }
 
   componentDidMount() {
-    super.componentDidMount();
-
     const data = this.props.data;
 
     this.props.actions.fetchRecords(
@@ -43,43 +40,17 @@ class GridField extends SilverStripeComponent {
     );
   }
 
-  render() {
-    // props.records is keyed by record identifiers
-    if (this.props.records === NotYetLoaded) {
-      // TODO Replace with better loading indicator
-      return <div>{ i18n._t('CampaignAdmin.LOADING', 'Loading...') }</div>;
-    }
-
-    if (!Object.getOwnPropertyNames(this.props.records).length) {
-      return <div>{ i18n._t('CampaignAdmin.NO_RECORDS', 'No campaigns created yet.') }</div>;
-    }
-
-    // Placeholder to align the headers correctly with the content
-    const actionPlaceholder = <th key="holder" className={'grid-field__action-placeholder'}></th>;
-    const headerCells = this.props.data.columns.map((column) =>
-      <GridFieldHeaderCell key={`${column.name}`}>{column.name}</GridFieldHeaderCell>
-    );
-    const header = <GridFieldHeader>{headerCells.concat(actionPlaceholder)}</GridFieldHeader>;
-    const rows = Object.keys(this.props.records).map((key) =>
-      this.createRow(this.props.records[key])
-    );
-
-    return (
-      <GridFieldTable header={header} rows={rows} />
-    );
-  }
-
   createRowActions(record) {
     return (
       <GridFieldCell className="grid-field__cell--actions" key="Actions">
         <GridFieldAction
           icon={'cog'}
-          handleClick={this.editRecord}
+          onClick={this.editRecord}
           record={record}
         />
         <GridFieldAction
           icon={'cancel'}
-          handleClick={this.deleteRecord}
+          onClick={this.deleteRecord}
           record={record}
         />
       </GridFieldCell>
@@ -87,10 +58,10 @@ class GridField extends SilverStripeComponent {
   }
 
   createCell(record, column) {
-    const handleDrillDown = this.props.data.handleDrillDown;
+    const handleDrillDown = this.props.data.onDrillDown;
     const cellProps = {
       className: handleDrillDown ? 'grid-field__cell--drillable' : '',
-      handleDrillDown: handleDrillDown ? (event) => handleDrillDown(event, record) : null,
+      onDrillDown: handleDrillDown ? (event) => handleDrillDown(event, record) : null,
       key: `${column.name}`,
       width: column.width,
     };
@@ -104,7 +75,7 @@ class GridField extends SilverStripeComponent {
    */
   createRow(record) {
     const rowProps = {
-      className: this.props.data.handleDrillDown ? 'grid-field__row--drillable' : '',
+      className: this.props.data.onDrillDown ? 'grid-field__row--drillable' : '',
       key: `${record.ID}`,
     };
     const cells = this.props.data.columns.map((column) =>
@@ -121,8 +92,8 @@ class GridField extends SilverStripeComponent {
   }
 
   /**
-   * @param object event
-   * @param number id
+   * @param {Event} event
+   * @param {number} id
    */
   deleteRecord(event, id) {
     event.preventDefault();
@@ -146,20 +117,44 @@ class GridField extends SilverStripeComponent {
   }
 
   /**
-   * @param object event
-   * @param number id
+   * @param {Event} event
+   * @param {number} id
    */
   editRecord(event, id) {
     event.preventDefault();
 
-    if (typeof this.props.data === 'undefined' ||
-      typeof this.props.data.handleEditRecord === 'undefined') {
+    if (!this.props.data) {
       return;
     }
-
-    this.props.data.handleEditRecord(event, id);
+    if (typeof this.props.data.onEditRecord === 'function') {
+      this.props.data.onEditRecord(event, id);
+    }
   }
 
+  render() {
+    if (this.props.records === NotYetLoaded) {
+      // TODO Replace with better loading indicator
+      return <div>{ i18n._t('CampaignAdmin.LOADING', 'Loading...') }</div>;
+    }
+
+    if (!this.props.records.length) {
+      return <div>{ i18n._t('CampaignAdmin.NO_RECORDS', 'No campaigns created yet.') }</div>;
+    }
+
+    // Placeholder to align the headers correctly with the content
+    const actionPlaceholder = <th key="holder" className="grid-field__action-placeholder" />;
+    const headerCells = this.props.data.columns.map((column) =>
+      <GridFieldHeaderCell key={column.name}>{column.name}</GridFieldHeaderCell>
+    );
+    const header = <GridFieldHeader>{headerCells.concat(actionPlaceholder)}</GridFieldHeader>;
+    const rows = this.props.records.map((record) =>
+      this.createRow(record)
+    );
+
+    return (
+      <GridFieldTable header={header} rows={rows} />
+    );
+  }
 }
 
 GridField.propTypes = {
@@ -167,16 +162,16 @@ GridField.propTypes = {
     recordType: React.PropTypes.string.isRequired,
     headerColumns: React.PropTypes.array,
     collectionReadEndpoint: React.PropTypes.object,
-    handleDrillDown: React.PropTypes.func,
-    handleEditRecord: React.PropTypes.func,
+    onDrillDown: React.PropTypes.func,
+    onEditRecord: React.PropTypes.func,
   }),
 };
 
 function mapStateToProps(state, ownProps) {
-  const recordType = ownProps.data ? ownProps.data.recordType : null;
+  const recordType = ownProps.data && ownProps.data.recordType;
   return {
     config: state.config,
-    records: recordType && state.records[recordType] ? state.records[recordType] : NotYetLoaded,
+    records: (recordType && state.records[recordType]) ? state.records[recordType] : NotYetLoaded,
   };
 }
 

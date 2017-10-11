@@ -1,4 +1,4 @@
-/* global tinymce, ss */
+/* global tinymce, window */
 import i18n from 'i18n';
 import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
 import React from 'react';
@@ -13,6 +13,7 @@ TinyMCEActionRegistrar.addAction('sslink', {
   text: i18n._t('Admin.LINKLABEL_EXTERNALURL', 'Link to external URL'),
   // eslint-disable-next-line no-console
   onclick: (editor) => editor.execCommand('sslinkexternal'),
+  priority: 52,
 });
 
 const plugin = {
@@ -51,11 +52,15 @@ jQuery.entwine('ss', ($) => {
    */
   $(`#${modalId}`).entwine({
     renderModal(show) {
-      const store = ss.store;
-      const client = ss.apolloClient;
+      const store = window.ss.store;
+      const client = window.ss.apolloClient;
       const handleHide = () => this.close();
       const handleInsert = (...args) => this.handleInsert(...args);
       const attrs = this.getOriginalAttributes();
+      const selection = tinymce.activeEditor.selection;
+      const selectionContent = selection.getContent() || '';
+      const tagName = selection.getNode().tagName;
+      const requireLinkText = tagName !== 'A' && selectionContent.trim() === '';
 
       // create/update the react component
       ReactDOM.render(
@@ -69,6 +74,7 @@ jQuery.entwine('ss', ($) => {
             className="insert-link__dialog-wrapper--external"
             fileAttributes={attrs}
             identifier="Admin.InsertLinkExternalModal"
+            requireLinkText={requireLinkText}
           />
         </ApolloProvider>,
         this[0]
@@ -84,7 +90,7 @@ jQuery.entwine('ss', ($) => {
         href = `${window.location.protocol}//${href}`;
       }
       // if it's just the hash, then remove the prefix
-      href = href.replace(/:\/\/(#.*)$/, '$2');
+      href = href.replace(/.*:\/\/(#.*)$/, '$1');
 
       // if it is just the prefix, then leave it blank
       if (href.match(/:\/\/$/)) {

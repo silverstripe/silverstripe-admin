@@ -79,10 +79,9 @@ abstract class ModelAdmin extends LeftAndMain
     private static $menu_priority = -0.5;
 
     /**
-     * @todo ensure copied to client/dist folder and link from there
      * @var string
      */
-    private static $menu_icon = 'silverstripe-admin/client/src/sprites/menu-icons/16x16/db.png';
+    private static $menu_icon_class = 'font-icon-database';
 
     private static $allowed_actions = array(
         'ImportForm',
@@ -189,7 +188,7 @@ abstract class ModelAdmin extends LeftAndMain
             $this->sanitiseClassName($this->modelClass),
             false,
             $list,
-            $fieldConfig = GridFieldConfig_RecordEditor::create($this->stat('page_length'))
+            $fieldConfig = GridFieldConfig_RecordEditor::create($this->config()->get('page_length'))
                 ->addComponent($exportButton)
                 ->removeComponentsByType(GridFieldFilterHeader::class)
                 ->addComponents(new GridFieldPrintButton('buttons-before-left'))
@@ -260,6 +259,20 @@ abstract class ModelAdmin extends LeftAndMain
     }
 
     /**
+     * Gets a list of fields that have been searched
+     *
+     * @return SilverStripe\ORM\ArrayList
+     */
+    public function SearchSummary()
+    {
+        $context = $this->getSearchContext();
+        $params = $this->getRequest()->requestVar('q') ?: [];
+        $context->setSearchParams($params);
+
+        return $context->getSummary();
+    }
+
+    /**
      * @return \SilverStripe\Forms\Form|bool
      */
     public function SearchForm()
@@ -276,9 +289,9 @@ abstract class ModelAdmin extends LeftAndMain
             "SearchForm",
             $context->getSearchFields(),
             new FieldList(
-                FormAction::create('search', _t(__CLASS__.'.APPLY_FILTER', 'Apply Filter'))
+                FormAction::create('search', _t(__CLASS__ . '.APPLY_FILTER', 'Apply Filter'))
                     ->setUseButtonTag(true)->addExtraClass('btn-primary'),
-                FormAction::create('clearsearch', _t(__CLASS__.'.RESET', 'Reset'))
+                FormAction::create('clearsearch', _t(__CLASS__ . '.RESET', 'Reset'))
                     ->setAttribute('type', 'reset')
                     ->setUseButtonTag(true)->addExtraClass('btn-secondary')
             ),
@@ -340,17 +353,16 @@ abstract class ModelAdmin extends LeftAndMain
 
 
     /**
-
      * @return \SilverStripe\ORM\ArrayList An ArrayList of all managed models to build the tabs for this ModelAdmin
      */
     protected function getManagedModelTabs()
     {
         $models = $this->getManagedModels();
-        $forms  = new ArrayList();
+        $forms = new ArrayList();
 
         foreach ($models as $class => $options) {
-            $forms->push(new ArrayData(array (
-                'Title'     => $options['title'],
+            $forms->push(new ArrayData(array(
+                'Title' => $options['title'],
                 'ClassName' => $class,
                 'Link' => $this->Link($this->sanitiseClassName($class)),
                 'LinkOrCurrent' => ($class == $this->modelClass) ? 'current' : 'link'
@@ -387,7 +399,7 @@ abstract class ModelAdmin extends LeftAndMain
      */
     public function getManagedModels()
     {
-        $models = $this->stat('managed_models');
+        $models = $this->config()->get('managed_models');
         if (is_string($models)) {
             $models = array($models);
         }
@@ -421,7 +433,7 @@ abstract class ModelAdmin extends LeftAndMain
      */
     public function getModelImporters()
     {
-        $importerClasses = $this->stat('model_importers');
+        $importerClasses = $this->config()->get('model_importers');
 
         // fallback to all defined models if not explicitly defined
         if (is_null($importerClasses)) {
@@ -500,7 +512,7 @@ abstract class ModelAdmin extends LeftAndMain
 
         $actions = new FieldList(
             FormAction::create('import', _t('SilverStripe\\Admin\\ModelAdmin.IMPORT', 'Import from CSV'))
-                ->addExtraClass('btn btn-secondary-outline font-icon-upload')
+                ->addExtraClass('btn btn-outline-secondary font-icon-upload')
         );
 
         $form = new Form(
@@ -533,7 +545,8 @@ abstract class ModelAdmin extends LeftAndMain
     public function import($data, $form, $request)
     {
         if (!$this->showImportForm || (is_array($this->showImportForm)
-                && !in_array($this->modelClass, $this->showImportForm))) {
+                && !in_array($this->modelClass, $this->showImportForm))
+        ) {
             return false;
         }
 

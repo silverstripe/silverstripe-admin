@@ -1,6 +1,6 @@
 import React from 'react';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
-import { DateField } from '../DateField/DateField';
+import { Component as DateField } from '../DateField/DateField';
 import moment from 'moment';
 import modernizr from 'modernizr';
 import i18n from 'i18n';
@@ -8,7 +8,6 @@ import i18n from 'i18n';
 const localFormat = 'L LT';
 
 class DatetimeField extends DateField {
-
   getInputProps() {
     const placeholder = i18n.inject(
       i18n._t('Admin.FormatExample', 'Example: {format}'),
@@ -67,7 +66,6 @@ class DatetimeField extends DateField {
     }
     return isoTime;
   }
-
 }
 
 DatetimeField.propTypes = {
@@ -81,6 +79,6 @@ DatetimeField.defaultProps = {
   data: {},
 };
 
-export { DatetimeField };
+export { DatetimeField as Component };
 
 export default fieldHolder(DatetimeField);

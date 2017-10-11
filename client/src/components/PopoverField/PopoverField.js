@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Popover, OverlayTrigger } from 'react-bootstrap-ss';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
 
-class PopoverField extends SilverStripeComponent {
+class PopoverField extends Component {
   constructor(props) {
     super(props);
 
@@ -12,6 +11,16 @@ class PopoverField extends SilverStripeComponent {
     this.state = {
       showing: false,
     };
+  }
+
+  /**
+   * Get popup placement direction
+   *
+   * @returns {String}
+   */
+  getPlacement() {
+    const placement = this.props.data.placement;
+    return placement || 'bottom';
   }
 
   handleShow() {
@@ -29,14 +38,16 @@ class PopoverField extends SilverStripeComponent {
   render() {
     const placement = this.getPlacement();
     const overlay = (
-      <Popover id={`${this.props.id}_Popover`} className={`fade in popover-${placement}`}
+      <Popover
+        id={`${this.props.id}_Popover`}
+        className={`fade in bs-popover-${placement} ${this.props.popoverClassName}`}
         title={this.props.data.popoverTitle}
       >
         {this.props.children}
       </Popover>
     );
 
-    const buttonClasses = ['btn', 'btn-secondary'];
+    const buttonClasses = ['btn', 'btn-secondary', this.props.className];
     if (this.state.showing) {
       buttonClasses.push('btn--no-focus');
     }
@@ -55,10 +66,14 @@ class PopoverField extends SilverStripeComponent {
     }
 
     return (
-      <OverlayTrigger rootClose trigger="click"
-        placement={placement} overlay={overlay}
+      <OverlayTrigger
+        rootClose
+        trigger="click"
+        placement={placement}
+        overlay={overlay}
         onEnter={this.handleShow}
         onExited={this.handleHide}
+        container={this.props.container}
       >
         <button {...buttonProps}>
           {this.props.title}
@@ -66,21 +81,14 @@ class PopoverField extends SilverStripeComponent {
       </OverlayTrigger>
     );
   }
-
-  /**
-   * Get popup placement direction
-   *
-   * @returns {String}
-   */
-  getPlacement() {
-    const placement = this.props.data.placement;
-    return placement || 'bottom';
-  }
 }
 
 PopoverField.propTypes = {
   id: React.PropTypes.string,
   title: React.PropTypes.any,
+  container: React.PropTypes.any,
+  className: React.PropTypes.string,
+  popoverClassName: React.PropTypes.string,
   data: React.PropTypes.oneOfType([
     React.PropTypes.array,
     React.PropTypes.shape({
@@ -89,6 +97,12 @@ PopoverField.propTypes = {
       placement: React.PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
     }),
   ]),
+};
+
+PopoverField.defaultProps = {
+  data: {},
+  className: '',
+  popoverClassName: '',
 };
 
 export default PopoverField;

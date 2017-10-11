@@ -6,8 +6,10 @@ TreeDropdownFieldNode.propTypes = {
   // ID field could be string
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   title: PropTypes.string, // item label
+  titlePath: PropTypes.string, // full path using the titles
   // Marking information
   disabled: PropTypes.bool,
+  parentid: PropTypes.number,
   count: PropTypes.number, // Number of children that exist (not that were returned)
   depth: PropTypes.number, // Depth in the tree (root = 0)
   expanded: PropTypes.bool, // True if children returned (even if closed)

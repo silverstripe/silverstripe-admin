@@ -12,7 +12,7 @@ jest.mock('modernizr', () => ({
 
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
-import { TimeField } from '../TimeField';
+import { Component as TimeField } from '../TimeField';
 
 describe('TimeField without html5 time field support', () => {
   let props = null;

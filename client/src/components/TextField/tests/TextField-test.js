@@ -6,7 +6,7 @@ jest.unmock('../TextField');
 
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
-import { TextField } from '../TextField';
+import { Component as TextField } from '../TextField';
 
 describe('TextField', () => {
   let props = null;
@@ -61,6 +61,19 @@ describe('TextField', () => {
 
       expect(textField.isMultiline()).toBeTruthy();
       expect(newProps.componentClass).toBe('textarea');
+    });
+  });
+
+  describe('attributes', () => {
+    it('should assign placeholder', () => {
+      props.attributes = {
+        placeholder: 'text',
+      };
+      const textField = ReactTestUtils.renderIntoDocument(
+        <TextField {...props} />
+      );
+      const newProps = textField.getInputProps();
+      expect(newProps.placeholder).toBe('text');
     });
   });
 });

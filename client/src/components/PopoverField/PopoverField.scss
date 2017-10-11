@@ -9,16 +9,35 @@
     outline: none;
   }
 
-  .arrow {
-    @extend .popover-arrow; // Temp uses Bootstrap 3 class name, until React Bootstrap has been updated to Bootstrap 4
+  &.top,
+  &.bottom {
+    .arrow {
+      margin-left: -5px;
+    }
+  }
+
+  &.top {
+    margin-top: -10px;
+  }
+
+  &.left,
+  &.right {
+    .arrow {
+      margin-top: -3px;
+    }
+  }
+
+  &.left {
+    margin-left: -10px;
   }
 }
 
-.popover-content {
+.popover-body {
 
   // Unable to use classes within the popover, so we use elements to style
   ul {
-    padding-left: 0 !important; // TODO remove important by removing nesting of lists
+    // TODO remove important by removing nesting of lists
+    padding-left: 0 !important;
     list-style-type: none;
     margin-left: -#{$popover-padding} + 1px; // minus border
     margin-right: -#{$popover-padding} + 1px;
@@ -27,7 +46,7 @@
 
   a {
     display: block;
-    padding: #{$spacer-y / 4} $popover-padding;
+    padding: #{$spacer / 4} $popover-padding;
     color: $dropdown-link-color;
 
     &:hover {

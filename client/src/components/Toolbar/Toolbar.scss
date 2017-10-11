@@ -1,3 +1,4 @@
+// TODO ensure .toolbar is used globally and remove toolbar--"modifier" classes from following block
 .toolbar,
 .toolbar--north,
 .toolbar--content,
@@ -8,12 +9,10 @@
   .btn-toolbar {
     margin-top: 0;
     margin-bottom: 0;
-    margin-left: -5px;
-    margin-right: -5px;
+  }
 
-    .pull-xs-left .btn-primary {
-      margin-left: 5px;
-    }
+  .btn {
+    margin-bottom: 0;
   }
 }
 
@@ -27,31 +26,6 @@
   width: 100%;
 }
 
-// TEMP overrides color of links in JqueryUI widgets
-// required in modal toolbar eg. insert from URL link)
-.toolbar {
-
-  a.btn {
-    color: $body-color-light;
-  }
-
-  a.btn-primary {
-    color: #fff;
-  }
-
-  .btn {
-    margin-bottom: 0;
-  }
-
-  // If the first button isn't a btn with BG the icon should align with margin
-  .btn-toolbar > {
-    .btn-secondary:first-child,
-    .grid-csv-button:first-child,
-    .grid-print-button:first-child {
-      margin-left: -5px;
-    }
-  }
-}
 
 // Secondary content actions eg. Add page button
 .toolbar--content {
@@ -61,6 +35,7 @@
   padding-top: $spacer-xs;
   padding-bottom: $spacer-xs;
   min-height: auto;
+  width: auto; // override 100% width due to negative margin
 
   .btn {
     transition: font-size 0s;
@@ -88,10 +63,14 @@
 
   @include media-breakpoint-down(sm) {
     .btn {
-      font-size: 0;
+      // Hide text on small devices if the button has an icon
+      &[class*="font-icon-"] {
+        font-size: 0;
+      }
 
       &:before {
         margin-right: 0;
+        top: 0;
       }
     }
   }
@@ -99,6 +78,7 @@
 
 // Primary content actions
 .toolbar--south {
+  height: $toolbar-total-height;
   padding-top: $spacer-xs;
   padding-bottom: $spacer-xs;
   border-top: 1px solid $border-color;
@@ -108,11 +88,15 @@
 
 .toolbar__back-button {
   float: left;
-  margin: $spacer-xs $spacer-x / 2 $spacer-xs #{-$spacer-xs};
-  padding-left: $spacer-x / 4;
-  padding-right: $spacer-x / 4;
+  padding-left: $spacer / 4;
+  padding-right: $spacer / 4;
   min-width: 24px; // Safari fix
   color: $body-color-light; // TEMP: Needed for anchor buttons to override legacy styles
+  margin-left: -$spacer-xs;
+
+  @include media-breakpoint-down(sm) {
+    margin-left: 42px;
+  }
 
   .toolbar--south & {
     margin-top: 0;
@@ -122,4 +106,6 @@
 
 .toolbar__navigation {
   position: relative;
+  display: flex;
+  align-items: center;
 }

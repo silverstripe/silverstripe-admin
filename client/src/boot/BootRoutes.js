@@ -1,6 +1,6 @@
-/* global window */
+/* global window, document */
 
-import $ from 'jQuery';
+import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router as ReactRouter, useRouterHistory } from 'react-router';
@@ -20,7 +20,6 @@ import getFormState from 'lib/getFormState';
  * Bootstraps routes
  */
 class BootRoutes {
-
   /**
    * @param {Object} store Redux store
    * @param {Object} client The Apollo client
@@ -86,7 +85,7 @@ class BootRoutes {
     reactRouteRegister.updateRootRoute({
       component: App,
     });
-    let history = syncHistoryWithStore(
+    const history = syncHistoryWithStore(
       useRouterHistory(useBeforeUnload(createHistory))({
         basename: Config.get('baseUrl'),
       }),
@@ -150,7 +149,7 @@ class BootRoutes {
 
         // Verify that this is a true state change. E.g. not a hash change.
         // This emulates behaviour of old html history.js
-        const forceReload = ctx.data && ctx.data.__forceReload;
+        const forceReload = ctx.state && ctx.state.__forceReload;
         if (ctx.path !== lastPath || forceReload) {
           // Load the panel and stop processing routes.
           lastPath = ctx.path.replace(/#.*$/, '');

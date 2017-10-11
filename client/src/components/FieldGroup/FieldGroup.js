@@ -8,6 +8,6 @@ class FieldGroup extends CompositeField {
 }
 
 // Field group is essentially a composite field, but wrapped with a typical field holder
-export { FieldGroup };
+export { FieldGroup as Component };
 
 export default fieldHolder(FieldGroup);

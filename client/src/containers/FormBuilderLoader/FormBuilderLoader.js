@@ -1,27 +1,41 @@
+import i18n from 'i18n';
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { compose, bindActionCreators } from 'redux';
 import fetch from 'isomorphic-fetch';
 import deepFreeze from 'deep-freeze-strict';
 import {
   SubmissionError,
-  destroy as reduxDestroyForm,
   autofill,
   initialize,
 } from 'redux-form';
-import { findField } from 'lib/schemaFieldValues';
+import schemaFieldValues from 'lib/schemaFieldValues';
 import * as schemaActions from 'state/schema/SchemaActions';
 import merge from 'merge';
 import FormBuilder, { basePropTypes, schemaPropType } from 'components/FormBuilder/FormBuilder';
 import getIn from 'redux-form/lib/structure/plain/getIn';
 import { inject } from 'lib/Injector';
+import getFormState from 'lib/getFormState';
+
+/**
+ * Creates a dot-separated identifier for forms generated
+ * with schemas (e.g. FormBuilderLoader)
+ *
+ * @param {string} identifier
+ * @param {object} schema
+ * @returns {string}
+ */
+function createFormIdentifierFromProps({ identifier, schema = {} }) {
+  return [
+    identifier,
+    schema.schema && schema.schema.name,
+  ].filter(id => id).join('.');
+}
 
 class FormBuilderLoader extends Component {
-
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.clearSchema = this.clearSchema.bind(this);
     this.reduceSchemaErrors = this.reduceSchemaErrors.bind(this);
     this.handleAutofill = this.handleAutofill.bind(this);
   }
@@ -32,13 +46,8 @@ class FormBuilderLoader extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.schemaUrl !== prevProps.schemaUrl) {
-      this.clearSchema(prevProps.schemaUrl);
       this.fetch();
     }
-  }
-
-  componentWillUnmount() {
-    this.clearSchema(this.props.schemaUrl);
   }
 
   /**
@@ -62,13 +71,8 @@ class FormBuilderLoader extends Component {
     return messages;
   }
 
-  clearSchema(schemaUrl) {
-    if (schemaUrl) {
-      // we will reload the schema anyway when we mount again, this is here so that redux-form
-      // doesn't preload previous data mistakenly. (since it only accepts initialised values)
-      reduxDestroyForm(schemaUrl);
-      this.props.actions.schema.setSchema(schemaUrl, null, this.props.identifier);
-    }
+  getIdentifier(props = this.props) {
+    return createFormIdentifierFromProps(props);
   }
 
   /**
@@ -89,42 +93,32 @@ class FormBuilderLoader extends Component {
         .then(formSchema => {
           let schema = formSchema;
           if (schema) {
-            // Strip errors out of schema response in preparation for setSchema and SubmissionError
-            schema = this.reduceSchemaErrors(schema);
+            // Before modifying schema, check if the schema state is provided explicitly
+            const explicitUpdatedState = typeof schema.state !== 'undefined';
 
+            // Merge any errors into the current state to update messages and alerts
+            schema = this.reduceSchemaErrors(schema);
             this.props.actions.schema.setSchema(
               this.props.schemaUrl,
               schema,
-              this.props.identifier
+              this.getIdentifier()
             );
 
-            const schemaRef = schema.schema || this.props.schema.schema;
-            if (schema.state) {
-              const formData = schema.state.fields.reduce((tempData, state) => {
-                if (!schemaRef) {
-                  return tempData;
-                }
-
-                const field = findField(schemaRef.fields, state.name);
-
-                if (!field || field.schemaType === 'Structural' || field.readOnly === true) {
-                  return tempData;
-                }
-                return Object.assign({}, tempData, {
-                  [state.name]: state.value,
-                });
-              }, {});
-              this.props.actions.reduxForm.initialize(this.props.identifier, formData);
+            // If state is updated in server response, re-initialize redux form state
+            if (explicitUpdatedState) {
+              const schemaRef = schema.schema || this.props.schema.schema;
+              const formData = schemaFieldValues(schemaRef, schema.state);
+              this.props.actions.reduxForm.initialize(this.getIdentifier(), formData);
             }
           }
           return schema;
         })
     );
 
-    if (typeof this.props.handleSubmit === 'function') {
-      promise = this.props.handleSubmit(data, action, newSubmitFn);
+    if (typeof this.props.onSubmit === 'function') {
+      promise = this.props.onSubmit(data, action, newSubmitFn);
     } else {
-      promise = submitFn();
+      promise = newSubmitFn();
     }
 
     if (!promise) {
@@ -222,10 +216,35 @@ class FormBuilderLoader extends Component {
    */
   callFetch(headerValues) {
     return fetch(this.props.schemaUrl, {
-      headers: { 'X-FormSchema-Request': headerValues.join(',') },
+      headers: {
+        'X-FormSchema-Request': headerValues.join(','),
+        Accept: 'application/json',
+      },
       credentials: 'same-origin',
     })
-      .then(response => response.json());
+      .then((response) => {
+        if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        return new Promise(
+          (resolve, reject) => response
+            .json()
+            .then((json) => {
+              reject({
+                status: response.status,
+                statusText: response.statusText,
+                json,
+              });
+            })
+            .catch(() => {
+              reject({
+                status: response.status,
+                statusText: response.statusText,
+                json: {},
+              });
+            })
+        );
+      });
   }
 
   /**
@@ -238,53 +257,69 @@ class FormBuilderLoader extends Component {
    * @return {Object} Promise from the AJAX request.
    */
   fetch(schema = true, state = true, errors = true) {
-    // Note: `errors` is only valid for submissions, not schema requests, so omitted here
-    const headerValues = ['auto'];
-
-    if (schema) {
-      headerValues.push('schema');
-    }
-
-    if (state) {
-      headerValues.push('state');
-    }
-
-    if (errors) {
-      headerValues.push('errors');
-    }
-
     if (this.props.loading) {
       return Promise.resolve({});
     }
 
+    // Note: `errors` is only valid for submissions, not schema requests, so omitted here
+    const headerValues = [
+      'auto',
+      schema && 'schema',
+      state && 'state',
+      errors && 'errors',
+    ].filter(header => header);
+
+
     // using `this.state.fetching` caused race-condition issues.
     this.props.actions.schema.setSchemaLoading(this.props.schemaUrl, true);
+
+    if (typeof this.props.onFetchingSchema === 'function') {
+      this.props.onFetchingSchema();
+    }
 
     return this.callFetch(headerValues)
       .then(formSchema => {
         this.props.actions.schema.setSchemaLoading(this.props.schemaUrl, false);
 
-        if (typeof this.props.onFetchingSchema === 'function') {
-          this.props.onFetchingSchema();
+        if (formSchema.errors) {
+          if (typeof this.props.onLoadingError === 'function') {
+            this.props.onLoadingError(formSchema);
+          }
+        } else if (typeof this.props.onLoadingSuccess === 'function') {
+          this.props.onLoadingSuccess();
         }
 
-        if (formSchema.errors &&
-          typeof this.props.onLoadingError === 'function') {
-          return this.props.onLoadingError(formSchema);
-        }
-
-        if (typeof formSchema.id !== 'undefined') {
+        if (typeof formSchema.id !== 'undefined' && formSchema.state) {
           const overriddenSchema = Object.assign({},
             formSchema,
             {
-              id: this.props.schemaUrl,
               state: this.overrideStateData(formSchema.state),
             }
           );
+
           this.props.actions.schema.setSchema(
             this.props.schemaUrl,
             overriddenSchema,
-            this.props.identifier
+            // Mock the will-be shape of the props so that the identifier is right
+            createFormIdentifierFromProps({
+              ...this.props,
+              schema: {
+                ...this.props.schema,
+                ...overriddenSchema,
+              },
+            })
+          );
+
+          const schemaData = formSchema.schema || this.props.schema.schema;
+          const formData = schemaFieldValues(schemaData, overriddenSchema.state);
+
+          // need to initialize the form again in case it was loaded before
+          // this will re-trigger Injector.form APIs, reset values and reset pristine state as well
+          this.props.actions.reduxForm.initialize(
+            this.getIdentifier(),
+            formData,
+            false,
+            { keepSubmitSucceeded: true }
           );
 
           return overriddenSchema;
@@ -294,18 +329,49 @@ class FormBuilderLoader extends Component {
       .catch((error) => {
         this.props.actions.schema.setSchemaLoading(this.props.schemaUrl, false);
         if (typeof this.props.onLoadingError === 'function') {
-          return this.props.onLoadingError({
-            errors: [
-              {
-                value: error.message,
-                type: 'error',
-              },
-            ],
-          });
+          return this.props.onLoadingError(this.normaliseError(error));
         }
         // Assign onLoadingError to suppress this
         throw error;
       });
+  }
+
+  /**
+   * Convert error to a json object to pass to onLoadingError
+   *
+   * @param {Object} error
+   */
+  normaliseError(error) {
+    // JSON result contains errors.
+    // See LeftAndMain::jsonError() for format
+    if (error.json && error.json.errors) {
+      return error.json;
+    }
+
+    // Standard http errors
+    if (error.status && error.statusText) {
+      return {
+        errors: [
+          {
+            code: error.status,
+            value: error.statusText,
+            type: 'error',
+          },
+        ],
+      };
+    }
+
+    // Handle exception
+    const message = error.message
+      || i18n._t('Admin.UNKNOWN_ERROR', 'An unknown error has occurred.');
+    return {
+      errors: [
+        {
+          value: message,
+          type: 'error',
+        },
+      ],
+    };
   }
 
   /**
@@ -318,7 +384,7 @@ class FormBuilderLoader extends Component {
    * @param value
    */
   handleAutofill(field, value) {
-    this.props.actions.reduxForm.autofill(this.props.identifier, field, value);
+    this.props.actions.reduxForm.autofill(this.getIdentifier(), field, value);
   }
 
   render() {
@@ -329,11 +395,12 @@ class FormBuilderLoader extends Component {
     }
 
     const props = Object.assign({}, this.props, {
-      form: this.props.identifier,
+      form: this.getIdentifier(),
       onSubmitSuccess: this.props.onSubmitSuccess,
-      handleSubmit: this.handleSubmit,
+      onSubmit: this.handleSubmit,
       onAutofill: this.handleAutofill,
     });
+
     return <FormBuilder {...props} />;
   }
 }
@@ -353,11 +420,9 @@ FormBuilderLoader.propTypes = Object.assign({}, basePropTypes, {
 
 function mapStateToProps(state, ownProps) {
   const schema = state.form.formSchemas[ownProps.schemaUrl];
+  const identifier = createFormIdentifierFromProps({ ...ownProps, schema });
+  const reduxFormState = getIn(getFormState(state), identifier);
 
-  const reduxFormState =
-    state.form &&
-    state.form.formState &&
-    getIn(state.form.formState, ownProps.identifier);
   const submitting = reduxFormState && reduxFormState.submitting;
   const values = reduxFormState && reduxFormState.values;
 
@@ -375,16 +440,19 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const ConnectedFormBuilderLoader = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FormBuilderLoader);
+export { FormBuilderLoader as Component };
 
-export default inject(
-  ['ReduxForm', 'ReduxFormField'],
-  (Form, Field) => ({
-    baseFormComponent: Form,
-    baseFieldComponent: Field,
-  }),
-  ({ identifier }) => identifier
-)(ConnectedFormBuilderLoader);
+export default compose(
+  inject(
+    ['ReduxForm', 'ReduxFormField'],
+    (Form, Field) => ({
+      baseFormComponent: Form,
+      baseFieldComponent: Field,
+    }),
+    ({ identifier }) => identifier
+  ),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(FormBuilderLoader);

@@ -1,4 +1,6 @@
-import jQuery from 'jQuery';
+/* global window */
+import i18n from 'i18n';
+import jQuery from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -8,7 +10,7 @@ import FormBuilderModal from 'components/FormBuilderModal/FormBuilderModal';
 const InjectableFormBuilderModal = provideInjector(FormBuilderModal);
 
 jQuery.entwine('ss', ($) => {
-	/**
+  /**
    * Kick off an "add to campaign" dialog from the CMS actions.
    */
   $(
@@ -39,7 +41,7 @@ jQuery.entwine('ss', ($) => {
     },
   });
 
-	/**
+  /**
    * Uses React-Bootstrap in order to replicate the bootstrap styling and JavaScript behaviour.
    * The "add to campaign" dialog is used in a similar fashion in AssetAdmin.
    */
@@ -67,14 +69,15 @@ jQuery.entwine('ss', ($) => {
       const sectionConfig = store.getState().config.sections
         .find((section) => section.name === sectionConfigKey);
       const modalSchemaUrl = `${sectionConfig.form.AddToCampaignForm.schemaUrl}/${id}`;
+      const title = i18n._t('Admin.ADD_TO_CAMPAIGN', 'Add to campaign');
 
       ReactDOM.render(
         <Provider store={store}>
           <InjectableFormBuilderModal
-            title="Add to campaign"
+            title={title}
             show={show}
-            handleSubmit={handleSubmit}
-            handleHide={handleHide}
+            onSubmit={handleSubmit}
+            onHide={handleHide}
             schemaUrl={modalSchemaUrl}
             bodyClassName="modal__dialog"
             className="add-to-campaign-modal"

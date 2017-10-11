@@ -2,9 +2,8 @@
 
 namespace SilverStripe\Admin;
 
-use SilverStripe\Admin\Forms\EditorExternalLinkFormFactory;
 use SilverStripe\Admin\Forms\EditorEmailLinkFormFactory;
-use SilverStripe\CMS\Forms\InternalLinkFormFactory;
+use SilverStripe\Admin\Forms\EditorExternalLinkFormFactory;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\RequestHandler;
 use SilverStripe\Forms\Form;
@@ -47,6 +46,11 @@ class ModalController extends RequestHandler
         $this->name = $name;
     }
 
+    public function getRequest()
+    {
+        return $this->controller->getRequest();
+    }
+
     /**
      * @return Controller
      */
@@ -72,8 +76,14 @@ class ModalController extends RequestHandler
      */
     public function EditorExternalLink()
     {
+        // Show link text field if requested
+        $showLinkText = $this->controller->getRequest()->getVar('requireLinkText');
         $factory = EditorExternalLinkFormFactory::singleton();
-        return $factory->getForm($this->controller, "{$this->name}/EditorExternalLink");
+        return $factory->getForm(
+            $this->controller,
+            "{$this->name}/EditorExternalLink",
+            [ 'RequireLinkText' => isset($showLinkText) ]
+        );
     }
 
     /**
@@ -83,7 +93,13 @@ class ModalController extends RequestHandler
      */
     public function EditorEmailLink()
     {
+        // Show link text field if requested
+        $showLinkText = $this->controller->getRequest()->getVar('requireLinkText');
         $factory = EditorEmailLinkFormFactory::singleton();
-        return $factory->getForm($this->controller, "{$this->name}/EditorEmailLink");
+        return $factory->getForm(
+            $this->controller,
+            "{$this->name}/EditorEmailLink",
+            [ 'RequireLinkText' => isset($showLinkText) ]
+        );
     }
 }

@@ -4,77 +4,59 @@ import ACTION_TYPES from './RecordsActionTypes';
 const initialState = {};
 
 function recordsReducer(state = initialState, action) {
-  let records = null;
-  let recordType = null;
-  let record = null;
-
   switch (action.type) {
-    case ACTION_TYPES.CREATE_RECORD:
-      return deepFreeze(Object.assign({}, state, {}));
-
-    case ACTION_TYPES.UPDATE_RECORD:
-      return deepFreeze(Object.assign({}, state, {}));
-
-    case ACTION_TYPES.DELETE_RECORD:
-      return deepFreeze(Object.assign({}, state, {}));
-
-    case ACTION_TYPES.FETCH_RECORDS_REQUEST:
-      return state;
-
-    case ACTION_TYPES.FETCH_RECORDS_FAILURE:
-      return state;
-
-    case ACTION_TYPES.FETCH_RECORDS_SUCCESS:
-      recordType = action.payload.recordType;
+    case ACTION_TYPES.FETCH_RECORDS_SUCCESS: {
+      const recordType = action.payload.recordType;
       if (!recordType) {
         throw new Error('Undefined record type');
       }
-      records = action.payload.data._embedded[recordType] || {};
-      records = records.reduce((prev, val) => Object.assign({}, prev, { [val.ID]: val }), {});
-      return deepFreeze(Object.assign({}, state, {
+      const records = action.payload.data._embedded[recordType] || [];
+      return deepFreeze({
+        ...state,
         [recordType]: records,
-      }));
+      });
+    }
 
-    case ACTION_TYPES.FETCH_RECORD_REQUEST:
-      return state;
-
-    case ACTION_TYPES.FETCH_RECORD_FAILURE:
-      return state;
-
-    case ACTION_TYPES.FETCH_RECORD_SUCCESS:
-      recordType = action.payload.recordType;
-      record = action.payload.data;
-
+    case ACTION_TYPES.FETCH_RECORD_SUCCESS: {
+      const recordType = action.payload.recordType;
+      const newRecord = action.payload.data;
       if (!recordType) {
         throw new Error('Undefined record type');
       }
-      return deepFreeze(Object.assign({}, state, {
-        [recordType]: Object.assign({}, state[recordType], { [record.ID]: record }),
-      }));
+      if (!newRecord) {
+        throw new Error('Undefined record data given');
+      }
+      const records = state[recordType] || [];
+      // Conditionally replace or append
+      if (records.find((next) => next.ID === newRecord.ID)) {
+        return deepFreeze({
+          ...state,
+          [recordType]: records.map((next) => (next.ID === newRecord.ID ? newRecord : next)),
+        });
+      }
+      return deepFreeze({
+        ...state,
+        [recordType]: [...records, newRecord],
+      });
+    }
 
-    case ACTION_TYPES.DELETE_RECORD_REQUEST:
-      return state;
+    case ACTION_TYPES.DELETE_RECORD_SUCCESS: {
+      const recordType = action.payload.recordType;
+      if (!recordType) {
+        throw new Error('Undefined record type');
+      }
+      const records = state[recordType]
+        .filter((record) => record.ID !== action.payload.id);
 
-    case ACTION_TYPES.DELETE_RECORD_FAILURE:
-      return state;
-
-    case ACTION_TYPES.DELETE_RECORD_SUCCESS:
-      recordType = action.payload.recordType;
-      records = state[recordType];
-      records = Object.keys(records)
-        .reduce((result, key) => {
-          if (parseInt(key, 10) !== parseInt(action.payload.id, 10)) {
-            return Object.assign({}, result, { [key]: records[key] });
-          }
-          return result;
-        }, {});
-
-      return deepFreeze(Object.assign({}, state, {
+      return deepFreeze({
+        ...state,
         [recordType]: records,
-      }));
+      });
+    }
 
-    default:
+    default: {
       return state;
+    }
   }
 }
 

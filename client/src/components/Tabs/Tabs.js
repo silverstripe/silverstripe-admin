@@ -1,8 +1,7 @@
-import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
+import React, { Component } from 'react';
 import { Tab, Nav, NavItem } from 'react-bootstrap-ss';
 
-class Tabs extends SilverStripeComponent {
+class Tabs extends Component {
   /**
    * Returns props for the container component
    *
@@ -67,7 +66,8 @@ class Tabs extends SilverStripeComponent {
       return null;
     }
     return (
-      <NavItem eventKey={child.props.name}
+      <NavItem
+        eventKey={child.props.name}
         disabled={child.props.disabled}
         className={child.props.tabClassName}
       >

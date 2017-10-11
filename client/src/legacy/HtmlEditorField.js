@@ -197,8 +197,13 @@ ss.editorWrappers.tinyMCE = (function() {
      *
      * Parameters: {Object} attrs
      */
-    insertLink: function(attrs, opts) {
-      this.getInstance().execCommand("mceInsertLink", false, attrs, opts);
+    insertLink: function(attrs, opts, linkText) {
+      if (linkText) {
+        const linkEl = this.getInstance().dom.create('a', attrs, linkText);
+        this.getInstance().selection.setNode(linkEl);
+      } else {
+        this.getInstance().execCommand("mceInsertLink", false, attrs, opts);
+      }
     },
     /**
      * Remove the link from the currently selected node (if any).
@@ -336,7 +341,7 @@ jQuery.entwine('ss', function($) {
         let dialog = $('#insert-media-react__dialog-wrapper');
 
         if (!dialog.length) {
-          dialog = $('<div id="insert-media-react__dialog-wrapper" />');
+          dialog = $('<div id="insert-media-react__dialog-wrapper" class="insert-link__dialog-wrapper" />');
           $('body').append(dialog);
         }
 

@@ -1,3 +1,4 @@
+/* global window, document */
 /**
  * Handles client-side routing.
  * See https://github.com/visionmedia/page.js

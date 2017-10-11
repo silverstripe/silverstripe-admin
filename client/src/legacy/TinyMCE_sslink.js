@@ -2,6 +2,7 @@
 import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
 import ReactDOM from 'react-dom';
 import jQuery from 'jquery';
+import { setupTinyMceInlineToolbar } from 'components/TinymceInlineToolbar/TinymceInlineToolbar';
 
 const plugin = {
   /**
@@ -10,8 +11,8 @@ const plugin = {
    * @param {Object} editor
    */
   init(editor) {
-    const actions = TinyMCEActionRegistrar.getActions('sslink')
-      .map((action) => Object.assign(
+    const actions = TinyMCEActionRegistrar.getSortedActions('sslink')
+      .map(action => Object.assign(
         {},
         action,
         { onclick: () => action.onclick(editor) }
@@ -23,10 +24,26 @@ const plugin = {
       type: 'menubutton',
       menu: actions,
     });
+
     editor.addMenuItem('sslink', {
       icon: 'link',
       text: 'Insert Link',
       menu: actions,
+    });
+
+    function openLinkDialog() {
+      const node = tinymce.activeEditor.selection.getNode();
+      const href = node.getAttribute('href');
+      if (href) {
+        editor.execCommand(TinyMCEActionRegistrar.getEditorCommandFromUrl(href));
+      }
+    }
+
+    editor.on('preinit', () => {
+      setupTinyMceInlineToolbar(editor, [
+        { type: 'button', onClick: openLinkDialog, text: 'Edit link' },
+        { type: 'button', onClick: () => editor.execCommand('unlink'), text: 'Remove link' },
+      ]);
     });
   },
 };
@@ -36,6 +53,8 @@ jQuery.entwine('ss', ($) => {
     Element: null,
 
     Data: {},
+
+    Bookmark: null,
 
     onunmatch() {
       // solves errors given by ReactDOM "no matched root found" error.
@@ -48,6 +67,10 @@ jQuery.entwine('ss', ($) => {
     },
 
     open() {
+      // need to bookmark selection before modal opens, due to an IE11 bug where selection is lost
+      const editor = this.getElement().getEditor().getInstance();
+      this.setBookmark(editor.selection.getBookmark(2, true));
+
       this.renderModal(true);
     },
 
@@ -67,9 +90,13 @@ jQuery.entwine('ss', ($) => {
      * @private
      */
     handleInsert(data) {
+      // need to move to bookmarked selection before modal inserts, due to an IE11 bug
+      const editor = this.getElement().getEditor().getInstance();
+      editor.selection.moveToBookmark(this.getBookmark());
+
       const attributes = this.buildAttributes(data);
 
-      this.insertLinkInEditor(attributes);
+      this.insertLinkInEditor(attributes, data.Text);
       this.close();
 
       return Promise.resolve();
@@ -86,11 +113,18 @@ jQuery.entwine('ss', ($) => {
       };
     },
 
-    insertLinkInEditor(attributes) {
+    insertLinkInEditor(attributes, linkText) {
       const editor = this.getElement().getEditor();
-      editor.insertLink(attributes);
+      editor.insertLink(attributes, null, linkText);
       editor.addUndo();
       editor.repaint();
+
+      const instance = editor.getInstance();
+      const selection = instance.selection;
+
+      // Workaround to editing a link that is just inserted issue.
+      // What it does here is deselecting the link text in the editor
+      setTimeout(() => selection && selection.collapse(), 0);
     },
 
     getOriginalAttributes() {

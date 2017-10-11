@@ -2,16 +2,20 @@
 
   .popover-actions-simulate .ui-tabs-anchor {
     font-size: 0;
-    width: 44px;
-    height: 30px;
-    margin-top: -3px;
-    padding: 0;
+    padding: $input-btn-padding-y $input-btn-padding-x;
+    border: 1px solid transparent;
     display: flex;
     align-items: center;
     border-radius: 3px;
+    line-height: $line-height-base * $font-size-root;
 
     &.active, &:hover, &.active:hover {
       background: $btn-secondary-bg;
+    }
+
+    &:hover::after {
+      height: auto;
+      width: auto;
     }
 
     &:after {
@@ -19,13 +23,13 @@
       font-family: "silverstripe";
       display: block;
       margin: 0;
-      line-height: 1em;
+      line-height: $line-height-base * $font-size-root;
+      height: $line-height-base * $font-size-root !important;
       content: "9";
       font-size: 21px;
-      color: $dropdown-link-color;
+      color: $body-color-light;
       background-image: none !important;
       width: 100% !important;
-      height: 1em !important;
       text-align: center;
     }
   }

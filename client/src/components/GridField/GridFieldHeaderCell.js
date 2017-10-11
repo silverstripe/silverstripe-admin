@@ -1,18 +1,7 @@
 import React from 'react';
-import SilverStripeComponent from 'lib/SilverStripeComponent';
 
-class GridFieldHeaderCell extends SilverStripeComponent {
-
-  render() {
-    return (
-      <th>{this.props.children}</th>
-    );
-  }
-
-}
-
-GridFieldHeaderCell.PropTypes = {
-  width: React.PropTypes.number,
-};
+const GridFieldHeaderCell = (props) => (
+  <th>{props.children}</th>
+);
 
 export default GridFieldHeaderCell;

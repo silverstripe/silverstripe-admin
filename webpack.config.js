@@ -34,6 +34,10 @@ const config = [
       TinyMCE_sslink: `${PATHS.LEGACY_SRC}/TinyMCE_sslink.js`,
       'TinyMCE_sslink-external': `${PATHS.LEGACY_SRC}/TinyMCE_sslink-external.js`,
       'TinyMCE_sslink-email': `${PATHS.LEGACY_SRC}/TinyMCE_sslink-email.js`,
+      // For IE version 10 and below. These browsers doesn't handle large
+      // resource files so need to break browser detection and warning code into
+      // its own file
+      browserWarning: `${PATHS.SRC}/lib/browserWarning.js`,
     },
     output: {
       path: PATHS.DIST,
@@ -55,11 +59,30 @@ const config = [
     ],
   },
   {
+    name: 'i18n',
+    entry: {
+      'i18n': `${PATHS.SRC}/i18n.js`
+    },
+    output: {
+      path: PATHS.DIST,
+      filename: 'js/[name].js',
+    },
+    devtool: (ENV !== 'production') ? 'source-map' : '',
+    resolve: resolveJS(ENV, PATHS),
+    externals: externalJS(ENV, PATHS),
+    module: moduleJS(ENV, PATHS),
+    plugins: pluginJS(ENV, PATHS),
+  },
+  {
     name: 'css',
     entry: {
       bundle: `${PATHS.SRC}/styles/bundle.scss`,
       editor: `${PATHS.SRC}/styles/editor.scss`,
       GridField_print: `${PATHS.SRC}/styles/legacy/GridField_print.scss`,
+      // For IE version 10 and below. These browsers doesn't handle large
+      // resource files so need to break browser detection and warning code into
+      // its own file
+      'browser-warning': `${PATHS.SRC}/styles/browser-warning.scss`,
     },
     output: {
       path: PATHS.DIST,

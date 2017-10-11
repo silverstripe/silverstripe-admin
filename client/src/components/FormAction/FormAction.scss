@@ -3,8 +3,8 @@
 
 // Button wrapper
 .btn-toolbar {
-  margin-top: $spacer-y;
-  margin-bottom: $spacer-y;
+  margin-top: $spacer;
+  margin-bottom: $spacer;
 
   fieldset + & {
     margin-top: 0;
@@ -13,18 +13,42 @@
 
 // General buttons
 .btn {
-  margin-right: $spacer-x * .5; // 8px
+  margin-right: $btn-spacing;
   position: relative;
   box-shadow: none;
+  cursor: pointer;
+
+  .btn-toolbar & {
+    margin-right: 0;
+  }
+
+  &.disabled,
+  &.readonly,
+  &:disabled,
+  &[readonly] {
+    cursor: not-allowed;
+  }
+
+  .btn__title {
+    vertical-align: middle;
+  }
+
+  &.btn--last {
+    margin-right: 0;
+  }
+}
+
+.btn--loading .btn__title {
+  visibility: hidden;
 }
 
 // Button icons
 .btn[class*="font-icon-"]::before {
   position: relative;
-  margin-right: 6px;
-  line-height: $line-height-base;
+  margin-right: $btn-icon-spacing;
+  line-height: $line-height-base * $font-size-root;
+  vertical-align: middle;
   font-size: $font-size-lg;
-  float: left;
 }
 
 .btn--icon-danger:hover::before {
@@ -34,26 +58,19 @@
 // Gives button a larger icon
 .btn--icon-sm[class*="font-icon-"]::before {
   font-size: 14px;
-  position: relative;
 }
 
 .btn--icon-md[class*="font-icon-"]::before {
   font-size: 17px;
-  position: relative;
 }
 
 .btn--icon-large[class*="font-icon-"]::before {
   font-size: 20px;
-  top: -1px;
-  position: relative;
 }
 
 .btn--icon-xl[class*="font-icon-"]::before {
   font-size: 22px;
-  top: -1px;
-  position: relative;
 }
-
 
 // For buttons with icon and no text, removes space after icon
 // TODO replace all .no-text classes for .btn--no-text
@@ -65,18 +82,14 @@
 
 // Used buttons with text and icons, but you wan to hide the text only. eg. gridfield pagination
 // Could change to BS .text-hide { @include text-hide(); }, although slightly different
-.btn--hide-text {
-  text-indent: -90000px;
-  overflow: hidden;
-  min-width: calc(#{$btn-padding-x} * 2 + #{$font-size-lg}); // Fix Safari, enough to show icon and include padding
+.btn--hide-text[class*=font-icon-] {
 
-  &.btn-sm {
-    min-width: calc(#{$btn-padding-x-sm} * 2 + #{$font-size-lg}); // Fix Safari, enough to show icon and include padding
+  &:before {
+    margin-right: 0;
   }
 
-  &[class*=font-icon-]::before {
-    text-indent: 0;
-    margin-right: 0;
+  .btn__title {
+    display: none;
   }
 }
 
@@ -93,7 +106,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: $gray;
+    background: $gray-600;
     display: inline-block;
     margin: 0 2px;
     animation: loading-icon 1.2s infinite ease-in-out both;
@@ -110,7 +123,7 @@
 }
 
 .btn--loading {
-  & > span,
+  & > .btn__title,
   &::before {
     visibility: hidden;
   }
@@ -142,7 +155,7 @@
   }
 }
 
-.btn-primary-outline {
+.btn-outline-primary {
   border-color: lighten($btn-primary-border, 10%);
 
   &:hover,
@@ -159,42 +172,52 @@
   }
 }
 
-
+// Todo: All secondary buttons need to change to use .btn-light
 .btn-secondary {
   border-color: transparent;
   background-color: transparent;
+  color: $body-color-light;
 
-  &:hover {
-    background-color: $btn-secondary-bg;
-    border-color: transparent;
+  // Disabled styles
+  &.disabled,
+  &.readonly,
+  &:disabled,
+  &[readonly] {
+    &,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active,
+    &:hover {
+      border-color: transparent;
+      background-color: transparent;
+      color: $body-color-light;
+    }
   }
 
+  &:hover,
   &:focus,
+  &.focus,
   &:active,
   &.active {
-    @include box-shadow(inset 0 0 2px rgba(0, 0, 0, .125));
     background-color: $btn-secondary-bg;
-    border-color: $btn-secondary-border;
-
-    &:hover,
-    &:focus,
-    &.focus {
-      background-color: $btn-secondary-bg;
-      border-color: $btn-secondary-border;
-    }
+    border-color: $btn-secondary-bg;
+    color: $body-color-light;
   }
 }
 
-.btn-secondary-outline {
+.btn-outline-secondary {
   color: $btn-secondary-color;
+  border-color: $border-color;
 
   &:hover,
   &:focus,
   &:active,
   &:active:focus,
   &:active:hover {
-    background-color: $gray-lighter;
+    background-color: $gray-200;
     color: $btn-secondary-color;
+    border-color: $border-color-dark;
   }
 
   .btn__circle {
@@ -228,7 +251,7 @@
 
 // Grouped buttons
 .btn-group {
-  margin-right: $spacer-x * .75; // 12px
+  margin-right: $btn-spacing;
 
   .btn {
     margin-right: 0;
@@ -260,7 +283,7 @@
 }
 
 button.close {
-  padding: $btn-padding-y $btn-padding-x;
+  padding: $input-btn-padding-y $input-btn-padding-x;
 }
 
 // Apply to things like panel close btn
@@ -278,6 +301,6 @@ button.close {
 }
 
 // Main Save & Publish actions for edit page
-.btn-secondary-outline.font-icon-check-mark {
+.btn-outline-secondary.font-icon-check-mark {
   color: green;
 }

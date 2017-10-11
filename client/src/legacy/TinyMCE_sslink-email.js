@@ -1,4 +1,4 @@
-/* global tinymce, ss */
+/* global tinymce, window */
 import i18n from 'i18n';
 import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
 import React from 'react';
@@ -8,16 +8,21 @@ import jQuery from 'jquery';
 import { createInsertLinkModal } from 'containers/InsertLinkModal/InsertLinkModal';
 import { provideInjector } from 'lib/Injector';
 
+const commandName = 'sslinkemail';
+
 // Link to email address
-TinyMCEActionRegistrar.addAction('sslink', {
-  text: i18n._t('Admin.LINKLABEL_EMAIL', 'Link to email address'),
-  // eslint-disable-next-line no-console
-  onclick: (editor) => editor.execCommand('sslinkemail'),
-});
+TinyMCEActionRegistrar
+  .addAction('sslink', {
+    text: i18n._t('Admin.LINKLABEL_EMAIL', 'Link to email address'),
+    // eslint-disable-next-line no-console
+    onclick: (editor) => editor.execCommand(commandName),
+    priority: 51,
+  })
+  .addCommandWithUrlTest(commandName, /^mailto:/);
 
 const plugin = {
   init(editor) {
-    editor.addCommand('sslinkemail', () => {
+    editor.addCommand(commandName, () => {
       const field = window.jQuery(`#${editor.id}`).entwine('ss');
 
       field.openLinkEmailDialog();
@@ -51,11 +56,16 @@ jQuery.entwine('ss', ($) => {
    */
   $(`#${modalId}`).entwine({
     renderModal(show) {
-      const store = ss.store;
-      const client = ss.apolloClient;
+      const store = window.ss.store;
+      const client = window.ss.apolloClient;
       const handleHide = () => this.close();
       const handleInsert = (...args) => this.handleInsert(...args);
       const attrs = this.getOriginalAttributes();
+      const selection = tinymce.activeEditor.selection;
+      const selectionContent = selection.getContent() || '';
+      const tagName = selection.getNode().tagName;
+      const requireLinkText = tagName !== 'A' && selectionContent.trim() === '';
+
       // create/update the react component
       ReactDOM.render(
         <ApolloProvider store={store} client={client}>
@@ -68,6 +78,7 @@ jQuery.entwine('ss', ($) => {
             className="insert-link__dialog-wrapper--email"
             fileAttributes={attrs}
             identifier="Admin.InsertLinkEmailModal"
+            requireLinkText={requireLinkText}
           />
         </ApolloProvider>,
         this[0]
@@ -90,7 +101,7 @@ jQuery.entwine('ss', ($) => {
         ? hrefParts[1].match(/subject=([^&]+)/)
         : '';
       const subject = (subjectMatch)
-        ? subjectMatch[1]
+        ? decodeURIComponent(subjectMatch[1])
         : '';
 
       return {
@@ -128,5 +139,5 @@ jQuery.entwine('ss', ($) => {
 });
 
 // Adds the plugin class to the list of available TinyMCE plugins
-tinymce.PluginManager.add('sslinkemail', (editor) => plugin.init(editor));
+tinymce.PluginManager.add(commandName, (editor) => plugin.init(editor));
 export default plugin;

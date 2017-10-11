@@ -4,7 +4,7 @@
 
   //Spacing between items
   .nav-item+.nav-item {
-    margin-left: $spacer-x / 2;
+    margin-left: $spacer / 2;
   }
 
   .nav-link {
@@ -24,7 +24,7 @@
     &.active:active,
     &.active:focus,
     &.active:hover {
-      border-bottom-color: $nav-tabs-active-link-hover-border-color;
+      border-bottom-color: $nav-tabs-link-active-border-color;
     }
   }
 }

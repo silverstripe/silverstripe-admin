@@ -4,6 +4,7 @@ namespace SilverStripe\Admin\Forms;
 
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\RequiredFields;
 
 class EditorEmailLinkFormFactory extends LinkFormFactory
 {
@@ -24,6 +25,19 @@ class EditorEmailLinkFormFactory extends LinkFormFactory
             ),
         ]);
 
+        if ($context['RequireLinkText']) {
+            $fields->insertAfter('Link', TextField::create('Text', _t(__CLASS__.'.LINKTEXT', 'Link text')));
+        }
+
         return $fields;
+    }
+
+    protected function getValidator($controller, $name, $context)
+    {
+        if ($context['RequireLinkText']) {
+            return RequiredFields::create('Text');
+        }
+
+        return null;
     }
 }

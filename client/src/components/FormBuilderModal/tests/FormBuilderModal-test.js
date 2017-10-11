@@ -15,7 +15,7 @@ describe('FormBuilderModal', () => {
     props = {
       title: '',
       show: false,
-      handleHide: jest.genMockFunction(),
+      onHide: jest.fn(),
       identifier: 'FormModalTest',
     };
   });
@@ -45,7 +45,7 @@ describe('FormBuilderModal', () => {
         error: true,
       };
       const responseDom = ReactTestUtils.renderIntoDocument(formModal.getResponse());
-      expect(responseDom.classList.contains('error')).toBe(true);
+      expect(responseDom.classList.contains('alert-danger')).toBe(true);
       expect(responseDom.textContent).toBe(message);
     });
 
@@ -57,7 +57,7 @@ describe('FormBuilderModal', () => {
         error: false,
       };
       const responseDom = ReactTestUtils.renderIntoDocument(formModal.getResponse());
-      expect(responseDom.classList.contains('good')).toBe(true);
+      expect(responseDom.classList.contains('alert-success')).toBe(true);
       expect(responseDom.textContent).toBe(message);
     });
   });
