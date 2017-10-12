@@ -378,6 +378,11 @@ input[type=month] {
   }
 }
 
+
+.input-group .form-control {
+  z-index: auto;
+}
+
 // fix vertical-align of add-ons
 .input-group-addon {
   line-height: $line-height-base;
