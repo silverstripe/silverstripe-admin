@@ -3,15 +3,13 @@
 	<div class="cms-content-header north vertical-align-items">
 		<div class="cms-content-header-info  vertical-align-items flexbox-area-grow">
 			<div class="breadcrumbs-wrapper">
-				<h2 id="page-title-heading">
-					<span class="cms-panel-link crumb last">
-						<% if $SectionTitle %>
-							$SectionTitle
-						<% else %>
-							<%t SilverStripe\Admin\ModelAdmin.Title 'Data Models' %>
-						<% end_if %>
-					</span>
-				</h2>
+				<span class="cms-panel-link crumb last">
+					<% if $SectionTitle %>
+						$SectionTitle
+					<% else %>
+						<%t SilverStripe\Admin\ModelAdmin.Title 'Data Models' %>
+					<% end_if %>
+				</span>
 			</div>
 		</div>
 
