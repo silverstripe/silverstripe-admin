@@ -116,6 +116,8 @@ body.cms {
 
   .cms-content-header-info {
     height: 100%;
+    min-height: $toolbar-height;
+    min-width: 250px;
 
     & * {
       display: inline-block; // align back button and breadcrumbs
@@ -142,13 +144,17 @@ body.cms {
 }
 
 .cms-content-header {
+  width: 100%;
+  flex-direction: row;
+  display: flex;
+  flex-wrap: wrap;
 
   @include media-breakpoint-down(sm) {
     .cms-content-header-nav {
       display: block;
 
       > .cms-content-header-nav__left {
-        height: 52px;
+        height: $toolbar-height;
       }
     }
 
@@ -256,8 +262,9 @@ body.cms {
  * CMS Breadcrumbs
  * ----------------------------------------------------------------- */
 .breadcrumbs-wrapper {
-  width: 450px;
+  width: 250px; // to enable flexbox auto-grow
   overflow: hidden;
+  flex: 1;
 
   @include media-breakpoint-down(sm) {
     margin-left: $toolbar-total-height;
@@ -679,7 +686,9 @@ body.cms {
 }
 
 .cms-content-header-tabs {
-  margin-top: map_get($spacers, xs); // Same as toolbar padding
+  margin-top: 0;
+  padding-top: map_get($spacers, xs); // Same as toolbar padding
+  min-height: $toolbar-height;
 
   &.icon-button-group-tabs {
     margin-top: 12px;

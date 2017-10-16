@@ -38,7 +38,7 @@ class Toolbar extends Component {
     };
 
     return (
-      <div className="toolbar toolbar--north vertical-align-items">
+      <div className="toolbar toolbar--north">
         <div className="toolbar__navigation fill-width">
           {this.props.showBackButton &&
           <button {...backButtonProps} />

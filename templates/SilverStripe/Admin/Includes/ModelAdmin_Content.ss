@@ -1,7 +1,7 @@
 <div class="cms-content fill-height flexbox-area-grow cms-tabset center $BaseCSSClasses" data-layout-type="border" data-pjax-fragment="Content">
 
-	<div class="cms-content-header north vertical-align-items">
-		<div class="cms-content-header-info  vertical-align-items flexbox-area-grow">
+	<div class="cms-content-header north">
+		<div class="cms-content-header-info vertical-align-items flexbox-area-grow">
 			<div class="breadcrumbs-wrapper">
 				<span class="cms-panel-link crumb last">
 					<% if $SectionTitle %>
@@ -27,7 +27,7 @@
 		</div>
 	</div>
 
-	<div class="cms-content-fields center ui-widget-content cms-panel-padded fill-height" data-layout-type="border">
+	<div class="cms-content-fields center ui-widget-content cms-panel-padded fill-height flexbox-area-grow" data-layout-type="border">
 		$Tools
 
 		<div class="cms-content-view">
