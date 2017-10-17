@@ -7,15 +7,16 @@
 .treedropdownfield__option-button {
   border: 1px solid $border-color-light;
   border-radius: $border-radius;
-  background: none;
+  background: $white;
   // needed to override the width rule in .fill-width
   width: auto !important; // sass-lint:disable-line no-important
   max-width: 25%;
   margin: -4px -5px -4px 5px;
   padding: 4px 5px 4px 4px;
+  cursor: pointer;
 
   &:hover {
-    background: $btn-secondary-bg;
+    background: $gray-200;
   }
 }
 
@@ -41,6 +42,7 @@
 }
 
 .treedropdownfield__breadcrumbs-button {
+  color: $white;
   border: 0;
   background: none;
   width: 30px;
@@ -75,11 +77,34 @@
   }
 }
 
-.Select-option.is-selected {
-  background-color: $gray-200;
+.Select-option.is-focused {
+  background-color: lighten($cyan, 25%);
+  color: $body-color;
 }
 
-.Select-option.is-focused {
-  background-color: $gray-300;
+.Select-option.is-selected {
+  background-color: $link-color;
+  color: $white;
+
+  .treedropdownfield__option-button {
+    border-color: $brand-primary;
+    background: none;
+    color: $white;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+.is-focused:not(.is-open)>.Select-control,
+.is-open>.Select-control,
+.Select-menu-outer {
+  box-shadow: none;
+  border-color: $brand-primary;
+}
+
+.Select-menu-outer {
+  border-top-color: #e6e6e6;
 }
 // sass-lint:enable class-name-format
