@@ -39,7 +39,7 @@ const applyTransforms = () => {
           return togglePristineState(field, isPristine);
         });
         form.mutateField('action_publish', (field) => {
-          const isPristine = field.data.isPublished && form.isPristine();
+          const isPristine = field.data.isPublished && !field.data.isModified && form.isPristine();
 
           return togglePristineState(field, isPristine);
         });
