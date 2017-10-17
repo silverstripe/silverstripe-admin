@@ -83,7 +83,7 @@ $.entwine('ss', function($){
     }
   });
 
-  $('.cms-content .cms-content-header, .cms-content .cms-content-actions').entwine({
+  $('.cms-content .cms-content-actions').entwine({
     redraw: function() {
       if(window.debug) console.log('redraw', this.attr('class'), this.get(0));
 
