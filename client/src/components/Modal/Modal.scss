@@ -8,7 +8,7 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible;
   border: 0;
 }
 
@@ -21,7 +21,6 @@
 // Top section of the modal w/ title and dismiss
 .modal-header {
   // height: $toolbar-total-height;
-  margin-right: -$panel-padding-x / 2;
 
   // Close icon
   .close {
@@ -31,6 +30,7 @@
     height: 32px;
     opacity: .5;
     margin-top: 0;
+    margin-right: -$panel-padding-x / 2;
 
     span {
       overflow: hidden;
