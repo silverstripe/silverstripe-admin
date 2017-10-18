@@ -1057,7 +1057,10 @@ class LeftAndMain extends Controller implements PermissionProvider
                             $menuIconStyling .= $menuIcon;
                         }
 
-                        $iconClass = LeftAndMain::menu_icon_class_for_class($menuItem->controller);
+                        $iconClass = false;
+                        if (!$menuIcon) {
+                            $iconClass = LeftAndMain::menu_icon_class_for_class($menuItem->controller);
+                        }
                     } else {
                         $iconClass = $menuItem->iconClass;
                     }
