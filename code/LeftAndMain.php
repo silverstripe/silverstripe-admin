@@ -1050,14 +1050,15 @@ class LeftAndMain extends Controller implements PermissionProvider
                     // Provide styling for custom $menu-icon. Done here instead of in
                     // CMSMenu::populate_menu(), because the icon is part of
                     // the CMS right pane for the specified class as well...
+                    $iconClass = '';
                     if ($menuItem->controller) {
                         $menuIcon = LeftAndMain::menu_icon_for_class($menuItem->controller);
 
                         if (!empty($menuIcon)) {
                             $menuIconStyling .= $menuIcon;
+                        } else {
+                            $iconClass = LeftAndMain::menu_icon_class_for_class($menuItem->controller);
                         }
-
-                        $iconClass = LeftAndMain::menu_icon_class_for_class($menuItem->controller);
                     } else {
                         $iconClass = $menuItem->iconClass;
                     }
