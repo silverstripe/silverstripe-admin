@@ -71,6 +71,6 @@ function appBoot() {
   });
 
   // Force this to the end of the execution queue to ensure it's last.
-  window.setTimeout(Injector.load, 0);
+  window.setTimeout(() => Injector.load(), 0);
 }
 window.onload = appBoot;
