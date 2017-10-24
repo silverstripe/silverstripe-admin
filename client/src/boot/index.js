@@ -59,10 +59,7 @@ function appBoot() {
   // Apply any injector transformations
   applyTransforms();
 
-  // Force this to the end of the execution queue to ensure it's last.
-  window.setTimeout(() => {
-    Injector.load();
-
+  Injector.ready(() => {
     // add any possible new reducers that were registered
     const newReducer = combineReducers(Injector.reducer.getAll());
     store.replaceReducer(newReducer);
@@ -71,6 +68,9 @@ function appBoot() {
     if (window.jQuery) {
       window.jQuery('body').addClass('js-injector-boot');
     }
-  }, 0);
+  });
+
+  // Force this to the end of the execution queue to ensure it's last.
+  window.setTimeout(Injector.load, 0);
 }
 window.onload = appBoot;

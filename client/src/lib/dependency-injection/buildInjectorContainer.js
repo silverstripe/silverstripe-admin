@@ -11,6 +11,8 @@ const buildInjectorContainer = () => ({
    */
   initialised: false,
 
+  callbacks: [],
+
   /**
    * Register a service for the injector to provide
    *
@@ -62,6 +64,10 @@ const buildInjectorContainer = () => ({
       .forEach(service => service.load());
 
     this.initialised = true;
+    this.callbacks.forEach((callback) => {
+      callback();
+    });
+    this.callbacks = [];
   },
 
   /**
@@ -85,6 +91,21 @@ const buildInjectorContainer = () => ({
       {}
     );
     callback(updater);
+  },
+
+  ready(callback) {
+    if (typeof callback !== 'function') {
+      throw new Error('Callback provided is not a function');
+    }
+    if (this.initialised) {
+      callback();
+      return;
+    }
+
+    this.callbacks = [
+      ...this.callbacks,
+      callback,
+    ];
   },
 });
 
