@@ -1065,7 +1065,7 @@ class LeftAndMain extends Controller implements PermissionProvider
                     $menu->push(new ArrayData(array(
                         "MenuItem" => $menuItem,
                         "AttributesHTML" => $menuItem->getAttributesHTML(),
-                        "Title" => Convert::raw2xml($title),
+                        "Title" => $title,
                         "Code" => $code,
                         "Icon" => strtolower($code),
                         "IconClass" => $iconClass,
