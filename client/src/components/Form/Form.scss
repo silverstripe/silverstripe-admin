@@ -53,9 +53,11 @@
   margin: $spacer 0 #{-$spacer};
 }
 
-// Remove underline and column offset
-// Used on places like tree batch actions
-.form--no-dividers .form-group {
+// Remove underline and column offset. Used on places like tree batch actions.
+// Apply form--no-dividers to a form element, or form-field--no-divider to an individal
+// form field.
+.form--no-dividers .form-group,
+.form-field--no-divider {
   padding-bottom: 0;
 
   &::after {
@@ -374,6 +376,11 @@ input[type=month] {
       line-height: $line-height-base;
     }
   }
+}
+
+
+.input-group .form-control {
+  z-index: auto;
 }
 
 // fix vertical-align of add-ons

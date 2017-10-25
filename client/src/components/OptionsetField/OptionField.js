@@ -18,16 +18,26 @@ class OptionField extends Component {
     const classNames = [
       this.props.className,
       this.props.extraClass,
+      'form-check',
     ];
 
     if (this.props.value) {
       classNames.push('checked');
     }
 
+    if (this.props.readOnly || this.props.disabled) {
+      // bootstrap4 specific
+      classNames.push('disabled');
+
+      if (this.props.disabled) {
+        classNames.push('option-field--disabled');
+      }
+    }
+
     return {
       id: this.props.id,
       name: this.props.name,
-      disabled: this.props.disabled,
+      disabled: this.props.disabled || this.props.readOnly,
       readOnly: this.props.readOnly,
       className: classNames.join(' '),
       onChange: this.handleChange,
@@ -42,6 +52,10 @@ class OptionField extends Component {
    * @param {Event} event
    */
   handleChange(event) {
+    if (this.props.readOnly || this.props.disabled) {
+      event.preventDefault();
+      return;
+    }
     if (typeof this.props.onChange === 'function') {
       // call onChange for `FormBuilder` to work
       this.props.onChange(event, {
