@@ -59,14 +59,18 @@ function appBoot() {
   // Apply any injector transformations
   applyTransforms();
 
-  // Force this to the end of the execution queue to ensure it's last.
-  window.setTimeout(() => {
-    Injector.load();
-    routes.start(window.location.pathname);
-
+  Injector.ready(() => {
     // add any possible new reducers that were registered
     const newReducer = combineReducers(Injector.reducer.getAll());
     store.replaceReducer(newReducer);
-  }, 0);
+
+    routes.start(window.location.pathname);
+    if (window.jQuery) {
+      window.jQuery('body').addClass('js-injector-boot');
+    }
+  });
+
+  // Force this to the end of the execution queue to ensure it's last.
+  window.setTimeout(() => Injector.load(), 0);
 }
 window.onload = appBoot;

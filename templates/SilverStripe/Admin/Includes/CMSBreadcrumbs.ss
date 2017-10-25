@@ -1,12 +1,10 @@
 <div class="breadcrumbs-wrapper flexbox-area-grow" data-pjax-fragment="Breadcrumbs">
-	<h2 id="page-title-heading">
-		<% loop $Breadcrumbs %>
-			<% if $Last %>
-				<span class="cms-panel-link crumb last">$Title</span>
-			<% else %>
-				<a class="cms-panel-link crumb" href="$Link">$Title</a>
-				<span class="sep">/</span>
-			<% end_if %>
-		<% end_loop %>
-	</h2>
+	<% loop $Breadcrumbs %>
+		<% if $Last %>
+			<span class="cms-panel-link crumb last">$Title</span>
+		<% else %>
+			<a class="cms-panel-link crumb" href="$Link">$Title</a>
+			<span class="sep">/</span>
+		<% end_if %>
+	<% end_loop %>
 </div>

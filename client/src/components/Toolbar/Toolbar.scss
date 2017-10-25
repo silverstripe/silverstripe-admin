@@ -24,6 +24,9 @@
   z-index: 60;
   position: relative;
   width: 100%;
+  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
 }
 
 
@@ -87,7 +90,6 @@
 }
 
 .toolbar__back-button {
-  float: left;
   padding-left: $spacer / 4;
   padding-right: $spacer / 4;
   min-width: 24px; // Safari fix

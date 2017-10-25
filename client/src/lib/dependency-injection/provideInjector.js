@@ -1,7 +1,7 @@
 import React from 'react';
 import Injector from './Container';
 
-function provideInjector(Component) {
+function provideInjector(Injectable) {
   class InjectorProvider extends React.Component {
     getChildContext() {
       const { component, form } = Injector;
@@ -16,7 +16,7 @@ function provideInjector(Component) {
     }
 
     render() {
-      return <Component {...this.props} />;
+      return <Injectable {...this.props} />;
     }
   }
 
