@@ -16,7 +16,7 @@ class PopoverField extends Component {
   /**
    * Get popup placement direction
    *
-   * @return {String}
+   * @returns {String}
    */
   getPlacement() {
     const placement = this.props.data.placement;
