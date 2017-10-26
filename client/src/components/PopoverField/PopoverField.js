@@ -16,7 +16,7 @@ class PopoverField extends Component {
   /**
    * Get popup placement direction
    *
-   * @returns {String}
+   * @return {String}
    */
   getPlacement() {
     const placement = this.props.data.placement;
@@ -53,7 +53,8 @@ class PopoverField extends Component {
     }
 
     if (!this.props.title) {
-      buttonClasses.push('font-icon-dot-3 btn--no-text btn--icon-xl');
+      buttonClasses.push('font-icon-dot-3 btn--no-text');
+      buttonClasses.push(`btn--icon-${this.props.buttonSize}`);
     }
 
     const buttonProps = {
@@ -89,6 +90,7 @@ PopoverField.propTypes = {
   container: React.PropTypes.any,
   className: React.PropTypes.string,
   popoverClassName: React.PropTypes.string,
+  buttonSize: React.PropTypes.oneOf(['sm', 'md', 'large', 'xl']),
   data: React.PropTypes.oneOfType([
     React.PropTypes.array,
     React.PropTypes.shape({
@@ -103,6 +105,7 @@ PopoverField.defaultProps = {
   data: {},
   className: '',
   popoverClassName: '',
+  buttonSize: 'xl',
 };
 
 export default PopoverField;
