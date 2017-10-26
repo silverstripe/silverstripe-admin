@@ -98,14 +98,6 @@
 		}
 	}
 
-	/* Default CMS logo */
-	.cms-sitename {
-		.cms-sitename__link {
-			background-image: $application-logo-small-2x;
-			background-size: 22px 22px;
-		}
-	}
-
 	.cms-content-controls {
 		.icon-auto:before {
 			@extend .retina-sprites-32x32-2x;
