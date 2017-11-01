@@ -207,6 +207,10 @@ div.grid-field__sort-field + .form__fieldgroup-item {
 
 .grid-field__icon-action--hidden-on-hover {
   opacity: 0;
+
+  @include media-breakpoint-down(sm) {
+    opacity: 1;
+  }
 }
 
 .ss-gridfield-item {
@@ -258,10 +262,9 @@ div.grid-field__sort-field + .form__fieldgroup-item {
     display: none;
 
     &:first-child,
-    .cms-list &  {
-      display: table-cell;
-    }
-
+    .cms-list &,
+    &.col-Title,
+    &.grid-field__col-compact,
     &.grid-field__cell--actions,
     &.grid-field__action-placeholder {
       display: table-cell;
