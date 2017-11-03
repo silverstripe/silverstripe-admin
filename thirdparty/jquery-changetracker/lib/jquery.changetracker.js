@@ -113,10 +113,12 @@
       
       // Check global serialized state
       var initialState = formValue();
-      
+
       // Detect changes to the form
       var isChanged = function () {
-        return self.data('dirty') || initialState !== formValue();
+        var newState = formValue();
+
+        return self.data('dirty') || initialState !== newState;
       };
       
       // Handler for detecting global changes
