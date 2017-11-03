@@ -228,8 +228,8 @@ class LeftAndMain extends Controller implements PermissionProvider
      * <code>
      * LeftAndMain:
      *   extra_requirements_css:
-     *     - mysite/css/mystyle.css:
-     *          media: screen
+     *     mysite/css/mystyle.css:
+     *       media: screen
      * </code>
      *
      * @config
