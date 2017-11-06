@@ -1,5 +1,7 @@
 /* eslint-disable */
 
+import debounce from 'lodash.debounce';
+
 // Copyright (c) 2009, SilverStripe Ltd.
 // All rights reserved.
 // 
@@ -120,14 +122,14 @@
 
         return self.data('dirty') || initialState !== newState;
       };
-      
+
       // Handler for detecting global changes
-      var detectChanges = function() {
+      var detectChanges = function () {
         var changed = isChanged();
         self.toggleClass(options.changedCssClass, changed);
       };
 
-      var onchange = function(e) {
+      var handleChanges = function (e) {
         var $field = $(e.target);
         var origVal = $field.data('changetracker.origVal');
 
@@ -147,18 +149,22 @@
           if ($field.is(':radio')) {
             self.find(':radio[name=' + $field.attr('name') + ']').removeClass(options.changedCssClass);
           }
-          
+
           // Perform global change detection on the form
-          detectChanges();
+          ondetect();
         }
       };
+
+      var ondetect = debounce(detectChanges, 250, { leading: true, trailing: true });
+
+      var onchange = debounce(handleChanges, 250, { leading: true, trailing: true });
 
       // Delegate handlers
       self.on('click.changetracker', options.fieldSelector , onchange);
       self.on('change.changetracker', options.fieldSelector , onchange);
       
       // Bind observer to subtree
-      self.on('change.changetracker', detectChanges);
+      self.on('change.changetracker', ondetect);
       
       // Set initial state
       this.getFields().each(function() {
@@ -169,7 +175,7 @@
       // Set dirty handler
       self.on('dirty.changetracker', function() {
         self.data('dirty', true);
-        detectChanges();
+        ondetect();
       });
 
       this.data('changetracker', true);
