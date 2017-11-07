@@ -752,51 +752,65 @@ body.cms {
 // Loading Screen
 // ------------------------------------------------ */
 .ss-loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: $blue;
+  position: absolute;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  position: absolute;
   z-index: 100000;
-  // TODO Convert to compass gradient include
-  background: #fff;
-  background: -moz-radial-gradient(50% 50% 180deg, circle cover, #FFFFFF, #EFEFEF, #C7C7C7 100%);
-  background: -webkit-gradient(radial, 50% 50%, 350, 50% 50%, 0, from(#E3E3E3), to(white));
+  background: $body-bg;
 
-  .loading-logo {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    position: absolute;
-    background: transparent url(../images/silverstripe_logo.png) no-repeat 50% 50%;
+  &:before {
+    font-size: 90px; // logo size
   }
 
-  p {
-    width: 100%;
+  noscript {
+    z-index: 1; // Above loading indicator
+  }
+
+  .nojs-warning {
     text-align: center;
-    position: absolute;
-    bottom: 80px;
-    z-index: 100001;
+    margin-top: -$spacer;
+  }
+}
 
-    span.notice {
-      width: $cms-panel-sm;
-      font-size: 14px;
-      padding: 10px 20px;
-      color: #dc7f00;
-      border: none;
-      background: none;
-      border-radius: 5px;
-      display: inline-block;
-      zoom: 1;
-      *display: inline;
-    }
+.ss-loading-screen__text {
+  color: $blue;
+  position: relative;
+  font-weight: normal;
+  margin: $spacer * 2 $spacer 0 $spacer * 1.5;
+}
+
+.ss-loading-screen__text-dots {
+  color: $body-bg;
+
+  &:before {
+    content: attr(data-text);
+    position: absolute;
+    overflow: hidden;
+    max-width: $spacer;
+    white-space: nowrap;
+    color: $blue;
+    animation: loading 3s infinite;
+  }
+}
+
+@keyframes loading {
+  0% {
+    max-width: 0;
   }
 
-  .loading-animation {
-    display: none;
-    position: absolute;
-    left: 50%;
-    margin-left: -21.5px; // Half of spinner size
-    top: 80%;
+  80% {
+    max-width: $spacer;
+    color: $blue;
+  }
+
+  100% {
+    color: $body-bg;
   }
 }
 
@@ -1619,8 +1633,8 @@ form.member-profile-form {
 
 // overlay for switching between CMS panes
 .cms .ui-widget-overlay-light {
-  background: #aaaaaa url(../../../thirdparty/jquery-ui-themes/smoothness/images/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x;
-  opacity: 0.3;
+  opacity: 0.15;
+  background-color: #000;
 }
 
 // Adjusting the color of the background overlay to be darker for pop-up dialogs (created by jQuery-UI)
