@@ -80,7 +80,7 @@ $border: 1px solid darken(#D9D9D9, 15%);
             margin-left: 5px;
           }
 					a.tab-nav-link{
-						color:$color-text;
+						color:$body-color;
 						display:inline-block;
 						font-weight:bold;
 						line-height:16px;
@@ -234,7 +234,7 @@ $border: 1px solid darken(#D9D9D9, 15%);
 						outline:none;
 					}
 					a{
-						color: $color-text-blue-link;
+						color: $link-color;
 						font-size: 13px;
 						font-weight: normal;
 						line-height: 24px;
@@ -247,7 +247,7 @@ $border: 1px solid darken(#D9D9D9, 15%);
 							outline:none;
 						}
 						&:hover{
-							color: darken($color-text-blue-link,8%);
+							color: $link-hover-color;
 						}
 						/* Arrow */
 						&:after {
@@ -287,9 +287,9 @@ $border: 1px solid darken(#D9D9D9, 15%);
 				@extend .button-no-style;
 				clear:both;
 				display:block;
-				background-color: $tab-panel-texture-color;
+				background-color: $body-bg;
 				border:1px solid #ccc;
-				border-bottom:1px solid $tab-panel-texture-color;
+				border-bottom:1px solid $body-bg;
 				margin:0;
 				margin-top:2px;
 				max-width:250px;
@@ -300,7 +300,7 @@ $border: 1px solid darken(#D9D9D9, 15%);
 
 				//Styles for the information displayed in popup above the main action buttons
 				.cms-sitetree-information {
-					border-bottom: 1px solid lighten($color-light-separator, 8%);
+					border-bottom: 1px solid $border-color-light;
 					margin-bottom: 8px;
 					padding: 0 20px 0 0;
 					margin-right: 10px;

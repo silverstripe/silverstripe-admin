@@ -176,7 +176,7 @@
 .btn-secondary {
   border-color: transparent;
   background-color: transparent;
-  color: $body-color-light;
+  color: $text-muted;
 
   // Disabled styles
   &.disabled,
@@ -191,7 +191,7 @@
     &:hover {
       border-color: transparent;
       background-color: transparent;
-      color: $body-color-light;
+      color: $text-muted;
     }
   }
 
@@ -202,7 +202,7 @@
   &.active {
     background-color: $btn-secondary-bg;
     border-color: $btn-secondary-bg;
-    color: $body-color-light;
+    color: $text-muted;
   }
 }
 
@@ -296,7 +296,7 @@ button.close {
 
   // Temp override JQueryUI color
   &::before {
-    color: $body-color-light;
+    color: $text-muted;
   }
 }
 

@@ -454,7 +454,7 @@
       }
       &.jstree-checked {
         > a, > a:link {
-          background-color: $color-cms-batchactions-menu-selected-background;
+          background-color: #fffcdc;
         }
       }
       &.disabled,
@@ -470,7 +470,7 @@
         }
       }
       &.readonly {
-        color: $color-text-disabled;
+        color: $text-muted;
         padding-left: 18px;
 
         // Don't show drag icons or required spacing
@@ -484,7 +484,7 @@
       }
     }
     a, a:link {
-      color:  $color-text-blue-link;
+      color:  $link-color;
       padding: 3px 6px 3px 6px;
       border: none;
       display:  inline-block;
@@ -522,7 +522,7 @@
       margin-left: 3px;
       margin-right: 6px;
       border-radius: 2px, 2px;
-      color:  #7E7470;
+      color:  $state-draft;
       border: 1px solid #C9B800;
       background-color: #FFF0BC;
 
@@ -568,7 +568,7 @@
     margin-top: $grid-y;
 
     li:not(.filtered-item) > a {
-      color: $color-text-disabled;
+      color: $text-muted;
     }
   }
 }
@@ -715,8 +715,8 @@ a .jstree-pageicon {
     box-shadow: 0px 0px 6px 2px $bgColor;
   }
 }
-@include tree-status-icon('addedtodraft', #ff7f22, #F46B00, #fff7f2);
-@include tree-status-icon('modified', #fff2e8, #F46B00, #fff7f2);
+@include tree-status-icon('addedtodraft', #ff7f22, $state-draft, #fff7f2);
+@include tree-status-icon('modified', #fff2e8, $state-draft, #fff7f2);
 @include tree-status-icon('archived', #5F7688, #455b6c, #f7f7f7);
 @include tree-status-icon('deletedonlive', #f7f7f7, #455b6c, #f7f7f7);
 @include tree-status-icon('removedfromdraft', #f7f7f7, #455b6c, #f7f7f7);

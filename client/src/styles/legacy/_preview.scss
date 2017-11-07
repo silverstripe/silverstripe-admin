@@ -11,7 +11,7 @@
       float:left;
       width: 20px;
       overflow: hidden;
-      color: $color-text-dark;
+      color: $body-color-dark;
     }
   }
 
@@ -105,28 +105,27 @@
     .chosen-drop{
       padding: 0;
       margin-top: -5px;
-
-      border: 1px solid #aaa;
-      border-radius: 3px 3px 0 3px;
+      border: 1px solid $dropdown-border-color;
       box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
 
       ul.chosen-results {
-        padding: 0;
+        padding: $dropdown-padding-y 0;
         margin: 0;
         overflow: visible;
-        width: 135px;
+        width: 160px;
 
         li {
-          font-size: 12px;
-          line-height: 16px;
-          padding: 7px 16px 7px 6px;
-          color: $color-text-blue-link;
-          border-bottom: 1px solid #DDD;
-          background-color: #FFF;
+          font-size: $font-size-base;
+          line-height: $line-height-base;
+          padding: $dropdown-item-padding-y $dropdown-item-padding-x;
+          color: $body-color;
+          background-color: $dropdown-bg;
 
           &:before {
-            margin-right: 2px;
+            margin-right: 6px;
+            margin-top: -2px;
             font-size: 16px;
+            line-height: $line-height-base;
           }
           &.description {
             padding-top: 5px;
@@ -136,23 +135,14 @@
             }
           }
           &.highlighted, &:hover, &:focus {
-            color: $color-text-blue-link;
             filter: none;
-            background: lighten($color-widget-bg, 2%);
+            background: $dropdown-link-hover-bg;
             text-decoration: none;
-          }
-          &.first {
-            border-radius: 3px 3px 0 0;
-          }
-          &.last {
-            border-bottom: none;
-            border-radius: 0 0 0 3px;
           }
           &.restricted { /* disable option (eg.split mode for smaller screen sizes) */
             color: #CCC;
             background-color: #EEE;
             pointer-events: none;
-            /*text-decoration: line-through;*/
             &:before {
               opacity: 0.2;
             }
@@ -161,7 +151,7 @@
           /* Description styling */
           span {
             display: block;
-            color: lighten($color-text-dark, 30%);
+            color: $text-muted;
             font-size: 0.85em;
             line-height: 1.1em;
             padding-left: 23px;
@@ -172,12 +162,12 @@
         }
 
         li.result-selected {
-          background: $btn-secondary-bg;
-          color: $color-text;
+          background: $dropdown-link-active-bg;
+          color: $component-active-color;
 
-          &.highlighted, &:hover, &:focus {
-            background: darken($color-widget-bg, 4%);
-            color: $color-text;
+          &.highlighted, &:hover, &:focus, &::before {
+            background: $dropdown-link-active-bg;
+            color: $component-active-color;
           }
         }
       }
@@ -186,14 +176,14 @@
     &.split-disabled {
       .chosen-drop ul.chosen-results li.font-icon-columns {
         &, &.highlighted, &:hover, &:focus {
-          color: $color-text-disabled;
-          background: #fff;
+          color: $text-muted;
+          background: $component-active-color;
           pointer-events: none;
           cursor: default;
         }
 
         &::before {
-          color: $color-text-disabled;
+          color: $text-muted;
         }
       }
     }
@@ -270,7 +260,7 @@
 }
 
 .cms-preview {
-  background-color: $tab-panel-texture-color;
+  background-color: $body-bg;
   border-left: 1px solid $border-color-dark;
   position: relative;
 
@@ -332,7 +322,7 @@
   &.tablet,
   &.desktop {
     .panel {
-      background-color: $tab-panel-texture-color; /* cover website preview icon */
+      background-color: $body-bg; /* cover website preview icon */
       overflow: auto;
     }
 
@@ -342,7 +332,7 @@
       height: auto;
 
       &::after {
-        color: $body-color-lighter;
+        color: $text-muted;
         position: relative;
         top: -24px;
         transition: all .3s ease-in-out;

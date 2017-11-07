@@ -43,7 +43,7 @@ body.cms {
 .cms-container {
   height: 100%;
   width: 100%;
-  background: $tab-panel-texture-color;
+  background: $body-bg;
 }
 
 .cms-container--content-mode {
@@ -90,12 +90,8 @@ body.cms {
   min-width: 100%;
   z-index: $zindex-cms-content-header;
   min-height: $toolbar-total-height;
-  background: {
-    image: url("../images/textures/cms_content_header.png");
-    repeat: repeat;
-    position: left bottom;
-    color: $color-darker-bg;
-  }
+  background-color: $body-bg-dark;
+  border-bottom: 1px solid $border-color;
 
   .backlink {
     span.btn-icon-back {
@@ -257,6 +253,7 @@ body.cms {
   }
 }
 
+
 /** ------------------------------------------------------------------
  * CMS Breadcrumbs
  * ----------------------------------------------------------------- */
@@ -335,7 +332,7 @@ body.cms {
     text-indent: 0;
     text-shadow: none;
     line-height: 1em;
-    color: $color-text;
+    color: $body-color;
     background-color: transparent;
     background-image: none;
     border: 0;
@@ -360,13 +357,13 @@ body.cms {
 
     &.font-icon-search {
       padding: 5px 6px;
-      color: lighten($color-text, 10%);
+      color: lighten($body-color, 10%);
 
       &.active,
       &:active,
       &:focus,
       &:hover {
-        color: darken($color-text, 10%);
+        color: darken($body-color, 10%);
       }
 
       &:before {
@@ -425,7 +422,7 @@ body.cms {
     }
 
     &:hover {
-      background: $tab-panel-texture-color;
+      background: $body-bg;
     }
 
     &.active:hover {
@@ -459,7 +456,7 @@ body.cms {
       }
 
       &:hover {
-        background: $tab-panel-texture-color;
+        background: $body-bg;
       }
 
       &.ui-state-active:hover {
@@ -552,7 +549,7 @@ body.cms {
         outline: none;
         float: none;
         font-weight: normal;
-        color: $color-text;
+        color: $body-color;
         padding: $nav-link-padding;
         line-height: 20px; // Fix to ensure header extends to predictable size
 
@@ -584,11 +581,11 @@ body.cms {
       background: transparent;
 
       a {
-        color: lighten($color-text, 10%);
+        color: lighten($body-color, 10%);
         border-bottom: $nav-tabs-link-border-width solid transparent;
 
         &:hover {
-          color: $color-text;
+          color: $body-color;
         }
       }
     }
@@ -601,12 +598,8 @@ body.cms {
         border-color: #66727d;
         padding-left: $spacer / 4;
         padding-right: $spacer / 4;
-        color: $color-text;
+        color: $body-color;
       }
-    }
-
-    &.ui-state-active {
-      border-color: $color-medium-separator;
     }
 
     li.cms-tabset-icon.ui-corner-top {
@@ -706,7 +699,7 @@ body.cms {
 .panel--padded .ui-tabs-nav {
   float: none;
   padding: 0;
-  border-bottom: 1px solid $color-button-generic-border;
+  border-bottom: 1px solid $btn-secondary-border;
   margin-top: -$panel-padding-y;
 
   li {
@@ -824,7 +817,7 @@ body.cms {
   height: $toolbar-total-height;
   min-height: $toolbar-total-height;
   max-height: $toolbar-total-height;
-  background-color: $tab-panel-texture-color;
+  background-color: $body-bg;
   padding: map_get($spacers, xs) 0;
 
   &.south .btn-toolbar {
@@ -1011,12 +1004,12 @@ body.cms {
 
     &:hover,
     &.selected {
-      background-color: $background-darker;
+      background-color: $body-bg-dark;
       cursor: pointer;
     }
 
     &.disabled {
-      color: $color-text-disabled;
+      color: $text-muted;
       opacity: 0.6;
     }
 
@@ -1064,7 +1057,7 @@ body.cms {
       display: inline-block;
 
       label {
-        color: $color-text-blue-link;
+        color: $link-color;
       }
     }
   }
@@ -1092,7 +1085,7 @@ body.cms {
  * panel
  */
 .cms-content-tools {
-  background: $tab-panel-texture-color;
+  background: $body-bg;
   width: $cms-panel-sm;
   box-shadow: 1px 0 0 0 $border-color-dark;
   z-index: 1000;
@@ -1113,23 +1106,15 @@ body.cms {
     margin: 10px 0 $grid-y - 1;
     padding-bottom: 2px;
     line-height: $grid-y * 3;
-    border-bottom: 1px solid $color-light-separator;
+    border-bottom: 1px solid $border-color;
   }
 
   .cms-panel-content {
-    width: 300px;
+    width: $cms-panel-sm;
 
     .btn-toolbar .ss-ui-action-constructive {
       margin-right: 5px; //accounts for the scrollbar in the filter - keeps the actions on one line instead of wrapping onto two.
     }
-  }
-
-  .cms-content-header h2 {
-    text-shadow: darken($color-widget-bg, 50%) -1px -1px 0;
-    width: $grid-x * 22 /* 24 - (padding on each side + margin) */
-  ;
-    color: lighten($color-widget-bg, 60%);
-    @include hide-text-overflow();
   }
 
   h3, h4, h5 {
@@ -1166,7 +1151,7 @@ body.cms {
     tr {
       &.active {
         background-color: $component-active-bg;
-        color: $color-text-light;
+        color: $white;
         border-top: 2px solid $component-active-bg;
       }
       + .active td {
@@ -1181,7 +1166,7 @@ body.cms {
 
   td,
   th {
-    border-bottom: 1px solid darken($color-widget-bg, 10%);
+    border-bottom: 1px solid $border-color;
     padding: $grid-y - 1 2px;
     font-size: 11px;
     vertical-align: top;
@@ -1204,7 +1189,7 @@ body.cms {
   margin: 0 0 8px;
   padding: 10px 12px;
   font-weight: normal;
-  border: 1px $color-light-separator solid;
+  border: 1px solid $border-color-light;
   background: #fff; //for browsers that don't understand rgba
   background: rgba(#fff, 0.5);
   text-shadow: none;
@@ -1334,12 +1319,12 @@ form.member-profile-form {
 
   #Root_Permissions {
     clear: both;
-    border-top: 1px solid darken($color-tab, 20%);
+    border-top: 1px solid darken(#d9d9d9, 20%);
   }
 
   #Root_Main {
     clear: both;
-    border-top: 1px solid darken($color-tab, 20%);
+    border-top: 1px solid darken(#d9d9d9, 20%);
     .cms-help-toggle {
       text-indent: -9999em;
       display: inline-block;
@@ -1450,7 +1435,7 @@ form.member-profile-form {
 
 .cms {
   .cms-content {
-    background: $tab-panel-texture-color;
+    background: $body-bg;
     height: 100%;
   }
 
@@ -1649,7 +1634,7 @@ form.member-profile-form {
 // Elements with this class can either frame inline markup or an iframe,
 // most styles should be applied to .cms-dialog instead (which declares the content in the frame)
 .ui-dialog {
-  background: $tab-panel-texture-color;
+  background: $body-bg;
   background-clip: content-box;
   border: 1px solid #666 !important;
   border-radius: $grid-y;
@@ -1663,7 +1648,7 @@ form.member-profile-form {
     padding: 0;
     border: 0;
     background: transparent url(../images/textures/cms_content_header.png) repeat;
-    box-shadow: $color-shadow-dark 0 0 ($grid-x / 2) inset;
+    box-shadow: $shadow-level-4 0 0 ($grid-x / 2) inset;
 
     .ui-dialog-title {
       position: absolute;
@@ -1682,7 +1667,7 @@ form.member-profile-form {
   }
 
   .cms-dialog-content {
-    background: $tab-panel-texture-color;
+    background: $body-bg;
     padding-bottom: $grid-y;
     padding-top: 0;
 
@@ -1724,8 +1709,8 @@ form.member-profile-form {
 
   .ui-dialog-buttonpane {
     margin: 0;
-    background: $color-darker-bg;
-    border-top: 1px solid $color-light-separator;
+    background: $body-bg;
+    border-top: 1px solid $border-color-light;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
   }
@@ -1733,7 +1718,7 @@ form.member-profile-form {
 
 body.cms-dialog {
   overflow: auto;
-  background: $tab-panel-texture-color;
+  background: $body-bg;
   position: relative;
 }
 

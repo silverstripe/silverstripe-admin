@@ -10,7 +10,7 @@
 
 .cms-menu {
   z-index: $zindex-menu;
-  background: $color-theme-bg;
+  background: $base-menu-bg;
   // Add `!important` to ignore width set in `.cms-panel` entwine`
   width: $cms-menu-width !important; // sass-lint:disable-line no-important
 
@@ -117,8 +117,8 @@
 
   .cms-panel-toggle {
     height: $toolbar-total-height;
-    background-color: $color-theme-bg;
-    box-shadow: inset $color-separator -1px 0 0;
+    background-color: $base-menu-bg;
+    box-shadow: inset $border-color -1px 0 0;
     position: relative;
     padding-left: 0;
 
@@ -231,11 +231,11 @@
 .cms-menu__header {
   padding: 0;
   line-height: 24px;
-  background-color: $color-brand-bg;
+  background-color: $brand-secondary;
   min-height: $toolbar-total-height*2;
 
   span {
-    color: $color-text-light;
+    color: $white;
     display: block;
     padding-left: 26px;
 
@@ -247,7 +247,7 @@
 }
 
 .cms-sitename {
-  border-bottom: 1px solid darken($color-brand-bg, 4%);
+  border-bottom: 1px solid darken($brand-secondary, 4%);
   overflow: hidden;
   position: relative;
   vertical-align: middle;
@@ -259,7 +259,7 @@
 
   &:hover,
   &:focus {
-    background-color: darken($color-brand-bg, 2);
+    background-color: darken($brand-secondary, 2);
   }
 
   @include media-breakpoint-down(sm) {
@@ -324,7 +324,7 @@
     &:focus {
       opacity: .9;
       text-decoration: none;
-      background-color: darken($color-brand-bg, 2);
+      background-color: darken($brand-secondary, 2);
     }
   }
 
@@ -340,7 +340,7 @@
 
     &:hover,
     &:focus {
-      background-color: darken($color-brand-bg, 2);
+      background-color: darken($brand-secondary, 2);
     }
 
     i {
@@ -396,7 +396,7 @@
   margin: 0;
   list-style-type: none;
   padding-left: 0;
-  box-shadow: inset $color-separator -1px 0 0;
+  box-shadow: inset $border-color -1px 0 0;
 
   a:focus,
   a:active {
@@ -408,19 +408,19 @@
     a {
       display: block;
       min-height: 50px;
-      color: $color-text-default;
+      color: $body-color;
       padding: (2 * $grid-y) 5px (2 * $grid-y) 8px;
       background-color: $base-menu-bg;
       cursor: pointer;
       position: relative;
       transition: padding $transition-speed-fast;
       text-decoration: none;
-      box-shadow: inset $color-separator -1px 0 0;
+      box-shadow: inset $border-color -1px 0 0;
 
       &:hover {
         text-decoration: none;
         background-color: $base-menu;
-        color: darken($color-text-dark, 5%);
+        color: darken($body-color, 10%);
       }
 
       &:focus,
@@ -515,7 +515,7 @@
         height: 18px;
         padding-top: 11px;
         padding-bottom: 11px;
-        color: lighten($color-text-default, 10%);
+        color: lighten($body-color, 10%);
         background-color: $base-menu-bg;
 
         span.text {

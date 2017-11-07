@@ -19,7 +19,7 @@
 // Northern bar containing breadcrumb, tabs etc.
 .toolbar--north {
   background-image: none;
-  background-color: $background-darker;
+  background-color: $body-bg-dark;
   border-bottom: 1px solid $border-color;
   z-index: 60;
   position: relative;
@@ -86,14 +86,14 @@
   padding-bottom: $spacer-xs;
   border-top: 1px solid $border-color;
   width: 100%;
-  background-color: $background-main;
+  background-color: $body-bg;
 }
 
 .toolbar__back-button {
   padding-left: $spacer / 4;
   padding-right: $spacer / 4;
   min-width: 24px; // Safari fix
-  color: $body-color-light; // TEMP: Needed for anchor buttons to override legacy styles
+  color: $text-muted; // TEMP: Needed for anchor buttons to override legacy styles
   margin-left: -$spacer-xs;
 
   @include media-breakpoint-down(sm) {

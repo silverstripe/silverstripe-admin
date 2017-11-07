@@ -17,24 +17,15 @@
 
 .ui-widget-content,
 .ui-widget {
-	color: $color-text;
+	color: $body-color;
 	font-size: 1em;
 	border: 0;
 }
 
-
 .ui-widget-header {
-	background-color: darken($color-widget-bg, 20%);
-	padding: 8px 8px 6px 8px;
-	border-bottom: 2px solid darken($color-widget-bg, 35%);
-	background: linear-gradient(darken($color-widget-bg, 5%), darken($color-widget-bg, 30%));
-	border-bottom: 3px solid darken($color-widget-bg, 50%);
-	padding: 8px;
-	border-radius: 0;
 
 	& .ui-dialog-title {
 		padding: 6px 10px;
-		text-shadow: lighten($color-base, 10%) 1px 1px 0;
 	}
 
 	& a.ui-dialog-titlebar-close {
@@ -70,11 +61,11 @@
 
 .ui-accordion {
 	.ui-accordion-header {
-		border-color: $color-button-generic-border;
+		border-color: $btn-secondary-border;
 		margin-bottom: 0;
 	}
 	.ui-accordion-content {
-		border: 1px solid $color-button-generic-border;
+		border: 1px solid $btn-secondary-border;
 		border-top: none;
 	}
 }
