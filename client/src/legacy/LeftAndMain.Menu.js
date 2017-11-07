@@ -375,7 +375,7 @@ $.entwine('ss', function($){
       var item = this.getMenuItem();
 
       var url = this.attr('href');
-      if(!isExternal) url = $('base').attr('href') + url;
+      if(!isExternal) url = $.path.makePathAbsolute(url, $.path.getBaseURL());
 
       var children = item.find('li');
       if(children.length) {

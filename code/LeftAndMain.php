@@ -339,7 +339,8 @@ class LeftAndMain extends Controller implements PermissionProvider
             // Trim leading/trailing slash to make it easier to concatenate URL
             // and use in routing definitions.
             'name' => $name,
-            'url' => trim($this->Link(), '/'),
+            // This URL is used by ReactRouteRegister, and a site-relative URL is expected
+            'url' => trim(Director::makeRelative($this->Link()), '/'),
             'form' => [
                 'EditorExternalLink' => [
                     'schemaUrl' => $this->Link('methodSchema/Modals/EditorExternalLink'),

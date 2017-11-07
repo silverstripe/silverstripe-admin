@@ -40,7 +40,7 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
      */
     public static function admin_url()
     {
-        return self::get_admin_route() . '/';
+        return Controller::join_links(Director::baseURL(), self::get_admin_route()) . '/';
     }
 
     /**
