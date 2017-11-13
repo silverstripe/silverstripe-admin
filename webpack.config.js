@@ -1,6 +1,7 @@
 const Path = require('path');
 const webpack = require('webpack');
 const webpackConfig = require('@silverstripe/webpack-config');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const {
   resolveJS,
   externalJS,
@@ -90,7 +91,16 @@ const config = [
     },
     devtool: (ENV !== 'production') ? 'source-map' : '',
     module: moduleCSS(ENV, PATHS),
-    plugins: pluginCSS(ENV, PATHS),
+    plugins: [
+      ...pluginCSS(ENV, PATHS),
+      new CopyWebpackPlugin([
+        {
+          context: `${PATHS.SRC}/images`,
+          from: 'chosen-sprite*.png',
+          to: `${PATHS.DIST}/images`
+        }
+      ]),
+    ],
   },
 ];
 
