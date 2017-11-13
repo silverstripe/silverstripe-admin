@@ -87,13 +87,18 @@ ss.editorWrappers.tinyMCE = (function() {
 
     /**
      * Write the HTML back to the original text area field.
+     *
+     * @param {object} options
+     * @param {boolean} options.silent - suppress change event on the textarea
      */
-    save: function() {
+    save: function(options = {}) {
       var instance = this.getInstance();
       instance.save();
 
       // Update change detection
-      jQuery(instance.getElement()).trigger("change");
+      if(!options.silent) {
+        jQuery(instance.getElement()).trigger("change");
+      }
     },
 
     /**
@@ -306,7 +311,7 @@ jQuery.entwine('ss', function($) {
      */
     'from .cms-edit-form': {
       onbeforesubmitform: function() {
-        this.getEditor().save();
+        this.getEditor().save({ silent: true });
         this._super();
       }
     },
