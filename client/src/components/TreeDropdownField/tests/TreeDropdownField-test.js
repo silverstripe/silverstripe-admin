@@ -450,8 +450,17 @@ describe('TreeDropdownField', () => {
       const optionIds = options.map((option) => option.id).sort();
       const childrenIds = props.tree.children.map((child) => child.id).sort();
 
-      expect(optionIds[0]).toBe(childrenIds[0]);
-      expect(optionIds[1]).toBe(childrenIds[1]);
+      expect(optionIds[1]).toBe(childrenIds[0]);
+      expect(optionIds[2]).toBe(childrenIds[1]);
+    });
+
+    it('should return an empty option if empty value and is single select', () => {
+      props.value = 0;
+      field = ReactTestUtils.renderIntoDocument(
+        <TreeDropdownField {...props} />
+      );
+      const options = field.getDropdownOptions();
+      expect(options[0].id).toBe(0);
     });
 
     it('should return an empty first option if node has no children', () => {
@@ -462,7 +471,7 @@ describe('TreeDropdownField', () => {
       const options = field.getDropdownOptions();
 
       expect(options.length).toBe(1);
-      expect(options[0].id).toBe(null);
+      expect(options[0].id).toBe(0);
       expect(options[0].title).toBe(null);
       expect(options[0].disabled).toBe(true);
     });
@@ -479,9 +488,7 @@ describe('TreeDropdownField', () => {
       );
       const options = field.getDropdownOptions();
 
-      expect(options.length).toBe(1);
-      expect(options[0].id).toBe(35);
-      expect(options[0].title).toBe('Selected');
+      expect(options.map(item => item.id)).toContain(35);
     });
 
     it('should include the selected value/title appended to list', () => {
@@ -497,9 +504,8 @@ describe('TreeDropdownField', () => {
 
       const options = field.getDropdownOptions();
 
-      expect(options.length).toBe(3);
-      expect(options[0].id).toBe(15);
-      expect(options[0].title).toBe('page fifteen');
+      expect(options.length).toBe(4);
+      expect(options.map(item => item.id)).toContain(15);
     });
 
     it('should not include the selected value/title if no value given', () => {
@@ -509,7 +515,9 @@ describe('TreeDropdownField', () => {
       );
       const options = field.getDropdownOptions();
 
-      expect(options.length).toBe(2);
+      expect(options.length).toBe(3);
+      expect(options.map(item => item.id)).toContain(14);
+      expect(options.map(item => item.id)).toContain(26);
     });
 
     it('should include the root option when on the root path', () => {
@@ -534,7 +542,7 @@ describe('TreeDropdownField', () => {
       );
       const options = field.getDropdownOptions();
 
-      expect(options.length).toBe(2);
+      expect(options.length).toBe(3);
     });
 
     it('should show the path for the selected option', () => {
@@ -551,9 +559,8 @@ describe('TreeDropdownField', () => {
       );
       const options = field.getDropdownOptions();
 
-      expect(options.length).toBe(1);
-      expect(options[0].id).toBe(35);
-      expect(options[0].title).toBe('Selected full path');
+      expect(options.map(item => item.id)).toContain(35);
+      expect(options.map(item => item.title)).toContain('Selected full path');
     });
 
     it('should not show the path for the selected option if it is opened', () => {
@@ -571,9 +578,8 @@ describe('TreeDropdownField', () => {
       field.state.opened = true;
       const options = field.getDropdownOptions();
 
-      expect(options.length).toBe(1);
-      expect(options[0].id).toBe(35);
-      expect(options[0].title).toBe('Selected');
+      expect(options.map(item => item.id)).toContain(35);
+      expect(options.map(item => item.title)).toContain('Selected');
     });
   });
 

@@ -159,14 +159,6 @@ class TreeDropdownField extends Component {
     const node = this.getVisibleTree();
     let options = node ? [...node.children] : [];
 
-    if (this.props.data.hasEmptyDefault && !this.props.visible.length && !this.hasSearch()) {
-      options.unshift({
-        id: '',
-        title: this.props.data.emptyString,
-        disabled: false,
-      });
-    }
-
     const selectedOptions = this.props.selectedValues
       .filter(selected => (
         selected.id === value ||
@@ -190,12 +182,20 @@ class TreeDropdownField extends Component {
     }
 
     if (options.length) {
+      // require an empty option in some instances
+      // value is an empty string by react-select cannot find the options
+      options.unshift({
+        id: this.props.data.multiple ? '' : SINGLE_EMPTY_VALUE,
+        title: this.props.data.emptyString || null,
+        disabled: false,
+      });
+
       return options;
     }
 
     // force renderMenu() to handle rendering even if options are empty
     return [{
-      id: null,
+      id: this.props.data.multiple ? '' : SINGLE_EMPTY_VALUE,
       title: null,
       disabled: true,
     }];
@@ -317,6 +317,13 @@ class TreeDropdownField extends Component {
     const parent = this.getVisibleTree();
 
     return options.filter((option) => {
+      if (option.id === SINGLE_EMPTY_VALUE || (
+        option.id === '' && (
+          !this.props.data.hasEmptyDefault || this.props.visible.length || this.hasSearch()
+        )
+      )) {
+        return false;
+      }
       const title = option.title && option.title.toLocaleLowerCase();
       // using this.props.search so that we do not get flash of filtered current content
       const search = this.props.search.toLocaleLowerCase();
@@ -744,8 +751,8 @@ function mapStateToProps(state, ownProps) {
     value = [];
   }
 
-  if (!ownProps.data.multiple && ownProps.value === SINGLE_EMPTY_VALUE) {
-    value = '';
+  if (!ownProps.data.multiple && !ownProps.value) {
+    value = SINGLE_EMPTY_VALUE;
   }
 
   return { ...field, value };
