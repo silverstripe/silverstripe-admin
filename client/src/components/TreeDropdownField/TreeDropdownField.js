@@ -181,24 +181,15 @@ class TreeDropdownField extends Component {
       ];
     }
 
-    if (options.length) {
-      // require an empty option in some instances
-      // value is an empty string by react-select cannot find the options
-      options.unshift({
-        id: this.props.data.multiple ? '' : SINGLE_EMPTY_VALUE,
-        title: this.props.data.emptyString || null,
-        disabled: false,
-      });
-
-      return options;
-    }
-
-    // force renderMenu() to handle rendering even if options are empty
-    return [{
+    // require an empty option in some instances
+    // value is an empty string by react-select cannot find the options
+    options.unshift({
       id: this.props.data.multiple ? '' : SINGLE_EMPTY_VALUE,
-      title: null,
-      disabled: true,
-    }];
+      title: (this.props.data.hasEmptyDefault) ? this.props.data.emptyString : null,
+      disabled: !options.length || !this.props.data.hasEmptyDefault,
+    });
+
+    return options;
   }
 
   getPath(id) {
@@ -317,12 +308,10 @@ class TreeDropdownField extends Component {
     const parent = this.getVisibleTree();
 
     return options.filter((option) => {
-      if (option.id === SINGLE_EMPTY_VALUE || (
-        option.id === '' && (
-          !this.props.data.hasEmptyDefault || this.props.visible.length || this.hasSearch()
-        )
-      )) {
-        return false;
+      if ((option.id === SINGLE_EMPTY_VALUE || option.id === '') &&
+        (!this.props.data.hasEmptyDefault || this.props.visible.length || this.hasSearch())
+      ) {
+          return false;
       }
       const title = option.title && option.title.toLocaleLowerCase();
       // using this.props.search so that we do not get flash of filtered current content
@@ -333,7 +322,11 @@ class TreeDropdownField extends Component {
         // only show option if matches search filter
         ? title && title.includes(search)
         // only show option if it belongs in the current visible tree
-        : !parent || !option.id || parent.children.find((child) => child.id === option.id);
+        : (
+          !parent ||
+          !option.id ||
+          parent.children.find((child) => child.id === option.id)
+        );
     });
   }
 
