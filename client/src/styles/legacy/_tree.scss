@@ -460,12 +460,12 @@
       &.disabled,
       &.edit-disabled {
         > a, > a:link {
-          color: $color-text-disabled;
           background-color: transparent;
           cursor: default;
-
+          font-style: italic;
           > .jstree-checkbox {
             background-position: -57px -54px;
+            cursor: not-allowed;
           }
         }
       }

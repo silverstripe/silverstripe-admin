@@ -90,10 +90,6 @@
   content: "\48";
 }
 
-.font-icon-picture:before {
-  content: "\76";
-}
-
 .font-icon-chart-pie:before {
   content: "\41";
 }
@@ -422,10 +418,71 @@
   content: "\e006";
 }
 
+.font-icon-drag-handle:before {
+  content: "\53";
+}
+
+.font-icon-safari:before {
+  content: "\e00a";
+}
+
 .font-icon-folder-move:before {
   content: "\e007";
 }
 
-.font-icon-drag-handle:before {
-  content: "\53";
+.font-icon-clipboard-pencil:before {
+  content: "\e00c";
 }
+
+.font-icon-picture:before {
+  content: "\76";
+}
+
+.font-icon-sliders:before {
+  content: "\e00d";
+}
+
+.font-icon-white-question:before {
+  content: "\e00e";
+}
+
+.font-icon-home:before {
+  content: "\e002";
+}
+
+.font-icon-block-back:before {
+  content: "\e008";
+}
+
+.font-icon-block-banner:before {
+  content: "\e009";
+}
+
+.font-icon-block-carousel:before {
+  content: "\e00b";
+}
+
+.font-icon-block-content:before {
+  content: "\e00f";
+}
+
+.font-icon-block-file:before {
+  content: "\e010";
+}
+
+.font-icon-block-file-list:before {
+  content: "\e011";
+}
+
+.font-icon-block-form:before {
+  content: "\e012";
+}
+
+.font-icon-block-layout:before {
+  content: "\e013";
+}
+
+.font-icon-block-media:before {
+  content: "\e014";
+}
+

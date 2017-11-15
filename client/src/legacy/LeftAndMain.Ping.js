@@ -11,7 +11,7 @@ $.entwine('ss.ping', function($){
      * (Number) Interval in which /Security/ping will be checked for a valid login session.
      */
     PingIntervalSeconds: 5*60,
-    
+
     onadd: function() {
       this._setupPinging();
       this._super();
@@ -25,19 +25,32 @@ $.entwine('ss.ping', function($){
      * It redirects back to the login form if the URL is either unreachable, or returns '0'.
      */
     _setupPinging: function() {
+      var interval = null;
+      var loginPopup = null;
+
       var onSessionLost = function(xmlhttp, status) {
-        if(xmlhttp.status > 400 || xmlhttp.responseText == 0) {
-          // TODO will pile up additional alerts when left unattended
-          if(window.open('Security/login')) {
-            alert('Please log in and then try again');
-          } else {
+        if (xmlhttp.status < 400 && xmlhttp.responseText != 0) {
+          return;
+        }
+        // only open a new window when window doesn't exist or it was previously closed
+        if (!loginPopup || loginPopup.closed) {
+          loginPopup = window.open('Security/login');
+
+          if (!loginPopup) {
             alert('Please enable pop-ups for this site');
+
+            // stop bothering people if they don't want pop-ups...
+            clearInterval(interval);
           }
+        }
+
+        if (loginPopup) {
+          loginPopup.focus();
         }
       };
 
       // setup pinging for login expiry
-      setInterval(function() {
+      interval = setInterval(function() {
         $.ajax({
           url: 'Security/ping',
           global: false,

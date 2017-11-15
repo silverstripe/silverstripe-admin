@@ -211,7 +211,7 @@ form.small .field, .field.small {
 		border: 1px solid lighten($color-medium-separator, 10%);
 	}
 
-  .chosen-container-single .chosen-single  {
+  .chosen-container-single .chosen-single {
     border: 1px solid $border-color-dark;
     height: 36px;
     line-height: 34px; // not relative, as then we'd had to redo most of chosen
@@ -236,12 +236,18 @@ form.small .field, .field.small {
     }
   }
 
+  .chosen-container-multi .chosen-drop {
+    margin-top: -1px;
+  }
+
   .chosen-container-active {
-    .chosen-single {
+    .chosen-single,
+    .chosen-choices {
       border: 1px solid $input-focus-border-color;
     }
 
-    &.chosen-with-drop .chosen-single {
+    &.chosen-with-drop .chosen-single,
+    &.chosen-with-drop .chosen-choices {
       border-radius: $input-border-radius $input-border-radius 0 0;
     }
   }
@@ -252,10 +258,20 @@ form.small .field, .field.small {
   }
 
 	.chosen-choices {
-		border-radius: 3px;
+    border: 1px solid $border-color-dark;
+    border-radius: 3px;
+    font-size: $font-size-root;
+    background-image: linear-gradient(#efefef, #fff 10%, #fff 90%, #efefef);
+    box-shadow: none;
+    border-radius: $input-border-radius;
+    color: $body-color;
 
-		.search-choice {
+    li.search-choice {
+      border: 1px solid $border-color-dark;
+      background: linear-gradient(#efefef, #fff 10%, #fff 90%, #efefef);
+      color: $body-color;
 			line-height: 16px;
+
 			.search-choice-close {
 				top: 5px;
 			}
