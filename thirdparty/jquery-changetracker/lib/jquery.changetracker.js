@@ -46,8 +46,8 @@
     }
 
     this.defaults = {
-      fieldSelector: ':input:not(:submit)',
-      ignoreFieldSelector: "",
+      fieldSelector: ':input:not(:button,[type="submit"])',
+      ignoreFieldSelector: '.no-change-track',
       changedCssClass: 'changed'
     };
 
@@ -129,8 +129,11 @@
 
       var onchange = function(e) {
         var $field = $(e.target);
-        var origVal = $field.data('changetracker.origVal'), newVal;
+        var origVal = $field.data('changetracker.origVal');
 
+        if ($field.is(options.ignoreFieldSelector)) {
+          return;
+        }
         // Determine value based on field type
         var newVal = fieldValue($field);
 
