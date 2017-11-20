@@ -17,7 +17,7 @@
 
   > .btn-toolbar {
     margin-bottom: 0;
-    border-top: 1px solid $border-color-light;
+    border-top: 1px solid $border-color;
     padding-top: 13px;
 
     .form-group {
@@ -141,8 +141,8 @@
 .form-control-static {
   padding-top: $input-padding-y;
   padding-bottom: $input-padding-y;
-  padding-left: $input-padding-x;
-  padding-right: $input-padding-x;
+  padding-left: $input-btn-padding-x;
+  padding-right: $input-btn-padding-x;
   margin-bottom: 0;
   background-color: $input-disabled-bg;
   border: 1px solid darken($input-disabled-bg, 3%);

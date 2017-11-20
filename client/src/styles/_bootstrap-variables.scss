@@ -49,18 +49,17 @@
 // Color system
 //
 
-$white:  #fff !default; // bootstrap default
-$gray-700: #4f5861; // old $gray-dark
-$gray-100: #f8f9fa !default; // bootstrap default
-$gray-200: lighten($gray-700, 57%); // old $gray-lighter
-$gray-300: lighten($gray-700, 50%); // old $gray-light
-$gray-400: #ced4da !default; // bootstrap default
-$gray-500: #adb5bd !default; // bootstrap default
-$gray-600: lighten($gray-700, 20%); // old $gray
-$gray-650: lighten($gray-700, 10%);
-$gray-800: darken($gray-700, 10%); // old $gray-darker
-$gray-900: darken($gray-700, 20%); // old $gray-darkest
-$black:  #000 !default; // bootstrap default
+$white:     #fff !default; // bootstrap default
+$gray-700:  #43536d !default;
+$gray-100:  lighten($gray-700, 60%) !default; // #eef0f4
+$gray-200:  lighten($gray-700, 50%) !default; // #ced5e1
+$gray-300:  lighten($gray-700, 40%) !default; // #aebace
+$gray-400:  lighten($gray-700, 30%) !default; // #8f9fba
+$gray-500:  lighten($gray-700, 20%) !default; // #6f84a7
+$gray-600:  lighten($gray-700, 10%) !default; // #566b8d
+$gray-800:  darken($gray-700, 10%) !default; // #303b4d
+$gray-900:  darken($gray-700, 20%) !default; // #1c232e
+$black:     #000 !default; // bootstrap default
 
 $grays: (
   100: $gray-100,
@@ -69,22 +68,21 @@ $grays: (
   400: $gray-400,
   500: $gray-500,
   600: $gray-600,
-  650: $gray-650,
   700: $gray-700,
   800: $gray-800,
   900: $gray-900
 ) !default;
 
-$blue: #005a93; // custom
+$blue:    #005a93; // custom
 $indigo:  #6610f2 !default; // bootstrap default
 $purple:  #6f42c1 !default; // bootstrap default
 $pink:    #e83e8c !default; // bootstrap default
-$red: #d40404; // custom
+$red:     #da273b !default; // custom
 $orange:  #fd7e14 !default; // bootstrap default
 $yellow:  #ffc107 !default; // bootstrap default
-$green: #3fa142; // custom
+$green:   #008a00 !default; // custom
 $teal:    #20c997 !default; // bootstrap default
-$cyan: #29abe2; // custom
+$cyan:    #29abe2 !default; // custom
 
 $colors: (
   blue: $blue,
@@ -99,11 +97,7 @@ $colors: (
   cyan: $cyan,
   white: $white,
   gray: $gray-600,
-  gray-dark: $gray-700, // custom (modified)
-  gray-darker: $gray-800, // custom (added)
-  gray-darkest: $gray-900, // custom (added)
-  gray-light: $gray-300, // custom (added)
-  gray-lighter: $gray-200 // custom (added)
+  gray-dark: $gray-800,
 );
 
 $theme-colors: (
@@ -165,7 +159,7 @@ $spacers: (
 //
 // Settings for the `<body>` element.
 
-$body-bg: #f6f7f8;
+$body-bg: lighten($gray-100, 3);
 $body-color: $gray-700; // eg. Text, labels, iconography
 
 // Links
@@ -235,14 +229,14 @@ $line-height-lg: (4 / 3);
 $line-height-sm: 1.5;
 
 //$border-width: 1px !default;
-$border-color: darken(#f6f7f8, 10);
+$border-color: $gray-200;
 
-//$border-radius:          .25rem !default;
-//$border-radius-lg:       .3rem !default;
-//$border-radius-sm:       .2rem !default;
+$border-radius:          .23rem !default;
+$border-radius-lg:       .5rem !default;
+$border-radius-sm:       .192rem !default;
 
 //$component-active-color: $white !default;
-$component-active-bg: $cyan;
+$component-active-bg: $link-color;
 
 //$caret-width:            .3em !default;
 
@@ -300,8 +294,7 @@ $headings-margin-bottom: $spacer;
 
 //$small-font-size: 80% !default;
 
-//$text-muted: $gray-600 !default;
-$text-muted: lighten($gray-700, 10%);
+$text-muted: $gray-600;
 
 //$blockquote-small-color:  $gray-600 !default;
 //$blockquote-font-size:    ($font-size-base * 1.25) !default;
@@ -537,8 +530,8 @@ $form-check-input-gutter:   1.5385rem;
 
 //$dropdown-link-disabled-color:   $gray-600 !default;
 
-//$dropdown-item-padding-y:        .25rem !default;
-//$dropdown-item-padding-x:        1.5rem !default;
+$dropdown-item-padding-y:        .45rem !default;
+$dropdown-item-padding-x:        1.3rem !default;
 
 //$dropdown-header-color:          $gray-600 !default;
 
