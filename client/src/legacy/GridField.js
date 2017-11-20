@@ -64,6 +64,7 @@ $.entwine('ss', function($) {
           form.removeClass('loading');
           if(successCallback) successCallback.apply(this, arguments);
           self.trigger('reload', self);
+          self.trigger('change');
         },
         error: function(e) {
           alert(i18n._t('Admin.ERRORINTRANSACTION'));

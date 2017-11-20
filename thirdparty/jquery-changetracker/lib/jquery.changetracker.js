@@ -46,7 +46,7 @@
     }
 
     this.defaults = {
-      fieldSelector: ':input:not(:submit)',
+      fieldSelector: ':input:not(:button,[type="submit"])',
       ignoreFieldSelector: '.no-change-track',
       changedCssClass: 'changed'
     };
