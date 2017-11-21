@@ -223,7 +223,13 @@
       args.splice(0, 1);
       return this[arguments[0]].apply(this, args);
     } else {
-      return this.initialize();
+      // Defer until other init scripts are run
+      // E.g. PermissionCheckboxSetField.js
+      var self = this;
+      setTimeout(function () { 
+        self.initialize(); 
+      }, 0);
+      return this;
     }
 
   };
