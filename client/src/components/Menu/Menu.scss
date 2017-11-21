@@ -80,7 +80,8 @@
       .cms-sitename {
 
         .cms-sitename__link {
-          left: calc(50% - 12px);
+          width: $cms-menu-width-collapsed;
+          height: $toolbar-height; /* IE fix */
         }
 
         .cms-sitename__title {
@@ -230,7 +231,6 @@
 
 .cms-menu__header {
   padding: 0;
-  line-height: 24px;
   background-color: $brand-secondary;
   min-height: $toolbar-total-height*2;
 
@@ -252,10 +252,9 @@
   position: relative;
   vertical-align: middle;
   transition: padding $transition-speed-fast;
-  min-height: $toolbar-total-height;
+  height: $toolbar-total-height;
   font-weight: bold;
-  line-height: 16px;
-  padding: 6px 0;
+  display: flex;
 
   &:hover,
   &:focus {
@@ -267,25 +266,27 @@
   }
 
   .cms-sitename__link {
-    position: absolute;
-    top: $grid-y;
-    bottom: $grid-y;
-    display: block;
-    width: 24px;
-    left: 12px;
-    background: $application-logo-small no-repeat center center;
-    text-indent: -9999em;
-    padding: 0 1px;
+    color: #44C7F4;
+    font-size: 22px;
+    min-width: 40px;
+    line-height: 20px; /* For ie */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
-      opacity: .9;
+      ocolor: lighten(#44C7F4, 6);
+    }
+
+    &:before {
+      vertical-align: middle;
     }
   }
 
   .cms-sitename__title {
     color: $white;
     display: block;
-    margin: 12px 1em 12px 42px;
+    margin: 16px 1em 16px 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
