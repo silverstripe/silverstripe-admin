@@ -18,10 +18,10 @@ use SilverStripe\Core\ClassInfo;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Convert;
 use SilverStripe\Core\Injector\Injector;
-use SilverStripe\Core\Manifest\ModuleLoader;
 use SilverStripe\Core\Manifest\ModuleResourceLoader;
 use SilverStripe\Core\Manifest\VersionProvider;
 use SilverStripe\Dev\Deprecation;
+use SilverStripe\Dev\TestOnly;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\Form;
@@ -198,11 +198,13 @@ class LeftAndMain extends Controller implements PermissionProvider
     private static $required_permission_codes;
 
     /**
-     * @config
-     * @var String Namespace for session info, e.g. current record.
+     * Namespace for session info, e.g. current record.
      * Defaults to the current class name, but can be amended to share a namespace in case
      * controllers are logically bundled together, and mainly separated
      * to achieve more flexible templating.
+     *
+     * @config
+     * @var string
      */
     private static $session_namespace;
 
@@ -248,7 +250,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      * to ensure that the session never dies.
      *
      * @config
-     * @var boolean
+     * @var bool
      */
     private static $session_keepalive_ping = true;
 
@@ -510,7 +512,7 @@ class LeftAndMain extends Controller implements PermissionProvider
 
     /**
      * @param Member $member
-     * @return boolean
+     * @return bool
      */
     public function canView($member = null)
     {
@@ -825,7 +827,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      * If this is set to true, the "switchView" context in the
      * template is shown, with links to the staging and publish site.
      *
-     * @return boolean
+     * @return bool
      */
     public function ShowSwitchView()
     {
@@ -1130,6 +1132,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         if ($template) {
             return $this->renderWith($template);
         }
+        return null;
     }
 
     /**
@@ -1171,6 +1174,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         $record = $this->currentPage();
         if ($record && $record->exists()) {
             if ($record->hasExtension(Hierarchy::class)) {
+                /** @var DataObject|Hierarchy $record */
                 $ancestors = $record->getAncestors();
                 $ancestors = new ArrayList(array_reverse($ancestors->toArray()));
                 $ancestors->push($record);
@@ -1509,7 +1513,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      * and takes the most specific template (see {@link getTemplatesWithSuffix()}).
      * To explicitly disable the panel in the subclass, simply create a more specific, empty template.
      *
-     * @return String HTML
+     * @return string HTML
      */
     public function Tools()
     {
@@ -1531,7 +1535,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      * Any form fields contained in the returned markup will also be submitted with the main form,
      * which might be desired depending on the implementation details.
      *
-     * @return String HTML
+     * @return string HTML
      */
     public function EditFormTools()
     {
@@ -1697,7 +1701,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * @return String
+     * @return string
      */
     protected function sessionNamespace()
     {
@@ -1710,7 +1714,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      * The controller might not have any previewable content, in which case
      * this method returns FALSE.
      *
-     * @return String|boolean
+     * @return string|bool
      */
     public function LinkPreview()
     {
@@ -1732,10 +1736,12 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     public function SwitchView()
     {
-        if ($page = $this->currentPage()) {
-            $nav = SilverStripeNavigator::get_for_record($page);
-            return $nav['items'];
+        $page = $this->currentPage();
+        if (!$page) {
+            return null;
         }
+        $nav = SilverStripeNavigator::get_for_record($page);
+        return $nav['items'];
     }
 
     /**
@@ -1743,20 +1749,19 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     public function SiteConfig()
     {
-        return (class_exists('SilverStripe\\SiteConfig\\SiteConfig')) ? SiteConfig::current_site_config() : null;
+        return class_exists(SiteConfig::class) ? SiteConfig::current_site_config() : null;
     }
 
     /**
-     * The href for the anchor on the Silverstripe logo.
-     * Set by calling LeftAndMain::set_application_link()
+     * The href for the anchor on the Silverstripe logo
      *
      * @config
-     * @var String
+     * @var string
      */
     private static $application_link = '//www.silverstripe.org/';
 
     /**
-     * @return String
+     * @return string
      */
     public function ApplicationLink()
     {
@@ -1764,11 +1769,10 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * The application name. Customisable by calling
-     * LeftAndMain::setApplicationName() - the first parameter.
+     * The application name
      *
      * @config
-     * @var String
+     * @var string
      */
     private static $application_name = 'SilverStripe';
 
@@ -1810,6 +1814,7 @@ class LeftAndMain extends Controller implements PermissionProvider
                 return $menuItem->Title;
             }
         }
+        return null;
     }
 
     /**
@@ -1817,15 +1822,15 @@ class LeftAndMain extends Controller implements PermissionProvider
      * to avoid problems when using {@link ViewableData->customise()}
      * (which always returns "ArrayData" from the $original object).
      *
-     * @return String
+     * @return string
      */
     public function BaseCSSClasses()
     {
-        return $this->CSSClasses('SilverStripe\\Control\\Controller');
+        return $this->CSSClasses(Controller::class);
     }
 
     /**
-     * @return String
+     * @return string
      */
     public function Locale()
     {
@@ -1845,11 +1850,11 @@ class LeftAndMain extends Controller implements PermissionProvider
 
         // Add any custom ModelAdmin subclasses. Can't put this on ModelAdmin itself
         // since its marked abstract, and needs to be singleton instanciated.
-        foreach (ClassInfo::subclassesFor('SilverStripe\\Admin\\ModelAdmin') as $i => $class) {
-            if ($class == 'SilverStripe\\Admin\\ModelAdmin') {
+        foreach (ClassInfo::subclassesFor(ModelAdmin::class) as $i => $class) {
+            if ($class === ModelAdmin::class) {
                 continue;
             }
-            if (ClassInfo::classImplements($class, 'SilverStripe\\Dev\\TestOnly')) {
+            if (ClassInfo::classImplements($class, TestOnly::class)) {
                 continue;
             }
 
