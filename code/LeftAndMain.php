@@ -1818,6 +1818,18 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
+     * Generate a logout url with BackURL to the CMS
+     *
+     * @return string
+     */
+    public function LogoutURL()
+    {
+        return Controller::join_links(Security::logout_url(), '?' . http_build_query([
+            'BackURL' => AdminRootController::admin_url(),
+        ]));
+    }
+
+    /**
      * Same as {@link ViewableData->CSSClasses()}, but with a changed name
      * to avoid problems when using {@link ViewableData->customise()}
      * (which always returns "ArrayData" from the $original object).
