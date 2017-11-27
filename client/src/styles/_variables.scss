@@ -9,30 +9,28 @@ $brand-primary: #29abe2;
 $brand-success: #3fa142;
 $brand-danger: #d40404;
 
+// offical silverstripe brand color
+$color-brand: #43c7f4 !default;
+
+// Body colors
+$body-color-dark: darken($body-color, 10);
+
 // Extra state colors
-$state-draft: #f46b00;
+$state-draft: #d03f00;
 $state-draft-bg: #fff2e8;
 $state-modified: $state-draft;
 $state-modified-bg: #ff7f22;
 
 // Extra background colors
-$background-main: #f6f7f8;
-$background-darker: darken($body-bg, 2);
+$body-bg-dark: darken($body-bg, 2);
 
 // Extra border colors
-$border-color-lighter: darken($body-bg, 2);
-$border-color-light: darken($body-bg, 6);
-$border-color-dark: darken($body-bg, 14);
+$border-color-light: lighten($border-color, 4);
+$border-color-dark: darken($border-color, 4);
 
 // Extra spacers
 $spacer-sm: $spacer * .75; // 12px
 $spacer-xs: $spacer * .625; // 10px
-
-// Extra body colors
-$body-color-light: $gray-650; // eg. Field descriptions
-$body-color-lighter: $gray-600; // eg. placeholder text
-$body-color-dark: $gray-800;  // eg. iconography hovered
-
 
 // Grid columns
 //
@@ -51,7 +49,7 @@ $font-size-xs: .846rem; // 11px
 $font-size-xxs: .769rem; // 10px
 
 // Component
-$component-active-bg-light: lighten($component-active-bg, 42%);
+$component-active-bg-light: lighten($component-active-bg, 57%);
 $component-active-border-color: $brand-primary;
 
 // Custom table colors
@@ -69,13 +67,12 @@ $btn-primary-bg: $brand-success;
 $btn-primary-border: $btn-primary-bg;
 $btn-primary-shadow: darken($btn-primary-bg, 6%);
 
-$btn-secondary-color: $body-color-light;
-$btn-secondary-bg: lighten(#dee3e8, 2);
+$btn-secondary-color: $text-muted;
+$btn-secondary-bg: darken($body-bg, 5);
 $btn-secondary-border: $border-color-dark;
 
 // Forms
-$input-padding-x: .75rem;
-$input-padding-y: .5385rem;
+$input-padding-y: .5385rem; // 7px
 $input-max-width: 895px; // Approx max possible at small screen sizes
 
 $input-padding-x-lg: 1.25rem;
@@ -95,7 +92,7 @@ $zindex-menu: $zindex-cms-content-actions + 1;
 
 
 // SS toolbars
-// Used for ui layout which contains main actions, seconday page action, top breadcrumbs and navigation bars.
+// Used for ui layout which contains main actions, secondary page action, top breadcrumbs and navigation bars.
 
 $toolbar-height: 52px;
 $toolbar-total-height: $toolbar-height + 1px; // Include border
@@ -104,7 +101,7 @@ $toolbar-total-height: $toolbar-height + 1px; // Include border
 // Navs
 $nav-tabs-link-border-width: .15385rem;  // 2px
 $nav-link-padding: $spacer #{$spacer / 4} #{$spacer - $nav-tabs-link-border-width};
-$nav-tabs-link-active-border-color: $body-color-light;
+$nav-tabs-link-active-border-color: $text-muted;
 
 // Popovers
 
@@ -147,10 +144,11 @@ $z-depth-2: 0 8px 12px 0 $shadow-level-3, 0 6px 20px 0 $shadow-level-2;
 $z-depth-3: 0 12px 20px 0 $shadow-level-4, 0 17px 40px 0 $shadow-level-3;
 $z-depth-4: 0 16px 28px 0 $shadow-level-5, 0 25px 55px 0 $shadow-level-5;
 
-// Masks: typically behind modals, drag drop areas
+// Menu theme colours
 
-$page-mask-light: rgba(236, 239, 241, .9);
-
+$base-menu: #d8e4eb !default;
+$base-menu-bg: lighten($base-menu, 5%);
+$base-menu-icon: darken($base-menu, 26%);
 
 // Gallery thumbnail and image sizes
 
@@ -184,7 +182,7 @@ $search-width-max: 100%;
 // CMS menu
 
 $cms-menu-width: $panel-padding-y * 9;
-$cms-menu-width-collapsed: $panel-padding-y * 3;
+$cms-menu-width-collapsed: $cms-panel-xs;
 
 
 // Custom speeds
@@ -193,9 +191,6 @@ $transition-speed-slow:   1s;
 $transition-speed-mid:  .5s;
 $transition-speed-fast:   .3s;
 
-// Normal input padding (for some reason, bootstrap ties this to btn-padding)
-$input-padding-y: .5385rem; // 7px
-$input-padding-x: $input-btn-padding-x;
 
 // line height to be based off the root height
 $line-height-root: $line-height-base * 1rem;

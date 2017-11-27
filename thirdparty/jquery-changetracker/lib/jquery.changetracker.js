@@ -46,8 +46,8 @@
     }
 
     this.defaults = {
-      fieldSelector: ':input:not(:submit)',
-      ignoreFieldSelector: "",
+      fieldSelector: ':input:not(:button,[type="submit"])',
+      ignoreFieldSelector: '.no-change-track',
       changedCssClass: 'changed'
     };
 
@@ -113,10 +113,12 @@
       
       // Check global serialized state
       var initialState = formValue();
-      
+
       // Detect changes to the form
       var isChanged = function () {
-        return self.data('dirty') || initialState !== formValue();
+        var newState = formValue();
+
+        return self.data('dirty') || initialState !== newState;
       };
       
       // Handler for detecting global changes
@@ -127,8 +129,11 @@
 
       var onchange = function(e) {
         var $field = $(e.target);
-        var origVal = $field.data('changetracker.origVal'), newVal;
+        var origVal = $field.data('changetracker.origVal');
 
+        if ($field.is(options.ignoreFieldSelector)) {
+          return;
+        }
         // Determine value based on field type
         var newVal = fieldValue($field);
 
@@ -218,7 +223,13 @@
       args.splice(0, 1);
       return this[arguments[0]].apply(this, args);
     } else {
-      return this.initialize();
+      // Defer until other init scripts are run
+      // E.g. PermissionCheckboxSetField.js
+      var self = this;
+      setTimeout(function () { 
+        self.initialize(); 
+      }, 0);
+      return this;
     }
 
   };

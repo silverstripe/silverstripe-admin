@@ -6,7 +6,7 @@
   display: block;
   width: $toolbar-total-height - 1;
   height: $toolbar-total-height - 1;
-  background: $color-brand-bg;
+  background: $brand-secondary;
   color: $white;
   border: 0;
 
@@ -16,7 +16,7 @@
     right: $child-left-right;
     top: $child-top-bottom;
     height: $child-height;
-    background: lighten($color-brand-bg, 80%);
+    background: lighten($brand-secondary, 80%);
     border-radius: 5px;
     transition: 0.1s all;
 

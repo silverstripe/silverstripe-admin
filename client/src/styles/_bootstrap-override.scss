@@ -28,5 +28,6 @@ html [type="button"] {
 
 // Don't tie input padding to btn padding
 .form-control {
-  padding: $input-padding-y $input-padding-x;
+  padding-top: $input-padding-y;
+  padding-bottom: $input-padding-y;
 }

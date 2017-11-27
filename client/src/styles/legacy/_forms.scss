@@ -40,7 +40,7 @@ fieldset {
 		margin: $grid-y/2 0 0 0;
 		display:inline;
 		font-style: normal;
-		color: $color-text;
+		color: $body-color;
 		clear:none;
 	}
 
@@ -207,11 +207,7 @@ form.small .field, .field.small {
 
 	/* dropdowns */
 
-	.chosen-container-active .chosen-single {
-		border: 1px solid lighten($color-medium-separator, 10%);
-	}
-
-  .chosen-container-single .chosen-single  {
+  .chosen-container-single .chosen-single {
     border: 1px solid $border-color-dark;
     height: 36px;
     line-height: 34px; // not relative, as then we'd had to redo most of chosen
@@ -236,13 +232,14 @@ form.small .field, .field.small {
     }
   }
 
-  .chosen-container-active {
-    .chosen-single {
-      border: 1px solid $input-focus-border-color;
-    }
+  .chosen-container-multi .chosen-drop {
+    margin-top: -1px;
+  }
 
-    &.chosen-with-drop .chosen-single {
-      border-radius: $input-border-radius $input-border-radius 0 0;
+  .chosen-container-active {
+    .chosen-single,
+    .chosen-choices {
+      border: 1px solid $input-focus-border-color;
     }
   }
 
@@ -252,10 +249,20 @@ form.small .field, .field.small {
   }
 
 	.chosen-choices {
-		border-radius: 3px;
+    border: 1px solid $border-color-dark;
+    border-radius: 3px;
+    font-size: $font-size-root;
+    background-image: linear-gradient(#efefef, #fff 10%, #fff 90%, #efefef);
+    box-shadow: none;
+    border-radius: $input-border-radius;
+    color: $body-color;
 
-		.search-choice {
+    li.search-choice {
+      border: 1px solid $border-color-dark;
+      background: linear-gradient(#efefef, #fff 10%, #fff 90%, #efefef);
+      color: $body-color;
 			line-height: 16px;
+
 			.search-choice-close {
 				top: 5px;
 			}
@@ -292,27 +299,23 @@ form.small .field, .field.small {
 .ss-ui-button {
 	margin-top: 0px;
 	text-decoration: none;
-	color: lighten($color-text-dark, 10%);
-	border: 1px solid $color-button-generic-border;
-	border-bottom: 1px solid darken($color-button-generic-border, 10%);
+	color: $body-color;
+	border: 1px solid $btn-secondary-border;
 	cursor: pointer;
-	background-color: $color-button-generic;
+	background-color: transparent;
 	white-space: nowrap;
-	background-image: linear-gradient(lighten($color-button-generic, 10%), darken($color-button-generic, 5%));
 
 	&.ui-state-hover,
 	&:hover {
 		text-decoration: none;
-		background-color: lighten($color-button-generic, 10%);
-		background-image: linear-gradient(lighten($color-button-generic, 20%), $color-button-generic);
-		box-shadow: 0 0 5px darken($color-button-generic, 20%);
+		background-color: $gray-200;
+		box-shadow: 0 0 5px $shadow-level-2;
 	}
 
 	&:active, &:focus, &.ui-state-active, &.ui-state-focus {
-		border: 1px solid darken($color-button-generic, 20%);
-		background-color: lighten($color-button-generic, 10%);
-		background-image: linear-gradient(lighten($color-button-generic, 20%), $color-button-generic);
-		box-shadow: 0 0 5px darken($color-button-generic, 20%) inset;
+		border: 1px solid $btn-secondary-border;
+		background-color: $gray-200;
+		box-shadow: 0 0 5px $shadow-level-2 inset;
 	}
 }
 
@@ -321,7 +324,7 @@ form.small .field, .field.small {
 		border-radius: 0;
 		background: none;
 		border: none;
-		color: $color-text-blue-link;
+		color: $link-color;
 		display: block;
 		font-weight:normal;
 		margin:0;
@@ -366,7 +369,7 @@ input.ui-state-default.loading, .ui-widget-content input.ui-state-default.loadin
 		background: transparent url("../images/network-save.gif") no-repeat 0 0;
 	}
 
-	color: lighten($color-text-dark, 20%);
+	color: $body-color;
 	cursor: default;
 }
 
@@ -399,31 +402,25 @@ button.loading {
 	&.ss-ui-action-constructive {
 		text-shadow:none;
 		font-weight: bold;
-		color: $color-text-light;
-		border-color: $color-button-constructive-border;
-		border-bottom-color: darken($color-button-constructive-border, 10%);
-		background-color: $color-button-constructive;
-		background-image: linear-gradient(scale-color(lighten($color-button-constructive, 10%), $red:50%), $color-button-constructive);
-		text-shadow: darken($color-button-constructive, 3%) 0 -1px -1px;
+		color: $white;
+		border-color: $green;
+		border-bottom-color: darken($green, 10%);
+		background-color: $green;
 
 		&.ui-state-hover, &:hover {
-			border-color: darken($color-button-constructive-border, 10%);
-			background-color: $color-button-constructive;
-			background-image: linear-gradient(
-				scale-color(saturate(lighten($color-button-constructive, 10%), 10%), $red:60%),
-				lighten($color-button-constructive, 5%)
-			);
+			border-color: darken($green, 10%);
+			background-color: darken($green, 10%);
 		}
 		&:active, &:focus, &.ui-state-active, &.ui-state-focus {
-			background-color: darken($color-button-constructive, 2%);
+			background-color: darken($green, 2%);
 			box-shadow: inset 0 1px 3px rgb(23, 24, 26), 0 1px 0 rgba(255, 255, 255, .6);
 		}
 	}
 
 	/* destructive */
 	&.ss-ui-action-destructive {
-		color: $color-button-destructive;
-		background-color: $color-button-generic;
+		color: $red;
+		background-color: $gray-100;
 	}
 
 	&.ss-ui-button-small {
@@ -433,25 +430,24 @@ button.loading {
 	}
 
 	&.ui-state-highlight {
-		background-color: $color-button-highlight;
-		border: 1px solid $color-button-highlight-border;
+		background-color: #e6e6e6;
 	}
 
 	&.ss-ui-action-minor {
 		background: none;
 		border: 0;
-		color: lighten($color-text-dark, 10%);
+		color: $body-color;
 		text-decoration: underline;
 		box-shadow: none;
 
 		&:hover {
 			text-decoration: none;
-			color: $color-text-dark;
+			color: $body-color-dark;
 		}
 		&:focus,
 		&:active {
 			text-decoration: none;
-			color: lighten($color-text-dark, 20%);
+			color: $body-color;
 		}
 	}
 
@@ -471,7 +467,7 @@ button.loading {
 		text-shadow: none;
 		text-decoration: none;
 		font-weight: normal;
-		color: $color-text;
+		color: $body-color;
 
     &:disabled {
       cursor: not-allowed;
@@ -481,14 +477,14 @@ button.loading {
 		&:hover {
 			box-shadow: none;
 			background: #dee3e8;
-			color: darken($color-text, 10%);
+			color: darken($body-color, 10%);
 			border: 0;
 		}
 
 		&:focus {
 			box-shadow: none;
 			background: #dee3e8;
-			color: darken($color-text, 10%);
+			color: darken($body-color, 10%);
 			border: 0;
 		}
 
@@ -508,7 +504,7 @@ button.loading {
 		&:active {
 			box-shadow: 0 0 1px rgba(191, 194, 196, .9) inset;
 			background: #dee3e8;
-			color: darken($color-text, 10%);
+			color: darken($body-color, 10%);
 			border: 0;
 		}
 
@@ -529,7 +525,7 @@ button.loading {
 			&:focus,
 			&.active {
 				box-shadow: none;
-				color: darken($color-text, 10%);
+				color: darken($body-color, 10%);
 			}
 
 			&::before {
@@ -616,7 +612,7 @@ button.loading {
 		border-radius: $border-radius-sm;
 
 		&.ui-state-default {
-			background: $background-darker;
+			background: $body-bg-dark;
 		}
 
 		&.ui-state-active {
@@ -706,11 +702,9 @@ div.switch-states{
 
     a {
 			@include hide-text-overflow;
-			color:lighten($color-text-dark,40%);
-			color:rgba($color-text-dark,0.5);
+			color: $body-color;
 			cursor: pointer;
 			float:left;
-			font-weight:bold;
 			height: 100%;
 			line-height: 25px;
       z-index:2;
@@ -724,8 +718,7 @@ div.switch-states{
 			-ms-user-select: none;
 			user-select: none;
 			&:hover{
-				color:lighten($color-text-dark, 30%);
-				color:rgba($color-text-dark,0.7);
+				color: $body-color-dark;
 			}
 
 			span{
@@ -733,9 +726,7 @@ div.switch-states{
 				@include hide-text-overflow;
 				display:inline-block;
         padding:0 10px;
-        text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
-        color:lighten($color-text-dark,40%);
-        color:rgba($color-text-dark,0.5);
+        color: $body-color;
 				width: 100%;
 				text-align: center;
 			}
@@ -747,12 +738,10 @@ div.switch-states{
         ));
         @include border-radius(3px);
         @include box-shadow(inset 0 2px 6px rgba(0, 0, 0, 0.3), 0 1px 0px rgba(255, 255, 255, 0.2));
-        text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
 			background-color: #2b9c32;
 
         span {
           color: #fff;
-          text-shadow: 0 -1px 0 darken($color-menu-button, 10%);
 			}
 			}
 		}
@@ -768,7 +757,7 @@ div.switch-states{
   display: none;
   width: 100%;
   padding: $grid-gutter-width-half;
-  border-bottom: 1px solid $color-light-separator;
+  border-bottom: 1px solid $border-color-light;
 
   .chosen-results {
     max-height: 180px;

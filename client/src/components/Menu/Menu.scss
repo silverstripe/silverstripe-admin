@@ -10,7 +10,7 @@
 
 .cms-menu {
   z-index: $zindex-menu;
-  background: $color-theme-bg;
+  background: $base-menu-bg;
   // Add `!important` to ignore width set in `.cms-panel` entwine`
   width: $cms-menu-width !important; // sass-lint:disable-line no-important
 
@@ -80,7 +80,8 @@
       .cms-sitename {
 
         .cms-sitename__link {
-          left: calc(50% - 12px);
+          width: $cms-menu-width-collapsed;
+          height: $toolbar-height; /* IE fix */
         }
 
         .cms-sitename__title {
@@ -117,8 +118,8 @@
 
   .cms-panel-toggle {
     height: $toolbar-total-height;
-    background-color: $color-theme-bg;
-    box-shadow: inset $color-separator -1px 0 0;
+    background-color: $base-menu-bg;
+    box-shadow: inset $border-color -1px 0 0;
     position: relative;
     padding-left: 0;
 
@@ -230,12 +231,11 @@
 
 .cms-menu__header {
   padding: 0;
-  line-height: 24px;
-  background-color: $color-brand-bg;
+  background-color: $brand-secondary;
   min-height: $toolbar-total-height*2;
 
   span {
-    color: $color-text-light;
+    color: $white;
     display: block;
     padding-left: 26px;
 
@@ -247,19 +247,18 @@
 }
 
 .cms-sitename {
-  border-bottom: 1px solid darken($color-brand-bg, 4%);
+  border-bottom: 1px solid darken($brand-secondary, 4%);
   overflow: hidden;
   position: relative;
   vertical-align: middle;
   transition: padding $transition-speed-fast;
-  min-height: $toolbar-total-height;
+  height: $toolbar-total-height;
   font-weight: bold;
-  line-height: 16px;
-  padding: 6px 0;
+  display: flex;
 
   &:hover,
   &:focus {
-    background-color: darken($color-brand-bg, 2);
+    background-color: darken($brand-secondary, 2);
   }
 
   @include media-breakpoint-down(sm) {
@@ -267,25 +266,27 @@
   }
 
   .cms-sitename__link {
-    position: absolute;
-    top: $grid-y;
-    bottom: $grid-y;
-    display: block;
-    width: 24px;
-    left: 12px;
-    background: $application-logo-small no-repeat center center;
-    text-indent: -9999em;
-    padding: 0 1px;
+    color: #44C7F4;
+    font-size: 22px;
+    min-width: 40px;
+    line-height: 20px; /* For ie */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
-      opacity: .9;
+      color: lighten(#44C7F4, 6);
+    }
+
+    &:before {
+      vertical-align: middle;
     }
   }
 
   .cms-sitename__title {
     color: $white;
     display: block;
-    margin: 12px 1em 12px 42px;
+    margin: 16px 1em 16px 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -324,7 +325,7 @@
     &:focus {
       opacity: .9;
       text-decoration: none;
-      background-color: darken($color-brand-bg, 2);
+      background-color: darken($brand-secondary, 2);
     }
   }
 
@@ -340,7 +341,7 @@
 
     &:hover,
     &:focus {
-      background-color: darken($color-brand-bg, 2);
+      background-color: darken($brand-secondary, 2);
     }
 
     i {
@@ -396,7 +397,7 @@
   margin: 0;
   list-style-type: none;
   padding-left: 0;
-  box-shadow: inset $color-separator -1px 0 0;
+  box-shadow: inset $border-color -1px 0 0;
 
   a:focus,
   a:active {
@@ -408,19 +409,19 @@
     a {
       display: block;
       min-height: 50px;
-      color: $color-text-default;
+      color: $body-color;
       padding: (2 * $grid-y) 5px (2 * $grid-y) 8px;
       background-color: $base-menu-bg;
       cursor: pointer;
       position: relative;
       transition: padding $transition-speed-fast;
       text-decoration: none;
-      box-shadow: inset $color-separator -1px 0 0;
+      box-shadow: inset $border-color -1px 0 0;
 
       &:hover {
         text-decoration: none;
         background-color: $base-menu;
-        color: darken($color-text-dark, 5%);
+        color: darken($body-color, 10%);
       }
 
       &:focus,
@@ -515,7 +516,7 @@
         height: 18px;
         padding-top: 11px;
         padding-bottom: 11px;
-        color: lighten($color-text-default, 10%);
+        color: lighten($body-color, 10%);
         background-color: $base-menu-bg;
 
         span.text {

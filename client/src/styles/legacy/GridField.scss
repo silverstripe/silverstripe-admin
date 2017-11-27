@@ -147,17 +147,17 @@
 
         &.col-getTreeTitle {
           span.item {
-            color: $color-text-blue-link;
+            color: $link-color;
           }
 
           span.badge {
             clear: both;
             text-transform: uppercase;
             display: inline-block;
-            padding: 0 3px;
+            padding: 1px 2px;
             font-size: 0.75em;
             line-height: 1em;
-            margin-left: 10px;
+            margin-left: 3px;
             margin-right: 6px;
             margin-top: -1px;
             border-radius: 2px 2px;
@@ -165,23 +165,14 @@
           }
 
           span.badge.status-modified {
-            color: #7E7470;
-            border: 1px solid #C9B800;
-            background-color: #FFF0BC;
+            color: $state-draft;
           }
 
           span.badge.status-addedtodraft {
-            color: #7E7470;
-            border: 1px solid #C9B800;
-            background-color: #FFF0BC;
+            color: $state-draft;
           }
 
-          span.badge.status-deletedonlive {
-            color: #636363;
-            border: 1px solid #E49393;
-            background-color: #F2DADB;
-          }
-
+          span.badge.status-deletedonlive,
           span.badge.status-removedfromdraft {
             color: #636363;
             border: 1px solid #E49393;
@@ -201,10 +192,6 @@
 
         a.view-link {
           display: inline-block;
-        }
-
-        a.view-link {
-          background: url(../../sprites/btn-icon/magnifier.png) no-repeat 0 1px;
         }
       }
     }
@@ -354,7 +341,7 @@
       padding-left: 0;
       padding-right: 0;
       text-align: center;
-      border-color: darken($background-darker, 5%);
+      border-color: $border-color;
       background-color: $white;
       background-image: none;
       display: inline;

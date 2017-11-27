@@ -45,10 +45,10 @@
     line-height: 20px;
     background: none;
     font-weight: normal;
-    color: $body-color-light;
+    color: $text-muted;
 
     &:hover {
-      background-color: $background-darker;
+      background-color: $body-bg-dark;
     }
 
     &:focus {
@@ -140,8 +140,8 @@
 }
 
 input.grid-field__sort-field {
-  margin-left: -$input-padding-x;
-  margin-right: -$input-padding-x;
+  margin-left: -$input-btn-padding-x;
+  margin-right: -$input-btn-padding-x;
 
   // Create space for the clear btn
   &.text {
@@ -149,7 +149,7 @@ input.grid-field__sort-field {
   }
 
   .grid-field & { // TODO Reduce nesting
-    width: calc(100% + #{$input-padding-x * 2});
+    width: calc(100% + #{$input-btn-padding-x * 2});
     border-color: $table-bg-tools;
   }
 }
@@ -207,6 +207,10 @@ div.grid-field__sort-field + .form__fieldgroup-item {
 
 .grid-field__icon-action--hidden-on-hover {
   opacity: 0;
+
+  @include media-breakpoint-down(sm) {
+    opacity: 1;
+  }
 }
 
 .ss-gridfield-item {
@@ -228,7 +232,7 @@ div.grid-field__sort-field + .form__fieldgroup-item {
   display: block;
 
   .grid-field .grid-field__table & {  // Override legacy styles (TODO: remove once jqueryui is removed)
-    color: $body-color-light;
+    color: $text-muted;
     text-decoration: none;
   }
 }
@@ -258,10 +262,9 @@ div.grid-field__sort-field + .form__fieldgroup-item {
     display: none;
 
     &:first-child,
-    .cms-list &  {
-      display: table-cell;
-    }
-
+    .cms-list &,
+    &.col-Title,
+    &.grid-field__col-compact,
     &.grid-field__cell--actions,
     &.grid-field__action-placeholder {
       display: table-cell;

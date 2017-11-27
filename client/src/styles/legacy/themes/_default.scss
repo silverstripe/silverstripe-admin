@@ -1,11 +1,28 @@
-// This file contains the default theme definitions for the admin interface.
-// Please put mostly SCSS variable definitions in here,
-// and leave the actual styling to _style.scss and auxilliary files.
+// ATTENTION These variables are not to be used and planned to be removed
+// TODO move contents to _variables.scss if needed
 
 @import "../../bootstrap-variables";
 
+// Legacy notice colours
+$color-notice:  #93CDE8 !default;
+$color-warning: #E9D104 !default;
+$color-error:   #e68288 !default;
+$color-good:    #72c34b !default;
+
+
+// Legacy Grid Units (px), replaced by $spacer which is 16px based off the root font size
+$grid-y: 8px !default;
+$grid-x: 8px !default;
+
+
+// Legacy application logo (CMS Logo) Must be 24px x 24px
+$application-logo-small: url("../images/logo_small.png") !default;
+$application-logo-small-2x: url("../images/logo_small@2x.png") !default;
+
+
 //--------------------------------------------------
-// Colours
+// LEGACY
+// All the of the following variables below here are no longer used in SilverStripe Admin/CMS/Asset-admin
 //--------------------------------------------------
 
 $color-base: #b0bec7 !default;
@@ -18,12 +35,11 @@ $color-theme-bg: 	lighten($color-theme-base, 5%);
 $color-theme-icons: darken($color-theme-base, 26%);
 $color-theme-active: $color-theme-base;
 
-// CMS 4 menu
 $base-menu: #d8e4eb;
 $base-menu-bg: lighten($base-menu, 5%);
 $base-menu-icon: darken($base-menu, 26%);
 
-// offical silverstripe brand color
+// Brand colors
 $color-brand-bg: #005a93 !default;
 $color-brand: #43c7f4 !default;
 
@@ -54,7 +70,6 @@ $color-menu-background: #c6d7df !default;
 $color-menu-border: #8c99a1 !default;
 $color-panel-background: #c6d7df !default;
 
-// new in SilverStripe 4
 $color-text-default: #4f5861 !default;
 $color-text: #66727d !default;
 $color-text-light: white !default;
@@ -65,7 +80,6 @@ $color-text-dark-link: #3EBAE0 !default;
 $color-text-blue-link: #0071c4 !default;
 $color-text-shadow: white !default;
 
-
 $color-button-generic: #e6e6e6 !default;
 $color-button-generic-border: #d0d3d5 !default;
 
@@ -74,7 +88,6 @@ $color-button-highlight-border: #708284 !default;
 
 $color-button-constructive: #1F9433 !default;
 $color-button-constructive-border: #1F9433 !default;
-
 $color-button-destructive: #f00 !default;
 
 $color-button-disabled: #eeeded !default;
@@ -88,25 +101,6 @@ $color-good: #72c34b !default;			// green
 $color-cms-batchactions-menu-background: #f5f5f5 !default;
 $color-cms-batchactions-menu-selected-background: #fffcdc !default;
 
-//--------------------------------------------------
 // Textures
-//--------------------------------------------------
 $tab-panel-texture-color: #f6f7f8 !default;
 $tab-panel-texture-background: $tab-panel-texture-color url("../images/textures/bg_cms_main_content.png") repeat top left !default;
-
-
-//--------------------------------------------------
-// Grid Units (px)
-//
-// We have a vertical rhythm that the grid is based off
-// both x (=horizontal) and y (=vertical). All internal padding and
-// margins are scaled to this and accounting for paragraphs
-//--------------------------------------------------
-$grid-y: 8px !default;
-$grid-x: 8px !default;
-
-//--------------------------------------------------
-// Application Logo (CMS Logo) Must be 24px x 24px
-//--------------------------------------------------
-$application-logo-small: url("../images/logo_small.png") !default;
-$application-logo-small-2x: url("../images/logo_small@2x.png") !default;

@@ -77,8 +77,10 @@
     "validator": "^6.1.0"
   },
   "devDependencies": {
-    "@silverstripe/webpack-config": "^0.4.0",
+    "@silverstripe/eslint-config": "^0.0.1",
+    "@silverstripe/webpack-config": "^0.5.0",
     "babel-jest": "^20.0.3",
+    "copy-webpack-plugin": "^4.2.0",
     "jest-cli": "^19.0.2"
   },
   "resolutions": {

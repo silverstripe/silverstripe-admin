@@ -453,8 +453,13 @@ $.entwine('ss.preview', function($){
       }
 
       // Mark url as a preview url so it can get special treatment
-       if (url) {
-          url += ((url.indexOf('?') === -1) ? '?' : '&') + 'CMSPreview=1';
+      if (url) {
+        let urlFrag = url.split('#');
+        const urlBits = urlFrag.shift().split(/[?&]/);
+        const urlBase = urlBits.shift();
+        urlBits.push('CMSPreview=1');
+        urlFrag = urlFrag.length ? '#' + urlFrag.join('#') : '';
+        url = urlBase + '?' + urlBits.join('&') + urlFrag;
       }
 
       // If this preview panel isn't visible at the moment, delay loading the URL until it (maybe) is later
