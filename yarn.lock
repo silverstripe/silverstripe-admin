@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@silverstripe/eslint-config@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@silverstripe/eslint-config/-/eslint-config-0.0.1.tgz#3a8f51abe1a20991705a1bdb2909a0f8fe66662c"
+"@silverstripe/eslint-config@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@silverstripe/eslint-config/-/eslint-config-0.0.2.tgz#358ed4e1f28d35326b5af7e4526e5f1cbf7b3b60"
   dependencies:
     eslint "^4.6.1"
     eslint-config-airbnb "^15.1.0"
