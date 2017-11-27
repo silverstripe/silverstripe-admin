@@ -136,7 +136,7 @@ Used in side panels and action tabs
 				overflow:hidden;
 				margin-top:10px;
 				display: block;
-				color: lighten($color-text, 35%);
+				color: lighten($body-color, 35%);
 				font-style:italic;
 				font-weight:normal;
 				font-size:1em;
@@ -154,7 +154,7 @@ Used in side panels and action tabs
 						float:left;
 						text-shadow: none;
 						border-radius: 50px;
-						background-color:lighten($color-text, 45%);
+						background-color:lighten($body-color, 45%);
 						width:21px;
 						height:15px;
 						margin-right:5px;

@@ -29,7 +29,7 @@
 		clear:both;
 		padding: 0;
 		background: #fff;
-		border: 1px solid lighten($color-medium-separator, 20%);
+		border: 1px solid $border-color;
 		border-radius: 4px;
 		background-image: linear-gradient(#efefef, #fff 10%, #fff 90%, #efefef);
 	}
@@ -55,9 +55,9 @@
       }
 
 			&.ss-uploadfield-dropzone {
-				box-shadow: 0 0 4px 0 $color-medium-separator inset;
-				border: 2px dashed $color-medium-separator;
-				background: $color-light-separator;
+				box-shadow: 0 0 4px 0 $border-color-dark inset;
+				border: 2px dashed $border-color-dark;
+				background: $border-color-light;
 				margin-right: 15px;
 				position: relative;
 
@@ -93,7 +93,7 @@
 					float:left;
 				}
 				.size {
-					color: lighten($color-text, 25%);
+					color: lighten($body-color, 25%);
 					padding: 0 0 0 5px;
 					display:inline;
 					float:left;
@@ -105,7 +105,7 @@
 					max-width: 75%;
 
 					&.ui-state-error-text {
-						color: $color-button-destructive;
+						color: $red;
 						font-weight: bold;
 						width:150px; //Allocates the status message enough room to be useful. Will wrap if it is longer
 					}
@@ -115,7 +115,7 @@
 					}
 
 					&.ui-state-success-text {
-						color: $color-button-constructive;
+						color: $green;
 					}
 				}
 			}
@@ -177,9 +177,9 @@
 		.ss-uploadfield-item,
 		.ss-uploadfield-item.ui-state-error {
 			border: 0;
-			border-bottom: 1px solid lighten($color-medium-separator, 20%);
+			border-bottom: 1px solid $border-color;
 			background: none;
-			color: $color-text;
+			color: $body-color;
 
 			&:last-child {
 				border-bottom: 0;
@@ -208,7 +208,7 @@
 			}
 		}
 		.ss-uploadfield-item-progressbar {
-			border: 1px solid $color-medium-separator;
+			border: 1px solid $border-color-dark;
 			background-color: #92a6b3;
 			background-image: linear-gradient(to bottom, #92a6b3 0%,#90aab8 11%,#96b1bf 22%,#9eb4c1 33%,#a7bac7 44%,#c1d5dc 100%);
 		}
@@ -277,14 +277,14 @@
 			iframe {
 				margin-top: $grid-y;
 				padding-top: $grid-y;
-				border-top: 1px solid $color-light-separator;
+				border-top: 1px solid $border-color-light;
 				width: 100%;
 			}
 		}
 	}
 	.ss-uploadfield-addfile {
 		&.borderTop {
-			border-top: 1px solid lighten($color-medium-separator, 20%);
+			border-top: 1px solid $border-color;
 		}
 	}
 }
