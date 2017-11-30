@@ -22,6 +22,7 @@ import TabItem from 'components/Tabs/TabItem';
 import FormAction from 'components/FormAction/FormAction';
 import FieldGroup from 'components/FieldGroup/FieldGroup';
 import TreeDropdownField from 'components/TreeDropdownField/TreeDropdownField';
+import FormBuilderModal from 'components/FormBuilderModal/FormBuilderModal';
 import Form from 'components/Form/Form';
 import ReduxForm from 'containers/Form/Form';
 
@@ -52,5 +53,6 @@ export default () => {
     ReduxForm,
     ReduxFormField,
     Form,
+    FormBuilderModal,
   });
 };
