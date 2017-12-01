@@ -80,8 +80,8 @@
   "devDependencies": {
     "@silverstripe/eslint-config": "^0.0.1",
     "@silverstripe/webpack-config": "^0.5.1",
-    "@storybook/addon-actions": "^3.2.6",
-    "@storybook/react": "^3.2.8",
+    "@storybook/addon-actions": "^3.2.16",
+    "@storybook/react": "^3.2.16",
     "babel-jest": "^20.0.3",
     "copy-webpack-plugin": "^4.2.0",
     "html-loader": "^0.5.1",

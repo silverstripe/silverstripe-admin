@@ -41,8 +41,9 @@ ValueTracker.propTypes = {
   value: PropTypes.any,
 };
 
+
 ValueTracker.defaultProps = {
-  value: null,
+  value: '',
 };
 
 export default ValueTracker;

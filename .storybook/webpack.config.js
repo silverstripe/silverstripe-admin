@@ -17,12 +17,15 @@ module.exports = (config, configType) => {
     resolve,
     {
       modules: [
-        ...resolve.modules,
-        // make sure silverstripe-admin's node_modules is used
-        path.resolve('node_modules'),
+        ...resolve.modules.filter(module => module !== 'node_modules'),
         // make sure any modules we include in the story is included
         path.resolve('../asset-admin/client/src'),
-      ]
+        path.resolve('../campaign-admin/client/src'),
+        // make sure silverstripe-admin's node_modules is used
+        path.resolve('./node_modules'),
+        // need generic "node_modules" folder to be last - otherwise it causes multiple versions of React
+        'node_modules',
+      ],
     });
 
   // Not copying other settings on modules key
