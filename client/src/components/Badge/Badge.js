@@ -1,15 +1,11 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames';
 
-const Badge = ({ status, message, className }) => {
-  if (!status) {
-    return null;
-  }
-  return (
-    <span className={`${className || ''} badge badge-${status} badge-pill`}>
-      {message}
-    </span>
-  );
-};
+const Badge = ({ status, message, className }) => (
+  <span className={classnames(className, `badge badge-${status} badge-pill`)}>
+    {message}
+  </span>
+);
 
 Badge.propTypes = {
   message: PropTypes.node,
@@ -23,6 +19,10 @@ Badge.propTypes = {
     'secondary',
   ]),
   className: PropTypes.string,
+};
+
+Badge.defaultProps = {
+  status: 'default',
 };
 
 export default Badge;

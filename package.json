@@ -19,7 +19,8 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint client/src && sass-lint -v",
-    "js-fix": "eslint client/src --fix"
+    "js-fix": "eslint client/src --fix",
+    "pattern-lib": "yarn && start-storybook -p 6006"
   },
   "repository": {
     "type": "git",
@@ -78,9 +79,12 @@
   },
   "devDependencies": {
     "@silverstripe/eslint-config": "^0.0.1",
-    "@silverstripe/webpack-config": "^0.5.0",
+    "@silverstripe/webpack-config": "^0.5.1",
+    "@storybook/addon-actions": "^3.2.16",
+    "@storybook/react": "^3.2.16",
     "babel-jest": "^20.0.3",
     "copy-webpack-plugin": "^4.2.0",
+    "html-loader": "^0.5.1",
     "jest-cli": "^19.0.2"
   },
   "resolutions": {
