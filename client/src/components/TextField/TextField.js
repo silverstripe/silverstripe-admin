@@ -25,6 +25,7 @@ class TextField extends Component {
       value: this.props.value,
       placeholder: this.props.placeholder,
       autoFocus: this.props.autoFocus,
+      maxLength: this.props.maxLength,
     };
 
     if (this.props.attributes && !Array.isArray(this.props.attributes)) {
@@ -90,6 +91,7 @@ TextField.propTypes = {
   type: React.PropTypes.string,
   autoFocus: React.PropTypes.bool,
   attributes: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.array]),
+  maxLength: React.PropTypes.number,
 };
 
 TextField.defaultProps = {
