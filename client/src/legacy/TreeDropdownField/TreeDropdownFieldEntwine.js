@@ -2,22 +2,24 @@
 import jQuery from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ApolloProvider } from 'react-apollo';
 import { schemaMerge } from 'lib/schemaFieldValues';
-import {
-  ConnectedTreeDropdownField,
-  MULTI_EMPTY_VALUE,
-} from 'components/TreeDropdownField/TreeDropdownField';
-import { provideInjector } from 'lib/Injector';
+import { MULTI_EMPTY_VALUE } from 'components/TreeDropdownField/TreeDropdownField';
+import { loadComponent } from 'lib/Injector';
 
-const InjectableTreeDropdownField = provideInjector(ConnectedTreeDropdownField);
+const TreeDropdownField = loadComponent('TreeDropdownField');
 jQuery.entwine('ss', ($) => {
-  $('.js-react-boot .TreeDropdownField').entwine({
+  $('.TreeDropdownField').entwine({
     Value: null,
     Timer: null,
 
     onmatch() {
       this._super();
+      // shifts the react component to override the entire field holder element
+      if (this.parent('.form__field-holder').length) {
+        this.unwrap('.form__field-holder');
+        this.siblings().remove();
+        this.unwrap('.form-group').attr('class', 'TreeDropdownField form-group');
+      }
 
       const state = this.data('state') || {};
       const schema = this.data('schema') || {};
@@ -33,7 +35,6 @@ jQuery.entwine('ss', ($) => {
         this.setValue(state.value ? Number(state.value) : '');
       }
 
-      this.find(':input').remove();
       this.refresh();
     },
 
@@ -47,9 +48,6 @@ jQuery.entwine('ss', ($) => {
     },
 
     refresh() {
-      const store = window.ss.store;
-      const client = window.ss.apolloClient;
-
       const props = this.getAttributes();
 
       const onChange = (value) => {
@@ -65,9 +63,11 @@ jQuery.entwine('ss', ($) => {
       };
 
       ReactDOM.render(
-        <ApolloProvider store={store} client={client}>
-          <InjectableTreeDropdownField {...props} onChange={onChange} value={this.getValue()} />
-        </ApolloProvider>,
+        <TreeDropdownField
+          {...props}
+          onChange={onChange}
+          value={this.getValue()}
+        />,
         this[0]
       );
     },

@@ -3,10 +3,9 @@ import i18n from 'i18n';
 import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ApolloProvider } from 'react-apollo';
 import jQuery from 'jquery';
 import { createInsertLinkModal } from 'containers/InsertLinkModal/InsertLinkModal';
-import { provideInjector } from 'lib/Injector';
+import { loadComponent } from 'lib/Injector';
 
 // Link to external url
 TinyMCEActionRegistrar.addAction('sslink', {
@@ -29,7 +28,7 @@ const plugin = {
 const modalId = 'insert-link__dialog-wrapper--external';
 const sectionConfigKey = 'SilverStripe\\Admin\\LeftAndMain';
 const formName = 'EditorExternalLink';
-const InsertLinkExternalModal = provideInjector(createInsertLinkModal(sectionConfigKey, formName));
+const InsertLinkExternalModal = loadComponent(createInsertLinkModal(sectionConfigKey, formName));
 
 jQuery.entwine('ss', ($) => {
   $('textarea.htmleditor').entwine({
@@ -52,8 +51,6 @@ jQuery.entwine('ss', ($) => {
    */
   $(`#${modalId}`).entwine({
     renderModal(show) {
-      const store = window.ss.store;
-      const client = window.ss.apolloClient;
       const handleHide = () => this.close();
       const handleInsert = (...args) => this.handleInsert(...args);
       const attrs = this.getOriginalAttributes();
@@ -64,19 +61,17 @@ jQuery.entwine('ss', ($) => {
 
       // create/update the react component
       ReactDOM.render(
-        <ApolloProvider store={store} client={client}>
-          <InsertLinkExternalModal
-            show={show}
-            onInsert={handleInsert}
-            onHide={handleHide}
-            title={i18n._t('Admin.LINK_EXTERNAL', 'Insert external link')}
-            bodyClassName="modal__dialog"
-            className="insert-link__dialog-wrapper--external"
-            fileAttributes={attrs}
-            identifier="Admin.InsertLinkExternalModal"
-            requireLinkText={requireLinkText}
-          />
-        </ApolloProvider>,
+        <InsertLinkExternalModal
+          show={show}
+          onInsert={handleInsert}
+          onHide={handleHide}
+          title={i18n._t('Admin.LINK_EXTERNAL', 'Insert external link')}
+          bodyClassName="modal__dialog"
+          className="insert-link__dialog-wrapper--external"
+          fileAttributes={attrs}
+          identifier="Admin.InsertLinkExternalModal"
+          requireLinkText={requireLinkText}
+        />,
         this[0]
       );
     },

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Injector from './Container';
 
 function provideInjector(Injectable) {
-  class InjectorProvider extends React.Component {
+  class InjectorProvider extends Component {
     getChildContext() {
       const { component, form } = Injector;
       const { get } = component;
