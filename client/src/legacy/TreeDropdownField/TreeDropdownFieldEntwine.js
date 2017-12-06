@@ -17,8 +17,8 @@ jQuery.entwine('ss', ($) => {
       // shifts the react component to override the entire field holder element
       if (this.parent('.form__field-holder').length) {
         this.unwrap('.form__field-holder');
-        this.siblings('label').remove();
-        this.unwrap('.form-group').attr('class', 'TreeDropdownField');
+        this.siblings().remove();
+        this.unwrap('.form-group').attr('class', 'TreeDropdownField form-group');
       }
 
       const state = this.data('state') || {};
@@ -35,7 +35,6 @@ jQuery.entwine('ss', ($) => {
         this.setValue(state.value ? Number(state.value) : '');
       }
 
-      this.find(':input').remove();
       this.refresh();
     },
 
