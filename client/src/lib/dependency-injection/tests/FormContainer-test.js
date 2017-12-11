@@ -48,15 +48,20 @@ describe('FormContainer', () => {
 
     it('Creates a validation reducer', () => {
       const reducer = registry.getValidationReducer([
-        (values, errors) => ({ ...errors, field1: 'error one' }),
-        (values, errors) => ({ ...errors, field2: 'error two' }),
-        (values, errors) => ({ ...errors, field3: null }),
+        (values, Validation) => {
+          Validation.addError('FirstName', 'error one');
+        },
+        (values, Validation) => {
+          Validation.addError('FirstName', 'error two');
+        },
+        (values, Validation) => {
+          Validation.addError('Surname', 'error three');
+        },
       ]);
-      const result = reducer({}, { uncle: 'cheese', field3: 'error three' });
-      expect(result.field1).toBe('error one');
-      expect(result.field2).toBe('error two');
-      expect(result.field3).toBe(null);
-      expect(result.uncle).toBe('cheese');
+      const result = reducer({ FirstName: 'Uncle', Surname: 'Cheese' }, {});
+
+      expect(result.FirstName).toEqual(['error one', 'error two']);
+      expect(result.Surname).toEqual(['error three']);
     });
   });
 
