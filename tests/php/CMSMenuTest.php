@@ -96,8 +96,8 @@ class CMSMenuTest extends SapphireTest implements TestOnly
     {
 
         // Get CMS classes and check that:
-        //	1.) SecurityAdmin is included
-        //	2.) LeftAndMain & ModelAdmin are excluded
+        //  1.) SecurityAdmin is included
+        //  2.) LeftAndMain & ModelAdmin are excluded
         $cmsClasses = CMSMenu::get_cms_classes();
         $this->assertContains(SecurityAdmin::class, $cmsClasses, 'SecurityAdmin included in valid CMS Classes');
         $this->assertNotContains(LeftAndMain::class, $cmsClasses, 'LeftAndMain not included in valid CMS Classes');
