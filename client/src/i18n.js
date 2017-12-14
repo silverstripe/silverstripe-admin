@@ -51,22 +51,27 @@ class i18n {
 	 * @return string : Translated word
 	 */
 	_t(entity, fallbackString, priority, context) {
-		const langName = this.getLocale().replace(/_[\w]+/i, '');
-		const defaultlangName = this.defaultLocale.replace(/_[\w]+/i, '');
+		const fallback = fallbackString || '';
 
-		if (this.lang && this.lang[this.getLocale()] && this.lang[this.getLocale()][entity]) {
-			return this.lang[this.getLocale()][entity];
-		} else if (this.lang && this.lang[langName] && this.lang[langName][entity]) {
-			return this.lang[langName][entity];
-		} else if (this.lang && this.lang[this.defaultLocale] && this.lang[this.defaultLocale][entity]) {
-			return this.lang[this.defaultLocale][entity];
-		} else if (this.lang && this.lang[defaultlangName] && this.lang[defaultlangName][entity]) {
-			return this.lang[defaultlangName][entity];
-		} else if(fallbackString) {
-			return fallbackString;
-		} else {
-			return '';
+		if (!this.lang) {
+			return fallback
 		}
+		const locale = this.getLocale();
+		const search = [
+			locale,
+			locale.replace(/_[\w]+/i, ''),
+			this.defaultLocale,
+			this.defaultLocale.replace(/_[\w]+/i, '')
+		];
+
+		for (let i = 0; i < search.length; i++) {
+			const lang = search[i];
+			if (this.lang[lang] && this.lang[lang][entity]) {
+				return this.lang[lang][entity];
+			}
+		}
+
+		return fallback;
 	}
 
 	/**
