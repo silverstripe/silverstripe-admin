@@ -85,11 +85,12 @@ class LeftAndMainTest extends FunctionalTest
      */
     public function testLeftAndMainSubclasses()
     {
-        $adminuser = $this->objFromFixture(Member::class, 'admin');
-        $this->session()->set('loggedInAs', $adminuser->ID);
-
+        $this->logInWithPermission('ADMIN');
         $this->resetMenu();
+
         $menuItems = LeftAndMain::singleton()->MainMenu(false);
+        $this->assertGreaterThan(0, count($menuItems));
+
         foreach ($menuItems as $menuItem) {
             $link = $menuItem->Link;
 
@@ -107,8 +108,6 @@ class LeftAndMainTest extends FunctionalTest
             $this->assertRegExp('/<head[^>]*>/i', $response->getBody(), "$link should contain <head> tag");
             $this->assertRegExp('/<body[^>]*>/i', $response->getBody(), "$link should contain <body> tag");
         }
-
-        $this->session()->set('loggedInAs', null);
     }
 
     public function testCanView()
