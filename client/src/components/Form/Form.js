@@ -47,14 +47,11 @@ class Form extends Component {
     if (this.props.attributes && this.props.attributes.className) {
       className.push(this.props.attributes.className);
     }
-    const formProps = Object.assign(
-      {},
-      this.props.attributes,
-      {
-        onSubmit: this.props.handleSubmit,
-        className: className.join(' '),
-      }
-    );
+    const formProps = {
+      ...this.props.attributes,
+      onSubmit: this.props.handleSubmit,
+      className: className.join(' '),
+    };
 
     return (
       <form

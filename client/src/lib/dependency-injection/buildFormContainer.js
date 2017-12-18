@@ -1,5 +1,6 @@
 import buildBaseContainer from './buildBaseContainer';
 import FormStateManager from './FormStateManager';
+import FormValidationManager from './FormValidationManager';
 
 const SCHEMA_MIDDLEWARE_SERVICE = 'FormSchemaMiddleware';
 const VALIDATION_MIDDLEWARE_SERVICE = 'FormValidationMiddleware';
@@ -129,14 +130,12 @@ const buildFormContainer = (base = buildBaseContainer()) => ({
    * @returns {function}
    */
   getValidationReducer(factories) {
-    return (values, errors = {}) =>
-      factories.reduce((currentErrors, currentFactory) => {
-        const modifications = currentFactory(values, errors);
-        return {
-          ...currentErrors,
-          ...modifications,
-        };
-      }, errors);
+    return (values, schema) => {
+      const validation = new FormValidationManager(values);
+      factories.forEach(factory => factory(values, validation, schema));
+
+      return validation.getState();
+    };
   },
 
 });

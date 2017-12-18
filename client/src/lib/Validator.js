@@ -1,6 +1,7 @@
 // linter resolves to the wrong file
 // eslint-disable-next-line import/no-unresolved
 import validator from 'validator';
+import i18n from 'i18n';
 
 /**
  * Provides methods for handling client-side validation for Forms.
@@ -85,49 +86,15 @@ class Validator {
   }
 
   getMessage(rule, config) {
-    let message = '';
+    const name = config.title;
+    const message = (typeof config.message === 'string')
+      ? config.message
+      : i18n._t(
+          `Admin.VALIDATOR_MESSAGE_${rule.toUpperCase()}`,
+          i18n._t('Admin.VALIDATOR_MESSAGE_DEFAULT', '{name} is not a valid value.')
+        );
 
-    if (typeof config.message === 'string') {
-      message = config.message;
-    } else {
-      // TODO use i18n to get message instead of this switch
-      switch (rule) {
-        case 'required': {
-          message = '{name} is required.';
-          break;
-        }
-        case 'equals': {
-          message = '{name} are not equal.';
-          break;
-        }
-        case 'numeric': {
-          message = '{name} is not a number.';
-          break;
-        }
-        case 'date': {
-          message = '{name} is not a proper date format.';
-          break;
-        }
-        case 'alphanumeric': {
-          message = '{name} is not an alpha-numeric value.';
-          break;
-        }
-        case 'alpha': {
-          message = '{name} is not only letters.';
-          break;
-        }
-        default: {
-          message = '{name} is not a valid value.';
-          break;
-        }
-      }
-    }
-
-    if (config.title) {
-      message = message.replace('{name}', config.title);
-    }
-
-    return message;
+    return i18n.inject(message, { name });
   }
 
   /**
@@ -172,10 +139,8 @@ class Validator {
       }
 
       const valid = this.validateValue(value, rule, config);
-
       if (!valid) {
         const message = this.getMessage(rule, config);
-
         response.valid = false;
         response.errors.push(message);
       }

@@ -78,7 +78,7 @@
     "validator": "^6.1.0"
   },
   "devDependencies": {
-    "@silverstripe/eslint-config": "^0.0.1",
+    "@silverstripe/eslint-config": "^0.0.3",
     "@silverstripe/webpack-config": "^0.5.1",
     "@storybook/addon-actions": "^3.2.16",
     "@storybook/react": "^3.2.16",
