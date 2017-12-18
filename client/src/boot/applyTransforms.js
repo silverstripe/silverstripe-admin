@@ -56,13 +56,18 @@ const applyTransforms = () => {
         '*',
         (values, Validation, schema) => {
           const validator = new Validator(values);
-          Object.keys(values).forEach((key) => {
+          const errorMap = Object.keys(values).reduce((curr, key) => {
             const field = findField(schema.fields, key);
             const { valid, errors } = validator.validateFieldSchema(field);
-            if (!valid) {
-              Validation.addErrors(key, errors);
+            if (valid) {
+              return curr;
             }
-          });
+            return {
+              ...curr,
+              [key]: errors
+            };
+          }, {});
+          Validation.addErrors(errorMap);
 
           return Validation.getState();
         }
