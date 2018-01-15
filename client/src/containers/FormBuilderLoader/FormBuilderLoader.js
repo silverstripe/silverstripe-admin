@@ -7,9 +7,10 @@ import deepFreeze from 'deep-freeze-strict';
 import {
   SubmissionError,
   autofill,
-  initialize,
+  initialize
 } from 'redux-form';
 import schemaFieldValues from 'lib/schemaFieldValues';
+import { createErrorHtml } from 'lib/createErrorBlock';
 import * as schemaActions from 'state/schema/SchemaActions';
 import merge from 'merge';
 import FormBuilder, { basePropTypes, schemaPropType } from 'components/FormBuilder/FormBuilder';
@@ -126,8 +127,8 @@ class FormBuilderLoader extends Component {
     }
 
     return promise
-      // TODO Suggest storing messages in a separate redux store rather than throw an error
-      // ref: https://github.com/erikras/redux-form/issues/94#issuecomment-143398399
+    // TODO Suggest storing messages in a separate redux store rather than throw an error
+    // ref: https://github.com/erikras/redux-form/issues/94#issuecomment-143398399
       .then(formSchema => {
         if (!formSchema || !formSchema.state) {
           return formSchema;
@@ -155,22 +156,34 @@ class FormBuilderLoader extends Component {
     }
 
     // Inherit state from current schema if not being assigned in this request
-    let reduced = Object.assign({}, schema);
+    let reduced = { ...schema };
     if (!reduced.state) {
-      reduced = Object.assign({}, reduced, { state: this.props.schema.state });
+      reduced = {
+        ...reduced,
+        state: this.props.schema.state
+      };
     }
 
     // Modify state.fields and replace state.messages
-    reduced = Object.assign({}, reduced, {
-      state: Object.assign({}, reduced.state, {
+    reduced = {
+      ...reduced,
+      state: {
+        ...reduced.state,
         // Replace message property for each field
-        fields: reduced.state.fields.map((field) => Object.assign({}, field, {
-          message: schema.errors.find((error) => error.field === field.name),
-        })),
+        fields: reduced.state.fields.map((field) => {
+          let message = schema.errors.find((error) => error.field === field.name);
+          if (message) {
+            message = createErrorHtml([message.value]);
+          }
+          return {
+            ...field,
+            message,
+          };
+        })
+      },
         // Non-field messages
-        messages: schema.errors.filter((error) => !error.field),
-      }),
-    });
+      messages: schema.errors.filter((error) => !error.field),
+    };
 
     // Can be safely discarded
     delete reduced.errors;

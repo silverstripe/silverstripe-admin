@@ -1,5 +1,7 @@
 import Injector from 'lib/Injector';
+import Validator from 'lib/Validator';
 import classnames from 'classnames';
+import { findField } from 'lib/schemaFieldValues';
 
 const togglePristineState = (field, isPristine = false) => {
   // set pristine and dirty classes if they're defined
@@ -46,8 +48,31 @@ const applyTransforms = () => {
 
         return form.getState();
       });
-    },
-  );
+    });
+  Injector.transform(
+    'schema-validation',
+    (updater) => {
+      updater.form.addValidation(
+        '*',
+        (values, Validation, schema) => {
+          const validator = new Validator(values);
+          const errorMap = Object.keys(values).reduce((curr, key) => {
+            const field = findField(schema.fields, key);
+            const { valid, errors } = validator.validateFieldSchema(field);
+            if (valid) {
+              return curr;
+            }
+            return {
+              ...curr,
+              [key]: errors
+            };
+          }, {});
+          Validation.addErrors(errorMap);
+
+          return Validation.getState();
+        }
+      );
+    });
 };
 
 export default applyTransforms;

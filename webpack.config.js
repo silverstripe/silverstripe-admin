@@ -12,15 +12,7 @@ const {
 } = webpackConfig;
 
 const ENV = process.env.NODE_ENV;
-const PATHS = {
-  MODULES: 'node_modules',
-  THIRDPARTY: 'thirdparty',
-  FILES_PATH: '../',
-  ROOT: Path.resolve(),
-  SRC: Path.resolve('client/src'),
-  DIST: Path.resolve('client/dist'),
-  LEGACY_SRC: Path.resolve('client/src/legacy'),
-};
+const PATHS = require('./webpack-vars');
 
 const config = [
   {

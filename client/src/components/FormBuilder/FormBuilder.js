@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import merge from 'merge';
-import schemaFieldValues, { schemaMerge, findField } from 'lib/schemaFieldValues';
-import Validator from 'lib/Validator';
+import schemaFieldValues, { schemaMerge } from 'lib/schemaFieldValues';
+import { createErrorBlock } from 'lib/createErrorBlock';
 import backend from 'lib/Backend';
 import { withInjector } from 'lib/Injector';
 
@@ -84,45 +84,13 @@ class FormBuilder extends Component {
 
     let middlewareValidationResult = {};
     if (validationMiddleware) {
-      middlewareValidationResult = validationMiddleware(values, {}) || {};
+      middlewareValidationResult = validationMiddleware(
+        values,
+        this.props.schema.schema
+      ) || {};
     }
 
-    const validator = new Validator(values);
-
-    const validation = Object.entries(values).reduce((prev, curr) => {
-      const [key] = curr;
-      const field = findField(this.props.schema.schema.fields, key);
-
-      let { valid, errors } = validator.validateFieldSchema(field);
-      let middlewareErrors = middlewareValidationResult[key];
-      valid = valid && !middlewareErrors;
-      if (valid) {
-        return prev;
-      }
-
-      if (middlewareErrors) {
-        if (!Array.isArray(middlewareErrors)) {
-          middlewareErrors = [middlewareErrors];
-        }
-        errors = [...errors, ...middlewareErrors];
-      }
-
-      // so if there are multiple errors, it will be listed in html spans
-      const errorHtml = errors.map((message, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <span key={index} className="form__validation-message">{message}</span>
-      ));
-
-      return {
-        ...prev,
-        [key]: {
-          type: 'error',
-          value: { react: errorHtml },
-        },
-      };
-    }, {});
-
-    return validation;
+    return createErrorBlock(middlewareValidationResult);
   }
 
   /**
@@ -328,10 +296,13 @@ class FormBuilder extends Component {
 
     // Map form schema to React component attribute names,
     // which requires renaming some of them (by unsetting the original keys)
-    const attributes = Object.assign({}, schema.attributes, {
+    const attributes = {
+      ...schema.attributes,
       className: schema.attributes.class,
       encType: schema.attributes.enctype,
-    });
+      // Turn off HTML5 validation to rely on validateForm as the sole validator
+      noValidate: true,
+    };
     delete attributes.class;
     delete attributes.enctype;
 

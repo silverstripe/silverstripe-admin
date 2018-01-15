@@ -43,7 +43,8 @@
         }
     },
     "scripts": {
-        "lint": "phpcs code/ tests/php/"
+        "lint": "phpcs code/ tests/php/",
+        "lint-clean": "phpcbf code/ tests/php/"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

@@ -3,10 +3,9 @@ import i18n from 'i18n';
 import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ApolloProvider } from 'react-apollo';
 import jQuery from 'jquery';
 import { createInsertLinkModal } from 'containers/InsertLinkModal/InsertLinkModal';
-import { provideInjector } from 'lib/Injector';
+import { loadComponent } from 'lib/Injector';
 
 const commandName = 'sslinkemail';
 
@@ -33,7 +32,7 @@ const plugin = {
 const modalId = 'insert-link__dialog-wrapper--email';
 const sectionConfigKey = 'SilverStripe\\Admin\\LeftAndMain';
 const formName = 'EditorEmailLink';
-const InsertLinkEmailModal = provideInjector(createInsertLinkModal(sectionConfigKey, formName));
+const InsertLinkEmailModal = loadComponent(createInsertLinkModal(sectionConfigKey, formName));
 
 jQuery.entwine('ss', ($) => {
   $('textarea.htmleditor').entwine({
@@ -56,8 +55,6 @@ jQuery.entwine('ss', ($) => {
    */
   $(`#${modalId}`).entwine({
     renderModal(show) {
-      const store = window.ss.store;
-      const client = window.ss.apolloClient;
       const handleHide = () => this.close();
       const handleInsert = (...args) => this.handleInsert(...args);
       const attrs = this.getOriginalAttributes();
@@ -68,19 +65,17 @@ jQuery.entwine('ss', ($) => {
 
       // create/update the react component
       ReactDOM.render(
-        <ApolloProvider store={store} client={client}>
-          <InsertLinkEmailModal
-            show={show}
-            onInsert={handleInsert}
-            onHide={handleHide}
-            title={i18n._t('Admin.LINK_EMAIL', 'Insert email link')}
-            bodyClassName="modal__dialog"
-            className="insert-link__dialog-wrapper--email"
-            fileAttributes={attrs}
-            identifier="Admin.InsertLinkEmailModal"
-            requireLinkText={requireLinkText}
-          />
-        </ApolloProvider>,
+        <InsertLinkEmailModal
+          show={show}
+          onInsert={handleInsert}
+          onHide={handleHide}
+          title={i18n._t('Admin.LINK_EMAIL', 'Insert email link')}
+          bodyClassName="modal__dialog"
+          className="insert-link__dialog-wrapper--email"
+          fileAttributes={attrs}
+          identifier="Admin.InsertLinkEmailModal"
+          requireLinkText={requireLinkText}
+        />,
         this[0]
       );
     },

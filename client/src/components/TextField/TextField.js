@@ -25,6 +25,7 @@ class TextField extends Component {
       value: this.props.value,
       placeholder: this.props.placeholder,
       autoFocus: this.props.autoFocus,
+      maxLength: this.props.data && this.props.data.maxlength,
     };
 
     if (this.props.attributes && !Array.isArray(this.props.attributes)) {

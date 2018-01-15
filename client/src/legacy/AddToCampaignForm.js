@@ -3,11 +3,9 @@ import i18n from 'i18n';
 import jQuery from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { provideInjector } from 'lib/Injector';
-import FormBuilderModal from 'components/FormBuilderModal/FormBuilderModal';
+import { loadComponent } from 'lib/Injector';
 
-const InjectableFormBuilderModal = provideInjector(FormBuilderModal);
+const FormBuilderModal = loadComponent('FormBuilderModal');
 
 jQuery.entwine('ss', ($) => {
   /**
@@ -64,28 +62,26 @@ jQuery.entwine('ss', ($) => {
       const handleHide = () => this.close();
       const handleSubmit = (...args) => this._handleSubmitModal(...args);
       const id = $('form.cms-edit-form :input[name=ID]').val();
-      const store = window.ss.store;
       const sectionConfigKey = 'SilverStripe\\CMS\\Controllers\\CMSPageEditController';
+      const store = window.ss.store;
       const sectionConfig = store.getState().config.sections
         .find((section) => section.name === sectionConfigKey);
       const modalSchemaUrl = `${sectionConfig.form.AddToCampaignForm.schemaUrl}/${id}`;
       const title = i18n._t('Admin.ADD_TO_CAMPAIGN', 'Add to campaign');
 
       ReactDOM.render(
-        <Provider store={store}>
-          <InjectableFormBuilderModal
-            title={title}
-            show={show}
-            onSubmit={handleSubmit}
-            onHide={handleHide}
-            schemaUrl={modalSchemaUrl}
-            bodyClassName="modal__dialog"
-            className="add-to-campaign-modal"
-            responseClassBad="modal__response modal__response--error"
-            responseClassGood="modal__response modal__response--good"
-            identifier="Admin.AddToCampaign"
-          />
-        </Provider>,
+        <FormBuilderModal
+          title={title}
+          show={show}
+          onSubmit={handleSubmit}
+          onHide={handleHide}
+          schemaUrl={modalSchemaUrl}
+          bodyClassName="modal__dialog"
+          className="add-to-campaign-modal"
+          responseClassBad="modal__response modal__response--error"
+          responseClassGood="modal__response modal__response--good"
+          identifier="Admin.AddToCampaign"
+        />,
         this[0]
       );
     },

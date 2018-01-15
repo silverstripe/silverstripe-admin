@@ -2,17 +2,13 @@
 import jQuery from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ApolloProvider } from 'react-apollo';
 import { schemaMerge } from 'lib/schemaFieldValues';
-import {
-  ConnectedTreeDropdownField,
-  MULTI_EMPTY_VALUE,
-} from 'components/TreeDropdownField/TreeDropdownField';
-import { provideInjector } from 'lib/Injector';
+import { MULTI_EMPTY_VALUE } from 'components/TreeDropdownField/TreeDropdownField';
+import { loadComponent } from 'lib/Injector';
 
-const InjectableTreeDropdownField = provideInjector(ConnectedTreeDropdownField);
+const TreeDropdownField = loadComponent('TreeDropdownField');
 jQuery.entwine('ss', ($) => {
-  $('.js-react-boot .TreeDropdownField').entwine({
+  $('.TreeDropdownField').entwine({
     Value: null,
     Timer: null,
 
@@ -33,7 +29,6 @@ jQuery.entwine('ss', ($) => {
         this.setValue(state.value ? Number(state.value) : '');
       }
 
-      this.find(':input').remove();
       this.refresh();
     },
 
@@ -47,9 +42,6 @@ jQuery.entwine('ss', ($) => {
     },
 
     refresh() {
-      const store = window.ss.store;
-      const client = window.ss.apolloClient;
-
       const props = this.getAttributes();
 
       const onChange = (value) => {
@@ -64,10 +56,14 @@ jQuery.entwine('ss', ($) => {
         this.setTimer(timer);
       };
 
+      // TODO: rework entwine so that react has control of holder
       ReactDOM.render(
-        <ApolloProvider store={store} client={client}>
-          <InjectableTreeDropdownField {...props} onChange={onChange} value={this.getValue()} />
-        </ApolloProvider>,
+        <TreeDropdownField
+          {...props}
+          onChange={onChange}
+          value={this.getValue()}
+          noHolder
+        />,
         this[0]
       );
     },

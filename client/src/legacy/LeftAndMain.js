@@ -1264,7 +1264,6 @@ $.entwine('ss', function($) {
       }
 
       var container = this.closest('.cms-container');
-      container.find('.cms-edit-form').tabs('select',0);  //always switch to the first tab (list view) when searching
       container.loadPanel(url, "", {}, true);
 
       return false;
@@ -1315,22 +1314,19 @@ $.entwine('ss', function($) {
 
       this._super();
 
-      // If the node is empty, try to either load it from cache or via ajax.
-      if(!this.children().length) {
-        if(!this.data('deferredNoCache') && typeof window._panelDeferredCache[url] !== 'undefined') {
-          this.html(window._panelDeferredCache[url]);
-        } else {
-          this.addClass('loading');
-          $.ajax({
-            url: url,
-            complete: function() {
-              self.removeClass('loading');
-            },
-            success: function(data, status, xhr) {
-              self.html(data);
-            }
-          });
-        }
+      if(!this.data('deferredNoCache') && typeof window._panelDeferredCache[url] !== 'undefined') {
+        this.html(window._panelDeferredCache[url]);
+      } else {
+        this.addClass('loading');
+        $.ajax({
+          url: url,
+          complete: function() {
+            self.removeClass('loading');
+          },
+          success: function(data, status, xhr) {
+            self.html(data);
+          }
+        });
       }
     }
   });

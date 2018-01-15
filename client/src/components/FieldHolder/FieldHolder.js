@@ -162,6 +162,9 @@ function fieldHolder(Field) {
     }
 
     render() {
+      if (this.props.noHolder) {
+        return this.renderField();
+      }
       return (
         <FormGroup {...this.getHolderProps()}>
           {this.renderLeftTitle()}
@@ -183,6 +186,7 @@ function fieldHolder(Field) {
     extraClass: PropTypes.string,
     holderId: PropTypes.string,
     id: PropTypes.string,
+    name: PropTypes.string,
     description: PropTypes.any,
     hideLabels: PropTypes.bool,
     message: PropTypes.shape({
@@ -204,6 +208,11 @@ function fieldHolder(Field) {
     extraClass: '',
     leftTitle: null,
     rightTitle: null,
+    title: '',
+    description: null,
+    hideLabels: false,
+    noHolder: false,
+    message: null,
     data: {},
   };
 
