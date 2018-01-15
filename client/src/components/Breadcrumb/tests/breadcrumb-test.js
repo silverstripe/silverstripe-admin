@@ -1,8 +1,5 @@
 /* global jest, describe, beforeEach, it, expect */
 
-jest.unmock('../Breadcrumb');
-
-// FYI: Changing these to import statements broke jest's automocking
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 import { Component as Breadcrumb } from '../Breadcrumb';

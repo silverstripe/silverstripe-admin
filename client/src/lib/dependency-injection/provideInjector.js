@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import Injector from './Container';
+import injectorContext from './injectorContext';
 
-function provideInjector(Injectable) {
+function provideInjector(Injectable, injectorContainer = Injector) {
   class InjectorProvider extends Component {
     getChildContext() {
-      const { component, form } = Injector;
+      const { component, form } = injectorContainer;
       const { get } = component;
 
       return {
@@ -20,11 +21,7 @@ function provideInjector(Injectable) {
     }
   }
 
-  InjectorProvider.childContextTypes = {
-    injector: React.PropTypes.shape({
-      get: React.PropTypes.func,
-    }),
-  };
+  InjectorProvider.childContextTypes = injectorContext;
 
   return InjectorProvider;
 }

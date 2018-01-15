@@ -1,7 +1,9 @@
-import React from 'react';
+import { PropTypes } from 'react';
 
 export default {
-  injector: React.PropTypes.shape({
-    get: React.PropTypes.func,
+  injector: PropTypes.shape({
+    get: PropTypes.func,
+    context: PropTypes.string,
+    validate: PropTypes.func,
   }),
 };

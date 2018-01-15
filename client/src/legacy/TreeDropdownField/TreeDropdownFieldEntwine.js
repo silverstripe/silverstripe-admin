@@ -6,14 +6,22 @@ import { schemaMerge } from 'lib/schemaFieldValues';
 import { MULTI_EMPTY_VALUE } from 'components/TreeDropdownField/TreeDropdownField';
 import { loadComponent } from 'lib/Injector';
 
-const TreeDropdownField = loadComponent('TreeDropdownField');
 jQuery.entwine('ss', ($) => {
   $('.TreeDropdownField').entwine({
     Value: null,
     Timer: null,
+    Component: null,
 
     onmatch() {
       this._super();
+
+      const cmsContent = this.closest('.cms-content').attr('id');
+      const context = (cmsContent)
+        ? { context: cmsContent }
+        : {};
+
+      const TreeDropdownField = loadComponent('TreeDropdownField', context);
+      this.setComponent(TreeDropdownField);
 
       const state = this.data('state') || {};
       const schema = this.data('schema') || {};
@@ -55,6 +63,8 @@ jQuery.entwine('ss', ($) => {
         }, 0);
         this.setTimer(timer);
       };
+
+      const TreeDropdownField = this.getComponent();
 
       // TODO: rework entwine so that react has control of holder
       ReactDOM.render(
