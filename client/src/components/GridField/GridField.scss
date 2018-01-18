@@ -218,11 +218,6 @@ div.grid-field__sort-field + .form__fieldgroup-item {
   &:hover .grid-field__icon-action--hidden-on-hover {
     opacity: 1;
   }
-
-  .ss-gridfield-badge {
-    color: $state-draft;
-    padding: 0;
-  }
 }
 
 // Grid-field body
@@ -296,6 +291,7 @@ div.grid-field__sort-field + .form__fieldgroup-item {
   border: 1px solid $border-color-light;
   background-color: $white;
   margin-left: $btn-spacing;
+  color: $state-draft; // Default colour
 
   &.version-status--addedtodraft {
     color: $state-draft;
@@ -303,5 +299,9 @@ div.grid-field__sort-field + .form__fieldgroup-item {
 
   &.version-status--modified {
     color: $state-modified;
+  }
+
+  &.version-status--published {
+    color: $state-published;
   }
 }
