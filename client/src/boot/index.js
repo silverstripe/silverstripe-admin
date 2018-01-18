@@ -6,6 +6,7 @@ import thunkMiddleware from 'redux-thunk';
 import Config from 'lib/Config';
 import buildApolloClient from 'boot/buildApolloClient';
 import { setConfig } from 'state/config/ConfigActions';
+import { notifyRegistration } from 'state/injector/InjectorActions';
 import registerComponents from 'boot/registerComponents';
 import registerReducers from 'boot/registerReducers';
 import applyDevtools from 'boot/applyDevtools';
@@ -63,6 +64,7 @@ function appBoot() {
     // add any possible new reducers that were registered
     const newReducer = combineReducers(Injector.reducer.getAll());
     store.replaceReducer(newReducer);
+    store.dispatch(notifyRegistration());
 
     routes.start(window.location.pathname);
     if (window.jQuery) {

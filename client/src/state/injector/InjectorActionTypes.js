@@ -1,0 +1,3 @@
+export default {
+  NOTIFY_REGISTRATION: 'NOTIFY_REGISTRATION',
+};
