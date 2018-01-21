@@ -291,3 +291,17 @@ div.grid-field__sort-field + .form__fieldgroup-item {
 .import-form .advanced {
   display: none;
 }
+
+.version-status {
+  border: 1px solid $border-color-light;
+  background-color: $white;
+  margin-left: $btn-spacing;
+
+  &.version-status--addedtodraft {
+    color: $state-draft;
+  }
+
+  &.version-status--modified {
+    color: $state-modified;
+  }
+}
