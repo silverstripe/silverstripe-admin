@@ -18,12 +18,13 @@ class GridFieldCell extends Component {
     const classNames = ['grid-field__cell', this.props.className];
 
     const props = {
+      ...this.props,
       className: classnames(classNames),
       onClick: this.handleDrillDown,
     };
 
     return (
-      <td {...props}>{this.props.children}</td>
+      <td {...props} />
     );
   }
 }
