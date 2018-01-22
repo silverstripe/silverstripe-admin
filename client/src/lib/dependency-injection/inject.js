@@ -1,5 +1,7 @@
-import React from 'react';
-import injectorContext from './injectorContext';
+import React, { Component } from 'react';
+import contextType from './injectorContext';
+
+const defaultContext = (props, injectorContext) => injectorContext;
 
 /**
  * Injects dependences from the Injector as named props into a component
@@ -9,66 +11,69 @@ import injectorContext from './injectorContext';
  * @param {function} getContext Gets the name of the context to pass to Injector.
  *   Accepts the component's props as a param. (props) => `SomeContext.${props.identifier}`;
  */
-const inject = (dependencies, mapDependenciesToProps, getContext) => (Component) => {
-  if (dependencies && !Array.isArray(dependencies)) {
-    throw new Error(`
+const inject = (dependencies, mapDependenciesToProps, getContext = defaultContext) => (
+  (InjectingComponent) => {
+    if (dependencies && !Array.isArray(dependencies)) {
+      throw new Error(`
       withInjector() passed an argument for dependencies that is ${typeof deps}. 
-      Must be a string or array of named dependencies.
+      Must be an array of named dependencies.
     `);
-  }
+    }
 
-  if (mapDependenciesToProps && typeof mapDependenciesToProps !== 'function') {
-    throw new Error(`
+    if (mapDependenciesToProps && typeof mapDependenciesToProps !== 'function') {
+      throw new Error(`
       Second parameter of inject() [mapDependenciesToProps] must be a function, taking the resolved
       dependencies as enumerated arguments, and returning a map of prop names to dependencies.
     `);
-  }
+    }
 
-  if (getContext && typeof getContext !== 'function') {
-    throw new Error(`
+    if (typeof getContext !== 'function') {
+      throw new Error(`
       Third parameter of inject() [getContext] must be a function, taking the component's props
-      as the single parameter, and returning a string representing the Injector
+      and current inject context as parameters, and returning a string representing the Injector
       context to use throughout the component.
     `);
-  }
+    }
 
-  // eslint-disable-next-line react/prefer-stateless-function
-  class Injected extends React.Component {
-    render() {
-      let props = {};
-      const context = getContext ? getContext(this.props) : null;
-      if (dependencies) {
-        const resolved = dependencies.map(dep => this.context.injector.get(dep, context));
+    // eslint-disable-next-line react/prefer-stateless-function
+    class Injector extends Component {
+      render() {
+        let props = {};
+        if (dependencies) {
+          const { get, context } = this.context.injector;
+          const injectorContext = getContext(this.props, context);
+          const resolved = dependencies.map(dep => get(dep, injectorContext));
 
-        if (mapDependenciesToProps) {
-          props = mapDependenciesToProps(...resolved);
-        } else {
-          // If no mapping function is given, mirror the prop names and dependency names
-          dependencies.forEach((dep, index) => {
-            props[dep] = resolved[index];
-          });
-        }
+          if (mapDependenciesToProps) {
+            props = mapDependenciesToProps(...resolved);
+          } else {
+            // If no mapping function is given, mirror the prop names and dependency names
+            dependencies.forEach((dep, index) => {
+              props[dep] = resolved[index];
+            });
+          }
 
-        if (!props || typeof props !== 'object') {
-          throw new Error(`
+          if (!props || typeof props !== 'object') {
+            throw new Error(`
             mapDepedenciesToProps parameter passed to inject()
             should return an object that maps prop names to dependencies
           `);
+          }
         }
+        const newProps = {
+          ...props,
+          ...this.props,
+        };
+        return <InjectingComponent {...newProps} />;
       }
-      const newProps = {
-        ...this.props,
-        ...props,
-      };
-      return <Component {...newProps} />;
     }
-  }
-  Injected.contextTypes = injectorContext;
-  Injected.displayName = `inject(
-    ${(Component.displayName || Component.name || 'Component')}
-  )`;
 
-  return Injected;
-};
+    Injector.contextTypes = contextType;
+
+    Injector.childContextTypes = contextType;
+
+    return Injector;
+  }
+);
 
 export default inject;

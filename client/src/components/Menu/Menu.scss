@@ -81,7 +81,7 @@
 
         .cms-sitename__link {
           width: $cms-menu-width-collapsed;
-          height: $toolbar-height; /* IE fix */
+          height: $toolbar-height; // IE fix
         }
 
         .cms-sitename__title {
@@ -269,7 +269,7 @@
     color: #44C7F4;
     font-size: 22px;
     min-width: 40px;
-    line-height: 20px; /* For ie */
+    line-height: 20px; // For IE
     display: flex;
     align-items: center;
     justify-content: center;

@@ -12,10 +12,11 @@ import NotFoundComponent from 'components/NotFoundComponent/NotFoundComponent';
  *
  * Ensures that Injector is ready before the provided component will be rendered.
  *
- * @param targetName - properties include the following
+ * @param targetName
+ * @param context - properties include the following
  *    - store for the redux store
  *    - apolloClient for the apollo client (graphql)
- * @param context
+ *    - context for filtering/applying transformations to the obtained component
  * @param overrideInjector
  */
 const loadComponent = (targetName, context = {}, overrideInjector) => {
@@ -35,7 +36,7 @@ const loadComponent = (targetName, context = {}, overrideInjector) => {
           let error = true;
           let target = null;
           try {
-            target = this.context.injector.get(targetName);
+            target = this.context.injector.get(targetName, context && context.context);
             error = false;
           } catch (e) {
             this.setState({ target, error });
