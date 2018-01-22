@@ -11,6 +11,7 @@ import GridFieldCell from './GridFieldCell';
 import GridFieldAction from './GridFieldAction';
 import FormConstants from 'components/Form/FormConstants';
 import * as actions from 'state/records/RecordsActions';
+import castStringToElement from 'lib/castStringToElement';
 
 const NotYetLoaded = [];
 
@@ -66,8 +67,7 @@ class GridField extends Component {
       width: column.width,
     };
     const val = column.field.split('.').reduce((a, b) => a[b], record);
-
-    return <GridFieldCell {...cellProps}>{val}</GridFieldCell>;
+    return castStringToElement(GridFieldCell, val, cellProps);
   }
 
   /**
