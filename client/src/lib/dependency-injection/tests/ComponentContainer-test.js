@@ -40,8 +40,8 @@ describe('ComponentContainer', () => {
       const Service1 = registry.get('TestComponent1');
       const Service2 = registry.get('TestComponent2');
 
-      expect(Service1.displayName).toBe('injected(test(TestComponent1))');
-      expect(Service2.displayName).toBe('injected(Besto(Testo))');
+      expect(Service1.displayName).toBe('test(TestComponent1)');
+      expect(Service2.displayName).toBe('Besto(Testo)');
     });
   });
 });

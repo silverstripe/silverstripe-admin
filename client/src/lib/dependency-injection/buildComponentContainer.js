@@ -1,5 +1,4 @@
 import buildBaseContainer from './buildBaseContainer';
-import provideContext from './provideContext';
 
 /**
  * Creates a display name for a final composed component given all
@@ -24,16 +23,18 @@ const buildComponentContainer = (base = buildBaseContainer()) => ({
    * @param key
    * @param context
    * @param args
-   * @returns {function}
+   * @returns {XML}
    */
   get(key, context, ...args) {
-    const Component = base.get.call(this, key, context, ...args);
+    const service = base.get.call(this, key, context, ...args);
 
-    const service = provideContext(context)(Component);
+    if (service.displayName && service.displayName.match(/\]$/)) {
+      return service;
+    }
 
-    const name = (Component.displayName || Component.name || 'Component');
-    const suffix = (context) ? `[${context}]` : '';
-    service.displayName = `injected(${name}${suffix})`;
+    const componentName = (service.displayName || service.name || 'Component');
+    const componentKey = (context) ? `[${context}]` : '';
+    service.displayName = `${componentName}${componentKey}`;
 
     return service;
   },
