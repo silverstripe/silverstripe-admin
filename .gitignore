@@ -4,3 +4,4 @@
 /**/*.js.map
 /**/*.css.map
 yarn-error.log
+coverage/

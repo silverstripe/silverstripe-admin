@@ -1,10 +1,11 @@
 /* global window */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { ApolloProvider } from 'react-apollo';
 import provideInjector from './provideInjector';
 import withInjector from './withInjector';
 import Injector from './Container';
 import NotFoundComponent from 'components/NotFoundComponent/NotFoundComponent';
+import contextType from './injectorContext';
 
 /**
  * Handles loading SilverStripe-centric providers
@@ -27,6 +28,19 @@ const loadComponent = (targetName, context = {}, overrideInjector) => {
       this.state = {
         target: null,
         error: false,
+      };
+    }
+
+    getChildContext() {
+      const injectorContext = context && context.context;
+      if (!injectorContext) {
+        return this.context;
+      }
+      return {
+        injector: {
+          ...this.context.injector,
+          context: injectorContext,
+        },
       };
     }
 
@@ -85,11 +99,9 @@ const loadComponent = (targetName, context = {}, overrideInjector) => {
     }
   }
 
-  LegacyLoader.childContextTypes = {
-    injector: PropTypes.shape({
-      get: PropTypes.func,
-    }),
-  };
+  LegacyLoader.contextTypes = contextType;
+
+  LegacyLoader.childContextTypes = contextType;
 
   const contextInjector = overrideInjector || provideInjector;
 

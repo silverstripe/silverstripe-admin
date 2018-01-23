@@ -37,12 +37,38 @@ const inject = (dependencies, mapDependenciesToProps, getContext = defaultContex
 
     // eslint-disable-next-line react/prefer-stateless-function
     class Injector extends Component {
+      constructor(props, context) {
+        super(props, context);
+
+        this.state = {
+          context: getContext(props, context.injector.context),
+        };
+      }
+
+      getChildContext() {
+        return {
+          injector: {
+            ...this.context.injector,
+            context: this.state.context,
+          },
+        };
+      }
+
+      componentWillReceiveProps(nextProps, nextContext) {
+        const newContext = getContext(nextProps, nextContext.injector.context);
+
+        if (newContext !== this.state.context) {
+          this.setState({
+            context: newContext,
+          });
+        }
+      }
+
       render() {
         let props = {};
         if (dependencies) {
-          const { get, context } = this.context.injector;
-          const injectorContext = getContext(this.props, context);
-          const resolved = dependencies.map(dep => get(dep, injectorContext));
+          const { get } = this.context.injector;
+          const resolved = dependencies.map(dep => get(dep, this.state.context));
 
           if (mapDependenciesToProps) {
             props = mapDependenciesToProps(...resolved);
