@@ -410,7 +410,7 @@
       display: block;
       min-height: 50px;
       color: $body-color;
-      padding: (2 * $grid-y) 5px (2 * $grid-y) 8px;
+      padding: $spacer 5px $spacer 8px;
       background-color: $base-menu-bg;
       cursor: pointer;
       position: relative;

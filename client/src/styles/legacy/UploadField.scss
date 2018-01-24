@@ -23,7 +23,7 @@
 		// TODO .middleColumn styling should probably be theme specific (eg cms ui will look different than blackcandy)
 		// so we should move this style into the cms and black candy files
 		min-width: 510px;
-		max-width: $grid-x * 87; // Capped width to line up with text fields
+		max-width: ($spacer / 2) * 87; // Capped width to line up with text fields
 		width:100%;
 		margin-left:0;
 		clear:both;
@@ -275,8 +275,8 @@
 			}
 
 			iframe {
-				margin-top: $grid-y;
-				padding-top: $grid-y;
+				margin-top: ($spacer / 2);
+				padding-top: ($spacer / 2);
 				border-top: 1px solid $border-color-light;
 				width: 100%;
 			}

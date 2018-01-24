@@ -565,7 +565,7 @@
 
   // Applied to trees when displaying filter / search results.
   &.filtered-list {
-    margin-top: $grid-y;
+    margin-top: $spacer / 2;
 
     li:not(.filtered-item) > a {
       color: $text-muted;

@@ -103,7 +103,7 @@ body.cms {
     font-size: $h4-font-size;
     font-weight: bold;
     margin: 0;
-    margin-bottom: $grid-x;
+    margin-bottom: $spacer / 2;
 
     * {
       vertical-align: middle;
@@ -131,7 +131,7 @@ body.cms {
 
   // Reset to default styles
   .ss-ui-button {
-    line-height: $grid-x * 3;
+    line-height: $spacer / 1.5;
 
     .ui-button-text {
       line-height: 1.4;
@@ -523,7 +523,7 @@ body.cms {
 
   .ui-tabs-nav {
     float: right;
-    margin: $grid-x*2 0 $panel-padding-y 0;
+    margin: ($spacer / 2) 0 $panel-padding-y 0;
     padding: 0;
     border-bottom: 0;
 
@@ -618,7 +618,7 @@ body.cms {
         padding: 0; // Avoid double padding with parent
 
         .ui-tabs-panel {
-          padding: $grid-x 0 0 0;
+          padding: ($spacer / 2) 0 0 0;
         }
       }
 
@@ -892,7 +892,7 @@ body.cms {
 }
 
 .cms-edit-form .ui-tabs-panel .message {
-  margin: 0 0 $grid-x*2; // gets padding from tab panel
+  margin: 0 0 $spacer; // gets padding from tab panel
 }
 
 .notice-item {
@@ -1051,7 +1051,7 @@ body.cms {
 
   .cms-tree-view-modes {
     float: right;
-    padding-top: $grid-y - 3;
+    padding-top: ($spacer / 2) - 3;
 
     * {
       display: inline-block;
@@ -1103,9 +1103,9 @@ body.cms {
 
   .cms-panel-header {
     clear: both;
-    margin: 10px 0 $grid-y - 1;
+    margin: 10px 0 (($spacer / 2) - 1);
     padding-bottom: 2px;
-    line-height: $grid-y * 3;
+    line-height: $spacer * 1.5;
     border-bottom: 1px solid $border-color;
   }
 
@@ -1119,7 +1119,7 @@ body.cms {
 
   h3, h4, h5 {
     font-weight: bold;
-    line-height: $grid-y * 2;
+    line-height: $spacer;
   }
   h3 {
     font-size: $h5-font-size;
@@ -1167,7 +1167,7 @@ body.cms {
   td,
   th {
     border-bottom: 1px solid $border-color;
-    padding: $grid-y - 1 2px;
+    padding: (($spacer / 2) - 1) 2px;
     font-size: 11px;
     vertical-align: top;
 
@@ -1334,7 +1334,7 @@ form.member-profile-form {
   }
 
   #FavouritePageID {
-    margin-top: $grid-y;
+    margin-top: $spacer / 2;
   }
 
   #CsvFile .middleColumn {
@@ -1351,7 +1351,7 @@ form.member-profile-form {
   }
 
   input.customFormat {
-    width: $grid-x * 10;
+    width: $spacer * 5;
     border: 1px solid #ccc !important;
     padding: 3px;
     display: inline-block;
@@ -1499,7 +1499,7 @@ form.member-profile-form {
   select {
     // Fix for chosen.js width detection on hidden elements.
     // TODO Remove once .field styling in _form.scss is refactored to allow flexible field widths
-    width: $grid-x * 64;
+    width: $spacer * 32;
   }
 }
 
@@ -1560,7 +1560,7 @@ form.member-profile-form {
 
     h2, h3 {
       border-bottom: 0;
-      margin-left: $grid-y;
+      margin-left: $spacer / 2;
       transform-origin: bottom, right;
       transform: rotate(270deg);
     }
@@ -1637,7 +1637,7 @@ form.member-profile-form {
   background: $body-bg;
   background-clip: content-box;
   border: 1px solid #666 !important;
-  border-radius: $grid-y;
+  border-radius: $spacer / 2;
   overflow: visible;
   padding: 0;
   box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, .3);
@@ -1648,7 +1648,7 @@ form.member-profile-form {
     padding: 0;
     border: 0;
     background: transparent url(../images/textures/cms_content_header.png) repeat;
-    box-shadow: $shadow-level-4 0 0 ($grid-x / 2) inset;
+    box-shadow: $shadow-level-4 0 0 ($spacer / 4) inset;
 
     .ui-dialog-title {
       position: absolute;
@@ -1656,7 +1656,7 @@ form.member-profile-form {
   }
 
   .ui-dialog-content {
-    border-radius: $grid-y;
+    border-radius: $spacer / 2;
     overflow: auto; // TODO Replace with proper $.layout grid
 
     &.loading {
@@ -1668,12 +1668,12 @@ form.member-profile-form {
 
   .cms-dialog-content {
     background: $body-bg;
-    padding-bottom: $grid-y;
+    padding-bottom: $spacer / 2;
     padding-top: 0;
 
     .btn-toolbar {
       overflow: auto;
-      padding-bottom: $grid-y;
+      padding-bottom: $spacer / 2;
       float: right;
     }
 
@@ -1734,7 +1734,7 @@ body.cms-dialog {
 
   .htmleditorfield-from-web {
     text-align: left;
-    margin-bottom: $grid-y;
+    margin-bottom: $spacer / 2;
 
     &.CompositeField {
       @include clearfix;
@@ -1742,7 +1742,7 @@ body.cms-dialog {
 
     .url-description {
       text-align: left;
-      margin-bottom: $grid-y*1.5;
+      margin-bottom: $spacer * 0.75;
     }
 
     div.remoteurl {
@@ -1805,7 +1805,7 @@ body.cms-dialog {
     }
 
     h3 {
-      padding: $grid-y*1.5 0 $grid-y*1.5 $panel-padding-y;
+      padding: ($spacer * 0.75) 0 ($spacer * 0.75) $panel-padding-y;
       margin: 0;
       line-height: 28px;
       display: inline-block;
@@ -1852,7 +1852,7 @@ body.cms-dialog {
   }
 
   .btn-toolbar {
-    padding: $grid-y $grid-x*2;
+    padding: ($spacer / 2) $spacer;
 
     .ui-tabs-panel {
       padding: 0;
@@ -1881,7 +1881,7 @@ body.cms-dialog {
 
 .htmleditorfield-linkform {
   .step2 {
-    margin-bottom: $grid-x*2;
+    margin-bottom: $spacer;
     line-height: 18px;
   }
 }
@@ -1896,7 +1896,7 @@ body.cms-dialog {
     &.ss-uploadfield {
       h4 {
         float: left; // headline and dropdown on same line
-        margin-top: $grid-y/2; // bring to same baseline as dropdown
+        margin-top: $spacer / 4; // bring to same baseline as dropdown
         margin-bottom: 0;
       }
 
@@ -1963,7 +1963,7 @@ body.cms-dialog {
  * Search forms (used in AssetAdmin, ModelAdmin, etc)
  * -------------------------------------------- */
 .cms-search-form {
-  margin-bottom: $grid-y * 2;
+  margin-bottom: $spacer;
 
   .filter & {
     margin-bottom: 0;
@@ -1991,18 +1991,18 @@ body.cms-dialog {
 
   // Preview might not always be available
   .cms-file-info-preview img {
-    max-width: $grid-x * 22; // Same as ".field label"
-    max-height: $grid-x * 16; // Fitting typical info displayed (~5 rows)
+    max-width: ($spacer / 2) * 22; // Same as ".field label"
+    max-height: ($spacer / 2) * 16; // Fitting typical info displayed (~5 rows)
     margin-bottom: $spacer;
   }
 }
 
 form.small {
   .cms-file-info-preview {
-    width: $grid-x*14;
+    width: $spacer * 7;
 
     img {
-      max-width: $grid-x*14;
+      max-width: $spacer * 7;
     }
   }
 
@@ -2015,11 +2015,11 @@ form.small {
       padding-bottom: 0;
 
       label {
-        width: $grid-x*14;
+        width: $spacer * 7;
       }
 
       .middleColumn {
-        margin-left: $grid-x*15;
+        margin-left: $spacer * 7.5;
       }
     }
   }
@@ -2065,7 +2065,7 @@ form.small {
   }
 
   .fieldgroup .fieldgroup-field {
-    width: $grid-x * 27;
+    width: $spacer * 13.5;
     padding-left: 0;
   }
 }

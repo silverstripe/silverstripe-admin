@@ -103,7 +103,7 @@ Used in side panels and action tabs
 @mixin tightSpacing{
 	h3,h4,h5 {
 		font-weight: bold;
-		line-height: $grid-y * 2;
+		line-height: $spacer;
 	}
 	h3 {
 		font-size: $font-size-root;
@@ -131,7 +131,7 @@ Used in side panels and action tabs
 			float: none;
 			width: auto;
 			font-size: 12px;
-			padding: 0 $grid-x 4px 0;
+			padding: 0 ($spacer / 2) 4px 0;
 			&.extra-details{
 				overflow:hidden;
 				margin-top:10px;
