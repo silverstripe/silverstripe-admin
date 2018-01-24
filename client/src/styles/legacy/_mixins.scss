@@ -19,13 +19,6 @@
 	-o-text-overflow: ellipsis;
 }
 
-@mixin box-shadow-none{
-	-moz-box-shadow: none;
-	-webkit-box-shadow: none;
-    box-shadow: none;
-}
-
-
 //**----------------------------------------------------
 //Clearfix mixin clears the float of it's parent element
 //----------------------------------------------------**/
@@ -39,8 +32,6 @@
 	}
 	*:first-child &{ zoom:1;}
 }
-
-
 
 //** ----------------------------------------------------
 // * Clear the properties of sub form fields.
@@ -77,25 +68,6 @@
 		max-width: auto;
 	}
 }
-
-//** ----------------------------------------------------
-// * Double tone borders
-// *
-// * http://daverupert.com/2011/06/two-tone-borders-with-css3/
-// * ----------------------------------------------------- */
-@mixin doubleborder($side, $innerColor, $outerColor) {
-    $shadow: "0 0 0";
-    border-#{$side}: 1px solid $innerColor;
-    @if ($side == "top") { $shadow: 0 -1px 0; }
-    @if ($side == "right") { $shadow: 1px 0 0; }
-    @if ($side == "bottom") { $shadow: 0 1px 0; }
-    @if ($side == "left") { $shadow: -1px 0 0; }
-    -webkit-box-shadow: $shadow $outerColor;
-    -moz-box-shadow: $shadow $outerColor;
-    -o-box-shadow: $shadow $outerColor;
-    box-shadow: $shadow $outerColor;
-}
-
 
 /*Mixin used to generate slightly smaller text and forms
 Used in side panels and action tabs
@@ -250,21 +222,4 @@ Used in side panels and action tabs
 		overflow:visible;
 		border-bottom:none;
 	}
-}
-
-//** ----------------------------------------------------
-// * Compass replacement mixins.
-// *
-// * Mixins that were built-in with compass
-// * ----------------------------------------------------- */
-
-@mixin legacy-pie-clearfix {
-	&:after {
-    content: "\0020";
-    display: block;
-    height: 0;
-    clear: both;
-    overflow: hidden;
-    visibility: hidden;
-  }
 }
