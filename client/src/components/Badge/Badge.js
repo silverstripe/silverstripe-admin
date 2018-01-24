@@ -1,15 +1,18 @@
-import React, { PropTypes } from 'react';
+import React, { PureComponent, PropTypes } from 'react';
 
-const Badge = ({ status, message, className }) => {
-  if (!status) {
-    return null;
+class Badge extends PureComponent {
+  render() {
+    if (!this.props.status) {
+      return null;
+    }
+
+    return (
+      <span className={`${this.props.className || ''} badge badge-${this.props.status} badge-pill`}>
+        {this.props.message}
+      </span>
+    );
   }
-  return (
-    <span className={`${className || ''} badge badge-${status} badge-pill`}>
-      {message}
-    </span>
-  );
-};
+}
 
 Badge.propTypes = {
   message: PropTypes.node,
