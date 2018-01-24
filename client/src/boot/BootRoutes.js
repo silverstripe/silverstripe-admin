@@ -37,6 +37,14 @@ class BootRoutes {
     this.handleBeforeUnload = this.handleBeforeUnload.bind(this);
   }
 
+  setStore(store) {
+    this.store = store;
+  }
+
+  setClient(client) {
+    this.client = client;
+  }
+
   /**
    * Conditionally registers routes either as legacy (via page.js) or react-route powered routes
    *
