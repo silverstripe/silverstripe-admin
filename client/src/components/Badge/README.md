@@ -1,6 +1,6 @@
 # Badge Component
 
-Badge component for displaying a message in a bootstrap "badge" style.
+Badge component for displaying a message in a Bootstrap "badge" style.
 
 ## Example
 ```js

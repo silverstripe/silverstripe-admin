@@ -36,6 +36,10 @@ class Validator {
   }
 
   validateValue(value, rule, config) {
+    // Empty values suppress error unless rule is required
+    if (value === '') {
+      return rule !== 'required';
+    }
     switch (rule) {
       case 'equals': {
         const otherValue = this.getFieldValue(config.field);

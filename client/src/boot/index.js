@@ -35,38 +35,33 @@ function appBoot() {
 
   const createStoreWithMiddleware = runMiddleware(createStore);
 
-  // need to build initial state of reducers for booting earlier
-  const rootReducer = combineReducers(Injector.reducer.getAll());
-  const store = createStoreWithMiddleware(rootReducer, {});
-
-  // Set the initial config state.
-  store.dispatch(setConfig(Config.getAll()));
-  Injector.reducer.setStore(store);
-
   // Expose store stuff for legacy use
-  window.ss.store = store;
   window.ss.apolloClient = apolloClient;
 
-  // @todo - Remove once we remove entwine
-  // Enable top-level css selectors for react-dependant entwine sections
-  if (window.jQuery) {
-    window.jQuery('body').addClass('js-react-boot');
-  }
-
   // Bootstrap routing
-  const routes = new BootRoutes(store, apolloClient);
+  const routes = new BootRoutes(null, apolloClient);
 
   // Apply any injector transformations
   applyTransforms();
 
   Injector.ready(() => {
-    // add any possible new reducers that were registered
-    const newReducer = combineReducers(Injector.reducer.getAll());
-    store.replaceReducer(newReducer);
+    // need to build initial state of reducers for booting earlier
+    const rootReducer = combineReducers(Injector.reducer.getAll());
+    const store = createStoreWithMiddleware(rootReducer, {});
 
+    // Set the initial config state.
+    store.dispatch(setConfig(Config.getAll()));
+    Injector.reducer.setStore(store);
+
+    window.ss.store = store;
+
+    routes.setStore(store);
     routes.start(window.location.pathname);
+
+    // @todo - Remove once we remove entwine
+    // Enable top-level css selectors for react-dependant entwine sections
     if (window.jQuery) {
-      window.jQuery('body').addClass('js-injector-boot');
+      window.jQuery('body').addClass('js-react-boot js-injector-boot');
     }
   });
 

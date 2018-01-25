@@ -14,7 +14,6 @@
 
 [class^="font-icon-"]:before,
 [class*=" font-icon-"]:before {
-  // sass-lint:disable-block no-important
   font-family: "silverstripe" !important;
   font-style: normal !important;
   font-weight: normal !important;
@@ -484,5 +483,13 @@
 
 .font-icon-block-media:before {
   content: "\e014";
+}
+
+.font-icon-tag:before {
+  content: "\e015";
+}
+
+.font-icon-tags:before {
+  content: "\e016";
 }
 

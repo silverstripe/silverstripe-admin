@@ -65,6 +65,14 @@ describe('Validator', () => {
       // eslint-disable-next-line no-console
       expect(console.warn).toBeCalled();
     });
+
+    it('should not error when empty and not required', () => {
+      validator = new Validator({});
+      const result1 = validator.validateValue('', 'date');
+      expect(result1).toBe(true);
+      const result2 = validator.validateValue('', 'required');
+      expect(result2).toBe(false);
+    });
   });
 
   describe('validateFieldSchema()', () => {
