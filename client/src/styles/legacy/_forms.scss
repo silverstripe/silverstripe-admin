@@ -10,10 +10,6 @@
  * Basic form fields
  * ---------------------------------------------------- */
 
-form.nostyle {
-	@include clear-form-field-styles();
-}
-
 // need this for consistent <fieldset> behaviour
 fieldset {
 	width: 100%;
@@ -69,26 +65,10 @@ fieldset {
   }
 
   input.text,
-  input.creditcard,
 	textarea,
 	select {
     @extend .form-control;
 	}
-
-  input.creditcard {
-    padding: 7px 10px;
-    display: inline;
-    width: auto;
-  }
-
-  input.phonenumber-field__country,
-  input.phonenumber-field__area,
-  input.phonenumber-field__number,
-  input.phonenumber-field__extension {
-    display: inline;
-    padding: 7px 10px;
-    width: auto;
-  }
 
   // TODO remove ID style
 	&#Action {
@@ -429,10 +409,6 @@ button.loading {
 		}
 	}
 
-	&.ui-state-highlight {
-		background-color: #e6e6e6;
-	}
-
 	&.ss-ui-action-minor {
 		background: none;
 		border: 0;
@@ -532,15 +508,6 @@ button.loading {
 				margin: 0;
 			}
 		}
-	}
-}
-
-.ss-ui-buttonset {
-	margin: 0 ($spacer / 2) 0 0;
-	padding: 0;
-
-	.ui-button {
-		margin-left: -1px;
 	}
 }
 

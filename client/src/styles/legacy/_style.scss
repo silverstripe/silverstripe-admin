@@ -314,10 +314,6 @@ body.cms {
  * Tabs should be refactored to use weaker selectors.
  * ----------------------------------------------------------------- */
 
-.ui-button .ui-button-text {
-  line-height: $line-height-base;
-}
-
 .ui-button-text-only .ui-button-text {
   padding-left: 0;
 }
@@ -1303,15 +1299,6 @@ body.cms {
 }
 
 /** --------------------------------------------
- * Preview
- * -------------------------------------------- */
-.cms-switch-view {
-  a {
-    padding-right: 1em;
-  }
-}
-
-/** --------------------------------------------
  * Member Profile
  * -------------------------------------------- */
 
@@ -1325,20 +1312,6 @@ form.member-profile-form {
   #Root_Main {
     clear: both;
     border-top: 1px solid darken(#d9d9d9, 20%);
-    .cms-help-toggle {
-      text-indent: -9999em;
-      display: inline-block;
-      width: 20px;
-      background: url(../images/question.png) no-repeat 0px 0px;
-    }
-  }
-
-  #FavouritePageID {
-    margin-top: $spacer / 2;
-  }
-
-  #CsvFile .middleColumn {
-    background: none !important;
   }
 
   .advanced h4 {
@@ -1348,76 +1321,6 @@ form.member-profile-form {
   .btn-toolbar {
     text-align: left;
     border: 0;
-  }
-
-  input.customFormat {
-    width: $spacer * 5;
-    border: 1px solid #ccc !important;
-    padding: 3px;
-    display: inline-block;
-    margin-left: 1em;
-  }
-
-  .formattingHelpToggle {
-    display: block;
-    font-size: 11px;
-  }
-
-  .formattingHelpText {
-    margin: 5px 0 0 -5px;
-    color: #333;
-    padding: 5px 10px;
-    background: #fff;
-    border: 1px solid #ccc;
-  }
-
-  .formattingHelpText ul {
-    padding: 0;
-  }
-
-  .formattingHelpText li {
-    font-size: 11px;
-    color: #333;
-    margin-bottom: 2px;
-    padding-bottom: 0;
-    float: none;
-    width: auto;
-  }
-
-  #Groups .middleColumn {
-    margin-left: 0;
-    width: 100%;
-  }
-
-  // Same rules in .SecurityAdmin
-  #Permissions .optionset li {
-    float: none;
-    width: auto;
-  }
-}
-
-.memberdatetimeoptionset {
-  @extend .form-inline;
-
-  .description {
-    font-style: normal;
-  }
-
-  .toggle {
-    font-size: $font-size-sm;
-  }
-  .toggle-content {
-    padding-left: 0;
-    li {
-      margin-right: 20px;
-    }
-  }
-  .radio {
-    width: 200px;
-    margin-bottom: 6px;
-  }
-  .valcustom {
-    vertical-align: top;
   }
 }
 
@@ -1723,243 +1626,6 @@ body.cms-dialog {
 }
 
 /** --------------------------------------------
- * "Insert X" forms
- * -------------------------------------------- */
-.htmleditorfield-dialog {
-  &.ui-dialog-content {
-    padding: 0;
-    position: relative;
-    border-radius: 8px 8px 0 0;
-  }
-
-  .htmleditorfield-from-web {
-    text-align: left;
-    margin-bottom: $spacer / 2;
-
-    &.CompositeField {
-      @include clearfix;
-    }
-
-    .url-description {
-      text-align: left;
-      margin-bottom: $spacer * 0.75;
-    }
-
-    div.remoteurl {
-      width: calc(100% - 100px);
-      position: relative;
-      display: inline-block;
-
-      label {
-        position: absolute;
-        left: 0;
-        top: 0;
-        margin-bottom: 0;
-        line-height: $line-height-base;
-        @extend .input-group-addon;
-      }
-
-      input.remoteurl {
-        padding-left: 60px;
-        max-width: none;
-      }
-    }
-
-    button.add-url {
-      display: inline-block;;
-      float: none;
-      margin: 2px 0 0;
-      vertical-align: top;
-
-      &:hover,
-      &:active {
-        opacity: 1;
-      }
-
-      &.ui-state-disabled {
-        &,
-        &:hover,
-        &:active {
-          opacity: 0.35;
-          filter: Alpha(Opacity=35);
-        }
-      }
-    }
-
-    &.loading button.add-url::before {
-      content: "";
-      background: url(../images/throbber.gif) no-repeat center center;
-      padding: 8px;
-    }
-  }
-
-  .cms-content-header {
-    padding: 0;
-    width: 100%;
-    height: 53px;
-    margin-bottom: 0;
-
-    // remove extra border on headers
-    &::after {
-      display: none;
-    }
-
-    h3 {
-      padding: ($spacer * 0.75) 0 ($spacer * 0.75) $panel-padding-y;
-      margin: 0;
-      line-height: 28px;
-      display: inline-block;
-      font-weight: normal;
-
-      &.insert {
-        .back-button {
-          margin: 0;
-          padding: 0;
-          cursor: pointer;
-
-          &::before {
-            margin-right: 4px;
-            font-size: 18px;
-            vertical-align: text-bottom;
-          }
-        }
-      }
-    }
-  }
-
-  .ss-insert-media {
-    padding: $panel-padding-y $panel-padding-x;
-
-    .ui-tabs-panel {
-      padding: 0;
-    }
-  }
-
-  .toolbar--content {
-    margin-top: -$panel-padding-y;
-    margin-left: -$panel-padding-x;
-    margin-right: -$panel-padding-x;
-    height: auto; // acount for uploading new files
-  }
-
-  .ss-insert-link {
-    padding-left: $panel-padding-x;
-    padding-right: $panel-padding-x;
-
-    &::after {
-      display: none;
-    }
-  }
-
-  .btn-toolbar {
-    padding: ($spacer / 2) $spacer;
-
-    .ui-tabs-panel {
-      padding: 0;
-    }
-  }
-
-  .details {
-    .file-url {
-      display: block;
-      width: 300px;
-      @include hide-text-overflow;
-    }
-
-    .cms-file-info {
-      .field {
-        border: none;
-        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-      }
-    }
-  }
-
-  .CompositeField .text select {
-    margin: 5px 0 0 0;
-  }
-}
-
-.htmleditorfield-linkform {
-  .step2 {
-    margin-bottom: $spacer;
-    line-height: 18px;
-  }
-}
-
-.htmleditorfield-mediaform {
-  .grid-field .gridfield-button-delete {
-    // TODO Remove from PHP instead of hiding
-    display: none; // delete action shouldn't be allowed here
-  }
-
-  .htmleditorfield-from-cms {
-    &.ss-uploadfield {
-      h4 {
-        float: left; // headline and dropdown on same line
-        margin-top: $spacer / 4; // bring to same baseline as dropdown
-        margin-bottom: 0;
-      }
-
-      .middleColumn {
-        min-width: 0; // fit within available space
-        clear: none; // headline and dropdown on same line
-      }
-
-      .field.treedropdown {
-        border-bottom: 0; // don't show border, dropdown and gridfield visually belong together
-        padding: 0;
-        position: absolute;
-        margin: 0;
-        top: 6px;
-        left: 160px;
-        width: auto;
-        min-width: 200px;
-
-        > .form__field-holder {
-          margin-left: -15px;
-        }
-      }
-
-      .treedropdownfield-title {
-        font-weight: bold;
-      }
-
-      .treedropdownfield-toggle-panel-link {
-        padding: 5px 4px 5px 0;
-        height: 30px; // Fix to hold dropdown search field
-
-        a {
-          background: url(../images/sitetree_ss_default_icons.png);
-          background-position: -18px -4px;
-          height: 14px;
-          opacity: .8;
-        }
-      }
-    }
-  }
-
-  .ss-assetuploadfield .ss-uploadfield-editandorganize .ss-uploadfield-files .ss-uploadfield-item-info {
-    background-color: grayscale(#5db4df);
-    background-image: linear-gradient(to bottom, grayscale(#5db4df) 0%, grayscale(#5db1dd) 8%, grayscale(#439bcb) 50%, grayscale(#3f99cd) 54%, grayscale(#207db6) 96%, grayscale(#1e7cba) 100%);
-  }
-}
-
-.ss-uploadfield-editandorganize {
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-top: $panel-padding-y;
-
-  .ss-uploadfield-item {
-    min-height: 32px;
-  }
-
-  .ss-uploadfield-item-info {
-    position: absolute;
-    top: 0;
-  }
-}
-
-/** --------------------------------------------
  * Search forms (used in AssetAdmin, ModelAdmin, etc)
  * -------------------------------------------- */
 .cms-search-form {
@@ -2039,17 +1705,6 @@ form.small {
     }
   }
 }
-
-/** --------------------------------------------
- * Page Edit Controller
- * -------------------------------------------- */
-
-/*.cms-container {
-  .CMSPageEditController, .CMSPageSettingsController, .CMSPageHistoryController {
-    // Fix pixel gap between nav tree and main page header
-     margin-left: -1px; // Removed to close gap far right of right tabs?
-    }
-}*/
 
 /** --------------------------------------------
  * Page Settings Controller
