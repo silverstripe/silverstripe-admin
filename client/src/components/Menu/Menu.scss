@@ -470,7 +470,7 @@
 
         .toggle-children {
           .toggle-children-icon {
-            @extend .icon-sprites-32x32; // sass-lint:disable-line no-extends
+            @include icon-sprites(32x32);
             @include sprite($sprites-32x32-menu-arrow-down);
           }
         }

@@ -42,13 +42,13 @@
 		background: transparent;
 
 		.ui-icon-closethick {
-			@extend .icon-sprites-32x32;
+      @include icon-sprites(32x32);
 			@include sprite($sprites-32x32-dialog-close-over);
 		}
 	}
 
 	.ui-icon-closethick {
-		@extend .icon-sprites-32x32;
+    @include icon-sprites(32x32);
 		@include sprite($sprites-32x32-dialog-close);
 		width: 30px;
 		height:  30px;

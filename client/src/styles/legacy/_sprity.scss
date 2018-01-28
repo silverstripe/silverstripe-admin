@@ -192,21 +192,6 @@ $menu-icons-24x24-2x-pie-chart: -0px -480px 48px 48px;
   @include sprite-width($sprite);
   @include sprite-height($sprite);
 }
-.icon-btn-icon {
-  background-image: url('../images/sprites/sprite-btn-icon.png');
-}
-.icon-sprites-32x32 {
-  background-image: url('../images/sprites/sprite-sprites-32x32.png');
-}
-.icon-sprites-64x64-2x {
-  background-image: url('../images/sprites/sprite-sprites-64x64-2x.png');
-}
-.icon-sprites-64x64 {
-  background-image: url('../images/sprites/sprite-sprites-64x64.png');
-}
-.icon-sprites-32x32-2x {
-  background-image: url('../images/sprites/sprite-sprites-32x32-2x.png');
-}
-.icon-menu-icons-16x16 {
-  background-image: url('../images/sprites/sprite-menu-icons-16x16.png');
+
+@mixin icon-sprites($dimension) {
 }

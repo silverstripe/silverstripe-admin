@@ -96,9 +96,6 @@ $border: 1px solid darken(#D9D9D9, 15%);
 							display:inline-block;
 							line-height: 18px;
 						}
-						&.view-mode-batchactions-wrapper .title {
-							margin-left: 22px;
-						}
 					}
 				}
 			}
@@ -251,7 +248,7 @@ $border: 1px solid darken(#D9D9D9, 15%);
 						}
 						/* Arrow */
 						&:after {
-							@extend .icon-sprites-32x32;
+              @include icon-sprites(32x32);
 							@include sprite($sprites-32x32-arrow_down_lighter, inline-block);
 
 							border-bottom: 0;
@@ -261,18 +258,18 @@ $border: 1px solid darken(#D9D9D9, 15%);
 							width: 16px;
 						}
 						&:hover:after {
-							@extend .icon-sprites-32x32;
+              @include icon-sprites(32x32);
 							@include sprite($sprites-32x32-arrow_down_darker, inline-block);
 						}
 					}
 					/* Make arrow point in up when nav open */
 					&.ui-state-active a {
 						&:after {
-							@extend .icon-sprites-32x32;
+              @include icon-sprites(32x32);
 							@include sprite($sprites-32x32-arrow_up_lighter, inline-block);
 						}
 						&:hover:after {
-							@extend .icon-sprites-32x32;
+              @include icon-sprites(32x32);
 							@include sprite($sprites-32x32-arrow_up_darker, inline-block);
 						}
 					}
@@ -284,7 +281,6 @@ $border: 1px solid darken(#D9D9D9, 15%);
 				border-top-radius: 3px;
 				border-bottom-radius: 0;
 				@include tightSpacing;
-				@extend .button-no-style;
 				clear:both;
 				display:block;
 				background-color: $body-bg;
@@ -318,7 +314,43 @@ $border: 1px solid darken(#D9D9D9, 15%);
 					width: 100%;
 					text-align: left;
 					border-radius: 0;
-				}
+        }
+
+        button {
+          border-radius: 0;
+          background: none;
+          border: none;
+          color: $link-color;
+          display: block;
+          font-weight:normal;
+          margin:0;
+          outline:none;
+          padding-left:10px;
+          padding-right:10px;
+          text-align: left;
+          text-shadow: none;
+          white-space:normal;
+          &.ss-ui-action-destructive{
+            color: darken($color-error,25%);
+          }
+          span{
+            padding-left:0;
+            padding-right:0;
+          }
+          &:hover, &:focus, &:active{
+            box-shadow: none;
+            outline: none;
+            background: none;
+            border: none;
+          }
+          &.loading {
+            background: transparent url("../images/network-save.gif") no-repeat ($spacer / 2) center;
+            .ui-button-text {
+              padding-left: $spacer /* icon */ + ($spacer/4);
+            }
+          }
+        }
+
 			}
 			/* Re-align last tab */
 			.last .ui-tabs-panel.ss-ui-action-tab{

@@ -67,7 +67,8 @@ fieldset {
   input.text,
 	textarea,
 	select {
-    @extend .form-control;
+    padding-top: $input-padding-y;
+    padding-bottom: $input-padding-y;
 	}
 
   // TODO remove ID style
@@ -298,44 +299,6 @@ form.small .field, .field.small {
 		box-shadow: 0 0 5px $shadow-level-2 inset;
 	}
 }
-
-.button-no-style {
-	button {
-		border-radius: 0;
-		background: none;
-		border: none;
-		color: $link-color;
-		display: block;
-		font-weight:normal;
-		margin:0;
-		outline:none;
-		padding-left:10px;
-		padding-right:10px;
-		text-align: left;
-		text-shadow: none;
-		white-space:normal;
-		&.ss-ui-action-destructive{
-			color: darken($color-error,25%);
-		}
-		span{
-			padding-left:0;
-			padding-right:0;
-		}
-		&:hover, &:focus, &:active{
-			box-shadow: none;
-			outline: none;
-			background: none;
-			border: none;
-		}
-		&.loading {
-			background: transparent url("../images/network-save.gif") no-repeat ($spacer / 2) center;
-			.ui-button-text {
-				padding-left: $spacer /* icon */ + ($spacer/4);
-			}
-		}
-	}
-}
-
 
 .south .btn-toolbar, .ui-tabs-panel .btn-toolbar,  .ui-tabs-panel iframe .btn-toolbar {
 	padding-top: 0;
