@@ -1,40 +1,7 @@
 .icon {
-  text-indent: -9999px;
-  border: none;
-  outline: none;
-
   &.icon-16 {
     width: 16px;
     height: 16px;
     background-image: url('../images/sprites/sprite-menu-icons-16x16.png');
-
-    &.icon-silverstripe-admin-campaignadmin {
-      @include sprite($menu-icons-16x16-collection, inline-block);
-    }
-    &.icon-silverstripe-cms-controllers-assetadmin,
-    &.icon-silverstripe-assetadmin-controller-assetadmin {
-      @include sprite($menu-icons-16x16-picture, inline-block);
-    }
-    &.icon-silverstripe-cms-controllers-cmsmain {
-      @include sprite($menu-icons-16x16-pencil, inline-block);
-    }
-    &.icon-silverstripe-cms-controllers-cmspagescontroller {
-      @include sprite($menu-icons-16x16-network, inline-block);
-    }
-    &.icon-silverstripe-siteconfig-siteconfigleftandmain {
-      @include sprite($menu-icons-16x16-gears, inline-block);
-    }
-    &.icon-silverstripe-admin-securityadmin {
-      @include sprite($menu-icons-16x16-community, inline-block);
-    }
-    &.icon-silverstripe-reports-reportadmin {
-      @include sprite($menu-icons-16x16-pie-chart, inline-block);
-    }
-    &.icon-commentadmin {
-      @include sprite($menu-icons-16x16-blog, inline-block);
-    }
-    &.icon-help {
-      @include sprite($menu-icons-16x16-information, inline-block);
-    }
   }
 }
