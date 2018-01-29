@@ -194,4 +194,5 @@ $menu-icons-24x24-2x-pie-chart: -0px -480px 48px 48px;
 }
 
 @mixin icon-sprites($dimension) {
+  background-image: url('../images/sprites/sprite-sprites-#{$dimension}.png');
 }
