@@ -8,7 +8,7 @@ import { loadComponent } from 'lib/Injector';
 
 const TreeDropdownField = loadComponent('TreeDropdownField');
 jQuery.entwine('ss', ($) => {
-  $('.TreeDropdownField').entwine({
+  $('.js-injector-boot .TreeDropdownField').entwine({
     Value: null,
     Timer: null,
 
