@@ -23,118 +23,6 @@ $border: 1px solid darken(#D9D9D9, 15%);
 			Styles for the tab-nav of the site tree implementation
 			of ss-ui-action-tabset
 		*/
-		&.multi{
-			ul.ui-tabs-nav{
-				border-radius: 3px;
-				@include clearfix;
-				border:$border;
-				float:left;
-				overflow:visible;
-				padding:0;
-				&:active{
-					outline:none;
-					box-shadow:none;
-					-webkit-box-shadow: none;
-				}
-				li{
-					background-image: linear-gradient(to bottom, #f8f8f8, #D9D9D9);
-					border-radius: 0;
-					background: #eaeaea;
-					border: none;
-					border-right:1px solid #eee;
-					border-left: $border;
-					margin:0;
-					overflow: visible;
-					min-width: 110px; //To make label width more uniform, but allow growth if needed
-					&:active{
-						outline:none;
-						box-shadow:none;
-						-webkit-box-shadow: none;
-					}
-					&.ui-state-active{
-						border-bottom-left-radius: 0;
-						border-bottom-right-radius: 0;
-						background:#f8f8f8;
-						border-bottom:none !important; //jquery-ui style has important on it
-						a {
-							border-bottom-left-radius: 0;
-							border-bottom-right-radius: 0;
-							&:active, span:active{
-								outline:none;
-								box-shadow:none;
-								-webkit-box-shadow: none;
-							}
-						}
-					}
-					&.first{
-						border-top-left-radius: 3px;
-						border-bottom-left-radius: 3px;
-						border-left:none;
-					}
-					&.last{
-						border-top-right-radius: 3px;
-						border-bottom-right-radius: 3px;
-						border-right:none;
-					}
-          input {
-            margin-left: 5px;
-          }
-					a.tab-nav-link{
-						color:$body-color;
-						display:inline-block;
-						font-weight:bold;
-						line-height:16px;
-						padding: 5px 10px;
-						.ui-no-icon { //for links that don't have icons (ie the batch actions field)
-							display: inline-block;
-							float: left;
-							height: 16px;
-							padding: 0 2px;
-							width: 16px;
-						}
-						.title{
-							display:inline-block;
-							line-height: 18px;
-						}
-					}
-				}
-			}
-			/* Style the tab panels */
-			.ss-ui-action-tab.ui-tabs-panel{
-				@include tightSpacing;
-				background:#f8f8f8 !important; //Because ie7 doesn't understand what the 'C' in CSS stands for
-				border:$border;
-				border-top:none;
-				clear:both;
-				display:block;
-				float:left;
-				margin:0;
-				padding:10px;
-				padding-top:15px;
-				position:absolute;
-				top:30px;
-				width:202px; //Width is approx the size of two tab nav panels.
-				z-index:1;
-				&.first {
-					left: 0;
-					width: 203px; //Width is approx the size of two tab nav panels with 1px border.
-				}
-				.ui-icon {
-					padding-right: 0;
-				}
-				.tab-nav-link, .ss-ui-button {
-					font-size: 12px;
-				}
-
-				#Form_AddForm_PageType ul {
-					padding: 0;
-
-					li{
-						padding:4px 5px;
-					}
-				}
-			}
-		}
 		// Classes applied by javascript
 		&.tabset-open {
 			ul.ui-tabs-nav,
@@ -147,18 +35,6 @@ $border: 1px solid darken(#D9D9D9, 15%);
 				border-bottom-right-radius: 0;
 			}
 		}
-		/* position a checkbox & icon within a tab */
-		.batch-check, .ui-icon {
-			display: inline-block;
-			float:left;
-			margin-left: -2px;
-			padding-right: 6px;
-		}
-		.batch-check {
-			margin: 6px 0px 5px 9px;
-			position: absolute;
-		}
-
 
 		/* Styles for the cms-actions in tree view, to use more limited space.
 		Title hidden in tree view, until hover/active state added. Active is applied
@@ -191,20 +67,6 @@ $border: 1px solid darken(#D9D9D9, 15%);
 						border-bottom-left-radius: 0;
 					}
 				}
-			}
-			.ui-tabs .ui-tabs-panel.ss-ui-action-tab {
-				padding:10px 6px;
-				width:162px;
-				.field {
-					max-width:160px;
-				}
-				.ui-icon {
-					padding-right: 0;
-				}
-			}
-			.last .ui-tabs-panel.ss-ui-action-tab {
-				left:auto;
-				right:0;
 			}
 		}
 
@@ -276,7 +138,7 @@ $border: 1px solid darken(#D9D9D9, 15%);
 				}
 			}
 			/* Style the panel for actions-menu */
-			.ui-tabs-panel{
+			.ui-tabs-panel {
 				@include clearfix;
 				border-top-radius: 3px;
 				border-bottom-radius: 0;
@@ -351,11 +213,6 @@ $border: 1px solid darken(#D9D9D9, 15%);
           }
         }
 
-			}
-			/* Re-align last tab */
-			.last .ui-tabs-panel.ss-ui-action-tab{
-				left:auto;
-				right:-1px;
 			}
 		}
 	}
