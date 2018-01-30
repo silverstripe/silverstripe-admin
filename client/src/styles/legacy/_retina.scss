@@ -5,17 +5,6 @@
  * @subpackage admin
  */
 
-@mixin retina-sprite($sprite) {
-	@include sprite($sprite);
-	background-position: round(nth($sprite, 1)/2) round(nth($sprite, 2)/2);
-	width: round(nth($sprite, 3)/2);
-	height: round(nth($sprite, 4)/2);
-}
-
-/** ----------------------------------------------------
- * "@2x" media query
- * ---------------------------------------------------- */
-
 @media
 	only screen and (-webkit-min-device-pixel-ratio: 2),
 	only screen and (   min--moz-device-pixel-ratio: 2),
@@ -24,18 +13,11 @@
 	only screen and (                min-resolution: 192dpi),
 	only screen and (                min-resolution: 2dppx) {
 
-	@mixin retina-sprites-32x32-2x {
-		background-image: url('../../images/sprites/sprite-sprites-32x32-2x.png');
-		background-size: 30px auto;
-	}
-
 	/* Loading spinner */
 	.cms-content-loading-spinner {
 		background-image: url('../../images/spinner@2x.gif');
 		background-size: 43px 43px;
 	}
-
-	/* CMS menu */
 
 	/* Sitetree */
 	.tree-holder, .cms-tree {
@@ -45,20 +27,5 @@
 				background-size: 108px 72px;
 			}
 		}
-	}
-
-	/* UI widget "close" button */
-	.ui-widget-header {
-		a.ui-state-hover {
-			.ui-icon-closethick {
-				@include retina-sprites-32x32-2x;
-				@include retina-sprite($sprites-32x32-2x-dialog-close-over);
-			}
-		}
-
-		.ui-icon-closethick {
-			@include retina-sprites-32x32-2x;
-			@include retina-sprite($sprites-32x32-2x-dialog-close);
-		}
-	}
+  }
 }
