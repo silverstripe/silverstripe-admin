@@ -126,4 +126,6 @@ Form.defaultProps = {
   }
 };
 
+export { Form as Component };
+
 export default Form;
