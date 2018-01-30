@@ -7,7 +7,7 @@ import { MULTI_EMPTY_VALUE } from 'components/TreeDropdownField/TreeDropdownFiel
 import { loadComponent } from 'lib/Injector';
 
 jQuery.entwine('ss', ($) => {
-  $('.TreeDropdownField').entwine({
+  $('.js-injector-boot .TreeDropdownField').entwine({
     Value: null,
     Timer: null,
     Component: null,
