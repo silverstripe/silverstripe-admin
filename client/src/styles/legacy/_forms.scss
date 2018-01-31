@@ -12,7 +12,7 @@
 
 // need this for consistent <fieldset> behaviour
 fieldset {
-	width: 100%;
+  width: 100%;
 
   // fix firefox fieldset width behaviour http://stackoverflow.com/a/17863685
   @-moz-document url-prefix() {
@@ -22,170 +22,170 @@ fieldset {
 
 .field { // TODO convert to .form-group
 
-	&.ui-tabs {
-		border-bottom: 0;
-	}
+  &.ui-tabs {
+    border-bottom: 0;
+  }
 
-	&.noborder {
-		padding-bottom: 0;
-		border-bottom: none;
-		box-shadow: none;
-	}
+  &.noborder {
+    padding-bottom: 0;
+    border-bottom: none;
+    box-shadow: none;
+  }
 
-	&.checkbox label.right {
-		margin: ($spacer / 4) 0 0 0;
-		display:inline;
-		font-style: normal;
-		color: $body-color;
-		clear:none;
-	}
+  &.checkbox label.right {
+    margin: ($spacer / 4) 0 0 0;
+    display:inline;
+    font-style: normal;
+    color: $body-color;
+    clear:none;
+  }
 
-	span.readonly {
-		padding-top: $spacer / 2;
-		display: block;
-	}
+  span.readonly {
+    padding-top: $spacer / 2;
+    display: block;
+  }
 
-	.fieldgroup .fieldgroup-field.last {  /* This is used on page/settings/visibility */
-			padding-bottom: 8px; /* replicates li item spacing */
-		}
+  .fieldgroup .fieldgroup-field.last {  /* This is used on page/settings/visibility */
+      padding-bottom: 8px; /* replicates li item spacing */
+    }
 
-	// Additional help text to clarify the field intent,
-	// displayed alongside the field (rather than in a tooltip)
-	.description {
+  // Additional help text to clarify the field intent,
+  // displayed alongside the field (rather than in a tooltip)
+  .description {
     font-style: italic;
     color: $text-muted; //8.5% is the minimum required to meet contrast standards while still retaining visual difference from normal text
-	}
+  }
 
-	&.checkbox .description, &.grid-field .description {
-		margin-left: 0;
-	}
+  &.checkbox .description, &.grid-field .description {
+    margin-left: 0;
+  }
 
   select:not([size]):not([multiple]) {
     height: 2.924rem;
   }
 
   input.text,
-	textarea,
-	select {
+  textarea,
+  select {
     @extend .form-control;
-	}
+  }
 
   // TODO remove ID style
-	&#Action {
-			box-shadow: none;
-	}
+  &#Action {
+      box-shadow: none;
+  }
 
-	// When a field's description is toggleable, it's given an icon (right title) which is used as
-	// a click target for toggling the visibility of the description. See LeftAndMain.FieldDescriptionToggle.js
-	&.cms-description-toggle {
+  // When a field's description is toggleable, it's given an icon (right title) which is used as
+  // a click target for toggling the visibility of the description. See LeftAndMain.FieldDescriptionToggle.js
+  &.cms-description-toggle {
 
-		> .middleColumn { // The field wrapper
-			display: inline-block;
-			vertical-align: middle;
-			margin-left: 0;
-			width: 36%;
-			min-width: 300px;
-		}
+    > .middleColumn { // The field wrapper
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 0;
+      width: 36%;
+      min-width: 300px;
+    }
 
-		.right { // The column the trigger is inside.
-			display: inline-block;
-			vertical-align: middle;
-			height: 15px;
-			margin: 0 0 0 7px;
-		}
+    .right { // The column the trigger is inside.
+      display: inline-block;
+      vertical-align: middle;
+      height: 15px;
+      margin: 0 0 0 7px;
+    }
 
-		.btn-icon-information { // The default icon.
-			display: inline-block;
-			width: 15px;
-			height: 15px;
-		}
+    .btn-icon-information { // The default icon.
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+    }
 
-		.description {
-			padding: 12px 0;
-			width: 36%;
-		}
+    .description {
+      padding: 12px 0;
+      width: 36%;
+    }
 
-		// Overrides of the above default styles, for specific field types.
-		&.textarea,
-		&.htmleditor,
-		&.optionset,
-		&.listbox,
-		&.upload {
-			.right {
-				vertical-align: top;
-				margin-top: 4px;
-			}
-		}
+    // Overrides of the above default styles, for specific field types.
+    &.textarea,
+    &.htmleditor,
+    &.optionset,
+    &.listbox,
+    &.upload {
+      .right {
+        vertical-align: top;
+        margin-top: 4px;
+      }
+    }
 
-		&.htmleditor {
-			.middleColumn,
-			.description {
-				width: 95%;
-			}
-		}
+    &.htmleditor {
+      .middleColumn,
+      .description {
+        width: 95%;
+      }
+    }
 
-		&.optionset {
-			.right {
-				margin-top: 8px;
-			}
+    &.optionset {
+      .right {
+        margin-top: 8px;
+      }
 
-			li {
-				width: 170px;
-			}
-		}
+      li {
+        width: 170px;
+      }
+    }
 
-		&.listbox {
-			select {
-				margin-left: 0;
-			}
-		}
+    &.listbox {
+      select {
+        margin-left: 0;
+      }
+    }
 
-		&.upload {
-			.description {
-				margin-left: 184px;
-			}
-		}
-	}
+    &.upload {
+      .description {
+        margin-left: 184px;
+      }
+    }
+  }
 }
 
 form.small .field, .field.small {
-	label {
-		&.left {
+  label {
+    &.left {
       width: $spacer * 7;
-		}
-	}
+    }
+  }
 
-	.middleColumn {
-		margin-left: $spacer * 7.5;
-	}
+  .middleColumn {
+    margin-left: $spacer * 7.5;
+  }
 
-	input.text,
-	textarea,
-	select {
-		width: auto;
-	}
+  input.text,
+  textarea,
+  select {
+    width: auto;
+  }
 }
 
 /* Chosen override */
 .chosen-container {
-	width: 100%;
-	max-width: $input-max-width !important;
-	vertical-align: bottom;
+  width: 100%;
+  max-width: $input-max-width !important;
+  vertical-align: bottom;
 
-	.chosen-results {
-		padding-top: 4px;
+  .chosen-results {
+    padding-top: 4px;
 
-		li {
-			font-size: 11px;
-			line-height: $spacer;
-			padding: ($spacer / 2);
-		}
-	}
+    li {
+      font-size: 11px;
+      line-height: $spacer;
+      padding: ($spacer / 2);
+    }
+  }
 }
 
 .field {
 
-	/* dropdowns */
+  /* dropdowns */
 
   .chosen-container-single .chosen-single {
     border: 1px solid $border-color-dark;
@@ -228,7 +228,7 @@ form.small .field, .field.small {
     border-radius: 0 0 $input-border-radius $input-border-radius;
   }
 
-	.chosen-choices {
+  .chosen-choices {
     border: 1px solid $border-color-dark;
     border-radius: 3px;
     font-size: $font-size-root;
@@ -241,243 +241,243 @@ form.small .field, .field.small {
       border: 1px solid $border-color-dark;
       background: linear-gradient(#efefef, #fff 10%, #fff 90%, #efefef);
       color: $body-color;
-			line-height: 16px;
+      line-height: 16px;
 
-			.search-choice-close {
-				top: 5px;
-			}
-		}
-		.search-field input {
-			height: 18px;
-		}
-	}
+      .search-choice-close {
+        top: 5px;
+      }
+    }
+    .search-field input {
+      height: 18px;
+    }
+  }
 
-	/* Date Fields */
-	input.month, input.day {
-		width: (($spacer / 2) * 7);
+  /* Date Fields */
+  input.month, input.day {
+    width: (($spacer / 2) * 7);
     display: inline;
-	}
+  }
   input.year {
     width: (($spacer / 2) * 9);
     display: inline;
   }
 
-	input.time {
-		width: (($spacer / 2) * 17); // smaller time field, since input is restricted
-	}
+  input.time {
+    width: (($spacer / 2) * 17); // smaller time field, since input is restricted
+  }
 
-	/* Hides borders in settings/access. Activated from JS */
-	&.remove-splitter {
-		border-bottom: none;
-		box-shadow: none;
-	}
+  /* Hides borders in settings/access. Activated from JS */
+  &.remove-splitter {
+    border-bottom: none;
+    box-shadow: none;
+  }
 }
 
 /** ----------------------------------------------------
  * Buttons
  * ---------------------------------------------------- */
 .ss-ui-button {
-	margin-top: 0px;
-	text-decoration: none;
-	color: $body-color;
-	border: 1px solid $btn-secondary-border;
-	cursor: pointer;
-	background-color: transparent;
-	white-space: nowrap;
+  margin-top: 0px;
+  text-decoration: none;
+  color: $body-color;
+  border: 1px solid $btn-secondary-border;
+  cursor: pointer;
+  background-color: transparent;
+  white-space: nowrap;
 
-	&.ui-state-hover,
-	&:hover {
-		text-decoration: none;
-		background-color: $gray-200;
-		box-shadow: 0 0 5px $shadow-level-2;
-	}
+  &.ui-state-hover,
+  &:hover {
+    text-decoration: none;
+    background-color: $gray-200;
+    box-shadow: 0 0 5px $shadow-level-2;
+  }
 
-	&:active, &:focus, &.ui-state-active, &.ui-state-focus {
-		border: 1px solid $btn-secondary-border;
-		background-color: $gray-200;
-		box-shadow: 0 0 5px $shadow-level-2 inset;
-	}
+  &:active, &:focus, &.ui-state-active, &.ui-state-focus {
+    border: 1px solid $btn-secondary-border;
+    background-color: $gray-200;
+    box-shadow: 0 0 5px $shadow-level-2 inset;
+  }
 }
 
 .south .btn-toolbar, .ui-tabs-panel .btn-toolbar,  .ui-tabs-panel iframe .btn-toolbar {
-	padding-top: 0;
-	padding-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 input.loading, button.loading,
 input.ui-state-default.loading, .ui-widget-content input.ui-state-default.loading,
 .ui-widget-header input.ui-state-default.loading {
-	.ui-icon {
-		background: transparent url("../images/network-save.gif") no-repeat 0 0;
-	}
+  .ui-icon {
+    background: transparent url("../images/network-save.gif") no-repeat 0 0;
+  }
 
-	color: $body-color;
-	cursor: default;
+  color: $body-color;
+  cursor: default;
 }
 
 input.loading,
 button.loading {
-	&.ss-ui-action-constructive .ui-icon {
-		background: transparent url("../images/network-save-constructive.gif") no-repeat 0 0;
-	}
+  &.ss-ui-action-constructive .ui-icon {
+    background: transparent url("../images/network-save-constructive.gif") no-repeat 0 0;
+  }
 }
 
 .btn-toolbar .ss-ui-action-constructive:first-child {
-	margin-left: 5px;
+  margin-left: 5px;
 
-	.toolbar--content & {
-		margin-left: 15px;
-	}
+  .toolbar--content & {
+    margin-left: 15px;
+  }
 }
 
 
 
 .ss-ui-button {
-	&.ss-ui-action-minor {
-		span {
-			padding-left: 0;
-			padding-right: 0;
-		}
-	}
+  &.ss-ui-action-minor {
+    span {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
 
-	/* constructive */
-	&.ss-ui-action-constructive {
-		text-shadow:none;
-		font-weight: bold;
-		color: $white;
-		border-color: $green;
-		border-bottom-color: darken($green, 10%);
-		background-color: $green;
+  /* constructive */
+  &.ss-ui-action-constructive {
+    text-shadow:none;
+    font-weight: bold;
+    color: $white;
+    border-color: $green;
+    border-bottom-color: darken($green, 10%);
+    background-color: $green;
 
-		&.ui-state-hover, &:hover {
-			border-color: darken($green, 10%);
-			background-color: darken($green, 10%);
-		}
-		&:active, &:focus, &.ui-state-active, &.ui-state-focus {
-			background-color: darken($green, 2%);
-			box-shadow: inset 0 1px 3px rgb(23, 24, 26), 0 1px 0 rgba(255, 255, 255, .6);
-		}
-	}
+    &.ui-state-hover, &:hover {
+      border-color: darken($green, 10%);
+      background-color: darken($green, 10%);
+    }
+    &:active, &:focus, &.ui-state-active, &.ui-state-focus {
+      background-color: darken($green, 2%);
+      box-shadow: inset 0 1px 3px rgb(23, 24, 26), 0 1px 0 rgba(255, 255, 255, .6);
+    }
+  }
 
-	/* destructive */
-	&.ss-ui-action-destructive {
-		color: $red;
-		background-color: $gray-100;
-	}
+  /* destructive */
+  &.ss-ui-action-destructive {
+    color: $red;
+    background-color: $gray-100;
+  }
 
-	&.ss-ui-button-small {
-		.ui-button-text {
-			font-size: $font-size-sm;
-		}
-	}
+  &.ss-ui-button-small {
+    .ui-button-text {
+      font-size: $font-size-sm;
+    }
+  }
 
-	&.ss-ui-action-minor {
-		background: none;
-		border: 0;
-		color: $body-color;
-		text-decoration: underline;
-		box-shadow: none;
+  &.ss-ui-action-minor {
+    background: none;
+    border: 0;
+    color: $body-color;
+    text-decoration: underline;
+    box-shadow: none;
 
-		&:hover {
-			text-decoration: none;
-			color: $body-color-dark;
-		}
-		&:focus,
-		&:active {
-			text-decoration: none;
-			color: $body-color;
-		}
-	}
+    &:hover {
+      text-decoration: none;
+      color: $body-color-dark;
+    }
+    &:focus,
+    &:active {
+      text-decoration: none;
+      color: $body-color;
+    }
+  }
 
-	&.ss-ui-button-loading {
-		opacity: 0.8;
-	}
+  &.ss-ui-button-loading {
+    opacity: 0.8;
+  }
 
-	/* font-icon buttons */
-	&[class*="font-icon-"],
-	&[class^="font-icon-"],
-	&.ss-ui-button-constructive[class*="font-icon-"] {
-		padding: $input-btn-padding-y $input-btn-padding-x;
-		vertical-align: middle;
-		box-shadow: none;
-		border: 0;
-		background: none;
-		text-shadow: none;
-		text-decoration: none;
-		font-weight: normal;
-		color: $body-color;
+  /* font-icon buttons */
+  &[class*="font-icon-"],
+  &[class^="font-icon-"],
+  &.ss-ui-button-constructive[class*="font-icon-"] {
+    padding: $input-btn-padding-y $input-btn-padding-x;
+    vertical-align: middle;
+    box-shadow: none;
+    border: 0;
+    background: none;
+    text-shadow: none;
+    text-decoration: none;
+    font-weight: normal;
+    color: $body-color;
 
     &:disabled {
       cursor: not-allowed;
       opacity: .65;
     }
 
-		&:hover {
-			box-shadow: none;
-			background: #dee3e8;
-			color: darken($body-color, 10%);
-			border: 0;
-		}
+    &:hover {
+      box-shadow: none;
+      background: #dee3e8;
+      color: darken($body-color, 10%);
+      border: 0;
+    }
 
-		&:focus {
-			box-shadow: none;
-			background: #dee3e8;
-			color: darken($body-color, 10%);
-			border: 0;
-		}
+    &:focus {
+      box-shadow: none;
+      background: #dee3e8;
+      color: darken($body-color, 10%);
+      border: 0;
+    }
 
-		&:before {
-			font-size: 16px;
-			margin-right: 5px;
-			margin-top: 0;
-			vertical-align: top;
-			line-height: $line-height-root;
-		}
+    &:before {
+      font-size: 16px;
+      margin-right: 5px;
+      margin-top: 0;
+      vertical-align: top;
+      line-height: $line-height-root;
+    }
 
-		&.ui-state-focus {
-			box-shadow: none;
-		}
+    &.ui-state-focus {
+      box-shadow: none;
+    }
 
-		&.active,
-		&:active {
-			box-shadow: 0 0 1px rgba(191, 194, 196, .9) inset;
-			background: #dee3e8;
-			color: darken($body-color, 10%);
-			border: 0;
-		}
+    &.active,
+    &:active {
+      box-shadow: 0 0 1px rgba(191, 194, 196, .9) inset;
+      background: #dee3e8;
+      color: darken($body-color, 10%);
+      border: 0;
+    }
 
-		.ui-button-text {
-			display: inline-block;
-			padding: 0;
-		}
+    .ui-button-text {
+      display: inline-block;
+      padding: 0;
+    }
 
-		.ui-icon {
-			display: none;
-		}
+    .ui-icon {
+      display: none;
+    }
 
-		&.no-text,
-		&.btn--no-text {
+    &.no-text,
+    &.btn--no-text {
 
-			&:hover,
-			&:active,
-			&:focus,
-			&.active {
-				box-shadow: none;
-				color: darken($body-color, 10%);
-			}
+      &:hover,
+      &:active,
+      &:focus,
+      &.active {
+        box-shadow: none;
+        color: darken($body-color, 10%);
+      }
 
-			&::before {
-				margin: 0;
-			}
-		}
-	}
+      &::before {
+        margin: 0;
+      }
+    }
+  }
 }
 
 .ss-ui-loading-icon {
-	background: url("../images/network-save.gif") no-repeat;
-	display: block;
-	width: 16px;
-	height: 16px;
+  background: url("../images/network-save.gif") no-repeat;
+  display: block;
+  width: 16px;
+  height: 16px;
 }
 
 
@@ -485,102 +485,102 @@ button.loading {
  * Grouped form fields
  * ---------------------------------------------------- */
 .fieldgroup {
-	.fieldgroup-field {
-		float: left;
-		display: block;
-		padding: ($spacer /2) ($spacer /2) 0 0;
+  .fieldgroup-field {
+    float: left;
+    display: block;
+    padding: ($spacer /2) ($spacer /2) 0 0;
 
-		.field {
-			border: none;
-			padding-bottom: 0;
-		}
+    .field {
+      border: none;
+      padding-bottom: 0;
+    }
 
-		.fieldholder-small {
-			padding: 0 0 ($spacer / 2) 0;
-		}
+    .fieldholder-small {
+      padding: 0 0 ($spacer / 2) 0;
+    }
 
-		.fieldgroup input.text, .fieldgroup textarea, .fieldgroup select {
-			margin-left: 0;
-		}
+    .fieldgroup input.text, .fieldgroup textarea, .fieldgroup select {
+      margin-left: 0;
+    }
 
-		// Style specific label with display block, otherwise
-		// checkbox falls under the text
-		.fieldholder-small-label {
-			display: block;
-		}
+    // Style specific label with display block, otherwise
+    // checkbox falls under the text
+    .fieldholder-small-label {
+      display: block;
+    }
 
-		label {
-			padding: ($spacer / 2) ($spacer / 2) ($spacer / 2) 0;
-			margin-left: 0;
-			margin-right: 1em;
-			width: auto;
-		}
+    label {
+      padding: ($spacer / 2) ($spacer / 2) ($spacer / 2) 0;
+      margin-left: 0;
+      margin-right: 1em;
+      width: auto;
+    }
 
-		.checkbox {
-			display: inline;
-		}
+    .checkbox {
+      display: inline;
+    }
 
-		.fieldgroup .fieldgroup-field {
-			padding-top: 0;
-		}
-	}
+    .fieldgroup .fieldgroup-field {
+      padding-top: 0;
+    }
+  }
 
-	&.stacked {
-		.fieldgroup-field {
-			float: none;
-		}
-	}
+  &.stacked {
+    .fieldgroup-field {
+      float: none;
+    }
+  }
 }
 
 .ss-toggle {
-	margin: ($spacer / 2) 0;
+  margin: ($spacer / 2) 0;
 
-	.ui-accordion-header {
-		padding-top: $spacer * .75;
-		padding-bottom: $spacer * .75;
-		border-radius: $border-radius-sm;
+  .ui-accordion-header {
+    padding-top: $spacer * .75;
+    padding-bottom: $spacer * .75;
+    border-radius: $border-radius-sm;
 
-		&.ui-state-default {
-			background: $body-bg-dark;
-		}
+    &.ui-state-default {
+      background: $body-bg-dark;
+    }
 
-		&.ui-state-active {
-			border-bottom-right-radius: 0;
-			border-bottom-left-radius: 0;
-		}
+    &.ui-state-active {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
 
-		.ui-accordion-header-icon {
-			margin-top: -9px;
-		}
-	}
+    .ui-accordion-header-icon {
+      margin-top: -9px;
+    }
+  }
 
-	.ui-accordion-content {
-		padding: ($spacer / 2) 0 ($spacer * 0.75);
+  .ui-accordion-content {
+    padding: ($spacer / 2) 0 ($spacer * 0.75);
 
-		.field {
-			box-shadow: none;
-			padding-left: ($spacer / 2) *1.5;
-			padding-right: ($spacer / 2) *1.5;
+    .field {
+      box-shadow: none;
+      padding-left: ($spacer / 2) *1.5;
+      padding-right: ($spacer / 2) *1.5;
 
-			&:last-child {
-				margin-bottom: 0;
-			}
-			.middleColumn {
-				margin-left: 0;
-			}
-			label {
-				float: none;
-				margin-left: 0;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      .middleColumn {
+        margin-left: 0;
+      }
+      label {
+        float: none;
+        margin-left: 0;
 
-				&.ss-ui-button {
-					float: left;
-				}
-			}
-			.description {
-				margin-left: 0;
-			}
-		}
-	}
+        &.ss-ui-button {
+          float: left;
+        }
+      }
+      .description {
+        margin-left: 0;
+      }
+    }
+  }
 }
 
 
@@ -590,19 +590,19 @@ button.loading {
 
 .htmleditor {
 
-	textarea {
-		visibility: hidden; // enabled by JS
-	}
+  textarea {
+    visibility: hidden; // enabled by JS
+  }
 
-	.mceEditor {
-		input, select {
-			width: auto;
-		}
-	}
+  .mceEditor {
+    input, select {
+      width: auto;
+    }
+  }
 }
 
 .action-hidden {
-	display:  none;
+  display:  none;
 }
 
 
@@ -610,68 +610,68 @@ button.loading {
 * On/Off Switch.
 * Example html set-up:
 *  <div class="switch-states">
-*		<div class="switch">
+*    <div class="switch">
 *      <a href="my-page/?stage=Draft" class="first active"><span>Draft</span></a>
 *      <a href="my-page/?stage=Live" class="last"><span>Live</span></a>
-*		</div>
-*	</div>
+*    </div>
+*  </div>
 ****************************************************************/
 div.switch-states{
   padding: 0;
 
-	.switch{
+  .switch{
     @include box-shadow(inset 0 2px 6px rgba(0, 0, 0, 0.1), 0 1px 0px rgba(255, 255, 255, 0.1));
     @include border-radius(3px);
-		background:lighten(#2d3035,69%);
-		display: block;
+    background:lighten(#2d3035,69%);
+    display: block;
     height: 25px;
     margin-top:3px;
-		width:100%;
-		z-index:5;
+    width:100%;
+    z-index:5;
 
     a {
-			@include hide-text-overflow;
-			color: $body-color;
-			cursor: pointer;
-			float:left;
-			height: 100%;
-			line-height: 25px;
+      @include hide-text-overflow;
+      color: $body-color;
+      cursor: pointer;
+      float:left;
+      height: 100%;
+      line-height: 25px;
       z-index:2;
-			position:relative;
-			min-width: 80px;
-			/* Make text unselectable in browsers that support that */
-			-webkit-touch-callout: none;
-			-webkit-user-select: none;
-			-khtml-user-select: none;
-			-moz-user-select: none;
-			-ms-user-select: none;
-			user-select: none;
-			&:hover{
-				color: $body-color-dark;
-			}
+      position:relative;
+      min-width: 80px;
+      /* Make text unselectable in browsers that support that */
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      &:hover{
+        color: $body-color-dark;
+      }
 
-			span{
+      span{
         box-sizing: border-box;
-				@include hide-text-overflow;
-				display:inline-block;
+        @include hide-text-overflow;
+        display:inline-block;
         padding:0 10px;
         color: $body-color;
-				width: 100%;
-				text-align: center;
-			}
+        width: 100%;
+        text-align: center;
+      }
 
       &.active {
         background-image: linear-gradient(#2b9c32,#64ab36);
         @include border-radius(3px);
         @include box-shadow(inset 0 2px 6px rgba(0, 0, 0, 0.3), 0 1px 0px rgba(255, 255, 255, 0.2));
-			background-color: #2b9c32;
+      background-color: #2b9c32;
 
         span {
           color: #fff;
-			}
-			}
-		}
-	}
+      }
+      }
+    }
+  }
 }
 
 
@@ -704,22 +704,22 @@ div.switch-states{
 }
 
 .field.tabset {
-	border-bottom: 0;
-	margin-top: 0;
-	margin-bottom: 0;
-	padding-bottom: 0
+  border-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 0
 }
 
 // Fix for multiple divider lines on the page/settings tab
 .parentTypeSelector .field.optionset {
-	border-bottom: 0;
+  border-bottom: 0;
 }
 
 // TEMPORARY transitional fixes from JQuery-ui to bootstrap
 .btn .ui-button-text {
-	padding-top: 0;
-	padding-bottom: 0;
-	padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-right: 0;
 }
 
 .ui-button-text-only .ui-button-text { padding: 0; }
@@ -735,14 +735,14 @@ div.switch-states{
 }
 
 .btn .ui-icon + .ui-button-text {
-	padding-left: 18px;
+  padding-left: 18px;
 }
 
 .btn-toolbar .ss-ui-button {
-	margin-left: 5px;
+  margin-left: 5px;
 }
 
 // Override Bootstrap hidden file upload until they have a good way of showing uploaded file names
 .file input.file {
-	opacity: 1;
+  opacity: 1;
 }

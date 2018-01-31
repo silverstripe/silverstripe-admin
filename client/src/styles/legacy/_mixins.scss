@@ -13,10 +13,10 @@
 /* overflow.
 /* ----------------------------------------------------- */
 @mixin hide-text-overflow {
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	-o-text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
 }
 
 /**
@@ -24,167 +24,167 @@
  * and action tabs
 */
 @mixin tightSpacing {
-	h3,h4,h5 {
-		font-weight: bold;
-		line-height: $spacer;
-	}
-	h3 {
-		font-size: $font-size-root;
-	}
+  h3,h4,h5 {
+    font-weight: bold;
+    line-height: $spacer;
+  }
+  h3 {
+    font-size: $font-size-root;
+  }
 
-	h4 {
-		font-size: $font-size-root -1;
-		margin: 5px 0;
-	}
+  h4 {
+    font-size: $font-size-root -1;
+    margin: 5px 0;
+  }
 
-	.ui-widget-content {
-		background: none;
-	}
+  .ui-widget-content {
+    background: none;
+  }
 
-	.field {
-		/**
-		 * Fields are more compressed in some areas compared to the
-		 * main content editing window so the below alters the internal
-		 * spacing of the fields so we can move that spacing to between
-		 * the form fields rather than padding
-		 */
-		border-bottom:none;
+  .field {
+    /**
+     * Fields are more compressed in some areas compared to the
+     * main content editing window so the below alters the internal
+     * spacing of the fields so we can move that spacing to between
+     * the form fields rather than padding
+     */
+    border-bottom:none;
     box-shadow: none;
 
-		label {
-			float: none;
-			width: auto;
-			font-size: 12px;
+    label {
+      float: none;
+      width: auto;
+      font-size: 12px;
       padding: 0 ($spacer / 2) 4px 0;
 
-			&.extra-details{
-				overflow:hidden;
-				margin-top:10px;
-				display: block;
-				color: lighten($body-color, 35%);
-				font-style:italic;
-				font-weight:normal;
-				font-size:1em;
-				float:left;
+      &.extra-details{
+        overflow:hidden;
+        margin-top:10px;
+        display: block;
+        color: lighten($body-color, 35%);
+        font-style:italic;
+        font-weight:normal;
+        font-size:1em;
+        float:left;
         text-shadow: none;
 
-				&.fill{
-					&:before{
-						color:#fff;
-						content: '?';
-						font-size:12px;
-						box-sizing: border-box;
-						padding-left:3px;
-						padding-right:3px;
-						display:block;
-						float:left;
-						text-shadow: none;
-						border-radius: 50px;
-						background-color:lighten($body-color, 45%);
-						width:21px;
-						height:15px;
-						margin-right:5px;
-						margin-bottom:5px;
-					}
-				}
-			}
-		}
+        &.fill{
+          &:before{
+            color:#fff;
+            content: '?';
+            font-size:12px;
+            box-sizing: border-box;
+            padding-left:3px;
+            padding-right:3px;
+            display:block;
+            float:left;
+            text-shadow: none;
+            border-radius: 50px;
+            background-color:lighten($body-color, 45%);
+            width:21px;
+            height:15px;
+            margin-right:5px;
+            margin-bottom:5px;
+          }
+        }
+      }
+    }
 
-		.middleColumn {
-			margin: 0;
-		}
+    .middleColumn {
+      margin: 0;
+    }
 
-		input.text,
-		select,
-		textarea {
-			padding: 5px;
-			font-size: 11px;
-		}
+    input.text,
+    select,
+    textarea {
+      padding: 5px;
+      font-size: 11px;
+    }
 
-		&.checkbox {
-			padding: 0 8px 0;
+    &.checkbox {
+      padding: 0 8px 0;
 
-			input {
-				margin: 2px 0;
-			}
-		}
-	}
-
-	.form__fieldgroup {
-		.form__fieldgroup-item {
-			padding: 0;
-
-			.field {
-				margin: 0;
-				padding: 0;
-			}
-		}
-	}
-
-	/* Restyle for smaller area*/
-	.cms-content-fields{
-		overflow:visible;
+      input {
+        margin: 2px 0;
+      }
+    }
   }
 
-	.chosen-container-single{
+  .form__fieldgroup {
+    .form__fieldgroup-item {
+      padding: 0;
+
+      .field {
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+
+  /* Restyle for smaller area*/
+  .cms-content-fields{
+    overflow:visible;
+  }
+
+  .chosen-container-single{
     width:100% !important;
 
-		.chosen-single{
-			padding: 0 0 0 5px;
-			float:none;
-		}
+    .chosen-single{
+      padding: 0 0 0 5px;
+      float:none;
+    }
   }
 
-	.cms-content-actions, .cms-preview-controls{
-		padding:0;
-		height:auto;
-		border:none;
-		box-shadow: none;
+  .cms-content-actions, .cms-preview-controls{
+    padding:0;
+    height:auto;
+    border:none;
+    box-shadow: none;
   }
 
-	.cms-edit-form{
-		width:100%;
+  .cms-edit-form{
+    width:100%;
   }
 
-	.CompositeField{
-		margin:0;
-		padding:0;
-		float:none;
+  .CompositeField{
+    margin:0;
+    padding:0;
+    float:none;
   }
 
-	.parent-mode{
-		padding-top:0;
+  .parent-mode{
+    padding-top:0;
   }
 
-	.treedropdown, .SelectionGroup li.selected div.field{
-		margin:10px 0 0 0;
+  .treedropdown, .SelectionGroup li.selected div.field{
+    margin:10px 0 0 0;
     //@include box-shadow(inset 0 1px 0 #fff, 0 1px 1px rgba(0,0,0,0.1));
 
-		.treedropdownfield-title{
-			position:absolute;
-			z-index:2;
-			padding:5px;
+    .treedropdownfield-title{
+      position:absolute;
+      z-index:2;
+      padding:5px;
     }
 
-		.treedropdownfield-panel{
-			margin-top:11px;
+    .treedropdownfield-panel{
+      margin-top:11px;
     }
 
-		.treedropdownfield-toggle-panel-link{
-			background:none;
-			border-left:none;
-			padding:5px 3px;
-			.ui-icon{
-				float:right;
-				opacity:0.7;
-			}
-		}
+    .treedropdownfield-toggle-panel-link{
+      background:none;
+      border-left:none;
+      padding:5px 3px;
+      .ui-icon{
+        float:right;
+        opacity:0.7;
+      }
+    }
   }
 
-	.cms-add-form ul.SelectionGroup{
-		padding-left:0;
-		padding-right:0;
-		overflow:visible;
-		border-bottom:none;
-	}
+  .cms-add-form ul.SelectionGroup{
+    padding-left:0;
+    padding-right:0;
+    overflow:visible;
+    border-bottom:none;
+  }
 }
