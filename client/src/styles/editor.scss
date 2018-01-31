@@ -10,3 +10,7 @@ body.mceContentBody a.ss-broken { // sass-lint:disable-line class-name-format
   padding: 1px;
   text-decoration: underline;
 }
+// overrides tinymce fullscreen z-order so that it's not hidden by CMS panels
+.mce-fullscreen {
+  z-index: 1000!important;
+}
