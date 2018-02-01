@@ -304,3 +304,13 @@ button.close {
 .btn-outline-secondary.font-icon-check-mark {
   color: green;
 }
+
+.actions-warning {
+  color: darken($state-modified-bg, 15);
+
+  // override .btn styles
+  &.btn {
+    cursor: default;
+    box-shadow: none;
+  }
+}
