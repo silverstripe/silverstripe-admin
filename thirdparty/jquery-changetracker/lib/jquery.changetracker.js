@@ -161,6 +161,7 @@ import debounce from 'lodash.debounce';
 
       // Delegate handlers
       self.on('click.changetracker', options.fieldSelector , onchange);
+      self.on('keyup.changetracker', options.fieldSelector , onchange);
       self.on('change.changetracker', options.fieldSelector , onchange);
       
       // Bind observer to subtree
