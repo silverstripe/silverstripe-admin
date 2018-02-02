@@ -306,7 +306,7 @@ button.close {
 }
 
 .actions-warning {
-  color: darken($state-modified-bg, 15);
+  color: #856404; // in bootstrap: theme-color-level(map-get($theme-colors, "yellow"), 6)
 
   // override .btn styles
   &.btn {
