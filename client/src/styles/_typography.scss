@@ -74,19 +74,11 @@ h1 {
 .cms {
   code {
     font-family: "Bitstream Vera Sans Mono", "Courier", monospace;
-	}
+  }
 }
 
 th {
   text-transform: uppercase;
-}
-
-// Bootstrap badge
-.badge {
-  text-transform: uppercase;
-  font-size: $font-size-xxs;
-  font-weight: 400;
-  letter-spacing: .3px;
 }
 
 // Helpers
