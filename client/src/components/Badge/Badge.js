@@ -1,11 +1,22 @@
-import React, { PropTypes } from 'react';
+import React, { PureComponent, PropTypes } from 'react';
 import classnames from 'classnames';
 
-const Badge = ({ status, message, className }) => (
-  <span className={classnames(className, `badge badge-${status} badge-pill`)}>
-    {message}
-  </span>
-);
+class Badge extends PureComponent {
+  render() {
+    if (!this.props.status) {
+      return null;
+    }
+    const className = classnames(
+      this.props.className,
+      `badge badge-${this.props.status} badge-pill`
+    );
+    return (
+      <span className={className}>
+        {this.props.message}
+      </span>
+    );
+  }
+}
 
 Badge.propTypes = {
   message: PropTypes.node,

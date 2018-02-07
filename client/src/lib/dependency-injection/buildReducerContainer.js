@@ -11,8 +11,6 @@ const buildReducerContainer = (base = buildBaseContainer()) => ({
   store: null,
 
   setStore(store) {
-    this.isProtected();
-
     this.store = store;
   },
 

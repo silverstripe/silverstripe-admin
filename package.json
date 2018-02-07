@@ -52,6 +52,7 @@
     "isomorphic-fetch": "https://registry.npmjs.org/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz",
     "jquery-sizes": "^0.33.0",
     "json-js": "^1.1.2",
+    "lodash.debounce": "^4.0.8",
     "merge": "^1.2.0",
     "modernizr": "^3.5.0",
     "moment": "^2.18.1",
@@ -78,7 +79,7 @@
     "validator": "^6.1.0"
   },
   "devDependencies": {
-    "@silverstripe/eslint-config": "^0.0.3",
+    "@silverstripe/eslint-config": "^0.0.4",
     "@silverstripe/webpack-config": "^0.5.1",
     "@storybook/addon-actions": "^3.2.16",
     "@storybook/react": "^3.2.16",

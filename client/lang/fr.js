@@ -25,6 +25,13 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.ERRORINTRANSACTION": "An error occured while fetching data from the server\n Please try again later.",
     "Admin.DELETECONFIRMMESSAGE": "Are you sure you want to delete this record?",
     "Admin.EXPANDPANEL": "Expand panel",
-    "Admin.COLLAPSEPANEL": "Collapse panel"
+    "Admin.COLLAPSEPANEL": "Collapse panel",
+    "Admin.VALIDATOR_MESSAGE_REQUIRED": "{name} is required.",
+    "Admin.VALIDATOR_MESSAGE_EQUALS": "{name} are not equal.",
+    "Admin.VALIDATOR_MESSAGE_NUMERIC": "{name} is not a number.",
+    "Admin.VALIDATOR_MESSAGE_DATE": "{name} is not a proper date format.",
+    "Admin.VALIDATOR_MESSAGE_ALPHANUMERIC": "{name} is not an alphanumeric value.",
+    "Admin.VALIDATOR_MESSAGE_ALPHA": "{name} is not only letters.",
+    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} is not a valid value."
 });
 }

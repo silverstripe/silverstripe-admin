@@ -17,13 +17,18 @@ class GridFieldCell extends Component {
   render() {
     const classNames = ['grid-field__cell', this.props.className];
 
-    const props = {
-      className: classnames(classNames),
-      onClick: this.handleDrillDown,
-    };
+    const {
+      onDrillDown,
+      ...props
+    } = this.props;
 
     return (
-      <td {...props}>{this.props.children}</td>
+      // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+      <td
+        {...props}
+        className={classnames(classNames)}
+        onClick={this.handleDrillDown}
+      />
     );
   }
 }

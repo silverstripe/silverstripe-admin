@@ -5,26 +5,26 @@ namespace SilverStripe\Admin;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Convert;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\Form;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
 use SilverStripe\Forms\GridField\GridFieldDataColumns;
 use SilverStripe\Forms\GridField\GridFieldDetailForm;
+use SilverStripe\Forms\GridField\GridFieldExportButton;
+use SilverStripe\Forms\GridField\GridFieldImportButton;
+use SilverStripe\Forms\GridField\GridFieldPageCount;
+use SilverStripe\Forms\HiddenField;
 use SilverStripe\Forms\LiteralField;
 use SilverStripe\Forms\Tab;
 use SilverStripe\Forms\TabSet;
-use SilverStripe\Forms\HiddenField;
-use SilverStripe\Forms\FieldList;
-use SilverStripe\Forms\Form;
-use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
-use SilverStripe\Forms\GridField\GridFieldButtonRow;
-use SilverStripe\Forms\GridField\GridFieldExportButton;
-use SilverStripe\Forms\GridField\GridFieldImportButton;
-use SilverStripe\Forms\GridField\GridField;
-use SilverStripe\Security\Member;
 use SilverStripe\Security\Group;
+use SilverStripe\Security\Member;
 use SilverStripe\Security\Permission;
-use SilverStripe\Security\PermissionRole;
 use SilverStripe\Security\PermissionProvider;
-use SilverStripe\View\Requirements;
+use SilverStripe\Security\PermissionRole;
 use SilverStripe\View\ArrayData;
+use SilverStripe\View\Requirements;
 
 /**
  * Security section of the CMS
@@ -92,27 +92,54 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
 
     public function getEditForm($id = null, $fields = null)
     {
-        // Build member fields
-        $memberList = GridField::create(
-            'Members',
-            false,
-            Member::get(),
-            $memberListConfig = GridFieldConfig_RecordEditor::create()
-                ->addComponent(new GridFieldButtonRow('after'))
-                ->addComponent(new GridFieldExportButton('buttons-before-left'))
-        )->addExtraClass("members_grid");
+        // Build gridfield configs
+        $memberListConfig = GridFieldConfig_RecordEditor::create()
+            ->addComponent(new GridFieldExportButton('buttons-before-left'));
+        $groupListConfig = GridFieldConfig_RecordEditor::create()
+            ->addComponent(new GridFieldExportButton('buttons-before-left'));
+
         /** @var GridFieldDetailForm $detailForm */
         $detailForm = $memberListConfig->getComponentByType(GridFieldDetailForm::class);
         $memberValidator = Member::singleton()->getValidator();
         $detailForm->setValidator($memberValidator);
+
+        /** @var GridFieldPageCount $memberPaginator */
+        $memberListConfig->removeComponentsByType(GridFieldPageCount::class);
+        $memberListConfig->addComponent(new GridFieldPageCount('buttons-before-right'));
+
+        /** @var GridFieldPageCount $groupPaginator */
+        $groupListConfig->removeComponentsByType(GridFieldPageCount::class);
+        $groupListConfig->addComponent(new GridFieldPageCount('buttons-before-right'));
+
+        // Add import capabilities. Limit to admin since the import logic can affect assigned permissions
+        if (Permission::check('ADMIN')) {
+            // @todo when grid field is converted to react use the react component
+            $memberListConfig->addComponent(
+                GridFieldImportButton::create('buttons-before-left')
+                    ->setImportIframe($this->Link('memberimport'))
+                    ->setModalTitle(_t(__CLASS__ . '.IMPORTUSERS', 'Import users'))
+            );
+            $groupListConfig->addComponent(
+                GridFieldImportButton::create('buttons-before-left')
+                    ->setImportIframe($this->Link('groupimport'))
+                    ->setModalTitle(_t(__CLASS__ . '.IMPORTGROUPS', 'Import groups'))
+            );
+        }
+
+        // Build gridfield
+        $memberList = GridField::create(
+            'Members',
+            false,
+            Member::get(),
+            $memberListConfig
+        )->addExtraClass("members_grid");
 
         // Build group fields
         $groupList = GridField::create(
             'Groups',
             false,
             Group::get(),
-            $groupListConfig = GridFieldConfig_RecordEditor::create()
-                ->addComponent(new GridFieldExportButton('buttons-before-left'))
+            $groupListConfig
         );
         /** @var GridFieldDataColumns $columns */
         $columns = $groupList->getConfig()->getComponentByType(GridFieldDataColumns::class);
@@ -131,13 +158,13 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
                 'Root',
                 Tab::create(
                     'Users',
-                    _t('SilverStripe\\Admin\\SecurityAdmin.Users', 'Users'),
+                    _t(__CLASS__ . '.Users', 'Users'),
                     LiteralField::create(
                         'MembersCautionText',
                         sprintf(
                             '<div class="alert alert-warning" role="alert">%s</div>',
                             _t(
-                                'SilverStripe\\Admin\\SecurityAdmin.MemberListCaution',
+                                __CLASS__ . '.MemberListCaution',
                                 'Caution: Removing members from this list will remove them from all groups and the database'
                             )
                         )
@@ -154,21 +181,6 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
             new HiddenField('ID', false, 0)
         );
 
-        // Add import capabilities. Limit to admin since the import logic can affect assigned permissions
-        if (Permission::check('ADMIN')) {
-            // @todo when grid field is converted to react use the react component
-            $memberListConfig->addComponent(
-                GridFieldImportButton::create('buttons-before-left')
-                    ->setImportIframe($this->Link('memberimport'))
-                    ->setModalTitle(_t('SilverStripe\\Admin\\SecurityAdmin.IMPORTUSERS', 'Import users'))
-            );
-            $groupListConfig->addComponent(
-                GridFieldImportButton::create('buttons-before-left')
-                    ->setImportIframe($this->Link('groupimport'))
-                    ->setModalTitle(_t('SilverStripe\\Admin\\SecurityAdmin.IMPORTGROUPS', 'Import groups'))
-            );
-        }
-
         // Add roles editing interface
         $rolesTab = null;
         if (Permission::check('APPLY_ROLES')) {
@@ -179,7 +191,7 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
                 GridFieldConfig_RecordEditor::create()
             );
 
-            $rolesTab = $fields->findOrMakeTab('Root.Roles', _t('SilverStripe\\Admin\\SecurityAdmin.TABROLES', 'Roles'));
+            $rolesTab = $fields->findOrMakeTab('Root.Roles', _t(__CLASS__ . '.TABROLES', 'Roles'));
             $rolesTab->push($rolesField);
         }
 
@@ -288,12 +300,12 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
                 )));
             } elseif ($params['FieldName'] == 'Users') {
                 $crumbs->unshift(new ArrayData(array(
-                    'Title' => _t('SilverStripe\\Admin\\SecurityAdmin.Users', 'Users'),
+                    'Title' => _t(__CLASS__ . '.Users', 'Users'),
                     'Link' => $this->Link('users')
                 )));
             } elseif ($params['FieldName'] == 'Roles') {
                 $crumbs->unshift(new ArrayData(array(
-                    'Title' => _t('SilverStripe\\Admin\\SecurityAdmin.TABROLES', 'Roles'),
+                    'Title' => _t(__CLASS__ . '.TABROLES', 'Roles'),
                     'Link' => $this->Link('roles')
                 )));
             }
@@ -307,29 +319,42 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
     {
         $title = $this->menu_title();
         return array(
-            "CMS_ACCESS_SecurityAdmin" => array(
-                'name' => _t('SilverStripe\\CMS\\Controllers\\CMSMain.ACCESS', "Access to '{title}' section", array('title' => $title)),
+            "CMS_ACCESS_SecurityAdmin" => [
+                'name' => _t(
+                    'SilverStripe\\CMS\\Controllers\\CMSMain.ACCESS',
+                    "Access to '{title}' section",
+                    ['title' => $title]
+                ),
                 'category' => _t('SilverStripe\\Security\\Permission.CMS_ACCESS_CATEGORY', 'CMS Access'),
                 'help' => _t(
-                    'SilverStripe\\Admin\\SecurityAdmin.ACCESS_HELP',
+                    __CLASS__ . '.ACCESS_HELP',
                     'Allow viewing, adding and editing users, as well as assigning permissions and roles to them.'
                 )
-            ),
+            ],
             'EDIT_PERMISSIONS' => array(
-                'name' => _t('SilverStripe\\Admin\\SecurityAdmin.EDITPERMISSIONS', 'Manage permissions for groups'),
-                'category' => _t('SilverStripe\\Security\\Permission.PERMISSIONS_CATEGORY', 'Roles and access permissions'),
+                'name' => _t(__CLASS__ . '.EDITPERMISSIONS', 'Manage permissions for groups'),
+                'category' => _t(
+                    'SilverStripe\\Security\\Permission.PERMISSIONS_CATEGORY',
+                    'Roles and access permissions'
+                ),
                 'help' => _t(
-                    'SilverStripe\\Admin\\SecurityAdmin.EDITPERMISSIONS_HELP',
+                    __CLASS__ . '.EDITPERMISSIONS_HELP',
                     'Ability to edit Permissions and IP Addresses for a group.'
                     . ' Requires the "Access to \'Security\' section" permission.'
                 ),
                 'sort' => 0
             ),
             'APPLY_ROLES' => array(
-                'name' => _t('SilverStripe\\Admin\\SecurityAdmin.APPLY_ROLES', 'Apply roles to groups'),
-                'category' => _t('SilverStripe\\Security\\Permission.PERMISSIONS_CATEGORY', 'Roles and access permissions'),
-                'help' => _t('SilverStripe\\Admin\\SecurityAdmin.APPLY_ROLES_HELP', 'Ability to edit the roles assigned to a group.'
-                    . ' Requires the "Access to \'Users\' section" permission.'),
+                'name' => _t(__CLASS__ . '.APPLY_ROLES', 'Apply roles to groups'),
+                'category' => _t(
+                    'SilverStripe\\Security\\Permission.PERMISSIONS_CATEGORY',
+                    'Roles and access permissions'
+                ),
+                'help' => _t(
+                    __CLASS__ . '.APPLY_ROLES_HELP',
+                    'Ability to edit the roles assigned to a group.'
+                    . ' Requires the "Access to \'Users\' section" permission.'
+                ),
                 'sort' => 0
             )
         );

@@ -16,8 +16,8 @@ $color-brand: #43c7f4 !default;
 $body-color-dark: darken($body-color, 10);
 
 // Extra state colors
-$state-draft: #d03f00;
-$state-draft-bg: #fff2e8;
+$state-draft: #cf3f00;
+$state-draft-bg: #fff7f0;
 $state-modified: $state-draft;
 $state-modified-bg: #ff7f22;
 
@@ -46,7 +46,7 @@ $font-size-root: 13px;
 
 // Custom size
 $font-size-xs: .846rem; // 11px
-$font-size-xxs: .769rem; // 10px
+$font-size-xxs: .75rem; // 10px
 
 // Component
 $component-active-bg-light: lighten($component-active-bg, 57%);

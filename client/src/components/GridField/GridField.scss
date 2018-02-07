@@ -263,7 +263,7 @@ div.grid-field__sort-field + .form__fieldgroup-item {
 
     &:first-child,
     .cms-list &,
-    &.col-Title,
+    &.col-Title, // sass-lint:disable-line class-name-format
     &.grid-field__col-compact,
     &.grid-field__cell--actions,
     &.grid-field__action-placeholder {
@@ -290,4 +290,18 @@ div.grid-field__sort-field + .form__fieldgroup-item {
 
 .import-form .advanced {
   display: none;
+}
+
+.version-status {
+  border: 1px solid $border-color-light;
+  background-color: $white;
+  margin-left: $btn-spacing;
+
+  &.version-status--addedtodraft {
+    color: $state-draft;
+  }
+
+  &.version-status--modified {
+    color: $state-modified;
+  }
 }

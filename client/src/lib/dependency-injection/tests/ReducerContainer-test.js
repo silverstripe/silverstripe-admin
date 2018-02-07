@@ -20,15 +20,6 @@ describe('ReducerContainer', () => {
     };
   });
 
-  describe('setStore()', () => {
-    it('should throw an error after initialising', () => {
-      expect(container.isProtected).not.toBeCalled();
-
-      container.setStore(store);
-      expect(container.isProtected).toBeCalled();
-    });
-  });
-
   describe('customise()', () => {
     const meta = { name: 'testmeta' };
 
