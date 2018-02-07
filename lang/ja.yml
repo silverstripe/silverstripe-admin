@@ -1,8 +1,8 @@
 ja:
   SilverStripe\Admin\CMSBatchAction:
     PUBLISHED_PAGES: '%dページを公開しましたが、%dページの公開に失敗しました。'
-    PUBLISH_PAGES: '公開'
-    RESTORE: '復元'
+    PUBLISH_PAGES: 公開
+    RESTORE: 復元
     RESTORED_PAGES: '%dページを復元しました'
   SilverStripe\Admin\SecurityAdmin:
     GROUPNAME: グループ名
