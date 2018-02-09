@@ -1,9 +1,6 @@
 // Variables
 @import "variables";
 
-// Compatibilty with compass
-@import "legacy/compasscompat";
-
 // Thirdparty
 @import "chosen";
 @import "~bootstrap/scss/bootstrap";
@@ -20,24 +17,18 @@
 
 // Legacy
 @import "legacy/sprity";
-@import "legacy/sprites";
 @import "legacy/mixins";
-@import "legacy/themes/default";
 @import "legacy/uitheme";
 @import "legacy/forms";
 @import "legacy/style";
 @import "legacy/tree";
 @import "legacy/preview";
 @import "legacy/actionTabs";
-@import "legacy/ModelAdmin";
 @import "legacy/SecurityAdmin";
 @import "legacy/CMSSecurity";
 @import "legacy/retina";
 @import "legacy/popover-actions-simulate";
 
-@import "legacy/CheckboxSetField";
-@import "legacy/ConfirmedPasswordField";
-@import "legacy/DatetimeField";
 @import "legacy/GridField";
 @import "legacy/SelectionGroup";
 

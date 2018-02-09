@@ -135,10 +135,19 @@
   font-style: italic;
 }
 
+// Icons used in readonly fields (eg URL field in assetAdmin)
+.form-control-static__icon::before {
+  color: lighten($text-muted, 20%);
+  vertical-align: middle;
+  margin-right: 6px;
+}
 
-// TODO convert all readonly fields to inputs,
-// and remove .form-control-static class from them
-.form-control-static {
+
+// Readonlys should be converted to an input
+.form__field-holder p.readonly,
+.form__field-holder input.readonly,
+.form__field-holder span.readonly,
+.readonly .form__field-holder > div {
   padding-top: $input-padding-y;
   padding-bottom: $input-padding-y;
   padding-left: $input-btn-padding-x;
@@ -153,22 +162,6 @@
     border-color: $input-focus-border-color;
     outline: none;
   }
-}
-
-// Icons used in readonly fields (eg URL field in assetAdmin)
-.form-control-static__icon::before {
-  color: lighten($text-muted, 20%);
-  vertical-align: middle;
-  margin-right: 6px;
-}
-
-
-// Readonlys should be converted to an input
-.form__field-holder p.readonly,
-.form__field-holder input.readonly,
-.form__field-holder span.readonly,
-.readonly .form__field-holder > div {
-  @extend .form-control-static; // sass-lint:disable-line no-extends
 }
 
 // Fix for IE inputs not holding line-height

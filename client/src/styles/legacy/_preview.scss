@@ -285,7 +285,7 @@
     width: 300px;
 
     span {
-      @extend .icon-sprites-64x64;
+      @include icon-sprites(64x64);
       @include sprite($sprites-64x64-preview);
 
       height: 41px;

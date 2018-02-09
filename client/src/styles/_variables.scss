@@ -12,6 +12,12 @@ $brand-danger: #d40404;
 // offical silverstripe brand color
 $color-brand: #43c7f4 !default;
 
+// Generic colors
+$color-notice:  #93CDE8 !default;
+$color-warning: #E9D104 !default;
+$color-error:   #e68288 !default;
+$color-good:    #72c34b !default;
+
 // Body colors
 $body-color-dark: darken($body-color, 10);
 

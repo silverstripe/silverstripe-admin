@@ -39,7 +39,7 @@
   }
 
   .font-icon-disable-circle {
-  	color: $gray-600;
+    color: $gray-600;
   }
 
   li {
@@ -56,29 +56,29 @@
 green tick icon as a background this is created using gulp-sprity generated classes and hardcoded in the php */
 
 .permissioncheckboxsetfield_readonly .optionset li {
-	width: 100%;
+  width: 100%;
 
-	input {
-		display:none;
-	}
+  input {
+    display:none;
+  }
 
 
-	label {
-		cursor: default;
-		position:relative; // needs to be set to position the span element correctly
-		span { // background set using gulp-sprity generated classes (background is green tick icon)
+  label {
+    cursor: default;
+    position:relative; // needs to be set to position the span element correctly
+    span { // background set using gulp-sprity generated classes (background is green tick icon)
       margin-right: 6px;
       font-size: 16px;
-		}
-	}
+    }
+  }
 }
 
 .cms .cms-content .SecurityAdmin { //datagrid overflow on Security Admin
-	.cms-content-fields {
-		overflow-y:auto;
-		.aligned-right-label { //align the label with the parent group field in add new group
-			margin-left:$grid-x*23;
-			padding:$grid-x 0;
-		}
-	}
+  .cms-content-fields {
+    overflow-y:auto;
+    .aligned-right-label { //align the label with the parent group field in add new group
+      margin-left: ($spacer / 2) * 23;
+      padding: ($spacer / 2) 0;
+    }
+  }
 }
