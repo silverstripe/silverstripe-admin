@@ -50,15 +50,15 @@ class UsedOnTable extends PureComponent {
       title,
       type,
       state,
-      editLink,
+      link,
     } = data;
 
     const badge = (state)
       ? <span className={classnames('badge', 'used-on__badge', `status-${state}`)}>{state}</span>
       : null;
 
-    const titleLabel = (editLink)
-      ? <a className="used-on__edit-link" href={editLink}>{title} {badge}</a>
+    const titleLabel = (link)
+      ? <a className="used-on__edit-link" href={link}>{title} {badge}</a>
       : <span>{title} {badge}</span>;
 
     return (
@@ -82,7 +82,13 @@ class UsedOnTable extends PureComponent {
 
 UsedOnTable.propTypes = {
   loading: PropTypes.bool,
-  usedOn: PropTypes.array,
+  usedOn: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    title: PropTypes.string,
+    type: PropTypes.string,
+    state: PropTypes.string,
+    link: PropTypes.string,
+  })),
 };
 
 export { UsedOnTable as Component };

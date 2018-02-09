@@ -34,6 +34,8 @@ const provideUsedOnData = (UsedOnTable) => {
     data: PropTypes.oneOfType([
       PropTypes.array,
       PropTypes.shape({
+        recordClass: PropTypes.string,
+        recordId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         readUsageEndpoint: PropTypes.shape({
           url: PropTypes.string,
           method: PropTypes.string,
@@ -55,7 +57,10 @@ const provideUsedOnData = (UsedOnTable) => {
     };
   };
 
-  return connect(mapStateToProps, { loadUsedOn })(UsedOnDataProvider);
+  const connectedUsedOnDataProvider = connect(mapStateToProps, { loadUsedOn })(UsedOnDataProvider);
+  connectedUsedOnDataProvider.Component = UsedOnDataProvider;
+
+  return connectedUsedOnDataProvider;
 };
 
 export default provideUsedOnData;

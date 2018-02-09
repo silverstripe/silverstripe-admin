@@ -6,7 +6,7 @@ const initialState = {
   errors: {},
 };
 
-const usedOnReducer = (state = initialState, action) => {
+function usedOnReducer(state = initialState, action) {
   const identifier = action && action.payload && action.payload.identifier;
 
   if (!identifier) {
@@ -64,6 +64,6 @@ const usedOnReducer = (state = initialState, action) => {
       return state;
     }
   }
-};
+}
 
 export default usedOnReducer;

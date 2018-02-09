@@ -94,7 +94,7 @@ class UsedOnTable extends FormField
                 'title' => $user->getTitle(),
                 'type' => $user->singular_name(),
                 'state' => $state,
-                'editLink' => $link,
+                'link' => $link,
             ];
         }
 
