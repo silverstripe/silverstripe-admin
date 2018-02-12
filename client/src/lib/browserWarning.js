@@ -1,6 +1,9 @@
+/* global document */
 import browser from 'detect-browser';
-import $ from 'jquery';
 
 if (browser.name === 'ie' && parseInt(browser.version, 10) <= 10) {
-  $('.browser-warning-wrapper').removeClass('hide');
+  const warning = document.getElementById('browser-warning-wrapper');
+  if (warning) {
+    warning.className = `${warning.className} browser-warning-wrapper--incompatible`;
+  }
 }
