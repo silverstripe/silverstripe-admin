@@ -9,6 +9,12 @@ require('../../../thirdparty/jquery-entwine/dist/jquery.entwine-dist.js');
 
 $.entwine('ss', function($) {
   $('.grid-field').entwine({
+    onmatch: function () {
+      if (this.needsColumnFix()) {
+        this.fixColumns();
+        this.injectSearchButton(false);
+      }
+    },
     /**
      * @param {Object} Additional options for jQuery.ajax() call
      * @param {successCallback} callback to call after reloading succeeded.
@@ -49,16 +55,11 @@ $.entwine('ss', function($) {
 
           // Update filter
           if(self.find('.grid-field__filter-header').length) {
-            var content;
-            if(ajaxOpts.data[0].filter=="show") {
-              content = '<span class="non-sortable"></span>';
-              self.addClass('show-filter').find('.grid-field__filter-header').show();
-            } else {
-              content = '<button type="button" title="Open search and filter" name="showFilter" class="btn btn-secondary font-icon-search btn--no-text btn--icon-large grid-field__filter-open"></button>';
-              self.removeClass('show-filter').find('.grid-field__filter-header').hide();
+            var visible = ajaxOpts.data[0].filter === "show";
+            if (self.needsColumnFix()) {
+              self.fixColumns();
             }
-
-            self.find('.sortable-header th:last').html(content);
+            self.injectSearchButton(visible);
           }
 
           form.removeClass('loading');
@@ -92,6 +93,40 @@ $.entwine('ss', function($) {
      */
     getState: function() {
       return JSON.parse(this.find(':input[name="' + this.data('name') + '[GridState]"]').val());
+    },
+
+    needsColumnFix: function() {
+      return (
+        this.find('.grid-field__filter-header').length &&
+        !this.find('.grid-field__col-compact').length &&
+        !this.find('th.col-Actions').length
+      );
+    },
+
+    fixColumns: function (visible) {
+      this.find('.sortable-header').append('<th class="main col-Actions" />');
+      this.find('tbody tr').each(function () {
+        var cell = $(this).find('td:last');
+        cell.attr('colspan', 2);
+      });
+      var $extraCell = $('<th class="extra" />');
+      $('.grid-field__filter-header th:last .action').each(function() {
+        $(this).detach();
+        $extraCell.append($(this));
+      });
+      $('.grid-field__filter-header').append($extraCell);
+    },
+
+    injectSearchButton: function(visible) {
+      var content;
+      if (visible) {
+        content = '<span class="non-sortable"></span>';
+        this.addClass('show-filter').find('.grid-field__filter-header').show();
+      } else {
+        content = '<button type="button" title="Open search and filter" name="showFilter" class="btn btn-secondary font-icon-search btn--no-text btn--icon-large grid-field__filter-open"></button>';
+        this.removeClass('show-filter').find('.grid-field__filter-header').hide();
+      }
+      this.find('.sortable-header th:last').html(content);
     }
   });
 
