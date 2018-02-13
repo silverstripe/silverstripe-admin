@@ -24,7 +24,7 @@
         "silverstripe/vendor-plugin": "^1.0"
     },
     "require-dev": {
-        "phpunit/PHPUnit": "~4.8"
+        "phpunit/phpunit": "^7@dev"
     },
     "extra": {
         "branch-alias": {
