@@ -17,16 +17,30 @@ class UsedOnTable extends PureComponent {
   }
 
   renderBody() {
-    const { usedOn, loading } = this.props;
-    if (!usedOn || !usedOn.length) {
-      const message = (loading)
-        ? i18n._t('Admin.LOADING', 'Loading...')
-        : i18n._t('Admin.NOT_USED', 'This is not used anywhere');
-      const className = classnames({
-        'used-on__message': true,
-        'used-on__message--loading': loading,
-        'used-on__message--empty': !loading,
-      });
+    const { usedOn, loading, error } = this.props;
+
+    if (error || !usedOn || !usedOn.length) {
+      let message = null;
+      let classState = null;
+
+      if (error) {
+        message = i18n.inject(
+          i18n._t('Admin.LOADING_ERROR', 'As error occured when loading the data: {message}'),
+          { message: error },
+        );
+        classState = 'error';
+      } else if (loading) {
+        message = i18n._t('Admin.LOADING', 'Loading...');
+        classState = 'loading';
+      } else {
+        message = i18n._t('Admin.NOT_USED', 'This is not used anywhere');
+        classState = 'empty';
+      }
+
+      const className = classnames([
+        'used-on__message',
+        `used-on__message--${classState}`,
+      ]);
 
       return (
         <tbody>
@@ -89,6 +103,7 @@ UsedOnTable.propTypes = {
     state: PropTypes.string,
     link: PropTypes.string,
   })),
+  error: PropTypes.string,
 };
 
 export { UsedOnTable as Component };

@@ -29,7 +29,8 @@ const metadata = {
   loading: false,
   usedOn: [
     { id: 'id1', title: 'My custom item', type: 'Gallery', state: 'modified', link: 'http://www.google.co.nz' }
-  ]
+  ],
+  error: null,
 };
 <UsedOnTable data={metadata} />
 ```

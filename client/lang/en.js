@@ -26,6 +26,7 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.USED_ON": "Used on",
     "Admin.TYPE": "Type",
     "Admin.NOT_USED": "This is not used anywhere",
+    "Admin.LOADING_ERROR": "As error occured when loading the data: {message}",
     "Admin.ERRORINTRANSACTION": "An error occured while fetching data from the server\n Please try again later.",
     "Admin.DELETECONFIRMMESSAGE": "Are you sure you want to delete this record?",
     "Admin.EXPANDPANEL": "Expand panel",

@@ -47,13 +47,16 @@ const provideUsedOnData = (UsedOnTable) => {
 
   const mapStateToProps = (state, props) => {
     const identifier = `${props.data.recordClass}#${props.data.recordId}`;
-    const loading = state.usedOn.loading.includes(identifier);
-    const usedOn = state.usedOn.usedOn[identifier] || null;
+    const usedState = state.usedOn;
+    const loading = usedState.loading.includes(identifier);
+    const usedOn = usedState.usedOn[identifier] || null;
+    const error = usedState.errors[identifier] || null;
 
     return {
       identifier,
       loading,
       usedOn,
+      error,
     };
   };
 

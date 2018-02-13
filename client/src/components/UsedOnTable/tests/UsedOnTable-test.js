@@ -104,6 +104,17 @@ describe('UsedOnTable', () => {
         expect(column).toBeTruthy();
         expect(column.textContent).toContain('not used');
       });
+
+      it('should show the error message if there was an error provided', () => {
+        props = { error: 'bob did it' };
+
+        table = ReactTestUtils.renderIntoDocument(
+          <UsedOnTable {...props} />
+        );
+        const column = ReactTestUtils.findRenderedDOMComponentWithClass(table, 'used-on__message--error');
+        expect(column).toBeTruthy();
+        expect(column.textContent).toContain('bob did it');
+      });
     });
 
     describe('renderRow', () => {
