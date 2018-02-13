@@ -228,7 +228,7 @@ $grid-gutter-width: $spacer * 2.5; // 40px
 $line-height-lg: (4 / 3);
 $line-height-sm: 1.5;
 
-//$border-width: 1px !default;
+$border-width: 1px !default;
 $border-color: $gray-200;
 
 $border-radius:          .23rem !default;
@@ -551,17 +551,17 @@ $dropdown-item-padding-x:        1.3rem !default;
 
 // Navs
 
-//$nav-link-padding-y:            .5rem !default;
-//$nav-link-padding-x:            1rem !default;
+$nav-link-padding-y:            $spacer; // .5rem !default;
+$nav-link-padding-x:            #{$spacer / 4}; // 1rem !default;
 //$nav-link-disabled-color:       $gray-600 !default;
 
 $nav-tabs-border-color: $border-color;
-//$nav-tabs-border-width:                       $border-width !default;
-//$nav-tabs-border-radius:                      $border-radius !default;
+$nav-tabs-border-width:                       $border-width !default;
+$nav-tabs-border-radius:                      0 !default;
 $nav-tabs-link-hover-border-color:            $gray-300;
 $nav-tabs-link-active-color: $body-color;
 $nav-tabs-link-active-bg: transparent;
-$nav-tabs-link-active-border-color: lighten(map_get($colors, gray-dark), 10);
+$nav-tabs-link-active-border-color: $text-muted;
 
 //$nav-pills-border-radius:     $border-radius !default;
 //$nav-pills-link-active-color: $component-active-color !default;
