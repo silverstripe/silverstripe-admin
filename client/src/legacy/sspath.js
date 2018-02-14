@@ -164,8 +164,10 @@ var $window = $( window ),
     addSearchParams: function( url, params ) {
       var u = path.parseUrl( url ),
         params = ( typeof params === "string" ) ? path.convertSearchToArray( params ) : params,
-        newParams = $.extend( path.convertSearchToArray( u.search ), params );
-      return u.hrefNoSearch + '?' + $.param( newParams ) + ( u.hash || "" );
+        newParams = $.extend( path.convertSearchToArray( u.search ), params ),
+        paramStr = $.param( newParams ).replace(/\%2B/g, '+');
+
+      return u.hrefNoSearch + '?' + paramStr + ( u.hash || "" );
     },
 
     // 2013-12-06 ischommer: Added to allow merge with existing keys
