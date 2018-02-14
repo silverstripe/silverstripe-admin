@@ -544,8 +544,7 @@ body.cms {
         display: inline-block;
         outline: none;
         float: none;
-        font-weight: normal;
-        color: $body-color;
+        color: $text-muted; // Override JQueryUI
         padding: $nav-link-padding;
         line-height: 20px; // Fix to ensure header extends to predictable size
       }
@@ -560,7 +559,7 @@ body.cms {
       }
     }
 
-    //jquery UI override
+    // JQuery UI override
     li.ui-tabs-active,
     li.ui-state-default,
     li.ui-state-active {
@@ -571,27 +570,6 @@ body.cms {
     .ui-state-default {
       border: 0;
       background: transparent;
-
-      a {
-        color: lighten($body-color, 10%);
-        border-bottom: $nav-tabs-link-border-width solid transparent;
-
-        &:hover {
-          color: $body-color;
-        }
-      }
-    }
-
-    .ui-state-active {
-      background-color: transparent;
-      cursor: text;
-
-      a {
-        border-color: #66727d;
-        padding-left: $spacer / 4;
-        padding-right: $spacer / 4;
-        color: $body-color;
-      }
     }
 
     li.cms-tabset-icon.ui-corner-top {
@@ -599,7 +577,7 @@ body.cms {
 
       a {
         display: block;
-        padding-left: 40px; // icon width
+        padding-left: 40px; // Icon width
         padding-right: 0;
         margin: 0;
       }
@@ -653,6 +631,11 @@ body.cms {
     background: none;
     border-top: 0;
     border: 0;
+
+    .ui-tabs-anchor:hover,
+    .nav-link:hover {
+      border-bottom: $nav-tabs-link-border-width solid $nav-tabs-link-hover-border-color;
+    }
   }
 
   .ui-state-active {
@@ -662,7 +645,8 @@ body.cms {
     z-index: 2;
 
     a,
-    .nav-link {
+    .nav-link,
+    .nav-link:hover {
       border-bottom: $nav-tabs-link-border-width solid $nav-tabs-link-active-color;
       padding: $nav-link-padding;
     }

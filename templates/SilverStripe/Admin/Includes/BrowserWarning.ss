@@ -1,6 +1,6 @@
 <% require css('silverstripe/admin: client/dist/styles/browser-warning.css') %>
 
-<div id="browser-warning-wrapper" class="browser-warning-wrapper hide">
+<div id="browser-warning-wrapper" class="browser-warning-wrapper">
     <div class="browser-warning vertical-align-items">
         <div class="browser-warning__content flexbox-area-grow">
             <p class="ss-logo">SilverStripe</p>
@@ -23,7 +23,12 @@
 <% require javascript('silverstripe/admin: client/dist/js/browserWarning.js') %>
 
 <!--[if lte IE 8]>
-    <script>
-        document.getElementById('browser-warning-wrapper').className = 'browser-warning-wrapper';
-    </script>
+<script>
+(function () {
+  var warning = document.getElementById('browser-warning-wrapper');
+  if (warning) {
+  	warning.className = warning.className + ' browser-warning-wrapper--incompatible';
+  }
+})();
+</script>
 <![endif]-->

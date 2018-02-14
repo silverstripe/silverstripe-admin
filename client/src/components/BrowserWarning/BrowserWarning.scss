@@ -1,3 +1,11 @@
+.browser-warning-wrapper {
+  display: none;
+}
+
+.browser-warning-wrapper--incompatible {
+  display: block;
+}
+
 .browser-warning {
   position: fixed;
   color: $white;
@@ -7,11 +15,11 @@
   z-index: 100000;
   top: 0;
   left: 0;
+  overflow: auto;
 }
 
 .browser-warning__content {
   text-align: center;
-  margin: 100px 0;
   padding: 30px 30px;
 
   a {
@@ -29,6 +37,10 @@
     background-image: none, url("../../images/ss-logo.svg");
     background-repeat: no-repeat;
     background-position: 50% 50%;
+  }
+
+  @include media-breakpoint-up(md) {
+    margin: 100px 0;
   }
 }
 

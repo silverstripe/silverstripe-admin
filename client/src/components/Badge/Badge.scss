@@ -1,0 +1,12 @@
+// Bootstrap badge
+.badge {
+  text-transform: uppercase;
+  font-size: $font-size-xxs;
+  font-weight: 400;
+  letter-spacing: .3px;
+}
+
+// Todo: replace .status-archived class name with .badge--[modifier]
+.status-archived {
+  color: $text-muted;
+}
