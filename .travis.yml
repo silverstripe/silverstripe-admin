@@ -48,12 +48,11 @@ before_script:
   - composer install --prefer-dist --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile
 
 # Install NPM dependencies
-  - if [[ $NPM_TEST ]]; then nvm install $TRAVIS_NODE_VERSION && npm install -g yarn && yarn install --network-concurrency 1 && yarn run build; fi
+  - if [[ $NPM_TEST ]]; then nvm install $TRAVIS_NODE_VERSION && npm install -g yarn && yarn install --network-concurrency 1; fi
 
 script:
   - if [[ $PHPUNIT_TEST ]]; then vendor/bin/phpunit tests/php; fi
+  - if [[ $NPM_TEST ]]; then yarn run build; fi
   - if [[ $NPM_TEST ]]; then git diff-files --quiet -w --relative=client; fi
   - if [[ $NPM_TEST ]]; then git diff --name-status --relative=client; fi
-  - if [[ $NPM_TEST ]]; then yarn run lint; fi
-  - if [[ $NPM_TEST ]]; then yarn run test; fi
   - if [[ $PHPCS_TEST ]]; then composer run-script lint; fi

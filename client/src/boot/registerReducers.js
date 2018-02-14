@@ -9,6 +9,7 @@ import BreadcrumbsReducer from 'state/breadcrumbs/BreadcrumbsReducer';
 import TreeDropdownFieldReducer from 'state/treeDropdownField/TreeDropdownFieldReducer';
 import MobileMenuReducer from 'state/mobileMenu/MobileMenuReducer';
 import UnsavedFormsReducer from 'state/unsavedForms/UnsavedFormsReducer';
+import usedOnReducer from 'state/usedOn/usedOnReducer';
 import applyFormMiddleware from 'lib/dependency-injection/applyFormMiddleware';
 
 export default (extra = {}) => {
@@ -26,6 +27,7 @@ export default (extra = {}) => {
     treeDropdownField: TreeDropdownFieldReducer,
     mobileMenu: MobileMenuReducer,
     unsavedForms: UnsavedFormsReducer,
+    usedOn: usedOnReducer,
     ...extra,
   });
 

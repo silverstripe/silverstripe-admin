@@ -12,6 +12,12 @@ $brand-danger: #d40404;
 // offical silverstripe brand color
 $color-brand: #43c7f4 !default;
 
+// Generic colors
+$color-notice:  #93CDE8 !default;
+$color-warning: #E9D104 !default;
+$color-error:   #e68288 !default;
+$color-good:    #72c34b !default;
+
 // Body colors
 $body-color-dark: darken($body-color, 10);
 
@@ -99,9 +105,8 @@ $toolbar-total-height: $toolbar-height + 1px; // Include border
 
 
 // Navs
-$nav-tabs-link-border-width: .15385rem;  // 2px
-$nav-link-padding: $spacer #{$spacer / 4} #{$spacer - $nav-tabs-link-border-width};
-$nav-tabs-link-active-border-color: $text-muted;
+$nav-tabs-link-border-width: .15385rem;  // 2px just border bottom width
+$nav-link-padding: $nav-link-padding-y $nav-link-padding-x #{$nav-link-padding-y - ($nav-tabs-link-border-width / 2)};
 
 // Popovers
 

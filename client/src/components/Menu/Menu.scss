@@ -157,10 +157,6 @@
     &.active {
       background-image: url("../images/sticky-toggle-on.png");
     }
-
-    .ui-button-text {
-      padding: 0;
-    }
   }
 
   .sticky-status-indicator {
@@ -410,7 +406,7 @@
       display: block;
       min-height: 50px;
       color: $body-color;
-      padding: (2 * $grid-y) 5px (2 * $grid-y) 8px;
+      padding: $spacer 5px $spacer 8px;
       background-color: $base-menu-bg;
       cursor: pointer;
       position: relative;
@@ -474,7 +470,7 @@
 
         .toggle-children {
           .toggle-children-icon {
-            @extend .icon-sprites-32x32; // sass-lint:disable-line no-extends
+            @include icon-sprites(32x32);
             @include sprite($sprites-32x32-menu-arrow-down);
           }
         }

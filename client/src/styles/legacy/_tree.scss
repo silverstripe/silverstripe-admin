@@ -495,18 +495,8 @@
       background-image: url(../images/sitetree_ss_default_icons.png);
     }
     span.badge {
-      clear: both;
-      text-transform: uppercase;
-      text-shadow: none;
-      display: inline-block;
-      position: relative;
-      padding: 3px 3px 1px;
-      font-size: 0.75em;
-      line-height: 1em;
       margin-left: 3px;
-      margin-top: -1px;
-      border-radius: 2px 2px;
-      font-weight: normal;
+      text-shadow: none;
     }
 
     /* comment speech bubble - ccs3 only - source: http://nicolasgallagher.com/pure-css-speech-bubbles/demo/ */
@@ -565,7 +555,7 @@
 
   // Applied to trees when displaying filter / search results.
   &.filtered-list {
-    margin-top: $grid-y;
+    margin-top: $spacer / 2;
 
     li:not(.filtered-item) > a {
       color: $text-muted;
@@ -601,18 +591,6 @@
       }
     }
   }
-}
-
-
-// Scroll horizontal for sitetree
-// so scrollbar is fixed to bottom of panel, and tree actions remain fixed at top
-.cms-tree-holder {
-  overflow-x: auto;
-  height: calc(100% - 13px); // Magic number, need to investigate why its needed (possibly scroll bar height)
-  padding-left: 20px;
-  padding-right: 20px;
-  margin-left: -20px;
-  margin-right: -20px;
 }
 
 // Override thirdparty themes
@@ -680,21 +658,18 @@ a .jstree-pageicon {
 .jstree-apple .jstree-hovered {
   background: #ebfbff;
 }
-%tree-status-icon-before {
-  content:"";
-  display: block;
-  width: 8px;
-  height: 8px;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background: #fce2d0;
-  border: 1px solid #fff;
-  border-radius: 100px;
-}
 @mixin tree-status-icon($label, $dotColor, $textColor, $bgColor) {
   .cms-tree.jstree .status-#{$label} > a .jstree-pageicon:before {
-    @extend %tree-status-icon-before;
+    content:"";
+    display: block;
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #fce2d0;
+    border: 1px solid #fff;
+    border-radius: 100px;
   }
   // Labels
   .jstree .status-#{$label} > .jstree-hovered,
@@ -710,9 +685,6 @@ a .jstree-pageicon {
   .cms-tree.jstree .status-#{$label} > a .jstree-pageicon:before  {
     background-color:$dotColor;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3), inset 0 0 0 1px $textColor;
-  }
-  #cms-content-tools-CMSMain .cms-tree.jstree span.badge.status-#{$label}  {
-    box-shadow: 0px 0px 6px 2px $bgColor;
   }
 }
 @include tree-status-icon('addedtodraft', #ff7f22, $state-draft, #fff7f2);
