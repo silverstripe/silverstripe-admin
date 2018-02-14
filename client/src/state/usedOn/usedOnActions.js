@@ -1,3 +1,4 @@
+import i18n from 'i18n';
 import TYPES from './usedOnTypes';
 import fetch from 'isomorphic-fetch';
 
@@ -26,7 +27,15 @@ export function loadUsedOn(identifier, method, url) {
     },
     credentials: 'same-origin',
   };
+
   return (dispatch) => {
+    if (!identifier || !method || !url) {
+      const message = i18n._t('Admin.NOT_AVAILABLE_USED_DATA', 'The usage data is currently unavailable.');
+      return Promise.resolve(
+        dispatch(loadUsedOnFailed(identifier, message))
+      );
+    }
+
     dispatch({
       type: TYPES.LOAD_USED_ON,
       payload: { identifier },

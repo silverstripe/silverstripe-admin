@@ -18,7 +18,7 @@ const provideUsedOnData = (UsedOnTable) => {
       const {
         method,
         url,
-      } = props.data.readUsageEndpoint;
+      } = (props.data.readUsageEndpoint || {});
 
       props.loadUsedOn(props.identifier, method, url);
     }
@@ -46,7 +46,12 @@ const provideUsedOnData = (UsedOnTable) => {
   };
 
   const mapStateToProps = (state, props) => {
-    const identifier = `${props.data.recordClass}#${props.data.recordId}`;
+    const {
+      recordClass,
+      recordId,
+    } = props.data;
+
+    const identifier = (recordClass && recordId) ? `${recordClass}#${recordId}` : '';
     const usedState = state.usedOn;
     const loading = usedState.loading.includes(identifier);
     const usedOn = usedState.usedOn[identifier] || null;

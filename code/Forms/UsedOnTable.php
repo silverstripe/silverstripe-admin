@@ -38,23 +38,17 @@ class UsedOnTable extends FormField
     protected $record;
 
     /**
-     * @param string $name
-     * @param DataObject|RecursivePublishable $record
-     */
-    public function __construct($name, $record)
-    {
-        $this->record = $record;
-
-        parent::__construct($name, null);
-    }
-
-    /**
      * @return array
      */
     public function getSchemaDataDefaults()
     {
         $defaults = parent::getSchemaDataDefaults();
         $record = $this->getRecord();
+
+        // can't really provide data for no ID or record
+        if (!$record || !$record->ID) {
+            return $defaults;
+        }
         $usageLink = $this->Link('usage');
 
         $defaults['data'] = array_merge($defaults['data'], [
@@ -108,7 +102,7 @@ class UsedOnTable extends FormField
     }
 
     /**
-     * @param $record
+     * @param DataObject|RecursivePublishable $record
      * @return null|string
      */
     protected function getState($record)
@@ -133,7 +127,30 @@ class UsedOnTable extends FormField
      */
     public function getRecord()
     {
-        return $this->record;
+        if ($this->record) {
+            return $this->record;
+        }
+        $form = $this->getForm();
+        if (!$form) {
+            return null;
+        }
+
+        // Get record from form
+        $record = $form->getRecord();
+        if ($record && ($record instanceof DataObject)) {
+            $this->record = $record;
+            return $record;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param DataObject|RecursivePublishable $record
+     */
+    public function setRecord($record)
+    {
+        $this->record = $record;
     }
 
     /**
