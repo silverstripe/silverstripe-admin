@@ -1,0 +1,24 @@
+.used-on__badge {
+  background-color: #fff7f2;
+  border-color: #cf3f00;
+  color: $state-draft;
+}
+
+.used-on__col--index {
+  width: 1em;
+}
+
+.used-on__col--type {
+  width: 35%;
+  max-width: 10em;
+}
+
+.used-on__edit-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.used-on__message--loading,
+.used-on__message--empty {
+  text-align: center;
+}
