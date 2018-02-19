@@ -44,7 +44,6 @@ storiesOf('Admin/Breadcrumb', module)
         onClick: nodefault,
         icon: {
           className: 'font-icon-edit-list',
-          action: nodefault,
         },
       },
     ];

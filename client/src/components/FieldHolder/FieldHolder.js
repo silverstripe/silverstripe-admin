@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { FormGroup, InputGroup, ControlLabel } from 'react-bootstrap-ss';
+import { FormGroup, InputGroup, InputGroupAddon, Label } from 'reactstrap';
 import castStringToElement from 'lib/castStringToElement';
 import classnames from 'classnames';
 
@@ -44,11 +44,7 @@ function fieldHolder(Field) {
       }
 
       return {
-        bsClass: this.props.bsClass,
-        bsSize: this.props.bsSize,
-        validationState: this.props.validationState,
         className: classNames.join(' '),
-        controlId: this.props.id,
         id: this.props.holderId,
       };
     }
@@ -104,7 +100,7 @@ function fieldHolder(Field) {
       }
 
       return castStringToElement(
-        ControlLabel,
+        Label,
         labelText,
         { className: 'form__field-label' }
       );
@@ -121,7 +117,7 @@ function fieldHolder(Field) {
       }
 
       return castStringToElement(
-        ControlLabel,
+        Label,
         this.props.rightTitle,
         { className: 'form__field-label' }
       );
@@ -151,11 +147,11 @@ function fieldHolder(Field) {
       return (
         <InputGroup>
           {prefix &&
-            <InputGroup.Addon>{prefix}</InputGroup.Addon>
+            <InputGroupAddon addonType="prepend">{prefix}</InputGroupAddon>
           }
           {field}
           {suffix &&
-            <InputGroup.Addon>{suffix}</InputGroup.Addon>
+            <InputGroupAddon addonType="append">{suffix}</InputGroupAddon>
           }
         </InputGroup>
       );

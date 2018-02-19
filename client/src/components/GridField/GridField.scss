@@ -272,18 +272,23 @@ div.grid-field__sort-field + .form__fieldgroup-item {
   }
 }
 
-.grid-field-import.show {
-  display: block;
+.grid-field-import {
+  pointer-events: none;
 
-  .modal-content {
-    overflow-y: auto;
-  }
+  &.show {
+    display: block;
 
-  .modal-dialog {
-    max-height: 600px;
+    .modal-content {
+      overflow-y: auto;
+      pointer-events: all;
+    }
 
-    .advanced {
-      display: none;
+    .modal-dialog {
+      max-height: 600px;
+
+      .advanced {
+        display: none;
+      }
     }
   }
 }

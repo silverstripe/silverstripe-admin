@@ -14,4 +14,4 @@ Generates a hidden input type field.
  * `name` (string) (required): The name for the component.
  * `value` (string): The value the input should hold.
  
- _NOTE:_ For other properties, please refer to the [react-bootstrap FormControl](https://react-bootstrap.github.io/components.html#forms-props-form-control) documentation.
+ _NOTE:_ For other properties, please refer to the [reactstrap Input](https://reactstrap.github.io/components/form/) documentation.

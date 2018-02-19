@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormControl } from 'react-bootstrap-ss';
+import { Input } from 'reactstrap';
 
 class HiddenField extends Component {
   /**
@@ -9,8 +9,6 @@ class HiddenField extends Component {
    */
   getInputProps() {
     return {
-      bsClass: this.props.bsClass,
-      componentClass: 'input',
       className: `${this.props.className} ${this.props.extraClass}`,
       id: this.props.id,
       name: this.props.name,
@@ -21,7 +19,7 @@ class HiddenField extends Component {
 
   render() {
     return (
-      <FormControl {...this.getInputProps()} />
+      <Input {...this.getInputProps()} />
     );
   }
 }

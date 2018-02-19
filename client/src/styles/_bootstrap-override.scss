@@ -31,3 +31,8 @@ html [type="button"] {
   padding-top: $input-padding-y;
   padding-bottom: $input-padding-y;
 }
+
+// Restore bottom padding
+.form-check {
+  margin-bottom: $form-check-margin-bottom;
+}

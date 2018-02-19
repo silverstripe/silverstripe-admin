@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import { Alert } from 'react-bootstrap-ss';
+import { Alert } from 'reactstrap';
 import castStringToElement from 'lib/castStringToElement';
 
 /**
- * A wrapper for Alert messages in react-bootstrap.
+ * A wrapper for Alert messages in reactstrap.
  * Displays a given message.
  */
 class FormAlert extends Component {
@@ -53,10 +53,9 @@ class FormAlert extends Component {
         this.props.className,
         this.props.extraClass,
       ].join(' '),
-      bsStyle: this.props.bsStyle || this.getMessageStyle(),
-      bsClass: this.props.bsClass,
-      onDismiss: (this.props.closeLabel) ? this.handleDismiss : null,
-      closeLabel: this.props.closeLabel,
+      color: this.props.type,
+      toggle: (this.props.closeLabel) ? this.handleDismiss : null,
+      isOpen: (this.props.closeLabel) ? this.state.visible : true,
     };
   }
 
@@ -64,7 +63,7 @@ class FormAlert extends Component {
    * Handler for when the message box is dismissed and hidden
    */
   handleDismiss() {
-    if (typeof this.props.onDismiss === 'function') {
+    if (typeof this.props.toggle === 'function') {
       this.props.onDismiss();
     } else {
       this.setState({ visible: false });

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormControl } from 'react-bootstrap-ss';
+import { Input } from 'reactstrap';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import i18n from 'i18n';
 
@@ -59,9 +59,12 @@ class LookupField extends Component {
     const none = `('${i18n._t('Admin.NONE', 'None')}')`;
 
     return (
-      <FormControl.Static {...this.getFieldProps()}>
+      <Input
+        plaintext
+        {...this.getFieldProps()}
+      >
         { this.getValueCSV() || none }
-      </FormControl.Static>
+      </Input>
     );
   }
 }

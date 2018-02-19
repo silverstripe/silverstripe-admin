@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
-import { Tab, Nav, NavItem } from 'react-bootstrap-ss';
+import { TabContent, Nav, NavItem, NavLink } from 'reactstrap';
 
 class Tabs extends Component {
+  constructor(props) {
+    super(props);
+
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      activeTab: this.getDefaultActiveKey()
+    };
+  }
+
   /**
    * Returns props for the container component
    *
@@ -9,8 +18,6 @@ class Tabs extends Component {
    */
   getContainerProps() {
     const {
-      activeKey,
-      onSelect,
       className,
       extraClass,
       id,
@@ -18,10 +25,7 @@ class Tabs extends Component {
     const combinedClassName = `${className} ${extraClass}`;
 
     return {
-      activeKey,
       className: combinedClassName,
-      defaultActiveKey: this.getDefaultActiveKey(),
-      onSelect,
       id,
     };
   }
@@ -55,6 +59,14 @@ class Tabs extends Component {
     return active;
   }
 
+  toggle(tab) {
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        activeTab: tab
+      });
+    }
+  }
+
   /**
    * Render an individual link for the tabset
    *
@@ -65,13 +77,17 @@ class Tabs extends Component {
     if (child.props.title === null) {
       return null;
     }
+    const classNames = `${this.state.activeTab === child.props.name ? 'active ' : ''}${child.props.tabClassName ? child.props.tabClassName : ''}`;
+
     return (
-      <NavItem
-        eventKey={child.props.name}
-        disabled={child.props.disabled}
-        className={child.props.tabClassName}
-      >
-        {child.props.title}
+      <NavItem>
+        <NavLink
+          onClick={() => { this.toggle(child.props.name); }}
+          disabled={child.props.disabled}
+          className={classNames}
+        >
+          {child.props.title}
+        </NavLink>
       </NavItem>
     );
   }
@@ -83,14 +99,14 @@ class Tabs extends Component {
    */
   renderNav() {
     const tabs = React.Children
-      .map(this.props.children, this.renderTab);
+      .map(this.props.children, this.renderTab, this);
 
     if (tabs.length <= 1) {
       return null;
     }
 
     return (
-      <Nav bsStyle={this.props.bsStyle} role="tablist">
+      <Nav tabs role="tablist">
         {tabs}
       </Nav>
     );
@@ -101,14 +117,14 @@ class Tabs extends Component {
     const nav = this.renderNav();
 
     return (
-      <Tab.Container {...containerProps}>
+      <div {...containerProps}>
         <div className="wrapper">
           { nav }
-          <Tab.Content animation={this.props.animation}>
+          <TabContent activeTab={this.state.activeTab}>
             {this.props.children}
-          </Tab.Content>
+          </TabContent>
         </div>
-      </Tab.Container>
+      </div>
     );
   }
 }
@@ -120,7 +136,6 @@ Tabs.propTypes = {
 };
 
 Tabs.defaultProps = {
-  bsStyle: 'tabs',
   className: '',
   extraClass: '',
 };

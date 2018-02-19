@@ -8,7 +8,7 @@ import * as treeDropdownFieldActions from 'state/treeDropdownField/TreeDropdownF
 import TreeDropdownFieldMenu from 'components/TreeDropdownField/TreeDropdownFieldMenu';
 import TreeDropdownFieldNode from 'components/TreeDropdownField/TreeDropdownFieldNode';
 import url from 'url';
-import { FormControl } from 'react-bootstrap-ss';
+import { Input } from 'reactstrap';
 import { mapHighlight } from 'lib/castStringToElement';
 import { findTreeByPath, findTreeByID, findTreePath } from './treeUtils';
 
@@ -607,7 +607,7 @@ class TreeDropdownField extends Component {
     return (
       <div className={className}>
         <span className="treedropdownfield__title">{title}</span>
-        <FormControl
+        <Input
           type="hidden"
           name={this.props.name}
           value={this.props.value}

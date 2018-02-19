@@ -12,7 +12,7 @@ return <InsertLinkModal
   show={showModal}
   schemaUrl="/schema/my-form-schema-url"
   onInsert={insertCallback}
-  onHide={hideCallback}
+  onClosed={hideCallback}
 />
 ```
 
@@ -21,7 +21,7 @@ return <InsertLinkModal
  * `show` (boolean): Whether to show the modal or not.
  * `schemaUrl` (string): The url to call to obtain the form schema.
  * `onInsert` (function) (required): The callback for when something has been submitted.
- * `onHide` (function) (required): The callback for when the modal is to be hidden again. 
+ * `onClosed` (function) (required): The callback for when the modal is to be hidden again. 
 
 ## Helpers
 

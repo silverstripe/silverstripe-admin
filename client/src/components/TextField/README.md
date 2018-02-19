@@ -20,4 +20,4 @@ Generates an editable text field.
  * `disabled` (boolean): Whether this field is disabled.
  * `type` (string): Defines the type this component will have, e.g. `email`, `tel`.
 
- _NOTE:_ For other properties, please refer to the [react-bootstrap FormControl](https://react-bootstrap.github.io/components.html#forms-props-form-control) documentation.
+ _NOTE:_ For other properties, please refer to the [reactstrap Input](https://reactstrap.github.io/components/form/) documentation.

@@ -20,6 +20,12 @@ storiesOf('Admin/TextField', module)
       {...props}
     />
   ))
+  .add('Textarea', () => (
+    <TextField
+      {...props}
+      data={{ rows: 4, columns: 40 }}
+    />
+  ))
   .add('All titles', () => (
     <TextField
       {...props}
@@ -32,6 +38,6 @@ storiesOf('Admin/TextField', module)
     <TextField
       {...props}
       description="Field description"
-      message={{ value: 'Validation message' }}
+      message={{ value: 'Validation message', type: 'error' }}
     />
   ));

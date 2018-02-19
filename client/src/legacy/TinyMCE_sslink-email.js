@@ -54,7 +54,7 @@ jQuery.entwine('ss', ($) => {
    * Assumes that $('.insert-link__dialog-wrapper').entwine({}); is defined for shared functions
    */
   $(`#${modalId}`).entwine({
-    renderModal(show) {
+    renderModal(isOpen) {
       const handleHide = () => this.close();
       const handleInsert = (...args) => this.handleInsert(...args);
       const attrs = this.getOriginalAttributes();
@@ -66,9 +66,9 @@ jQuery.entwine('ss', ($) => {
       // create/update the react component
       ReactDOM.render(
         <InsertLinkEmailModal
-          show={show}
+          isOpen={isOpen}
           onInsert={handleInsert}
-          onHide={handleHide}
+          onClosed={handleHide}
           title={i18n._t('Admin.LINK_EMAIL', 'Insert email link')}
           bodyClassName="modal__dialog"
           className="insert-link__dialog-wrapper--email"

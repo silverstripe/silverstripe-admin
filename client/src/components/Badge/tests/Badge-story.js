@@ -5,12 +5,7 @@ import Badge from 'components/Badge/Badge';
 
 storiesOf('Admin/Badge', module)
   .add('Default badge', ({ story }) => (
-    <div>
-      <div style={{ background: '#555', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }} />
-      <div style={{ zIndex: 2, position: 'relative' }}>
-        <Badge message={story} />
-      </div>
-    </div>
+    <Badge message={story} />
   ))
   .add('Info badge', ({ story }) => (
     <Badge status="info" message={story} />

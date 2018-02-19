@@ -28,4 +28,4 @@ Generates a select/dropdown field.
    * `hasEmptyDefault` (boolean): Defines if this has a "blank" option.
    * `emptyString` (string): The title for the "blank" option.
 
- _NOTE:_ For other properties, please refer to the [react-bootstrap FormControl](https://react-bootstrap.github.io/components.html#forms-props-form-control) documentation.
+ _NOTE:_ For other properties, please refer to the [reactstrap Input](https://reactstrap.github.io/components/form/) documentation.

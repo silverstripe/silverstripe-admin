@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Popover, OverlayTrigger } from 'react-bootstrap-ss';
+import { Button, Popover, PopoverTitle, PopoverContent } from 'reactstrap';
 
 class PopoverField extends Component {
   constructor(props) {
     super(props);
 
-    this.handleShow = this.handleShow.bind(this);
-    this.handleHide = this.handleHide.bind(this);
+    this.toggle = this.toggle.bind(this);
 
     this.state = {
       showing: false,
@@ -23,29 +22,14 @@ class PopoverField extends Component {
     return placement || 'bottom';
   }
 
-  handleShow() {
+  toggle() {
     this.setState({
-      showing: true,
-    });
-  }
-
-  handleHide() {
-    this.setState({
-      showing: false,
+      showing: !this.state.showing
     });
   }
 
   render() {
     const placement = this.getPlacement();
-    const overlay = (
-      <Popover
-        id={`${this.props.id}_Popover`}
-        className={`fade in bs-popover-${placement} ${this.props.popoverClassName}`}
-        title={this.props.data.popoverTitle}
-      >
-        {this.props.children}
-      </Popover>
-    );
 
     const buttonClasses = ['btn', 'btn-secondary', this.props.className];
     if (this.state.showing) {
@@ -67,19 +51,20 @@ class PopoverField extends Component {
     }
 
     return (
-      <OverlayTrigger
-        rootClose
-        trigger="click"
-        placement={placement}
-        overlay={overlay}
-        onEnter={this.handleShow}
-        onExited={this.handleHide}
-        container={this.props.container}
-      >
-        <button {...buttonProps}>
-          {this.props.title}
-        </button>
-      </OverlayTrigger>
+      <Button {...buttonProps} onClick={this.toggle}>
+        {this.props.title}
+        <Popover
+          id={`${this.props.id}_Popover`}
+          placement={placement}
+          isOpen={this.state.showing}
+          target={this.props.id}
+          toggle={this.toggle}
+          className={this.props.popoverClassName}
+        >
+          <PopoverHeader>{this.props.data.popoverTitle}</PopoverHeader>
+          <PopoverBody>{this.props.children}</PopoverBody>
+        </Popover>
+      </Button>
     );
   }
 }
@@ -87,7 +72,6 @@ class PopoverField extends Component {
 PopoverField.propTypes = {
   id: React.PropTypes.string,
   title: React.PropTypes.any,
-  container: React.PropTypes.any,
   className: React.PropTypes.string,
   popoverClassName: React.PropTypes.string,
   buttonSize: React.PropTypes.oneOf(['sm', 'md', 'large', 'xl']),

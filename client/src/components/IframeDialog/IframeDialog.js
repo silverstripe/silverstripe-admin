@@ -1,12 +1,12 @@
 import React, { PropTypes, Component } from 'react';
-import { Modal } from 'react-bootstrap-ss';
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 class IframeDialog extends Component {
   renderHeader() {
     const title = this.props.title;
     if (title) {
       return (
-        <Modal.Header><Modal.Title>{title}</Modal.Title></Modal.Header>
+        <ModalHeader>{title}</ModalHeader>
       );
     }
     return null;
@@ -15,20 +15,20 @@ class IframeDialog extends Component {
   render() {
     return (
       <Modal
-        show={this.props.show}
-        onHide={this.props.onHide}
+        isOpen={this.props.isOpen}
+        onExit={this.props.onExit}
         className={this.props.className}
-        dialogClassName={this.props.dialogClassName}
+        modalClassName={this.props.modalClassName}
       >
         {this.renderHeader()}
-        <Modal.Body className={this.props.bodyClassName}>
+        <ModalBody className={this.props.bodyClassName}>
           <iframe
             id={this.props.iframeId}
             className={this.props.iframeClassName}
             src={this.props.url}
             frameBorder={0}
           />
-        </Modal.Body>
+        </ModalBody>
       </Modal>
     );
   }
@@ -36,10 +36,10 @@ class IframeDialog extends Component {
 
 IframeDialog.propTypes = {
   url: PropTypes.string.isRequired,
-  onHide: PropTypes.func,
-  show: PropTypes.bool,
+  onExit: PropTypes.func,
+  isOpen: PropTypes.bool,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  dialogClassName: PropTypes.string,
+  modalClassName: PropTypes.string,
   iframeId: PropTypes.string,
   iframeClassName: PropTypes.string,
   className: PropTypes.string,
@@ -47,7 +47,7 @@ IframeDialog.propTypes = {
 };
 
 IframeDialog.defaultProps = {
-  show: false,
+  isOpen: false,
   title: null,
 };
 

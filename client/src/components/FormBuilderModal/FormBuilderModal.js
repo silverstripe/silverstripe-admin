@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import i18n from 'i18n';
-import { Modal } from 'react-bootstrap-ss';
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import FormBuilderLoader from 'containers/FormBuilderLoader/FormBuilderLoader';
 import castStringToElement from 'lib/castStringToElement';
 
@@ -89,8 +89,8 @@ class FormBuilderModal extends Component {
    */
   handleHide() {
     this.clearResponse();
-    if (typeof this.props.onHide === 'function') {
-      this.props.onHide();
+    if (typeof this.props.onClosed === 'function') {
+      this.props.onClosed();
     }
   }
 
@@ -141,11 +141,11 @@ class FormBuilderModal extends Component {
   renderHeader() {
     if (this.props.title !== false) {
       return (
-        <Modal.Header closeButton><Modal.Title>{this.props.title}</Modal.Title></Modal.Header>
+        <ModalHeader toggle={this.handleHide}>{this.props.title}</ModalHeader>
       );
     }
 
-    if (typeof this.props.onHide === 'function') {
+    if (this.props.showCloseButton === true && typeof this.props.onClosed === 'function') {
       return (
         <button
           type="button"
@@ -167,29 +167,30 @@ class FormBuilderModal extends Component {
 
     return (
       <Modal
-        show={this.props.show}
-        onHide={this.handleHide}
+        isOpen={this.props.isOpen}
+        toggle={this.handleHide}
         className={this.props.className}
-        dialogClassName={this.props.dialogClassName}
-        bsSize={this.props.bsSize}
+        modalClassName={this.props.modalClassName}
+        size={this.props.size}
       >
         {this.renderHeader()}
-        <Modal.Body className={this.props.bodyClassName}>
+        <ModalBody className={this.props.bodyClassName}>
           {response}
           {form}
           {this.props.children}
-        </Modal.Body>
+        </ModalBody>
       </Modal>
     );
   }
 }
 
 FormBuilderModal.propTypes = {
-  show: React.PropTypes.bool,
+  isOpen: React.PropTypes.bool,
   title: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.bool]),
   className: React.PropTypes.string,
   bodyClassName: React.PropTypes.string,
-  onHide: React.PropTypes.func,
+  showCloseButton: React.PropTypes.bool,
+  onClosed: React.PropTypes.func,
   schemaUrl: React.PropTypes.string,
   onSubmit: React.PropTypes.func,
   onAction: React.PropTypes.func,
@@ -203,8 +204,9 @@ FormBuilderModal.propTypes = {
 
 FormBuilderModal.defaultProps = {
   showErrorMessage: false,
+  showCloseButton: true,
   onLoadingError: noop,
-  show: false,
+  isOpen: false,
   title: null,
   responseClassGood: 'alert alert-success',
   responseClassBad: 'alert alert-danger',

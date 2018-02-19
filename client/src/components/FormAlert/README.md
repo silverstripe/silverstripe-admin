@@ -20,4 +20,4 @@ Generates a bootstrap alert box, with state closing handled optionally.
  * `visible` (boolean): Manual set whether the message is hidden or shown.
  * `closeLabel` (string): The label for the screen reader close button.
 
- _NOTE:_ For other properties, please refer to the [react-bootstrap Alert](https://react-bootstrap.github.io/components.html#alert-props) documentation.
+ _NOTE:_ For other properties, please refer to the [reactstrap Alert](https://reactstrap.github.io/components/alerts/) documentation.

@@ -14,4 +14,4 @@ Generates a block of raw HTML content inside a Readonly styled box.
  * `name` (string) (required): The name for the component.
  * `value` (string): The raw HTML content to generate.
  
- _NOTE:_ For other properties, please refer to the [react-bootstrap FormControl.Static](https://react-bootstrap.github.io/components.html#forms-props-form-control-static) documentation.
+ _NOTE:_ For other properties, please refer to the [reactstrap Input](https://reactstrap.github.io/components/form/) documentation.

@@ -40,7 +40,7 @@ jQuery.entwine('ss', ($) => {
   });
 
   /**
-   * Uses React-Bootstrap in order to replicate the bootstrap styling and JavaScript behaviour.
+   * Uses reactstrap in order to replicate the bootstrap styling and JavaScript behaviour.
    * The "add to campaign" dialog is used in a similar fashion in AssetAdmin.
    */
   $('#add-to-campaign__dialog-wrapper').entwine({
@@ -58,7 +58,7 @@ jQuery.entwine('ss', ($) => {
       this._renderModal(false);
     },
 
-    _renderModal(show) {
+    _renderModal(isOpen) {
       const handleHide = () => this.close();
       const handleSubmit = (...args) => this._handleSubmitModal(...args);
       const id = $('form.cms-edit-form :input[name=ID]').val();
@@ -72,9 +72,9 @@ jQuery.entwine('ss', ($) => {
       ReactDOM.render(
         <FormBuilderModal
           title={title}
-          show={show}
+          isOpen={isOpen}
           onSubmit={handleSubmit}
-          onHide={handleHide}
+          onClosed={handleHide}
           schemaUrl={modalSchemaUrl}
           bodyClassName="modal__dialog"
           className="add-to-campaign-modal"

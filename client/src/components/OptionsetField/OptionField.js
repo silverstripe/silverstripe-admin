@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import castStringToElement from 'lib/castStringToElement';
-import { Checkbox, Radio } from 'react-bootstrap-ss';
+import fieldHolder from 'components/FieldHolder/FieldHolder';
+import { Input, Label } from 'reactstrap';
 
 class OptionField extends Component {
   constructor(props) {
@@ -36,6 +36,7 @@ class OptionField extends Component {
 
     return {
       id: this.props.id,
+      type: this.props.type,
       name: this.props.name,
       disabled: this.props.disabled || this.props.readOnly,
       readOnly: this.props.readOnly,
@@ -76,25 +77,16 @@ class OptionField extends Component {
       ? this.props.leftTitle
       : this.props.title;
 
-    // default and fallback to a Radio button
-    let Option = null;
+    const FieldHolder = fieldHolder(() =>
+      (<Label check>
+        <Input {...this.getInputProps()} />
+        {labelText}
+      </Label>)
+    );
 
-    switch (this.props.type) {
-      case 'checkbox':
-        Option = Checkbox;
-        break;
-      case 'radio':
-        Option = Radio;
-        break;
-      default:
-        throw new Error(`Invalid OptionField type: ${this.props.type}`);
-    }
-
-    const label = (typeof labelText === 'string')
-      ? { react: <span>{labelText}</span> }
-      : labelText;
-
-    return castStringToElement(Option, label, this.getInputProps());
+    return (
+      <FieldHolder {...this.props} hideLabels check />
+    );
   }
 }
 
@@ -113,6 +105,8 @@ OptionField.propTypes = {
   ]),
   readOnly: React.PropTypes.bool,
   disabled: React.PropTypes.bool,
+  rightTitle: React.PropTypes.any,
+  check: React.PropTypes.bool,
 };
 
 OptionField.defaultProps = {
@@ -121,6 +115,9 @@ OptionField.defaultProps = {
   className: '',
   type: 'radio',
   leftTitle: null,
+  check: true,
 };
 
-export default OptionField;
+export { OptionField as Component };
+
+export default fieldHolder(OptionField);

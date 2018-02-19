@@ -71,7 +71,7 @@ class OptionsetField extends Component {
     return (
       <div>
         { this.props.source.map((item, index) => (
-          <OptionField {...this.getOptionProps(item, index)} />
+          <OptionField {...this.getOptionProps(item, index)} hideLabels />
         )) }
       </div>
     );

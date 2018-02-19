@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
-import { FormControl } from 'react-bootstrap-ss';
+import { Input } from 'reactstrap';
 
 class HtmlReadonlyField extends Component {
   constructor(props) {
@@ -25,8 +25,6 @@ class HtmlReadonlyField extends Component {
    */
   getInputProps() {
     return {
-      bsClass: this.props.bsClass,
-      componentClass: this.props.componentClass,
       // The extraClass property is defined on both the holder and element
       // for legacy reasons (same behaviour as PHP rendering)
       className: `${this.props.className} ${this.props.extraClass}`,
@@ -37,7 +35,8 @@ class HtmlReadonlyField extends Component {
 
   render() {
     return (
-      <FormControl.Static
+      <Input
+        static
         {...this.getInputProps()}
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={this.getContent()}

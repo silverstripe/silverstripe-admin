@@ -998,7 +998,7 @@ $.entwine('ss', function($) {
       this.renderModal(true);
     },
 
-    renderModal(show) {
+    renderModal(isOpen) {
       // Build properties
       const tempid = $('body').data('member-tempid');
       const url = $.path.addSearchParams('CMSSecurity/login', {
@@ -1013,7 +1013,7 @@ $.entwine('ss', function($) {
           bodyClassName="login-dialog__body"
           iframeId="login-dialog-iframe"
           iframeClassName="login-dialog__body__iframe"
-          show={show}
+          isOpen={isOpen}
           url={url}
         />,
         this[0]
