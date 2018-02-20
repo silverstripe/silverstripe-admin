@@ -433,6 +433,27 @@ $.entwine('ss', function($){
     }
   });
 
+  // Hack: silverstripe/versioned coupling
+  $('.cms-edit-form .btn-toolbar button[name=action_doUnpublish].btn.action').entwine({
+    onclick: function(e) {
+      var owners = this.data('owners');
+      if (owners && parseInt(owners) > 0) {
+        var message = [
+          'You are unpublishing content that is being used in ' + owners + ' other published section(s).',
+          'This could cause a published page have missing components on the live site.',
+          'Do you want to unpublish anyway?'
+        ];
+        if (window.confirm(message.join('\n\n'))) {
+          this._super();
+        } else {
+          e.preventDefault();
+        }
+      } else {
+        this._super();
+      }
+    }
+  });
+
   /**
    * Hide tabs when only one is available.
    * Special case is actiontabs - tabs between buttons, where we want to have
