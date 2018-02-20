@@ -439,9 +439,21 @@ $.entwine('ss', function($){
       var owners = this.data('owners');
       if (owners && parseInt(owners) > 0) {
         var message = [
-          'You are unpublishing content that is being used in ' + owners + ' other published section(s).',
-          'This could cause a published page have missing components on the live site.',
-          'Do you want to unpublish anyway?'
+          i18n.inject(
+            i18n._t(
+              'Admin.OWNED_WARNING_1',
+              'You are unpublishing content that is being used in {count} other published section(s).',
+            ),
+            { count: owners }
+          ),
+          i18n._t(
+            'Admin.OWNED_WARNING_2',
+            'This could cause a published page have missing components on the live site.'
+          ),
+          i18n._t(
+            'Admin.OWNED_WARNING_3',
+            'Do you want to unpublish anyway?'
+          )
         ];
         if (window.confirm(message.join('\n\n'))) {
           this._super();
