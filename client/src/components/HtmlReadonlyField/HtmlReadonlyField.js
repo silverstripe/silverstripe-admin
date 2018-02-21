@@ -36,7 +36,7 @@ class HtmlReadonlyField extends Component {
   render() {
     return (
       <Input
-        static
+        plaintext
         {...this.getInputProps()}
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={this.getContent()}

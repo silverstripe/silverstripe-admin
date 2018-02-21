@@ -8,28 +8,26 @@ storiesOf('Admin/FormAlert', module)
     <div>
       <FormAlert
         type="success"
-        value={'This is a \'success\'/\'good\' alert'}
+        value="This is a 'success'/'good' alert"
       />
       <FormAlert
         type="info"
-        value={'This is a \'info\' alert'}
+        value="This is a 'info' alert"
       />
       <FormAlert
         type="warning"
-        value={'This is a \'warning\' alert'}
+        value="This is a 'warning' alert"
       />
       <FormAlert
         type="danger"
-        value={'This is a \'danger\' alert'}
+        value="This is a 'danger' alert"
       />
     </div>
   ))
   .add('Dismissable', () => (
-    <div>
-      <FormAlert
-        type="success"
-        value={'This is an alert that can be dismissed'}
-        closeLabel="close"
-      />
-    </div>
+    <FormAlert
+      type="success"
+      value="This is an alert that can be dismissed"
+      closeLabel="close"
+    />
   ));

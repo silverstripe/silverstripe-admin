@@ -59,7 +59,7 @@ class OptionsetField extends Component {
         const sourceItem = this.props.source
           .find((item, index) => this.getItemKey(item, index) === field.id);
 
-        this.props.onChange(sourceItem.value);
+        this.props.onChange(event, { id: this.props.id, value: sourceItem.value });
       }
     }
   }

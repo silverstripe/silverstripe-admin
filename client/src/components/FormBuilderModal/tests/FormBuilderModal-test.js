@@ -14,8 +14,8 @@ describe('FormBuilderModal', () => {
   beforeEach(() => {
     props = {
       title: '',
-      isOpen: false,
-      onClosed: jest.fn(),
+      show: false,
+      onHide: jest.fn(),
       identifier: 'FormModalTest',
     };
   });

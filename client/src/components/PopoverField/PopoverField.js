@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Popover, PopoverTitle, PopoverContent } from 'reactstrap';
+import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import classnames from 'classnames';
 
 class PopoverField extends Component {
   constructor(props) {
@@ -8,7 +9,7 @@ class PopoverField extends Component {
     this.toggle = this.toggle.bind(this);
 
     this.state = {
-      showing: false,
+      isOpen: false,
     };
   }
 
@@ -24,42 +25,41 @@ class PopoverField extends Component {
 
   toggle() {
     this.setState({
-      showing: !this.state.showing
+      isOpen: !this.state.isOpen
     });
   }
 
   render() {
     const placement = this.getPlacement();
 
-    const buttonClasses = ['btn', 'btn-secondary', this.props.className];
-    if (this.state.showing) {
-      buttonClasses.push('btn--no-focus');
-    }
-
-    if (!this.props.title) {
-      buttonClasses.push('font-icon-dot-3 btn--no-text');
-      buttonClasses.push(`btn--icon-${this.props.buttonSize}`);
-    }
+    const buttonClasses = classnames({
+      btn: true,
+      'btn-secondary': true,
+      [this.props.className]: true,
+      'btn--no-focus': this.state.isOpen,
+      ['font-icon-dot-3 btn--no-text']: !this.props.title,
+      [`btn--icon-${this.props.buttonSize}`]: !this.props.title,
+    });
 
     const buttonProps = {
       id: this.props.id,
       type: 'button',
-      className: buttonClasses.join(' '),
+      className: buttonClasses,
+      onClick: this.toggle,
+      title: this.props.data.buttonTooltip,
     };
-    if (this.props.data.buttonTooltip) {
-      buttonProps.title = this.props.data.buttonTooltip;
-    }
 
     return (
-      <Button {...buttonProps} onClick={this.toggle}>
+      <Button {...buttonProps}>
         {this.props.title}
         <Popover
           id={`${this.props.id}_Popover`}
           placement={placement}
-          isOpen={this.state.showing}
+          isOpen={this.state.isOpen}
           target={this.props.id}
           toggle={this.toggle}
           className={this.props.popoverClassName}
+          container={this.props.container}
         >
           <PopoverHeader>{this.props.data.popoverTitle}</PopoverHeader>
           <PopoverBody>{this.props.children}</PopoverBody>
@@ -72,6 +72,7 @@ class PopoverField extends Component {
 PopoverField.propTypes = {
   id: React.PropTypes.string,
   title: React.PropTypes.any,
+  container: React.PropTypes.any,
   className: React.PropTypes.string,
   popoverClassName: React.PropTypes.string,
   buttonSize: React.PropTypes.oneOf(['sm', 'md', 'large', 'xl']),

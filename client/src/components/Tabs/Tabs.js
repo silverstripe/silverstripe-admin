@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { TabContent, Nav, NavItem, NavLink } from 'reactstrap';
+import classnames from 'classnames';
 
 class Tabs extends Component {
   constructor(props) {
     super(props);
 
     this.toggle = this.toggle.bind(this);
+    this.renderTab = this.renderTab.bind(this);
     this.state = {
       activeTab: this.getDefaultActiveKey()
     };
@@ -22,10 +24,9 @@ class Tabs extends Component {
       extraClass,
       id,
       } = this.props;
-    const combinedClassName = `${className} ${extraClass}`;
 
     return {
-      className: combinedClassName,
+      className: classnames([className, extraClass]),
       id,
     };
   }
@@ -59,10 +60,10 @@ class Tabs extends Component {
     return active;
   }
 
-  toggle(tab) {
-    if (this.state.activeTab !== tab) {
+  toggle(activeTab) {
+    if (this.state.activeTab !== activeTab) {
       this.setState({
-        activeTab: tab
+        activeTab,
       });
     }
   }
@@ -77,14 +78,18 @@ class Tabs extends Component {
     if (child.props.title === null) {
       return null;
     }
-    const classNames = `${this.state.activeTab === child.props.name ? 'active ' : ''}${child.props.tabClassName ? child.props.tabClassName : ''}`;
+    const classNames = classnames({
+      active: this.state.activeTab === child.props.name,
+      [child.props.tabClassName]: child.props.tabClassName,
+    });
 
     return (
       <NavItem>
         <NavLink
-          onClick={() => { this.toggle(child.props.name); }}
+          onClick={() => (this.toggle(child.props.name))}
           disabled={child.props.disabled}
           className={classNames}
+          href="#"
         >
           {child.props.title}
         </NavLink>
@@ -99,7 +104,7 @@ class Tabs extends Component {
    */
   renderNav() {
     const tabs = React.Children
-      .map(this.props.children, this.renderTab, this);
+      .map(this.props.children, this.renderTab);
 
     if (tabs.length <= 1) {
       return null;
@@ -119,7 +124,7 @@ class Tabs extends Component {
     return (
       <div {...containerProps}>
         <div className="wrapper">
-          { nav }
+          {nav}
           <TabContent activeTab={this.state.activeTab}>
             {this.props.children}
           </TabContent>

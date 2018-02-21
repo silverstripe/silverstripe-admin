@@ -4,6 +4,6 @@ import { storiesOf } from '@storybook/react';
 import HtmlReadonlyField from 'components/HtmlReadonlyField/HtmlReadonlyField';
 
 storiesOf('Admin/HtmlReadonlyField', module)
-  .add('Static', () => (
-    <HtmlReadonlyField name="static" value="This is readonly" />
+  .add('Default', () => (
+    <HtmlReadonlyField name="default" value="This is readonly" />
   ));

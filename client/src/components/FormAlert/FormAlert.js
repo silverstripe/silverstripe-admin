@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Alert } from 'reactstrap';
 import castStringToElement from 'lib/castStringToElement';
+import classnames from 'classnames';
 
 /**
  * A wrapper for Alert messages in reactstrap.
@@ -10,7 +11,7 @@ class FormAlert extends Component {
   constructor(props) {
     super(props);
 
-    this.handleDismiss = this.handleDismiss.bind(this);
+    this.handleClosed = this.handleClosed.bind(this);
 
     this.state = {
       visible: true,
@@ -47,14 +48,14 @@ class FormAlert extends Component {
     const type = this.props.type || 'no-type';
 
     return {
-      className: [
+      className: classnames([
         'message-box',
         `message-box--${type}`,
         this.props.className,
         this.props.extraClass,
-      ].join(' '),
-      color: this.props.type,
-      toggle: (this.props.closeLabel) ? this.handleDismiss : null,
+      ]),
+      color: this.getMessageStyle(),
+      toggle: (this.props.closeLabel) ? this.handleClosed : null,
       isOpen: (this.props.closeLabel) ? this.state.visible : true,
     };
   }
@@ -62,9 +63,9 @@ class FormAlert extends Component {
   /**
    * Handler for when the message box is dismissed and hidden
    */
-  handleDismiss() {
-    if (typeof this.props.toggle === 'function') {
-      this.props.onDismiss();
+  handleClosed() {
+    if (typeof this.props.onClosed === 'function') {
+      this.props.onClosed();
     } else {
       this.setState({ visible: false });
     }
@@ -91,7 +92,7 @@ FormAlert.propTypes = {
   extraClass: PropTypes.string,
   value: PropTypes.any,
   type: PropTypes.string,
-  onDismiss: PropTypes.func,
+  onClosed: PropTypes.func,
   closeLabel: PropTypes.string,
   visible: PropTypes.bool,
 };

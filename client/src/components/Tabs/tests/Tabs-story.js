@@ -6,12 +6,22 @@ import TabItem from 'components/Tabs/TabItem';
 
 storiesOf('Admin/Tabs', module)
   .add('Basic', () => (
-    <Tabs defaultActiveKey="Main" id="Root">
+    <Tabs id="Root">
       <TabItem name="Main" title="Main">
         My first tab content
       </TabItem>
       <TabItem name="Settings" title="Settings">
         My settings tab here
+      </TabItem>
+      <TabItem name="Disabled" title="Disabled item" disabled>
+        My settings tab here
+      </TabItem>
+    </Tabs>
+  ))
+  .add('Single tab instance', () => (
+    <Tabs id="Root">
+      <TabItem name="Main" title="Main">
+        Tab content for the only tab in tabset
       </TabItem>
     </Tabs>
   ));

@@ -2,6 +2,7 @@ import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { storiesOf } from '@storybook/react';
 import DatetimeField from 'components/DatetimeField/DatetimeField';
+import ValueTracker from 'stories/ValueTracker';
 
 const props = {
   name: 'MyField',
@@ -10,6 +11,9 @@ const props = {
 };
 
 storiesOf('Admin/DatetimeField', module)
+  .addDecorator((storyFn) => (
+    <ValueTracker>{storyFn()}</ValueTracker>
+  ))
   .add('Basic', () => (
     <DatetimeField
       {...props}

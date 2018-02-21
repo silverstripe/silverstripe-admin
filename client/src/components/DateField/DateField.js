@@ -21,24 +21,24 @@ class DateField extends TextField {
       i18n._t('Admin.FormatExample', 'Example: {format}'),
       { format: moment().endOf('month').format(localFormat) }
     );
-    const props = {};
 
-    let val = this.props.value;
+    const localised = (
+      !this.props.data.html5 ||
+      (this.hasNativeSupport() && this.props.data.html5)
+    );
+    const defaultValue = (localised)
+      ? this.props.value
+      : this.getLocalisedValue();
 
-    if (!this.props.data.html5 || (this.hasNativeSupport() && this.props.data.html5)) {
-      val = this.props.value;
-    } else {
-      val = this.getLocalisedValue();
-    }
-
-    Object.assign(props, super.getInputProps(), {
+    const props = {
+      ...super.getInputProps(),
       type: this.props.data.html5 ? 'date' : 'text',
       // `parse()` of redux-form `Field` should be used for parsing the
       // localised input value to iso format to pass to redux store but `Field`
       // is not accessible in this context.
-      defaultValue: val,
+      defaultValue,
       placeholder,
-    });
+    };
 
     // Reset value so `defaultValue` is used
     delete props.value;
@@ -72,12 +72,12 @@ class DateField extends TextField {
     }
 
     if (typeof this.props.onChange === 'function') {
-      this.triggerChange(isoValue);
+      this.triggerChange(event, isoValue);
     }
   }
 
-  triggerChange(value) {
-    this.props.onChange(value);
+  triggerChange(event, value) {
+    this.props.onChange(event, { id: this.props.id, value });
   }
 
   convertToIso(localDate) {

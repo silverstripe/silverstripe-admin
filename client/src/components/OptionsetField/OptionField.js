@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import fieldHolder from 'components/FieldHolder/FieldHolder';
-import { Input, Label } from 'reactstrap';
+import { FormGroup, Input, Label } from 'reactstrap';
+import classnames from 'classnames';
 
 class OptionField extends Component {
   constructor(props) {
@@ -15,24 +15,14 @@ class OptionField extends Component {
    * @returns {object} properties
    */
   getInputProps() {
-    const classNames = [
-      this.props.className,
-      this.props.extraClass,
-      'form-check',
-    ];
-
-    if (this.props.value) {
-      classNames.push('checked');
-    }
-
-    if (this.props.readOnly || this.props.disabled) {
-      // bootstrap4 specific
-      classNames.push('disabled');
-
-      if (this.props.disabled) {
-        classNames.push('option-field--disabled');
-      }
-    }
+    const classes = classnames({
+      [this.props.className]: true,
+      [this.props.extraClass]: true,
+      'form-check': true,
+      checked: this.props.value,
+      disabled: this.props.readOnly,
+      'option-field--disabled': this.props.readOnly || this.props.disabled,
+    });
 
     return {
       id: this.props.id,
@@ -40,7 +30,7 @@ class OptionField extends Component {
       name: this.props.name,
       disabled: this.props.disabled || this.props.readOnly,
       readOnly: this.props.readOnly,
-      className: classNames.join(' '),
+      className: classes,
       onChange: this.handleChange,
       checked: !!this.props.value,
       value: 1,
@@ -57,15 +47,18 @@ class OptionField extends Component {
       event.preventDefault();
       return;
     }
+
+    let callback = null;
     if (typeof this.props.onChange === 'function') {
-      // call onChange for `FormBuilder` to work
-      this.props.onChange(event, {
-        id: this.props.id,
-        value: event.target.checked ? 1 : 0,
-      });
+      // call onChange for `FormBuilder` and `redux-form` to work
+      callback = this.props.onChange;
     } else if (typeof this.props.onClick === 'function') {
       // for other React components which needs compatibility with this component
-      this.props.onClick(event, {
+      callback = this.props.onClick;
+    }
+
+    if (callback) {
+      callback(event, {
         id: this.props.id,
         value: event.target.checked ? 1 : 0,
       });
@@ -77,15 +70,13 @@ class OptionField extends Component {
       ? this.props.leftTitle
       : this.props.title;
 
-    const FieldHolder = fieldHolder(() =>
-      (<Label check>
-        <Input {...this.getInputProps()} />
-        {labelText}
-      </Label>)
-    );
-
     return (
-      <FieldHolder {...this.props} hideLabels check />
+      <FormGroup check>
+        <Label check>
+          <Input {...this.getInputProps()} />
+          {labelText}
+        </Label>
+      </FormGroup>
     );
   }
 }
@@ -105,8 +96,6 @@ OptionField.propTypes = {
   ]),
   readOnly: React.PropTypes.bool,
   disabled: React.PropTypes.bool,
-  rightTitle: React.PropTypes.any,
-  check: React.PropTypes.bool,
 };
 
 OptionField.defaultProps = {
@@ -115,9 +104,8 @@ OptionField.defaultProps = {
   className: '',
   type: 'radio',
   leftTitle: null,
-  check: true,
 };
 
 export { OptionField as Component };
 
-export default fieldHolder(OptionField);
+export default OptionField;

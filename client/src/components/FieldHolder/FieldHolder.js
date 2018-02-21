@@ -35,16 +35,12 @@ function fieldHolder(Field) {
     getHolderProps() {
       // The extraClass property is defined on both the holder and element
       // for legacy reasons (same behaviour as PHP rendering)
-      const classNames = [
-        'field',
-        this.props.extraClass,
-      ];
-      if (this.props.readOnly) {
-        classNames.push('readonly');
-      }
-
       return {
-        className: classNames.join(' '),
+        className: classnames({
+          field: true,
+          [this.props.extraClass]: true,
+          readonly: this.props.readOnly,
+        }),
         id: this.props.holderId,
       };
     }

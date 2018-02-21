@@ -1,0 +1,15 @@
+.iframe-dialog {
+  .modal-content {
+    min-height: 500px;
+  }
+
+  .modal-body {
+    flex: 1;
+    display: flex;
+  }
+}
+
+.iframe-dialog__iframe {
+  flex: 1;
+}
+

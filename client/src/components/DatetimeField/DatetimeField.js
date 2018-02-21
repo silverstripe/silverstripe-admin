@@ -31,14 +31,14 @@ class DatetimeField extends DateField {
     return modernizr.inputtypes['datetime-local'];
   }
 
-  triggerChange(value) {
+  triggerChange(event, value) {
     // html5 `datetime-local` input doesn't retain second digits if they're
     // `00` but that will failed the back-end validation. So add `:00` to the
     // value if they're missing.
     if (/^\d{4}-\d\d-\d\dT\d\d:\d\d$/.test(value)) {
-      this.props.onChange(`${value}:00`);
+      this.props.onChange(event, { id: this.props.id, value: `${value}:00` });
     } else {
-      this.props.onChange(value);
+      this.props.onChange(event, { id: this.props.id, value });
     }
   }
 

@@ -1,7 +1,8 @@
 import React from 'react';
-import OptionField from '../OptionsetField/OptionField';
+import OptionField from 'components/OptionsetField/OptionField';
 
-const CheckboxField = (props) =>
-  <OptionField {...props} type="checkbox" hideLabels />;
+const CheckboxField = (props) => (
+  <OptionField {...props} type="checkbox" />
+);
 
 export default CheckboxField;

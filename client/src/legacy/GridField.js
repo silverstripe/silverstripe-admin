@@ -215,13 +215,10 @@ $.entwine('ss', function($) {
       }
 
       // Set close action
-      modal.find('[data-dismiss]').on('click', function () {
-        closeModal();
-      });
-
-      $('.modal-backdrop').on('click', function () {
-        closeModal();
-      });
+      modal.find('[data-dismiss]').add('.modal-backdrop')
+        .on('click', function () {
+          closeModal();
+        });
 
       $(document).on('keydown', function(e) {
         if (e.keyCode === 27) { // Escape key
