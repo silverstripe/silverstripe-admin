@@ -108,7 +108,7 @@ class FormBuilder extends Component {
       ...props,
       ...props.input,
       // required as reference for positional components like PopoverField
-      container: this,
+      container: this.formDOM,
     };
     delete componentProps.input;
     const { identifier } = this.props;
@@ -341,9 +341,14 @@ class FormBuilder extends Component {
       persistentSubmitErrors,
       validate: this.validateForm,
       autoFocus,
+      setDOM: (formDOM) => { this.formDOM = formDOM; }
     };
 
-    return <BaseFormComponent {...props} />;
+    return (
+      <BaseFormComponent
+        {...props}
+      />
+    );
   }
 }
 

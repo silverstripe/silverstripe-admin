@@ -59,10 +59,10 @@
   .btn {
     padding-left: calc(#{$popover-padding} - 1px); // minus border
     padding-right: calc(#{$popover-padding} - 1px);
-    margin-left: calc(-#{$popover-padding} + 1px);
-    margin-right: calc(-#{$popover-padding} + 1px);
+    margin-left: calc(-.75rem + 1px);
+    margin-right: calc(-.75rem + 1px);
     display: block;
-    width: calc(100% + #{$popover-padding * 2} - 2px);
+    width: calc(100% + 1.5rem - 2px);
     text-align: left;
     border-radius: 0;
 

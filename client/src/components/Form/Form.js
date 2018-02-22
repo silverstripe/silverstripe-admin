@@ -56,7 +56,7 @@ class Form extends Component {
     return (
       <form
         {...formProps}
-        ref={(form) => { this.form = form; }}
+        ref={(form) => { this.form = form; this.props.setDOM(form); }}
       >
         {fields &&
           <fieldset>
@@ -78,6 +78,7 @@ class Form extends Component {
 
 Form.propTypes = {
   autoFocus: PropTypes.bool,
+  setDOM: PropTypes.func,
   valid: PropTypes.bool,
   actions: PropTypes.array,
   afterMessages: PropTypes.node,
@@ -98,6 +99,10 @@ Form.propTypes = {
     value: PropTypes.any,
     type: PropTypes.string,
   })),
+};
+
+Form.defaultProps = {
+  setDOM: () => null,
 };
 
 export default Form;

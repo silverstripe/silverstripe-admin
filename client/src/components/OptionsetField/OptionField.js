@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FormGroup, Input, Label } from 'reactstrap';
 import classnames from 'classnames';
+import castStringToElement from 'lib/castStringToElement';
 
 class OptionField extends Component {
   constructor(props) {
@@ -74,7 +75,7 @@ class OptionField extends Component {
       <FormGroup check>
         <Label check>
           <Input {...this.getInputProps()} />
-          {labelText}
+          {castStringToElement('span', labelText)}
         </Label>
       </FormGroup>
     );
