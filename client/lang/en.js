@@ -38,6 +38,9 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.VALIDATOR_MESSAGE_DATE": "{name} is not a proper date format.",
     "Admin.VALIDATOR_MESSAGE_ALPHANUMERIC": "{name} is not an alphanumeric value.",
     "Admin.VALIDATOR_MESSAGE_ALPHA": "{name} is not only letters.",
-    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} is not a valid value."
+    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} is not a valid value.",
+    "Admin.OWNED_WARNING_1": "You are unpublishing content that is being used in {count} other published section(s).",
+    "Admin.OWNED_WARNING_2": "This could cause a published page have missing components on the live site.",
+    "Admin.OWNED_WARNING_3": "Do you want to unpublish anyway?"
 });
 }
