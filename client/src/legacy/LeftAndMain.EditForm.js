@@ -442,13 +442,13 @@ $.entwine('ss', function($){
           i18n.inject(
             i18n._t(
               'Admin.OWNED_WARNING_1',
-              'You are unpublishing content that is being used in {count} other published section(s).',
+              'You are unpublishing content that is being used in {count} other published section(s).'
             ),
             { count: owners }
           ),
           i18n._t(
             'Admin.OWNED_WARNING_2',
-            'This could cause a published page have missing components on the live site.'
+            'This could cause a published page to have missing components on the live site.'
           ),
           i18n._t(
             'Admin.OWNED_WARNING_3',
