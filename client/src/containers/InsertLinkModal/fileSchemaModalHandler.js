@@ -65,9 +65,11 @@ FileSchemaHandler.propTypes = {
   actions: PropTypes.object,
 };
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, props) {
+  const actions = (props && props.actions) || {};
   return {
     actions: {
+      ...actions,
       schema: bindActionCreators(schemaActions, dispatch),
     },
   };
