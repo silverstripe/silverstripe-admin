@@ -107,6 +107,8 @@ class FormBuilder extends Component {
     const componentProps = {
       ...props,
       ...props.input,
+      // Redux prefers a single arg to onChange
+      onChange: (event, payload) => props.input.onChange(payload ? payload.value : event),
       // required as reference for positional components like PopoverField
       container: this.formDOM,
     };
