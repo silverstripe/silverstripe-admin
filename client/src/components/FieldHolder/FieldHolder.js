@@ -98,7 +98,10 @@ function fieldHolder(Field) {
       return castStringToElement(
         Label,
         labelText,
-        { className: 'form__field-label' }
+        {
+          className: 'form__field-label',
+          for: this.props.id,
+        }
       );
     }
 
@@ -115,7 +118,10 @@ function fieldHolder(Field) {
       return castStringToElement(
         Label,
         this.props.rightTitle,
-        { className: 'form__field-label' }
+        {
+          className: 'form__field-label',
+          for: this.props.id,
+        }
       );
     }
 
