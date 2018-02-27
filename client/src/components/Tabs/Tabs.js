@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
-import { Tab, Nav, NavItem } from 'react-bootstrap-ss';
+import { TabContent, Nav, NavItem, NavLink } from 'reactstrap';
+import classnames from 'classnames';
 
 class Tabs extends Component {
+  constructor(props) {
+    super(props);
+
+    this.toggle = this.toggle.bind(this);
+    this.renderTab = this.renderTab.bind(this);
+    this.state = {
+      activeTab: this.getDefaultActiveKey()
+    };
+  }
+
   /**
    * Returns props for the container component
    *
@@ -9,19 +20,13 @@ class Tabs extends Component {
    */
   getContainerProps() {
     const {
-      activeKey,
-      onSelect,
       className,
       extraClass,
       id,
       } = this.props;
-    const combinedClassName = `${className} ${extraClass}`;
 
     return {
-      activeKey,
-      className: combinedClassName,
-      defaultActiveKey: this.getDefaultActiveKey(),
-      onSelect,
+      className: classnames([className, extraClass]),
       id,
     };
   }
@@ -55,6 +60,14 @@ class Tabs extends Component {
     return active;
   }
 
+  toggle(activeTab) {
+    if (this.state.activeTab !== activeTab) {
+      this.setState({
+        activeTab,
+      });
+    }
+  }
+
   /**
    * Render an individual link for the tabset
    *
@@ -65,13 +78,21 @@ class Tabs extends Component {
     if (child.props.title === null) {
       return null;
     }
+    const classNames = classnames({
+      active: this.state.activeTab === child.props.name,
+      [child.props.tabClassName]: child.props.tabClassName,
+    });
+
     return (
-      <NavItem
-        eventKey={child.props.name}
-        disabled={child.props.disabled}
-        className={child.props.tabClassName}
-      >
-        {child.props.title}
+      <NavItem>
+        <NavLink
+          onClick={() => (this.toggle(child.props.name))}
+          disabled={child.props.disabled}
+          className={classNames}
+          href="#"
+        >
+          {child.props.title}
+        </NavLink>
       </NavItem>
     );
   }
@@ -90,7 +111,7 @@ class Tabs extends Component {
     }
 
     return (
-      <Nav bsStyle={this.props.bsStyle} role="tablist">
+      <Nav tabs role="tablist">
         {tabs}
       </Nav>
     );
@@ -101,14 +122,14 @@ class Tabs extends Component {
     const nav = this.renderNav();
 
     return (
-      <Tab.Container {...containerProps}>
+      <div {...containerProps}>
         <div className="wrapper">
-          { nav }
-          <Tab.Content animation={this.props.animation}>
+          {nav}
+          <TabContent activeTab={this.state.activeTab}>
             {this.props.children}
-          </Tab.Content>
+          </TabContent>
         </div>
-      </Tab.Container>
+      </div>
     );
   }
 }
@@ -120,7 +141,6 @@ Tabs.propTypes = {
 };
 
 Tabs.defaultProps = {
-  bsStyle: 'tabs',
   className: '',
   extraClass: '',
 };

@@ -12,8 +12,22 @@ class DateField extends TextField {
     return super.render();
   }
 
+  /**
+   * If this field is to be rendered as a HTML5 date input
+   *
+   * @return {Boolean}
+   */
+  asHTML5() {
+    return this.props.data.html5 && this.hasNativeSupport();
+  }
+
+  /**
+   * Check if this field has native html5 date support
+   *
+   * @return {Boolean}
+   */
   hasNativeSupport() {
-    return modernizr.inputtypes.date;
+    return this.props.modernizr.inputtypes.date;
   }
 
   getInputProps() {
@@ -21,24 +35,20 @@ class DateField extends TextField {
       i18n._t('Admin.FormatExample', 'Example: {format}'),
       { format: moment().endOf('month').format(localFormat) }
     );
-    const props = {};
 
-    let val = this.props.value;
-
-    if (!this.props.data.html5 || (this.hasNativeSupport() && this.props.data.html5)) {
-      val = this.props.value;
-    } else {
-      val = this.getLocalisedValue();
-    }
-
-    Object.assign(props, super.getInputProps(), {
-      type: this.props.data.html5 ? 'date' : 'text',
+    const defaultValue = this.asHTML5()
+      ? this.props.value
+      : this.getLocalisedValue();
+    const type = this.asHTML5() ? 'date' : 'text';
+    const props = {
+      ...super.getInputProps(),
+      type,
       // `parse()` of redux-form `Field` should be used for parsing the
       // localised input value to iso format to pass to redux store but `Field`
       // is not accessible in this context.
-      defaultValue: val,
+      defaultValue,
       placeholder,
-    });
+    };
 
     // Reset value so `defaultValue` is used
     delete props.value;
@@ -63,21 +73,20 @@ class DateField extends TextField {
     const enteredValue = event.target.value;
     let isoValue = '';
 
-    // When browser support input=date the date value is already in iso format
-    // and html5 is enabled
-    if (!this.props.data.html5 || (this.hasNativeSupport() && this.props.data.html5)) {
+    // When browser support input=date the date value is already in iso format and html5 is enabled
+    if (this.asHTML5()) {
       isoValue = enteredValue;
     } else {
       isoValue = this.convertToIso(enteredValue);
     }
 
     if (typeof this.props.onChange === 'function') {
-      this.triggerChange(isoValue);
+      this.triggerChange(event, isoValue);
     }
   }
 
-  triggerChange(value) {
-    this.props.onChange(value);
+  triggerChange(event, value) {
+    this.props.onChange(event, { id: this.props.id, value });
   }
 
   convertToIso(localDate) {
@@ -110,12 +119,14 @@ class DateField extends TextField {
 
 DateField.propTypes = {
   lang: React.PropTypes.string,
+  modernizr: React.PropTypes.object,
   data: React.PropTypes.shape({
-    html5: React.PropTypes.boolean,
+    html5: React.PropTypes.bool,
   }),
 };
 
 DateField.defaultProps = {
+  modernizr,
   data: {},
 };
 

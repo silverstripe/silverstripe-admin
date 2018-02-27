@@ -27,4 +27,4 @@ Generates a checkbox button group.
    * `title` (any): The displayed value for item.
    * `disabled` (boolean): Tells if item is disabled from selecting.
 
- _NOTE:_ For other properties, please refer to the [react-bootstrap Radio/Checkbox](https://react-bootstrap.github.io/components.html#forms-props-checkbox) documentation.
+ _NOTE:_ For other properties, please refer to the [reactstrap Radio/Checkbox](https://reactstrap.github.io/components/form/) documentation.

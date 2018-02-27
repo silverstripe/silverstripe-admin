@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { FormGroup, InputGroup, ControlLabel } from 'react-bootstrap-ss';
+import { FormGroup, InputGroup, InputGroupAddon, Label } from 'reactstrap';
 import castStringToElement from 'lib/castStringToElement';
 import classnames from 'classnames';
 
@@ -35,20 +35,12 @@ function fieldHolder(Field) {
     getHolderProps() {
       // The extraClass property is defined on both the holder and element
       // for legacy reasons (same behaviour as PHP rendering)
-      const classNames = [
-        'field',
-        this.props.extraClass,
-      ];
-      if (this.props.readOnly) {
-        classNames.push('readonly');
-      }
-
       return {
-        bsClass: this.props.bsClass,
-        bsSize: this.props.bsSize,
-        validationState: this.props.validationState,
-        className: classNames.join(' '),
-        controlId: this.props.id,
+        className: classnames({
+          field: true,
+          [this.props.extraClass]: true,
+          readonly: this.props.readOnly,
+        }),
         id: this.props.holderId,
       };
     }
@@ -104,9 +96,12 @@ function fieldHolder(Field) {
       }
 
       return castStringToElement(
-        ControlLabel,
+        Label,
         labelText,
-        { className: 'form__field-label' }
+        {
+          className: 'form__field-label',
+          for: this.props.id,
+        }
       );
     }
 
@@ -121,9 +116,12 @@ function fieldHolder(Field) {
       }
 
       return castStringToElement(
-        ControlLabel,
+        Label,
         this.props.rightTitle,
-        { className: 'form__field-label' }
+        {
+          className: 'form__field-label',
+          for: this.props.id,
+        }
       );
     }
 
@@ -151,11 +149,11 @@ function fieldHolder(Field) {
       return (
         <InputGroup>
           {prefix &&
-            <InputGroup.Addon>{prefix}</InputGroup.Addon>
+            <InputGroupAddon addonType="prepend">{prefix}</InputGroupAddon>
           }
           {field}
           {suffix &&
-            <InputGroup.Addon>{suffix}</InputGroup.Addon>
+            <InputGroupAddon addonType="append">{suffix}</InputGroupAddon>
           }
         </InputGroup>
       );

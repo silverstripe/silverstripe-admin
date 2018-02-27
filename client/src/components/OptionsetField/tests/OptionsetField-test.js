@@ -47,7 +47,8 @@ describe('OptionsetField', () => {
       setField.handleChange(event, { id: 'set-one', value: 1 });
 
       expect(setField.props.onChange).toBeCalledWith(
-        'one'
+        event,
+        { id: 'set', value: 'one' }
       );
     });
   });

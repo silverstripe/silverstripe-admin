@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Tab } from 'react-bootstrap-ss';
+import { Fade, TabPane } from 'reactstrap';
 
 class TabItem extends Component {
   /**
@@ -13,39 +13,32 @@ class TabItem extends Component {
       className,
       extraClass,
       disabled,
-      bsClass,
-      onEnter,
-      onEntering,
-      onEntered,
-      onExit,
-      onExiting,
-      onExited,
-      animation,
-      unmountOnExit,
       } = this.props;
 
     return {
-      eventKey: name,
+      tabId: name,
       className: `${className} ${extraClass}`,
       disabled,
-      bsClass,
-      onEnter,
-      onEntering,
-      onEntered,
-      onExit,
-      onExiting,
-      onExited,
-      animation,
-      unmountOnExit,
     };
+  }
+
+  /**
+   * Checks if the tab is the active tab
+   *
+   * @returns {bool} active
+   */
+  isActive() {
+    return this.context.activeTabId === this.props.name;
   }
 
   render() {
     const tabProps = this.getTabProps();
     return (
-      <Tab.Pane {...tabProps}>
-        {this.props.children}
-      </Tab.Pane>
+      <TabPane {...tabProps}>
+        <Fade in={this.isActive()}>
+          {this.props.children}
+        </Fade>
+      </TabPane>
     );
   }
 }
@@ -59,6 +52,10 @@ TabItem.propTypes = {
 TabItem.defaultProps = {
   className: '',
   extraClass: '',
+};
+
+TabItem.contextTypes = {
+  activeTabId: React.PropTypes.string
 };
 
 export default TabItem;

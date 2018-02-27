@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { FormGroup, Input, Label } from 'reactstrap';
+import classnames from 'classnames';
 import castStringToElement from 'lib/castStringToElement';
-import { Checkbox, Radio } from 'react-bootstrap-ss';
 
 class OptionField extends Component {
   constructor(props) {
@@ -15,31 +16,22 @@ class OptionField extends Component {
    * @returns {object} properties
    */
   getInputProps() {
-    const classNames = [
-      this.props.className,
-      this.props.extraClass,
-      'form-check',
-    ];
-
-    if (this.props.value) {
-      classNames.push('checked');
-    }
-
-    if (this.props.readOnly || this.props.disabled) {
-      // bootstrap4 specific
-      classNames.push('disabled');
-
-      if (this.props.disabled) {
-        classNames.push('option-field--disabled');
-      }
-    }
+    const classes = classnames({
+      [this.props.className]: true,
+      [this.props.extraClass]: true,
+      'form-check': true,
+      checked: this.props.value,
+      disabled: this.props.readOnly,
+      'option-field--disabled': this.props.readOnly || this.props.disabled,
+    });
 
     return {
       id: this.props.id,
+      type: this.props.type,
       name: this.props.name,
       disabled: this.props.disabled || this.props.readOnly,
       readOnly: this.props.readOnly,
-      className: classNames.join(' '),
+      className: classes,
       onChange: this.handleChange,
       checked: !!this.props.value,
       value: 1,
@@ -56,15 +48,18 @@ class OptionField extends Component {
       event.preventDefault();
       return;
     }
+
+    let callback = null;
     if (typeof this.props.onChange === 'function') {
-      // call onChange for `FormBuilder` to work
-      this.props.onChange(event, {
-        id: this.props.id,
-        value: event.target.checked ? 1 : 0,
-      });
+      // call onChange for `FormBuilder` and `redux-form` to work
+      callback = this.props.onChange;
     } else if (typeof this.props.onClick === 'function') {
       // for other React components which needs compatibility with this component
-      this.props.onClick(event, {
+      callback = this.props.onClick;
+    }
+
+    if (callback) {
+      callback(event, {
         id: this.props.id,
         value: event.target.checked ? 1 : 0,
       });
@@ -76,25 +71,14 @@ class OptionField extends Component {
       ? this.props.leftTitle
       : this.props.title;
 
-    // default and fallback to a Radio button
-    let Option = null;
-
-    switch (this.props.type) {
-      case 'checkbox':
-        Option = Checkbox;
-        break;
-      case 'radio':
-        Option = Radio;
-        break;
-      default:
-        throw new Error(`Invalid OptionField type: ${this.props.type}`);
-    }
-
-    const label = (typeof labelText === 'string')
-      ? { react: <span>{labelText}</span> }
-      : labelText;
-
-    return castStringToElement(Option, label, this.getInputProps());
+    return (
+      <FormGroup check>
+        <Label check>
+          <Input {...this.getInputProps()} />
+          {castStringToElement('span', labelText)}
+        </Label>
+      </FormGroup>
+    );
   }
 }
 
@@ -122,5 +106,7 @@ OptionField.defaultProps = {
   type: 'radio',
   leftTitle: null,
 };
+
+export { OptionField as Component };
 
 export default OptionField;

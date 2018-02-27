@@ -10,14 +10,14 @@ class InsertLinkModal extends Component {
     super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    if (!props.show) {
+    if (!props.isOpen) {
       props.setOverrides(null);
     }
   }
 
   componentWillReceiveProps(props) {
-    if ((props.show && !this.props.show) || (!props.show && this.props.show)) {
-      props.setOverrides(props.show ? props : null);
+    if ((props.isOpen && !this.props.isOpen) || (!props.isOpen && this.props.isOpen)) {
+      props.setOverrides(props.isOpen ? props : null);
     }
   }
 
@@ -31,7 +31,7 @@ class InsertLinkModal extends Component {
       this.props,
       {
         onSubmit: this.handleSubmit,
-        onHide: this.props.onHide,
+        onClosed: this.props.onClosed,
         showErrorMessage: true,
       }
     );
@@ -44,7 +44,7 @@ class InsertLinkModal extends Component {
   handleSubmit(data, action) {
     switch (action) {
       case 'action_cancel': {
-        this.props.onHide();
+        this.props.onClosed();
         break;
       }
       default: {
@@ -62,10 +62,10 @@ class InsertLinkModal extends Component {
 }
 
 InsertLinkModal.propTypes = {
-  show: PropTypes.bool,
+  isOpen: PropTypes.bool,
   schemaUrl: PropTypes.string,
   onInsert: PropTypes.func.isRequired,
-  onHide: PropTypes.func.isRequired,
+  onClosed: PropTypes.func.isRequired,
   setOverrides: PropTypes.func.isRequired,
   actions: PropTypes.object,
   requireLinkText: PropTypes.bool,

@@ -1,4 +1,5 @@
 import { configure } from '@storybook/react';
+import { setOptions } from '@storybook/addon-options';
 
 // dynamically load any `bundle.scss` or `Component-story.jsx` files
 const modules = [
@@ -17,4 +18,10 @@ function loadStories() {
   });
 }
 
+setOptions({
+  // disabling animations fixes some animation bugs that have been occurring
+  sidebarAnimations: false,
+  hierarchySeparator: /\/|\./,
+  hierarchyRootSeparator: /\/|\./,
+});
 configure(loadStories, module);

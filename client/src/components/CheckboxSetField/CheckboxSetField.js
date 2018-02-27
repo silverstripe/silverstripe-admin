@@ -32,9 +32,13 @@ class CheckboxSetField extends Component {
   getValues() {
     let values = this.props.value;
 
-    if (!Array.isArray(values) &&
-      (values || typeof values === 'string' || typeof values === 'number')) {
-      values = [values];
+    if (!Array.isArray(values)) {
+      if (typeof values === 'string') {
+        values = values.length ? [values] : [];
+      }
+      if (typeof values === 'number') {
+        values = [values];
+      }
     }
 
     if (values) {
@@ -52,7 +56,7 @@ class CheckboxSetField extends Component {
    * @returns {object} properties
    */
   getOptionProps(item, index) {
-    const oldValue = this.getValues();
+    const values = this.getValues();
     const key = this.getItemKey(item, index);
 
     return {
@@ -63,7 +67,7 @@ class CheckboxSetField extends Component {
       disabled: item.disabled || this.props.disabled,
       readOnly: this.props.readOnly,
       onChange: this.handleChange,
-      value: oldValue.indexOf(`${item.value}`) > -1,
+      value: values.indexOf(`${item.value}`) > -1,
       title: item.title,
       type: 'checkbox',
     };
@@ -80,7 +84,7 @@ class CheckboxSetField extends Component {
   handleChange(event, field) {
     if (typeof this.props.onChange === 'function') {
       const oldValue = this.getValues();
-      const newValue = this.props.source
+      const value = this.props.source
         .filter((item, index) => {
           if (this.getItemKey(item, index) === field.id) {
             return field.value === 1;
@@ -89,7 +93,7 @@ class CheckboxSetField extends Component {
         })
         .map((item) => `${item.value}`);
 
-      this.props.onChange(newValue);
+      this.props.onChange(event, { id: this.props.id, value });
     }
   }
 
@@ -100,7 +104,7 @@ class CheckboxSetField extends Component {
     return (
       <div>
         { this.props.source.map((item, index) => (
-          <OptionField {...this.getOptionProps(item, index)} />
+          <OptionField {...this.getOptionProps(item, index)} hideLabels />
         )) }
       </div>
     );

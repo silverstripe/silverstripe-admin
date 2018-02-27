@@ -206,14 +206,25 @@ $.entwine('ss', function($) {
         backdrop.appendTo(document.body);
       }
 
-      // Set close action
-      modal.find('[data-dismiss]').on('click', function() {
+      function closeModal() {
         backdrop.removeClass('show');
         modal.removeClass('show');
         setTimeout(function() {
           backdrop.remove();
         }, 150) // Simulate the bootstrap out-transition period
-      })
+      }
+
+      // Set close action
+      modal.find('[data-dismiss]').add('.modal-backdrop')
+        .on('click', function () {
+          closeModal();
+        });
+
+      $(document).on('keydown', function(e) {
+        if (e.keyCode === 27) { // Escape key
+          closeModal();
+        }
+      });
 
       // Fade each element in (use setTimeout to ensure initial render at opacity=0 works)
       setTimeout(function() {

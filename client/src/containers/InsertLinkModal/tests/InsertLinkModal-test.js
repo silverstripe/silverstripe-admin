@@ -15,7 +15,7 @@ describe('InsertLinkModal', () => {
   beforeEach(() => {
     props = {
       onInsert: jest.fn(),
-      onHide: jest.fn(),
+      onClosed: jest.fn(),
       setOverrides: jest.fn(),
     };
   });
@@ -67,10 +67,10 @@ describe('InsertLinkModal', () => {
       );
     });
 
-    it('should call onHide callback when the action is cancel', () => {
+    it('should call onClosed callback when the action is cancel', () => {
       modal.handleSubmit({}, 'action_cancel', submitFn);
 
-      expect(props.onHide).toBeCalled();
+      expect(props.onClosed).toBeCalled();
       expect(submitFn).not.toBeCalled();
     });
 

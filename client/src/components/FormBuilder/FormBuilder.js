@@ -107,8 +107,10 @@ class FormBuilder extends Component {
     const componentProps = {
       ...props,
       ...props.input,
+      // Redux prefers a single arg to onChange
+      onChange: (event, payload) => props.input.onChange(payload ? payload.value : event),
       // required as reference for positional components like PopoverField
-      container: this,
+      container: this.formDOM,
     };
     delete componentProps.input;
     const { identifier } = this.props;
@@ -163,7 +165,7 @@ class FormBuilder extends Component {
       );
 
       // Don't wrap structural or readonly fields, since they don't need connected fields.
-      // The redux-form connected fields also messed up react-bootstrap's tab handling.
+      // The redux-form connected fields also messed up reactstrap's tab handling.
       if (field.schemaType === 'Structural' || field.readOnly === true) {
         return this.buildComponent(props);
       }
@@ -341,9 +343,14 @@ class FormBuilder extends Component {
       persistentSubmitErrors,
       validate: this.validateForm,
       autoFocus,
+      setDOM: (formDOM) => { this.formDOM = formDOM; }
     };
 
-    return <BaseFormComponent {...props} />;
+    return (
+      <BaseFormComponent
+        {...props}
+      />
+    );
   }
 }
 
