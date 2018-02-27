@@ -21,6 +21,14 @@ describe('DatetimeField without html5 date time field support', () => {
       title: '',
       name: '',
       value: '',
+      data: {
+        html5: false,
+      },
+      modernizr: {
+        inputtypes: {
+          'datetime-local': false,
+        },
+      },
       onChange: jest.genMockFunction(),
     };
   });
@@ -102,7 +110,13 @@ describe('DatetimeField without html5 date time field support', () => {
         lang: 'en_NZ',
         value: '2017-01-05T02:23:22',
         data: {
-          html5: true,
+          ...props.data,
+          html5: true, // Note: support requested but denied
+        },
+        modernizr: {
+          inputtypes: {
+            'datetime-local': false,
+          },
         },
       };
 
@@ -113,7 +127,14 @@ describe('DatetimeField without html5 date time field support', () => {
       inputField = ReactTestUtils.findRenderedDOMComponentWithTag(datetimeField, 'input');
     });
 
+    it('should know it doesn\'t support html5', () => {
+      expect(datetimeField.props.data.html5).toBe(true);
+      expect(datetimeField.hasNativeSupport()).toBe(false);
+      expect(datetimeField.asHTML5()).toBe(false);
+    });
+
     it('should use localised format of date value in the input field', () => {
+      expect(inputField.type).toBe('text');
       expect(inputField.value).toBe('05/01/2017 2:23 AM');
     });
 
@@ -132,58 +153,81 @@ describe('DatetimeField without html5 date time field support', () => {
     });
   });
 
-
-  describe('DatetimeField with html5 date time field support', () => {
-    describe('Browser supports html5 date time input', () => {
-      beforeEach(() => {
-        props = {
-          ...props,
-          lang: 'en_NZ',
-          value: '2017-01-05T02:23:22',
-          data: {
-            html5: false,
+  describe('Browser supports html5 date input and field opts in', () => {
+    beforeEach(() => {
+      props = {
+        ...props,
+        lang: 'en_NZ',
+        value: '2017-01-05T02:23:22',
+        data: {
+          ...props.data,
+          html5: true,
+        },
+        modernizr: {
+          inputtypes: {
+            'datetime-local': true,
           },
-        };
+        },
+      };
 
-        datetimeField = ReactTestUtils.renderIntoDocument(
-          <DatetimeField {...props} />
-        );
+      datetimeField = ReactTestUtils.renderIntoDocument(
+        <DatetimeField {...props} />
+      );
 
-        inputField = ReactTestUtils.findRenderedDOMComponentWithTag(datetimeField, 'input');
-      });
-
-      it('should use localised format of date time value in the input field', () => {
-        expect(inputField.value).toBe('2017-01-05T02:23:22');
-      });
-
-      it('should pass iso format as entered in the input field', () => {
-        const value = '2018-02-05T03:34:33';
-        const event = { target: { value } };
-        datetimeField.handleChange(event);
-        expect(datetimeField.props.onChange).toBeCalledWith(event, { id: 'datetime', value: '2018-02-05T03:34:33' });
-      });
+      inputField = ReactTestUtils.findRenderedDOMComponentWithTag(datetimeField, 'input');
     });
 
-    describe('Browser supports html5 date time input but user has opt-outed', () => {
-      beforeEach(() => {
-        props = {
-          ...props,
-          lang: 'en_NZ',
-          value: 'Jan 1, 2017 2:56 PM',
-          data: {
-            html5: false,
+    it('should know it supports html5', () => {
+      expect(datetimeField.props.data.html5).toBe(true);
+      expect(datetimeField.hasNativeSupport()).toBe(true);
+      expect(datetimeField.asHTML5()).toBe(true);
+    });
+
+    it('should use iso format of date value in the input field', () => {
+      expect(inputField.type).toBe('datetime-local');
+      expect(inputField.value).toBe('2017-01-05T02:23:22');
+    });
+
+    it('should pass iso format as entered in the input field', () => {
+      const value = '2018-02-05T03:34:33';
+      const event = { target: { value } };
+      datetimeField.handleChange(event);
+      expect(datetimeField.props.onChange).toBeCalledWith(event, { id: 'datetime', value: '2018-02-05T03:34:33' });
+    });
+  });
+
+  describe('Browser supports html5 date time input but user has opt-outed', () => {
+    beforeEach(() => {
+      props = {
+        ...props,
+        lang: 'en_NZ',
+        value: '2017-01-05T02:23:22',
+        data: {
+          ...props.data,
+          html5: false,
+        },
+        modernizr: {
+          inputtypes: {
+            'datetime-local': true,
           },
-        };
-        datetimeField = ReactTestUtils.renderIntoDocument(
-          <DatetimeField {...props} />
-        );
+        },
+      };
+      datetimeField = ReactTestUtils.renderIntoDocument(
+        <DatetimeField {...props} />
+      );
 
-        inputField = ReactTestUtils.findRenderedDOMComponentWithTag(datetimeField, 'input');
-      });
+      inputField = ReactTestUtils.findRenderedDOMComponentWithTag(datetimeField, 'input');
+    });
 
-      it('should use whatever format passed to it', () => {
-        expect(inputField.value).toBe('Jan 1, 2017 2:56 PM');
-      });
+    it('should use localised format of date value in the input field', () => {
+      expect(inputField.type).toBe('text');
+      expect(inputField.value).toBe('05/01/2017 2:23 AM');
+    });
+
+    it('should suppress HTML input even if supported', () => {
+      expect(datetimeField.props.data.html5).toBe(false);
+      expect(datetimeField.hasNativeSupport()).toBe(true);
+      expect(datetimeField.asHTML5()).toBe(false);
     });
   });
 });

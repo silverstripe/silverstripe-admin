@@ -13,14 +13,12 @@ class DatetimeField extends DateField {
       i18n._t('Admin.FormatExample', 'Example: {format}'),
       { format: moment().endOf('month').format(localFormat) }
     );
-    return Object.assign(
-      {},
-      super.getInputProps(),
-      {
-        type: this.props.data.html5 ? 'datetime-local' : 'text',
-        placeholder,
-      }
-    );
+    const type = this.asHTML5() ? 'datetime-local' : 'text';
+    return {
+      ...super.getInputProps(),
+      type,
+      placeholder,
+    };
   }
 
   isMultiline() {
@@ -28,7 +26,7 @@ class DatetimeField extends DateField {
   }
 
   hasNativeSupport() {
-    return modernizr.inputtypes['datetime-local'];
+    return this.props.modernizr.inputtypes['datetime-local'];
   }
 
   triggerChange(event, value) {
@@ -70,12 +68,14 @@ class DatetimeField extends DateField {
 
 DatetimeField.propTypes = {
   lang: React.PropTypes.string,
+  modernizr: React.PropTypes.object,
   data: React.PropTypes.shape({
     html5: React.PropTypes.boolean,
   }),
 };
 
 DatetimeField.defaultProps = {
+  modernizr,
   data: {},
 };
 

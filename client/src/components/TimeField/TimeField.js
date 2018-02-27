@@ -13,13 +13,12 @@ class TimeField extends DateField {
       i18n._t('Admin.FormatExample', 'Example: {format}'),
       { format: moment().endOf('month').format(localFormat) }
     );
-    const props = {};
-    Object.assign(props, super.getInputProps());
-    Object.assign(props, {
-      type: this.props.data.html5 ? 'time' : 'text',
+    const type = this.asHTML5() ? 'time' : 'text';
+    return {
+      ...super.getInputProps(),
+      type,
       placeholder,
-    });
-    return props;
+    };
   }
 
   isMultiline() {
@@ -27,7 +26,7 @@ class TimeField extends DateField {
   }
 
   hasNativeSupport() {
-    return modernizr.inputtypes.time;
+    return this.props.modernizr.inputtypes.time;
   }
 
   convertToLocalised(isoTime) {
@@ -55,12 +54,14 @@ class TimeField extends DateField {
 
 TimeField.propTypes = {
   lang: React.PropTypes.string,
+  modernizr: React.PropTypes.object,
   data: React.PropTypes.shape({
     html5: React.PropTypes.boolean,
   }),
 };
 
 TimeField.defaultProps = {
+  modernizr,
   data: {},
 };
 
