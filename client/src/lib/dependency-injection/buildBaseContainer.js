@@ -200,8 +200,8 @@ const buildBaseContainer = () => ({
 
   /**
    * Creates a factory method for a service, incorporating all the given middleware.
-   * @param {mixed} service
-   * @param {array} middlewareMatches
+   * @param {string} key
+   * @param {Array} middlewareMatches
    * @returns {function}
    */
   getFactory(key, middlewareMatches) {

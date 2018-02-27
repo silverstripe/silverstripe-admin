@@ -155,7 +155,6 @@
   margin-bottom: 0;
   background-color: $input-disabled-bg;
   border: 1px solid darken($input-disabled-bg, 3%);
-  max-width: $input-max-width;
   @include border-radius($input-border-radius);
 
   &:focus {
@@ -195,7 +194,7 @@ input.radio {
   color: $text-muted;
 }
 
-.cms-edit-form:not(.AssetAdmin) .form__field-holder--stacked {
+.cms-edit-form .form__field-holder--stacked {
   .form__field-label {
     padding-left: 0;
     padding-right: 0;
@@ -326,9 +325,14 @@ input.radio {
 
     // HTML editor to expand to maximise to the space
     // Max-width to visually match other stacked fields + label
-    .form-group.htmleditor .form__field-holder {
-      @include make-col(12);
-      max-width: calc(#{$input-max-width} + 16.66667%);
+    .form-group.htmleditor {
+      .form__field-holder {
+        @include make-col(8);
+      }
+
+      &.stacked .form__field-holder {
+        @include make-col(10);
+      }
     }
 
     .form__field-extra-label {
@@ -342,6 +346,10 @@ input.radio {
       .form__field-holder {
         @include make-col(7);
       }
+    }
+
+    .form-group.htmleditor.stacked .form__field-holder {
+      @include make-col(9);
     }
 
     .form__field-extra-label {
@@ -386,6 +394,6 @@ input[type=month] {
 // @include form-responsive(turns inline, stops being full width, reduced portion of screen width is used)
 .form--inline,
 .ss-insert-link .form__fieldgroup,
-.cms-edit-form:not(.AssetAdmin) {
+.cms-edit-form {
   @include form-responsive(lg, xl, xxl);
 }
