@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import i18n from 'i18n';
 import PopoverField from 'components/PopoverField/PopoverField';
+import classnames from 'classnames';
 
 /**
  * Renders the right-hand collapsable change preview panel
@@ -19,8 +20,53 @@ class Preview extends Component {
     }
   }
 
-  render() {
-    let body = null;
+  /**
+   * Returns list of toolbar buttons
+   *
+   * @return {Array}
+   */
+  buildToolbarButtons() {
+    const toolbarButtons = [];
+    if (this.props.itemLinks && this.props.itemLinks.edit) {
+      const editUrl = this.props.itemLinks.edit.href;
+      toolbarButtons.push(
+        <a key="edit" href={editUrl} className="btn btn-outline-secondary font-icon-edit">
+          <span className="btn__title">{i18n._t('Admin.EDIT', 'Edit')}</span>
+        </a>
+      );
+    }
+    return toolbarButtons;
+  }
+
+  renderPopover() {
+    if (!this.props.moreActions || this.props.moreActions.length === 0) {
+      return null;
+    }
+    const props = {
+      data: { placement: 'top' },
+      id: this.props.moreActionsPopoverId,
+    };
+    return (
+      <PopoverField {...props}>
+        {this.props.moreActions}
+      </PopoverField>
+    );
+  }
+
+  renderBackButton() {
+    if (typeof this.props.onBack !== 'function') {
+      return null;
+    }
+    return (
+      <button
+        className="btn btn-secondary font-icon-left-open-big toolbar__back-button hidden-lg-up"
+        type="button"
+        onClick={this.handleBackClick}
+      >Back</button>
+    );
+  }
+
+  renderBody() {
     let previewUrl = null;
     let previewType = '';
 
@@ -35,67 +81,47 @@ class Preview extends Component {
       }
     }
 
-    // Build actions
-    let editUrl = null;
-    const editKey = 'edit';
-    const toolbarButtons = [];
-    if (this.props.itemLinks && this.props.itemLinks.edit) {
-      editUrl = this.props.itemLinks.edit.href;
-      toolbarButtons.push(
-        <a key={editKey} href={editUrl} className="btn btn-outline-secondary font-icon-edit">
-          <span className="btn__title">{ i18n._t('Admin.EDIT', 'Edit') }</span>
-        </a>
-      );
-    }
-
-    // Build body
+    // No item available
     if (!this.props.itemId) {
-      body = (
+      return (
         <div className="preview__overlay">
           <h3 className="preview__overlay-text">No preview available.</h3>
         </div>
       );
-    } else if (!previewUrl) {
-      body = (
+    }
+
+    // No preview url
+    if (!previewUrl) {
+      return (
         <div className="preview__overlay">
           <h3 className="preview__overlay-text">There is no preview available for this item.</h3>
         </div>
       );
-    } else if (previewType && previewType.indexOf('image/') === 0) {
-      body = (
+    }
+
+    // Show image preview
+    if (previewType && previewType.indexOf('image/') === 0) {
+      return (
         <div className="preview__file-container panel--scrollable">
           <img alt={previewUrl} className="preview__file--fits-space" src={previewUrl} />
         </div>
       );
-    } else {
-      body = <iframe className="flexbox-area-grow preview__iframe" src={previewUrl} />;
     }
 
-    const backButton = (typeof this.props.onBack === 'function') && (
-      <button
-        className="btn btn-secondary font-icon-left-open-big toolbar__back-button hidden-lg-up"
-        type="button"
-        onClick={this.handleBackClick}
-      >Back</button>
-    );
+    // Show iframe preview
+    return <iframe className="flexbox-area-grow preview__iframe" src={previewUrl} />;
+  }
 
-    const moreActions = this.props.moreActions && this.props.moreActions.length > 0
-      ? (
-        <PopoverField data={{ placement: 'top' }} id="campaign-preview-popver">
-          {this.props.moreActions}
-        </PopoverField>
-      )
-      : null;
-
-    // Combine elements
+  render() {
+    const className = classnames('flexbox-area-grow fill-height preview', this.props.className);
     return (
-      <div className="flexbox-area-grow fill-height preview campaign-admin__campaign-preview">
-        {body}
+      <div className={className}>
+        {this.renderBody()}
         <div className="toolbar toolbar--south">
-          { backButton }
+          { this.renderBackButton() }
           <div className="btn-toolbar">
-            {toolbarButtons}
-            {moreActions}
+            {this.buildToolbarButtons()}
+            {this.renderPopover()}
           </div>
         </div>
       </div>
@@ -108,6 +134,7 @@ Preview.propTypes = {
   itemId: React.PropTypes.number,
   onBack: React.PropTypes.func,
   moreActions: React.PropTypes.arrayOf(React.PropTypes.element),
+  moreActionsPopoverId: React.PropTypes.string,
 };
 
 export default Preview;
