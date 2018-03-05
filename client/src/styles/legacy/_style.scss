@@ -955,13 +955,16 @@ body.cms {
   &.class-HomePage {
     background-position: 0 -48px;
   }
-  &.class-RedirectorPage {
+  &.class-RedirectorPage,
+  &.class-SilverStripe_CMS_Model_RedirectorPage {
     background-position: 0 -16px;
   }
-  &.class-VirtualPage {
+  &.class-VirtualPage,
+  &.class-SilverStripe_CMS_Model_VirtualPage {
     background-position: 0 -32px;
   }
-  &.class-ErrorPage {
+  &.class-ErrorPage,
+  &.class-SilverStripe_ErrorPage_ErrorPage {
     background-position: 0 -112px;
   }
 }
