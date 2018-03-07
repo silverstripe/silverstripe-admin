@@ -30,7 +30,8 @@
 
   > fieldset,
   .btn-toolbar {
-    padding: 20px;
+    min-height: $toolbar-total-height;
+    padding: $spacer * .625 $grid-gutter-width-half;
   }
 }
 
