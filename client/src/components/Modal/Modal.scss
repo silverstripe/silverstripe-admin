@@ -1,11 +1,19 @@
 // Based on bootstrap modal
 .modal-dialog {
-  height: calc(100% - #{$toolbar-total-height}); // IE10 fix
+  // IE10 fix
+  height: calc(100% - #{$toolbar-total-height});
+
+  @include media-breakpoint-down(sm) {
+    height: calc(100% - 1rem);
+    width: calc(100% - .5rem);
+    margin: 0 auto;
+  }
 }
 
 .modal-content {
   height: auto;
   min-height: 0;
+  max-height: 100%;
   display: flex;
   flex-direction: column;
   overflow: visible;
@@ -20,7 +28,7 @@
 // Modal header
 // Top section of the modal w/ title and dismiss
 .modal-header {
-  // height: $toolbar-total-height;
+  min-height: $toolbar-total-height;
 
   // Close icon
   .close {
@@ -53,6 +61,14 @@
 
 .modal-body {
   min-height: 200px;
+  display: flex;
+
+  &>.form,
+  &>div {
+    flex: 1;
+    height: auto;
+    width: 100%;
+  }
 }
 
 
