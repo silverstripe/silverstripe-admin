@@ -26,4 +26,4 @@ fieldHolder(TextField)
    "html": "<span>My html</span>"
  }
  ```
- _NOTE2:_ For other properties, please refer to the [react-bootstrap FormGroup](https://react-bootstrap.github.io/components.html#forms-props-form-group) documentation.
+ _NOTE2:_ For other properties, please refer to the [reactstrap FormGroup](https://reactstrap.github.io/components/form/) documentation.

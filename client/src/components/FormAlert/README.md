@@ -16,8 +16,8 @@ Generates a bootstrap alert box, with state closing handled optionally.
    * warning
    * danger
    * info
- * `onDismiss` (function): For manual handling of showing and hiding the message, used in conjunction with `visible`.
+ * `onClosed` (function): For manual handling of showing and hiding the message, used in conjunction with `visible`.
  * `visible` (boolean): Manual set whether the message is hidden or shown.
  * `closeLabel` (string): The label for the screen reader close button.
 
- _NOTE:_ For other properties, please refer to the [react-bootstrap Alert](https://react-bootstrap.github.io/components.html#alert-props) documentation.
+ _NOTE:_ For other properties, please refer to the [reactstrap Alert](https://reactstrap.github.io/components/alerts/) documentation.

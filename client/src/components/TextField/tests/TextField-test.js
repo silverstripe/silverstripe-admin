@@ -48,7 +48,7 @@ describe('TextField', () => {
       const newProps = textField.getInputProps();
 
       expect(textField.isMultiline()).toBeFalsy();
-      expect(newProps.componentClass).toBe('input');
+      expect(newProps.type).toBe('text');
     });
 
     it('should be multi-line for three rows', () => {
@@ -60,7 +60,7 @@ describe('TextField', () => {
       const newProps = textField.getInputProps();
 
       expect(textField.isMultiline()).toBeTruthy();
-      expect(newProps.componentClass).toBe('textarea');
+      expect(newProps.type).toBe('textarea');
     });
   });
 

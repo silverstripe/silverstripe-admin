@@ -59,7 +59,7 @@ class OptionsetField extends Component {
         const sourceItem = this.props.source
           .find((item, index) => this.getItemKey(item, index) === field.id);
 
-        this.props.onChange(sourceItem.value);
+        this.props.onChange(event, { id: this.props.id, value: sourceItem.value });
       }
     }
   }
@@ -71,7 +71,7 @@ class OptionsetField extends Component {
     return (
       <div>
         { this.props.source.map((item, index) => (
-          <OptionField {...this.getOptionProps(item, index)} />
+          <OptionField {...this.getOptionProps(item, index)} hideLabels />
         )) }
       </div>
     );

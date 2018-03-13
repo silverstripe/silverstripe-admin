@@ -15,21 +15,29 @@ import ReactTestUtils from 'react-addons-test-utils';
 import { Component as TimeField } from '../TimeField';
 
 describe('TimeField without html5 time field support', () => {
+  let timeField = null;
+  let inputField = null;
   let props = null;
 
   beforeEach(() => {
     props = {
+      id: 'time',
       title: '',
       name: '',
       value: '',
+      data: {
+        html5: false,
+      },
+      modernizr: {
+        inputtypes: {
+          time: false,
+        },
+      },
       onChange: jest.genMockFunction(),
     };
   });
 
   describe('onChange()', () => {
-    let timeField = null;
-    let inputField = null;
-
     beforeEach(() => {
       timeField = ReactTestUtils.renderIntoDocument(
         <TimeField {...props} />
@@ -44,8 +52,6 @@ describe('TimeField without html5 time field support', () => {
   });
 
   describe('convertToIso()', () => {
-    let timeField = null;
-
     beforeEach(() => {
       timeField = ReactTestUtils.renderIntoDocument(
         <TimeField {...props} />
@@ -68,8 +74,6 @@ describe('TimeField without html5 time field support', () => {
   });
 
   describe('convertToLocalised()', () => {
-    let timeField = null;
-
     beforeEach(() => {
       timeField = ReactTestUtils.renderIntoDocument(
         <TimeField {...props} />
@@ -86,13 +90,13 @@ describe('TimeField without html5 time field support', () => {
   });
 
   describe('getLocalisedValue()', () => {
-    let timeField = null;
-    const modProps = {};
-    Object.assign(modProps, props, { value: '04:22:39' });
-
     beforeEach(() => {
+      props = {
+        ...props,
+        value: '04:22:39'
+      };
       timeField = ReactTestUtils.renderIntoDocument(
-        <TimeField {...modProps} />
+        <TimeField {...props} />
       );
     });
 
@@ -102,39 +106,127 @@ describe('TimeField without html5 time field support', () => {
   });
 
   describe('Browser doesn\'t support html5 time input', () => {
-    let timeField = null;
-    let inputField = null;
-    const modProps = {};
-    Object.assign(modProps, props, {
-      value: '23:01:23',
-      onChange: jest.genMockFunction(),
-      data: {
-        html5: true,
-      },
-    });
-
     beforeEach(() => {
+      props = {
+        ...props,
+        value: '23:01:23',
+        data: {
+          ...props.data,
+          html5: true, // Note: support requested but denied
+        },
+        modernizr: {
+          inputtypes: {
+            time: false,
+          },
+        },
+      };
       timeField = ReactTestUtils.renderIntoDocument(
-        <TimeField {...modProps} />
+        <TimeField {...props} />
       );
 
       inputField = ReactTestUtils.findRenderedDOMComponentWithTag(timeField, 'input');
     });
 
+    it('should know it doesn\'t support html5', () => {
+      expect(timeField.props.data.html5).toBe(true);
+      expect(timeField.hasNativeSupport()).toBe(false);
+      expect(timeField.asHTML5()).toBe(false);
+    });
+
     it('should use localised form of time value in the input field', () => {
+      expect(inputField.type).toBe('text');
       expect(inputField.value).toBe('11:01 PM');
     });
 
     it('should pass iso format instead of localised format', () => {
-      inputField.value = '12:22 AM';
-      ReactTestUtils.Simulate.change(inputField);
-      expect(timeField.props.onChange).toBeCalledWith('00:22:00');
+      const value = '12:22 AM';
+      const event = { target: { value } };
+      timeField.handleChange(event);
+      expect(timeField.props.onChange).toBeCalledWith(event, { id: 'time', value: '00:22:00' });
     });
 
     it('should pass "" if the input value is not valid', () => {
-      inputField.value = 'invalid value';
-      ReactTestUtils.Simulate.change(inputField);
-      expect(timeField.props.onChange).toBeCalledWith('');
+      const value = 'invalid value';
+      const event = { target: { value } };
+      timeField.handleChange(event);
+      expect(timeField.props.onChange).toBeCalledWith(event, { id: 'time', value: '' });
+    });
+  });
+
+  describe('Browser supports html5 date input and field opts in', () => {
+    beforeEach(() => {
+      props = {
+        ...props,
+        value: '23:01:23',
+        data: {
+          ...props.data,
+          html5: true,
+        },
+        modernizr: {
+          inputtypes: {
+            time: true,
+          },
+        },
+      };
+
+      timeField = ReactTestUtils.renderIntoDocument(
+        <TimeField {...props} />
+      );
+
+      inputField = ReactTestUtils.findRenderedDOMComponentWithTag(timeField, 'input');
+    });
+
+    it('should know it supports html5', () => {
+      expect(timeField.props.data.html5).toBe(true);
+      expect(timeField.hasNativeSupport()).toBe(true);
+      expect(timeField.asHTML5()).toBe(true);
+    });
+
+    it('should use iso format of time value in the input field', () => {
+      expect(inputField.type).toBe('time');
+      expect(inputField.value).toBe('23:01:23');
+    });
+
+    it('should pass iso format as entered in the input', () => {
+      const value = '12:22:33';
+      const event = { target: { value } };
+      timeField.handleChange(event);
+      expect(timeField.props.onChange).toBeCalledWith(event, { id: 'time', value: '12:22:33' });
+    });
+  });
+
+  describe('Browser supports html5 time input but user has opt-outed', () => {
+    beforeEach(() => {
+      props = {
+        ...props,
+        value: '23:01:23',
+        data: {
+          ...props.data,
+          html5: false,
+        },
+        modernizr: {
+          inputtypes: {
+            time: true,
+          },
+        },
+      };
+
+      timeField = ReactTestUtils.renderIntoDocument(
+        <TimeField {...props} />
+      );
+
+      inputField = ReactTestUtils.findRenderedDOMComponentWithTag(timeField, 'input');
+    });
+
+    it('should use localised format of date value in the input field', () => {
+      expect(inputField.type).toBe('text');
+      expect(inputField.value).toBe('11:01 PM');
+    });
+
+    it('should suppress HTML input even if supported', () => {
+      expect(timeField.props.data.html5).toBe(false);
+      expect(timeField.hasNativeSupport()).toBe(true);
+      expect(timeField.asHTML5()).toBe(false);
     });
   });
 });

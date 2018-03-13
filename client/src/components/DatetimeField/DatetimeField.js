@@ -13,14 +13,12 @@ class DatetimeField extends DateField {
       i18n._t('Admin.FormatExample', 'Example: {format}'),
       { format: moment().endOf('month').format(localFormat) }
     );
-    return Object.assign(
-      {},
-      super.getInputProps(),
-      {
-        type: this.props.data.html5 ? 'datetime-local' : 'text',
-        placeholder,
-      }
-    );
+    const type = this.asHTML5() ? 'datetime-local' : 'text';
+    return {
+      ...super.getInputProps(),
+      type,
+      placeholder,
+    };
   }
 
   isMultiline() {
@@ -28,17 +26,17 @@ class DatetimeField extends DateField {
   }
 
   hasNativeSupport() {
-    return modernizr.inputtypes['datetime-local'];
+    return this.props.modernizr.inputtypes['datetime-local'];
   }
 
-  triggerChange(value) {
+  triggerChange(event, value) {
     // html5 `datetime-local` input doesn't retain second digits if they're
     // `00` but that will failed the back-end validation. So add `:00` to the
     // value if they're missing.
     if (/^\d{4}-\d\d-\d\dT\d\d:\d\d$/.test(value)) {
-      this.props.onChange(`${value}:00`);
+      this.props.onChange(event, { id: this.props.id, value: `${value}:00` });
     } else {
-      this.props.onChange(value);
+      this.props.onChange(event, { id: this.props.id, value });
     }
   }
 
@@ -70,12 +68,14 @@ class DatetimeField extends DateField {
 
 DatetimeField.propTypes = {
   lang: React.PropTypes.string,
+  modernizr: React.PropTypes.object,
   data: React.PropTypes.shape({
     html5: React.PropTypes.boolean,
   }),
 };
 
 DatetimeField.defaultProps = {
+  modernizr,
   data: {},
 };
 

@@ -1,12 +1,25 @@
 import React, { PropTypes, Component } from 'react';
-import { Modal } from 'react-bootstrap-ss';
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import classnames from 'classnames';
 
 class IframeDialog extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleClosed = this.handleClosed.bind(this);
+  }
+
+  handleClosed() {
+    if (typeof this.props.onClosed === 'function') {
+      this.props.onClosed();
+    }
+  }
+
   renderHeader() {
     const title = this.props.title;
     if (title) {
       return (
-        <Modal.Header><Modal.Title>{title}</Modal.Title></Modal.Header>
+        <ModalHeader toggle={this.handleClosed}>{title}</ModalHeader>
       );
     }
     return null;
@@ -15,20 +28,20 @@ class IframeDialog extends Component {
   render() {
     return (
       <Modal
-        show={this.props.show}
-        onHide={this.props.onHide}
-        className={this.props.className}
-        dialogClassName={this.props.dialogClassName}
+        isOpen={this.props.isOpen}
+        onClosed={this.handleClosed}
+        className={classnames('iframe-dialog', this.props.className)}
+        modalClassName={this.props.modalClassName}
       >
         {this.renderHeader()}
-        <Modal.Body className={this.props.bodyClassName}>
+        <ModalBody className={this.props.bodyClassName}>
           <iframe
             id={this.props.iframeId}
-            className={this.props.iframeClassName}
+            className={classnames('iframe-dialog__iframe', this.props.iframeClassName)}
             src={this.props.url}
             frameBorder={0}
           />
-        </Modal.Body>
+        </ModalBody>
       </Modal>
     );
   }
@@ -36,10 +49,10 @@ class IframeDialog extends Component {
 
 IframeDialog.propTypes = {
   url: PropTypes.string.isRequired,
-  onHide: PropTypes.func,
-  show: PropTypes.bool,
+  onClosed: PropTypes.func,
+  isOpen: PropTypes.bool,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  dialogClassName: PropTypes.string,
+  modalClassName: PropTypes.string,
   iframeId: PropTypes.string,
   iframeClassName: PropTypes.string,
   className: PropTypes.string,
@@ -47,7 +60,7 @@ IframeDialog.propTypes = {
 };
 
 IframeDialog.defaultProps = {
-  show: false,
+  isOpen: false,
   title: null,
 };
 

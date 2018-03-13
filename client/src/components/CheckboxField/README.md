@@ -19,4 +19,4 @@ Generates a single checkbox element.
  * `readOnly` (boolean): Whether this field is read only.
  * `disabled` (boolean): Whether this field is disabled.
 
- _NOTE:_ For other properties, please refer to the [react-bootstrap Radio/Checkbox](https://react-bootstrap.github.io/components.html#forms-props-checkbox) documentation.
+ _NOTE:_ For other properties, please refer to the [reactstrap Radio/Checkbox](https://reactstrap.github.io/components/form/) documentation.

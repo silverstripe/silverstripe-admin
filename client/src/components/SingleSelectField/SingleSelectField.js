@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import i18n from 'i18n';
-import { FormControl } from 'react-bootstrap-ss';
+import { Input } from 'reactstrap';
 
 class SingleSelectField extends Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class SingleSelectField extends Component {
       ? label
       : this.props.value;
 
-    return <FormControl.Static {...this.getInputProps()}>{label}</FormControl.Static>;
+    return <Input plaintext {...this.getInputProps()}>{label}</Input>;
   }
 
   /**
@@ -46,7 +46,7 @@ class SingleSelectField extends Component {
     }
 
     return (
-      <FormControl {...this.getInputProps()}>
+      <Input type="select" {...this.getInputProps()}>
         { options.map((item, index) => {
           const key = `${this.props.name}-${item.value || `empty${index}`}`;
 
@@ -56,7 +56,7 @@ class SingleSelectField extends Component {
             </option>
           );
         }) }
-      </FormControl>
+      </Input>
     );
   }
 
@@ -67,7 +67,6 @@ class SingleSelectField extends Component {
    */
   getInputProps() {
     const props = {
-      bsClass: this.props.bsClass,
       // @TODO Prevent entwine chosen applying chosen
       className: `${this.props.className} ${this.props.extraClass} no-chosen`,
       id: this.props.id,
@@ -79,7 +78,6 @@ class SingleSelectField extends Component {
       Object.assign(props, {
         onChange: this.handleChange,
         value: this.props.value,
-        componentClass: 'select',
       });
     }
 

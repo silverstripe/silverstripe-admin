@@ -1,13 +1,19 @@
 import React from 'react';
-import OptionField from '../OptionsetField/OptionField';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
+import OptionField from 'components/OptionsetField/OptionField';
 
-const CheckboxField = (props) => {
-  // Build standard checkbox with fieldholder
-  const FieldHolder = fieldHolder(OptionField);
+// Build inner field
+const CheckboxField = (props) => (
+  <OptionField {...props} type="checkbox" />
+);
 
+// Build holder
+const CheckboxWithHolder = (props) => {
+  const FieldHolder = fieldHolder(CheckboxField);
   // set to not show field holder labels, as checkbox already generates a label
-  return <FieldHolder {...props} type="checkbox" hideLabels />;
+  return <FieldHolder {...props} hideLabels />;
 };
 
-export default CheckboxField;
+export { CheckboxField as Component };
+
+export default CheckboxWithHolder;

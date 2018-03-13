@@ -21,4 +21,4 @@ Generates a CSV list of values inside a Readonly styled box.
    * `value` (string|number): The value for item.
    * `title` (any): The displayed value for item.
 
- _NOTE:_ For other properties, please refer to the [react-bootstrap FormControl.Static](https://react-bootstrap.github.io/components.html#forms-props-form-control-static) documentation.
+ _NOTE:_ For other properties, please refer to the [reactstrap Input](https://reactstrap.github.io/components/form/) documentation.

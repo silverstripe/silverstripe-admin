@@ -7,7 +7,6 @@ import ValueTracker from 'stories/ValueTracker';
 const props = {
   name: 'MyField',
   title: 'Field title',
-  value: 'Default value',
   placeholder: 'Placeholder text',
 };
 
@@ -20,9 +19,16 @@ storiesOf('Admin/TextField', module)
       {...props}
     />
   ))
+  .add('Textarea', () => (
+    <TextField
+      {...props}
+      data={{ rows: 4, columns: 40 }}
+    />
+  ))
   .add('All titles', () => (
     <TextField
       {...props}
+      value="Default text"
       rightTitle="Right title"
       description="My description"
       data={{ prefix: 'prefix', suffix: 'suffix' }}
@@ -31,7 +37,8 @@ storiesOf('Admin/TextField', module)
   .add('Validation failed', () => (
     <TextField
       {...props}
+      value="Default text"
       description="Field description"
-      message={{ value: 'Validation message' }}
+      message={{ value: 'Validation message', type: 'error' }}
     />
   ));

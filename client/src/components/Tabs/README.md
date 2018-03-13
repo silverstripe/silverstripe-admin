@@ -2,7 +2,7 @@
 
 For separating content into tabs without the need for separate pages.
 
-This extends from `react-bootstrap` with similar expected behaviours, only difference is that when
+This extends from `reactstrap` with similar expected behaviours, only difference is that when
 there is only one tab (or none) in the Tabset, then only the content will show without the
 clickable tab.
 
@@ -32,4 +32,4 @@ clickable tab.
  * `extraClass` (string): Extra classes the component should have.
  * `tabClassName` (string): Class to use for the tab.
 
- _NOTE:_ For other properties, please refer to the [react-bootstrap Tabs](https://react-bootstrap.github.io/components.html#tabs-props) documentation.
+ _NOTE:_ For other properties, please refer to the [reactstrap Tabs](https://reactstrap.github.io/components/tabs/) documentation.

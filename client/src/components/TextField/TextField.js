@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
-import { FormControl } from 'react-bootstrap-ss';
+import { Input } from 'reactstrap';
 
 class TextField extends Component {
   constructor(props) {
@@ -16,7 +16,6 @@ class TextField extends Component {
    */
   getInputProps() {
     const props = {
-      bsClass: this.props.bsClass,
       className: `${this.props.className} ${this.props.extraClass}`,
       id: this.props.id,
       name: this.props.name,
@@ -34,13 +33,12 @@ class TextField extends Component {
 
     if (this.isMultiline()) {
       Object.assign(props, {
-        componentClass: 'textarea',
+        type: 'textarea',
         rows: this.props.data.rows,
         cols: this.props.data.columns,
       });
     } else {
       Object.assign(props, {
-        componentClass: 'input',
         type: this.props.type ? this.props.type : null,
       });
     }
@@ -75,7 +73,7 @@ class TextField extends Component {
   }
 
   render() {
-    return <FormControl {...this.getInputProps()} />;
+    return <Input {...this.getInputProps()} />;
   }
 }
 

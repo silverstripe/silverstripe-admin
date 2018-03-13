@@ -158,13 +158,15 @@
 .btn-outline-primary {
   border-color: lighten($btn-primary-border, 10%);
 
-  &:hover,
-  &:active,
-  &:focus {
-    color: darken($btn-primary-bg, 10%);
-    background-image: none;
-    background-color: lighten($btn-primary-bg, 50%);
-    border-color: $btn-primary-border;
+  &:not(:disabled):not(.disabled) {
+    &:hover,
+    &:active,
+    &:focus {
+      color: darken($btn-primary-bg, 10%);
+      background-image: none;
+      background-color: lighten($btn-primary-bg, 50%);
+      border-color: $btn-primary-border;
+    }
   }
 
   .btn__circle {
@@ -195,14 +197,16 @@
     }
   }
 
-  &:hover,
-  &:focus,
-  &.focus,
-  &:active,
-  &.active {
-    background-color: $btn-secondary-bg;
-    border-color: $btn-secondary-bg;
-    color: $text-muted;
+  &:not(:disabled):not(.disabled) {
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active {
+      background-color: $btn-secondary-bg;
+      border-color: $btn-secondary-bg;
+      color: $text-muted;
+    }
   }
 }
 
@@ -210,14 +214,16 @@
   color: $btn-secondary-color;
   border-color: $border-color;
 
-  &:hover,
-  &:focus,
-  &:active,
-  &:active:focus,
-  &:active:hover {
-    background-color: $gray-200;
-    color: $btn-secondary-color;
-    border-color: $border-color-dark;
+  &:not(:disabled):not(.disabled) {
+    &:hover,
+    &:focus,
+    &:active,
+    &:active:focus,
+    &:active:hover {
+      background-color: $gray-200;
+      color: $btn-secondary-color;
+      border-color: $border-color-dark;
+    }
   }
 
   .btn__circle {

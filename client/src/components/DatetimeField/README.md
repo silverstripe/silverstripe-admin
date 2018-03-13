@@ -20,4 +20,4 @@ Generates an editable date time field.
  * `disabled` (boolean): Whether this field is disabled.
  * `lang` (string): Locale string. E.g. `en_NZ`.
 
- _NOTE:_ For other properties, please refer to the [react-bootstrap FormControl](https://react-bootstrap.github.io/components.html#forms-props-form-control) documentation.
+ _NOTE:_ For other properties, please refer to the [reactstrap FormControl](https://reactstrap.github.io/components/form/) documentation.
