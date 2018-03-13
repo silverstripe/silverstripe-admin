@@ -642,13 +642,16 @@ a .jstree-pageicon {
   li.class-HomePage > &{
     background-position: 0 -48px;
   }
-  li.class-RedirectorPage > & {
+  li.class-RedirectorPage > &,
+  li.class-SilverStripe_CMS_Model_RedirectorPage > & {
     background-position: 0 -16px;
   }
-  li.class-VirtualPage > & {
+  li.class-VirtualPage > &,
+  li.class-SilverStripe_CMS_Model_VirtualPage > & {
     background-position: 0 -32px;
   }
-  li.class-ErrorPage > & {
+  li.class-ErrorPage > &,
+  li.class-SilverStripe_ErrorPage_ErrorPage > & {
     background-position: 0 -112px;
   }
 }
