@@ -23,6 +23,20 @@ class PopoverField extends Component {
     return placement || 'bottom';
   }
 
+  /**
+   * Gets the DOM element the Popover markup will be appended to
+   * @return {*}
+   */
+  getContainer() {
+    if (this.props.container) {
+      return this.props.container;
+    }
+    return this.button;
+  }
+
+  /**
+   * Toggle the popover on or off
+   */
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
@@ -50,7 +64,7 @@ class PopoverField extends Component {
     };
 
     return (
-      <Button {...buttonProps}>
+      <Button {...buttonProps} innerRef={button => { this.button = button; }}>
         {this.props.title}
         <Popover
           id={`${this.props.id}_Popover`}
@@ -59,7 +73,7 @@ class PopoverField extends Component {
           target={this.props.id}
           toggle={this.toggle}
           className={this.props.popoverClassName}
-          container={this.props.container}
+          container={this.getContainer()}
         >
           <PopoverHeader>{this.props.data.popoverTitle}</PopoverHeader>
           <PopoverBody>{this.props.children}</PopoverBody>
@@ -81,7 +95,7 @@ PopoverField.propTypes = {
     React.PropTypes.shape({
       popoverTitle: React.PropTypes.string,
       buttonTooltip: React.PropTypes.string,
-      placement: React.PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
+      placement: React.PropTypes.string,
     }),
   ]),
 };
