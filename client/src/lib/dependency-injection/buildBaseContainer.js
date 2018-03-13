@@ -128,7 +128,7 @@ const buildBaseContainer = () => ({
 
     if (this.services[key] && force !== true) {
       throw new Error(`
-      Tried to register service ${key} more than once. This practice is discouraged. Consider
+      Tried to register service '${key}' more than once. This practice is discouraged. Consider
       using Injector.update() to enhance the service rather than override it completely.
       Otherwise, invoke the register() function with { force: true } as the third argument.
      `);
