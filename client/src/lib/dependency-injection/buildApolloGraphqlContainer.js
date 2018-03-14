@@ -1,5 +1,7 @@
 import buildBaseContainer from './buildBaseContainer';
-
+import { captureTag } from './graphql/tags';
+import buildReadQuery from './graphql/buildReadQuery';
+import GraphqlManager from './GraphqlManager';
 
 const buildApolloGraphqlContainer = (base = buildBaseContainer()) => ({
   ...base,
@@ -7,7 +9,9 @@ const buildApolloGraphqlContainer = (base = buildBaseContainer()) => ({
   /**
    * A register of templates registered with this container
    */
-  templates: {},
+  templates: {
+    scaffoldedRead: buildReadQuery(captureTag),
+  },
 
   /**
    * A register of available fragments which templates and queries could take advantage of
@@ -28,7 +32,6 @@ const buildApolloGraphqlContainer = (base = buildBaseContainer()) => ({
       templateName,
     } = config;
 
-    // maybe lazy load this in the service below?
     if (!templateName || !this.templates[templateName]) {
       throw new Error(`
 Tried to register a new query '${key}' without a defined template '${templateName}'. Please ensure the
@@ -39,7 +42,7 @@ templateName config is defined and that you have registered the template before 
     return base.register.call(
       this,
       key,
-      (Target) => console.log(Target, config) || Target,
+      config,
       ...args
     );
   },
@@ -83,7 +86,29 @@ Otherwise, invoke the registerFragment() function with '{ force: true }' as the 
 
   getFragments() {
     return { ...this.fragments };
-  }
+  },
+
+  /**
+   * Creates a factory function for the given service
+   * @param {string} key
+   * @param {Array} middlewareMatches
+   * @returns {function}
+   */
+  getFactory(key, middlewareMatches) {
+    const factories = middlewareMatches.map(middleware => middleware.factory).reverse();
+    const config = this.services[key];
+
+    const manager = new GraphqlManager(
+      config,
+      { ...this.templates },
+      { ...this.fragments },
+    );
+    factories.forEach((factory) => {
+      factory(manager);
+    }, config);
+
+    return manager.getContainer();
+  },
 });
 
 export default buildApolloGraphqlContainer;

@@ -458,9 +458,9 @@ export { FormBuilderLoader as Component };
 export default compose(
   inject(
     ['ReduxForm', 'ReduxFormField'],
-    (Form, Field) => ({
-      baseFormComponent: Form,
-      baseFieldComponent: Field,
+    (ReduxForm, ReduxFormField) => ({
+      baseFormComponent: ReduxForm,
+      baseFieldComponent: ReduxFormField,
     }),
     ({ identifier }) => identifier
   ),

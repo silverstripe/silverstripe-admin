@@ -8,7 +8,7 @@ const getParams = ({ params, pagination }) => buildArgs(params, pagination);
 
 const getFields = ({ fields, pagination }) => mapFields(fields, pagination);
 
-const getFragments = ({ availableFragments, fragments }) => (
+const getFragments = ({ availableFragments, fragments = [] }) => (
   // build up the list of fragments needed for this query but concatenating them together
   Object.entries(availableFragments)
     .reduce((capturedFragments, [key, fragment]) => (
