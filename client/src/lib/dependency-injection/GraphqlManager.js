@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 
 const TEMPLATE_OVERRIDE = '__TEMPLATE_OVERRIDE__';
 const protectedConfig = ['templateName', 'fields', 'fragments'];
-
+const deferredApolloConfig = ['options', 'props', 'variables', 'skip'];
 
 /**
  * An API for updating the query/mutation parts of a given template
@@ -22,6 +22,9 @@ class GraphqlManager {
    *      // additive only, will ignore removals
    *      variables: (<props>) => (<currentValue) => <object|newValue>,
    *
+   *      // last transform returning a boolean will take precedence
+   *      skip: (<props>) => (<currentValue>) => <boolean|newValue>,
+   *
    *      // additive only, will ignore removals??
    *      context: (currentValue) => <object|newValue>,
    *
@@ -30,9 +33,6 @@ class GraphqlManager {
    *
    *      // additive only, will ignore removals
    *      refetchQueries: (<currentValue>) => <array|newValue>,
-   *
-   *      // last transform returning a boolean will take precedence
-   *      skip: (<currentValue>) => (<props>) => <boolean|newValue>,
    *
    *      // last transform returning a number will take precedence
    *      pollInterval: (<currentValue>) => <integer|newValue>,
@@ -229,6 +229,36 @@ Tried to use template '${name}', which could not be found. Please make sure that
     }
   }
 
+  reduceApolloConfig(prev, key) {
+    const value = this.apolloConfigInitValues[key];
+    const transforms = this.apolloConfigTransforms[key];
+
+    if (deferredApolloConfig.includes(key)) {
+      const deferred = (...args) => {
+        const bootedTransformers = transforms.map(transform => transform(...args));
+
+        return bootedTransformers.reduce((oldValue, transform) => {
+          const newValue = transform(oldValue);
+
+          return this.coallesceData(key, oldValue, newValue);
+        }, value);
+      };
+
+      return {
+        ...prev,
+        [key]: deferred,
+      };
+    }
+
+    if (typeof value === 'undefined' || value === null) {
+      return prev;
+    }
+
+    return {
+      ...prev,
+      [key]: value,
+    };
+  }
   getConfig() {
     return {
       ...this.config,
@@ -239,9 +269,13 @@ Tried to use template '${name}', which could not be found. Please make sure that
   }
 
   getApolloConfig() {
-    return {
+    const keys = [
+      ...Object.keys(this.apolloConfigInitValues),
+      ...Object.keys(this.apolloConfigTransforms),
+    ]
+      .filter((key, index, list) => list.indexOf(key) === index);
 
-    };
+    return keys.reduce(this.reduceApolloConfig, {});
   }
 
   getContainer() {
