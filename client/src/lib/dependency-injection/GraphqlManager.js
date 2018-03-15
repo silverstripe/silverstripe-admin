@@ -2,15 +2,121 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const TEMPLATE_OVERRIDE = '__TEMPLATE_OVERRIDE__';
+const protectedConfig = ['templateName', 'fields', 'fragments'];
+
 
 /**
  * An API for updating the query/mutation parts of a given template
  */
 class GraphqlManager {
+  /**
+   * @example for the config structure
+   *  {
+   *    apolloConfig: {
+   *      // additive only, will ignore removals
+   *      options: (<originalParams>) => (<currentValue>) => <object|newValue>,
+   *
+   *      // additive only, will ignore removals
+   *      props: (<originalData>) => (<currentValue>) => <object|newValue>,
+   *
+   *      // additive only, will ignore removals
+   *      variables: (<props>) => (<currentValue) => <object|newValue>,
+   *
+   *      // additive only, will ignore removals??
+   *      context: (currentValue) => <object|newValue>,
+   *
+   *      // additive only, will ignore removals
+   *      optimisticResponse: (<currentValue>) => <object|newValue>,
+   *
+   *      // additive only, will ignore removals
+   *      refetchQueries: (<currentValue>) => <array|newValue>,
+   *
+   *      // last transform returning a boolean will take precedence
+   *      skip: (<currentValue>) => (<props>) => <boolean|newValue>,
+   *
+   *      // last transform returning a number will take precedence
+   *      pollInterval: (<currentValue>) => <integer|newValue>,
+   *
+   *      // last transform returning an object or null will take precedence
+   *      fetchPolicy: (<currentValue>) => <object|newValue>,
+   *
+   *      // last transform returning a string will take precedence
+   *      name: (<currentName>) => <string|newValue>,
+   *
+   *      withRef: <anyTrue>,
+   *
+   *      notifyOnNetworkStatusChange: <anyTrue>,
+   *
+   *      // each transformation will be called successively no values returned between
+   *      // each transformation
+   *      update: (<DataProxy>, <Response>) => <noReturn>,
+   *    },
+   *    singularName: <string>,
+   *    pluralName: <string>,
+   *    fields: [<string>],
+   *    params: [<string>],
+   *    pagination: <boolean>,
+   *    templateName: <string>,
+   *  }
+   *
+   * @param {object} config - default config options which we extrapolate as the "base" behaviour.
+   * @param {object} templates - a key-value map of templates
+   * @param {object} fragments - a key-value map of fragments
+   */
   constructor(config, templates, fragments) {
-    this.config = config;
-    this.templates = templates || {};
-    this.fragments = fragments || {};
+    const {
+      apolloConfig,
+      ...otherConfig
+    } = config;
+
+    this.config = otherConfig;
+    this.apolloConfigInitValues = apolloConfig;
+    this.apolloConfigTransforms = {};
+    this.templates = { ...templates } || {};
+    this.fragments = { ...fragments } || {};
+  }
+
+  setConfig(name, value) {
+    // prevent overriding functionally important configs
+    if (protectedConfig.includes(name)) {
+      throw new Error(`
+Tried to set protected config values: '${name}', which is discouraged.
+      `);
+    }
+    this.config = {
+      ...this.config,
+      [name]: value,
+    };
+
+    return this;
+  }
+
+  transformApolloConfig(config, callback) {
+    const transformList = this.apolloConfigTransforms[config] || [];
+
+    this.apolloConfigTransforms = {
+      ...this.apolloConfigTransforms,
+      [config]: [
+        ...transformList,
+        callback,
+      ],
+    };
+
+    return this;
+  }
+
+  addParam(param) {
+    return this.addParams([param]);
+  }
+
+  addParams(params = []) {
+    const existing = this.config.params;
+    this.config.params = [
+      ...existing,
+      ...params,
+    ];
+
+    return this;
   }
 
   addField(field) {
@@ -32,6 +138,24 @@ class GraphqlManager {
       ...this.config.fragments,
       name,
     ];
+
+    return this;
+  }
+
+  /**
+   * Change to another template to use
+   *
+   * @param name
+   * @return {GraphqlManager}
+   */
+  useTemplate(name) {
+    if (!Object.keys(this.templates).includes(name)) {
+      throw new Error(`
+Tried to use template '${name}', which could not be found. Please make sure that it is registered with your Injector.
+      `);
+    }
+
+    this.config.templateName = name;
 
     return this;
   }
@@ -63,6 +187,48 @@ class GraphqlManager {
     return this.templates[name];
   }
 
+  coallesceData(type, oldValue, newValue) {
+    switch (type) {
+      case 'options':
+      case 'props':
+      case 'variables':
+      case 'context':
+      case 'optimisticResponse':
+        return {
+          ...(oldValue || {}),
+          ...(newValue || {}),
+        };
+      case 'refetchQueries':
+        return [
+          ...(oldValue || []),
+          ...(newValue || []),
+        ];
+      case 'skip':
+        return (typeof newValue === 'boolean')
+          ? newValue
+          : oldValue;
+      case 'pollInterval':
+        return (typeof newValue === 'number')
+          ? newValue
+          : oldValue;
+      case 'fetchPolicy':
+        // null intended to be valid value
+        return (typeof newValue === 'object')
+          ? newValue
+          : oldValue;
+      case 'name':
+        return (typeof newValue === 'string')
+          ? newValue
+          : oldValue;
+      case 'withRef':
+      case 'notifyOnNetworkStatusChange':
+        return newValue || oldValue;
+        // case 'update':
+      default:
+        return null;
+    }
+  }
+
   getConfig() {
     return {
       ...this.config,
@@ -72,8 +238,15 @@ class GraphqlManager {
     };
   }
 
+  getApolloConfig() {
+    return {
+
+    };
+  }
+
   getContainer() {
     const config = this.getConfig();
+    const apolloConfig = this.getApolloConfig();
     const template = this.getRawTemplate(config.templateName);
 
     const expressed = template.expressions.map(expression => {
@@ -88,7 +261,7 @@ class GraphqlManager {
 
     // can provide AST manipulation here
 
-    return graphql(query, config);
+    return graphql(query, apolloConfig);
   }
 }
 

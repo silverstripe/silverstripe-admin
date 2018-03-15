@@ -5,12 +5,12 @@ import injectorContext from './injectorContext';
 function provideInjector(Injectable, injectorContainer = Injector) {
   class InjectorProvider extends Component {
     getChildContext() {
-      const { component, form } = injectorContainer;
-      const { get } = component;
+      const { component, form, query } = injectorContainer;
 
       return {
         injector: {
-          get: get.bind(component),
+          query: query.get.bind(query),
+          get: component.get.bind(component),
           validate: form.getValidation.bind(form),
         },
       };
