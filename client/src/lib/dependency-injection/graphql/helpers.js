@@ -3,12 +3,16 @@ const paginationFields = {
   offset: 'Int',
 };
 
-const paginateFields = (fields) => {
-  return `edges { node { ${fields.map(' ')} } } pageInfo { totalCount }`;
-};
+const paginateFields = (fields) => (
+  `edges { node { ${fields.join(' ')} } } pageInfo { totalCount }`
+);
 
-const buildDefs = (params, paginated = false) => {
-  const items = (paginated) ? { ...params, ...paginationFields } : params;
+export const getSingularName = ({ singularName }) => singularName;
+
+export const getPluralName = ({ pluralName }) => pluralName;
+
+export const getVariables = ({ params, pagination = true }) => {
+  const items = (pagination) ? { ...params, ...paginationFields } : params;
 
   return Object.entries(items)
     .map(([key, type]) => (
@@ -17,8 +21,8 @@ const buildDefs = (params, paginated = false) => {
     .join(', ');
 };
 
-const buildArgs = (params, paginated = false) => {
-  const items = (paginated) ? { ...params, ...paginationFields } : params;
+export const getParams = ({ params, pagination = true }) => {
+  const items = (pagination) ? { ...params, ...paginationFields } : params;
 
   return Object.keys(items)
     .map((key) => (
@@ -27,29 +31,20 @@ const buildArgs = (params, paginated = false) => {
     .join(', ');
 };
 
-const mapFields = (fields, paginated = false) => {
+export const getFields = ({ fields, pagination = true }) => {
   const strings = fields.map(field => (
     (Array.isArray(field))
-      ? `{ ${mapFields(field, paginated)} }`
+      // nested fields shouldn't also have pagination
+      ? `{ ${getFields({ fields: field, pagination: false })} }`
       : field
   ));
 
-  if (paginated) {
+  if (pagination) {
     return paginateFields(strings);
   }
 
   return strings.join(' ');
 };
-
-export const getSingularName = ({ singularName }) => singularName;
-
-export const getPluralName = ({ pluralName }) => pluralName;
-
-export const getVariables = ({ params, pagination }) => buildDefs(params, pagination);
-
-export const getParams = ({ params, pagination }) => buildArgs(params, pagination);
-
-export const getFields = ({ fields, pagination }) => mapFields(fields, pagination);
 
 export const getFragments = ({ availableFragments, fragments = [] }) => (
   // build up the list of fragments needed for this query but concatenating them together
@@ -58,5 +53,5 @@ export const getFragments = ({ availableFragments, fragments = [] }) => (
       (fragments.includes(key))
         ? `${capturedFragments} ${fragment}`
         : capturedFragments
-    ))
+    ), '')
 );

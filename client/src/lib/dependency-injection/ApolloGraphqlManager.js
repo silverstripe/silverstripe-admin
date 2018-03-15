@@ -2,13 +2,13 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const TEMPLATE_OVERRIDE = '__TEMPLATE_OVERRIDE__';
-const protectedConfig = ['templateName', 'fields', 'fragments'];
+const protectedConfig = ['templateName', 'fields', 'params', 'fragments'];
 const deferredApolloConfig = ['options', 'props', 'variables', 'skip', 'update'];
 
 /**
  * An API for updating the query/mutation parts of a given template
  */
-class GraphqlManager {
+class ApolloGraphqlManager {
   /**
    * @schema for the config structure
     {
@@ -74,6 +74,8 @@ class GraphqlManager {
     this.apolloConfigTransforms = {};
     this.templates = { ...templates } || {};
     this.fragments = { ...fragments } || {};
+
+    this.reduceApolloConfig = this.reduceApolloConfig.bind(this);
   }
 
   setConfig(name, value) {
@@ -146,7 +148,7 @@ Tried to set protected config values: '${name}', which is discouraged.
    * Change to another template to use
    *
    * @param name
-   * @return {GraphqlManager}
+   * @return {ApolloGraphqlManager}
    */
   useTemplate(name) {
     if (!Object.keys(this.templates).includes(name)) {
@@ -236,16 +238,17 @@ Tried to use template '${name}', which could not be found. Please make sure that
       return this.coallesceData(key, oldValue, newValue);
     };
     const value = this.apolloConfigInitValues[key];
-    const transforms = this.apolloConfigTransforms[key];
+    const transforms = this.apolloConfigTransforms[key] || [];
 
     if (deferredApolloConfig.includes(key)) {
       const deferredValue = (...args) => {
+        const oldValue = value(...args);
         const bootedTransformers = transforms.map(transform => transform(...args));
 
         if (key === 'update') {
           return null;
         }
-        return bootedTransformers.reduce(calculateValue, value);
+        return bootedTransformers.reduce(calculateValue, oldValue);
       };
 
       return {
@@ -306,4 +309,4 @@ Tried to use template '${name}', which could not be found. Please make sure that
   }
 }
 
-export default GraphqlManager;
+export default ApolloGraphqlManager;

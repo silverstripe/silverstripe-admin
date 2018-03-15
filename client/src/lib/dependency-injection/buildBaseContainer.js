@@ -108,7 +108,7 @@ const buildBaseContainer = () => ({
         }
         return {
           ...factories,
-          [key]: () => service,
+          [key]: () => this.getFactory(key, []),
         };
       }, {});
 

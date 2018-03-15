@@ -1,10 +1,11 @@
 import buildBaseContainer from './buildBaseContainer';
 import { captureTag } from './graphql/tags';
-import GraphqlManager from './GraphqlManager';
+import ApolloGraphqlManager from './ApolloGraphqlManager';
 import buildCreateMutation from './graphql/buildCreateMutation';
 import buildReadQuery from './graphql/buildReadQuery';
 import buildUpdateMutation from './graphql/buildUpdateMutation';
 import buildDeleteMutation from './graphql/buildDeleteMutation';
+import buildBaseQuery from './graphql/buildBaseQuery';
 
 const buildApolloGraphqlContainer = (base = buildBaseContainer()) => ({
   ...base,
@@ -17,6 +18,7 @@ const buildApolloGraphqlContainer = (base = buildBaseContainer()) => ({
     scaffoldRead: buildReadQuery(captureTag),
     scaffoldUpdate: buildUpdateMutation(captureTag),
     scaffoldDelete: buildDeleteMutation(captureTag),
+    baseQuery: buildBaseQuery(captureTag),
   },
 
   /**
@@ -39,6 +41,7 @@ const buildApolloGraphqlContainer = (base = buildBaseContainer()) => ({
   /* eslint-disable max-len, no-unused-vars */
   scaffold(key, config, { force }) {
     /*
+     * @todo build out scaffolding
      * I would recommend adding a default mutation update handlers here, instead of in the `register` method.
      * This way query and mutation could be potentially be linked more easily.
      * Config schema could be found in the `GraphqlManager.js` file.
@@ -140,7 +143,7 @@ Otherwise, invoke the registerFragment() function with '{ force: true }' as the 
     const factories = middlewareMatches.map(middleware => middleware.factory).reverse();
     const config = this.services[key];
 
-    const manager = new GraphqlManager(
+    const manager = new ApolloGraphqlManager(
       config,
       { ...this.templates },
       { ...this.fragments },
