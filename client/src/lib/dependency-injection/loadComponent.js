@@ -99,8 +99,6 @@ const loadComponent = (targetName, context = {}, overrideInjector) => {
     }
   }
 
-  LegacyLoader.contextTypes = contextType;
-
   LegacyLoader.childContextTypes = contextType;
 
   const contextInjector = overrideInjector || provideInjector;

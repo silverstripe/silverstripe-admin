@@ -3,61 +3,61 @@ import gql from 'graphql-tag';
 
 const TEMPLATE_OVERRIDE = '__TEMPLATE_OVERRIDE__';
 const protectedConfig = ['templateName', 'fields', 'fragments'];
-const deferredApolloConfig = ['options', 'props', 'variables', 'skip'];
+const deferredApolloConfig = ['options', 'props', 'variables', 'skip', 'update'];
 
 /**
  * An API for updating the query/mutation parts of a given template
  */
 class GraphqlManager {
   /**
-   * @example for the config structure
-   *  {
-   *    apolloConfig: {
-   *      // additive only, will ignore removals
-   *      options: (<originalParams>) => (<currentValue>) => <object|newValue>,
-   *
-   *      // additive only, will ignore removals
-   *      props: (<originalData>) => (<currentValue>) => <object|newValue>,
-   *
-   *      // additive only, will ignore removals
-   *      variables: (<props>) => (<currentValue) => <object|newValue>,
-   *
-   *      // last transform returning a boolean will take precedence
-   *      skip: (<props>) => (<currentValue>) => <boolean|newValue>,
-   *
-   *      // additive only, will ignore removals??
-   *      context: (currentValue) => <object|newValue>,
-   *
-   *      // additive only, will ignore removals
-   *      optimisticResponse: (<currentValue>) => <object|newValue>,
-   *
-   *      // additive only, will ignore removals
-   *      refetchQueries: (<currentValue>) => <array|newValue>,
-   *
-   *      // last transform returning a number will take precedence
-   *      pollInterval: (<currentValue>) => <integer|newValue>,
-   *
-   *      // last transform returning an object or null will take precedence
-   *      fetchPolicy: (<currentValue>) => <object|newValue>,
-   *
-   *      // last transform returning a string will take precedence
-   *      name: (<currentName>) => <string|newValue>,
-   *
-   *      withRef: <anyTrue>,
-   *
-   *      notifyOnNetworkStatusChange: <anyTrue>,
-   *
-   *      // each transformation will be called successively no values returned between
-   *      // each transformation
-   *      update: (<DataProxy>, <Response>) => <noReturn>,
-   *    },
-   *    singularName: <string>,
-   *    pluralName: <string>,
-   *    fields: [<string>],
-   *    params: [<string>],
-   *    pagination: <boolean>,
-   *    templateName: <string>,
-   *  }
+   * @schema for the config structure
+    {
+      apolloConfig: {
+        // additive only, will ignore removals
+        options: (<originalParams>) => (<currentValue>) => <object|newValue>,
+
+        // additive only, will ignore removals
+        props: (<originalData>) => (<currentValue>) => <object|newValue>,
+
+        // additive only, will ignore removals
+        variables: (<props>) => (<currentValue) => <object|newValue>,
+
+        // last transform returning a boolean will take precedence
+        skip: (<props>) => (<currentValue>) => <boolean|newValue>,
+
+        // additive only, will ignore removals??
+        context: (currentValue) => <object|newValue>,
+
+        // additive only, will ignore removals
+        optimisticResponse: (<currentValue>) => <object|newValue>,
+
+        // additive only, will ignore removals
+        refetchQueries: (<currentValue>) => <array|newValue>,
+
+        // last transform returning a number will take precedence
+        pollInterval: (<currentValue>) => <integer|newValue>,
+
+        // last transform returning an object or null will take precedence
+        fetchPolicy: (<currentValue>) => <object|newValue>,
+
+        // last transform returning a string will take precedence
+        name: (<currentName>) => <string|newValue>,
+
+        withRef: <anyTrue>,
+
+        notifyOnNetworkStatusChange: <anyTrue>,
+
+        // each transformation will be called successively no values returned between
+        // each transformation
+        update: (<DataProxy>, <Response>) => <noReturn>,
+      },
+      singularName: <string>,
+      pluralName: <string>,
+      fields: [<string>],
+      params: [<string>],
+      pagination: <boolean>,
+      templateName: <string>,
+    }
    *
    * @param {object} config - default config options which we extrapolate as the "base" behaviour.
    * @param {object} templates - a key-value map of templates
@@ -230,23 +230,27 @@ Tried to use template '${name}', which could not be found. Please make sure that
   }
 
   reduceApolloConfig(prev, key) {
+    const calculateValue = (oldValue, transform) => {
+      const newValue = transform(oldValue);
+
+      return this.coallesceData(key, oldValue, newValue);
+    };
     const value = this.apolloConfigInitValues[key];
     const transforms = this.apolloConfigTransforms[key];
 
     if (deferredApolloConfig.includes(key)) {
-      const deferred = (...args) => {
+      const deferredValue = (...args) => {
         const bootedTransformers = transforms.map(transform => transform(...args));
 
-        return bootedTransformers.reduce((oldValue, transform) => {
-          const newValue = transform(oldValue);
-
-          return this.coallesceData(key, oldValue, newValue);
-        }, value);
+        if (key === 'update') {
+          return null;
+        }
+        return bootedTransformers.reduce(calculateValue, value);
       };
 
       return {
         ...prev,
-        [key]: deferred,
+        [key]: deferredValue,
       };
     }
 
@@ -254,11 +258,14 @@ Tried to use template '${name}', which could not be found. Please make sure that
       return prev;
     }
 
+    const newValue = transforms.reduce(calculateValue, value);
+
     return {
       ...prev,
-      [key]: value,
+      [key]: newValue,
     };
   }
+
   getConfig() {
     return {
       ...this.config,
