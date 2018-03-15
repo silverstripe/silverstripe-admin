@@ -53,8 +53,8 @@ class GraphqlManager {
       },
       singularName: <string>,
       pluralName: <string>,
-      fields: [<string>],
-      params: [<string>],
+      fields: [<string>], - e.g. ['Title'] or nested fields ['Author', ['ID']]
+      params: {<name>: <type>}, - e.g. { limit: 'Int' }
       pagination: <boolean>,
       templateName: <string>,
     }
@@ -212,7 +212,7 @@ Tried to use template '${name}', which could not be found. Please make sure that
           ? newValue
           : oldValue;
       case 'fetchPolicy':
-        // null intended to be valid value
+        // null intended to be a valid value
         return (typeof newValue === 'object')
           ? newValue
           : oldValue;

@@ -1,7 +1,10 @@
 import buildBaseContainer from './buildBaseContainer';
 import { captureTag } from './graphql/tags';
-import buildReadQuery from './graphql/buildReadQuery';
 import GraphqlManager from './GraphqlManager';
+import buildCreateMutation from './graphql/buildCreateMutation';
+import buildReadQuery from './graphql/buildReadQuery';
+import buildUpdateMutation from './graphql/buildUpdateMutation';
+import buildDeleteMutation from './graphql/buildDeleteMutation';
 
 const buildApolloGraphqlContainer = (base = buildBaseContainer()) => ({
   ...base,
@@ -10,7 +13,10 @@ const buildApolloGraphqlContainer = (base = buildBaseContainer()) => ({
    * A register of templates registered with this container
    */
   templates: {
-    scaffoldedRead: buildReadQuery(captureTag),
+    scaffoldCreate: buildCreateMutation(captureTag),
+    scaffoldRead: buildReadQuery(captureTag),
+    scaffoldUpdate: buildUpdateMutation(captureTag),
+    scaffoldDelete: buildDeleteMutation(captureTag),
   },
 
   /**
@@ -30,16 +36,19 @@ const buildApolloGraphqlContainer = (base = buildBaseContainer()) => ({
    *
    * @return {object} mappedQueryNameKeys
    */
+  /* eslint-disable max-len, no-unused-vars */
   scaffold(key, config, { force }) {
-    // proof-of-concept: https://github.com/flamerohr/silverstripe-graphql-react-boilerplate/tree/master/client/src/js/lib/graphql
-
     /*
-     * I would recommend adding mutation update handlers here, so it could be linked with the
-     * read query more easily, anything else (such as additional fields) could be done through
-     * transformations instead of through `scaffold` or `register`
+     * I would recommend adding a default mutation update handlers here, instead of in the `register` method.
+     * This way query and mutation could be potentially be linked more easily.
+     * Config schema could be found in the `GraphqlManager.js` file.
+     *
+     * Proof-of-concept for handlers could be found here:
+     * https://github.com/flamerohr/silverstripe-graphql-react-boilerplate/tree/master/client/src/js/lib/graphql
      */
     throw new Error('This API endpoint is not available yet');
   },
+  /* eslint-enable */
 
   /**
    * Register a new query with a given key and config options
