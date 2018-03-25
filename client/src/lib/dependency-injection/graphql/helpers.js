@@ -14,21 +14,23 @@ export const getPluralName = ({ pluralName }) => pluralName;
 export const getVariables = ({ params, pagination = true }) => {
   const items = (pagination) ? { ...params, ...paginationFields } : params;
 
-  return Object.entries(items)
+  const varList = Object.entries(items)
     .map(([key, type]) => (
       `$${key}: ${type}`
-    ))
-    .join(', ');
+    ));
+
+  return varList.length ? `(${varList.join(', ')})` : '';
 };
 
 export const getParams = ({ params, pagination = true }) => {
   const items = (pagination) ? { ...params, ...paginationFields } : params;
 
-  return Object.keys(items)
+  const paramList = Object.keys(items)
     .map((key) => (
       `${key}: $${key}`
-    ))
-    .join(', ');
+    ));
+
+  return paramList.length ? `(${paramList.join(', ')})` : '';
 };
 
 export const getFields = ({ fields, pagination = true }) => {

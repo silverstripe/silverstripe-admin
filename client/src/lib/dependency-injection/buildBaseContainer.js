@@ -87,8 +87,8 @@ const buildBaseContainer = () => ({
    */
   load() {
     this.isProtected();
-    this.factories = Object.entries(this.services)
-      .reduce((factories, [key, service]) => {
+    this.factories = Object.keys(this.services)
+      .reduce((factories, key) => {
         const middleware = this.middlewareRegistries[key];
         if (middleware) {
           middleware.sort();

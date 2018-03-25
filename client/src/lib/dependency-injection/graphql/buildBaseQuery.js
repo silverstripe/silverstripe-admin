@@ -11,8 +11,8 @@ const getQueryName = ({ queryName }) => queryName;
 const getQueryType = ({ queryType }) => queryType;
 
 export default function buildReadQuery(tag = defaultTag) {
-  return tag`${getQueryType} ${getOperationName}(${getVariables}) {
-    ${getQueryName}(${getParams}) {
+  return tag`${getQueryType} ${getOperationName}${getVariables} {
+    ${getQueryName}${getParams} {
       ${getFields}
     }
   }
