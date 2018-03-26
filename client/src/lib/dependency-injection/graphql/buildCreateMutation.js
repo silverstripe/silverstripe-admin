@@ -1,8 +1,8 @@
 import { defaultTag } from './tags';
 import { getSingularName, getFields, getFragments } from './helpers';
 
-const buildCreateMutation = (tag = defaultTag) => {
-  return tag`mutation Create${getSingularName}(
+const buildCreateMutation = (tag = defaultTag) => (
+  tag`mutation Create${getSingularName}(
     $Input:${getSingularName}CreateInputType!
   ) {
     create${getSingularName}(
@@ -11,7 +11,7 @@ const buildCreateMutation = (tag = defaultTag) => {
       ${getFields}
     }
   }
-  ${getFragments}`;
-};
+  ${getFragments}`
+);
 
 export default buildCreateMutation;
