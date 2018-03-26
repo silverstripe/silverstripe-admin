@@ -1,7 +1,7 @@
 import { defaultTag } from './tags';
 import { getSingularName, getVariables, getParams, getFields, getFragments } from './helpers';
 
-export default function buildUpdateMutation(tag = defaultTag) {
+const buildUpdateMutation = (tag = defaultTag) => {
   return tag`mutation Update${getSingularName}(
     $Input:${getSingularName}UpdateInputType!
     ${getVariables}
@@ -14,4 +14,6 @@ export default function buildUpdateMutation(tag = defaultTag) {
     }
   }
   ${getFragments}`;
-}
+};
+
+export default buildUpdateMutation;

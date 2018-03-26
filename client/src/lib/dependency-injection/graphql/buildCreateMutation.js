@@ -1,7 +1,7 @@
 import { defaultTag } from './tags';
 import { getSingularName, getFields, getFragments } from './helpers';
 
-export default function buildCreateMutation(tag = defaultTag) {
+const buildCreateMutation = (tag = defaultTag) => {
   return tag`mutation Create${getSingularName}(
     $Input:${getSingularName}CreateInputType!
   ) {
@@ -12,4 +12,6 @@ export default function buildCreateMutation(tag = defaultTag) {
     }
   }
   ${getFragments}`;
-}
+};
+
+export default buildCreateMutation;
