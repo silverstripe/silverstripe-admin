@@ -3,16 +3,22 @@ import classnames from 'classnames';
 
 class Badge extends PureComponent {
   render() {
-    if (!this.props.status) {
+    const { status, inverted, className, message } = this.props;
+    if (!status) {
       return null;
     }
-    const className = classnames(
-      this.props.className,
-      `badge badge-${this.props.status}`
+
+    const invertedClass = inverted ? `badge-${status}--inverted` : '';
+
+    const compiledClassNames = classnames(
+      className,
+      'badge',
+      `badge-${status}`,
+      invertedClass,
     );
     return (
-      <span className={className}>
-        {this.props.message}
+      <span className={compiledClassNames}>
+        {message}
       </span>
     );
   }
@@ -30,11 +36,13 @@ Badge.propTypes = {
     'secondary',
   ]),
   className: PropTypes.string,
+  inverted: PropTypes.bool,
 };
 
 Badge.defaultProps = {
   status: 'default',
   className: 'badge-pill',
+  inverted: false,
 };
 
 export default Badge;

@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import Badge from 'components/Badge/Badge';
 
 storiesOf('Admin/Badge', module)
-  .add('Types', () => (
+  .add('Default states', () => (
     <div>
       <div>
         <Badge message="Default badge" />
@@ -26,6 +26,58 @@ storiesOf('Admin/Badge', module)
       </div>
       <div>
         <Badge status="secondary" message="Secondary badge" />
+      </div>
+    </div>
+  ))
+  .add('Non-pill states', () => (
+    <div>
+      <div>
+        <div>
+          <Badge message="Default badge" className="" />
+        </div>
+        <div>
+          <Badge status="info" message="Info badge" className="" />
+        </div>
+        <div>
+          <Badge status="success" message="Success badge" className="" />
+        </div>
+        <div>
+          <Badge status="warning" message="Warning badge" className="" />
+        </div>
+        <div>
+          <Badge status="danger" message="Danger badge" className="" />
+        </div>
+        <div>
+          <Badge status="primary" message="Primary badge" className="" />
+        </div>
+        <div>
+          <Badge status="secondary" message="Secondary badge" className="" />
+        </div>
+      </div>
+    </div>
+  ))
+  .add('Inverted states', () => (
+    <div>
+      <div>
+        <Badge message="Default (inverted)" inverted />
+      </div>
+      <div>
+        <Badge status="info" message="Info badge (inverted)" inverted />
+      </div>
+      <div>
+        <Badge status="success" message="Success badge (inverted)" inverted />
+      </div>
+      <div>
+        <Badge status="warning" message="Warning badge (inverted)" inverted />
+      </div>
+      <div>
+        <Badge status="danger" message="Danger badge (inverted)" inverted />
+      </div>
+      <div>
+        <Badge status="primary" message="Primary badge (inverted)" inverted />
+      </div>
+      <div>
+        <Badge status="secondary" message="Secondary badge (inverted)" inverted />
       </div>
     </div>
   ));
