@@ -38,9 +38,13 @@ class PopoverField extends Component {
    * Toggle the popover on or off
    */
   toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
+    // Force this to the bottom of the execution queue so that buttons
+    // aren't removed from the DOM before their onClick handlers fire.
+    setTimeout(() => (
+        this.setState({
+          isOpen: !this.state.isOpen
+        })
+    ), 0);
   }
 
   render() {
