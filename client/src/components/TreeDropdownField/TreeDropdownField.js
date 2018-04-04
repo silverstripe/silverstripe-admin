@@ -62,7 +62,7 @@ class TreeDropdownField extends Component {
         .then((treeData) => {
           // If this is the first time the tree has been loaded, then ensure
           // the selected visible node is highlighted
-          if (!this.props.data.multiple && this.props.value) {
+          if (!this.props.data.multiple) {
             const newPath = this.props.findTreePath(treeData, this.props.value);
             if (newPath) {
               // Revert one level to show parent
