@@ -14,20 +14,20 @@ addons:
 env:
   global:
     - TRAVIS_NODE_VERSION="6"
-    - COMPOSER_ROOT_VERSION=1.2.x-dev
+    - COMPOSER_ROOT_VERSION=2.x-dev
 
 matrix:
   fast_finish: true
   include:
-    - php: 5.6
+    - php: 7.1
       env: DB=PGSQL PHPUNIT_TEST=1
-    - php: 5.6
+    - php: 7.1
       env: DB=MYSQL PHPUNIT_TEST=1 PHPCS_TEST=1
-    - php: 7.0
+    - php: 7.1
       env: DB=MYSQL PHPUNIT_TEST=1
     - php: 7.1
       env: DB=MYSQL PHPUNIT_TEST=1 PDO=1
-    - php: 5.6
+    - php: 7.1
       env: NPM_TEST=1
 
 before_script:
@@ -41,9 +41,9 @@ before_script:
 
 # Install composer
   - composer validate
-  - composer require silverstripe/recipe-core:1.2.x-dev silverstripe/versioned:1.2.x-dev --no-update
-  - if [[ $DB == PGSQL ]]; then composer require silverstripe/postgresql:2.0.x-dev --no-update; fi
-  - if [[ $DB == SQLITE ]]; then composer require silverstripe/sqlite3:2.0.x-dev --no-update; fi
+  - composer require silverstripe/recipe-core:2.x-dev silverstripe/versioned:2.x-dev --no-update
+  - if [[ $DB == PGSQL ]]; then composer require silverstripe/postgresql:3.x-dev --no-update; fi
+  - if [[ $DB == SQLITE ]]; then composer require silverstripe/sqlite3:3.x-dev --no-update; fi
   - if [[ $PHPCS_TEST ]]; then composer global require squizlabs/php_codesniffer:^3 --prefer-dist --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile; fi
   - composer install --prefer-dist --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile
 
