@@ -78,12 +78,16 @@ class ApolloGraphqlManager {
     this.reduceApolloConfig = this.reduceApolloConfig.bind(this);
   }
 
+  /**
+   * Assigns a new value to a config setting
+   * @param name
+   * @param value
+   * @returns {ApolloGraphqlManager}
+   */
   setConfig(name, value) {
     // prevent overriding functionally important configs
     if (protectedConfig.includes(name)) {
-      throw new Error(`
-Tried to set protected config values: '${name}', which is discouraged.
-      `);
+      throw new Error(`Tried to set protected config values: '${name}', which is discouraged.`);
     }
     this.config = {
       ...this.config,
@@ -93,6 +97,12 @@ Tried to set protected config values: '${name}', which is discouraged.
     return this;
   }
 
+  /**
+   * Applies a decorator to the apollo config
+   * @param config
+   * @param callback
+   * @returns {ApolloGraphqlManager}
+   */
   transformApolloConfig(config, callback) {
     const transformList = this.apolloConfigTransforms[config] || [];
 
@@ -107,10 +117,20 @@ Tried to set protected config values: '${name}', which is discouraged.
     return this;
   }
 
+  /**
+   * Adds a param to the query
+   * @param param
+   * @returns {ApolloGraphqlManager}
+   */
   addParam(param) {
     return this.addParams([param]);
   }
 
+  /**
+   * Adds multiple params to the query
+   * @param params
+   * @returns {ApolloGraphqlManager}
+   */
   addParams(params = []) {
     const existing = this.config.params;
     this.config.params = [
@@ -121,10 +141,20 @@ Tried to set protected config values: '${name}', which is discouraged.
     return this;
   }
 
+  /**
+   * Adds a field to the query
+   * @param field
+   * @returns {ApolloGraphqlManager}}
+   */
   addField(field) {
     return this.addFields([field]);
   }
 
+  /**
+   * Adds a list of fields to the query
+   * @param fields
+   * @returns {ApolloGraphqlManager}
+   */
   addFields(fields = []) {
     const existing = this.config.fields;
     this.config.fields = [
@@ -135,6 +165,11 @@ Tried to set protected config values: '${name}', which is discouraged.
     return this;
   }
 
+  /**
+   * Includes a fragment in the query
+   * @param name
+   * @returns {ApolloGraphqlManager}
+   */
   useFragment(name) {
     this.config.fragments = [
       ...this.config.fragments,
@@ -162,6 +197,12 @@ Tried to use template '${name}', which could not be found. Please make sure that
     return this;
   }
 
+  /**
+   *
+   * @param name
+   * @param fragment
+   * @returns {ApolloGraphqlManager}
+   */
   addTempFragment(name, fragment) {
     this.fragments = {
       ...this.fragments,
@@ -171,6 +212,12 @@ Tried to use template '${name}', which could not be found. Please make sure that
     return this.useFragment(name);
   }
 
+  /**
+   * Use a custom template
+   * @param strings
+   * @param expressions
+   * @returns {ApolloGraphqlManager}
+   */
   setTemplate(strings, ...expressions) {
     this.config.templateName = TEMPLATE_OVERRIDE;
 
@@ -185,10 +232,22 @@ Tried to use template '${name}', which could not be found. Please make sure that
     return this;
   }
 
+  /**
+   * Gets the template before data has been interpolated
+   * @param name
+   * @returns {*}
+   */
   getRawTemplate(name) {
     return this.templates[name];
   }
 
+  /**
+   *
+   * @param type
+   * @param oldValue
+   * @param newValue
+   * @returns {*}
+   */
   coallesceData(type, oldValue, newValue) {
     switch (type) {
       case 'options':
@@ -231,6 +290,12 @@ Tried to use template '${name}', which could not be found. Please make sure that
     }
   }
 
+  /**
+   * Applies decorators to the config and returns a new config object
+   * @param prev
+   * @param key
+   * @returns {Object}
+   */
   reduceApolloConfig(prev, key) {
     const calculateValue = (oldValue, transform) => {
       const newValue = transform(oldValue);
@@ -269,6 +334,10 @@ Tried to use template '${name}', which could not be found. Please make sure that
     };
   }
 
+  /**
+   *
+   * @returns {Object}
+   */
   getConfig() {
     return {
       ...this.config,
@@ -288,6 +357,10 @@ Tried to use template '${name}', which could not be found. Please make sure that
     return keys.reduce(this.reduceApolloConfig, {});
   }
 
+  /**
+   * Creates the graphql() HOC using the dynamic query and all transforms to config
+   * @returns {Function}
+   */
   getContainer() {
     const config = this.getConfig();
     const apolloConfig = this.getApolloConfig();

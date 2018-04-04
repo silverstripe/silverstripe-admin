@@ -1,33 +1,23 @@
 import buildBaseContainer from './buildBaseContainer';
-import { captureTag } from './graphql/tags';
 import ApolloGraphqlManager from './ApolloGraphqlManager';
-import buildCreateMutation from './graphql/buildCreateMutation';
-import buildReadQuery from './graphql/buildReadQuery';
-import buildReadOneQuery from './graphql/buildReadOneQuery';
-import buildUpdateMutation from './graphql/buildUpdateMutation';
-import buildDeleteMutation from './graphql/buildDeleteMutation';
-import buildBaseQuery from './graphql/buildBaseQuery';
-import { CREATE, READ, READ_ONE, UPDATE, DELETE, QUERY } from './graphql/templates';
 
-const buildApolloGraphqlContainer = (base = buildBaseContainer()) => ({
+
+const buildApolloGraphqlContainer = (
+  base = buildBaseContainer(),
+  initialTemplates = {},
+  initialFragments = {}
+) => ({
   ...base,
 
   /**
    * A register of templates registered with this container
    */
-  templates: {
-    [CREATE]: buildCreateMutation(captureTag),
-    [READ]: buildReadQuery(captureTag),
-    [READ_ONE]: buildReadOneQuery(captureTag),
-    [UPDATE]: buildUpdateMutation(captureTag),
-    [DELETE]: buildDeleteMutation(captureTag),
-    [QUERY]: buildBaseQuery(captureTag),
-  },
+  templates: { ...initialTemplates },
 
   /**
    * A register of available fragments which templates and queries could take advantage of
    */
-  fragments: {},
+  fragments: { ...initialFragments },
 
   /**
    * Registers queries which mirror silverstripe graphql's scaffolded options, also adds some
