@@ -60,6 +60,18 @@ describe('TreeDropdownField', () => {
 
         expect(props.actions.treeDropdownField.addSelectedValues).not.toBeCalled();
       });
+
+      it('should reset the visible prop based on the tree', (done) => {
+        field = ReactTestUtils.renderIntoDocument(
+          <TreeDropdownField {...props} />
+        );
+
+        // Wait until callFetch has been resolved, we can't mock this as it is called on mount
+        setTimeout(() => {
+          expect(props.actions.treeDropdownField.setVisible).toBeCalledWith('Form_Test', []);
+          done();
+        }, 0)
+      })
     });
 
     describe('multi-select', () => {
