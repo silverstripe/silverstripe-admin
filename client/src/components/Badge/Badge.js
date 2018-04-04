@@ -8,7 +8,7 @@ class Badge extends PureComponent {
     }
     const className = classnames(
       this.props.className,
-      `badge badge-${this.props.status} badge-pill`
+      `badge badge-${this.props.status}`
     );
     return (
       <span className={className}>
@@ -34,6 +34,7 @@ Badge.propTypes = {
 
 Badge.defaultProps = {
   status: 'default',
+  className: 'badge-pill',
 };
 
 export default Badge;

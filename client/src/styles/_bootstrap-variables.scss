@@ -328,7 +328,7 @@ $table-hover-bg: #f0f4f7;
 $table-active-bg: map_get($theme-colors, primary);
 
 //$table-border-width:            $border-width !default;
-//$table-border-color:            $gray-200 !default;
+$table-border-color:            lighten($border-color, 4) !default;
 
 //$table-head-bg:                 $gray-200 !default;
 //$table-head-color:              $gray-700 !default;
