@@ -126,13 +126,12 @@ Otherwise, invoke the registerFragment() function with '{ force: true }' as the 
   },
 
   /**
-   * Creates a factory function for the given service
-   *
+   * Runs all of the factories against the manager and returns the instance
    * @param {string} key
    * @param {Array} middlewareMatches
-   * @returns {function}
+   * @returns {ApolloGraphqlManager}
    */
-  getFactory(key, middlewareMatches) {
+  getProcessedManager(key, middlewareMatches) {
     const factories = middlewareMatches.map(middleware => middleware.factory).reverse();
     const config = this.services[key];
 
@@ -145,8 +144,20 @@ Otherwise, invoke the registerFragment() function with '{ force: true }' as the 
       factory(manager);
     }, config);
 
-    return manager.getContainer();
+    return manager;
   },
+
+  /**
+   * Creates a factory function for the given service
+   *
+   * @param {string} key
+   * @param {Array} middlewareMatches
+   * @returns {function}
+   */
+  getFactory(key, middlewareMatches) {
+    return this.getProcessedManager(key, middlewareMatches).getContainer();
+  },
+
 });
 
 export default buildApolloGraphqlContainer;

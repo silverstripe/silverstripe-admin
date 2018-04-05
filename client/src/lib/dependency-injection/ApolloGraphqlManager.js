@@ -4,6 +4,13 @@ import gql from 'graphql-tag';
 const TEMPLATE_OVERRIDE = '__TEMPLATE_OVERRIDE__';
 const protectedConfig = ['templateName', 'fields', 'params', 'fragments'];
 const deferredApolloConfig = ['options', 'props', 'variables', 'skip', 'update'];
+const configDefaults = {
+  params: [],
+  fields: [],
+  fragments: [],
+  pagination: true,
+  apolloConfig: {},
+};
 
 /**
  * An API for updating the query/mutation parts of a given template
@@ -64,10 +71,14 @@ class ApolloGraphqlManager {
    * @param {object} fragments - a key-value map of fragments
    */
   constructor(config, templates, fragments) {
+    const mergedConfig = {
+      ...configDefaults,
+      ...config,
+    };
     const {
       apolloConfig,
       ...otherConfig
-    } = config;
+    } = mergedConfig;
 
     this.config = otherConfig;
     this.apolloConfigInitValues = apolloConfig;
@@ -358,12 +369,11 @@ Tried to use template '${name}', which could not be found. Please make sure that
   }
 
   /**
-   * Creates the graphql() HOC using the dynamic query and all transforms to config
-   * @returns {Function}
+   * Gets the AST for the interpolated string of graphql
+   * @returns {Document}
    */
-  getContainer() {
+  getGraphqlAST() {
     const config = this.getConfig();
-    const apolloConfig = this.getApolloConfig();
     const template = this.getRawTemplate(config.templateName);
 
     const expressed = template.expressions.map(expression => {
@@ -374,11 +384,15 @@ Tried to use template '${name}', which could not be found. Please make sure that
       return expression(config);
     });
 
-    const query = gql(template.strings, ...expressed);
+    return gql(template.strings, ...expressed);
+  }
 
-    // can provide AST manipulation here
-
-    return graphql(query, apolloConfig);
+  /**
+   * Creates the graphql() HOC using the dynamic query and all transforms to config
+   * @returns {Function}
+   */
+  getContainer() {
+    return graphql(this.getGraphqlAST(), this.getApolloConfig());
   }
 }
 

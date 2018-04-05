@@ -1,17 +1,10 @@
 import { defaultTag } from './tags';
-import { getSingularName, getFields, getFragments } from './helpers';
+import { getSingularName } from './helpers';
 
 const buildDeleteMutation = (tag = defaultTag) => (
-  tag`mutation Delete${getSingularName}(
-    $Input:${getSingularName}DeleteInputType!
-  ) {
-    delete${getSingularName}(
-      Input: $Input
-    ) {
-      ${getFields}
-    }
-  }
-  ${getFragments}`
+  tag`mutation Delete${getSingularName}($IDs:[ID]!) {
+    delete${getSingularName}(IDs: $IDs)
+  }`
 );
 
 export default buildDeleteMutation;
