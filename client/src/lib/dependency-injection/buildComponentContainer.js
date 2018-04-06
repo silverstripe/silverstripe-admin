@@ -34,6 +34,7 @@ const buildComponentContainer = (base = buildBaseContainer()) => ({
 
     const componentName = (service.displayName || service.name || 'Component');
     const componentKey = (context) ? `[${context}]` : '';
+    // @todo this causes incorrect context to display if this service is used in different contexts
     service.displayName = `${componentName}${componentKey}`;
 
     return service;
