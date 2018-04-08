@@ -87,8 +87,8 @@ const buildBaseContainer = () => ({
    */
   load() {
     this.isProtected();
-    this.factories = Object.entries(this.services)
-      .reduce((factories, [key, service]) => {
+    this.factories = Object.keys(this.services)
+      .reduce((factories, key) => {
         const middleware = this.middlewareRegistries[key];
         if (middleware) {
           middleware.sort();
@@ -108,7 +108,7 @@ const buildBaseContainer = () => ({
         }
         return {
           ...factories,
-          [key]: () => service,
+          [key]: () => this.getFactory(key, []),
         };
       }, {});
 
@@ -128,7 +128,7 @@ const buildBaseContainer = () => ({
 
     if (this.services[key] && force !== true) {
       throw new Error(`
-      Tried to register service ${key} more than once. This practice is discouraged. Consider
+      Tried to register service '${key}' more than once. This practice is discouraged. Consider
       using Injector.update() to enhance the service rather than override it completely.
       Otherwise, invoke the register() function with { force: true } as the third argument.
      `);

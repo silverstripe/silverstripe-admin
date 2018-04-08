@@ -3,7 +3,7 @@ import injectorContext from './injectorContext';
 const withInjector = (Component) => {
   // eslint-disable-next-line no-param-reassign
   Component.contextTypes = {
-    ...Component.contextTypes,
+    ...(Component.contextTypes || {}),
     ...injectorContext,
   };
   // eslint-disable-next-line no-param-reassign

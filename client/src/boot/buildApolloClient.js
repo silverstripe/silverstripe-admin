@@ -16,8 +16,9 @@ function buildApolloClient(baseUrl) {
     shouldBatch: true,
     addTypename: true,
     dataIdFromObject: (o) => {
-      if (o.id >= 0 && o.__typename) {
-        return `${o.__typename}:${o.id}`;
+      const dataId = o.id || o.ID;
+      if (dataId && dataId >= 0 && o.__typename) {
+        return `${o.__typename}:${dataId}`;
       }
       return null;
     },
