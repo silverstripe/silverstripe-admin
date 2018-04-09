@@ -367,9 +367,8 @@
 }
 
 .grid-field {
-
   // If gridfield isn't first thing on page
-  .form-group + & {
+  .field + & {
     .toolbar--content {
       margin-top: 0;
     }
