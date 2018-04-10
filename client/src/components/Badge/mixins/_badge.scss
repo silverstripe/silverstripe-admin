@@ -1,0 +1,13 @@
+// Provides an inverted variant of Bootstrap badges.
+// See: bootstrap/mixins/_badge.scss for original.
+@mixin badge-variant-inverted($bg) {
+  color: $bg;
+  background-color: color-yiq($bg);
+
+  &[href] {
+    @include hover-focus {
+      color: darken($bg, 10%);
+      background-color: color-yiq($bg);
+    }
+  }
+}

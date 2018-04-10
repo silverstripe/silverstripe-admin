@@ -17,3 +17,4 @@ const props = {
  * `status` (string): The status for the badge, takes bootstrap's `success`/`warning`/`danger`/`info`/`default` values.
  * `message` (string): The string to display in the badge.
  * `className` (string): Any extra classes to apply for the badge.
+ * `inverted` (boolean): If the colours should be inverted.
