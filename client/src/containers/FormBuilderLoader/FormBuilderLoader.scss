@@ -1,7 +1,7 @@
-// App
-// Container for React areas
+// Container for FormBuilder
 
 .form-builder-loader {
+  // Shows a loading indicator while fetching a form
   &--loading {
     text-indent: -9999em;
     background: transparent url("../../images/spinner.gif") center center no-repeat;
