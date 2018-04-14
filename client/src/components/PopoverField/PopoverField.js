@@ -89,7 +89,7 @@ class PopoverField extends Component {
 }
 
 PopoverField.propTypes = {
-  id: React.PropTypes.string,
+  id: React.PropTypes.string.isRequired,
   title: React.PropTypes.any,
   container: React.PropTypes.any,
   className: React.PropTypes.string,
