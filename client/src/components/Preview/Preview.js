@@ -62,7 +62,7 @@ class Preview extends Component {
         className="btn btn-secondary font-icon-left-open-big toolbar__back-button hidden-lg-up"
         type="button"
         onClick={this.handleBackClick}
-      >Back</button>
+      >{i18n._t('Admin.BACK', 'Back')}</button>
     );
   }
 
@@ -85,7 +85,9 @@ class Preview extends Component {
     if (!this.props.itemId) {
       return (
         <div className="preview__overlay">
-          <h3 className="preview__overlay-text">No preview available.</h3>
+          <h3 className="preview__overlay-text">
+            {i18n._t('Admin.NO_PREVIEW', 'No preview available.')}
+          </h3>
         </div>
       );
     }
@@ -94,7 +96,9 @@ class Preview extends Component {
     if (!previewUrl) {
       return (
         <div className="preview__overlay">
-          <h3 className="preview__overlay-text">There is no preview available for this item.</h3>
+          <h3 className="preview__overlay-text">
+            {i18n._t('Admin.NO_ITEM_PREVIEW', 'There is no preview available for this item.')}
+          </h3>
         </div>
       );
     }
@@ -113,9 +117,11 @@ class Preview extends Component {
   }
 
   render() {
-    const className = classnames('flexbox-area-grow fill-height preview', this.props.className);
+    const { className } = this.props;
+
+    const classNames = classnames('preview', className);
     return (
-      <div className={className}>
+      <div className={classNames}>
         {this.renderBody()}
         <div className="toolbar toolbar--south">
           { this.renderBackButton() }
@@ -130,11 +136,16 @@ class Preview extends Component {
 }
 
 Preview.propTypes = {
+  className: React.PropTypes.string,
   itemLinks: React.PropTypes.object,
   itemId: React.PropTypes.number,
   onBack: React.PropTypes.func,
   moreActions: React.PropTypes.arrayOf(React.PropTypes.element),
   moreActionsPopoverId: React.PropTypes.string,
+};
+
+Preview.defaultProps = {
+  className: 'flexbox-area-grow fill-height',
 };
 
 export default Preview;
