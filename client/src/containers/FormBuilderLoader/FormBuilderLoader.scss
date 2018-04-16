@@ -5,6 +5,7 @@
   &--loading {
     text-indent: -9999em;
     background: transparent url("../../images/spinner.gif") center center no-repeat;
+    min-height: 43px;
 
     @media only screen and (min-device-pixel-ratio: 2),
       only screen and (min-resolution: 192dpi),
