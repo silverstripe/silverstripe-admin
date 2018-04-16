@@ -89,7 +89,6 @@ class Tabs extends Component {
           onClick={() => (this.toggle(child.props.name))}
           disabled={child.props.disabled}
           className={classNames}
-          href="#"
         >
           {child.props.title}
         </NavLink>

@@ -16,6 +16,7 @@
     color: $text-muted;
     padding: $nav-link-padding;
     border-bottom-width: $nav-tabs-link-border-width;
+    cursor: pointer;
 
     &:hover,
     &:focus {
