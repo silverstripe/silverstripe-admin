@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { compose, bindActionCreators } from 'redux';
 import fetch from 'isomorphic-fetch';
 import deepFreeze from 'deep-freeze-strict';
+import Loading from 'components/Loading/Loading';
 import {
   SubmissionError,
   autofill,
@@ -404,7 +405,7 @@ class FormBuilderLoader extends Component {
     // If the response from fetching the initial data
     // hasn't come back yet, don't render anything.
     if (!this.props.schema || !this.props.schema.schema || this.props.loading) {
-      return <div className="form-builder-loader--loading">Loading</div>;
+      return <Loading />;
     }
 
     const props = Object.assign({}, this.props, {
