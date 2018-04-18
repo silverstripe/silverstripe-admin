@@ -69,6 +69,10 @@
     height: auto;
     width: 100%;
   }
+
+  &>.alert {
+    flex-grow: 0;
+  }
 }
 
 
