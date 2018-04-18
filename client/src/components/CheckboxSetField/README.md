@@ -4,7 +4,7 @@ Generates a checkbox button group.
 
 ## Example
 ```js
-<CheckSetField name="my-select" source={[
+<CheckboxSetField name="my-select" source={[
 	{ value: 'one', title: '1' },
 	{ value: 'two', title: '2', disabled: true },
 	{ value: 'three', title: '3' },
