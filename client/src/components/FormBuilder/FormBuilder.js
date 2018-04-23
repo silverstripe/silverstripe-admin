@@ -102,7 +102,7 @@ class FormBuilder extends Component {
    */
   buildComponent(props) {
     // Inline `input` props into main field props
-    // (each component can pick and choose the props required for it's <input>
+    // (each component can   pick and choose the props required for it's <input>
     // See http://redux-form.com/6.0.5/docs/api/Field.md/#input-props
     const componentProps = {
       ...props,

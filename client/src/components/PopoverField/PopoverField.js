@@ -29,13 +29,14 @@ class PopoverField extends Component {
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
-    })
+    });
   }
 
   render() {
     const placement = this.getPlacement();
 
     const buttonClasses = classnames({
+      'popover-container': true,
       btn: true,
       'btn-secondary': true,
       [this.props.className]: true,
@@ -47,14 +48,13 @@ class PopoverField extends Component {
     const buttonProps = {
       id: this.props.id,
       type: 'button',
-      className: buttonClasses,
       onClick: this.toggle,
       title: this.props.data.buttonTooltip,
     };
 
     return (
-      <Button {...buttonProps}>
-        {this.props.title}
+      <div className={buttonClasses}>
+        <Button {...buttonProps}>{this.props.title}</Button>
         <Popover
           id={`${this.props.id}_Popover`}
           placement={placement}
@@ -67,7 +67,7 @@ class PopoverField extends Component {
           <PopoverHeader>{this.props.data.popoverTitle}</PopoverHeader>
           <PopoverBody>{this.props.children}</PopoverBody>
         </Popover>
-      </Button>
+      </div>
     );
   }
 }
