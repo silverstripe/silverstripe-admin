@@ -24,27 +24,12 @@ class PopoverField extends Component {
   }
 
   /**
-   * Gets the DOM element the Popover markup will be appended to
-   * @return {*}
-   */
-  getContainer() {
-    if (this.props.container) {
-      return this.props.container;
-    }
-    return this.button;
-  }
-
-  /**
    * Toggle the popover on or off
    */
   toggle() {
-    // Force this to the bottom of the execution queue so that buttons
-    // aren't removed from the DOM before their onClick handlers fire.
-    setTimeout(() => (
-        this.setState({
-          isOpen: !this.state.isOpen
-        })
-    ), 0);
+    this.setState({
+      isOpen: !this.state.isOpen
+    })
   }
 
   render() {
@@ -68,7 +53,7 @@ class PopoverField extends Component {
     };
 
     return (
-      <Button {...buttonProps} innerRef={button => { this.button = button; }}>
+      <Button {...buttonProps}>
         {this.props.title}
         <Popover
           id={`${this.props.id}_Popover`}
@@ -77,7 +62,7 @@ class PopoverField extends Component {
           target={this.props.id}
           toggle={this.toggle}
           className={this.props.popoverClassName}
-          container={this.getContainer()}
+          container={this.props.container}
         >
           <PopoverHeader>{this.props.data.popoverTitle}</PopoverHeader>
           <PopoverBody>{this.props.children}</PopoverBody>
