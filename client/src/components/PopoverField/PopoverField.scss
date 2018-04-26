@@ -1,24 +1,4 @@
 // Popover: Custom styles built on top of the Bootstrap popover component
-.popover-container {
-  position: relative;
-
-  button.btn-secondary:not(:disabled) {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background: transparent;
-
-    &:hover,
-    &:focus,
-    &:active {
-      background-color: transparent;
-      border: 0;
-    }
-  }
-}
-
 .popover {
   box-shadow: $z-depth-1;
   font-size: $font-size-base;
