@@ -27,6 +27,7 @@ import NotFoundComponent from 'components/NotFoundComponent/NotFoundComponent';
 import Form from 'components/Form/Form';
 import ReduxForm from 'containers/Form/Form';
 import UsedOnTable from 'components/UsedOnTable/UsedOnTable';
+import Loading from 'components/Loading/Loading';
 
 export default () => {
   Injector.component.registerMany({
@@ -58,5 +59,6 @@ export default () => {
     FormBuilderModal,
     NotFoundComponent,
     UsedOnTable,
+    Loading,
   });
 };

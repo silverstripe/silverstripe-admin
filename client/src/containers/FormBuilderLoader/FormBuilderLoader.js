@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { compose, bindActionCreators } from 'redux';
 import fetch from 'isomorphic-fetch';
 import deepFreeze from 'deep-freeze-strict';
-import Loading from 'components/Loading/Loading';
 import {
   SubmissionError,
   autofill,
@@ -402,6 +401,7 @@ class FormBuilderLoader extends Component {
   }
 
   render() {
+    const Loading = this.props.loadingComponent;
     // If the response from fetching the initial data
     // hasn't come back yet, don't render anything.
     if (!this.props.schema || !this.props.schema.schema || this.props.loading) {
@@ -430,6 +430,7 @@ FormBuilderLoader.propTypes = Object.assign({}, basePropTypes, {
   form: PropTypes.string,
   submitting: PropTypes.bool,
   onFetchingSchema: PropTypes.func,
+  loadingComponent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]).isRequired,
 });
 
 function mapStateToProps(state, ownProps) {
@@ -458,8 +459,9 @@ export { FormBuilderLoader as Component };
 
 export default compose(
   inject(
-    ['ReduxForm', 'ReduxFormField'],
-    (ReduxForm, ReduxFormField) => ({
+    ['ReduxForm', 'ReduxFormField', 'Loading'],
+    (ReduxForm, ReduxFormField, Loading) => ({
+      loadingComponent: Loading,
       baseFormComponent: ReduxForm,
       baseFieldComponent: ReduxFormField,
     }),
