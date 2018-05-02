@@ -1,3 +1,5 @@
+@import "mixins/badge";
+
 // Bootstrap badge
 .badge {
   text-transform: uppercase;
@@ -9,4 +11,11 @@
 // Todo: replace .status-archived class name with .badge--[modifier]
 .status-archived {
   color: $text-muted;
+}
+
+// Inverted states
+@each $color, $value in $theme-colors {
+  .badge-#{$color}--inverted {
+    @include badge-variant-inverted($value);
+  }
 }

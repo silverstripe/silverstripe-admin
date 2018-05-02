@@ -37,6 +37,7 @@ require('expose-loader?AccordionBlock!components/Accordion/AccordionBlock');
 require('expose-loader?HiddenField!components/HiddenField/HiddenField');
 require('expose-loader?ListGroup!components/ListGroup/ListGroup');
 require('expose-loader?ListGroupItem!components/ListGroup/ListGroupItem');
+require('expose-loader?Loading!components/Loading/Loading');
 require('expose-loader?TextField!components/TextField/TextField');
 require('expose-loader?LiteralField!components/LiteralField/LiteralField');
 require('expose-loader?Toolbar!components/Toolbar/Toolbar');
@@ -48,6 +49,7 @@ require('expose-loader?BreadcrumbsActions!state/breadcrumbs/BreadcrumbsActions')
 require('expose-loader?RecordsActionTypes!state/records/RecordsActionTypes');
 require('expose-loader?UnsavedFormsActions!state/unsavedForms/UnsavedFormsActions');
 require('expose-loader?Badge!components/Badge/Badge');
+require('expose-loader?CheckboxSetField!components/CheckboxSetField/CheckboxSetField');
 require('expose-loader?Preview!components/Preview/Preview');
 require('expose-loader?Focusedzone!components/Focusedzone/Focusedzone');
 require('expose-loader?Config!lib/Config');

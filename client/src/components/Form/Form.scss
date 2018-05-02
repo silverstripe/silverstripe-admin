@@ -21,6 +21,11 @@
       margin-bottom: 0;
     }
   }
+
+  .panel--padded > & {
+    margin-left: -$panel-padding-x;
+    margin-right: -$panel-padding-x;
+  }
 }
 
 .form--padded {

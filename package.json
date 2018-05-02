@@ -79,14 +79,15 @@
   },
   "devDependencies": {
     "@silverstripe/eslint-config": "^0.0.4",
-    "@silverstripe/webpack-config": "^0.7.0",
+    "@silverstripe/webpack-config": "^0.8.0",
     "@storybook/addon-actions": "^3.2.19",
     "@storybook/addon-options": "^3.2.19",
     "@storybook/react": "^3.2.19",
     "babel-jest": "^20.0.3",
     "copy-webpack-plugin": "^4.2.0",
     "html-loader": "^0.5.1",
-    "jest-cli": "^19.0.2"
+    "jest-cli": "^19.0.2",
+    "webpack": "^2"
   },
   "resolutions": {
     "eslint": "^4.6.1"
