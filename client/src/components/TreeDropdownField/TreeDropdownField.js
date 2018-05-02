@@ -58,19 +58,7 @@ class TreeDropdownField extends Component {
   componentDidMount() {
     // Ensure root node is loaded, force invalidating the cache when not readonly or disabled
     if (!this.props.readOnly && !this.props.disabled) {
-      this.loadTree([], this.props.search)
-        .then((treeData) => {
-          // If this is the first time the tree has been loaded, then ensure
-          // the selected visible node is highlighted
-          if (!this.props.data.multiple && this.props.value) {
-            const newPath = this.props.findTreePath(treeData, this.props.value);
-            if (newPath) {
-              // Revert one level to show parent
-              newPath.pop();
-              this.props.actions.treeDropdownField.setVisible(this.props.id, newPath);
-            }
-          }
-        });
+      this.initialise();
     }
 
     const id = this.props.id;
@@ -201,6 +189,34 @@ class TreeDropdownField extends Component {
   }
 
   /**
+   * Initialises the state of this field, forcing a root node
+   * request and conditionally setting the path to the selected value
+   * for single selected values.
+   *
+   * @return {Promise}
+   */
+  initialise() {
+    return this
+      .loadTree([], this.props.search)
+      .then((treeData) => {
+        // If this is the first time the tree has been loaded, then ensure
+        // the selected visible node is highlighted, or otherwise reset to root
+        let newPath = [];
+        if (!this.props.data.multiple && this.props.value) {
+          // Get path of current node
+          newPath = this.props.findTreePath(treeData, this.props.value);
+          if (newPath) {
+            // Revert one level to show parent
+            newPath.pop();
+          } else {
+            newPath = [];
+          }
+        }
+        this.props.actions.treeDropdownField.setVisible(this.props.id, newPath);
+      });
+  }
+
+  /**
    * Call to make the fetching happen
    *
    * @param {Array} path to load
@@ -214,8 +230,12 @@ class TreeDropdownField extends Component {
       fetchURL.query.search = search;
       fetchURL.query.flatList = '1';
     }
+    // If incrementally loading, set base node
     if (path.length) {
       fetchURL.query.ID = path[path.length - 1];
+    } else if (!props.data.multiple && props.value) {
+      // If initial load, ensure that we mark any selected value as exposed
+      fetchURL.query.forceValue = props.value;
     }
     fetchURL.query.format = 'json';
     fetchURL.search = null;
