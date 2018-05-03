@@ -37,6 +37,7 @@ require('expose-loader?AccordionBlock!components/Accordion/AccordionBlock');
 require('expose-loader?HiddenField!components/HiddenField/HiddenField');
 require('expose-loader?ListGroup!components/ListGroup/ListGroup');
 require('expose-loader?ListGroupItem!components/ListGroup/ListGroupItem');
+require('expose-loader?Loading!components/Loading/Loading');
 require('expose-loader?TextField!components/TextField/TextField');
 require('expose-loader?LiteralField!components/LiteralField/LiteralField');
 require('expose-loader?Toolbar!components/Toolbar/Toolbar');

@@ -39,6 +39,40 @@ describe('TreeDropdownField', () => {
     };
   });
 
+  describe('initialise()', () => {
+    let loadTree = null;
+    beforeEach(() => {
+      loadTree = jest.fn(() => Promise.resolve({}));
+      props.findTreePath = jest.fn((data, value) => (value ? [4, value] : null));
+    });
+
+    it('should call setVisible with selected value', () => {
+      props.data.valueObject = { id: 67 };
+      props.value = 67;
+      field = ReactTestUtils.renderIntoDocument(
+        <TreeDropdownField {...props} />
+      );
+      field.loadTree = loadTree;
+      const setVisible = props.actions.treeDropdownField.setVisible;
+      field.initialise().then(() => {
+        expect(loadTree).toHaveBeenCalled();
+        expect(setVisible).toHaveBeenCalledWith('Form_Test', [4]);
+      });
+    });
+
+    it('should call setVisible with empty path', () => {
+      field = ReactTestUtils.renderIntoDocument(
+        <TreeDropdownField {...props} />
+      );
+      field.loadTree = loadTree;
+      const setVisible = props.actions.treeDropdownField.setVisible;
+      field.initialise().then(() => {
+        expect(loadTree).toHaveBeenCalled();
+        expect(setVisible).toHaveBeenCalledWith('Form_Test', []);
+      });
+    });
+  });
+
   describe('componentDidMount()', () => {
     describe('single-select', () => {
       it('should add valueObject to selectedValues', () => {

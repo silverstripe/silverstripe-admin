@@ -401,10 +401,11 @@ class FormBuilderLoader extends Component {
   }
 
   render() {
+    const Loading = this.props.loadingComponent;
     // If the response from fetching the initial data
     // hasn't come back yet, don't render anything.
     if (!this.props.schema || !this.props.schema.schema || this.props.loading) {
-      return <div className="form-builder-loader--loading">Loading</div>;
+      return <Loading />;
     }
 
     const props = Object.assign({}, this.props, {
@@ -429,6 +430,7 @@ FormBuilderLoader.propTypes = Object.assign({}, basePropTypes, {
   form: PropTypes.string,
   submitting: PropTypes.bool,
   onFetchingSchema: PropTypes.func,
+  loadingComponent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]).isRequired,
 });
 
 function mapStateToProps(state, ownProps) {
@@ -457,8 +459,9 @@ export { FormBuilderLoader as Component };
 
 export default compose(
   inject(
-    ['ReduxForm', 'ReduxFormField'],
-    (ReduxForm, ReduxFormField) => ({
+    ['ReduxForm', 'ReduxFormField', 'Loading'],
+    (ReduxForm, ReduxFormField, Loading) => ({
+      loadingComponent: Loading,
       baseFormComponent: ReduxForm,
       baseFieldComponent: ReduxFormField,
     }),
