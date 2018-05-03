@@ -111,12 +111,39 @@ $.entwine('ss', function($) {
         this.append(container);
       }
 
-      // Set panel width same as the content panel it contains. Assumes the panel has overflow: hidden.
-      this.setWidthExpanded(this.find('.cms-panel-content').innerWidth());
+      if (this.canSetCookie() && $.cookie('cms-panel-width-' + this.attr('id'))) {
+          // Set panel width to the saved width from the last resize
+          this.setWidthExpanded($.cookie('cms-panel-width-' + this.attr('id')));
+          this.find('.cms-panel-content').width($.cookie('cms-panel-width-' + this.attr('id')));
+      } else {
+          // Set panel width same as the content panel it contains. Assumes the panel has overflow: hidden.
+          this.setWidthExpanded(this.find('.cms-panel-content').innerWidth());
+      }
 
       // Assumes the collapsed width is indicated by the toggle, or by an optionally collapsed view
       collapsedContent = this.find('.cms-panel-content-collapsed');
       this.setWidthCollapsed(collapsedContent.length ? collapsedContent.innerWidth() : this.find('.toggle-expand').innerWidth());
+
+      if (this.hasClass('cms-content-tools')) {
+          var self = this;
+          this.resizable({
+              handles: 'se',
+              autoHide: false,
+              alsoResize: this.find('.cms-panel-content'),
+              minWidth: 250,
+              minHeight: jQuery('body').innerHeight(),
+              resize: function( event, ui ) {
+                  self.css('height', '100%').find('.cms-panel-content').css('height', '100%');
+              },
+              stop: function( event, ui ) {
+                  self.setWidthExpanded(ui.size.width);
+                  if (self.canSetCookie()) {
+                      // Store the width
+                      $.cookie('cms-panel-width-' + self.attr('id'), ui.size.width, { path: '/', expires: 31 });
+                  }
+              }
+          });
+      }
 
       // Toggle visibility
       this.togglePanel(!this.getInitialCollapsedState(), true, false);
@@ -153,6 +180,13 @@ $.entwine('ss', function($) {
 
       if (doSaveState !== false) {
         this.setPersistedCollapsedState(!doExpand);
+      }
+
+      if (this.hasClass('cms-content-tools')) {
+          this.resizable(doExpand ? 'enable' : 'disable');
+          if (!doExpand) {
+              this.removeClass('ui-state-disabled');
+          }
       }
 
       // TODO Fix redraw order (inner to outer), and re-enable silent flag
