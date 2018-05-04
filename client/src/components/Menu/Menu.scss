@@ -44,7 +44,7 @@
       // Using important because JavaScript is overriding this value
       width: $cms-menu-width-collapsed !important; // sass-lint:disable-line no-important
       cursor: auto;
-      z-index: 1000;
+      z-index: 50;
 
       .cms-panel-header {
         width: 30px;
