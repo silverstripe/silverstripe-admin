@@ -1,5 +1,6 @@
 /* global window */
 import React, { Component } from 'react';
+import { Provider } from 'react-redux';
 import { ApolloProvider } from 'react-apollo';
 import provideInjector from './provideInjector';
 import withInjector from './withInjector';
@@ -88,8 +89,10 @@ const loadComponent = (targetName, context = {}, overrideInjector) => {
             apolloClient: client,
           } = fullContext;
           return (
-            <ApolloProvider store={store} client={client}>
-              <Target {...this.props} />
+            <ApolloProvider client={client}>
+              <Provider store={store}>
+                <Target {...this.props} />
+              </Provider>
             </ApolloProvider>
           );
         }
