@@ -13,18 +13,14 @@ import applyTransforms from 'boot/applyTransforms';
 
 window.ss = window.ss || {};
 
-function appBoot() {
+async function appBoot() {
   const baseUrl = Config.get('absoluteBaseUrl');
-  const apolloClient = buildApolloClient(baseUrl);
-  const apolloReducer = apolloClient.reducer();
+  const apolloClient = await buildApolloClient(baseUrl);
 
   registerComponents();
-  registerReducers({
-    apollo: apolloReducer,
-  });
+  registerReducers();
   const middleware = [
-    thunkMiddleware,
-    apolloClient.middleware(),
+    thunkMiddleware
   ];
   const debugging = Config.get('debugging');
   let runMiddleware = applyMiddleware(...middleware);

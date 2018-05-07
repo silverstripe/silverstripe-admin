@@ -1,53 +1,87 @@
-import ApolloClient, { createNetworkInterface } from 'apollo-client';
-import { printRequest } from 'apollo-client/transport/networkInterface';
+/* global window */
+import fetch from 'isomorphic-fetch';
+import ApolloClient, { InMemoryCache, IntrospectionFragmentMatcher, printAST, ApolloLink } from 'apollo-boost';
+import { BatchHttpLink } from 'apollo-link-batch-http';
 import qs from 'qs';
 
 function buildApolloClient(baseUrl) {
-  const networkInterface = createNetworkInterface({
-    uri: `${baseUrl}graphql/`,
-    opts: {
-      credentials: 'same-origin',
+  return fetch(`${baseUrl}graphql`, {
+      method: 'POST',
       headers: {
-        accept: 'application/json',
+        'Content-Type': 'application/json'
       },
-    },
-  });
-  const apolloClient = new ApolloClient({
-    shouldBatch: true,
-    addTypename: true,
-    dataIdFromObject: (o) => {
-      const dataId = o.id || o.ID;
-      if (dataId && dataId >= 0 && o.__typename) {
-        return `${o.__typename}:${dataId}`;
-      }
-      return null;
-    },
-    networkInterface,
-  });
-
-  networkInterface.use([{
-    applyMiddleware(req, next) {
-      const entries = printRequest(req.request);
-
-      // eslint-disable-next-line no-param-reassign
-      req.options.headers = Object.assign(
-        {},
-        req.options.headers,
-        {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      uri: `${baseUrl}`,
+      credentials: 'same-origin',
+      body: JSON.stringify({
+        query: `{
+        __schema {
+          types {
+            kind
+            name
+            possibleTypes {
+              name
+            }
+          }
         }
+      }`,
+      }),
+    })
+    .then(result => result.json())
+    .then(result => {
+      const fragmentData = result.data;
+      // here we're filtering out any type information unrelated to unions or interfaces
+      const filteredData = fragmentData.__schema.types.filter(
+        type => type.possibleTypes !== null,
       );
-      // eslint-disable-next-line no-param-reassign
-      req.options.body = qs.stringify(Object.assign(
-        {},
-        entries,
-        { variables: JSON.stringify(entries.variables) }
-      ));
-      next();
-    },
-  }]);
+      fragmentData.__schema.types = filteredData;
+      return fragmentData;
+    })
+    .then(fragmentData => {
+      const batchLink = new BatchHttpLink({
+        uri: `${baseUrl}`,
+        fetchOptions: {
+          credentials: 'same-origin',
+          headers: {
+            accept: 'application/json',
+          },
+        },
+      });
+      const fragmentMatcher = new IntrospectionFragmentMatcher({
+        fragmentData
+      });
+      const middlewareLink = new ApolloLink((operation, forward) => {
+        const entries = printAST(operation.request);
+        operation.setContext({
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+          },
+          body: qs.stringify(
+            Object.assign({}, entries, {
+              variables: JSON.stringify(entries.variables),
+            }),
+          )
+        });
+        return forward(operation);
+      });
+      const link = middlewareLink.concat(batchLink);
+      const cache = new InMemoryCache({
+        fragmentMatcher,
+        dataIdFromObject: (o) => {
+          const dataId = o.id || o.ID;
+          if (dataId && dataId >= 0 && o.__typename) {
+            return `${o.__typename}:${dataId}`;
+          }
+          return null;
+        },
+        addTypename: true,
+      });
+      const apolloClient = new ApolloClient({
+        cache,
+        link,
+      });
 
-  return apolloClient;
+      return apolloClient;
+    });
 }
 
 export default buildApolloClient;
