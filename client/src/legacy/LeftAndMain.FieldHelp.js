@@ -10,16 +10,22 @@ $.entwine('ss', function($) {
    * input fields (e.g. GridField), and aren't compatible
    * with showing tooltips.
    */
-  $(".cms .field.cms-description-tooltip").entwine({
+  $(".cms .field.cms-description-tooltip .form__field-holder").entwine({
     onmatch: function() {
       this._super();
 
-      var descriptionEl = this.find('.description'), inputEl, tooltipEl;
+      var descriptionEl = this.find('.form__field-description');
       if(descriptionEl.length) {
+        var offset = this.css('padding-left');
         this
           // TODO Remove title setting, shouldn't be necessary
           .attr('title', descriptionEl.text())
-          .tooltip({content: descriptionEl.html()});
+          .tooltip({
+            content: descriptionEl.html(),
+            position: {
+              my: "left+" + offset + " top"
+            }
+          });
         descriptionEl.remove();
       }
     },
@@ -27,11 +33,17 @@ $.entwine('ss', function($) {
 
   $(".cms .field.cms-description-tooltip :input").entwine({
     onfocusin: function(e) {
-      this.closest('.field').tooltip('open');
+      var holder = this.closest('.form__field-holder');
+      if (holder.data('tooltip')) {
+        holder.tooltip('open');
+      }
     },
     onfocusout: function(e) {
-      this.closest('.field').tooltip('close');
+      var holder = this.closest('.form__field-holder');
+      if (holder.data('tooltip')) {
+        holder.tooltip('close');
       }
+    }
   });
 
 });
