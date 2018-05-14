@@ -1,5 +1,4 @@
 import CompositeField from 'components/CompositeField/CompositeField';
-import fieldHolder from 'components/FieldHolder/FieldHolder';
 
 class FieldGroup extends CompositeField {
   getClassName() {
@@ -8,6 +7,6 @@ class FieldGroup extends CompositeField {
 }
 
 // Field group is essentially a composite field, but wrapped with a typical field holder
-export { FieldGroup as Component };
+// fieldHolder wrapping happens in the FormBuilder component
 
-export default fieldHolder(FieldGroup);
+export default FieldGroup;
