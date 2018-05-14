@@ -22,7 +22,7 @@ class TextField extends Component {
       name: this.props.name,
       disabled: this.props.disabled,
       readOnly: this.props.readOnly,
-      value: this.props.value,
+      value: this.props.value || '',
       placeholder: this.props.placeholder,
       autoFocus: this.props.autoFocus,
       maxLength: this.props.data && this.props.data.maxlength,
