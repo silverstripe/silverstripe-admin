@@ -5,9 +5,12 @@ import { from } from 'apollo-link';
 import getGraphqlFragments from './getGraphqlFragments';
 import buildNetworkComponents from './buildNetworkComponents';
 import buildCache from './buildCache';
+import Config from 'lib/Config';
 
 const buildClient = async (baseUrl) => {
-    const fragmentData = await getGraphqlFragments(baseUrl);
+    const graphQLConfig = Config.getSection('SilverStripe\\Admin\\LeftAndMain').graphql;
+    const cachedTypenames = graphQLConfig && graphQLConfig.cachedTypenames;
+    const fragmentData = await getGraphqlFragments(baseUrl, cachedTypenames);
     const cache = buildCache(fragmentData);
     const components = buildNetworkComponents(baseUrl);
     const stateLink = withClientState({
