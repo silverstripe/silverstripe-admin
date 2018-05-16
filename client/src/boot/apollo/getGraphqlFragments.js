@@ -20,9 +20,16 @@ const handleError = response => {
   return response;
 };
 
-const getGraphqlFragments = async (baseUrl) => {
-  const staticURL = `${baseUrl}assets/types.graphql`;
-  const dynamicURL = `${baseUrl}graphql/types`;
+const getGraphqlFragments = async (baseUrl, preferStatic = true) => {
+  const urls = [
+    `${baseUrl}assets/types.graphql`,
+    `${baseUrl}graphql/types`
+  ];
+  if (!preferStatic) {
+    urls.reverse();
+  }
+  const [primaryURL, fallbackURL] = urls;
+
   const fetchConfig = {
     method: 'GET',
     headers: {
@@ -41,10 +48,10 @@ const getGraphqlFragments = async (baseUrl) => {
 
   let response;
   try {
-    response = await fetchSchema(staticURL);
+    response = await fetchSchema(primaryURL);
   } catch (e) {
     try {
-      response = await fetchSchema(dynamicURL);
+      response = await fetchSchema(fallbackURL);
     } catch (finalError) {
       return Promise.reject(finalError);
     }
