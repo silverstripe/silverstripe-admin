@@ -3,9 +3,11 @@ import dataIdFromObject from './dataIdFromObject';
 
 const buildCache = (introspectionQueryResultData) => (
   new InMemoryCache({
-    fragmentMatcher: new IntrospectionFragmentMatcher({
-      introspectionQueryResultData,
-    }),
+    fragmentMatcher: introspectionQueryResultData
+      ? new IntrospectionFragmentMatcher({
+          introspectionQueryResultData,
+        })
+      : null,
     dataIdFromObject,
     addTypename: true,
   })

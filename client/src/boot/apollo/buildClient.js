@@ -10,7 +10,12 @@ import Config from 'lib/Config';
 const buildClient = async (baseUrl) => {
     const graphQLConfig = Config.getSection('SilverStripe\\Admin\\LeftAndMain').graphql;
     const cachedTypenames = graphQLConfig && graphQLConfig.cachedTypenames;
-    const fragmentData = await getGraphqlFragments(baseUrl, cachedTypenames);
+    let fragmentData;
+    try {
+      fragmentData = await getGraphqlFragments(baseUrl, cachedTypenames);
+    } catch (e) {
+        fragmentData = null;
+    }
     const cache = buildCache(fragmentData);
     const components = buildNetworkComponents(baseUrl);
     const stateLink = withClientState({
