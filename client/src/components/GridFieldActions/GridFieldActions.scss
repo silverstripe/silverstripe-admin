@@ -1,0 +1,24 @@
+.gridfield-actionmenu__container {
+  display: inline-flex;
+  margin: -.5em 0;
+}
+
+.action-menu {
+  & &--handled {
+    display: none;
+  }
+
+  &__toggle {
+    width: 3em;
+    text-indent: -9999em;
+    background-image: url("../../images/dot-3.svg");
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
+  &__dropdown {
+    button {
+      cursor: pointer;
+    }
+  }
+}

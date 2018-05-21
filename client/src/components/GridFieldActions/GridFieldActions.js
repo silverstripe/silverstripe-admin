@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import DropdownAction from './DropdownAction';
+import GridFieldDropdownAction from './GridFieldDropdownAction';
 // import i18n from 'i18n';
 
 class GridFieldActions extends PureComponent {
@@ -19,14 +19,10 @@ class GridFieldActions extends PureComponent {
     });
   }
 
-  // doAction(e) {
-  //   $('.grid-field .action:button').entwine('ss').onclick(e);
-  // }
-
   renderMultipleActions(schema) {
     const groupedActions = schema.reduce((groups, action) => {
       const groupsList = groups;
-      const groupName = action.group;
+      const groupName = action.group ? action.group : 'Default';
 
       if (!groupsList[groupName]) {
         groupsList[groupName] = [];
@@ -40,12 +36,12 @@ class GridFieldActions extends PureComponent {
         <DropdownToggle className="action-menu__toggle">
           Actions
         </DropdownToggle>
-        <DropdownMenu right>
+        <DropdownMenu className="action-menu__dropdown" right>
           {Object.keys(groupedActions).map(
             (group, index) => [
               index !== 0 && <DropdownItem divider />,
               groupedActions[group].map((action) =>
-                (<DropdownAction
+                (<GridFieldDropdownAction
                   data={action.data}
                   title={action.title}
                   type={action.type}
@@ -60,12 +56,24 @@ class GridFieldActions extends PureComponent {
   }
 
   renderSingleAction(action) {
-    const { type, url, title } = action;
-    const buttonType = type === 'Submit' ? 'submit' : undefined;
+    const { type, title, data } = action;
+    let { url } = action;
+    let buttonType;
+    if (type === 'submit') {
+      buttonType = 'submit';
+      url = undefined; // If url is defined reactstrap forces it to render as a link
+    }
+    let classNames = 'action';
+    if (data && data.classNames) {
+      classNames = `action ${data.classNames}`;
+    }
     return (
       <Button
+        className={classNames}
         type={buttonType}
         href={url}
+        data-url={data['data-url']}
+        name={data.name}
         color="secondary"
       >
         {title}
@@ -83,5 +91,12 @@ class GridFieldActions extends PureComponent {
     return null;
   }
 }
+
+const actionShape = GridFieldDropdownAction.propTypes;
+actionShape.group = React.PropTypes.string;
+
+GridFieldActions.propTypes = React.PropTypes.arrayOf(
+  React.PropTypes.shape(actionShape)
+).isRequired;
 
 export default GridFieldActions;
