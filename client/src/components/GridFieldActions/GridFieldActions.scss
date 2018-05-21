@@ -14,6 +14,10 @@
     background-image: url("../../images/dot-3.svg");
     background-position: center center;
     background-repeat: no-repeat;
+
+    &:not(:disabled):not(.disabled):active {
+      background-image: url("../../images/dot-3.svg");
+    }
   }
 
   &__dropdown {
