@@ -26,6 +26,7 @@ import TreeDropdownField from 'components/TreeDropdownField/TreeDropdownField';
 import FormBuilderModal from 'components/FormBuilderModal/FormBuilderModal';
 import NotFoundComponent from 'components/NotFoundComponent/NotFoundComponent';
 import Form from 'components/Form/Form';
+import FormAlert from 'components/FormAlert/FormAlert';
 import Preview from 'components/Preview/Preview';
 import ReduxForm from 'containers/Form/Form';
 import UsedOnTable from 'components/UsedOnTable/UsedOnTable';
@@ -60,6 +61,7 @@ export default () => {
     ReduxForm,
     ReduxFormField,
     Form,
+    FormAlert,
     FormBuilderModal,
     NotFoundComponent,
     UsedOnTable,
