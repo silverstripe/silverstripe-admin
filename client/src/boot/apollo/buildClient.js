@@ -11,6 +11,7 @@ const buildClient = async (baseUrl) => {
     const graphQLConfig = Config.getSection('SilverStripe\\Admin\\LeftAndMain').graphql;
     const cachedTypenames = graphQLConfig && graphQLConfig.cachedTypenames;
     let fragmentData;
+    // GraphQL may not return what we want (e.g. if schema is empty, so fail gracefully)
     try {
       fragmentData = await getGraphqlFragments(baseUrl, cachedTypenames);
     } catch (e) {
