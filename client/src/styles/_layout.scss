@@ -108,6 +108,7 @@ body {
 .flexbox-area-grow {
   -ms-flex: 1;
   flex: 1;
+  min-width: 0; // Allows some browsers to shrink below the width of their contents.
 }
 
 .cms .flexbox-display {
