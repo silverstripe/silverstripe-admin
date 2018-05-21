@@ -10,6 +10,7 @@ import CheckboxField from 'components/CheckboxField/CheckboxField';
 import CheckboxSetField from 'components/CheckboxSetField/CheckboxSetField';
 import OptionsetField from 'components/OptionsetField/OptionsetField';
 import GridField from 'components/GridField/GridField';
+import GridFieldActions from 'components/GridFieldActions/GridFieldActions';
 import SingleSelectField from 'components/SingleSelectField/SingleSelectField';
 import PopoverField from 'components/PopoverField/PopoverField';
 import HeaderField from 'components/HeaderField/HeaderField';
@@ -44,6 +45,7 @@ export default () => {
     CheckboxSetField,
     OptionsetField,
     GridField,
+    GridFieldActions,
     FieldGroup,
     SingleSelectField,
     PopoverField,
