@@ -143,9 +143,19 @@ $.entwine('ss', function($) {
   $('.gridfield-actionmenu__container').entwine({
     Timer: null,
     Component: null,
+    Actions: null,
 
     onmatch() {
       this._super();
+
+      let actions = [];
+
+      $('.action-menu--handled', this.parent()).each(function () {
+        const action = $(this).detach();
+        actions.push(action);
+      });
+
+      this.setActions(actions);
 
       const cmsContent = this.closest('.cms-content').attr('id');
       const context = (cmsContent)
@@ -164,6 +174,14 @@ $.entwine('ss', function($) {
       const container = this[0];
       if (container) {
         ReactDOM.unmountComponentAtNode(container);
+      }
+
+      const actions = this.getActions();
+      const actionContainer = this.parent();
+      if (actions) {
+        $(actions).each(function () {
+          $(this).appendTo(actionContainer);
+        });
       }
     },
 
