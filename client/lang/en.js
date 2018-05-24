@@ -22,6 +22,7 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.NONE": "None",
     "Admin.EDIT": "Edit",
     "Admin.ANY": "Any",
+    "Admin.ACTIONS": "Actions",
     "Admin.LOADING": "Loading...",
     "Admin.USED_ON": "Used on",
     "Admin.TYPE": "Type",

@@ -4,10 +4,6 @@
 }
 
 .action-menu {
-  & &--handled {
-    display: none;
-  }
-
   &__toggle {
     width: 3em;
     text-indent: -9999em;

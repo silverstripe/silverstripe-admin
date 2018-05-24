@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import GridFieldDropdownAction from './GridFieldDropdownAction';
-// import i18n from 'i18n';
+import i18n from 'i18n';
 
 class GridFieldActions extends PureComponent {
   constructor(props) {
@@ -34,7 +34,7 @@ class GridFieldActions extends PureComponent {
     return (
       <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
         <DropdownToggle className="action-menu__toggle">
-          Actions
+          {i18n._t('Admin.ACTIONS', 'Actions')}
         </DropdownToggle>
         <DropdownMenu className="action-menu__dropdown" right>
           {Object.keys(groupedActions).map(
