@@ -1,0 +1,15 @@
+.action-menu {
+  &__dropdown {
+    .dropdown-item {
+      cursor: pointer;
+    }
+  }
+
+  .dropdown-item[class*="font-icon-"]::before {
+    position: relative;
+    margin-right: $btn-icon-spacing;
+    line-height: $line-height-base * $font-size-root;
+    vertical-align: middle;
+    font-size: $font-size-lg;
+  }
+}

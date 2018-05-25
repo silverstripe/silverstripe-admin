@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
-import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Button, DropdownItem } from 'reactstrap';
 import GridFieldDropdownAction from './GridFieldDropdownAction';
-import i18n from 'i18n';
+import ActionMenu from '../ActionMenu/ActionMenu';
+import classnames from 'classnames';
 
 class GridFieldActions extends PureComponent {
   constructor(props) {
@@ -31,27 +32,24 @@ class GridFieldActions extends PureComponent {
       return groupsList;
     }, []);
 
+    const dropdownMenuProps = { right: true };
+
     return (
-      <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-        <DropdownToggle className="action-menu__toggle">
-          {i18n._t('Admin.ACTIONS', 'Actions')}
-        </DropdownToggle>
-        <DropdownMenu className="action-menu__dropdown" right>
-          {Object.keys(groupedActions).map(
-            (group, index) => [
-              index !== 0 && <DropdownItem divider />,
-              groupedActions[group].map((action) =>
-                (<GridFieldDropdownAction
-                  data={action.data}
-                  title={action.title}
-                  type={action.type}
-                  url={action.url}
-                />)
-              )
-            ]
-          )}
-        </DropdownMenu>
-      </Dropdown>
+      <ActionMenu dropdownMenuProps={dropdownMenuProps}>
+        {Object.keys(groupedActions).map(
+          (group, index) => [
+            index !== 0 && <DropdownItem divider />,
+            groupedActions[group].map((action) =>
+              (<GridFieldDropdownAction
+                data={action.data}
+                title={action.title}
+                type={action.type}
+                url={action.url}
+              />)
+            )
+          ]
+        )}
+      </ActionMenu>
     );
   }
 
@@ -63,10 +61,7 @@ class GridFieldActions extends PureComponent {
       buttonType = 'submit';
       url = undefined; // If url is defined reactstrap forces it to render as a link
     }
-    let classNames = 'action';
-    if (data && data.classNames) {
-      classNames = `action ${data.classNames}`;
-    }
+    const classNames = classnames('action', data.classNames);
     return (
       <Button
         className={classNames}

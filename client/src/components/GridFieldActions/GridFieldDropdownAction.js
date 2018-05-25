@@ -1,15 +1,15 @@
 import React, { PureComponent } from 'react';
 import { DropdownItem } from 'reactstrap';
+import classnames from 'classnames';
 
 class GridFieldDropdownAction extends PureComponent {
   render() {
     const { type, title, data } = this.props;
     let { url } = this.props;
-    let classNames = 'action';
-    if (data && data.classNames) {
-      classNames = `action ${data.classNames}`;
-    }
+
+    const classNames = classnames('action', data.classNames);
     let elementType = null;
+
     switch (type) {
       case 'submit':
         elementType = 'button';
