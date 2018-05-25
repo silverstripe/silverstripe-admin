@@ -1,5 +1,6 @@
 import { Field as ReduxFormField } from 'redux-form';
 import Injector from 'lib/Injector';
+import ActionMenu from 'components/ActionMenu/ActionMenu';
 import Badge from 'components/Badge/Badge';
 import TextField from 'components/TextField/TextField';
 import HiddenField from 'components/HiddenField/HiddenField';
@@ -35,6 +36,7 @@ import Loading from 'components/Loading/Loading';
 
 export default () => {
   Injector.component.registerMany({
+    ActionMenu,
     Badge,
     TextField,
     HiddenField,

@@ -62,7 +62,7 @@ describe('GridFieldActions', () => {
         <GridFieldActions {...props} />
       );
 
-      expect(ReactTestUtils.findRenderedDOMComponentWithClass(actionMenu, 'action-menu__toggle').textContent).toBe('Actions');
+      expect(ReactTestUtils.findRenderedDOMComponentWithClass(actionMenu, 'action-menu__toggle').textContent).toBe('View actions');
     });
   });
 
