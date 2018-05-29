@@ -43,7 +43,8 @@
 }
 
 // Button icons
-.btn[class*="font-icon-"]::before {
+.btn[class*="font-icon-"]::before,
+.dropdown-item[class*="font-icon-"]::before {
   position: relative;
   margin-right: $btn-icon-spacing;
   line-height: $line-height-base * $font-size-root;
