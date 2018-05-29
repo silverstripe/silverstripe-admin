@@ -8,6 +8,21 @@ describe('GridFieldActions', () => {
   let props = null;
   let actionMenu = null;
 
+  const button = {
+    type: 'submit',
+    title: 'Button',
+    group: 'My Group',
+    data: {},
+  };
+
+  const link = {
+    type: 'link',
+    title: 'Link',
+    url: '/test-url',
+    group: 'My Group',
+    data: {},
+  };
+
   beforeEach(() => {
     props = {
     };
@@ -25,14 +40,7 @@ describe('GridFieldActions', () => {
     });
 
     it('should render a single button, if there is only one action', () => {
-      props.schema = [
-        {
-          type: 'link',
-          title: 'Link',
-          url: '/test-url',
-          data: {},
-        }
-      ];
+      props.schema = [link];
 
       actionMenu = ReactTestUtils.renderIntoDocument(
         <GridFieldActions {...props} />
@@ -43,20 +51,7 @@ describe('GridFieldActions', () => {
     });
 
     it('should render a menu, if there is more than one action', () => {
-      props.schema = [
-        {
-          type: 'submit',
-          title: 'Button',
-          url: '/test-url',
-          data: {},
-        },
-        {
-          type: 'link',
-          title: 'Link',
-          url: '/test-url',
-          data: {},
-        }
-      ];
+      props.schema = [button, link];
 
       actionMenu = ReactTestUtils.renderIntoDocument(
         <GridFieldActions {...props} />
@@ -68,14 +63,7 @@ describe('GridFieldActions', () => {
 
   describe('renderSingleAction()', () => {
     it('should render the correct type of element according to action type', () => {
-      props.schema = [
-        {
-          type: 'submit',
-          title: 'Button',
-          url: '/test-url',
-          data: {},
-        }
-      ];
+      props.schema = [button];
 
       actionMenu = ReactTestUtils.renderIntoDocument(
         <GridFieldActions {...props} />
@@ -83,14 +71,7 @@ describe('GridFieldActions', () => {
 
       expect(ReactTestUtils.findRenderedDOMComponentWithClass(actionMenu, 'action').tagName).toBe('BUTTON');
 
-      props.schema = [
-        {
-          type: 'link',
-          title: 'Link',
-          url: '/test-url',
-          data: {},
-        }
-      ];
+      props.schema = [link];
 
       actionMenu = ReactTestUtils.renderIntoDocument(
         <GridFieldActions {...props} />
@@ -103,6 +84,7 @@ describe('GridFieldActions', () => {
           type: null,
           title: 'Link',
           url: '/test-url',
+          group: 'My Group',
           data: {},
         }
       ];
@@ -114,6 +96,7 @@ describe('GridFieldActions', () => {
           type: [],
           title: 'Link',
           url: '/test-url',
+          group: 'My Group',
           data: {},
         }
       ];
@@ -124,20 +107,7 @@ describe('GridFieldActions', () => {
 
   describe('renderMultipleActions()', () => {
     it('should render the correct type of element according to action type', () => {
-      props.schema = [
-        {
-          type: 'submit',
-          title: 'Button',
-          url: '/test-url',
-          data: {},
-        },
-        {
-          type: 'link',
-          title: 'Link',
-          url: '/test-url',
-          data: {},
-        }
-      ];
+      props.schema = [button, link];
 
       actionMenu = ReactTestUtils.renderIntoDocument(
         <GridFieldActions {...props} />
@@ -151,44 +121,8 @@ describe('GridFieldActions', () => {
       expect(actionMenu[1].tagName).toBe('A');
     });
 
-    it('should not render a divider if there are no action groups or only one defined', () => {
-      props.schema = [
-        {
-          type: 'submit',
-          title: 'Button',
-          url: '/test-url',
-          data: {},
-        },
-        {
-          type: 'link',
-          title: 'Link',
-          url: '/test-url',
-          data: {},
-        }
-      ];
-
-      actionMenu = ReactTestUtils.renderIntoDocument(
-        <GridFieldActions {...props} />
-      );
-
-      expect(ReactTestUtils.scryRenderedDOMComponentsWithClass(actionMenu, 'dropdown-divider')).toHaveLength(0);
-
-      props.schema = [
-        {
-          type: 'submit',
-          title: 'Button',
-          url: '/test-url',
-          group: 'My Group',
-          data: {},
-        },
-        {
-          type: 'link',
-          title: 'Link',
-          url: '/test-url',
-          group: 'My Group',
-          data: {},
-        }
-      ];
+    it('should not render a divider if there is only one defined', () => {
+      props.schema = [button, link];
 
       actionMenu = ReactTestUtils.renderIntoDocument(
         <GridFieldActions {...props} />
@@ -202,7 +136,6 @@ describe('GridFieldActions', () => {
         {
           type: 'submit',
           title: 'Button',
-          url: '/test-url',
           group: 'First Group',
           data: {},
         },
@@ -230,7 +163,6 @@ describe('GridFieldActions', () => {
         {
           type: 'submit',
           title: 'Button',
-          url: '/test-url',
           group: 'First Group',
           data: {},
         },
@@ -251,7 +183,6 @@ describe('GridFieldActions', () => {
         {
           type: 'submit',
           title: 'Button',
-          url: '/test-url',
           group: 'First Group',
           data: {},
         },
