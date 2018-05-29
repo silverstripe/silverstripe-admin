@@ -11,6 +11,7 @@ import MobileMenuReducer from 'state/mobileMenu/MobileMenuReducer';
 import UnsavedFormsReducer from 'state/unsavedForms/UnsavedFormsReducer';
 import usedOnReducer from 'state/usedOn/usedOnReducer';
 import applyFormMiddleware from 'lib/dependency-injection/applyFormMiddleware';
+import AnchorSelectorReducer from 'state/anchorSelector/AnchorSelectorReducer';
 
 export default (extra = {}) => {
   const FormReducer = combineReducers({
@@ -28,6 +29,7 @@ export default (extra = {}) => {
     mobileMenu: MobileMenuReducer,
     unsavedForms: UnsavedFormsReducer,
     usedOn: usedOnReducer,
+    anchorSelector: AnchorSelectorReducer,
     ...extra,
   });
 
