@@ -23,12 +23,16 @@ class GridFieldActions extends PureComponent {
   renderMultipleActions(schema) {
     const groupedActions = schema.reduce((groups, action) => {
       const groupsList = groups;
-      const groupName = action.group ? action.group : 'Default';
+      const groupName = action.group;
+
+      if (!groupName) { throw new Error(`Action: \"${action.title}\" has no group assigned`); }
 
       if (!groupsList[groupName]) {
         groupsList[groupName] = [];
       }
+
       groupsList[groupName].push(action);
+
       return groupsList;
     }, []);
 
