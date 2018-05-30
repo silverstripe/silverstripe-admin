@@ -2,6 +2,7 @@ import Injector from 'lib/Injector';
 import Validator from 'lib/Validator';
 import classnames from 'classnames';
 import { findField } from 'lib/schemaFieldValues';
+import fieldHolder from 'components/FieldHolder/FieldHolder';
 
 const togglePristineState = (field, isPristine = false) => {
   // set pristine and dirty classes if they're defined
@@ -31,6 +32,16 @@ const togglePristineState = (field, isPristine = false) => {
 };
 
 const applyTransforms = () => {
+  Injector.transform(
+    'field-holders',
+    (updater) => {
+      // @todo: Should contain every field that exports itself wrapped in a `fieldHolder` by default
+      const fields = [
+        'FieldGroup',
+      ];
+      fields.forEach((field) => updater.component('FieldGroup', fieldHolder, `${field}Holder`));
+    }
+  );
   Injector.transform(
     'form-action-changed',
     (updater) => {

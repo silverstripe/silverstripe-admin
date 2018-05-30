@@ -2,6 +2,7 @@
 
 import $ from 'jquery';
 import React from 'react';
+import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 import { Router as ReactRouter, useRouterHistory } from 'react-router';
 import useBeforeUnload from 'history/lib/useBeforeUnload';
@@ -103,11 +104,13 @@ class BootRoutes {
     history.listenBefore(this.handleBeforeRoute);
 
     ReactDOM.render(
-      <ApolloProvider store={this.store} client={this.client}>
-        <ReactRouter
-          history={history}
-          routes={reactRouteRegister.getRootRoute()}
-        />
+      <ApolloProvider client={this.client}>
+        <Provider store={this.store}>
+          <ReactRouter
+            history={history}
+            routes={reactRouteRegister.getRootRoute()}
+          />
+        </Provider>
       </ApolloProvider>,
       document.getElementsByClassName('cms-content')[0]
     );

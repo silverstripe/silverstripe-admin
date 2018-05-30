@@ -24,6 +24,17 @@ class PopoverField extends Component {
   }
 
   /**
+   * Gets the DOM element the Popover markup will be appended to
+   * @return {*}
+   */
+  getContainer() {
+    if (this.props.container) {
+      return this.props.container;
+    }
+    return this.wrapper;
+  }
+
+  /**
    * Toggle the popover on or off
    */
   toggle() {
@@ -36,7 +47,6 @@ class PopoverField extends Component {
     const placement = this.getPlacement();
 
     const buttonClasses = classnames({
-      'popover-container': true,
       btn: true,
       'btn-secondary': true,
       [this.props.className]: true,
@@ -48,12 +58,18 @@ class PopoverField extends Component {
     const buttonProps = {
       id: this.props.id,
       type: 'button',
+      className: buttonClasses,
       onClick: this.toggle,
       title: this.props.data.buttonTooltip,
     };
 
+    const wrapperClasses = classnames({
+      [this.props.className]: true,
+      'popover-container': true,
+    });
+
     return (
-      <div className={buttonClasses}>
+      <div className={wrapperClasses} ref={(wrapper) => { this.wrapper = wrapper; }}>
         <Button {...buttonProps}>{this.props.title}</Button>
         <Popover
           id={`${this.props.id}_Popover`}
@@ -62,7 +78,7 @@ class PopoverField extends Component {
           target={this.props.id}
           toggle={this.toggle}
           className={this.props.popoverClassName}
-          container={this.props.container}
+          container={this.getContainer()}
         >
           <PopoverHeader>{this.props.data.popoverTitle}</PopoverHeader>
           <PopoverBody>{this.props.children}</PopoverBody>
@@ -73,7 +89,7 @@ class PopoverField extends Component {
 }
 
 PopoverField.propTypes = {
-  id: React.PropTypes.string,
+  id: React.PropTypes.string.isRequired,
   title: React.PropTypes.any,
   container: React.PropTypes.any,
   className: React.PropTypes.string,

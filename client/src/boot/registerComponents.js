@@ -1,5 +1,6 @@
 import { Field as ReduxFormField } from 'redux-form';
 import Injector from 'lib/Injector';
+import ActionMenu from 'components/ActionMenu/ActionMenu';
 import Badge from 'components/Badge/Badge';
 import TextField from 'components/TextField/TextField';
 import HiddenField from 'components/HiddenField/HiddenField';
@@ -10,6 +11,7 @@ import CheckboxField from 'components/CheckboxField/CheckboxField';
 import CheckboxSetField from 'components/CheckboxSetField/CheckboxSetField';
 import OptionsetField from 'components/OptionsetField/OptionsetField';
 import GridField from 'components/GridField/GridField';
+import GridFieldActions from 'components/GridFieldActions/GridFieldActions';
 import SingleSelectField from 'components/SingleSelectField/SingleSelectField';
 import PopoverField from 'components/PopoverField/PopoverField';
 import HeaderField from 'components/HeaderField/HeaderField';
@@ -26,12 +28,15 @@ import TreeDropdownField from 'components/TreeDropdownField/TreeDropdownField';
 import FormBuilderModal from 'components/FormBuilderModal/FormBuilderModal';
 import NotFoundComponent from 'components/NotFoundComponent/NotFoundComponent';
 import Form from 'components/Form/Form';
+import FormAlert from 'components/FormAlert/FormAlert';
+import Preview from 'components/Preview/Preview';
 import ReduxForm from 'containers/Form/Form';
 import UsedOnTable from 'components/UsedOnTable/UsedOnTable';
 import Loading from 'components/Loading/Loading';
 
 export default () => {
   Injector.component.registerMany({
+    ActionMenu,
     Badge,
     TextField,
     HiddenField,
@@ -42,6 +47,7 @@ export default () => {
     CheckboxSetField,
     OptionsetField,
     GridField,
+    GridFieldActions,
     FieldGroup,
     SingleSelectField,
     PopoverField,
@@ -55,9 +61,11 @@ export default () => {
     FormAction,
     LabelField,
     TreeDropdownField,
+    Preview,
     ReduxForm,
     ReduxFormField,
     Form,
+    FormAlert,
     FormBuilderModal,
     NotFoundComponent,
     UsedOnTable,

@@ -21,7 +21,7 @@ class SingleSelectField extends Component {
 
     label = typeof label === 'string'
       ? label
-      : this.props.value;
+      : (this.props.value || '');
 
     return <Input plaintext {...this.getInputProps()}>{label}</Input>;
   }

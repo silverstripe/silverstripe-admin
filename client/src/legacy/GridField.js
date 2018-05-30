@@ -1,5 +1,9 @@
 import $ from 'jquery';
 import i18n from 'i18n';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { schemaMerge } from 'lib/schemaFieldValues';
+import { loadComponent } from 'lib/Injector';
 
 require('../../../thirdparty/jquery-ui/jquery-ui.js');
 require('../../../thirdparty/jquery-entwine/dist/jquery.entwine-dist.js');
@@ -136,7 +140,63 @@ $.entwine('ss', function($) {
     }
   });
 
+  $('.gridfield-actionmenu__container').entwine({
+    Timer: null,
+    Component: null,
+    Actions: null,
 
+    onmatch() {
+      this._super();
+
+      let actions = [];
+
+      $('.action-menu--handled', this.parent()).each(function () {
+        const action = $(this).detach();
+        actions.push(action);
+      });
+
+      this.setActions(actions);
+
+      const cmsContent = this.closest('.cms-content').attr('id');
+      const context = (cmsContent)
+        ? { context: cmsContent }
+        : {};
+
+      const GridFieldActions = loadComponent('GridFieldActions', context);
+      this.setComponent(GridFieldActions);
+
+      this.refresh();
+    },
+
+    onunmatch() {
+      this._super();
+      // solves errors given by ReactDOM "no matched root found" error.
+      const container = this[0];
+      if (container) {
+        ReactDOM.unmountComponentAtNode(container);
+      }
+
+      const actions = this.getActions();
+      const actionContainer = this.parent();
+      if (actions) {
+        $(actions).each(function () {
+          $(this).appendTo(actionContainer);
+        });
+      }
+    },
+
+    refresh() {
+      const schema = this.data('schema');
+
+      const GridFieldActions = this.getComponent();
+
+      // TODO: rework entwine so that react has control of holder
+      ReactDOM.render(
+        <GridFieldActions schema={schema} />,
+        this[0]
+      );
+    },
+  })
 
   $('.grid-field :button[name=showFilter]').entwine({
     onclick: function(e) {
@@ -153,7 +213,12 @@ $.entwine('ss', function($) {
 
 
   $('.grid-field .ss-gridfield-item').entwine({
-    onclick: function(e) {
+    onclick: function (e) {
+      if (e.target.classList.contains('action-menu__toggle')) {
+        this._super(e);
+        return false;
+      }
+
       if($(e.target).closest('.action').length) {
         this._super(e);
         return false;
@@ -236,7 +301,7 @@ $.entwine('ss', function($) {
   });
 
   $('.grid-field .action:button').entwine({
-    onclick: function(e){
+    onclick: function (e) {
       var filterState='show'; //filterstate should equal current state.
 
       // If the button is disabled, do nothing.
@@ -258,7 +323,7 @@ $.entwine('ss', function($) {
     /**
      * Get the url this action should submit to
      */
-    actionurl: function() {
+    actionurl: function () {
       var btn = this.closest(':button'), grid = this.getGridField(),
         form = this.closest('form'), data = form.find(':input.gridstate').serialize(),
         csrf = form.find('input[name="SecurityID"]').val();

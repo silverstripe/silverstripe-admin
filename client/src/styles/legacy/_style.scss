@@ -1062,7 +1062,7 @@ html, body {
   background: $body-bg;
   width: $cms-panel-sm;
   box-shadow: 1px 0 0 0 $border-color-dark;
-  z-index: 1000;
+  z-index: 80;
   position: relative;
 
   &.collapsed .cms-content-header {

@@ -102,15 +102,17 @@ class FormBuilder extends Component {
    */
   buildComponent(props) {
     // Inline `input` props into main field props
-    // (each component can   pick and choose the props required for it's <input>
+    // (each component can pick and choose the props required for it's <input>
     // See http://redux-form.com/6.0.5/docs/api/Field.md/#input-props
+    const inputProps = props.input || {};
     const componentProps = {
       ...props,
       ...props.input,
-      // Redux prefers a single arg to onChange
-      onChange: (event, payload) => props.input.onChange(payload ? payload.value : event),
-      // required as reference for positional components like PopoverField
-      container: this.formDOM,
+      onChange: inputProps.onChange
+        ? (event, payload) => {
+          inputProps.onChange(payload ? payload.value : event);
+        }
+        : null,
     };
     delete componentProps.input;
     const { identifier } = this.props;
@@ -133,7 +135,6 @@ class FormBuilder extends Component {
     if (typeof createFn === 'function') {
       return createFn(SchemaComponent, componentProps);
     }
-
     return <SchemaComponent key={componentProps.id} {...componentProps} />;
   }
 

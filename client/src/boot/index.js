@@ -4,7 +4,7 @@ import Injector from 'lib/Injector';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import Config from 'lib/Config';
-import buildApolloClient from 'boot/buildApolloClient';
+import buildApolloClient from 'boot/apollo/buildClient';
 import { setConfig } from 'state/config/ConfigActions';
 import registerComponents from 'boot/registerComponents';
 import registerReducers from 'boot/registerReducers';
@@ -13,18 +13,13 @@ import applyTransforms from 'boot/applyTransforms';
 
 window.ss = window.ss || {};
 
-function appBoot() {
+async function appBoot() {
   const baseUrl = Config.get('absoluteBaseUrl');
-  const apolloClient = buildApolloClient(baseUrl);
-  const apolloReducer = apolloClient.reducer();
-
+  const apolloClient = await buildApolloClient(baseUrl);
   registerComponents();
-  registerReducers({
-    apollo: apolloReducer,
-  });
+  registerReducers();
   const middleware = [
-    thunkMiddleware,
-    apolloClient.middleware(),
+    thunkMiddleware
   ];
   const debugging = Config.get('debugging');
   let runMiddleware = applyMiddleware(...middleware);
