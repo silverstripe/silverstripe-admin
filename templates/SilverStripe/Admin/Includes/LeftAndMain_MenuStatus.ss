@@ -1,6 +1,6 @@
 <div class="cms-login-status">
 	<% with $CurrentMember %>
-        <a href="{$AdminURL}myprofile" class="cms-login-status__profile-link" title="<%t SilverStripe\Admin\CMSProfileController.MENUTITLE "My Profile" %>">
+        <a href="{$AdminURL}myprofile" class="cms-login-status__profile-link" title="<%t SilverStripe\Admin\LeftAndMain.PROFILE '{name} profile' name=$Name %>">
             <i class="font-icon-torso"></i>
             <span>
                 <% if $FirstName && $Surname %>$FirstName $Surname<% else_if $FirstName %>$FirstName<% else %>$Email<% end_if %>
