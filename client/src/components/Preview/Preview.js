@@ -43,7 +43,7 @@ class Preview extends Component {
       return null;
     }
     return (
-      <ActionMenu>
+      <ActionMenu className="preview__more-actions">
         {this.props.moreActions}
       </ActionMenu>
     );
@@ -120,8 +120,8 @@ class Preview extends Component {
       <div className={classNames}>
         {this.renderBody()}
         <div className="toolbar toolbar--south">
-          { this.renderBackButton() }
           <div className="btn-toolbar">
+            {this.renderBackButton()}
             {this.buildToolbarButtons()}
             {this.renderMoreActions()}
           </div>

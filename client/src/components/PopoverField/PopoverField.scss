@@ -39,14 +39,14 @@
       // TODO remove important by removing nesting of lists
       padding-left: 0 !important;
       list-style-type: none;
-      margin-left: -#{$popover-padding} + 1px; // minus border
-      margin-right: -#{$popover-padding} + 1px;
+      margin-left: -#{$popover-body-padding-x} + 1px; // minus border
+      margin-right: -#{$popover-body-padding-x} + 1px;
       margin-bottom: 0;
     }
 
     a {
       display: block;
-      padding: #{$spacer / 4} $popover-padding;
+      padding: #{$spacer / 4} $popover-body-padding-x;
       color: $dropdown-link-color;
 
       &:hover {
@@ -57,8 +57,8 @@
     }
 
     .btn {
-      padding-left: calc(#{$popover-padding} - 1px); // minus border
-      padding-right: calc(#{$popover-padding} - 1px);
+      padding-left: calc(#{$popover-body-padding-x} - 1px); // minus border
+      padding-right: calc(#{$popover-body-padding-x} - 1px);
       margin-left: calc(-.75rem + 1px);
       margin-right: calc(-.75rem + 1px);
       display: block;
