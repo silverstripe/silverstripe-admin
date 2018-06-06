@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import i18n from 'i18n';
-import PopoverField from 'components/PopoverField/PopoverField';
+import ActionMenu from '../ActionMenu/ActionMenu';
 import classnames from 'classnames';
 
 /**
@@ -38,18 +38,14 @@ class Preview extends Component {
     return toolbarButtons;
   }
 
-  renderPopover() {
+  renderMoreActions() {
     if (!this.props.moreActions || this.props.moreActions.length === 0) {
       return null;
     }
-    const props = {
-      data: { placement: 'top' },
-      id: this.props.moreActionsPopoverId,
-    };
     return (
-      <PopoverField {...props}>
+      <ActionMenu>
         {this.props.moreActions}
-      </PopoverField>
+      </ActionMenu>
     );
   }
 
@@ -127,7 +123,7 @@ class Preview extends Component {
           { this.renderBackButton() }
           <div className="btn-toolbar">
             {this.buildToolbarButtons()}
-            {this.renderPopover()}
+            {this.renderMoreActions()}
           </div>
         </div>
       </div>
@@ -141,7 +137,6 @@ Preview.propTypes = {
   itemId: React.PropTypes.number,
   onBack: React.PropTypes.func,
   moreActions: React.PropTypes.arrayOf(React.PropTypes.element),
-  moreActionsPopoverId: React.PropTypes.string,
 };
 
 Preview.defaultProps = {

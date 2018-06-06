@@ -66,6 +66,7 @@ class PopoverField extends Component {
     const wrapperClasses = classnames({
       [this.props.className]: true,
       'popover-container': true,
+      'popover-field': true
     });
 
     return (

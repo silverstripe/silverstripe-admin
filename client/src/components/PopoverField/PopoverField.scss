@@ -1,72 +1,74 @@
 // Popover: Custom styles built on top of the Bootstrap popover component
-.popover {
-  box-shadow: $z-depth-1;
-  font-size: $font-size-base;
-  min-width: 230px;
+.popover-field {
+  .popover {
+    box-shadow: $z-depth-1;
+    font-size: $font-size-base;
+    min-width: 230px;
 
-  &:focus {
-    outline: none;
-  }
+    &:focus {
+      outline: none;
+    }
 
-  &.top,
-  &.bottom {
-    .arrow {
-      margin-left: -5px;
+    &.top,
+    &.bottom {
+      .arrow {
+        margin-left: -5px;
+      }
+    }
+
+    &.top {
+      margin-top: -10px;
+    }
+
+    &.left,
+    &.right {
+      .arrow {
+        margin-top: -3px;
+      }
+    }
+
+    &.left {
+      margin-left: -10px;
     }
   }
 
-  &.top {
-    margin-top: -10px;
-  }
+  .popover-body {
 
-  &.left,
-  &.right {
-    .arrow {
-      margin-top: -3px;
+    // Unable to use classes within the popover, so we use elements to style
+    ul {
+      // TODO remove important by removing nesting of lists
+      padding-left: 0 !important;
+      list-style-type: none;
+      margin-left: -#{$popover-padding} + 1px; // minus border
+      margin-right: -#{$popover-padding} + 1px;
+      margin-bottom: 0;
     }
-  }
 
-  &.left {
-    margin-left: -10px;
-  }
-}
+    a {
+      display: block;
+      padding: #{$spacer / 4} $popover-padding;
+      color: $dropdown-link-color;
 
-.popover-body {
-
-  // Unable to use classes within the popover, so we use elements to style
-  ul {
-    // TODO remove important by removing nesting of lists
-    padding-left: 0 !important;
-    list-style-type: none;
-    margin-left: -#{$popover-padding} + 1px; // minus border
-    margin-right: -#{$popover-padding} + 1px;
-    margin-bottom: 0;
-  }
-
-  a {
-    display: block;
-    padding: #{$spacer / 4} $popover-padding;
-    color: $dropdown-link-color;
-
-    &:hover {
-      text-decoration: none;
-      background-color: $dropdown-link-hover-bg;
-      color: $dropdown-link-hover-color;
+      &:hover {
+        text-decoration: none;
+        background-color: $dropdown-link-hover-bg;
+        color: $dropdown-link-hover-color;
+      }
     }
-  }
 
-  .btn {
-    padding-left: calc(#{$popover-padding} - 1px); // minus border
-    padding-right: calc(#{$popover-padding} - 1px);
-    margin-left: calc(-.75rem + 1px);
-    margin-right: calc(-.75rem + 1px);
-    display: block;
-    width: calc(100% + 1.5rem - 2px);
-    text-align: left;
-    border-radius: 0;
+    .btn {
+      padding-left: calc(#{$popover-padding} - 1px); // minus border
+      padding-right: calc(#{$popover-padding} - 1px);
+      margin-left: calc(-.75rem + 1px);
+      margin-right: calc(-.75rem + 1px);
+      display: block;
+      width: calc(100% + 1.5rem - 2px);
+      text-align: left;
+      border-radius: 0;
 
-    &:hover {
-      background-color: $base-menu-bg;
+      &:hover {
+        background-color: $base-menu-bg;
+      }
     }
   }
 }
