@@ -72,6 +72,7 @@ en:
     DELETEDRECORDS: 'Deleted {count} records.'
     EMPTYBEFOREIMPORT: 'Replace data'
     FILTER: Filter
+    SEARCH: Search
     IMPORT: 'Import from CSV'
     IMPORTEDRECORDS: 'Imported {count} records.'
     IMPORTSPECFIELDS: 'Database columns'
