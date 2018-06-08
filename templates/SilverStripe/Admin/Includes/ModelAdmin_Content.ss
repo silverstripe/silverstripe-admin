@@ -33,8 +33,8 @@
 		<div class="cms-content-view">
 			<% if $SearchSummary %>
 				<p class="message notice">
-						<a href="$Link" class="clear-search btn btn-notice font-icon-cancel">Clear search</a>
-            Search results for
+						<a href="$Link" class="clear-search btn btn-notice font-icon-cancel"><%t SilverStripe\Admin\ModelAdmin.CLEARSEARCH 'Clear search' %></a>
+                        <%t SilverStripe\Admin\ModelAdmin.SEARCHRESULTSFOR 'Search results for' %>
 					<% loop $SearchSummary %>
 						$Field<% if $Value %>: <strong>$Value</strong><% end_if %>
 					<% end_loop %>
