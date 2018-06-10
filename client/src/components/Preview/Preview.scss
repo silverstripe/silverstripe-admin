@@ -51,3 +51,9 @@
   top: 50%;
   transform: translateY(-50%);
 }
+
+.preview__more-actions {
+  &:not(:first-child) {
+    margin-left: 5px;
+  }
+}
