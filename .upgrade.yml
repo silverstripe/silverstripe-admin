@@ -14,12 +14,10 @@ mappings:
   CMSMenuItem: SilverStripe\Admin\CMSMenuItem
   CMSProfileController: SilverStripe\Admin\CMSProfileController
   GroupImportForm: SilverStripe\Admin\GroupImportForm
-  LeftAndMain: SilverStripe\Admin\LeftAndMain
   LeftAndMain_HTTPResponse: SilverStripe\Admin\LeftAndMain_HTTPResponse
   LeftAndMain_SearchFilter: SilverStripe\Admin\LeftAndMain_SearchFilter
   LeftAndMainExtension: SilverStripe\Admin\LeftAndMainExtension
   MemberImportForm: SilverStripe\Admin\MemberImportForm
-  ModelAdmin: SilverStripe\Admin\ModelAdmin
   SecurityAdmin: SilverStripe\Admin\SecurityAdmin
   CMSMenuItemTest: SilverStripe\Admin\Tests\CMSMenuItemTest
   CMSMenuTest: SilverStripe\Admin\Tests\CMSMenuTest
