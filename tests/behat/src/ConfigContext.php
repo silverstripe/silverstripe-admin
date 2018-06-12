@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverStripe\Framework\Tests\Behaviour;
+namespace SilverStripe\Admin\Tests\Behaviour;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Hook\Scope\AfterScenarioScope;
