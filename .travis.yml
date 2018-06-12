@@ -79,11 +79,11 @@ before_script:
   - if [[ $BEHAT_TEST == cms ]]; then (vendor/bin/serve --bootstrap-file vendor/silverstripe/cms/tests/behat/serve-bootstrap.php &> artifacts/serve.log &); fi
 
 script:
-  - if [[ $PHPUNIT_TEST ]]; then vendor/bin/phpunit tests/php; fi
-  - if [[ $NPM_TEST ]]; then yarn run build; fi
-  - if [[ $NPM_TEST ]]; then git diff-files --quiet -w --relative=client; fi
-  - if [[ $NPM_TEST ]]; then git diff --name-status --relative=client; fi
-  - if [[ $PHPCS_TEST ]]; then composer run-script lint; fi
+#  - if [[ $PHPUNIT_TEST ]]; then vendor/bin/phpunit tests/php; fi
+#  - if [[ $NPM_TEST ]]; then yarn run build; fi
+#  - if [[ $NPM_TEST ]]; then git diff-files --quiet -w --relative=client; fi
+#  - if [[ $NPM_TEST ]]; then git diff --name-status --relative=client; fi
+#  - if [[ $PHPCS_TEST ]]; then composer run-script lint; fi
   - if [[ $BEHAT_TEST == framework ]]; then vendor/bin/behat @framework; fi
   - if [[ $BEHAT_TEST == cms ]]; then vendor/bin/behat @cms; fi
 
