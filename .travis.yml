@@ -65,7 +65,7 @@ before_script:
   - if [[ $PHPCS_TEST ]]; then composer global require squizlabs/php_codesniffer:^3 --prefer-dist --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile; fi
   - if [[ $BEHAT_TEST == cms ]]; then composer require silverstripe/recipe-cms:1.2.x-dev --no-update; fi
 
-  - composer install --prefer-dist --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile
+  - composer install --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile
 
 # Install NPM dependencies
   - if [[ $NPM_TEST ]]; then nvm install $TRAVIS_NODE_VERSION && npm install -g yarn && yarn install --network-concurrency 1; fi
