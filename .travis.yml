@@ -41,7 +41,7 @@ matrix:
     - php: 7.0
       env:
        - DB=MYSQL
-       - BEHAT_TEST=framework
+       - BEHAT_TEST=admin
     - php: 7.0
       env:
        - DB=MYSQL
@@ -75,7 +75,7 @@ before_script:
   - if [[ $BEHAT_TEST ]]; then cp composer.lock artifacts/; fi
   - if [[ $BEHAT_TEST ]]; then sh -e /etc/init.d/xvfb start; sleep 3; fi
   - if [[ $BEHAT_TEST ]]; then (chromedriver > artifacts/chromedriver.log 2>&1 &); fi
-  - if [[ $BEHAT_TEST == framework ]]; then (vendor/bin/serve --bootstrap-file tests/behat/serve-bootstrap.php &> artifacts/serve.log &); fi
+  - if [[ $BEHAT_TEST == admin ]]; then (vendor/bin/serve --bootstrap-file vendor/silverstripe/framework/tests/behat/serve-bootstrap.php &> artifacts/serve.log &); fi
   - if [[ $BEHAT_TEST == cms ]]; then (vendor/bin/serve --bootstrap-file vendor/silverstripe/cms/tests/behat/serve-bootstrap.php &> artifacts/serve.log &); fi
 
 script:
@@ -84,7 +84,7 @@ script:
   - if [[ $NPM_TEST ]]; then git diff-files --quiet -w --relative=client; fi
   - if [[ $NPM_TEST ]]; then git diff --name-status --relative=client; fi
   - if [[ $PHPCS_TEST ]]; then composer run-script lint; fi
-  - if [[ $BEHAT_TEST == framework ]]; then vendor/bin/behat @framework; fi
+  - if [[ $BEHAT_TEST == admin ]]; then vendor/bin/behat @admin; fi
   - if [[ $BEHAT_TEST == cms ]]; then vendor/bin/behat @cms; fi
 
 after_failure:
