@@ -40,13 +40,12 @@
     "autoload": {
         "psr-4": {
             "SilverStripe\\Admin\\": "code/",
-            "SilverStripe\\Admin\\Tests\\": "tests/php/",
-            "SilverStripe\\Admin\\Tests\\Behaviour\\": "tests/behat/src/"
+            "SilverStripe\\Admin\\Tests\\": "tests/php/"
         }
     },
     "scripts": {
-        "lint": "phpcs code/ tests/php/ tests/behat/src",
-        "lint-clean": "phpcbf code/ tests/php/ tests/behat/src"
+        "lint": "phpcs code/ tests/php/",
+        "lint-clean": "phpcbf code/ tests/php/"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
