@@ -78,8 +78,7 @@
 }
 
 .Select-option.is-focused {
-  background-color: lighten($cyan, 25%);
-  color: $body-color;
+  background-color: $list-group-hover-bg;
 }
 
 .Select-option.is-selected {
