@@ -211,6 +211,10 @@
             @include hide-text-overflow; // Add ellipses to overflowing text
           }
 
+          span.non-sortable {
+            line-height: 14px; // Specify a line-height for misaligned non-sortable GridField table headers
+          }
+
           &.col-listChildrenLink {
             border-right: 0;
           }
