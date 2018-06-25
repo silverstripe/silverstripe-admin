@@ -224,11 +224,11 @@ $.entwine('ss', function($) {
         return false;
       }
 
-      var editLink = this.find('.edit-link');
-      if(editLink.length) this.getGridField().showDetailView(editLink.prop('href'));
+      var formLink = this.find('.edit-link, .view-link');
+      if(formLink.length) this.getGridField().showDetailView(formLink.prop('href'));
     },
     onmouseover: function() {
-      if(this.find('.edit-link').length) this.css('cursor', 'pointer');
+      if(this.find('.edit-link, .view-link').length) this.css('cursor', 'pointer');
     },
     onmouseout: function() {
       this.css('cursor', 'default');

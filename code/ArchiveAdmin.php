@@ -13,9 +13,11 @@ use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridField_ActionMenu;
 use SilverStripe\Forms\GridField\GridFieldConfig_RecordViewer;
 use SilverStripe\Forms\GridField\GridFieldDataColumns;
 use SilverStripe\Forms\GridField\GridFieldRestoreAction;
+use SilverStripe\Forms\HiddenField;
 use SilverStripe\Forms\Tab;
 use SilverStripe\Forms\TabSet;
 use SilverStripe\ORM\DataObject;
@@ -27,7 +29,7 @@ class ArchiveAdmin extends LeftAndMain
 {
     private static $url_segment = 'archive';
 
-    private static $url_rule = '/$Action/$ID/$OtherID';
+    private static $url_rule = '/$Action/$Class';
 
     private static $menu_title = 'Archives';
 
@@ -87,6 +89,7 @@ class ArchiveAdmin extends LeftAndMain
 
     public function getEditForm($id = null, $fields = null)
     {
+        // Construct gridfield showing archived Pages
         $pageList = $this->createArchiveGridField('Pages', SiteTree::class);
         $pageColumns = $pageList->getConfig()->getComponentByType(GridFieldDataColumns::class);
         $pageColumns->setDisplayFields([
@@ -103,6 +106,7 @@ class ArchiveAdmin extends LeftAndMain
             },
         ]);
 
+        // Construct gridfield showing archived Blocks
         $blockList = $this->createArchiveGridField('Blocks', BaseElement::class);
         $blockColumns = $blockList->getConfig()->getComponentByType(GridFieldDataColumns::class);
         $blockColumns->setDisplayFields([
@@ -124,6 +128,7 @@ class ArchiveAdmin extends LeftAndMain
             },
         ]);
 
+        // Construct gridfield showing archived Files
         $fileList = $this->createArchiveGridField('Files', File::class);
         $fileColumns = $fileList->getConfig()->getComponentByType(GridFieldDataColumns::class);
         $fileColumns->setDisplayFields([
@@ -157,14 +162,51 @@ class ArchiveAdmin extends LeftAndMain
                     'Files',
                     File::singleton()->i18n_plural_name(),
                     $fileList
-                ),
-                Tab::create(
-                    'Others',
-                    _t(__CLASS__ . '.Others', 'Others'),
-                    DropdownField::create('OtherDropdown', 'Select a content type', $this->getOtherVersionedObjects())
                 )
             )->setTemplate('SilverStripe\\Forms\\CMSTabSet')
         );
+
+        $otherVersionedObjects = $this->getOtherVersionedObjects();
+
+        // If there are custom versioned objects then construct a tab to view them
+        if (count($otherVersionedObjects)) {
+            $displayClass = $this->request->param('Class') ? str_replace('-', '\\', $this->request->param('Class')): null;
+
+            $modelSelectField = DropdownField::create('OtherDropdown', 'Select a content type', $this->getOtherVersionedObjects(), $displayClass);
+            $modelSelectField->addExtraClass('other-model-selector');
+            $modelSelectField->setEmptyString('Select…');
+            $modelSelectField->setHasEmptyDefault(true);
+
+            $modelSelectURL = HiddenField::create('ModelSelectURL', null, $this->Link('others'));
+
+            // We contstruct a tab with a field to select which other model to view
+            $fields->addFieldToTab('Root', Tab::create(
+                'Others',
+                _t(__CLASS__ . '.Others', 'Others'),
+                $modelSelectField,
+                $modelSelectURL
+            ));
+
+            // If a valid other model name is passed via a request param
+            // then show a gridfield with archived records
+            if ($displayClass && isset($otherVersionedObjects[$displayClass])) {
+                $otherList = $this->createArchiveGridField('Others', $displayClass);
+                $otherColumns = $otherList->getConfig()->getComponentByType(GridFieldDataColumns::class);
+                $otherColumns->setDisplayFields([
+                    'Name' => 'Name',
+                    'LastEdited.Ago' => 'Date Archived',
+                    'AuthorID' => 'Archived By',
+                ]);
+                $otherColumns->setFieldFormatting([
+                    'AuthorID' => function ($val, $item) {
+                        /** @var DataObject $item */
+                        return Member::get_by_id($val)->Name;
+                    },
+                ]);
+
+                $fields->addFieldToTab('Root.Others', $otherList);
+            }
+        }
 
         // Build replacement form
         $form = Form::create(
@@ -208,6 +250,7 @@ class ArchiveAdmin extends LeftAndMain
         $field->setModelClass(SiteTree::class);
         $field->getConfig()->removeComponentsByType(VersionedGridFieldState::class);
         $field->getConfig()->addComponent(new GridFieldRestoreAction);
+        $field->getConfig()->addComponent(new GridField_ActionMenu);
 
         return $field;
     }
@@ -228,6 +271,12 @@ class ArchiveAdmin extends LeftAndMain
                 );
             }
         );
+
+        $versionedClasses = array_flip($versionedClasses);
+
+        foreach (array_keys($versionedClasses) as $className) {
+            $versionedClasses[$className] = $className::singleton()->i18n_plural_name();
+        }
 
         return $versionedClasses;
     }
