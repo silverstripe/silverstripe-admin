@@ -161,21 +161,41 @@ class TinymceInlineToolbar {
  * @return {Boolean}
  */
 function shouldShowToolbar(selection, isEditorFocused, tagTypes) {
-  const tags = Array.isArray(tagTypes) ? tagTypes : [tagTypes || ''];
-  return Boolean(
-    selection &&
-    tags
-      .map(tag => String(tag))
-      .map(tag => tag.toLowerCase())
-      .includes((selection.tagName || '').toLowerCase()) &&
-    isEditorFocused);
+  let tags = Array.isArray(tagTypes) ? tagTypes : [tagTypes || ''];
+
+  if (selection && isEditorFocused) {
+    tags = tags
+        .map(tag => String(tag))
+        .map(tag => tag.toLowerCase());
+
+    const matching = tags.filter((t) => {
+      if (t.indexOf('[') > -1 && t.indexOf(']') > -1) {
+        const tTag = t.substring(0, t.indexOf('['));
+        const tAttr = t.substring(t.indexOf('[') + 1, t.indexOf(']'));
+        if (tTag === selection.tagName.toLowerCase()) {
+          if (selection.getAttribute(tAttr)) {
+            return true;
+          }
+        }
+      } else if (selection.tagName && t === selection.tagName.toLowerCase()) {
+          return true;
+      }
+
+      return false;
+    });
+
+    return matching.length > 0;
+  }
+
+  return false;
 }
 
 
 /**
  * @param  {Object} editor Tinymce editor instance
  * @param  {Array} buttons Array of button literal object
- * @param  {Array} tagTypes Array of tag names - e.g. "A"
+ * @param  {Array} tagTypes Array of tag names - e.g. "A". Tag types can be
+ *  filtered by an attribute e.g ['a[href]'] to only target links (not anchors)
  */
 function setupTinyMceInlineToolbar(editor, buttons, tagTypes = ['a']) {
   const toolbar = new TinymceInlineToolbar(editor, buttons);
