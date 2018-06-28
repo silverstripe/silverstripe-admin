@@ -4,12 +4,12 @@ namespace SilverStripe\Admin;
 
 use DNADesign\Elemental\Models\BaseElement;
 use DNADesign\Elemental\Models\ElementalArea;
-use SilverStripe\Admin\LeftAndMain;
+use SilverStripe\Admin\AdminRootController;
+use SilverStripe\Admin\ModelAdmin;
 use SilverStripe\Assets\AssetControlExtension;
 use SilverStripe\Assets\File;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\Controller;
-use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Forms\DropdownField;
@@ -22,229 +22,154 @@ use SilverStripe\Forms\GridField\GridFieldDataColumns;
 use SilverStripe\Forms\GridField\GridFieldDetailForm;
 use SilverStripe\Forms\GridField\GridFieldRestoreAction;
 use SilverStripe\Forms\GridField\GridFieldViewButton;
-use SilverStripe\Forms\HiddenField;
-use SilverStripe\Forms\Tab;
-use SilverStripe\Forms\TabSet;
+use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Member;
 use SilverStripe\Versioned\Versioned;
 use SilverStripe\Versioned\VersionedGridFieldState\VersionedGridFieldState;
+use SilverStripe\View\ArrayData;
 
 class ArchiveAdmin extends ModelAdmin
 {
     private static $url_segment = 'archive';
 
-    private static $url_rule = '/$ModelClass/$Action';
-
     private static $menu_title = 'Archives';
 
     private static $menu_icon_class = 'font-icon-box';
 
-    private static $allowed_actions = [
-        'EditForm',
-        'pages',
-        'blocks',
-        'files',
-        'others'
-    ];
+    public $showSearchForm = false;
 
-    private static $url_handlers = array(
-        '$ModelClass/$Action' => 'handleAction'
-    );
-
-    protected $modelClass;
-
-    /**
-     * Shortcut action for setting the correct active tab.
-     *
-     * @param HTTPRequest $request
-     * @return HTTPResponse
-     */
-    public function pages($request)
-    {
-        return $this->index($request);
-    }
-
-    /**
-     * Shortcut action for setting the correct active tab.
-     *
-     * @param HTTPRequest $request
-     * @return HTTPResponse
-     */
-    public function blocks($request)
-    {
-        return $this->index($request);
-    }
-
-    /**
-     * Shortcut action for setting the correct active tab.
-     *
-     * @param HTTPRequest $request
-     * @return HTTPResponse
-     */
-    public function files($request)
-    {
-        return $this->index($request);
-    }
-
-    /**
-     * Shortcut action for setting the correct active tab.
-     *
-     * @param HTTPRequest $request
-     * @return HTTPResponse
-     */
-    public function others($request)
-    {
-        return $this->index($request);
-    }
+    public $showOthers = false;
 
     public function getEditForm($id = null, $fields = null)
     {
-        // Construct gridfield showing archived Pages
-        $pageList = $this->createArchiveGridField('Pages', SiteTree::class);
-        $pageColumns = $pageList->getConfig()->getComponentByType(GridFieldDataColumns::class);
-        $pageColumns->setDisplayFields([
-                'Title' => SiteTree::singleton()->fieldLabel('Title'),
-                'i18n_singular_name' => SiteTree::singleton()->fieldLabel('Type'),
-                'LastEdited.Ago' => 'Date Archived',
-                'ParentID' => 'Origin',
-                'AuthorID' => 'Archived By'
-            ]);
-        $pageColumns->setFieldFormatting([
-            'ParentID' => function ($val, $item) {
-                if (SiteTree::get_by_id($val)) {
-                    $breadcrumbs = SiteTree::get_by_id($val)->getBreadcrumbItems(2);
-                    $breadcrumbString = '../';
-                    foreach ($breadcrumbs as $item) {
-                        $breadcrumbString = $breadcrumbString . $item->Title . '/';
-                    };
-                    return $breadcrumbString;
-                }
-            },
-            'AuthorID' => function ($val, $item) {
-                return Member::get_by_id($val)->Name;
-            },
-        ]);
-
-        $fields = FieldList::create(
-            TabSet::create(
-                'Root',
-                Tab::create(
-                    'Pages',
-                    SiteTree::singleton()->i18n_plural_name(),
-                    $pageList
-                )
-            )->setTemplate('SilverStripe\\Forms\\CMSTabSet')
-        );
-
-        if (class_exists(BaseElement::class)) {
-            // Construct gridfield showing archived Blocks
-            $blockList = $this->createArchiveGridField('Blocks', BaseElement::class);
-            $blockColumns = $blockList->getConfig()->getComponentByType(GridFieldDataColumns::class);
-            $blockColumns->setDisplayFields([
-                'Title' => BaseElement::singleton()->fieldLabel('Title'),
-                'Type' => 'Type',
-                'LastEdited.Ago' => 'Date Archived',
-                'Breadcrumbs' => 'Origin',
-                'AuthorID' => 'Archived By'
-            ]);
-            $blockColumns->setFieldFormatting([
-                'Breadcrumbs' => function ($val, $item) {
-                    $parent = $item->Page;
-
-                    return $parent ? $parent->Breadcrumbs() : null;
-                },
-                'AuthorID' => function ($val, $item) {
-                    /** @var Page $item */
-                    return Member::get_by_id($val)->Name;
-                },
-            ]);
-
-            $fields->addFieldToTab('Root', Tab::create(
-                'Blocks',
-                ucfirst(BaseElement::singleton()->i18n_plural_name()),
-                $blockList
-            ));
-        }
-
-        // The files archive is only useful if archived assets are stored
-        if (Config::inst()->get(AssetControlExtension::class, 'keep_archived_assets')) {
-            // Construct gridfield showing archived Files
-            $fileList = $this->createArchiveGridField('Files', File::class);
-            $fileColumns = $fileList->getConfig()->getComponentByType(GridFieldDataColumns::class);
-            $fileColumns->setDisplayFields([
-                'Name' => File::singleton()->fieldLabel('Name'),
-                'appCategory' => 'Type',
-                'LastEdited.Ago' => 'Date Archived',
-                'Parent.Name' => 'Origin',
-                'AuthorID' => 'Archived By',
-            ]);
-            $fileColumns->setFieldFormatting([
-                'AuthorID' => function ($val, $item) {
-                    /** @var Page $item */
-                    return Member::get_by_id($val)->Name;
-                },
-            ]);
-
-            $fields->addFieldToTab('Root', Tab::create(
-                'Files',
-                File::singleton()->i18n_plural_name(),
-                $fileList
-            ));
-        }
-
+        $fields = new FieldList();
         $otherVersionedObjects = $this->getOtherVersionedObjects();
 
-        // If there are custom versioned objects then construct a tab to view them
-        if (count($otherVersionedObjects)) {
-            $displayClass = $this->request->param('ModelClass') ? $this->unsanitiseClassName($this->request->param('ModelClass')): null;
+        $modelClass = $this->request->getVar('others') ? 'others' : $this->modelClass;
 
-            $modelSelectField = DropdownField::create('OtherDropdown', 'Select a content type', $otherVersionedObjects, $displayClass);
-            $modelSelectField->setAttribute('data-others-archive-url', $this->Link());
-            $modelSelectField->addExtraClass('other-model-selector');
-            $modelSelectField->setEmptyString('Select…');
-            $modelSelectField->setHasEmptyDefault(true);
-
-            // We contstruct a tab with a field to select which other model to view
-            $fields->addFieldToTab('Root', Tab::create(
-                'Others',
-                _t(__CLASS__ . '.Others', 'Others'),
-                $modelSelectField
-            ));
-
-            // If a valid other model name is passed via a request param
-            // then show a gridfield with archived records
-            if ($displayClass && isset($otherVersionedObjects[$displayClass])) {
-                $otherList = $this->createArchiveGridField('Others', $displayClass);
-                $otherColumns = $otherList->getConfig()->getComponentByType(GridFieldDataColumns::class);
-                $otherColumns->setDisplayFields([
-                    'Name' => 'Name',
+        switch ($modelClass) {
+            case SiteTree::class:
+                // Construct gridfield showing archived Pages
+                $listField = $this->createArchiveGridField('Pages', SiteTree::class);
+                $listColumns = $listField->getConfig()->getComponentByType(GridFieldDataColumns::class);
+                $listColumns->setDisplayFields([
+                    'Title' => SiteTree::singleton()->fieldLabel('Title'),
+                    'i18n_singular_name' => SiteTree::singleton()->fieldLabel('Type'),
                     'LastEdited.Ago' => 'Date Archived',
-                    'AuthorID' => 'Archived By',
+                    'ParentID' => 'Origin',
+                    'AuthorID' => 'Archived By'
                 ]);
-                $otherColumns->setFieldFormatting([
+                $listColumns->setFieldFormatting([
+                    'ParentID' => function ($val, $item) {
+                        if (SiteTree::get_by_id($val)) {
+                            $breadcrumbs = SiteTree::get_by_id($val)->getBreadcrumbItems(2);
+                            $breadcrumbString = '../';
+                            foreach ($breadcrumbs as $item) {
+                                $breadcrumbString = $breadcrumbString . $item->Title . '/';
+                            };
+                            return $breadcrumbString;
+                        }
+                    },
                     'AuthorID' => function ($val, $item) {
-                        /** @var DataObject $item */
                         return Member::get_by_id($val)->Name;
                     },
                 ]);
 
-                $fields->addFieldToTab('Root.Others', $otherList);
-            }
+                $fields->push($listField);
+                break;
+
+            case BaseElement::class:
+                // Construct gridfield showing archived Blocks
+                $listField = $this->createArchiveGridField('Blocks', BaseElement::class);
+                $listColumns = $listField->getConfig()->getComponentByType(GridFieldDataColumns::class);
+                $listColumns->setDisplayFields([
+                    'Title' => BaseElement::singleton()->fieldLabel('Title'),
+                    'Type' => 'Type',
+                    'LastEdited.Ago' => 'Date Archived',
+                    'Breadcrumbs' => 'Origin',
+                    'AuthorID' => 'Archived By'
+                ]);
+                $listColumns->setFieldFormatting([
+                    'Breadcrumbs' => function ($val, $item) {
+                        $parent = $item->Page;
+
+                        return $parent ? $parent->Breadcrumbs() : null;
+                    },
+                    'AuthorID' => function ($val, $item) {
+                        /** @var Page $item */
+                        return Member::get_by_id($val)->Name;
+                    },
+                ]);
+
+                $fields->push($listField);
+                break;
+
+            case File::class:
+                // Construct gridfield showing archived Files
+                $listField = $this->createArchiveGridField('Files', File::class);
+
+                $listColumns = $listField->getConfig()->getComponentByType(GridFieldDataColumns::class);
+                $listColumns->setDisplayFields([
+                    'Name' => File::singleton()->fieldLabel('Name'),
+                    'appCategory' => 'Type',
+                    'LastEdited.Ago' => 'Date Archived',
+                    'Parent.Name' => 'Origin',
+                    'AuthorID' => 'Archived By',
+                ]);
+                $listColumns->setFieldFormatting([
+                    'AuthorID' => function ($val, $item) {
+                        /** @var Page $item */
+                        return Member::get_by_id($val)->Name;
+                    },
+                ]);
+
+                $fields->push($listField);
+                break;
+
+            case 'others':
+                $modelSelectField = $this->getOtherModelSelector($modelClass);
+                $fields->push($modelSelectField);
+                break;
+
+            default:
+                $modelSelectField = $this->getOtherModelSelector($modelClass);
+                $fields->push($modelSelectField);
+
+                // If a valid other model name is passed via a request param
+                // then show a gridfield with archived records
+                if (array_search($modelClass, $otherVersionedObjects)) {
+                    $listField = $this->createArchiveGridField('Others', $modelClass);
+
+                    $listColumns = $listField->getConfig()->getComponentByType(GridFieldDataColumns::class);
+                    $listColumns->setDisplayFields([
+                        'Name' => 'Name',
+                        'LastEdited.Ago' => 'Date Archived',
+                        'AuthorID' => 'Archived By',
+                    ]);
+                    $listColumns->setFieldFormatting([
+                        'AuthorID' => function ($val, $item) {
+                            /** @var DataObject $item */
+                            return Member::get_by_id($val)->Name;
+                        },
+                    ]);
+
+                    $fields->push($listField);
+                }
+                break;
         }
 
-        // Build replacement form
         $form = Form::create(
             $this,
             'EditForm',
             $fields,
             FieldList::create()
         )->setHTMLID('Form_EditForm');
-        $form->addExtraClass('cms-edit-form fill-height discardchanges');
+        $form->addExtraClass('cms-edit-form cms-panel-padded center flexbox-area-grow discardchanges');
         $form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
         $form->addExtraClass('ss-tabset cms-tabset ' . $this->BaseCSSClasses());
-        // $editFormAction = Controller::join_links($this->Link($this->sanitiseClassName($)), 'EditForm');
-        // $form->setFormAction($editFormAction);
+        $editFormAction = Controller::join_links($this->Link($this->sanitiseClassName($this->modelClass)), 'EditForm');
+        $form->setFormAction($editFormAction);
         $form->setAttribute('data-pjax-fragment', 'CurrentForm');
 
         $this->extend('updateEditForm', $form);
@@ -289,24 +214,27 @@ class ArchiveAdmin extends ModelAdmin
     /**
      * Finds versioned objects that are not pages, blocks or files
      *
+     * @param boolean $forDisplay
      * @return array
      */
-    protected function getOtherVersionedObjects()
+    protected function getOtherVersionedObjects($forDisplay = false)
     {
         $versionedClasses = array_filter(
             ClassInfo::subclassesFor(DataObject::class),
             function ($class) {
                 return (
                     DataObject::has_extension($class, Versioned::class) &&
-                    !self::isExcludedClass($class)
+                    self::isOthersClass($class)
                 );
             }
         );
 
-        $versionedClasses = array_flip($versionedClasses);
+        if ($forDisplay) {
+            $versionedClasses = array_flip($versionedClasses);
 
-        foreach (array_keys($versionedClasses) as $className) {
-            $versionedClasses[$className] = $className::singleton()->i18n_plural_name();
+            foreach (array_keys($versionedClasses) as $className) {
+                $versionedClasses[$className] = $className::singleton()->i18n_plural_name();
+            }
         }
 
         return $versionedClasses;
@@ -319,7 +247,7 @@ class ArchiveAdmin extends ModelAdmin
      * @param string $className
      * @return bool
      */
-    protected function isExcludedClass($className)
+    protected function isOthersClass($className)
     {
         $existingTabs = [
             SiteTree::class,
@@ -334,28 +262,99 @@ class ArchiveAdmin extends ModelAdmin
             $excludedClasses = array_merge($excludedClasses, array_keys(ClassInfo::subclassesFor($excludedClass)));
         }
 
-        return array_search(strtolower($className), $excludedClasses) !== false;
+        return array_search(strtolower($className), $excludedClasses) === false;
     }
 
     /**
-     * Sanitise a model class' name for inclusion in a link
+     * Creates a dropdown field that displays other archived models
      *
-     * @param string $class
-     * @return string
+     * @return DropdownField
      */
-    protected function sanitiseClassName($class)
+    public function getOtherModelSelector($modelClass = '')
     {
-        return str_replace('\\', '-', $class);
+        $otherVersionedObjects = $this->getOtherVersionedObjects(true);
+
+        $modelSelectField = DropdownField::create('OtherDropdown', 'Select a content type', $otherVersionedObjects, $modelClass);
+        $modelSelectField->setAttribute('data-others-archive-url', AdminRootController::admin_url() . $this->config()->get('url_segment') . '/');
+        $modelSelectField->addExtraClass('other-model-selector');
+        $modelSelectField->setEmptyString('Select…');
+        $modelSelectField->setHasEmptyDefault(true);
+
+        return $modelSelectField;
     }
 
     /**
-     * Unsanitise a model class' name from a URL param
+     * Archive admin needs some extra logic for whether an archive tab should be shown
      *
-     * @param string $class
-     * @return string
+     * @return array Map of class name to an array of 'title' (see {@link $managed_models})
      */
-    protected function unsanitiseClassName($class)
+    public function getManagedModels()
     {
-        return str_replace('-', '\\', $class);
+        // The 'Pages' should always be present and we allow 'Others' as a special
+        $archivableModels = [
+            SiteTree::class
+        ];
+
+        // Add the blocks archive if the Elemental module is installed
+        if (class_exists(BaseElement::class)) {
+            array_push($archivableModels, BaseElement::class);
+        }
+        // The files archive is only useful if archived assets are stored
+        if (Config::inst()->get(AssetControlExtension::class, 'keep_archived_assets')) {
+            array_push($archivableModels, File::class);
+        }
+
+        // Normalize models to have their model class in array key (and make sure the name is uppercase)
+        foreach ($archivableModels as $k => $v) {
+            $archivableModels[$v] = array('title' => ucfirst(singleton($v)->i18n_plural_name()), 'showAsTab' => true);
+            unset($archivableModels[$k]);
+        }
+
+        $otherModels = $this->getOtherVersionedObjects();
+        if ($otherModels) {
+            foreach ($otherModels as $k => $v) {
+                $archivableModels[$v] = array('title' => ucfirst(singleton($v)->i18n_plural_name()), 'showAsTab' => false);
+                unset($archivableModels[$k]);
+            }
+        }
+
+        return $archivableModels;
+    }
+
+    /**
+     * Add the special 'Others' tab
+     *
+     * @return \SilverStripe\ORM\ArrayList An ArrayList of all managed models to build the tabs for this ModelAdmin
+     */
+    protected function getManagedModelTabs()
+    {
+        $isOtherActive = ($this->isOthersClass($this->modelClass) || $this->request->getVar('others') !== null);
+
+        $models = $this->getManagedModels();
+        $models = array_filter($models, function ($item) {
+            return $item['showAsTab'] === true;
+        });
+
+        $forms = new ArrayList();
+
+        foreach ($models as $class => $options) {
+            $forms->push(new ArrayData(array(
+                'Title' => $options['title'],
+                'ClassName' => $class,
+                'Link' => $this->Link($this->sanitiseClassName($class)),
+                'LinkOrCurrent' => ($class == $this->modelClass) ? 'current' : 'link'
+            )));
+        }
+
+        $forms->push(new ArrayData([
+            'Title' => 'Others',
+            'ClassName' => 'Others',
+            'Link' => $this->Link('?others=1'),
+            'LinkOrCurrent' => ($isOtherActive ? 'current' : 'link')
+        ]));
+
+        $forms->first()->LinkOrCurrent = 'link';
+
+        return $forms;
     }
 }

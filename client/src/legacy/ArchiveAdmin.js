@@ -22,7 +22,7 @@ $.entwine('ss', ($) => {
       const othersArchiveUrl = $(this).data('others-archive-url');
       if (targetClassName) {
         targetClassName = targetClassName.replace(/\\/g, '-');
-        const url = othersArchiveUrl + targetClassName + '#Root_Others';
+        const url = othersArchiveUrl + targetClassName;
 
         $('.cms-container').loadPanel(url, '', { pjax: 'CurrentForm' });
       }
