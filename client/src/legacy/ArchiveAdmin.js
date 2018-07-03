@@ -3,9 +3,14 @@
  */
 import $ from 'jquery';
 
-window.onbeforeunload = function () { };
-
 $.entwine('ss', ($) => {
+  $('.ArchiveAdmin__action--restore').entwine({
+    onmatch() {
+      $(this).attr('readonly', false);
+      $(this).attr('disabled', false);
+    }
+  });
+
   $('.other-model-selector select').entwine({
     /**
      * Reacts to the user changing the content type.
@@ -14,10 +19,10 @@ $.entwine('ss', ($) => {
       e.preventDefault();
 
       let targetClassName = $(this).val();
+      const othersArchiveUrl = $(this).data('others-archive-url');
       if (targetClassName) {
         targetClassName = targetClassName.replace(/\\/g, '-');
-        const othersArchiveUrl = $('[name="ModelSelectURL"]').val();
-        const url = othersArchiveUrl + '/' + targetClassName;
+        const url = othersArchiveUrl + targetClassName + '#Root_Others';
 
         $('.cms-container').loadPanel(url, '', { pjax: 'CurrentForm' });
       }

@@ -1,0 +1,27 @@
+#Form_EditForm_OtherDropdown_Holder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: (-$panel-padding-y) (-$panel-padding-x) 0;
+  border-bottom: 1px solid $border-color;
+  padding: ($panel-padding-y * 2) ($panel-padding-x * 2);
+
+  background-color: $white;
+
+  &:after {
+    border-bottom: none;
+  }
+
+  .form__field-label {
+    max-width: none;
+    width: auto;
+    margin-bottom: $spacer-sm;
+    color: $text-muted;
+    font-size: $h2-font-size;
+  }
+
+  .form__field-holder {
+    width: 100%;
+    max-width: 23rem;
+  }
+}
