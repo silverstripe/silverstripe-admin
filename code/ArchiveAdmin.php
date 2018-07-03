@@ -55,10 +55,10 @@ class ArchiveAdmin extends ModelAdmin
                 $listColumns = $listField->getConfig()->getComponentByType(GridFieldDataColumns::class);
                 $listColumns->setDisplayFields([
                     'Title' => SiteTree::singleton()->fieldLabel('Title'),
-                    'i18n_singular_name' => SiteTree::singleton()->fieldLabel('Type'),
-                    'LastEdited.Ago' => 'Date Archived',
-                    'ParentID' => 'Origin',
-                    'AuthorID' => 'Archived By'
+                    'i18n_singular_name' => _t(__CLASS__ . '.COLUMN_TYPE', 'Type'),
+                    'LastEdited.Ago' => _t(__CLASS__ . '.COLUMN_DATEARCHIVED', 'Date Archived'),
+                    'ParentID' => _t(__CLASS__ . '.COLUMN_ORIGIN', 'Origin'),
+                    'AuthorID' => _t(__CLASS__ . '.COLUMN_ARCHIVEDBY', 'Archived By')
                 ]);
                 $listColumns->setFieldFormatting([
                     'ParentID' => function ($val, $item) {
@@ -85,10 +85,10 @@ class ArchiveAdmin extends ModelAdmin
                 $listColumns = $listField->getConfig()->getComponentByType(GridFieldDataColumns::class);
                 $listColumns->setDisplayFields([
                     'Title' => BaseElement::singleton()->fieldLabel('Title'),
-                    'Type' => 'Type',
-                    'LastEdited.Ago' => 'Date Archived',
-                    'Breadcrumbs' => 'Origin',
-                    'AuthorID' => 'Archived By'
+                    'Type' => _t(__CLASS__ . '.COLUMN_TYPE', 'Type'),
+                    'LastEdited.Ago' => _t(__CLASS__ . '.COLUMN_DATEARCHIVED', 'Date Archived'),
+                    'Breadcrumbs' => _t(__CLASS__ . '.COLUMN_ORIGIN', 'Origin'),
+                    'AuthorID' => _t(__CLASS__ . '.COLUMN_ARCHIVEDBY', 'Archived By')
                 ]);
                 $listColumns->setFieldFormatting([
                     'Breadcrumbs' => function ($val, $item) {
@@ -112,10 +112,10 @@ class ArchiveAdmin extends ModelAdmin
                 $listColumns = $listField->getConfig()->getComponentByType(GridFieldDataColumns::class);
                 $listColumns->setDisplayFields([
                     'Name' => File::singleton()->fieldLabel('Name'),
-                    'appCategory' => 'Type',
-                    'LastEdited.Ago' => 'Date Archived',
-                    'Parent.Name' => 'Origin',
-                    'AuthorID' => 'Archived By',
+                    'appCategory' => _t(__CLASS__ . '.COLUMN_TYPE', 'Type'),
+                    'LastEdited.Ago' => _t(__CLASS__ . '.COLUMN_DATEARCHIVED', 'Date Archived'),
+                    'Parent.Name' => _t(__CLASS__ . '.COLUMN_ORIGIN', 'Origin'),
+                    'AuthorID' => _t(__CLASS__ . '.COLUMN_ARCHIVEDBY', 'Archived By'),
                 ]);
                 $listColumns->setFieldFormatting([
                     'AuthorID' => function ($val, $item) {
@@ -143,9 +143,9 @@ class ArchiveAdmin extends ModelAdmin
 
                     $listColumns = $listField->getConfig()->getComponentByType(GridFieldDataColumns::class);
                     $listColumns->setDisplayFields([
-                        'Name' => 'Name',
-                        'LastEdited.Ago' => 'Date Archived',
-                        'AuthorID' => 'Archived By',
+                        'Name' => _t(__CLASS__ . '.COLUMN_NAME', 'Name'),
+                        'LastEdited.Ago' => _t(__CLASS__ . '.COLUMN_DATEARCHIVED', 'Date Archived'),
+                        'AuthorID' => _t(__CLASS__ . '.COLUMN_ARCHIVEDBY', 'Archived By'),
                     ]);
                     $listColumns->setFieldFormatting([
                         'AuthorID' => function ($val, $item) {
@@ -274,10 +274,15 @@ class ArchiveAdmin extends ModelAdmin
     {
         $otherVersionedObjects = $this->getOtherVersionedObjects(true);
 
-        $modelSelectField = DropdownField::create('OtherDropdown', 'Select a content type', $otherVersionedObjects, $modelClass);
+        $modelSelectField = DropdownField::create(
+            'OtherDropdown',
+            _t(__CLASS__ . '.SELECT_TYPE', 'Select a content type'),
+            $otherVersionedObjects,
+            $modelClass
+        );
         $modelSelectField->setAttribute('data-others-archive-url', AdminRootController::admin_url() . $this->config()->get('url_segment') . '/');
         $modelSelectField->addExtraClass('other-model-selector');
-        $modelSelectField->setEmptyString('Select…');
+        $modelSelectField->setEmptyString(_t(__CLASS__ . '.SELECT_EMPTY', 'Select…'));
         $modelSelectField->setHasEmptyDefault(true);
 
         return $modelSelectField;
@@ -347,7 +352,7 @@ class ArchiveAdmin extends ModelAdmin
         }
 
         $forms->push(new ArrayData([
-            'Title' => 'Others',
+            'Title' => _t(__CLASS__ . '.TAB_OTHERS', 'Others'),
             'ClassName' => 'Others',
             'Link' => $this->Link('?others=1'),
             'LinkOrCurrent' => ($isOtherActive ? 'current' : 'link')

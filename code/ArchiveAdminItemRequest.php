@@ -28,11 +28,11 @@ class ArchiveRestoreAction extends DataExtension
             $restoreToRoot = $this->shouldRestoreToRoot($record);
 
             $title = $restoreToRoot
-                ? _t('SilverStripe\\CMS\\Controllers\\CMSMain.RESTORE_TO_ROOT', 'Restore draft at top level')
-                : _t('SilverStripe\\CMS\\Controllers\\CMSMain.RESTORE', 'Restore draft');
+                ? _t('SilverStripe\\Admin\\ArchiveAdmin.RESTORE_TO_ROOT', 'Restore draft at top level')
+                : _t('SilverStripe\\Admin\\ArchiveAdmin.RESTORE', 'Restore draft');
             $description = $restoreToRoot
-                ? _t('SilverStripe\\CMS\\Controllers\\CMSMain.RESTORE_TO_ROOT_DESC', 'Restore the archived version to draft as a top level item')
-                : _t('SilverStripe\\CMS\\Controllers\\CMSMain.RESTORE_DESC', 'Restore the archived version to draft');
+                ? _t('SilverStripe\\Admin\\ArchiveAdmin.RESTORE_TO_ROOT_DESC', 'Restore the archived version to draft as a top level item')
+                : _t('SilverStripe\\Admin\\ArchiveAdmin.RESTORE_DESC', 'Restore the archived version to draft');
             $form->actions = FieldList::create(
                 FormAction::create('doRestore', $title)
                     ->setDescription($description)
@@ -83,7 +83,7 @@ class ArchiveRestoreAction extends DataExtension
         }
 
         $message = [
-            'text' => sprintf('Successfully restored "%s" %s.', $restoredID, $restoredType),
+            'text' => _t('SilverStripe\\Admin\\ArchiveAdmin.RESTORE_TO_ROOT', 'Successfully restored the {model} "{id}"', ['model' => $restoredType, 'id' => $restoredID]),
             'type' => 'good',
         ];
 

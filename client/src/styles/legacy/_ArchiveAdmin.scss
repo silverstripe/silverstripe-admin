@@ -8,6 +8,12 @@
 
   background-color: $white;
 
+  #Form_EditForm_error.good + fieldset > &,
+  #Form_EditForm_error.warning + fieldset > &,
+  #Form_EditForm_error.info + fieldset > & {
+    margin-top: 0;
+  }
+
   &:after {
     border-bottom: none;
   }
