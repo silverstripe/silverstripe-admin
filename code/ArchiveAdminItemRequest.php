@@ -6,11 +6,15 @@ use SilverStripe\Admin\ArchiveAdmin;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\FormAction;
+use SilverStripe\Forms\RestoreAction;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\ValidationResult;
 use SilverStripe\Versioned\Versioned;
 
+/**
+ * Adds a restore action to the item edit form of ArchiveAdmin
+ */
 class ArchiveRestoreAction extends DataExtension
 {
     /**
@@ -25,7 +29,7 @@ class ArchiveRestoreAction extends DataExtension
         if ($admin instanceof ArchiveAdmin &&
             DataObject::has_extension($record, Versioned::class) &&
             $record->canEdit()) {
-            $restoreToRoot = $this->shouldRestoreToRoot($record);
+            $restoreToRoot = RestoreAction::shouldRestoreToRoot($record);
 
             $title = $restoreToRoot
                 ? _t('SilverStripe\\Admin\\ArchiveAdmin.RESTORE_TO_ROOT', 'Restore draft at top level')
@@ -55,60 +59,13 @@ class ArchiveRestoreAction extends DataExtension
     public function doRestore($data, $form)
     {
         $record = $this->owner->getRecord();
-        $restoreType = 'standard';
 
-        if ($this->shouldRestoreToRoot($record)) {
-            $restoreType = 'missingParent';
-        }
-
-        $restoredItem = Versioned::get_latest_version($record->classname, $record->ID);
-        if (!$restoredItem) {
-            return new ValidationException($record->classname . " #$record->ID not found", 400);
-        }
-
-        if (method_exists($restoredItem, 'doRestoreToStage')) {
-            $restoredItem = $restoredItem->doRestoreToStage();
-        } else {
-            $restoredItem->writeToStage(Versioned::DRAFT);
-            $restoredItem = Versioned::get_by_stage($restoredItem->classname, Versioned::DRAFT)
-                ->byID($restoredItem->ID);
-        }
-
-        $restoredID = $restoredItem->Title ?: $restoredItem->ID;
-        $restoredType = strtolower($restoredItem->i18n_singular_name());
-
-        if (method_exists($restoredItem, 'CMSEditLink') &&
-        $restoredItem->CMSEditLink()) {
-            $restoredID = sprintf('<a href="%s">%s</a>', $restoredItem->CMSEditLink(), $restoredID);
-        }
-
-        $message = [
-            'text' => _t('SilverStripe\\Admin\\ArchiveAdmin.RESTORE_TO_ROOT', 'Successfully restored the {model} "{id}"', ['model' => $restoredType, 'id' => $restoredID]),
-            'type' => 'good',
-        ];
+        $message = RestoreAction::restore($record);
 
         $controller = $this->owner->popupController;
         $controller->getRequest()->addHeader('X-Pjax', 'Content');
         $controller->getEditForm()->sessionMessage($message['text'], $message['type'], ValidationResult::CAST_HTML);
 
         return $controller->redirect($controller->Link(), 'index');
-    }
-
-    /**
-     * Determines whether this record can be restored to it's original location
-     *
-     * @param $record
-     * @return bool
-     */
-    public function shouldRestoreToRoot($record)
-    {
-        if ($parentID = $record->ParentID) {
-            $parentItem = Versioned::get_latest_version($record->classname, $parentID);
-            if (!$parentItem || !$parentItem->isOnDraft()) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

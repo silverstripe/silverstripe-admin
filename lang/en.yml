@@ -70,6 +70,8 @@ en:
     ResultNone: 'No changes'
     ResultUpdated: 'Updated {count} members'
   SilverStripe\Admin\ArchiveAdmin:
+    RESTORE_FALIURE_PERMISSION: 'Insufficient permission to restore item'
+    RESTORE_FALIURE_STATE: 'This item already exists and cannot be restored'
     RESTORE_TO_ROOT: 'Restore draft at top level'
     RESTORE: 'Restore draft'
     RESTORE_TO_ROOT_DESC: 'Restore the archived version to draft as a top level item'

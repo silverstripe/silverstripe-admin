@@ -118,6 +118,9 @@ class ArchiveAdmin extends ModelAdmin
                     'AuthorID' => _t(__CLASS__ . '.COLUMN_ARCHIVEDBY', 'Archived By'),
                 ]);
                 $listColumns->setFieldFormatting([
+                    'appCategory' => function ($val, $item) {
+                        return ucfirst($val ?: $item->i18n_singular_name());
+                    },
                     'AuthorID' => function ($val, $item) {
                         /** @var Page $item */
                         return Member::get_by_id($val)->Name;
@@ -206,7 +209,7 @@ class ArchiveAdmin extends ModelAdmin
         $field->getConfig()->addComponent($detailForm);
         $field->getConfig()->addComponent(new GridFieldViewButton);
         $field->getConfig()->addComponent(new GridFieldRestoreAction);
-        // $field->getConfig()->addComponent(new GridField_ActionMenu);
+        $field->getConfig()->addComponent(new GridField_ActionMenu);
 
         return $field;
     }
@@ -217,7 +220,7 @@ class ArchiveAdmin extends ModelAdmin
      * @param boolean $forDisplay
      * @return array
      */
-    protected function getOtherVersionedObjects($forDisplay = false)
+    public function getOtherVersionedObjects($forDisplay = false)
     {
         $versionedClasses = array_filter(
             ClassInfo::subclassesFor(DataObject::class),
@@ -247,7 +250,7 @@ class ArchiveAdmin extends ModelAdmin
      * @param string $className
      * @return bool
      */
-    protected function isOthersClass($className)
+    public function isOthersClass($className)
     {
         $existingTabs = [
             SiteTree::class,
@@ -329,9 +332,9 @@ class ArchiveAdmin extends ModelAdmin
     /**
      * Add the special 'Others' tab
      *
-     * @return \SilverStripe\ORM\ArrayList An ArrayList of all managed models to build the tabs for this ModelAdmin
+     * @return ArrayList An ArrayList of all managed models to build the tabs for this ModelAdmin
      */
-    protected function getManagedModelTabs()
+    public function getManagedModelTabs()
     {
         $isOtherActive = ($this->isOthersClass($this->modelClass) || $this->request->getVar('others') !== null);
 
