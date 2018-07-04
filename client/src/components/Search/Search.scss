@@ -1,0 +1,182 @@
+// AssetAdmin search
+
+.search {
+  @include media-breakpoint-up(md) {
+    position: relative;
+    right: auto;
+
+    &.search--active {
+      right: 0;
+    }
+  }
+
+  &.search--active {
+    position: relative;
+    width: 100%;
+  }
+}
+
+.search__group {
+  opacity: 0;
+  overflow: hidden;
+  display: none;
+
+  .search--active & {
+    transition: opacity $transition-speed-fast;
+    overflow: visible;
+    opacity: 1;
+    display: block;
+    width: 100%;
+  }
+}
+
+// Search open icon
+.search__trigger {
+  z-index: 1;
+
+  .search--active & {
+    display: none;
+  }
+
+  .search & {
+    margin-right: 0;
+  }
+}
+
+// Search submit
+.search__submit {
+  right: 37px;
+  top: 9px;
+  position: absolute;
+  margin-right: 0;
+}
+
+// Search cancel
+.search__cancel {
+  right: 4px;
+  margin-right: 0;
+  top: 9px;
+  position: absolute;
+  padding-right: 5px;
+  padding-left: 5px;
+  background-color: transparent;
+
+  &:hover {
+    background-color: $btn-secondary-bg;
+  }
+}
+
+// Expand filters panel
+.search__filter-trigger-text {
+  display: none;
+  opacity: 0;
+  position: absolute;
+  transform: translateX(-106%);
+  font-size: $font-size-xs;
+  top: 7px;
+  color: $link-color;
+  transition: opacity $transition-speed-fast;
+}
+
+.search__filter-trigger {
+  display: block;
+  border: 0;
+  margin: 0;
+  border-radius: 0;
+  position: absolute;
+  top: 10px;
+  right: 79px;
+  outline: 0;
+  overflow: visible;
+
+  &:hover:not(:disabled):not(.disabled) {
+    background-color: transparent;
+
+    &:before {
+      color: $link-color;
+    }
+
+    .search__filter-trigger-text {
+      display: block;
+      opacity: 1;
+    }
+  }
+
+  &:active,
+  &:focus,
+  &:hover {
+    border: 0;
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  // Rotate ^ when filter-panel is open
+  &::before {
+    margin: 0;
+    transform: rotate(180deg) translateY(2px);
+  }
+
+  &.collapsed::before {
+    transform: rotate(0deg) translateY(0);
+  }
+}
+
+.search__filter-panel {
+  position: absolute;
+  padding: $panel-padding-y $panel-padding-x;
+  background: $white;
+  margin-right: 1px;
+  right: 0;
+  top: $toolbar-total-height;
+  z-index: 9999;
+  box-shadow: 0 2px 6px 0 $shadow-level-5;
+  border-radius: 0 0 $border-radius $border-radius;
+  width: calc(#{$search-width-max} - 2px);
+
+  @include media-breakpoint-up(md) {
+    width: #{$search-width - 2px};
+  }
+
+  @include media-breakpoint-up(lg) {
+    width: #{$search-width-lg - 2px};
+  }
+}
+
+.search__content-field {
+  padding-right: 113px;
+  padding-left: 18px;
+  padding-top: 4px;
+  box-shadow: 0 1px $input-btn-border-width 0 $input-border-color, 0 1px 5px 1px $border-color-light;
+  border-top: 0;
+  border-bottom: 0;
+  border-radius: 0;
+  font-size: 15px;
+  height: 52px;
+  width: 0;
+  opacity: 0;
+  float: right;
+
+  &:focus {
+    box-shadow: 0 1px 1px $input-focus-border-color, 0 0 8px $input-focus-box-shadow;
+  }
+
+  .search--active & {
+    opacity: 1;
+    width: $search-width-max;
+
+    @include media-breakpoint-up(md) {
+      width: $search-width;
+      transition: width $transition-speed-fast,
+      opacity $transition-speed-fast;
+    }
+
+    @include media-breakpoint-up(lg) {
+      width: $search-width-lg;
+    }
+  }
+
+  // hide clear action in IE as it overlaps with filters
+  &::-ms-clear {
+    display: none;
+  }
+}
