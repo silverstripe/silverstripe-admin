@@ -13,12 +13,17 @@ import Focusedzone from 'components/Focusedzone/Focusedzone';
 import getFormState from 'lib/getFormState';
 import classnames from 'classnames';
 
-const identifier = 'AssetAdmin.SearchForm';
-const view = {
+const identifier = 'Admin.SearchForm';
+const display = {
   NONE: 'NONE',
   VISIBLE: 'VISIBLE',
   EXPANDED: 'EXPANDED',
 };
+const displayBehavior = {
+  NONE: 'NONE',
+  HIDEABLE: 'HIDEABLE',
+  TOGGLABLE: 'TOGGLABLE'
+}
 
 /**
  * @param {Object} filters
@@ -28,6 +33,9 @@ function hasFilters(filters) {
   return (filters && Object.keys(filters).length > 0);
 }
 
+/**
+ * Displays a search form
+ */
 class Search extends Component {
   constructor(props) {
     super(props);
@@ -43,7 +51,6 @@ class Search extends Component {
     this.toggle = this.toggle.bind(this);
     this.open = this.open.bind(this);
     this.state = {
-      view: view.NONE,
       searchText: (props.filters && props.filters.name) || '',
     };
   }
@@ -98,7 +105,7 @@ class Search extends Component {
   }
 
   focusInput() {
-    if (this.state.view === view.NONE) {
+    if (this.state.display === display.NONE) {
       return;
     }
 
@@ -118,7 +125,7 @@ class Search extends Component {
   }
 
   focusFirstFormField() {
-    if (this.state.view !== view.EXPANDED) {
+    if (this.state.display !== display.EXPANDED) {
       return;
     }
 
@@ -177,7 +184,7 @@ class Search extends Component {
    * When clicking the "X" button
    */
   hide() {
-    this.setState({ view: view.NONE });
+    this.setState({ display: display.NONE });
   }
 
   /**
@@ -185,26 +192,26 @@ class Search extends Component {
    * When clicking the green activate "magnifying glass" button
    */
   show() {
-    this.setState({ view: view.VISIBLE });
+    this.setState({ display: display.VISIBLE });
   }
 
   /**
    * Expand fully form
    */
   expand() {
-    this.setState({ view: view.EXPANDED });
+    this.setState({ display: display.EXPANDED });
   }
 
   /**
    * When toggling the advanced button
    */
   toggle() {
-    switch (this.state.view) {
-      case view.VISIBLE:
+    switch (this.state.display) {
+      case display.VISIBLE:
         this.expand();
         setTimeout(this.focusFirstFormField, 50);
         break;
-      case view.EXPANDED:
+      case display.EXPANDED:
         this.show();
         break;
       default:
@@ -244,16 +251,17 @@ class Search extends Component {
       'font-icon-down-open', 'search__filter-trigger',
     ];
     let expanded = false;
-    switch (this.state.view) {
-      case view.EXPANDED:
+    console.dir(this.props.display)
+    switch (this.props.display) {
+      case display.EXPANDED:
         expanded = true;
         searchClasses.push('search--active');
         break;
-      case view.VISIBLE:
+      case display.VISIBLE:
         advancedButtonClasses.push('collapsed');
         searchClasses.push('search--active');
         break;
-      case view.NONE:
+      case display.NONE:
         advancedButtonClasses.push('collapsed');
         break;
       default:
@@ -264,9 +272,15 @@ class Search extends Component {
       'btn',
       'btn-primary',
       'search__submit',
-      'font-icon-search',
       'btn--icon-large',
       'btn--no-text',
+      'font-icon-search',
+    );
+
+    const clearButtonClasses = classnames(
+      'btn',
+      'btn-secondary',
+      'clear__submit',
     );
 
     const searchTriggerButtonClasses = classnames(
@@ -304,35 +318,38 @@ class Search extends Component {
               // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
             />
-            <button
+            { (this.props.forceFilters || this.props.formSchemaUrl) && <button
               aria-expanded={expanded}
               aria-controls={formId}
               onClick={this.toggle}
               className={advancedButtonClasses.join(' ')}
-              title={i18n._t('AssetAdmin.ADVANCED', 'Advanced')}
+              title={i18n._t('Admin.ADVANCED', 'Advanced')}
             >
               <span className="search__filter-trigger-text">
-                {i18n._t('AssetAdmin.ADVANCED', 'Advanced')}
+                {i18n._t('Admin.ADVANCED', 'Advanced')}
               </span>
-            </button>
-            <button
-              className={searchButtonClasses}
-              title={i18n._t('AssetAdmin.SEARCH', 'Search')}
-              onClick={this.doSearch}
-            />
+            </button>}
             <button
               onClick={this.hide}
-              title={i18n._t('AssetAdmin.CLOSE', 'Close')}
+              title={i18n._t('Admin.CLOSE', 'Close')}
               className="btn font-icon-cancel btn--no-text btn--icon-md search__cancel"
               aria-controls={this.props.id}
               aria-expanded="true"
             />
 
             <Collapse id={formId} className="search__filter-panel" isOpen={expanded}>
-              {/*<FormBuilderLoader*/}
-                {/*identifier={identifier}*/}
-                {/*schemaUrl={this.props.searchFormSchemaUrl}*/}
-              {/*/>*/}
+              {this.props.formSchemaUrl && <FormBuilderLoader
+                identifier={identifier}
+                schemaUrl={this.props.formSchemaUrl}
+              />}
+              <button className={searchButtonClasses} onClick={this.doSearch} >
+                {i18n._t('Admin.SEARCH', 'Search')}
+              </button>
+              <button
+                className={clearButtonClasses}
+                onClick={this.doSearch}>
+                {i18n._t('Admin.CLEAR', 'Clear')}
+              </button>
             </Collapse>
           </div>
         </div>
@@ -341,21 +358,41 @@ class Search extends Component {
   }
 }
 
+
+
 Search.propTypes = {
-  searchFormSchemaUrl: PropTypes.string.isRequired,
+  onSearch: PropTypes.func,
+  onClear: PropTypes.func,
+  onShowFilters: PropTypes.func,
+  onHideFilters: PropTypes.func,
+  onShow: PropTypes.func,
+  onHide: PropTypes.func,
+
   id: PropTypes.string.isRequired,
-  onSearch: PropTypes.func.isRequired,
+  display: PropTypes.oneOf(Object.values(display)),
+  showFilters: PropTypes.bool,
+  formSchemaUrl: PropTypes.string,
   filters: PropTypes.object,
   formData: PropTypes.object,
-  placeholder: PropTypes.string
+  placeholder: PropTypes.string,
+  displayBehavior: PropTypes.oneOf(Object.values(displayBehavior)),
+  term: PropTypes.string,
+
+  forceFilters: PropTypes.bool,
 };
 
 Search.defaultProps = {
-  placeholder: i18n._t('Admin.SEARCH', 'Search')
+  placeholder: i18n._t('Admin.SEARCH', 'Search'),
+  display: display.VISIBLE,
+  displayBehavior: displayBehavior.NONE,
+  showFilters: false,
+  filters: {},
+  formData: {},
+  term: '',
+  forceFilters: false
 }
 
 function mapStateToProps(state, ownProps) {
-  console.dir(state);
   const schema = state.form.formSchemas[ownProps.searchFormSchemaUrl];
   if (!schema || !schema.name) {
     return { formData: {} };

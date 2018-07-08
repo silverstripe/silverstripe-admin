@@ -43,14 +43,6 @@
   }
 }
 
-// Search submit
-.search__submit {
-  right: 37px;
-  top: 9px;
-  position: absolute;
-  margin-right: 0;
-}
-
 // Search cancel
 .search__cancel {
   right: 4px;
@@ -178,5 +170,9 @@
   // hide clear action in IE as it overlaps with filters
   &::-ms-clear {
     display: none;
+  }
+
+  &::before {
+    display: block;
   }
 }
