@@ -28,6 +28,14 @@
     display: block;
     width: 100%;
   }
+
+  .font-icon-search {
+    font-size: 25px;
+    position: absolute;
+    left: 20px;
+    top: 10px;
+  }
+
 }
 
 // Search open icon
@@ -45,13 +53,18 @@
 
 // Search cancel
 .search__cancel {
-  right: 4px;
-  margin-right: 0;
-  top: 9px;
+  right: 0;
+  top: 0;
   position: absolute;
   padding-right: 5px;
   padding-left: 5px;
   background-color: transparent;
+  height: 100%;
+  border-left: 1px solid $gray-200;
+  width: 52px;
+  height: 54px;
+  border-radius: 0;
+  margin: 0;
 
   &:hover {
     background-color: $btn-secondary-bg;
@@ -77,9 +90,16 @@
   border-radius: 0;
   position: absolute;
   top: 10px;
-  right: 79px;
   outline: 0;
   overflow: visible;
+
+  .search__hideable & {
+    right: 55px;
+  }
+
+  .search__not-hideable & {
+    right: 5px;
+  }
 
   &:hover:not(:disabled):not(.disabled) {
     background-color: transparent;
@@ -117,36 +137,33 @@
   position: absolute;
   padding: $panel-padding-y $panel-padding-x;
   background: $white;
-  margin-right: 1px;
+  margin: 0;
   right: 0;
   top: $toolbar-total-height;
   z-index: 9999;
   box-shadow: 0 2px 6px 0 $shadow-level-5;
   border-radius: 0 0 $border-radius $border-radius;
-  width: calc(#{$search-width-max} - 2px);
-
-  @include media-breakpoint-up(md) {
-    width: #{$search-width - 2px};
-  }
-
-  @include media-breakpoint-up(lg) {
-    width: #{$search-width-lg - 2px};
-  }
+  width: 100%;
 }
 
 .search__content-field {
   padding-right: 113px;
-  padding-left: 18px;
+  padding-left: 55px;
   padding-top: 4px;
   box-shadow: 0 1px $input-btn-border-width 0 $input-border-color, 0 1px 5px 1px $border-color-light;
   border-top: 0;
   border-bottom: 0;
   border-radius: 0;
   font-size: 15px;
+  font-weight: bold;
   height: 52px;
-  width: 0;
+  width: 100%;
   opacity: 0;
   float: right;
+
+  &::placeholder {
+    font-weight: normal;
+  }
 
   &:focus {
     box-shadow: 0 1px 1px $input-focus-border-color, 0 0 8px $input-focus-box-shadow;
@@ -157,13 +174,13 @@
     width: $search-width-max;
 
     @include media-breakpoint-up(md) {
-      width: $search-width;
+
       transition: width $transition-speed-fast,
       opacity $transition-speed-fast;
     }
 
     @include media-breakpoint-up(lg) {
-      width: $search-width-lg;
+
     }
   }
 

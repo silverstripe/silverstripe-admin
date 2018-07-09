@@ -248,10 +248,9 @@ class Search extends Component {
     const searchClasses = ['search'];
     const advancedButtonClasses = [
       'btn', 'btn-secondary', 'btn--icon-md', 'btn--no-text',
-      'font-icon-down-open', 'search__filter-trigger',
+      'font-icon-caret-down-two', 'search__filter-trigger',
     ];
     let expanded = false;
-    console.dir(this.props.display)
     switch (this.props.display) {
       case display.EXPANDED:
         expanded = true;
@@ -268,13 +267,19 @@ class Search extends Component {
         // noop
     }
 
+    // Decide if we display the X button
+    let hideable = [displayBehavior.HIDEABLE, displayBehavior.TOGGLABLE].indexOf(this.props.displayBehavior) > -1;
+    if (hideable) {
+      searchClasses.push('search__hideable');
+    } else {
+      searchClasses.push('search__not-hideable');
+    }
+
     const searchButtonClasses = classnames(
       'btn',
       'btn-primary',
       'search__submit',
-      'btn--icon-large',
       'btn--no-text',
-      'font-icon-search',
     );
 
     const clearButtonClasses = classnames(
@@ -311,31 +316,29 @@ class Search extends Component {
               type="text"
               name="name"
               placeholder={this.props.placeholder}
-              className="form-control search__content-field font-icon-search"
+              className="form-control search__content-field "
               onKeyUp={this.handleKeyUp}
               onChange={this.handleChange}
               value={searchText}
               // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
             />
+            <div className="icon font-icon-search"/>
             { (this.props.forceFilters || this.props.formSchemaUrl) && <button
               aria-expanded={expanded}
               aria-controls={formId}
+              aria-label= {i18n._t('Admin.ADVANCED', 'Advanced')}
               onClick={this.toggle}
               className={advancedButtonClasses.join(' ')}
               title={i18n._t('Admin.ADVANCED', 'Advanced')}
-            >
-              <span className="search__filter-trigger-text">
-                {i18n._t('Admin.ADVANCED', 'Advanced')}
-              </span>
-            </button>}
-            <button
+            ></button>}
+            { hideable && <button
               onClick={this.hide}
               title={i18n._t('Admin.CLOSE', 'Close')}
-              className="btn font-icon-cancel btn--no-text btn--icon-md search__cancel"
+              className="btn font-icon-cancel btn--no-text btn--icon-lg search__cancel"
               aria-controls={this.props.id}
               aria-expanded="true"
-            />
+            /> }
 
             <Collapse id={formId} className="search__filter-panel" isOpen={expanded}>
               {this.props.formSchemaUrl && <FormBuilderLoader

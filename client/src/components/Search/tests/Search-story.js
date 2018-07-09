@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { storiesOf } from '@storybook/react';
 import Search from '../Search';
+import SearchToggle from '../SearchToggle';
 import ValueTracker from 'stories/ValueTracker';
 import { createStore, combineReducers } from 'redux';
 import { reducer as ReduxFormReducer } from 'redux-form';
@@ -15,7 +16,6 @@ const FormReducer = combineReducers({
 const props = {
   name: 'MyField',
   title: 'Field title',
-  placeholder: 'Placeholder text (Defaults to "Admin.SEARCH")',
   store: createStore(combineReducers({form: FormReducer})),
 };
 
@@ -31,8 +31,9 @@ storiesOf('Admin/Search', module)
         formSchemaUrl=""
         filters={{}}
         formData={{}}
-        placeholder="Search me"
+        placeholder={'Search "Pages"'}
         displayBehavior={"NONE"}
+        forceFilters={true}
         {...props}
       />
   )).add('Search Small Expanded', () => (
@@ -48,19 +49,21 @@ storiesOf('Admin/Search', module)
         displayBehavior={"NONE"}
         {...props}
       />
+  )).add('Search hideable', () => (
+    <div style={{width: "800px"}}>
+      <Search
+        id="Large Hideable"
+        display="VISIBLE"
+        showFilters={false}
+        formSchemaUrl=""
+        forceFilters={true}
+        filters={{}}
+        formData={{}}
+        placeholder="Search me"
+        displayBehavior={"HIDEABLE"}
+        {...props}
+      />
+    </div>
+  )).add('Toggeable Search', () => (
+  <SearchToggle toogle={console.dir} />
   ));
-
-
-
-// Search.propTypes = {
-//
-//   id: PropTypes.string.isRequired,
-//   display: PropTypes.oneOf(Object.values(display)),
-//   showFilters: PropTypes.bool,
-//   formSchemaUrl: PropTypes.string,
-//   filters: PropTypes.object,
-//   formData: PropTypes.object,
-//   placeholder: PropTypes.string,
-//   displayBehavior: PropTypes.oneOf(Object.values(displayBehavior)),
-//   term: PropTypes.string,
-// };
