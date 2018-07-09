@@ -24,6 +24,28 @@ storiesOf('Admin/PopoverField', module)
       </PopoverField>
     </div>
   ))
+  .add('Icons', () => (
+    <div style={centerStyles}>
+      <PopoverField
+        id="popover-field-ellipsis"
+        data={{
+          popoverTitle: 'Default ellipsis button'
+        }}
+      >
+        <p>An ellipsis icon is used if no title is provided.</p>
+      </PopoverField>
+      <PopoverField
+        id="popover-field-custom-icon"
+        buttonClassName="font-icon-share"
+        title="Share"
+        data={{
+          popoverTitle: 'Custom button icon'
+        }}
+      >
+        <p>Providing a title and a custom button icon</p>
+      </PopoverField>
+    </div>
+  ))
   .add('Positions', () => (
     <div style={centerStyles}>
       <PopoverField

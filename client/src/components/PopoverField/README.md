@@ -15,6 +15,9 @@ is represented by a button.
 
  * `id` (string): The ID for the component.
  * `title` (any): The title to display on the button to open the popover, if left blank it will display an ellipsis icon.
+ * `className` (string): A class name that is applied to the container div and the trigger button.
+ * `buttonClassName` (string): A class name that is applied to the trigger button.
+ * `popoverClassName` (string): A class name that is applied to the popover element.
  * `data` (object) (required): Extra data that helps define this field uniquely.
    * `popoverTitle` (string): The title to appear for the popover.
    * `buttonTooltip` (string): Title for button tooltip.
@@ -23,3 +26,4 @@ is represented by a button.
      * right
      * bottom
      * left
+ * `toggleCallback` (function): An optional callback for when the popover is toggled.
