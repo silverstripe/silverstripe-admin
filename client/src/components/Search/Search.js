@@ -12,8 +12,10 @@ import getIn from 'redux-form/lib/structure/plain/getIn';
 import Focusedzone from 'components/Focusedzone/Focusedzone';
 import getFormState from 'lib/getFormState';
 import classnames from 'classnames';
+import SearchBox from './SearchBox';
+import SearchForm from './SearchForm';
 
-const identifier = 'Admin.SearchForm';
+
 const display = {
   NONE: 'NONE',
   VISIBLE: 'VISIBLE',
@@ -44,6 +46,7 @@ class Search extends Component {
     this.handleKeyUp = this.handleKeyUp.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.doSearch = this.doSearch.bind(this);
+    this.doClear = this.doClear.bind(this);
     this.focusInput = this.focusInput.bind(this);
     this.focusFirstFormField = this.focusFirstFormField.bind(this);
     this.hide = this.hide.bind(this);
@@ -219,6 +222,10 @@ class Search extends Component {
     }
   }
 
+  doClear() {
+
+  }
+
   doSearch() {
     const data = {};
 
@@ -240,7 +247,9 @@ class Search extends Component {
   }
 
   render() {
-    const formId = `${this.props.id}_ExtraFields`;
+    const {formSchemaUrl, id, ...props} = this.props;
+
+    const formId = `${id}_ExtraFields`;
     const triggerId = `${this.props.id}_Trigger`;
     const searchText = this.state.searchText;
 
@@ -250,22 +259,8 @@ class Search extends Component {
       'btn', 'btn-secondary', 'btn--icon-md', 'btn--no-text',
       'font-icon-caret-down-two', 'search__filter-trigger',
     ];
-    let expanded = false;
-    switch (this.props.display) {
-      case display.EXPANDED:
-        expanded = true;
-        searchClasses.push('search--active');
-        break;
-      case display.VISIBLE:
-        advancedButtonClasses.push('collapsed');
-        searchClasses.push('search--active');
-        break;
-      case display.NONE:
-        advancedButtonClasses.push('collapsed');
-        break;
-      default:
-        // noop
-    }
+
+    let expanded = this.props.display == display.EXPANDED;
 
     // Decide if we display the X button
     let hideable = [displayBehavior.HIDEABLE, displayBehavior.TOGGLABLE].indexOf(this.props.displayBehavior) > -1;
@@ -275,87 +270,24 @@ class Search extends Component {
       searchClasses.push('search__not-hideable');
     }
 
-    const searchButtonClasses = classnames(
-      'btn',
-      'btn-primary',
-      'search__submit',
-      'btn--no-text',
-    );
-
-    const clearButtonClasses = classnames(
-      'btn',
-      'btn-secondary',
-      'clear__submit',
-    );
-
-    const searchTriggerButtonClasses = classnames(
-      'btn',
-      'btn--no-text',
-      'btn-secondary',
-      'search__trigger',
-      'font-icon-search',
-      'btn--icon-large'
-    );
-
     return (
       <Focusedzone onClickOut={this.hide}>
-        <div className={searchClasses.join(' ')}>
-          <button
-            className={searchTriggerButtonClasses}
-            type="button"
-            title={i18n._t('AssetAdmin.SEARCH', 'Search')}
-            aria-owns={this.props.id}
-            aria-controls={this.props.id}
-            aria-expanded="false"
-            onClick={this.open}
-            id={triggerId}
-          />
-          <div id={this.props.id} className="search__group">
-            <input
-              aria-labelledby={triggerId}
-              type="text"
-              name="name"
-              placeholder={this.props.placeholder}
-              className="form-control search__content-field "
-              onKeyUp={this.handleKeyUp}
-              onChange={this.handleChange}
-              value={searchText}
-              // eslint-disable-next-line jsx-a11y/no-autofocus
-              autoFocus
-            />
-            <div className="icon font-icon-search"/>
-            { (this.props.forceFilters || this.props.formSchemaUrl) && <button
-              aria-expanded={expanded}
-              aria-controls={formId}
-              aria-label= {i18n._t('Admin.ADVANCED', 'Advanced')}
-              onClick={this.toggle}
-              className={advancedButtonClasses.join(' ')}
-              title={i18n._t('Admin.ADVANCED', 'Advanced')}
-            ></button>}
-            { hideable && <button
-              onClick={this.hide}
-              title={i18n._t('Admin.CLOSE', 'Close')}
-              className="btn font-icon-cancel btn--no-text btn--icon-lg search__cancel"
-              aria-controls={this.props.id}
-              aria-expanded="true"
-            /> }
+        <SearchBox
+          onChange={this.handleChange}
+          searchText={searchText}
+          hideable={hideable}
+          expanded={expanded}
+          id={`${id}_searchbox`}
+          {...props}
+          >
 
-            <Collapse id={formId} className="search__filter-panel" isOpen={expanded}>
-              {this.props.formSchemaUrl && <FormBuilderLoader
-                identifier={identifier}
-                schemaUrl={this.props.formSchemaUrl}
-              />}
-              <button className={searchButtonClasses} onClick={this.doSearch} >
-                {i18n._t('Admin.SEARCH', 'Search')}
-              </button>
-              <button
-                className={clearButtonClasses}
-                onClick={this.doSearch}>
-                {i18n._t('Admin.CLEAR', 'Clear')}
-              </button>
-            </Collapse>
-          </div>
-        </div>
+          <SearchForm
+            id={formId}
+            expanded={expanded}
+            formSchemaUrl={formSchemaUrl}
+            onSearch={this.doSearch}
+            onClear={this.doClear} />
+        </SearchBox>
       </Focusedzone>
     );
   }
