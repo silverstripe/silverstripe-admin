@@ -21,7 +21,6 @@ client/src/legacy/LeftAndMain.*.js
 client/src/legacy/MemberDatetimeOptionsetField.js
 client/src/legacy/MemberImportForm.js
 client/src/legacy/ModelAdmin.js
-client/src/legacy/ArchiveAdmin.js
 client/src/legacy/SecurityAdmin.js
 client/src/legacy/leaktools.js
 client/src/legacy/sspath.js
