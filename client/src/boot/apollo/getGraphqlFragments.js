@@ -22,8 +22,8 @@ const handleError = response => {
 
 const getGraphqlFragments = async (baseUrl, preferStatic = true) => {
   const urls = [
-    `${baseUrl}assets/types.graphql`,
-    `${baseUrl}graphql/types`
+    `${baseUrl}assets/admin.types.graphql`,
+    `${baseUrl}admin/graphql/types`
   ];
   if (!preferStatic) {
     urls.reverse();

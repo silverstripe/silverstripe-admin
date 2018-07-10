@@ -6,4 +6,9 @@ After:
 ---
 SilverStripe\Control\Director:
   rules:
+    'admin/graphql':
+      Controller: %$SilverStripe\GraphQL\Controller.admin
+      Stage: Stage
+      Permissions:
+        CMS_ACCESS: CMS_ACCESS
     'admin': 'SilverStripe\Admin\AdminRootController'

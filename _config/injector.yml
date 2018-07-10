@@ -1,0 +1,12 @@
+---
+Name: admin-injector
+---
+SilverStripe\Core\Injector\Injector:
+  SilverStripe\GraphQL\Manager.admin:
+    class: SilverStripe\GraphQL\Manager
+    constructor:
+      identifier: admin
+  SilverStripe\GraphQL\Controller.admin:
+    class: SilverStripe\GraphQL\Controller
+    constructor:
+      manager: %$SilverStripe\GraphQL\Manager.admin
