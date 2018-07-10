@@ -78,7 +78,6 @@ require('../legacy/LeftAndMain.FieldHelp');
 require('../legacy/LeftAndMain.FieldDescriptionToggle');
 require('../legacy/LeftAndMain.TreeDropdownField');
 require('../legacy/AddToCampaignForm');
-require('../legacy/ArchiveAdmin');
 require('../legacy/SecurityAdmin');
 require('../legacy/ModelAdmin');
 
