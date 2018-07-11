@@ -12,7 +12,7 @@ Feature: Lost Password
     When I follow "I've lost my password"
     And I fill in "admin@example.org" for "Email"
     And I press the "Send me the password reset link" button
-    Then I should see "A reset link has been sent to 'admin@example.org'"
+    Then I should see "A reset link has been sent, provided an account exists for this email address"
     And there should be an email to "admin@example.org" titled "Your password reset link"
     When I click on the "password reset link" link in the email to "admin@example.org"
     Then I should see "Please enter a new password"
