@@ -22,6 +22,23 @@ storiesOf('Admin/PopoverField', module)
       >
         <p>This is some info in the popover</p>
       </PopoverField>
+      <PopoverField
+        id="popover-field-lots-of-content"
+        title="Lots of content"
+        data={{
+          popoverTitle: 'I have lots of content',
+          buttonTooltip: 'Button tooltip'
+        }}
+      >
+        <p>
+          Sometimes a popover body will have a lot of content in it. Lorem ipsum dolor sit
+          amet, consectetur adipiscing elit. Mauris pulvinar pellentesque neque quis suscipit.
+        </p>
+        <p>
+          Praesent bibendum gravida fringilla. Vestibulum ante ipsum primis in faucibus orci
+          luctus et ultrices posuere cubilia Curae.
+        </p>
+      </PopoverField>
     </div>
   ))
   .add('Positions', () => (
