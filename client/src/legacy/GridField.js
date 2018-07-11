@@ -314,9 +314,26 @@ $.entwine('ss', function($) {
         filterState='hidden';
       }
 
-      this.getGridField().reload({
-        data: [{name: this.attr('name'), value: this.val(), filter: filterState}]
-      });
+      const successCallback = function(data, status, response) {
+        const messageText = response.getResponseHeader('X-Message-Text');
+        const messageType = response.getResponseHeader('X-Message-Type');
+        if (messageText && messageType) {
+          $("#Form_EditForm_error").addClass(messageType);
+          $("#Form_EditForm_error").html(messageText);
+          $("#Form_EditForm_error").show();
+        }
+      }
+
+      this.getGridField().reload(
+        {
+          data: [{
+            name: this.attr('name'),
+            value: this.val(),
+            filter: filterState
+          }],
+        },
+        successCallback
+      );
 
       e.preventDefault();
     },
