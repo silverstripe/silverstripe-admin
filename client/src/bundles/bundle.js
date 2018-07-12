@@ -42,6 +42,7 @@ require('expose-loader?TextField!components/TextField/TextField');
 require('expose-loader?LiteralField!components/LiteralField/LiteralField');
 require('expose-loader?Toolbar!components/Toolbar/Toolbar');
 require('expose-loader?Breadcrumb!components/Breadcrumb/Breadcrumb');
+require('expose-loader?Search!components/Search/Search');
 require('expose-loader?TreeDropdownFieldNode!components/TreeDropdownField/TreeDropdownFieldNode');
 require('expose-loader?TreeDropdownFieldMenu!components/TreeDropdownField/TreeDropdownFieldMenu');
 require('expose-loader?TreeDropdownField!components/TreeDropdownField/TreeDropdownField');

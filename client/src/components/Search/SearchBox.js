@@ -1,16 +1,7 @@
 /* global document */
 import i18n from 'i18n';
 import React, { PropTypes, Component } from 'react';
-import classnames from 'classnames';
 import { Label } from 'reactstrap';
-
-/**
- * @param {Object} filters
- * @returns {boolean}
- */
-function hasFilters(filters) {
-  return (filters && Object.keys(filters).length > 0);
-}
 
 /**
  * Displays a search form
@@ -18,27 +9,11 @@ function hasFilters(filters) {
 class SearchBox extends Component {
   constructor(props) {
     super(props);
+    this.handleKeyUp = this.handleKeyUp.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
       searchText: (props.filters && props.filters.name) || '',
     };
-  }
-
-  handleChange(event) {
-    console.dir(event);
-    this.setState({ searchText: event.target.value });
-  }
-
-  componentWillMount() {
-
-  }
-
-  componentWillReceiveProps(props) {
-
-  }
-
-  componentWillUnmount() {
-
   }
 
   /**
@@ -52,12 +27,16 @@ class SearchBox extends Component {
     }
   }
 
+  handleChange(event) {
+    this.setState({ searchText: event.target.value });
+  }
+
   searchClasses() {
 
   }
 
   render() {
-    const {id, searchText, hideable, onChange, expanded} = this.props;
+    const { id, searchText, hideable, onChange, expanded } = this.props;
 
     // Build classes
     const searchClasses = ['search'];
@@ -76,44 +55,43 @@ class SearchBox extends Component {
 
 
     return (
-        <div className={searchClasses.join(' ')}>
-          <div id={this.props.id} className="search__group">
-            <Label for={this.props.id} id={`${id}_label`} hidden>{i18n._t('AssetAdmin.SEARCH', 'Search')}</Label>
-            <input
-              aria-labelledby={`${id}_label`}
-              type="text"
-              name="name"
-              placeholder={this.props.placeholder}
-              className="form-control search__content-field "
-              onKeyUp={this.handleKeyUp}
-              onChange={onChange}
-              value={searchText}
-              autoFocus
-              id={this.props.id}
-            />
-            <div className="icon font-icon-search"/>
-            { (this.props.forceFilters || this.props.formSchemaUrl) && <button
-              aria-expanded={expanded}
-              aria-controls={this.props.formId}
-              aria-label= {i18n._t('Admin.ADVANCED', 'Advanced')}
-              onClick={this.toggle}
-              className={advancedButtonClasses.join(' ')}
-              title={i18n._t('Admin.ADVANCED', 'Advanced')}
-            ></button>}
-            { hideable && <button
-              onClick={this.hide}
-              title={i18n._t('Admin.CLOSE', 'Close')}
-              className="btn font-icon-cancel btn--no-text btn--icon-lg search__cancel"
-              aria-controls={this.props.id}
-              aria-expanded="true"
-            /> }
-            {this.props.children}
-          </div>
+      <div className={searchClasses.join(' ')}>
+        <div id={this.props.id} className="search__group">
+          <Label for={this.props.id} id={`${id}_label`} hidden>{i18n._t('AssetAdmin.SEARCH', 'Search')}</Label>
+          <input
+            aria-labelledby={`${id}_label`}
+            type="text"
+            name="name"
+            placeholder={this.props.placeholder}
+            className="form-control search__content-field "
+            onKeyUp={this.handleKeyUp}
+            onChange={onChange}
+            value={searchText}
+            autoFocus
+            id={this.props.id}
+          />
+          <div className="icon font-icon-search" />
+          { (this.props.forceFilters || this.props.formSchemaUrl) && <button
+            aria-expanded={expanded}
+            aria-controls={this.props.formId}
+            aria-label={i18n._t('Admin.ADVANCED', 'Advanced')}
+            onClick={this.toggle}
+            className={advancedButtonClasses.join(' ')}
+            title={i18n._t('Admin.ADVANCED', 'Advanced')}
+          />}
+          { hideable && <button
+            onClick={this.hide}
+            title={i18n._t('Admin.CLOSE', 'Close')}
+            className="btn font-icon-cancel btn--no-text btn--icon-lg search__cancel"
+            aria-controls={this.props.id}
+            aria-expanded="true"
+          /> }
+          {this.props.children}
         </div>
+      </div>
     );
   }
 }
-
 
 
 SearchBox.propTypes = {
@@ -139,9 +117,9 @@ SearchBox.defaultProps = {
   filters: {},
   formData: {},
   term: '',
-}
+};
 
 
-export { SearchBox as Component};
+export { SearchBox as Component };
 
 export default SearchBox;

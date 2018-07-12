@@ -21,25 +21,19 @@ const clearButtonClasses = classnames(
   'clear__submit',
 );
 
+const searchLabel = i18n._t('Admin.SEARCH', 'Search');
+const clearLabel = i18n._t('Admin.CLEAR', 'Clear');
+
 /**
  * Displays a search form
  */
-const SearchForm = ({expanded, onSearch, onClear, formSchemaUrl, id}) => (
+const SearchForm = ({ expanded, onSearch, onClear, formSchemaUrl, id }) => (
   <Collapse id={id} className="search__filter-panel" isOpen={expanded}>
-    {formSchemaUrl && <FormBuilderLoader
-      identifier={identifier}
-      schemaUrl={formSchemaUrl} />}
-    <button className={searchButtonClasses} onClick={onSearch}>
-      {i18n._t('Admin.SEARCH', 'Search')}
-    </button>
-    <button
-      className={clearButtonClasses}
-      onClick={onClear}>
-      {i18n._t('Admin.CLEAR', 'Clear')}
-    </button>
+    {formSchemaUrl && <FormBuilderLoader identifier={identifier} schemaUrl={formSchemaUrl} />}
+    <button className={searchButtonClasses} onClick={onSearch}>{searchLabel}</button>
+    <button className={clearButtonClasses} onClick={onClear}>{clearLabel}</button>
   </Collapse>
 );
-
 
 
 SearchForm.propTypes = {
@@ -54,10 +48,11 @@ SearchForm.propTypes = {
 };
 
 SearchForm.defaultProps = {
+  formData: {},
+  showFilters: {}
+};
 
-}
 
-
-export { SearchForm as Component};
+export { SearchForm as Component };
 
 export default SearchForm;

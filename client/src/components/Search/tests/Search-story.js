@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { storiesOf } from '@storybook/react';
 import Search from '../Search';
@@ -16,7 +16,7 @@ const FormReducer = combineReducers({
 const props = {
   name: 'MyField',
   title: 'Field title',
-  store: createStore(combineReducers({form: FormReducer})),
+  store: createStore(combineReducers({ form: FormReducer })),
 };
 
 storiesOf('Admin/Search', module)
@@ -24,46 +24,46 @@ storiesOf('Admin/Search', module)
     <ValueTracker>{storyFn()}</ValueTracker>
   ))
   .add('Search Small Collapse', () => (
-      <Search
-        id="SmallNotExpanded"
-        display="VISIBLE"
-        showFilters={false}
-        formSchemaUrl=""
-        filters={{}}
-        formData={{}}
-        placeholder={'Search "Pages"'}
-        displayBehavior={"NONE"}
-        forceFilters={true}
-        {...props}
-      />
+    <Search
+      id="SmallNotExpanded"
+      display="VISIBLE"
+      showFilters={false}
+      formSchemaUrl=""
+      filters={{}}
+      formData={{}}
+      placeholder={'Search "Pages"'}
+      displayBehavior={'NONE'}
+      forceFilters
+      {...props}
+    />
   )).add('Search Small Expanded', () => (
-      <Search
-        id="SmallExpanded"
-        display="EXPANDED"
-        showFilters={false}
-        formSchemaUrl=""
-        forceFilters={true}
-        filters={{}}
-        formData={{}}
-        placeholder="Search me"
-        displayBehavior={"NONE"}
-        {...props}
-      />
+    <Search
+      id="SmallExpanded"
+      display="EXPANDED"
+      showFilters={false}
+      formSchemaUrl=""
+      forceFilters
+      filters={{}}
+      formData={{}}
+      placeholder="Search me"
+      displayBehavior={'NONE'}
+      {...props}
+    />
   )).add('Search hideable', () => (
-    <div style={{width: "800px"}}>
+    <div style={{ width: '800px' }}>
       <Search
         id="Large Hideable"
         display="VISIBLE"
         showFilters={false}
         formSchemaUrl=""
-        forceFilters={true}
+        forceFilters
         filters={{}}
         formData={{}}
         placeholder="Search me"
-        displayBehavior={"HIDEABLE"}
+        displayBehavior={'HIDEABLE'}
         {...props}
       />
     </div>
   )).add('Toggeable Search', () => (
-  <SearchToggle toogle={console.dir} />
+    <SearchToggle toogle={console.dir} />
   ));

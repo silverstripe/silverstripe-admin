@@ -4,16 +4,14 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
-import FormBuilderLoader from 'containers/FormBuilderLoader/FormBuilderLoader';
-import { Collapse } from 'reactstrap';
 import * as schemaActions from 'state/schema/SchemaActions';
 import { reset, initialize } from 'redux-form';
 import getIn from 'redux-form/lib/structure/plain/getIn';
 import Focusedzone from 'components/Focusedzone/Focusedzone';
 import getFormState from 'lib/getFormState';
-import classnames from 'classnames';
 import SearchBox from './SearchBox';
 import SearchForm from './SearchForm';
+import SearchToggle from './SearchToggle';
 
 
 const display = {
@@ -25,7 +23,9 @@ const displayBehavior = {
   NONE: 'NONE',
   HIDEABLE: 'HIDEABLE',
   TOGGLABLE: 'TOGGLABLE'
-}
+};
+
+const identifier = 'Admin.SearchForm';
 
 /**
  * @param {Object} filters
@@ -43,8 +43,6 @@ class Search extends Component {
     super(props);
 
     this.expand = this.expand.bind(this);
-    this.handleKeyUp = this.handleKeyUp.bind(this);
-    this.handleChange = this.handleChange.bind(this);
     this.doSearch = this.doSearch.bind(this);
     this.doClear = this.doClear.bind(this);
     this.focusInput = this.focusInput.bind(this);
@@ -162,21 +160,6 @@ class Search extends Component {
     }
   }
 
-  handleChange(event) {
-    this.setState({ searchText: event.target.value });
-  }
-
-  /**
-   * Handle enter key submission in search box
-   *
-   * @param {Object} event
-   */
-  handleKeyUp(event) {
-    if (event.keyCode === 13) {
-      this.doSearch();
-    }
-  }
-
   open() {
     this.show();
     setTimeout(this.focusInput, 50);
@@ -222,10 +205,6 @@ class Search extends Component {
     }
   }
 
-  doClear() {
-
-  }
-
   doSearch() {
     const data = {};
 
@@ -246,53 +225,55 @@ class Search extends Component {
     this.props.onSearch(data);
   }
 
+  doClear() {
+    this.clearFormData();
+  }
+
   render() {
-    const {formSchemaUrl, id, ...props} = this.props;
+    const { formSchemaUrl, id, ...props } = this.props;
 
     const formId = `${id}_ExtraFields`;
-    const triggerId = `${this.props.id}_Trigger`;
     const searchText = this.state.searchText;
 
     // Build classes
     const searchClasses = ['search'];
-    const advancedButtonClasses = [
-      'btn', 'btn-secondary', 'btn--icon-md', 'btn--no-text',
-      'font-icon-caret-down-two', 'search__filter-trigger',
-    ];
-
-    let expanded = this.props.display == display.EXPANDED;
+    const showToggle =
+      (props.display === display.NONE) &&
+      (props.displayBehavior === displayBehavior.TOGGLABLE);
+    const expanded = props.display === display.EXPANDED;
 
     // Decide if we display the X button
-    let hideable = [displayBehavior.HIDEABLE, displayBehavior.TOGGLABLE].indexOf(this.props.displayBehavior) > -1;
+    const hideable =
+      [displayBehavior.HIDEABLE, displayBehavior.TOGGLABLE].indexOf(props.displayBehavior) > -1;
     if (hideable) {
       searchClasses.push('search__hideable');
     } else {
       searchClasses.push('search__not-hideable');
     }
 
-    return (
-      <Focusedzone onClickOut={this.hide}>
-        <SearchBox
-          onChange={this.handleChange}
-          searchText={searchText}
-          hideable={hideable}
-          expanded={expanded}
-          id={`${id}_searchbox`}
-          {...props}
-          >
+    return (showToggle ? <SearchToggle onToggle={this.show} /> :
+    <Focusedzone onClickOut={this.hide}>
+      <SearchBox
+        onChange={this.handleChange}
+        searchText={searchText}
+        hideable={hideable}
+        expanded={expanded}
+        id={`${id}_searchbox`}
+        {...props}
+      >
 
-          <SearchForm
-            id={formId}
-            expanded={expanded}
-            formSchemaUrl={formSchemaUrl}
-            onSearch={this.doSearch}
-            onClear={this.doClear} />
-        </SearchBox>
-      </Focusedzone>
+        <SearchForm
+          id={formId}
+          expanded={expanded}
+          formSchemaUrl={formSchemaUrl}
+          onSearch={this.doSearch}
+          onClear={this.doClear}
+        />
+      </SearchBox>
+    </Focusedzone>
     );
   }
 }
-
 
 
 Search.propTypes = {
@@ -325,7 +306,7 @@ Search.defaultProps = {
   formData: {},
   term: '',
   forceFilters: false
-}
+};
 
 function mapStateToProps(state, ownProps) {
   const schema = state.form.formSchemas[ownProps.searchFormSchemaUrl];
