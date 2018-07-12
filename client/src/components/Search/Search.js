@@ -7,19 +7,19 @@ import { bindActionCreators } from 'redux';
 import * as schemaActions from 'state/schema/SchemaActions';
 import { reset, initialize } from 'redux-form';
 import getIn from 'redux-form/lib/structure/plain/getIn';
-import Focusedzone from 'components/Focusedzone/Focusedzone';
+import Focusedzone from '../Focusedzone/Focusedzone';
 import getFormState from 'lib/getFormState';
 import SearchBox from './SearchBox';
 import SearchForm from './SearchForm';
 import SearchToggle from './SearchToggle';
 
 
-const display = {
+const DISPLAY = {
   NONE: 'NONE',
   VISIBLE: 'VISIBLE',
   EXPANDED: 'EXPANDED',
 };
-const displayBehavior = {
+const BEHAVIOR = {
   NONE: 'NONE',
   HIDEABLE: 'HIDEABLE',
   TOGGLABLE: 'TOGGLABLE'
@@ -43,6 +43,7 @@ class Search extends Component {
     super(props);
 
     this.expand = this.expand.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.doSearch = this.doSearch.bind(this);
     this.doClear = this.doClear.bind(this);
     this.focusInput = this.focusInput.bind(this);
@@ -52,8 +53,10 @@ class Search extends Component {
     this.toggle = this.toggle.bind(this);
     this.open = this.open.bind(this);
     this.state = {
-      searchText: (props.filters && props.filters.name) || '',
+      display: props.display,
+      searchText: props.term || (props.filters && props.filters.name) || '',
     };
+
   }
 
   componentWillMount() {
@@ -105,8 +108,12 @@ class Search extends Component {
     }
   }
 
+  handleChange(event) {
+      this.setState({ searchText: event.target.value });
+  }
+
   focusInput() {
-    if (this.state.display === display.NONE) {
+    if (this.state.display === DISPLAY.NONE) {
       return;
     }
 
@@ -126,7 +133,7 @@ class Search extends Component {
   }
 
   focusFirstFormField() {
-    if (this.state.display !== display.EXPANDED) {
+    if (this.state.display !== DISPLAY.EXPANDED) {
       return;
     }
 
@@ -170,7 +177,12 @@ class Search extends Component {
    * When clicking the "X" button
    */
   hide() {
-    this.setState({ display: display.NONE });
+
+    if (this.props.onHide) {
+      this.props.onHide();
+    } else {
+      this.setState({ display: DISPLAY.NONE });
+    }
   }
 
   /**
@@ -178,14 +190,14 @@ class Search extends Component {
    * When clicking the green activate "magnifying glass" button
    */
   show() {
-    this.setState({ display: display.VISIBLE });
+    this.setState({ display: DISPLAY.VISIBLE });
   }
 
   /**
    * Expand fully form
    */
   expand() {
-    this.setState({ display: display.EXPANDED });
+    this.setState({ display: DISPLAY.EXPANDED });
   }
 
   /**
@@ -193,11 +205,11 @@ class Search extends Component {
    */
   toggle() {
     switch (this.state.display) {
-      case display.VISIBLE:
+      case DISPLAY.VISIBLE:
         this.expand();
         setTimeout(this.focusFirstFormField, 50);
         break;
-      case display.EXPANDED:
+      case DISPLAY.EXPANDED:
         this.show();
         break;
       default:
@@ -230,47 +242,55 @@ class Search extends Component {
   }
 
   render() {
-    const { formSchemaUrl, id, ...props } = this.props;
+    const { formSchemaUrl, forceFilters, id, displayBehavior, ...props } = this.props;
+
+    if (this.state.display === DISPLAY.NONE) {
+      return (displayBehavior === BEHAVIOR.TOGGLABLE) ?
+        <SearchToggle onToggle={this.show} /> :
+        <div/>;
+    }
 
     const formId = `${id}_ExtraFields`;
     const searchText = this.state.searchText;
 
     // Build classes
     const searchClasses = ['search'];
-    const showToggle =
-      (props.display === display.NONE) &&
-      (props.displayBehavior === displayBehavior.TOGGLABLE);
-    const expanded = props.display === display.EXPANDED;
+
+    const expanded = this.state.display === DISPLAY.EXPANDED;
 
     // Decide if we display the X button
     const hideable =
-      [displayBehavior.HIDEABLE, displayBehavior.TOGGLABLE].indexOf(props.displayBehavior) > -1;
+      [BEHAVIOR.HIDEABLE, BEHAVIOR.TOGGLABLE].indexOf(displayBehavior) > -1;
     if (hideable) {
       searchClasses.push('search__hideable');
     } else {
       searchClasses.push('search__not-hideable');
     }
 
-    return (showToggle ? <SearchToggle onToggle={this.show} /> :
-    <Focusedzone onClickOut={this.hide}>
-      <SearchBox
-        onChange={this.handleChange}
-        searchText={searchText}
-        hideable={hideable}
-        expanded={expanded}
-        id={`${id}_searchbox`}
-        {...props}
-      >
-
-        <SearchForm
-          id={formId}
-          expanded={expanded}
-          formSchemaUrl={formSchemaUrl}
+    return (
+      <Focusedzone onClickOut={this.show}>
+        <SearchBox
+          {...props}
+          onChange={this.handleChange}
           onSearch={this.doSearch}
-          onClear={this.doClear}
-        />
-      </SearchBox>
-    </Focusedzone>
+          onToggleFilter={this.toggle}
+          onHide={this.hide}
+          searchText={searchText}
+          hideable={hideable}
+          expanded={expanded}
+          id={`${id}_searchbox`}
+          showFilters={forceFilters ||formSchemaUrl}
+        >
+
+          <SearchForm
+            id={formId}
+            expanded={expanded}
+            formSchemaUrl={formSchemaUrl}
+            onSearch={this.doSearch}
+            onClear={this.doClear}
+          />
+        </SearchBox>
+      </Focusedzone>
     );
   }
 }
@@ -285,13 +305,12 @@ Search.propTypes = {
   onHide: PropTypes.func,
 
   id: PropTypes.string.isRequired,
-  display: PropTypes.oneOf(Object.values(display)),
-  showFilters: PropTypes.bool,
+  display: PropTypes.oneOf(Object.values(DISPLAY)),
   formSchemaUrl: PropTypes.string,
   filters: PropTypes.object,
   formData: PropTypes.object,
   placeholder: PropTypes.string,
-  displayBehavior: PropTypes.oneOf(Object.values(displayBehavior)),
+  displayBehavior: PropTypes.oneOf(Object.values(BEHAVIOR)),
   term: PropTypes.string,
 
   forceFilters: PropTypes.bool,
@@ -299,9 +318,8 @@ Search.propTypes = {
 
 Search.defaultProps = {
   placeholder: i18n._t('Admin.SEARCH', 'Search'),
-  display: display.VISIBLE,
-  displayBehavior: displayBehavior.NONE,
-  showFilters: false,
+  display: DISPLAY.VISIBLE,
+  displayBehavior: BEHAVIOR.NONE,
   filters: {},
   formData: {},
   term: '',

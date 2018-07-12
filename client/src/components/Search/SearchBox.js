@@ -10,10 +10,6 @@ class SearchBox extends Component {
   constructor(props) {
     super(props);
     this.handleKeyUp = this.handleKeyUp.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.state = {
-      searchText: (props.filters && props.filters.name) || '',
-    };
   }
 
   /**
@@ -23,12 +19,8 @@ class SearchBox extends Component {
    */
   handleKeyUp(event) {
     if (event.keyCode === 13) {
-      this.doSearch();
+      this.props.onSearch();
     }
-  }
-
-  handleChange(event) {
-    this.setState({ searchText: event.target.value });
   }
 
   searchClasses() {
@@ -71,16 +63,16 @@ class SearchBox extends Component {
             id={this.props.id}
           />
           <div className="icon font-icon-search" />
-          { (this.props.forceFilters || this.props.formSchemaUrl) && <button
+          { (this.props.showFilters) && <button
             aria-expanded={expanded}
             aria-controls={this.props.formId}
             aria-label={i18n._t('Admin.ADVANCED', 'Advanced')}
-            onClick={this.toggle}
+            onClick={this.props.onToggleFilter}
             className={advancedButtonClasses.join(' ')}
             title={i18n._t('Admin.ADVANCED', 'Advanced')}
           />}
           { hideable && <button
-            onClick={this.hide}
+            onClick={this.props.onHide}
             title={i18n._t('Admin.CLOSE', 'Close')}
             className="btn font-icon-cancel btn--no-text btn--icon-lg search__cancel"
             aria-controls={this.props.id}
@@ -96,12 +88,11 @@ class SearchBox extends Component {
 
 SearchBox.propTypes = {
   onSearch: PropTypes.func,
-  onClear: PropTypes.func,
-  onShowFilters: PropTypes.func,
-  onHideFilters: PropTypes.func,
+  onToggleFilter: PropTypes.func,
   onChange: PropTypes.func,
   onShow: PropTypes.func,
   onHide: PropTypes.func,
+  formSchemaUrl: PropTypes.string,
 
   placeholder: PropTypes.string,
   expanded: PropTypes.bool,
@@ -109,6 +100,7 @@ SearchBox.propTypes = {
   id: PropTypes.string,
   searchText: PropTypes.string,
   hideable: PropTypes.bool,
+  showFilters: PropTypes.bool,
 };
 
 SearchBox.defaultProps = {

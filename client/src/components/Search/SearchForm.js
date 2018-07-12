@@ -41,7 +41,6 @@ SearchForm.propTypes = {
   onClear: PropTypes.func,
 
   id: PropTypes.string.isRequired,
-  showFilters: PropTypes.bool,
   formSchemaUrl: PropTypes.string,
   filters: PropTypes.object,
   formData: PropTypes.object,
@@ -49,7 +48,6 @@ SearchForm.propTypes = {
 
 SearchForm.defaultProps = {
   formData: {},
-  showFilters: {}
 };
 
 

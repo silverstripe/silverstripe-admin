@@ -27,7 +27,6 @@ storiesOf('Admin/Search', module)
     <Search
       id="SmallNotExpanded"
       display="VISIBLE"
-      showFilters={false}
       formSchemaUrl=""
       filters={{}}
       formData={{}}
@@ -40,7 +39,6 @@ storiesOf('Admin/Search', module)
     <Search
       id="SmallExpanded"
       display="EXPANDED"
-      showFilters={false}
       formSchemaUrl=""
       forceFilters
       filters={{}}
@@ -54,16 +52,24 @@ storiesOf('Admin/Search', module)
       <Search
         id="Large Hideable"
         display="VISIBLE"
-        showFilters={false}
         formSchemaUrl=""
         forceFilters
         filters={{}}
         formData={{}}
+        onHide={console.dir}
         placeholder="Search me"
         displayBehavior={'HIDEABLE'}
         {...props}
       />
     </div>
   )).add('Toggeable Search', () => (
-    <SearchToggle toogle={console.dir} />
+    <Search
+      id="TOGGEABLE"
+      display="NONE"
+      displayBehavior="TOGGLABLE"
+      formSchemaUrl=""
+      formData={{}}
+      forceFilters={true}
+      onSearch={console.dir}
+      {...props} />
   ));
