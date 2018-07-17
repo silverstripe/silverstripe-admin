@@ -10,6 +10,9 @@ class SearchBox extends Component {
   constructor(props) {
     super(props);
     this.handleKeyUp = this.handleKeyUp.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
+    this.state = { hasFocus: false };
   }
 
   /**
@@ -23,15 +26,20 @@ class SearchBox extends Component {
     }
   }
 
-  searchClasses() {
-
+  handleFocus() {
+    this.setState({ hasFocus: true });
   }
+
+  handleBlur() {
+    this.setState({ hasFocus: false });
+  }
+
 
   render() {
     const { id, searchText, hideable, onChange, expanded } = this.props;
 
     // Build classes
-    const searchClasses = ['search'];
+    const searchClasses = ['search', 'search--active'];
     const advancedButtonClasses = [
       'btn', 'btn-secondary', 'btn--icon-md', 'btn--no-text',
       'font-icon-caret-down-two', 'search__filter-trigger',
@@ -40,10 +48,9 @@ class SearchBox extends Component {
       advancedButtonClasses.push('collapsed');
     }
 
-    searchClasses.push('search--active');
-
     // Decide if we display the X button
     searchClasses.push(hideable ? 'search__hideable' : 'search__not-hideable');
+    searchClasses.push(this.state.hasFocus ? 'search__has-focus' : 'search__has-not-focus');
 
 
     return (
@@ -58,9 +65,12 @@ class SearchBox extends Component {
             className="form-control search__content-field "
             onKeyUp={this.handleKeyUp}
             onChange={onChange}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
             value={searchText}
-            autoFocus
             id={this.props.id}
+            // eslint-disable-next-line jsx-a11y/no-autofocus
+            autoFocus
           />
           <div className="icon font-icon-search" />
           { (this.props.showFilters) && <button
@@ -78,6 +88,7 @@ class SearchBox extends Component {
             aria-controls={this.props.id}
             aria-expanded="true"
           /> }
+          <div className="search__enter">{i18n._t('Admin.ENTER', 'Enter')} ↵</div>
           {this.props.children}
         </div>
       </div>
@@ -90,9 +101,7 @@ SearchBox.propTypes = {
   onSearch: PropTypes.func,
   onToggleFilter: PropTypes.func,
   onChange: PropTypes.func,
-  onShow: PropTypes.func,
   onHide: PropTypes.func,
-  formSchemaUrl: PropTypes.string,
 
   placeholder: PropTypes.string,
   expanded: PropTypes.bool,
