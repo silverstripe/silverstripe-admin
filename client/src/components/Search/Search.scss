@@ -36,6 +36,27 @@
     top: 10px;
   }
 
+  .search__enter {
+    display: none;
+    position: absolute;
+    right: 50px;
+    border: 1px solid $gray-100;
+    top: 16px;
+    padding: 0 4px;
+    font-size: $font-size-sm;
+    border-radius: 2px;
+    color: $gray-500;
+    user-select: none;
+
+    .search__hideable & {
+      right: 100px;
+    }
+
+    .search__has-focus & {
+      display: block;
+    }
+  }
+
 }
 
 // Search open icon
@@ -46,9 +67,15 @@
     display: none;
   }
 
+  &.search__trigger-active {
+    box-shadow: inset 0 0 5px $shadow-level-5;
+  }
+
   .search & {
     margin-right: 0;
   }
+
+
 }
 
 // Search cancel
@@ -143,7 +170,8 @@
   z-index: 9999;
   box-shadow: 0 2px 6px 0 $shadow-level-5;
   border-radius: 0 0 $border-radius $border-radius;
-  width: 100%;
+  max-width: 100%;
+  width: $cms-panel-md;
 }
 
 .search__content-field {
@@ -179,9 +207,6 @@
       opacity $transition-speed-fast;
     }
 
-    @include media-breakpoint-up(lg) {
-
-    }
   }
 
   // hide clear action in IE as it overlaps with filters
