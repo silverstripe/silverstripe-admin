@@ -1,6 +1,6 @@
 /* global document */
 import i18n from 'i18n';
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes } from 'react';
 
 import FormBuilderLoader from 'containers/FormBuilderLoader/FormBuilderLoader';
 import { Collapse } from 'reactstrap';
@@ -42,8 +42,6 @@ SearchForm.propTypes = {
 
   id: PropTypes.string.isRequired,
   formSchemaUrl: PropTypes.string,
-  filters: PropTypes.object,
-  formData: PropTypes.object,
 };
 
 SearchForm.defaultProps = {
