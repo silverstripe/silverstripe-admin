@@ -1,8 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { storiesOf } from '@storybook/react';
 import Search from '../Search';
-import SearchToggle from '../SearchToggle';
 import ValueTracker from 'stories/ValueTracker';
 import { createStore, combineReducers } from 'redux';
 import { reducer as ReduxFormReducer } from 'redux-form';
@@ -23,7 +22,15 @@ storiesOf('Admin/Search', module)
   .addDecorator((storyFn) => (
     <ValueTracker>{storyFn()}</ValueTracker>
   ))
-  .add('Search Small Collapse', () => (
+  .add('Simple Vanilla', () => (
+    <Search
+      id="SimpleVanillaSearch"
+      display="VISIBLE"
+      displayBehavior={'NONE'}
+      {...props}
+    />
+  ))
+  .add('With Filters', () => (
     <Search
       id="SmallNotExpanded"
       display="VISIBLE"
@@ -35,41 +42,28 @@ storiesOf('Admin/Search', module)
       forceFilters
       {...props}
     />
-  )).add('Search Small Expanded', () => (
+  ))
+  .add('Hideable', () => (
     <Search
-      id="SmallExpanded"
-      display="EXPANDED"
+      id="Large Hideable"
+      display="VISIBLE"
       formSchemaUrl=""
       forceFilters
       filters={{}}
       formData={{}}
       placeholder="Search me"
-      displayBehavior={'NONE'}
+      displayBehavior={'HIDEABLE'}
       {...props}
     />
-  )).add('Search hideable', () => (
-    <div style={{ width: '800px' }}>
-      <Search
-        id="Large Hideable"
-        display="VISIBLE"
-        formSchemaUrl=""
-        forceFilters
-        filters={{}}
-        formData={{}}
-        onHide={console.dir}
-        placeholder="Search me"
-        displayBehavior={'HIDEABLE'}
-        {...props}
-      />
-    </div>
-  )).add('Toggeable Search', () => (
+  ))
+  .add('Toggeable', () => (
     <Search
       id="TOGGEABLE"
       display="NONE"
       displayBehavior="TOGGLABLE"
       formSchemaUrl=""
       formData={{}}
-      forceFilters={true}
-      onSearch={console.dir}
-      {...props} />
+      forceFilters
+      {...props}
+    />
   ));
