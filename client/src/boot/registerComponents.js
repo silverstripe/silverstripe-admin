@@ -75,6 +75,6 @@ export default () => {
     Loading,
     ViewModeToggle,
     Search,
-    SearchToggle
+    SearchToggle,
   });
 };
