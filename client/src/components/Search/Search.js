@@ -56,7 +56,6 @@ class Search extends Component {
       display: props.display,
       searchText: props.term || (props.filters && props.filters.name) || '',
     };
-
   }
 
   componentWillMount() {
@@ -159,7 +158,7 @@ class Search extends Component {
   clearFormData(props) {
     this.setState({ searchText: '' });
 
-    const schemaUrl = (props && props.searchFormSchemaUrl) || this.props.searchFormSchemaUrl;
+    const schemaUrl = (props && props.formSchemaUrl) || this.props.formSchemaUrl;
     if (schemaUrl) {
       this.props.actions.schema.setSchemaStateOverrides(schemaUrl, null);
       this.props.actions.reduxForm.initialize(identifier, {}, Object.keys(this.props.formData));
@@ -177,7 +176,6 @@ class Search extends Component {
    * When clicking the "X" button
    */
   hide() {
-
     if (this.props.onHide) {
       this.props.onHide();
     } else {
@@ -247,7 +245,7 @@ class Search extends Component {
     if (this.state.display === DISPLAY.NONE) {
       return (displayBehavior === BEHAVIOR.TOGGLABLE) ?
         <SearchToggle onToggle={this.show} /> :
-        <div/>;
+        <div />;
     }
 
     const formId = `${id}_ExtraFields`;
@@ -279,7 +277,7 @@ class Search extends Component {
           hideable={hideable}
           expanded={expanded}
           id={`${id}_searchbox`}
-          showFilters={forceFilters ||formSchemaUrl}
+          showFilters={Boolean(forceFilters || formSchemaUrl)}
         >
 
           <SearchForm
@@ -327,7 +325,7 @@ Search.defaultProps = {
 };
 
 function mapStateToProps(state, ownProps) {
-  const schema = state.form.formSchemas[ownProps.searchFormSchemaUrl];
+  const schema = state.form.formSchemas[ownProps.formSchemaUrl];
   if (!schema || !schema.name) {
     return { formData: {} };
   }
