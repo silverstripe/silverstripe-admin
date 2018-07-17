@@ -12,13 +12,13 @@ const identifier = 'Admin.SearchForm';
 const searchButtonClasses = classnames(
   'btn',
   'btn-primary',
-  'search__submit',
+  'search-form__submit',
   'btn--no-text',
 );
 const clearButtonClasses = classnames(
   'btn',
   'btn-secondary',
-  'clear__submit',
+  'search-form__clear',
 );
 
 const searchLabel = i18n._t('Admin.SEARCH', 'Search');
@@ -28,7 +28,7 @@ const clearLabel = i18n._t('Admin.CLEAR', 'Clear');
  * Displays a search form
  */
 const SearchForm = ({ expanded, onSearch, onClear, formSchemaUrl, id }) => (
-  <Collapse id={id} className="search__filter-panel" isOpen={expanded}>
+  <Collapse id={id} className="search-form" isOpen={expanded}>
     {formSchemaUrl && <FormBuilderLoader identifier={identifier} schemaUrl={formSchemaUrl} />}
     <button className={searchButtonClasses} onClick={onSearch}>{searchLabel}</button>
     <button className={clearButtonClasses} onClick={onClear}>{clearLabel}</button>

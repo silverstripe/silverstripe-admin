@@ -1,27 +1,25 @@
-// AssetAdmin search
-
-.search {
+.search-box {
   @include media-breakpoint-up(md) {
     position: relative;
     right: auto;
 
-    &.search--active {
+    &.search-box__active {
       right: 0;
     }
   }
 
-  &.search--active {
+  &.search-box__active {
     position: relative;
     width: 100%;
   }
 }
 
-.search__group {
+.search-box__group {
   opacity: 0;
   overflow: hidden;
   display: none;
 
-  .search--active & {
+  .search-box__active & {
     transition: opacity $transition-speed-fast;
     overflow: visible;
     opacity: 1;
@@ -35,51 +33,31 @@
     left: 20px;
     top: 10px;
   }
-
-  .search__enter {
-    display: none;
-    position: absolute;
-    right: 50px;
-    border: 1px solid $gray-100;
-    top: 16px;
-    padding: 0 4px;
-    font-size: $font-size-sm;
-    border-radius: 2px;
-    color: $gray-500;
-    user-select: none;
-
-    .search__hideable & {
-      right: 100px;
-    }
-
-    .search__has-focus & {
-      display: block;
-    }
-  }
-
 }
 
-// Search open icon
-.search__trigger {
-  z-index: 1;
+.search-box__enter {
+  display: none;
+  position: absolute;
+  right: 50px;
+  border: 1px solid $gray-100;
+  top: 16px;
+  padding: 0 4px;
+  font-size: $font-size-sm;
+  border-radius: 2px;
+  color: $gray-500;
+  user-select: none;
 
-  .search--active & {
-    display: none;
+  .search-box__hideable & {
+    right: 100px;
   }
 
-  &.search__trigger-active {
-    box-shadow: inset 0 0 5px $shadow-level-5;
+  .search-box__has-focus & {
+    display: block;
   }
-
-  .search & {
-    margin-right: 0;
-  }
-
-
 }
 
 // Search cancel
-.search__cancel {
+.search-box__cancel {
   right: 0;
   top: 0;
   position: absolute;
@@ -99,18 +77,7 @@
 }
 
 // Expand filters panel
-.search__filter-trigger-text {
-  display: none;
-  opacity: 0;
-  position: absolute;
-  transform: translateX(-106%);
-  font-size: $font-size-xs;
-  top: 7px;
-  color: $link-color;
-  transition: opacity $transition-speed-fast;
-}
-
-.search__filter-trigger {
+.search-box__filter-trigger {
   display: block;
   border: 0;
   margin: 0;
@@ -120,11 +87,11 @@
   outline: 0;
   overflow: visible;
 
-  .search__hideable & {
+  .search-box__hideable & {
     right: 55px;
   }
 
-  .search__not-hideable & {
+  .search-box__not-hideable & {
     right: 5px;
   }
 
@@ -135,10 +102,6 @@
       color: $link-color;
     }
 
-    .search__filter-trigger-text {
-      display: block;
-      opacity: 1;
-    }
   }
 
   &:active,
@@ -160,21 +123,7 @@
   }
 }
 
-.search__filter-panel {
-  position: absolute;
-  padding: $panel-padding-y $panel-padding-x;
-  background: $white;
-  margin: 0;
-  right: 0;
-  top: $toolbar-total-height;
-  z-index: 9999;
-  box-shadow: 0 2px 6px 0 $shadow-level-5;
-  border-radius: 0 0 $border-radius $border-radius;
-  max-width: 100%;
-  width: $cms-panel-md;
-}
-
-.search__content-field {
+.search-box__content-field {
   padding-right: 113px;
   padding-left: 55px;
   padding-top: 4px;
@@ -197,7 +146,7 @@
     box-shadow: 0 1px 1px $input-focus-border-color, 0 0 8px $input-focus-box-shadow;
   }
 
-  .search--active & {
+  .search-box__active & {
     opacity: 1;
     width: $search-width-max;
 

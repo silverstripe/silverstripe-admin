@@ -7,7 +7,7 @@ const btnClasses = classnames(
   'btn',
   'btn--no-text',
   'btn-secondary',
-  'search__trigger',
+  'search-toggle',
   'font-icon-search',
   'btn--icon-large'
 );
@@ -16,7 +16,7 @@ const btnClasses = classnames(
 const SearchToggle = ({ onToggle, toggled }) => (<button
   title={label}
   onClick={onToggle}
-  className={btnClasses + (toggled ? ' search__trigger-active' : '')}
+  className={btnClasses + (toggled ? ' search-toggle__active' : '')}
 >
   <span className="sr-only">{label}</span>
 </button>);

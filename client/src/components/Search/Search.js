@@ -121,7 +121,7 @@ class Search extends Component {
       return;
     }
 
-    const input = node.querySelector('.search__content-field');
+    const input = node.querySelector('.search-box__content-field');
     // check that it doesn't already have focus
     if (input !== document.activeElement) {
       input.focus();
@@ -141,7 +141,7 @@ class Search extends Component {
       return;
     }
 
-    const form = node.querySelector('.search__filter-panel form');
+    const form = node.querySelector('.search-form form');
     if (!form) {
       return;
     }
@@ -252,21 +252,14 @@ class Search extends Component {
     const searchText = this.state.searchText;
 
     // Build classes
-    const searchClasses = ['search'];
-
     const expanded = this.state.display === DISPLAY.EXPANDED;
 
     // Decide if we display the X button
     const hideable =
       [BEHAVIOR.HIDEABLE, BEHAVIOR.TOGGLABLE].indexOf(displayBehavior) > -1;
-    if (hideable) {
-      searchClasses.push('search__hideable');
-    } else {
-      searchClasses.push('search__not-hideable');
-    }
 
     return (
-      <Focusedzone onClickOut={this.show}>
+      <Focusedzone onClickOut={this.show} className="search">
         <SearchBox
           {...props}
           onChange={this.handleChange}

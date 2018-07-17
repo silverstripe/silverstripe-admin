@@ -39,30 +39,30 @@ class SearchBox extends Component {
     const { id, searchText, hideable, onChange, expanded } = this.props;
 
     // Build classes
-    const searchClasses = ['search', 'search--active'];
+    const searchClasses = ['search-box', 'search-box__active'];
     const advancedButtonClasses = [
       'btn', 'btn-secondary', 'btn--icon-md', 'btn--no-text',
-      'font-icon-caret-down-two', 'search__filter-trigger',
+      'font-icon-caret-down-two', 'search-box__filter-trigger',
     ];
     if (!expanded) {
       advancedButtonClasses.push('collapsed');
     }
 
     // Decide if we display the X button
-    searchClasses.push(hideable ? 'search__hideable' : 'search__not-hideable');
-    searchClasses.push(this.state.hasFocus ? 'search__has-focus' : 'search__has-not-focus');
+    searchClasses.push(hideable ? 'search-box__hideable' : 'search-box__not-hideable');
+    searchClasses.push(this.state.hasFocus ? 'search-box__has-focus' : 'search-box__has-not-focus');
 
 
     return (
       <div className={searchClasses.join(' ')}>
-        <div id={this.props.id} className="search__group">
+        <div id={this.props.id} className="search-box__group">
           <Label for={this.props.id} id={`${id}_label`} hidden>{i18n._t('AssetAdmin.SEARCH', 'Search')}</Label>
           <input
             aria-labelledby={`${id}_label`}
             type="text"
             name="name"
             placeholder={this.props.placeholder}
-            className="form-control search__content-field "
+            className="form-control search-box__content-field"
             onKeyUp={this.handleKeyUp}
             onChange={onChange}
             onFocus={this.handleFocus}
@@ -84,11 +84,11 @@ class SearchBox extends Component {
           { hideable && <button
             onClick={this.props.onHide}
             title={i18n._t('Admin.CLOSE', 'Close')}
-            className="btn font-icon-cancel btn--no-text btn--icon-lg search__cancel"
+            className="btn font-icon-cancel btn--no-text btn--icon-lg search-box__cancel"
             aria-controls={this.props.id}
             aria-expanded="true"
           /> }
-          <div className="search__enter">{i18n._t('Admin.ENTER', 'Enter')} ↵</div>
+          <div className="search-box__enter">{i18n._t('Admin.ENTER', 'Enter')} ↵</div>
           {this.props.children}
         </div>
       </div>
