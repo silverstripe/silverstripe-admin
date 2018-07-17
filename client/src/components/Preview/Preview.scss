@@ -2,15 +2,7 @@
   position: relative;
   background-color: $body-bg;
   border-left: 1px solid $border-color-dark;
-
-  // Overlay preview at smaller sizes
-  @include media-breakpoint-down(md) {
-    position: absolute;
-    right: 0;
-    z-index: 2;
-    width: 100%;
-    border-left: 0;
-  }
+  z-index: 81;
 }
 
 .preview__iframe {
@@ -52,8 +44,11 @@
   transform: translateY(-50%);
 }
 
-.preview__more-actions {
-  &:not(:first-child) {
-    margin-left: 5px;
+.btn-toolbar {
+  .btn,
+  .dropdown {
+    &:not(:first-child) {
+      margin-left: 5px;
+    }
   }
 }

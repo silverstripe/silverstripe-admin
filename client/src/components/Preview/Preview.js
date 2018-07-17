@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import i18n from 'i18n';
 import ActionMenu from '../ActionMenu/ActionMenu';
 import classnames from 'classnames';
+import { inject } from 'lib/Injector';
 
 /**
  * Renders the right-hand collapsable change preview panel
@@ -43,22 +44,9 @@ class Preview extends Component {
       return null;
     }
     return (
-      <ActionMenu className="preview__more-actions">
+      <ActionMenu>
         {this.props.moreActions}
       </ActionMenu>
-    );
-  }
-
-  renderBackButton() {
-    if (typeof this.props.onBack !== 'function') {
-      return null;
-    }
-    return (
-      <button
-        className="btn btn-secondary font-icon-left-open-big toolbar__back-button hidden-lg-up"
-        type="button"
-        onClick={this.handleBackClick}
-      >{i18n._t('Admin.BACK', 'Back')}</button>
     );
   }
 
@@ -113,7 +101,7 @@ class Preview extends Component {
   }
 
   render() {
-    const { className } = this.props;
+    const { className, ViewModeComponent } = this.props;
 
     const classNames = classnames('preview', className);
     return (
@@ -121,8 +109,8 @@ class Preview extends Component {
         {this.renderBody()}
         <div className="toolbar toolbar--south">
           <div className="btn-toolbar">
-            {this.renderBackButton()}
             {this.buildToolbarButtons()}
+            <ViewModeComponent id="view-mode-toggle-in-preview-nb" area={'preview'} />
             {this.renderMoreActions()}
           </div>
         </div>
@@ -137,10 +125,20 @@ Preview.propTypes = {
   itemId: React.PropTypes.number,
   onBack: React.PropTypes.func,
   moreActions: React.PropTypes.arrayOf(React.PropTypes.element),
+  ViewModeComponent: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 };
 
 Preview.defaultProps = {
   className: 'flexbox-area-grow fill-height',
 };
 
-export default Preview;
+export { Preview as Component };
+
+export default inject(
+  ['ViewModeToggle'],
+  (ViewModeToggle) => ({
+    ViewModeComponent: ViewModeToggle
+  }),
+  () => 'Admin.Preview'
+)(Preview);
+

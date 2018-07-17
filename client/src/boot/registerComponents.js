@@ -33,6 +33,7 @@ import Preview from 'components/Preview/Preview';
 import ReduxForm from 'containers/Form/Form';
 import UsedOnTable from 'components/UsedOnTable/UsedOnTable';
 import Loading from 'components/Loading/Loading';
+import ViewModeToggle from 'components/ViewModeToggle/ViewModeToggle';
 
 export default () => {
   Injector.component.registerMany({
@@ -70,5 +71,6 @@ export default () => {
     NotFoundComponent,
     UsedOnTable,
     Loading,
+    ViewModeToggle,
   });
 };
