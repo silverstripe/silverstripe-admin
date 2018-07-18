@@ -38,11 +38,11 @@ matrix:
       env: DB=MYSQL PHPUNIT_TEST=1 PDO=1
     - php: 7.1
       env: NPM_TEST=1
-    - php: 7.0
+    - php: 7.2
       env:
        - DB=MYSQL
        - BEHAT_TEST=admin
-    - php: 7.0
+    - php: 7.2
       env:
        - DB=MYSQL
        - BEHAT_TEST=cms
