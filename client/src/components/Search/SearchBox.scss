@@ -1,3 +1,8 @@
+$searchBasePadding: 10px;
+$searchCancelWidth: 52px;
+$searchFilterWidth: 35px;
+$searchEnterWidth: 52px;
+
 .search-box {
   @include media-breakpoint-up(md) {
     position: relative;
@@ -38,7 +43,7 @@
 .search-box__enter {
   display: none;
   position: absolute;
-  right: 50px;
+  right: $searchBasePadding;
   border: 1px solid $gray-100;
   top: 16px;
   padding: 0 4px;
@@ -47,8 +52,16 @@
   color: $gray-500;
   user-select: none;
 
+  .search-box__has-filters & {
+    right: $searchBasePadding + $searchFilterWidth;
+  }
+
   .search-box__hideable & {
-    right: 100px;
+    right: $searchBasePadding + $searchCancelWidth;
+  }
+
+  .search-box__has-filters.search-box__hideable & {
+    right: $searchBasePadding + $searchFilterWidth + $searchCancelWidth;
   }
 
   .search-box__has-focus & {
@@ -66,7 +79,7 @@
   background-color: transparent;
   height: 100%;
   border-left: 1px solid $gray-200;
-  width: 52px;
+  width: $searchCancelWidth;
   height: 54px;
   border-radius: 0;
   margin: 0;
@@ -86,14 +99,12 @@
   top: 10px;
   outline: 0;
   overflow: visible;
+  right: 5px;
 
   .search-box__hideable & {
-    right: 55px;
+    right: $searchCancelWidth + 5px;
   }
 
-  .search-box__not-hideable & {
-    right: 5px;
-  }
 
   &:hover:not(:disabled):not(.disabled) {
     background-color: transparent;
@@ -124,7 +135,7 @@
 }
 
 .search-box__content-field {
-  padding-right: 113px;
+  padding-right: $searchEnterWidth + $searchBasePadding;
   padding-left: 55px;
   padding-top: 4px;
   box-shadow: 0 1px $input-btn-border-width 0 $input-border-color, 0 1px 5px 1px $border-color-light;
@@ -137,6 +148,18 @@
   width: 100%;
   opacity: 0;
   float: right;
+
+  .search-box__has-filters & {
+    padding-right:  $searchEnterWidth + $searchBasePadding + $searchFilterWidth;
+  }
+
+  .search-box__hideable & {
+    padding-right:  $searchEnterWidth + $searchBasePadding + $searchCancelWidth;
+  }
+
+  .search-box__has-filters.search-box__hideable & {
+    padding-right:  $searchEnterWidth + $searchBasePadding + $searchFilterWidth + $searchCancelWidth;
+  }
 
   &::placeholder {
     font-weight: normal;

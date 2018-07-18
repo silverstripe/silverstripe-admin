@@ -36,7 +36,7 @@ class SearchBox extends Component {
 
 
   render() {
-    const { id, searchText, hideable, onChange, expanded } = this.props;
+    const { id, searchText, hideable, onChange, expanded, showFilters, placeholder } = this.props;
 
     // Build classes
     const searchClasses = ['search-box', 'search-box__active'];
@@ -51,29 +51,30 @@ class SearchBox extends Component {
     // Decide if we display the X button
     searchClasses.push(hideable ? 'search-box__hideable' : 'search-box__not-hideable');
     searchClasses.push(this.state.hasFocus ? 'search-box__has-focus' : 'search-box__has-not-focus');
+    searchClasses.push(showFilters ? 'search-box__has-filters' : 'search-box__has-not-filters');
 
 
     return (
       <div className={searchClasses.join(' ')}>
-        <div id={this.props.id} className="search-box__group">
-          <Label for={this.props.id} id={`${id}_label`} hidden>{i18n._t('AssetAdmin.SEARCH', 'Search')}</Label>
+        <div className="search-box__group">
+          <Label for={id} id={`${id}_label`} hidden>{i18n._t('Admin.SEARCH', 'Search')}</Label>
           <input
             aria-labelledby={`${id}_label`}
             type="text"
             name="name"
-            placeholder={this.props.placeholder}
+            placeholder={placeholder}
             className="form-control search-box__content-field"
             onKeyUp={this.handleKeyUp}
             onChange={onChange}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
             value={searchText}
-            id={this.props.id}
+            id={id}
             // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
           />
           <div className="icon font-icon-search" />
-          { (this.props.showFilters) && <button
+          { (showFilters) && <button
             aria-expanded={expanded}
             aria-controls={this.props.formId}
             aria-label={i18n._t('Admin.ADVANCED', 'Advanced')}
@@ -85,7 +86,7 @@ class SearchBox extends Component {
             onClick={this.props.onHide}
             title={i18n._t('Admin.CLOSE', 'Close')}
             className="btn font-icon-cancel btn--no-text btn--icon-lg search-box__cancel"
-            aria-controls={this.props.id}
+            aria-controls={id}
             aria-expanded="true"
           /> }
           <div className="search-box__enter">{i18n._t('Admin.ENTER', 'Enter')} ↵</div>
