@@ -2,7 +2,7 @@ import i18n from 'i18n';
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 
-const label = i18n._t('Admin.SHOW_SEARCH', 'Show Search');
+const label = i18n._t('Admin.SHOW_SEARCH', 'Show search');
 const btnClasses = classnames(
   'btn',
   'btn--no-text',
