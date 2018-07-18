@@ -1,7 +1,7 @@
-$searchBasePadding: 10px;
-$searchCancelWidth: 52px;
-$searchFilterWidth: 35px;
-$searchEnterWidth: 52px;
+$search-base-padding: 10px;
+$search-cancel-width: 52px;
+$search-filter-width: 35px;
+$search-enter-width: 52px;
 
 .search-box {
   @include media-breakpoint-up(md) {
@@ -43,7 +43,7 @@ $searchEnterWidth: 52px;
 .search-box__enter {
   display: none;
   position: absolute;
-  right: $searchBasePadding;
+  right: $search-base-padding;
   border: 1px solid $gray-100;
   top: 16px;
   padding: 0 4px;
@@ -53,15 +53,15 @@ $searchEnterWidth: 52px;
   user-select: none;
 
   .search-box__has-filters & {
-    right: $searchBasePadding + $searchFilterWidth;
+    right: $search-base-padding + $search-filter-width;
   }
 
   .search-box__hideable & {
-    right: $searchBasePadding + $searchCancelWidth;
+    right: $search-base-padding + $search-cancel-width;
   }
 
   .search-box__has-filters.search-box__hideable & {
-    right: $searchBasePadding + $searchFilterWidth + $searchCancelWidth;
+    right: $search-base-padding + $search-filter-width + $search-cancel-width;
   }
 
   .search-box__has-focus & {
@@ -79,7 +79,7 @@ $searchEnterWidth: 52px;
   background-color: transparent;
   height: 100%;
   border-left: 1px solid $gray-200;
-  width: $searchCancelWidth;
+  width: $search-cancel-width;
   height: 54px;
   border-radius: 0;
   margin: 0;
@@ -102,7 +102,7 @@ $searchEnterWidth: 52px;
   right: 5px;
 
   .search-box__hideable & {
-    right: $searchCancelWidth + 5px;
+    right: $search-cancel-width + 5px;
   }
 
 
@@ -135,7 +135,7 @@ $searchEnterWidth: 52px;
 }
 
 .search-box__content-field {
-  padding-right: $searchEnterWidth + $searchBasePadding;
+  padding-right: $search-enter-width + $search-base-padding;
   padding-left: 55px;
   padding-top: 4px;
   box-shadow: 0 1px $input-btn-border-width 0 $input-border-color, 0 1px 5px 1px $border-color-light;
@@ -150,15 +150,15 @@ $searchEnterWidth: 52px;
   float: right;
 
   .search-box__has-filters & {
-    padding-right:  $searchEnterWidth + $searchBasePadding + $searchFilterWidth;
+    padding-right:  $search-enter-width + $search-base-padding + $search-filter-width;
   }
 
   .search-box__hideable & {
-    padding-right:  $searchEnterWidth + $searchBasePadding + $searchCancelWidth;
+    padding-right:  $search-enter-width + $search-base-padding + $search-cancel-width;
   }
 
   .search-box__has-filters.search-box__hideable & {
-    padding-right:  $searchEnterWidth + $searchBasePadding + $searchFilterWidth + $searchCancelWidth;
+    padding-right:  $search-enter-width + $search-base-padding + $search-filter-width + $search-cancel-width;
   }
 
   &::placeholder {
