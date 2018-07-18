@@ -25,7 +25,7 @@ const searchLabel = i18n._t('Admin.SEARCH', 'Search');
 const clearLabel = i18n._t('Admin.CLEAR', 'Clear');
 
 /**
- * Displays a search form
+ * Display an advanced filter form.
  */
 const SearchForm = ({ expanded, onSearch, onClear, formSchemaUrl, id }) => (
   <Collapse id={id} className="search-form" isOpen={expanded}>

@@ -13,7 +13,7 @@ describe('Search', () => {
 
   beforeEach(() => {
     props = {
-      searchFormSchemaUrl: 'someUrl',
+      formSchemaUrl: 'someUrl',
       id: 'MyForm',
       onSearch: jest.fn(),
       query: {},
@@ -22,8 +22,82 @@ describe('Search', () => {
         schema: {
           setSchemaStateOverrides: jest.fn(),
         },
+        reduxForm: {
+          initialize: jest.fn(),
+          reset: jest.fn()
+        }
       },
     };
+  });
+
+  describe('handleChange()', () => {
+    it('update search text', () => {
+      const component = ReactTestUtils.renderIntoDocument(
+        <Search {...props} />
+      );
+      component.setState({ searchText: 'foo' });
+      component.handleChange({ target: { value: 'bar' } });
+      expect(component.state.searchText).toEqual('bar');
+    });
+  });
+
+  describe('clearFormData()', () => {
+    it('Make sure we don\'t have any data', () => {
+      const component = ReactTestUtils.renderIntoDocument(
+        <Search {...props} term="Foo Bar" />
+      );
+      const resetCount = props.actions.reduxForm.reset.mock.calls.length;
+      component.clearFormData(props);
+      expect(props.actions.reduxForm.reset.mock.calls).toHaveLength(resetCount + 1);
+      expect(component.state.searchText).toEqual('');
+    });
+  });
+
+  describe('hide()', () => {
+    it('Using the internal state', () => {
+      const component = ReactTestUtils.renderIntoDocument(
+        <Search {...props} display="VISIBLE" />
+      );
+      component.hide();
+      expect(component.state.display).toEqual('NONE');
+    });
+    it('Using external handler', () => {
+      const onHide = jest.fn();
+      const component = ReactTestUtils.renderIntoDocument(
+        <Search {...props} onHide={onHide} display="VISIBLE" />
+      );
+      component.hide();
+      expect(component.state.display).toEqual('VISIBLE');
+      expect(onHide.mock.calls).toHaveLength(1);
+    });
+  });
+
+  describe('show()', () => {
+    it('Updating internal state', () => {
+      const onHide = jest.fn();
+      const component = ReactTestUtils.renderIntoDocument(
+        <Search {...props} onHide={onHide} display="NONE" />
+      );
+      component.show();
+      expect(component.state.display).toEqual('VISIBLE');
+    });
+  });
+
+  describe('toggle()', () => {
+    it('Showing advanced search', () => {
+      const component = ReactTestUtils.renderIntoDocument(
+        <Search {...props} display="VISIBLE" />
+      );
+      component.toggle();
+      expect(component.state.display).toEqual('EXPANDED');
+    });
+    it('Hidding advanced search', () => {
+      const component = ReactTestUtils.renderIntoDocument(
+        <Search {...props} display="EXPANDED" />
+      );
+      component.toggle();
+      expect(component.state.display).toEqual('VISIBLE');
+    });
   });
 
   describe('doSearch()', () => {

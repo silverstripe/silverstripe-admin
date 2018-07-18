@@ -36,7 +36,8 @@ function hasFilters(filters) {
 }
 
 /**
- * Displays a search form
+ * Displays a search component that can be use to retrieve a search term and
+ * display an advanced search form.
  */
 class Search extends Component {
   constructor(props) {
@@ -81,16 +82,16 @@ class Search extends Component {
    */
   setOverrides(props) {
     if (props && (
-        !hasFilters(props.filters) || this.props.searchFormSchemaUrl !== props.searchFormSchemaUrl
+        !hasFilters(props.filters) || this.props.formSchemaUrl !== props.formSchemaUrl
       )) {
       // clear any overrides that may be in place
-      const schemaUrl = (props && props.searchFormSchemaUrl) || this.props.searchFormSchemaUrl;
+      const schemaUrl = (props && props.formSchemaUrl) || this.props.formSchemaUrl;
       if (schemaUrl) {
         this.props.actions.schema.setSchemaStateOverrides(schemaUrl, null);
       }
     }
 
-    if (props && (hasFilters(props.filters) && props.searchFormSchemaUrl)) {
+    if (props && (hasFilters(props.filters) && props.formSchemaUrl)) {
       const filters = props.filters || {};
       const overrides = {
         fields: Object
@@ -103,14 +104,21 @@ class Search extends Component {
 
       // set overrides into redux store, so that it can be accessed by FormBuilder with the same
       // schemaUrl.
-      this.props.actions.schema.setSchemaStateOverrides(props.searchFormSchemaUrl, overrides);
+      this.props.actions.schema.setSchemaStateOverrides(props.formSchemaUrl, overrides);
     }
   }
 
+  /**
+   * Update the state search term form an input field change event.
+   * @param event onChangeEvent from a input field.
+   */
   handleChange(event) {
       this.setState({ searchText: event.target.value });
   }
 
+  /**
+   * Try to find the input field and focus on it.
+   */
   focusInput() {
     if (this.state.display === DISPLAY.NONE) {
       return;
@@ -131,6 +139,9 @@ class Search extends Component {
     }
   }
 
+  /**
+   * Try to find the first form field in the advanced form and focus on it.
+   */
   focusFirstFormField() {
     if (this.state.display !== DISPLAY.EXPANDED) {
       return;
@@ -155,6 +166,10 @@ class Search extends Component {
     }
   }
 
+  /**
+   * Clear the search term and any advanced search form data.
+   * @param props
+   */
   clearFormData(props) {
     this.setState({ searchText: '' });
 
@@ -166,14 +181,18 @@ class Search extends Component {
     }
   }
 
+  /**
+   * Show the Search box and set the focus on it after a slight delay.
+   */
   open() {
     this.show();
     setTimeout(this.focusInput, 50);
   }
 
   /**
-   * Hide this field.
-   * When clicking the "X" button
+   * Hide this field. When clicking the "X" button. If an `onHide` method has
+   * been provided it will be called and the global state will have to update
+   * the display props. Otherwise, the internal state will be updated instead.
    */
   hide() {
     if (this.props.onHide) {
@@ -184,8 +203,7 @@ class Search extends Component {
   }
 
   /**
-   * Show this field.
-   * When clicking the green activate "magnifying glass" button
+   * Show this field when the Search Toggle is click.
    */
   show() {
     this.setState({ display: DISPLAY.VISIBLE });
@@ -215,6 +233,9 @@ class Search extends Component {
     }
   }
 
+  /**
+   * Wrap up all the data into an object and call the onSearch method provided via the props.
+   */
   doSearch() {
     const data = {};
 
@@ -235,6 +256,9 @@ class Search extends Component {
     this.props.onSearch(data);
   }
 
+  /**
+   * Handle the internal clear event.
+   */
   doClear() {
     this.clearFormData();
   }

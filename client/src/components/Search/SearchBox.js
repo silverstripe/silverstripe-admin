@@ -4,7 +4,7 @@ import React, { PropTypes, Component } from 'react';
 import { Label } from 'reactstrap';
 
 /**
- * Displays a search form
+ * Displays a search box and a few buttons related buttons.
  */
 class SearchBox extends Component {
   constructor(props) {
@@ -26,10 +26,16 @@ class SearchBox extends Component {
     }
   }
 
+  /**
+   * Set the focus attribute on the internal state.
+   */
   handleFocus() {
     this.setState({ hasFocus: true });
   }
 
+  /**
+   * Unset the focus attribute on the internal state.
+   */
   handleBlur() {
     this.setState({ hasFocus: false });
   }

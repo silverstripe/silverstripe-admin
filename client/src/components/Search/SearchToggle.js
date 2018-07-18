@@ -12,7 +12,9 @@ const btnClasses = classnames(
   'btn--icon-large'
 );
 
-
+/**
+ * Simple Search toggle than can be use to enable/disable a Search component.
+ */
 const SearchToggle = ({ onToggle, toggled }) => (<button
   title={label}
   onClick={onToggle}
