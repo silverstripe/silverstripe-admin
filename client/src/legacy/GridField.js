@@ -224,11 +224,11 @@ $.entwine('ss', function($) {
         return false;
       }
 
-      var editLink = this.find('.edit-link');
-      if(editLink.length) this.getGridField().showDetailView(editLink.prop('href'));
+      var formLink = this.find('.edit-link, .view-link');
+      if(formLink.length) this.getGridField().showDetailView(formLink.prop('href'));
     },
     onmouseover: function() {
-      if(this.find('.edit-link').length) this.css('cursor', 'pointer');
+      if(this.find('.edit-link, .view-link').length) this.css('cursor', 'pointer');
     },
     onmouseout: function() {
       this.css('cursor', 'default');
@@ -314,9 +314,26 @@ $.entwine('ss', function($) {
         filterState='hidden';
       }
 
-      this.getGridField().reload({
-        data: [{name: this.attr('name'), value: this.val(), filter: filterState}]
-      });
+      const successCallback = function(data, status, response) {
+        const messageText = response.getResponseHeader('X-Message-Text');
+        const messageType = response.getResponseHeader('X-Message-Type');
+        if (messageText && messageType) {
+          $("#Form_EditForm_error").addClass(messageType);
+          $("#Form_EditForm_error").html(messageText);
+          $("#Form_EditForm_error").show();
+        }
+      }
+
+      this.getGridField().reload(
+        {
+          data: [{
+            name: this.attr('name'),
+            value: this.val(),
+            filter: filterState
+          }],
+        },
+        successCallback
+      );
 
       e.preventDefault();
     },

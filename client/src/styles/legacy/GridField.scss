@@ -6,8 +6,6 @@
  * @todo Add radial gradient to default delete button state
  * @todo Create SASS mixin-function to simply swap the from/to, to to/from colours in grsdient mixins?
  */
-@import "mixins";
-
 
 // Extends basic table styles, requires .table .table-hover
 .grid-field__row--drillable {
@@ -79,6 +77,7 @@
       }
 
       button.action_gridfield_relationadd {
+        display: flex;
         margin-left: 0; // Webkit needs this
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
@@ -209,6 +208,10 @@
 
           span {
             @include hide-text-overflow; // Add ellipses to overflowing text
+          }
+
+          span.non-sortable {
+            line-height: 14px; // Specify a line-height for misaligned non-sortable GridField table headers
           }
 
           &.col-listChildrenLink {
