@@ -289,10 +289,6 @@ class Search extends Component {
 
 Search.propTypes = {
   onSearch: PropTypes.func,
-  onClear: PropTypes.func,
-  onShowFilters: PropTypes.func,
-  onHideFilters: PropTypes.func,
-  onShow: PropTypes.func,
   onHide: PropTypes.func,
 
   id: PropTypes.string.isRequired,
