@@ -13,12 +13,6 @@
   only screen and (                min-resolution: 192dpi),
   only screen and (                min-resolution: 2dppx) {
 
-  /* Loading spinner */
-  .cms-content-loading-spinner {
-    background-image: url('../../images/spinner@2x.gif');
-    background-size: 43px 43px;
-  }
-
   /* Sitetree */
   .tree-holder, .cms-tree {
     &.jstree-apple {
