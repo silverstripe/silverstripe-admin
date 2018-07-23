@@ -1,25 +1,8 @@
 /* global document */
 import i18n from 'i18n';
 import React, { PropTypes } from 'react';
-
 import FormBuilderLoader from 'containers/FormBuilderLoader/FormBuilderLoader';
-import { Collapse } from 'reactstrap';
-
-import classnames from 'classnames';
-
-
-const identifier = 'Admin.SearchForm';
-const searchButtonClasses = classnames(
-  'btn',
-  'btn-primary',
-  'search-form__submit',
-  'btn--no-text',
-);
-const clearButtonClasses = classnames(
-  'btn',
-  'btn-secondary',
-  'search-form__clear',
-);
+import { Collapse, Button } from 'reactstrap';
 
 const searchLabel = i18n._t('Admin.SEARCH', 'Search');
 const clearLabel = i18n._t('Admin.CLEAR', 'Clear');
@@ -27,11 +10,23 @@ const clearLabel = i18n._t('Admin.CLEAR', 'Clear');
 /**
  * Display an advanced filter form.
  */
-const SearchForm = ({ expanded, onSearch, onClear, formSchemaUrl, id }) => (
-  <Collapse id={id} className="search-form" isOpen={expanded}>
-    {formSchemaUrl && <FormBuilderLoader identifier={identifier} schemaUrl={formSchemaUrl} />}
-    <button className={searchButtonClasses} onClick={onSearch}>{searchLabel}</button>
-    <button className={clearButtonClasses} onClick={onClear}>{clearLabel}</button>
+const SearchForm = ({ expanded, onSearch, onClear, formSchemaUrl, id, identifier }) => (
+  <Collapse id={id} isOpen={expanded} className="search-form">
+    <div className="search-form__wrapper">
+      {formSchemaUrl && <FormBuilderLoader
+        identifier={identifier}
+        schemaUrl={formSchemaUrl}
+      />}
+      <Button
+        className="search-form__submit"
+        onClick={onSearch}
+        color="primary"
+      >{searchLabel}</Button>
+      <Button
+        className="search-form__clear"
+        onClick={onClear}
+      >{clearLabel}</Button>
+    </div>
   </Collapse>
 );
 
@@ -42,10 +37,11 @@ SearchForm.propTypes = {
 
   id: PropTypes.string.isRequired,
   formSchemaUrl: PropTypes.string,
+  identifier: PropTypes.string,
 };
 
 SearchForm.defaultProps = {
-  formData: {},
+  formData: {}
 };
 
 

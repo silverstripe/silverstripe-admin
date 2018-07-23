@@ -1,126 +1,68 @@
 $search-base-padding: 10px;
-$search-cancel-width: 52px;
-$search-filter-width: 35px;
-$search-enter-width: 52px;
+$search-box-height: 52px;
 
 .search-box {
+  position: relative;
+  width: 100%;
+  height: $search-box-height;
+
   @include media-breakpoint-up(md) {
     position: relative;
-    right: auto;
-
-    &.search-box__active {
-      right: 0;
-    }
-  }
-
-  &.search-box__active {
-    position: relative;
-    width: 100%;
+    right: 0;
   }
 }
 
 .search-box__group {
-  opacity: 0;
-  overflow: hidden;
-  display: none;
-
-  .search-box__active & {
-    transition: opacity $transition-speed-fast;
-    overflow: visible;
-    opacity: 1;
-    display: block;
-    width: 100%;
-  }
+  transition: opacity $transition-speed-fast;
+  overflow: visible;
+  opacity: 1;
+  display: block;
+  width: 100%;
 
   .font-icon-search {
-    font-size: 25px;
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
     position: absolute;
     left: 20px;
-    top: 10px;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    pointer-events: none;
   }
 }
 
+.search-box__cancel,
+.search-box__filter-trigger,
 .search-box__enter {
-  display: none;
   position: absolute;
-  right: $search-base-padding;
-  border: 1px solid $gray-100;
-  top: 16px;
-  padding: 0 4px;
-  font-size: $font-size-sm;
-  border-radius: 2px;
-  color: $gray-500;
-  user-select: none;
-
-  .search-box__has-filters & {
-    right: $search-base-padding + $search-filter-width;
-  }
-
-  .search-box__hideable & {
-    right: $search-base-padding + $search-cancel-width;
-  }
-
-  .search-box__has-filters.search-box__hideable & {
-    right: $search-base-padding + $search-filter-width + $search-cancel-width;
-  }
-
-  .search-box__has-focus & {
-    display: block;
-  }
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  width: $search-box-height;
+  border-radius: 0;
+  border: 0;
+  outline: 0;
 }
+
 
 // Search cancel
 .search-box__cancel {
   right: 0;
-  top: 0;
-  position: absolute;
-  padding-right: 5px;
-  padding-left: 5px;
   background-color: transparent;
   height: 100%;
   border-left: 1px solid $gray-200;
-  width: $search-cancel-width;
-  height: 54px;
-  border-radius: 0;
-  margin: 0;
 
-  &:hover {
-    background-color: $btn-secondary-bg;
-  }
+  margin: 0;
 }
 
 // Expand filters panel
 .search-box__filter-trigger {
-  display: block;
-  border: 0;
-  margin: 0;
-  border-radius: 0;
-  position: absolute;
-  top: 10px;
-  outline: 0;
   overflow: visible;
-  right: 5px;
+  right: 0;
 
   .search-box__hideable & {
-    right: $search-cancel-width + 5px;
-  }
-
-
-  &:hover:not(:disabled):not(.disabled) {
-    background-color: transparent;
-
-    &:before {
-      color: $link-color;
-    }
-
-  }
-
-  &:active,
-  &:focus,
-  &:hover {
-    border: 0;
-    background-color: transparent;
-    box-shadow: none;
+    right: $search-box-height;
   }
 
   // Rotate ^ when filter-panel is open
@@ -134,51 +76,68 @@ $search-enter-width: 52px;
   }
 }
 
+.search-box__enter {
+  display: none;
+  right: $search-base-padding;
+  border: 1px solid $gray-100;
+  padding: 0 4px;
+  font-size: $font-size-sm;
+  border-radius: $border-radius-sm;
+  color: $gray-500;
+  user-select: none;
+  height: 20px;
+  pointer-events: none;
+
+  .search-box__has-filters &,
+  .search-box__hideable & {
+    right: $search-base-padding + $search-box-height;
+  }
+
+  .search-box__has-filters.search-box__hideable & {
+    right: $search-base-padding + 2 * $search-box-height;
+  }
+
+  .search-box__has-focus & {
+    display: block;
+  }
+}
+
 .search-box__content-field {
-  padding-right: $search-enter-width + $search-base-padding;
+  padding-right: $search-box-height + $search-base-padding;
   padding-left: 55px;
-  padding-top: 4px;
+  padding-top: 7px;
   box-shadow: 0 1px $input-btn-border-width 0 $input-border-color, 0 1px 5px 1px $border-color-light;
   border-top: 0;
   border-bottom: 0;
   border-radius: 0;
-  font-size: 15px;
+  font-size: $font-size-lg;
   font-weight: bold;
   height: 52px;
-  width: 100%;
-  opacity: 0;
+  opacity: 1;
+  width: $search-width-max;
   float: right;
 
-  .search-box__has-filters & {
-    padding-right:  $search-enter-width + $search-base-padding + $search-filter-width;
-  }
-
+  .search-box__has-filters &,
   .search-box__hideable & {
-    padding-right:  $search-enter-width + $search-base-padding + $search-cancel-width;
+    padding-right:  2 * $search-box-height + $search-base-padding;
   }
 
   .search-box__has-filters.search-box__hideable & {
-    padding-right:  $search-enter-width + $search-base-padding + $search-filter-width + $search-cancel-width;
+    padding-right:  3 * $search-box-height + $search-base-padding;
   }
 
   &::placeholder {
     font-weight: normal;
+    color: #687f9f;
   }
 
   &:focus {
     box-shadow: 0 1px 1px $input-focus-border-color, 0 0 8px $input-focus-box-shadow;
   }
 
-  .search-box__active & {
-    opacity: 1;
-    width: $search-width-max;
-
-    @include media-breakpoint-up(md) {
-
-      transition: width $transition-speed-fast,
-      opacity $transition-speed-fast;
-    }
-
+  @include media-breakpoint-up(md) {
+    transition: width $transition-speed-fast,
+    opacity $transition-speed-fast;
   }
 
   // hide clear action in IE as it overlaps with filters

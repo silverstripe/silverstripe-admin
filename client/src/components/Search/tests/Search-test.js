@@ -108,7 +108,17 @@ describe('Search', () => {
       component.setState({ searchText: 'foo' });
       component.doSearch();
       const data = props.onSearch.mock.calls[0][0];
-      expect(data.name).toEqual('foo');
+      expect(data.searchTerm).toEqual('foo');
+    });
+
+    it('custom name', () => {
+      const component = ReactTestUtils.renderIntoDocument(
+        <Search name="MySuperSpecialName" {...props} />
+      );
+      component.setState({ searchText: 'foo' });
+      component.doSearch();
+      const data = props.onSearch.mock.calls[0][0];
+      expect(data.MySuperSpecialName).toEqual('foo');
     });
 
     it('filters out empty values', () => {

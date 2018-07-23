@@ -25,8 +25,6 @@ const BEHAVIOR = {
   TOGGLABLE: 'TOGGLABLE'
 };
 
-const identifier = 'Admin.SearchForm';
-
 /**
  * @param {Object} filters
  * @returns {boolean}
@@ -152,12 +150,12 @@ class Search extends Component {
       return;
     }
 
-    const form = node.querySelector('.search-form form');
+    const form = node.querySelector('.search-form');
     if (!form) {
       return;
     }
 
-    const input = form.querySelector('input, textarea, select');
+    const input = form.querySelector('input, textarea, select, button');
     if (input) {
       input.focus();
       if (input.select) {
@@ -175,6 +173,7 @@ class Search extends Component {
 
     const schemaUrl = (props && props.formSchemaUrl) || this.props.formSchemaUrl;
     if (schemaUrl) {
+      const identifier = (props && props.identifier) || this.props.identifier;
       this.props.actions.schema.setSchemaStateOverrides(schemaUrl, null);
       this.props.actions.reduxForm.initialize(identifier, {}, Object.keys(this.props.formData));
       this.props.actions.reduxForm.reset(identifier);
@@ -241,7 +240,7 @@ class Search extends Component {
 
     // Merge data from redux-forms with text field
     if (this.state.searchText) {
-      data.name = this.state.searchText;
+      data[this.props.name] = this.state.searchText;
     }
 
     // Filter empty values
@@ -264,14 +263,17 @@ class Search extends Component {
   }
 
   render() {
-    const { formSchemaUrl, forceFilters, id, displayBehavior, ...props } = this.props;
+    const { formSchemaUrl, forceFilters, id, displayBehavior, identifier, ...props } = this.props;
 
+    // If the box is not to be displayed
     if (this.state.display === DISPLAY.NONE) {
-      return (displayBehavior === BEHAVIOR.TOGGLABLE) ?
-        <SearchToggle onToggle={this.show} /> :
-        <div />;
+      if (displayBehavior === BEHAVIOR.TOGGLABLE) {
+        return (<SearchToggle onToggle={this.show} />);
+      }
+        return (<div />);
     }
 
+    // Display the SearchBox
     const formId = `${id}_ExtraFields`;
     const searchText = this.state.searchText;
 
@@ -280,7 +282,7 @@ class Search extends Component {
 
     // Decide if we display the X button
     const hideable =
-      [BEHAVIOR.HIDEABLE, BEHAVIOR.TOGGLABLE].indexOf(displayBehavior) > -1;
+      [BEHAVIOR.HIDEABLE, BEHAVIOR.TOGGLABLE].includes(displayBehavior);
 
     return (
       <Focusedzone onClickOut={this.show} className="search">
@@ -299,6 +301,7 @@ class Search extends Component {
 
           <SearchForm
             id={formId}
+            identifier={identifier}
             expanded={expanded}
             formSchemaUrl={formSchemaUrl}
             onSearch={this.doSearch}
@@ -323,8 +326,9 @@ Search.propTypes = {
   placeholder: PropTypes.string,
   displayBehavior: PropTypes.oneOf(Object.values(BEHAVIOR)),
   term: PropTypes.string,
-
+  name: PropTypes.string,
   forceFilters: PropTypes.bool,
+  identifier: PropTypes.string,
 };
 
 Search.defaultProps = {
@@ -334,7 +338,9 @@ Search.defaultProps = {
   filters: {},
   formData: {},
   term: '',
-  forceFilters: false
+  forceFilters: false,
+  name: 'searchTerm',
+  identifier: 'Admin.SearchForm'
 };
 
 function mapStateToProps(state, ownProps) {

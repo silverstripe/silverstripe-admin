@@ -1,7 +1,8 @@
 /* global document */
 import i18n from 'i18n';
 import React, { PropTypes, Component } from 'react';
-import { Label } from 'reactstrap';
+import { Label, Button } from 'reactstrap';
+import classNames from 'classnames';
 
 /**
  * Displays a search box and a few buttons related buttons.
@@ -44,30 +45,31 @@ class SearchBox extends Component {
   render() {
     const { id, searchText, hideable, onChange, expanded, showFilters, placeholder } = this.props;
 
-    // Build classes
-    const searchClasses = ['search-box', 'search-box__active'];
-    const advancedButtonClasses = [
-      'btn', 'btn-secondary', 'btn--icon-md', 'btn--no-text',
-      'font-icon-caret-down-two', 'search-box__filter-trigger',
-    ];
-    if (!expanded) {
-      advancedButtonClasses.push('collapsed');
-    }
+    const searchClasses = classNames('search-box', {
+      'search-box__hideable': hideable,
+      'search-box__not-hideable': !hideable,
+      'search-box__has-focus': this.state.hasFocus,
+      'search-box__has-not-focus': !this.state.hasFocus,
+      'search-box__has-filters': showFilters,
+      'search-box__has-not-filters': !showFilters
+    });
 
-    // Decide if we display the X button
-    searchClasses.push(hideable ? 'search-box__hideable' : 'search-box__not-hideable');
-    searchClasses.push(this.state.hasFocus ? 'search-box__has-focus' : 'search-box__has-not-focus');
-    searchClasses.push(showFilters ? 'search-box__has-filters' : 'search-box__has-not-filters');
-
+    const advancedButtonClasses = classNames(
+      'btn--icon-md',
+      'btn--no-text',
+      'font-icon-caret-down-two',
+      'search-box__filter-trigger',
+      { collapsed: !expanded }
+    );
 
     return (
-      <div className={searchClasses.join(' ')}>
+      <div className={searchClasses}>
         <div className="search-box__group">
           <Label for={id} id={`${id}_label`} hidden>{i18n._t('Admin.SEARCH', 'Search')}</Label>
           <input
             aria-labelledby={`${id}_label`}
             type="text"
-            name="name"
+            name={this.props.name}
             placeholder={placeholder}
             className="form-control search-box__content-field"
             onKeyUp={this.handleKeyUp}
@@ -80,18 +82,18 @@ class SearchBox extends Component {
             autoFocus
           />
           <div className="icon font-icon-search" />
-          { (showFilters) && <button
+          { (showFilters) && <Button
             aria-expanded={expanded}
             aria-controls={this.props.formId}
             aria-label={i18n._t('Admin.ADVANCED', 'Advanced')}
             onClick={this.props.onToggleFilter}
-            className={advancedButtonClasses.join(' ')}
+            className={advancedButtonClasses}
             title={i18n._t('Admin.ADVANCED', 'Advanced')}
           />}
-          { hideable && <button
+          { hideable && <Button
             onClick={this.props.onHide}
             title={i18n._t('Admin.CLOSE', 'Close')}
-            className="btn font-icon-cancel btn--no-text btn--icon-lg search-box__cancel"
+            className="font-icon-cancel btn--no-text btn--icon-lg search-box__cancel"
             aria-controls={id}
             aria-expanded="true"
           /> }
@@ -117,6 +119,7 @@ SearchBox.propTypes = {
   searchText: PropTypes.string,
   hideable: PropTypes.bool,
   showFilters: PropTypes.bool,
+  name: PropTypes.string,
 };
 
 SearchBox.defaultProps = {

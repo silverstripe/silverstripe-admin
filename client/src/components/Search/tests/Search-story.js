@@ -66,4 +66,17 @@ storiesOf('Admin/Search', module)
       forceFilters
       {...props}
     />
+  ))
+  .add('Wide', () => (
+    <div style={{ width: '800px' }}>
+      <Search
+        id="WIDE"
+        display="VISIBLE"
+        displayBehavior="TOGGLABLE"
+        formSchemaUrl=""
+        formData={{}}
+        forceFilters
+        {...props}
+      />
+    </div>
   ));
