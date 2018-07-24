@@ -49,16 +49,21 @@ $search-box-height: 52px;
 // Search cancel
 .search-box__cancel {
   right: 0;
+  color: $gray-700;
   background-color: transparent;
   height: 100%;
   border-left: 1px solid $gray-200;
-
   margin: 0;
+
+  &[class*="font-icon-"]::before {
+    font-size: 24px;
+  }
 }
 
 // Expand filters panel
 .search-box__filter-trigger {
   overflow: visible;
+  color: $gray-700;
   right: 0;
 
   .search-box__hideable & {
