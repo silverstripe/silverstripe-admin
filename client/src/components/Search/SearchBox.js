@@ -43,7 +43,8 @@ class SearchBox extends Component {
 
 
   render() {
-    const { id, searchText, hideable, onChange, expanded, showFilters, placeholder } = this.props;
+    const { id, searchText, hideable, onChange, expanded, showFilters,
+      placeholder, name, onToggleFilter, formId, onHide } = this.props;
 
     const searchClasses = classNames('search-box', {
       'search-box__hideable': hideable,
@@ -69,7 +70,7 @@ class SearchBox extends Component {
           <input
             aria-labelledby={`${id}_label`}
             type="text"
-            name={this.props.name}
+            name={name}
             placeholder={placeholder}
             className="form-control search-box__content-field"
             onKeyUp={this.handleKeyUp}
@@ -84,21 +85,20 @@ class SearchBox extends Component {
           <div className="icon font-icon-search" />
           { (showFilters) && <Button
             aria-expanded={expanded}
-            aria-controls={this.props.formId}
+            aria-controls={formId}
             aria-label={i18n._t('Admin.ADVANCED', 'Advanced')}
-            onClick={this.props.onToggleFilter}
+            onClick={onToggleFilter}
             className={advancedButtonClasses}
             title={i18n._t('Admin.ADVANCED', 'Advanced')}
           />}
           { hideable && <Button
-            onClick={this.props.onHide}
+            onClick={onHide}
             title={i18n._t('Admin.CLOSE', 'Close')}
             className="font-icon-cancel btn--no-text btn--icon-lg search-box__cancel"
             aria-controls={id}
             aria-expanded="true"
           /> }
           <div className="search-box__enter">{i18n._t('Admin.ENTER', 'Enter')} ↵</div>
-          {this.props.children}
         </div>
       </div>
     );

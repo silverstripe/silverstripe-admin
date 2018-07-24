@@ -1,4 +1,4 @@
-$search-base-padding: 10px;
+$search-base-padding: 15px;
 $search-box-height: 52px;
 
 .search-box {
@@ -29,6 +29,10 @@ $search-box-height: 52px;
     bottom: 0;
     margin: auto 0;
     pointer-events: none;
+
+    &::before {
+      display: block;
+    }
   }
 }
 
@@ -92,6 +96,8 @@ $search-box-height: 52px;
   user-select: none;
   height: 20px;
   pointer-events: none;
+  width: auto;
+  min-width: $search-box-height;
 
   .search-box__has-filters &,
   .search-box__hideable & {
