@@ -5,6 +5,7 @@ $search-box-height: 52px;
   position: relative;
   width: 100%;
   height: $search-box-height;
+  z-index: 3;
 
   @include media-breakpoint-up(md) {
     position: relative;
@@ -83,6 +84,11 @@ $search-box-height: 52px;
   &.collapsed::before {
     transform: rotate(0deg) translateY(0);
   }
+}
+
+.search-box__hideable .search-form {
+  right: $search-box-height;
+  max-width: calc(100% - #{$search-box-height})
 }
 
 .search-box__enter {
