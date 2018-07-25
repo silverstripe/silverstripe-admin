@@ -43,7 +43,7 @@ class SearchBox extends Component {
 
 
   render() {
-    const { id, searchText, hideable, onChange, expanded, showFilters,
+    const { children, id, searchText, hideable, onChange, expanded, showFilters,
       placeholder, name, onToggleFilter, formId, onHide } = this.props;
 
     const searchClasses = classNames('search-box', {
@@ -99,6 +99,7 @@ class SearchBox extends Component {
             aria-expanded="true"
           /> }
           <div className="search-box__enter">{i18n._t('Admin.ENTER', 'Enter')} ↵</div>
+          {children}
         </div>
       </div>
     );
