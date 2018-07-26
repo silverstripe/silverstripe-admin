@@ -327,9 +327,7 @@ class CMSBatchActionHandler extends RequestHandler
         if ($recordClass::has_extension(Versioned::class)) {
             // Workaround for get_including_deleted not supporting byIDs filter very well
             // Ensure we select both stage / live records
-            $pages = Versioned::get_including_deleted($recordClass, array(
-                '"RecordID" IN ('.DB::placeholders($ids).')' => $ids
-            ));
+            $pages = Versioned::get_including_deleted($recordClass)->byIDs($ids);
         } else {
             $pages = DataObject::get($recordClass)->byIDs($ids);
         }
