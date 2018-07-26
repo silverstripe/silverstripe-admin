@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
 import * as schemaActions from 'state/schema/SchemaActions';
 import { reset, initialize } from 'redux-form';
-import { isDirty } from  'redux-form/lib/immutable';
+import { isDirty } from 'redux-form/lib/immutable';
 import getIn from 'redux-form/lib/structure/plain/getIn';
 import Focusedzone from '../Focusedzone/Focusedzone';
 import getFormState from 'lib/getFormState';
@@ -113,12 +113,35 @@ class Search extends Component {
   }
 
   /**
+   * Get the search criteria compiled into an object.
+   * @return Object
+   */
+  getData(ignoreSearchTerm = false) {
+    const data = {};
+
+    // Merge data from redux-forms with text field
+    if (!ignoreSearchTerm && this.state.searchText) {
+      data[this.props.name] = this.state.searchText.trim();
+    }
+
+    // Filter empty values
+    Object.keys(this.props.formData).forEach((key) => {
+      const value = this.props.formData[key];
+      if (value) {
+        data[key] = value;
+      }
+    });
+
+    return data;
+  }
+
+  /**
    * Update the state search term form an input field change event.
    * @param event onChangeEvent from a input field.
    */
   handleChange(event) {
     const value = event.target.value;
-    if (this.state.searchText != value) {
+    if (this.state.searchText !== value) {
       this.setState({ searchText: value });
     }
   }
@@ -248,34 +271,12 @@ class Search extends Component {
   }
 
   /**
-   * Get the search criteria compiled into an object.
-   * @return Object
-   */
-  getData(ignoreSearchTerm=false) {
-    const data = {};
-
-    // Merge data from redux-forms with text field
-    if (!ignoreSearchTerm && this.state.searchText) {
-      data[this.props.name] = this.state.searchText.trim();
-    }
-
-    // Filter empty values
-    Object.keys(this.props.formData).forEach((key) => {
-      const value = this.props.formData[key];
-      if (value) {
-        data[key] = value;
-      }
-    });
-
-    return data;
-  }
-
-  /**
    * Determine if the search term has changed since the last search.
    * @returns {boolean}
    */
   searchTermIsDirty() {
-    return this.state.searchText.trim() != this.state.initialSearchText.trim();
+    const { searchText, initialSearchText } = this.state;
+    return searchText.trim() !== initialSearchText.trim();
   }
 
   /**

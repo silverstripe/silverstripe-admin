@@ -89,11 +89,12 @@ $search-box-height: 52px;
 
 .search-box__hideable .search-form {
   right: $search-box-height;
-  max-width: calc(100% - #{$search-box-height})
+  max-width: calc(100% - #{$search-box-height});
 }
 
 .search-box__clear {
   right: 0;
+
   .search-box__has-filters &,
   .search-box__hideable & {
     right: $search-box-height;

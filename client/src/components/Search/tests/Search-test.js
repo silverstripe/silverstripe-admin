@@ -50,6 +50,7 @@ describe('Search', () => {
       component.clearFormData(props);
       expect(props.actions.reduxForm.reset.mock.calls).toHaveLength(resetCount + 1);
       expect(component.state.searchText).toEqual('');
+      expect(component.getData()).toEqual({});
     });
   });
 
@@ -109,6 +110,7 @@ describe('Search', () => {
       component.doSearch();
       const data = props.onSearch.mock.calls[0][0];
       expect(data.searchTerm).toEqual('foo');
+      expect(component.state.initialSearchText).toEqual('foo');
     });
 
     it('custom name', () => {
@@ -145,6 +147,57 @@ describe('Search', () => {
         { name: 'foo', value: true },
         { name: 'bar', value: null },
       ]);
+    });
+  });
+
+  describe('getData()', () => {
+    it('Retriving Data', () => {
+      props.term = 'Hello world';
+      const component = ReactTestUtils.renderIntoDocument(
+        <Search {...props} />
+      );
+      let data = component.getData(false);
+      expect(data).toEqual({ searchTerm: 'Hello world' });
+
+      data = component.getData(true);
+      expect(data).toEqual({});
+    });
+  });
+
+  describe('searchTermIsDirty()', () => {
+    it('Start pristine, dirty on change, pristine on search', () => {
+      props.term = '';
+      const component = ReactTestUtils.renderIntoDocument(
+        <Search {...props} />
+      );
+      // Starts oof pristine
+      let dirty = component.searchTermIsDirty();
+      expect(dirty).toEqual(false);
+
+      // Gets dirty after text change
+      component.setState({ searchText: 'Hello world' });
+      dirty = component.searchTermIsDirty();
+      expect(dirty).toEqual(true);
+
+      // Gets back to pristine after search
+      component.doSearch();
+      dirty = component.searchTermIsDirty();
+      expect(dirty).toEqual(false);
+    });
+
+    it('Trailing space should be ignored', () => {
+      props.term = ' Hello world';
+      const component = ReactTestUtils.renderIntoDocument(
+        <Search {...props} />
+      );
+      // Starts oof pristine
+      let dirty = component.searchTermIsDirty();
+      expect(dirty).toEqual(false);
+
+      // Gets dirty after text change
+      component.setState({ searchText: 'Hello world  ' });
+      dirty = component.searchTermIsDirty();
+      expect(dirty).toEqual(false);
     });
   });
 
