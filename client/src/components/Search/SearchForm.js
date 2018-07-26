@@ -10,7 +10,7 @@ const clearLabel = i18n._t('Admin.CLEAR', 'Clear');
 /**
  * Display an advanced filter form.
  */
-const SearchForm = ({ expanded, onSearch, onClear, formSchemaUrl, id, identifier }) => (
+const SearchForm = ({ expanded, onSearch, onClear, formSchemaUrl, id, identifier, clearable }) => (
   <Collapse id={id} isOpen={expanded} className="search-form">
     <div className="search-form__wrapper">
       {formSchemaUrl && <FormBuilderLoader
@@ -25,6 +25,7 @@ const SearchForm = ({ expanded, onSearch, onClear, formSchemaUrl, id, identifier
       <Button
         className="search-form__clear"
         onClick={onClear}
+        disabled={!clearable}
       >{clearLabel}</Button>
     </div>
   </Collapse>
@@ -38,6 +39,7 @@ SearchForm.propTypes = {
   id: PropTypes.string.isRequired,
   formSchemaUrl: PropTypes.string,
   identifier: PropTypes.string,
+  clearable: PropTypes.bool,
 };
 
 SearchForm.defaultProps = {

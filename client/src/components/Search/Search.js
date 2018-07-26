@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
 import * as schemaActions from 'state/schema/SchemaActions';
 import { reset, initialize } from 'redux-form';
+import { isDirty } from  'redux-form/lib/immutable';
 import getIn from 'redux-form/lib/structure/plain/getIn';
 import Focusedzone from '../Focusedzone/Focusedzone';
 import getFormState from 'lib/getFormState';
@@ -43,6 +44,7 @@ class Search extends Component {
 
     this.expand = this.expand.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.getData = this.getData.bind(this);
     this.doSearch = this.doSearch.bind(this);
     this.doClear = this.doClear.bind(this);
     this.focusInput = this.focusInput.bind(this);
@@ -51,9 +53,13 @@ class Search extends Component {
     this.show = this.show.bind(this);
     this.toggle = this.toggle.bind(this);
     this.open = this.open.bind(this);
+    this.searchTermIsDirty = this.searchTermIsDirty.bind(this);
+
+    const term = props.term || (props.filters && props.filters[props.name]) || '';
     this.state = {
       display: props.display,
-      searchText: props.term || (props.filters && props.filters.name) || '',
+      searchText: term,
+      initialSearchText: term,
     };
   }
 
@@ -111,7 +117,10 @@ class Search extends Component {
    * @param event onChangeEvent from a input field.
    */
   handleChange(event) {
-      this.setState({ searchText: event.target.value });
+    const value = event.target.value;
+    if (this.state.searchText != value) {
+      this.setState({ searchText: value });
+    }
   }
 
   /**
@@ -169,7 +178,9 @@ class Search extends Component {
    * @param props
    */
   clearFormData(props) {
-    this.setState({ searchText: '' });
+    if (this.state.searchText !== '') {
+      this.setState({ searchText: '' });
+    }
 
     const schemaUrl = (props && props.formSchemaUrl) || this.props.formSchemaUrl;
     if (schemaUrl) {
@@ -196,7 +207,7 @@ class Search extends Component {
   hide() {
     if (this.props.onHide) {
       this.props.onHide();
-    } else {
+    } else if (this.state.display !== DISPLAY.NONE) {
       this.setState({ display: DISPLAY.NONE });
     }
   }
@@ -205,14 +216,18 @@ class Search extends Component {
    * Show this field when the Search Toggle is click.
    */
   show() {
-    this.setState({ display: DISPLAY.VISIBLE });
+    if (this.state.display !== DISPLAY.VISIBLE) {
+      this.setState({ display: DISPLAY.VISIBLE });
+    }
   }
 
   /**
    * Expand fully form
    */
   expand() {
-    this.setState({ display: DISPLAY.EXPANDED });
+    if (this.state.display !== DISPLAY.EXPANDED) {
+      this.setState({ display: DISPLAY.EXPANDED });
+    }
   }
 
   /**
@@ -233,14 +248,15 @@ class Search extends Component {
   }
 
   /**
-   * Wrap up all the data into an object and call the onSearch method provided via the props.
+   * Get the search criteria compiled into an object.
+   * @return Object
    */
-  doSearch() {
+  getData(ignoreSearchTerm=false) {
     const data = {};
 
     // Merge data from redux-forms with text field
-    if (this.state.searchText) {
-      data[this.props.name] = this.state.searchText;
+    if (!ignoreSearchTerm && this.state.searchText) {
+      data[this.props.name] = this.state.searchText.trim();
     }
 
     // Filter empty values
@@ -251,7 +267,31 @@ class Search extends Component {
       }
     });
 
-    this.show();
+    return data;
+  }
+
+  /**
+   * Determine if the search term has changed since the last search.
+   * @returns {boolean}
+   */
+  searchTermIsDirty() {
+    return this.state.searchText.trim() != this.state.initialSearchText.trim();
+  }
+
+  /**
+   * Wrap up all the data into an object and call the onSearch method provided via the props.
+   */
+  doSearch() {
+    this.setState({
+      display: DISPLAY.VISIBLE,
+      initialSearchText: this.state.searchText
+    });
+
+    const formData = this.getData(true);
+    this.props.actions.schema.setSchemaStateOverrides(this.props.schemaUrl, null);
+    this.props.actions.reduxForm.initialize(this.props.schemaName, formData);
+
+    const data = this.getData();
     this.props.onSearch(data);
   }
 
@@ -263,7 +303,8 @@ class Search extends Component {
   }
 
   render() {
-    const { formSchemaUrl, forceFilters, id, displayBehavior, identifier, ...props } = this.props;
+    const { formSchemaUrl, forceFilters, id, displayBehavior,
+      identifier, formIsDirty, ...props } = this.props;
 
     // If the box is not to be displayed
     if (this.state.display === DISPLAY.NONE) {
@@ -284,6 +325,11 @@ class Search extends Component {
     const hideable =
       [BEHAVIOR.HIDEABLE, BEHAVIOR.TOGGLABLE].includes(displayBehavior);
 
+
+    const dirty = formIsDirty || this.searchTermIsDirty();
+    const data = this.getData();
+    const clearable = (Object.keys(data).length > 0);
+
     return (
       <Focusedzone onClickOut={this.show} className="search">
         <SearchBox
@@ -292,11 +338,14 @@ class Search extends Component {
           onSearch={this.doSearch}
           onToggleFilter={this.toggle}
           onHide={this.hide}
+          onClear={this.doClear}
           searchText={searchText}
           hideable={hideable}
           expanded={expanded}
           id={`${id}_searchbox`}
           showFilters={Boolean(forceFilters || formSchemaUrl)}
+          dirty={dirty}
+          clearable={clearable}
         >
 
           <SearchForm
@@ -306,6 +355,7 @@ class Search extends Component {
             formSchemaUrl={formSchemaUrl}
             onSearch={this.doSearch}
             onClear={this.doClear}
+            clearable={clearable}
           />
         </SearchBox>
       </Focusedzone>
@@ -328,7 +378,9 @@ Search.propTypes = {
   term: PropTypes.string,
   name: PropTypes.string,
   forceFilters: PropTypes.bool,
+  formIsDirty: PropTypes.bool,
   identifier: PropTypes.string,
+  schemaName: PropTypes.string,
 };
 
 Search.defaultProps = {
@@ -348,9 +400,15 @@ function mapStateToProps(state, ownProps) {
   if (!schema || !schema.name) {
     return { formData: {} };
   }
-  const form = getIn(getFormState(state), schema.name);
+
+  const schemaName = schema.name;
+
+  const form = getIn(getFormState(state), schemaName);
+
   const formData = (form && form.values) || {};
-  return { formData };
+  const formIsDirty = isDirty(schemaName, getFormState)(state);
+
+  return { formData, formIsDirty, schemaName };
 }
 
 function mapDispatchToProps(dispatch) {

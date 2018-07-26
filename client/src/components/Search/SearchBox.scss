@@ -39,7 +39,8 @@ $search-box-height: 52px;
 
 .search-box__cancel,
 .search-box__filter-trigger,
-.search-box__enter {
+.search-box__enter,
+.search-box__clear {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -91,8 +92,20 @@ $search-box-height: 52px;
   max-width: calc(100% - #{$search-box-height})
 }
 
+.search-box__clear {
+  right: 0;
+  .search-box__has-filters &,
+  .search-box__hideable & {
+    right: $search-box-height;
+  }
+
+  .search-box__has-filters.search-box__hideable & {
+    right: 2 * $search-box-height;
+  }
+}
+
 .search-box__enter {
-  display: none;
+  display: block;
   right: $search-base-padding;
   border: 1px solid $gray-100;
   padding: 0 4px;
@@ -112,10 +125,6 @@ $search-box-height: 52px;
 
   .search-box__has-filters.search-box__hideable & {
     right: $search-base-padding + 2 * $search-box-height;
-  }
-
-  .search-box__has-focus & {
-    display: block;
   }
 }
 

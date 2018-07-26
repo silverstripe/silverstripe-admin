@@ -31,20 +31,24 @@ class SearchBox extends Component {
    * Set the focus attribute on the internal state.
    */
   handleFocus() {
-    this.setState({ hasFocus: true });
+    if (!this.state.hasFocus) {
+      this.setState({ hasFocus: true });
+    }
   }
 
   /**
    * Unset the focus attribute on the internal state.
    */
   handleBlur() {
-    this.setState({ hasFocus: false });
+    if (this.state.hasFocus) {
+      this.setState({ hasFocus: false });
+    }
   }
 
 
   render() {
     const { children, id, searchText, hideable, onChange, expanded, showFilters,
-      placeholder, name, onToggleFilter, formId, onHide } = this.props;
+      placeholder, name, onToggleFilter, formId, onHide, dirty, clearable, onClear } = this.props;
 
     const searchClasses = classNames('search-box', {
       'search-box__hideable': hideable,
@@ -62,6 +66,9 @@ class SearchBox extends Component {
       'search-box__filter-trigger',
       { collapsed: !expanded }
     );
+
+    const showEnter = (dirty || !clearable) && this.state.hasFocus;
+    const showClear = !showEnter && clearable;
 
     return (
       <div className={searchClasses}>
@@ -82,6 +89,15 @@ class SearchBox extends Component {
             // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
           />
+          {showEnter &&
+          <div className="search-box__enter">{i18n._t('Admin.ENTER', 'Enter')}&nbsp;↵</div>}
+          {showClear && <Button
+            aria-controls={formId}
+            onClick={onClear}
+            className="search-box__clear"
+            title={i18n._t('Admin.CLEAR', 'Clear')}
+          >{i18n._t('Admin.CLEAR', 'Clear')}</Button>}
+          {children}
           <div className="icon font-icon-search" />
           { (showFilters) && <Button
             aria-expanded={expanded}
@@ -94,12 +110,11 @@ class SearchBox extends Component {
           { hideable && <Button
             onClick={onHide}
             title={i18n._t('Admin.CLOSE', 'Close')}
+            aria-label={i18n._t('Admin.CLOSE', 'Close')}
             className="font-icon-cancel btn--no-text btn--icon-lg search-box__cancel"
             aria-controls={id}
             aria-expanded="true"
           /> }
-          <div className="search-box__enter">{i18n._t('Admin.ENTER', 'Enter')} ↵</div>
-          {children}
         </div>
       </div>
     );
@@ -121,6 +136,8 @@ SearchBox.propTypes = {
   hideable: PropTypes.bool,
   showFilters: PropTypes.bool,
   name: PropTypes.string,
+  dirty: PropTypes.bool,
+  clearable: PropTypes.bool,
 };
 
 SearchBox.defaultProps = {
