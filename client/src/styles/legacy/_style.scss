@@ -737,6 +737,12 @@ html, body {
         animation: spinner__animation__keyframes 1.5s infinite cubic-bezier(.445, .05, .55, .95)
           forwards;
 
+        // IE11 doesn't support svg animation so we just animate opacity
+        @media all and (-ms-high-contrast: none) {
+          animation: spinner__animation__keyframes_ie .5s alternate infinite cubic-bezier(.445, .05, .55, .95)
+          forwards;
+        }
+
         @keyframes spinner__animation__keyframes {
           from {
             stroke-dashoffset: 140;
@@ -745,9 +751,18 @@ html, body {
             stroke-dashoffset: 0;
           }
         }
+
+        @keyframes spinner__animation__keyframes_ie {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
       }
     }
-    }
+  }
 }
 
 // -----------------------------------------------
@@ -803,20 +818,6 @@ html, body {
     position: relative;
     font-weight: normal;
     margin: $spacer * 2 $spacer 0 $spacer * 1.5;
-    transform: translateY(0);
-
-    animation: text__animate 1s cubic-bezier(.445, .05, .55, .95) both 1.75s;
-
-    @keyframes text__animate {
-      0% {
-        transform: translateY(1em);
-        opacity: 0;
-      }
-      100% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
   }
 
   &__dots {
@@ -825,6 +826,7 @@ html, body {
 
     &#{&} { // overrides the svg:not(:root) selector without !important
       overflow: visible;
+      vertical-align: baseline;
     }
   }
 
@@ -848,13 +850,13 @@ html, body {
     }
 
     &--1 {
-      animation: $dot-animation 2.5s;
+      animation: $dot-animation;
     }
     &--2 {
-      animation: $dot-animation (2.5s + ($dot-animation--timing * .33));
+      animation: $dot-animation ($dot-animation--timing * .33);
     }
     &--3 {
-      animation: $dot-animation (2.5s + ($dot-animation--timing * .66));
+      animation: $dot-animation ($dot-animation--timing * .66);
     }
   }
 
