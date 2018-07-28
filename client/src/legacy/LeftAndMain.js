@@ -473,15 +473,15 @@ $.entwine('ss', function($) {
         clearButton();
       }
 
-      // get all data from the form
-      var formData = form.serializeArray();
+      // collect extra form data, the form data itself is collected by .ajaxSubmit()
+      var extraFormData = {};
       // add button action
-      formData.push({name: $(button).attr('name'), value:'1'});
+      extraFormData[$(button).attr('name')] = '1';
       // Artificial HTTP referer, IE doesn't submit them via ajax.
       // Also rewrites anchors to their page counterparts, which is important
       // as automatic browser ajax response redirects seem to discard the hash/fragment.
       // TODO Replaces trailing slashes added by History after locale (e.g. admin/?locale=en/)
-      formData.push({ name: 'BackURL', value: document.URL.replace(/\/$/, '') });
+      extraFormData.BackURL = document.URL.replace(/\/$/, '');
 
       // Save tab selections so we can restore them later
       this.saveTabState();
@@ -491,10 +491,9 @@ $.entwine('ss', function($) {
       // The returned view isn't always decided upon when the request
       // is fired, so the server might decide to change it based on its own logic,
       // sending back different `X-Pjax` headers and content
-      jQuery.ajax(jQuery.extend({
+      form.ajaxSubmit(jQuery.extend({
         headers: {"X-Pjax" : "CurrentForm,Breadcrumbs"},
-        url: form.attr('action'),
-        data: formData,
+        data: extraFormData,
         type: 'POST',
         complete: function() {
           clearButton()
