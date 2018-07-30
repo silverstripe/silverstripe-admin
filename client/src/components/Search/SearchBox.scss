@@ -94,6 +94,7 @@ $search-box-height: 52px;
 
 .search-box__clear {
   right: 0;
+  color: $link-color;
 
   .search-box__has-filters &,
   .search-box__hideable & {
@@ -133,9 +134,7 @@ $search-box-height: 52px;
   padding-right: $search-box-height + $search-base-padding;
   padding-left: 55px;
   padding-top: 7px;
-  box-shadow: 0 1px $input-btn-border-width 0 $input-border-color, 0 1px 5px 1px $border-color-light;
   border-top: 0;
-  border-bottom: 0;
   border-radius: 0;
   font-size: $font-size-lg;
   font-weight: bold;
@@ -158,8 +157,10 @@ $search-box-height: 52px;
     color: #687f9f;
   }
 
-  &:focus {
-    box-shadow: 0 1px 1px $input-focus-border-color, 0 0 8px $input-focus-box-shadow;
+  &:focus,
+  .search-box__expanded & {
+    box-shadow: 0 2px 6px 0 $shadow-level-5;
+    border-color: $gray-200;
   }
 
   @include media-breakpoint-up(md) {

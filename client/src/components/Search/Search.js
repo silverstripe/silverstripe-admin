@@ -46,7 +46,6 @@ class Search extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.getData = this.getData.bind(this);
     this.doSearch = this.doSearch.bind(this);
-    this.doClear = this.doClear.bind(this);
     this.focusInput = this.focusInput.bind(this);
     this.focusFirstFormField = this.focusFirstFormField.bind(this);
     this.hide = this.hide.bind(this);
@@ -54,6 +53,8 @@ class Search extends Component {
     this.toggle = this.toggle.bind(this);
     this.open = this.open.bind(this);
     this.searchTermIsDirty = this.searchTermIsDirty.bind(this);
+    this.clearFilters = this.clearFilters.bind(this);
+    this.clearSearchBox = this.clearSearchBox.bind(this);
 
     const term = props.term || (props.filters && props.filters[props.name]) || '';
     this.state = {
@@ -297,10 +298,19 @@ class Search extends Component {
   }
 
   /**
-   * Handle the internal clear event.
+   * Clear the Search component and focus on the first filter field.
    */
-  doClear() {
-    this.clearFormData();
+  clearFilters() {
+      this.clearFormData();
+      this.focusFirstFormField();
+  }
+
+  /**
+   * Clear the Search component and focus on the main input field.
+   */
+  clearSearchBox() {
+      this.clearFormData();
+      this.focusInput();
   }
 
   render() {
@@ -339,7 +349,7 @@ class Search extends Component {
           onSearch={this.doSearch}
           onToggleFilter={this.toggle}
           onHide={this.hide}
-          onClear={this.doClear}
+          onClear={this.clearSearchBox}
           searchText={searchText}
           hideable={hideable}
           expanded={expanded}
@@ -355,7 +365,7 @@ class Search extends Component {
             expanded={expanded}
             formSchemaUrl={formSchemaUrl}
             onSearch={this.doSearch}
-            onClear={this.doClear}
+            onClear={this.clearFilters}
             clearable={clearable}
           />
         </SearchBox>

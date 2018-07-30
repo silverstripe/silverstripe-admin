@@ -56,7 +56,8 @@ class SearchBox extends Component {
       'search-box__has-focus': this.state.hasFocus,
       'search-box__has-not-focus': !this.state.hasFocus,
       'search-box__has-filters': showFilters,
-      'search-box__has-not-filters': !showFilters
+      'search-box__has-not-filters': !showFilters,
+      'search-box__expanded': expanded
     });
 
     const advancedButtonClasses = classNames(

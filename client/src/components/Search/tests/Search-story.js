@@ -15,6 +15,7 @@ const FormReducer = combineReducers({
 const props = {
   name: 'MyField',
   title: 'Field title',
+  onSearch: () => {},
   store: createStore(combineReducers({ form: FormReducer })),
 };
 
