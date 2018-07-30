@@ -13,6 +13,11 @@ class SearchBox extends Component {
     this.handleKeyUp = this.handleKeyUp.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
+    this.renderInput = this.renderInput.bind(this);
+    this.renderFilterButton = this.renderFilterButton.bind(this);
+    this.renderClearButton = this.renderClearButton.bind(this);
+    this.renderEnterHint = this.renderEnterHint.bind(this);
+    this.renderHideButton = this.renderHideButton.bind(this);
     this.state = { hasFocus: false };
   }
 
@@ -45,10 +50,95 @@ class SearchBox extends Component {
     }
   }
 
+  /**
+   * Render the input for the search box.
+   */
+  renderInput() {
+    const { id, searchText, onChange, placeholder, name } = this.props;
+    return (
+      <input
+        aria-labelledby={`${id}_label`}
+        type="text"
+        name={name}
+        placeholder={placeholder}
+        className="form-control search-box__content-field"
+        onKeyUp={this.handleKeyUp}
+        onChange={onChange}
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
+        value={searchText}
+        id={id}
+        // eslint-disable-next-line jsx-a11y/no-autofocus
+        autoFocus
+      />
+    );
+  }
+
+  /**
+   * Render the `[enter ↵]` hint.
+   */
+  renderEnterHint() {
+    return (
+      <div className="search-box__enter">
+        {i18n._t('Admin.ENTER', 'Enter')}&nbsp;↵
+      </div>
+    );
+  }
+
+  /**
+   * Render the Clear button.
+   */
+  renderClearButton() {
+    const { formId, onClear } = this.props;
+    return (
+      <Button
+        aria-controls={formId}
+        onClick={onClear}
+        className="search-box__clear"
+        title={i18n._t('Admin.CLEAR', 'Clear')}
+      >{i18n._t('Admin.CLEAR', 'Clear')}</Button>
+    );
+  }
+
+  /**
+   * Render the advanced filter button.
+   */
+  renderFilterButton() {
+    const { expanded, onToggleFilter, formId } = this.props;
+    const classes = classNames(
+        'btn--icon-md',
+        'btn--no-text',
+        'font-icon-caret-down-two',
+        'search-box__filter-trigger',
+        { collapsed: !expanded }
+    );
+    return (<Button
+      aria-expanded={expanded}
+      aria-controls={formId}
+      aria-label={i18n._t('Admin.ADVANCED', 'Advanced')}
+      onClick={onToggleFilter}
+      className={classes}
+      title={i18n._t('Admin.ADVANCED', 'Advanced')}
+    />);
+  }
+
+  /**
+   * Render the hide button.
+   */
+  renderHideButton() {
+    const { id, onHide } = this.props;
+    return (<Button
+      onClick={onHide}
+      title={i18n._t('Admin.CLOSE', 'Close')}
+      aria-label={i18n._t('Admin.CLOSE', 'Close')}
+      className="font-icon-cancel btn--no-text btn--icon-lg search-box__cancel"
+      aria-controls={id}
+      aria-expanded="true"
+    />);
+  }
 
   render() {
-    const { children, id, searchText, hideable, onChange, expanded, showFilters,
-      placeholder, name, onToggleFilter, formId, onHide, dirty, clearable, onClear } = this.props;
+    const { children, id, hideable, expanded, showFilters, dirty, clearable } = this.props;
 
     const searchClasses = classNames('search-box', {
       'search-box__hideable': hideable,
@@ -60,62 +150,22 @@ class SearchBox extends Component {
       'search-box__expanded': expanded
     });
 
-    const advancedButtonClasses = classNames(
-      'btn--icon-md',
-      'btn--no-text',
-      'font-icon-caret-down-two',
-      'search-box__filter-trigger',
-      { collapsed: !expanded }
-    );
-
     const showEnter = (dirty || !clearable) && this.state.hasFocus;
     const showClear = !showEnter && clearable;
 
     return (
       <div className={searchClasses}>
         <div className="search-box__group">
-          <Label for={id} id={`${id}_label`} hidden>{i18n._t('Admin.SEARCH', 'Search')}</Label>
-          <input
-            aria-labelledby={`${id}_label`}
-            type="text"
-            name={name}
-            placeholder={placeholder}
-            className="form-control search-box__content-field"
-            onKeyUp={this.handleKeyUp}
-            onChange={onChange}
-            onFocus={this.handleFocus}
-            onBlur={this.handleBlur}
-            value={searchText}
-            id={id}
-            // eslint-disable-next-line jsx-a11y/no-autofocus
-            autoFocus
-          />
-          {showEnter &&
-          <div className="search-box__enter">{i18n._t('Admin.ENTER', 'Enter')}&nbsp;↵</div>}
-          {showClear && <Button
-            aria-controls={formId}
-            onClick={onClear}
-            className="search-box__clear"
-            title={i18n._t('Admin.CLEAR', 'Clear')}
-          >{i18n._t('Admin.CLEAR', 'Clear')}</Button>}
-          {children}
+          <Label for={id} id={`${id}_label`} hidden>
+            {i18n._t('Admin.SEARCH', 'Search')}
+          </Label>
+          { this.renderInput() }
+          { showEnter && this.renderEnterHint() }
+          { showClear && this.renderClearButton() }
+          { children }
           <div className="icon font-icon-search" />
-          { (showFilters) && <Button
-            aria-expanded={expanded}
-            aria-controls={formId}
-            aria-label={i18n._t('Admin.ADVANCED', 'Advanced')}
-            onClick={onToggleFilter}
-            className={advancedButtonClasses}
-            title={i18n._t('Admin.ADVANCED', 'Advanced')}
-          />}
-          { hideable && <Button
-            onClick={onHide}
-            title={i18n._t('Admin.CLOSE', 'Close')}
-            aria-label={i18n._t('Admin.CLOSE', 'Close')}
-            className="font-icon-cancel btn--no-text btn--icon-lg search-box__cancel"
-            aria-controls={id}
-            aria-expanded="true"
-          /> }
+          { showFilters && this.renderFilterButton() }
+          { hideable && this.renderHideButton() }
         </div>
       </div>
     );
