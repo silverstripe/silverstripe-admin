@@ -2,6 +2,7 @@ import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { storiesOf } from '@storybook/react';
 import Search from '../Search';
+import SearchToggle from '../SearchToggle';
 import ValueTracker from 'stories/ValueTracker';
 import { createStore, combineReducers } from 'redux';
 import { reducer as ReduxFormReducer } from 'redux-form';
@@ -79,5 +80,11 @@ storiesOf('Admin/Search', module)
         forceFilters
         {...props}
       />
+    </div>
+  ))
+  .add('Toggle button', () => (
+    <div>
+      <SearchToggle />
+      <SearchToggle toggled />
     </div>
   ));

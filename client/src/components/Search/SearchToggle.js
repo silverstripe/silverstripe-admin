@@ -4,11 +4,13 @@ import { Button } from 'reactstrap';
 import classnames from 'classnames';
 
 const label = i18n._t('Admin.SHOW_SEARCH', 'Show search');
-const btnClasses = classnames(
+
+const toggleBtnClasses = (toggled) => classnames(
   'btn--no-text',
   'search-toggle',
   'font-icon-search',
-  'btn--icon-large'
+  'btn--icon-large',
+  { 'search-toggle__active': toggled }
 );
 
 /**
@@ -17,7 +19,7 @@ const btnClasses = classnames(
 const SearchToggle = ({ onToggle, toggled }) => (<Button
   title={label}
   onClick={onToggle}
-  className={btnClasses + (toggled ? ' search-toggle__active' : '')}
+  className={toggleBtnClasses(toggled)}
 >
   <span className="sr-only">{label}</span>
 </Button>);
