@@ -142,6 +142,10 @@ $search-box-height: 52px;
   opacity: 1;
   width: $search-width-max;
   float: right;
+  box-shadow: 0 0 0 $shadow-level-1;
+
+  transition: box-shadow .1s,
+  border-color .1s;
 
   .search-box__has-filters &,
   .search-box__hideable & {
@@ -159,13 +163,8 @@ $search-box-height: 52px;
 
   &:focus,
   .search-box__expanded & {
-    box-shadow: 0 2px 6px 0 $shadow-level-5;
+    box-shadow: 0 1px 1px $shadow-level-1;
     border-color: $gray-200;
-  }
-
-  @include media-breakpoint-up(md) {
-    transition: width $transition-speed-fast,
-    opacity $transition-speed-fast;
   }
 
   // hide clear action in IE as it overlaps with filters
