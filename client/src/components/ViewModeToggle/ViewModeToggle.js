@@ -163,7 +163,7 @@ class ViewModeToggle extends Component {
       const toggleClassName = classNames(
         this.getIconClass(),
         'btn',
-        'viewmode-dropdown__toggle',
+        'viewmode-toggle__dropdown',
         dropdownToggleProps.classname
       );
 
