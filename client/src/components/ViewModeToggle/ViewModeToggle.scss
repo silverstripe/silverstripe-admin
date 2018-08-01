@@ -1,119 +1,108 @@
-.viewmode-dropdown-toggle {
+.viewmode-dropdown__toggle {
   margin-left: auto;
   font-size: $font-size-base;
 
-  #splitModeButton {
-    &:disabled {
-      pointer-events: all;
-    }
-  }
-
-  .viewModeToggle-chosenView-title {
-    font-size: $font-size-xxs;
-    line-height: .75rem;
-    vertical-align: top;
-    white-space: normal;
-    width: 44px;
-    display: inline-block;
-    text-align: left;
+  &:before {
+    font-size: $h3-font-size;
   }
 }
 
-.dropdown {
+.viewmode-toggle__chosen-view-title {
+  font-size: $font-size-xxs;
+  line-height: .75rem;
+  vertical-align: top;
+  white-space: normal;
+  width: 44px;
+  display: inline-block;
+  text-align: left;
+}
 
-  &.viewModeToggle {
-    position: absolute;
-    right: 10px;
+.viewmode-toggle__button:disabled {
+  pointer-events: all;
+}
 
-    .viewmode-dropdown-toggle {
-      &:before {
-        font-size: $h3-font-size;
-      }
-    }
+.viewmode-toggle--selected.btn {
+  &,
+  &:hover,
+  &:before,
+  &.highlighted,
+  &:focus {
+    background: $dropdown-link-active-bg;
+    color: $component-active-color;
+    border: 0;
   }
+}
 
+.viewmode-toggle {
+  position: absolute;
+  right: 10px;
+
+  // Styles for alignment of the items in the dropdown
   .dropdown-menu.show {
     min-width: 12rem;
 
-    .btn {
+    .viewmode-toggle__button {
       margin-left: 0;
       border-radius: 0;
 
-      &:active {
-        &:before {
-          color: $white;
-        }
-      }
-    }
-
-    .viewMode-selected.btn {
-      &,
-      &:hover,
-      &:before,
-      &.highlighted,
-      &:focus {
-        background: $dropdown-link-active-bg;
-        color: $component-active-color;
-        border: 0;
+      &:active::before {
+        color: $white;
       }
     }
   }
-}
 
-.disabled-tooltip {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 37px;
-  background: rgba($white, 0);
+  // Styles for the tooltip that shows when split mode is disabled on smaller screens
+  .disabled-tooltip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 37px;
+    background: rgba($white, 0);
 
-  .disabled-tooltip-span {
-    display: none;
-
-    &:before {
-      content: "";
-      border: 5px solid transparent;
-      border-top-color: $gray-700;
-      border-bottom-width: 0;
-      display: block;
-      width: 10px;
-      height: 5px;
-      position: absolute;
-      margin: auto;
-      top: 100%;
-      left: 0;
-      right: 0;
-    }
-  }
-
-  &:hover {
     .disabled-tooltip-span {
-      display: block;
-      text-align: center;
-      background: $gray-700;
-      color: white;
-      padding: 4px 0;
-      position: absolute;
-      top: -24px;
-      left: -1px;
-      right: -1px;
-      border-radius: 3px 3px 0 0;
+      display: none;
+
+      &:before {
+        content: "";
+        border: 5px solid transparent;
+        border-top-color: $gray-700;
+        border-bottom-width: 0;
+        display: block;
+        width: 10px;
+        height: 5px;
+        position: absolute;
+        margin: auto;
+        top: 100%;
+        left: 0;
+        right: 0;
+      }
+    }
+
+    &:hover {
+      .disabled-tooltip-span {
+        display: block;
+        text-align: center;
+        background: $gray-700;
+        color: white;
+        padding: 4px 0;
+        position: absolute;
+        top: -24px;
+        left: -1px;
+        right: -1px;
+        border-radius: 3px 3px 0 0;
+      }
     }
   }
 }
 
 // When using the caret property, ReactStrap adds a .dropdown-toggle class to the DropdownToggle component, which in
-// turn changes the background colour. This behaviour is overriden here.
-.viewModeToggle {
-  &.dropdown {
-    &.show {
-      .btn-secondary.dropdown-toggle {
-        box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125), 0 0 0 0.2rem rgba(86, 107, 141, 0.5);
-        border-color: $gray-100;
-        background-color: transparent;
-        color: $gray-600;
-      }
-    }
+// turn changes the background colour. This behaviour is overridden here.
+.viewmode-toggle.dropdown.show {
+  .viewmode-dropdown__toggle {
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125), 0 0 0 0.2rem rgba(86, 107, 141, 0.5);
+    border-color: $gray-100;
+    background-color: transparent;
+    color: $gray-600;
   }
 }
