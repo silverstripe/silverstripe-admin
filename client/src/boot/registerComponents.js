@@ -34,6 +34,7 @@ import ReduxForm from 'containers/Form/Form';
 import UsedOnTable from 'components/UsedOnTable/UsedOnTable';
 import Loading from 'components/Loading/Loading';
 import ViewModeToggle from 'components/ViewModeToggle/ViewModeToggle';
+import Tag from 'components/Tag/Tag';
 import Search from 'components/Search/Search';
 import SearchToggle from 'components/Search/SearchToggle';
 
@@ -76,5 +77,6 @@ export default () => {
     ViewModeToggle,
     Search,
     SearchToggle,
+    Tag
   });
 };
