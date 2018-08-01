@@ -3,7 +3,7 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap
 import i18n from 'i18n';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { selectEditMode, selectPreviewMode, selectSplitMode } from 'state/viewMode/viewModeActions';
+import { selectEditMode, selectPreviewMode, selectSplitMode } from 'state/viewMode/ViewModeActions';
 import classNames from 'classnames';
 
 class ViewModeToggle extends Component {

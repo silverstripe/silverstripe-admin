@@ -11,7 +11,7 @@ import MobileMenuReducer from 'state/mobileMenu/MobileMenuReducer';
 import UnsavedFormsReducer from 'state/unsavedForms/UnsavedFormsReducer';
 import usedOnReducer from 'state/usedOn/usedOnReducer';
 import applyFormMiddleware from 'lib/dependency-injection/applyFormMiddleware';
-import ViewModeReducer from 'state/viewMode/viewModeReducer';
+import ViewModeReducer from 'state/viewMode/ViewModeReducer';
 
 
 export default (extra = {}) => {

@@ -1,4 +1,4 @@
-import ACTION_TYPES from './viewModeActionTypes';
+import ACTION_TYPES from './ViewModeActionTypes';
 import { SPLITMODE_BREAKPOINT as viewWideEnoughForSplitMode } from '../../lib/constants';
 
 const initialState = {
