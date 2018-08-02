@@ -178,9 +178,9 @@ describe('ViewModeToggle', () => {
       const editButton = wrapper.find('.font-icon-edit-write').at(0);
       const previewButton = wrapper.find('.font-icon-eye').at(0);
 
-      expect(splitButton.hasClass('viewMode-selected')).toBe(true);
-      expect(editButton.hasClass('viewMode-selected')).toBe(false);
-      expect(previewButton.hasClass('viewMode-selected')).toBe(false);
+      expect(splitButton.hasClass('viewmode-toggle--selected')).toBe(true);
+      expect(editButton.hasClass('viewmode-toggle--selected')).toBe(false);
+      expect(previewButton.hasClass('viewmode-toggle--selected')).toBe(false);
 
       expect(splitButton.prop('id')).toEqual('splitModeButton');
 
