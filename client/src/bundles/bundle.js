@@ -53,6 +53,7 @@ require('expose-loader?UnsavedFormsActions!state/unsavedForms/UnsavedFormsAction
 require('expose-loader?Badge!components/Badge/Badge');
 require('expose-loader?CheckboxSetField!components/CheckboxSetField/CheckboxSetField');
 require('expose-loader?Preview!components/Preview/Preview');
+require('expose-loader?ViewModeStates!state/viewMode/ViewModeStates');
 require('expose-loader?ViewModeActions!state/viewMode/ViewModeActions');
 require('expose-loader?ViewModeToggle!components/ViewModeToggle/ViewModeToggle');
 require('expose-loader?Focusedzone!components/Focusedzone/Focusedzone');

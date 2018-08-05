@@ -4,6 +4,7 @@ import i18n from 'i18n';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { selectEditMode, selectPreviewMode, selectSplitMode } from 'state/viewMode/ViewModeActions';
+import { VIEW_MODE_STATES } from 'state/viewMode/ViewModeStates';
 import classNames from 'classnames';
 
 class ViewModeToggle extends Component {
@@ -24,9 +25,9 @@ class ViewModeToggle extends Component {
     const { activeState, editIconClass, previewIconClass, splitIconClass } = this.props;
 
     switch (activeState) {
-      case 'edit':
+      case VIEW_MODE_STATES.EDIT:
         return editIconClass;
-      case 'preview':
+      case VIEW_MODE_STATES.PREVIEW:
         return previewIconClass;
       default:
         return splitIconClass;
@@ -37,9 +38,9 @@ class ViewModeToggle extends Component {
     const { activeState } = this.props;
 
     switch (activeState) {
-      case 'edit':
+      case VIEW_MODE_STATES.EDIT:
         return i18n._t('Admin.EDIT_MODE', 'Edit mode');
-      case 'preview':
+      case VIEW_MODE_STATES.PREVIEW:
         return i18n._t('Admin.PREVIEW_MODE', 'Preview mode');
       default:
         return i18n._t('Admin.SPLIT_MODE', 'Split mode');
@@ -84,7 +85,7 @@ class ViewModeToggle extends Component {
       splitIconClass,
       {
         'viewmode-toggle__button': true,
-        'viewmode-toggle--selected': (activeState === 'split'),
+        'viewmode-toggle--selected': (activeState === VIEW_MODE_STATES.SPLIT),
         disabled: (!splitAvailable)
       }
   );
@@ -94,7 +95,7 @@ class ViewModeToggle extends Component {
         type="button"
         disabled={!splitAvailable}
         className={itemClass}
-        value="split"
+        value={VIEW_MODE_STATES.SPLIT}
         onClick={this.handleSplitSelect}
         id="splitModeButton"
       >
@@ -110,7 +111,7 @@ class ViewModeToggle extends Component {
     const itemClass = classNames(
       'btn', 'icon-view', 'last', 'viewmode-toggle__button',
       editIconClass,
-      { 'viewmode-toggle--selected': (activeState === 'edit') }
+      { 'viewmode-toggle--selected': (activeState === VIEW_MODE_STATES.EDIT) }
     );
 
     return (
@@ -132,7 +133,7 @@ class ViewModeToggle extends Component {
     const itemClass = classNames(
       'btn', 'icon-view', 'viewmode-toggle__button',
       previewIconClass,
-      { 'viewmode-toggle--selected': (activeState === 'preview') }
+      { 'viewmode-toggle--selected': (activeState === VIEW_MODE_STATES.PREVIEW) }
     );
 
     return (
@@ -156,7 +157,7 @@ class ViewModeToggle extends Component {
       } = this.props;
 
       // Hide button in CMS content area when preview panel is open
-      if (area === 'edit' && activeState === 'split') {
+      if (area === VIEW_MODE_STATES.EDIT && activeState === VIEW_MODE_STATES.SPLIT) {
           return null;
       }
 
@@ -198,7 +199,7 @@ class ViewModeToggle extends Component {
 }
 
 ViewModeToggle.propTypes = {
-  activeState: PropTypes.string,
+  activeState: PropTypes.oneOf(Object.values(VIEW_MODE_STATES)),
   area: PropTypes.string.isRequired,
   splitAvailable: PropTypes.bool,
   onPreviewSelect: PropTypes.func,

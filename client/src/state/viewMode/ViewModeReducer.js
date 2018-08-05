@@ -1,8 +1,9 @@
 import ACTION_TYPES from './ViewModeActionTypes';
 import { SPLITMODE_BREAKPOINT as viewWideEnoughForSplitMode } from '../../lib/constants';
+import { VIEW_MODE_STATES } from './ViewModeStates';
 
 const initialState = {
-  activeState: 'split',
+  activeState: VIEW_MODE_STATES.SPLIT,
   splitAvailable: true
 };
 
@@ -11,21 +12,21 @@ function reducer(state = initialState, action) {
     case ACTION_TYPES.SELECT_EDIT: {
       return {
         ...state,
-        activeState: 'edit'
+        activeState: VIEW_MODE_STATES.EDIT,
       };
     }
 
     case ACTION_TYPES.SELECT_PREVIEW: {
       return {
         ...state,
-        activeState: 'preview'
+        activeState: VIEW_MODE_STATES.PREVIEW,
       };
     }
 
     case ACTION_TYPES.SELECT_SPLIT: {
       return {
         ...state,
-        activeState: 'split'
+        activeState: VIEW_MODE_STATES.SPLIT,
       };
     }
 
@@ -33,8 +34,8 @@ function reducer(state = initialState, action) {
       const splitAvailable = action.payload.panelWidth > viewWideEnoughForSplitMode;
       let activeState = state.activeState;
 
-      if (activeState === 'split' && !splitAvailable) {
-         activeState = 'edit';
+      if (activeState === VIEW_MODE_STATES.SPLIT && !splitAvailable) {
+         activeState = VIEW_MODE_STATES.EDIT;
       }
 
       return {
