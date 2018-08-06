@@ -3,6 +3,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Tag from '../Tag';
 import TagList from '../TagList';
+import CompactTagList from '../CompactTagList';
 
 const tags = [
   {key: 'justKey'},
@@ -22,5 +23,14 @@ storiesOf('Admin/Tag', module)
     </div>
   ))
   .add('TagList', () => (
-    <TagList tags={tags} />
+    <div style={{"background": 'white', 'padding': '20px'}}>
+      <TagList tags={tags} />
+      <TagList tags={tags} deletable />
+    </div>
+  ))
+  .add('CompactTagList', () => (
+    <div style={{"background": 'white', 'padding': '20px'}}>
+      <CompactTagList tags={tags} deletable maxSize={600} />
+    </div>
   ));
+
