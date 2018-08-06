@@ -3,15 +3,13 @@ import Tag from './Tag';
 import classnames from 'classnames';
 import i18n from 'i18n';
 
-const TagList = ({tags}) => {
-  return (
-    <div className="TagList">
-      { tags.map( (props) => (
-        <Tag dataKey={props.key} {...props} />
-      ))}
-    </div>
-  )
-}
+const TagList = ({tags, deletable}) => (
+  <div className="TagList">
+    { tags.map( (props) => (
+      <Tag deletable={deletable} dataKey={props.key} {...props} />
+    ))}
+  </div>
+);
 
 TagList.propTypes = {
   onTagClick: PropTypes.func,

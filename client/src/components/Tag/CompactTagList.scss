@@ -1,0 +1,11 @@
+.compact-tag-list {
+
+}
+
+.compact-tag-list__placeholder {
+  position: absolute;
+
+  .TagList {
+    white-space: nowrap;
+  }
+}
