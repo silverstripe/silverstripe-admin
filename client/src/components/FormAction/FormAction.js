@@ -15,17 +15,18 @@ class FormAction extends Component {
    * @returns {Object}
    */
   getButtonProps() {
+    const { attributes, id, name } = this.props;
+
     // Merge attributes
-    return Object.assign({},
-      typeof this.props.attributes === 'undefined' ? {} : this.props.attributes,
-      {
-        id: this.props.id,
-        name: this.props.name,
-        className: this.getButtonClasses(),
-        disabled: this.props.disabled,
-        onClick: this.handleClick,
-      }
-    );
+    const buttonAttributes = typeof attributes === 'undefined' ? {} : attributes;
+    return {
+      ...buttonAttributes,
+      id,
+      name,
+      className: this.getButtonClasses(),
+      disabled: this.isDisabled(),
+      onClick: this.handleClick,
+    };
   }
 
   /**
@@ -34,11 +35,13 @@ class FormAction extends Component {
    * @returns string
    */
   getButtonClasses() {
+    const { title, loading, extraClass } = this.props;
+
     const buttonClasses = {
       btn: true,
-      'btn--no-text': (typeof this.props.title !== 'string'),
-      'btn--loading': this.props.loading,
-      disabled: this.props.disabled,
+      'btn--no-text': (typeof title !== 'string'),
+      'btn--loading': loading,
+      disabled: this.isDisabled(),
     };
     // Add 'type' class
     const style = this.getButtonStyle();
@@ -53,8 +56,8 @@ class FormAction extends Component {
       buttonClasses[`font-icon-${icon}`] = true;
     }
 
-    if (typeof this.props.extraClass === 'string') {
-      buttonClasses[this.props.extraClass] = true;
+    if (typeof extraClass === 'string') {
+      buttonClasses[extraClass] = true;
     }
 
     return classnames(buttonClasses);
@@ -102,7 +105,7 @@ class FormAction extends Component {
   /**
    * Returns markup for the loading icon
    *
-   * @returns object|null
+   * @returns {Object|null}
    */
   getLoadingIcon() {
     if (this.props.loading) {
@@ -119,13 +122,26 @@ class FormAction extends Component {
   }
 
   /**
-   * @return {boolean}
+   * Returns whether the button is disabled or readonly
+   *
+   * @returns {boolean}
+   */
+  isDisabled() {
+    const { disabled, readOnly } = this.props;
+
+    return disabled || readOnly;
+  }
+
+  /**
+   * @returns {boolean}
    */
   isPrimary() {
-    const extraClasses = this.props.extraClass.split(' ');
+    const { extraClass, name } = this.props;
+
+    const extraClasses = extraClass.split(' ');
     return (
-      this.props.name === 'action_save' ||
-      extraClasses.find(className => className === 'ss-ui-action-constructive')
+      name === 'action_save' ||
+      !!extraClasses.find(className => className === 'ss-ui-action-constructive')
     );
   }
 
@@ -133,7 +149,6 @@ class FormAction extends Component {
    * Event handler triggered when a user clicks the button.
    *
    * @param {Object} event
-   * @return undefined
    */
   handleClick(event) {
     if (typeof this.props.onClick === 'function') {
@@ -142,7 +157,7 @@ class FormAction extends Component {
   }
 
   render() {
-    const title = this.props.title;
+    const { title } = this.props;
 
     return (
       <button {...this.getButtonProps()}>
@@ -162,6 +177,7 @@ FormAction.propTypes = {
   loading: React.PropTypes.bool,
   icon: React.PropTypes.string,
   disabled: React.PropTypes.bool,
+  readOnly: React.PropTypes.bool,
   data: React.PropTypes.oneOfType([
     React.PropTypes.array,
     React.PropTypes.shape({
@@ -179,6 +195,7 @@ FormAction.defaultProps = {
   attributes: {},
   data: {},
   disabled: false,
+  readOnly: false,
 };
 
 export default FormAction;
