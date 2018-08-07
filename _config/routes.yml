@@ -1,13 +1,4 @@
 ---
-Name: adminroutes
-After:
-  - '#rootroutes'
-  - '#coreroutes'
----
-SilverStripe\Control\Director:
-  rules:
-    'admin': 'SilverStripe\Admin\AdminRootController'
----
 Name: admin-graphql-routes
 Only:
   moduleexists: silverstripe/graphql
@@ -19,3 +10,12 @@ SilverStripe\Control\Director:
       Stage: Stage
       Permissions:
         CMS_ACCESS: CMS_ACCESS
+---
+Name: adminroutes
+After:
+  - '#rootroutes'
+  - '#coreroutes'
+---
+SilverStripe\Control\Director:
+  rules:
+    'admin': 'SilverStripe\Admin\AdminRootController'
