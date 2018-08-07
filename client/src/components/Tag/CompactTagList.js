@@ -1,5 +1,6 @@
 import React, {PropTypes, Component} from 'react';
 import TagList from './TagList';
+import SummaryTag from './SummaryTag';
 import ResizeAware from 'react-resize-aware';
 import classnames from 'classnames';
 import i18n from 'i18n';
@@ -21,7 +22,7 @@ class CompactTagList extends Component {
     };
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
     const placeholderWidth = this.getPlaceholderSize();
     this.refreshShowSummaryView(placeholderWidth);
   }
@@ -38,9 +39,9 @@ class CompactTagList extends Component {
   refreshShowSummaryView(placeholderWidth) {
     const maxWidth = this.props.maxSize;
     const showSummaryView = maxWidth < placeholderWidth;
-    console.dir({maxWidth, placeholderWidth});
+
     if (this.state.showSummaryView !== showSummaryView) {
-      this.setState({showSummaryView});
+      this.setState(() => ({showSummaryView}));
     }
   }
 
@@ -68,14 +69,19 @@ class CompactTagList extends Component {
 
     const {maxSize, ...listProps} = this.props;
     const showSummaryView = this.state.showSummaryView;
+    const count = this.props.tags.length;
+    const classes = classnames(
+      'compact-tag-list',
+      {'compact-tag-list__show-summary-view': showSummaryView}
+    );
 
     return (
       <div className="compact-tag-list" style={{'maxWidth': `${maxSize}px`}}>
-        <ResizeAware onResize={this.onResize} className="compact-tag-list__placeholder">
-          <TagList {...listProps} />
+        <ResizeAware onResize={this.onResize} className="compact-tag-list__placeholder" aria-hidden={true}>
+          <TagList {...listProps} focusable={false} />
         </ResizeAware>
-        {showSummaryView ?
-          <div>My Awesome summary view</div> :
+        { showSummaryView ?
+          <SummaryTag count={count} /> :
           <TagList {...listProps} />
         }
       </div>

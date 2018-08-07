@@ -1,11 +1,18 @@
 .compact-tag-list {
-
-}
-
-.compact-tag-list__placeholder {
-  position: absolute;
+  position: relative;
+  overflow: hidden;
 
   .TagList {
     white-space: nowrap;
   }
+
+  &__placeholder {
+    margin-left: -9999px;
+    position: absolute;
+    opacity:0;
+  }
 }
+
+
+
+

@@ -12,6 +12,13 @@ const tags = [
   {key: 'KeyPairLabel', label: "Some label", value: '123'}
 ];
 
+const moreTags = [
+  {key: 'MoreValue', value: '123'},
+  {key: 'ExtraValue', value: '123'},
+  {key: 'MoreExtraValue', value: '123'},
+  {key: 'ReallyALotOfValue', value: '123'},
+].concat(tags);
+
 storiesOf('Admin/Tag', module)
   .add('Tag', () => (
     <div style={{"background": 'white', 'padding': '20px'}}>
@@ -31,6 +38,7 @@ storiesOf('Admin/Tag', module)
   .add('CompactTagList', () => (
     <div style={{"background": 'white', 'padding': '20px'}}>
       <CompactTagList tags={tags} deletable maxSize={600} />
+      <CompactTagList tags={moreTags} deletable maxSize={600} />
     </div>
   ));
 

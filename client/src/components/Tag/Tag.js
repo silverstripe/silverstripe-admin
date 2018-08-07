@@ -39,25 +39,29 @@ const makeLabel = (key, label, value) => (
 /**
  * Component to display a tag the user can interact with.
  */
-const Tag = ({onClick, onDelete, deletable, dataKey, label, value, onBackSpace, ...props}) => (
+const Tag = ({
+  onClick, onDelete, deletable, dataKey, label, value, onBackSpace, children, focusable, ...props
+}) => (
   <Button
     {...props}
     className={ classnames("Tag", {"Tag__deletable": deletable}) }
     onClick={(e) => { e.preventDefault(); onClick(dataKey); } }
     href="#"
+    tabIndex={focusable ? undefined : -1}
     onKeyDown={(e) => {onKeyDown(e, dataKey, onDelete, onBackSpace)}}>
-    { deletable && <DeleteButton onDelete={onDelete} dataKey={dataKey} /> }
-    { makeLabel(dataKey, label, value) }
+    { deletable && <DeleteButton onDelete={onDelete} dataKey={dataKey} focusable={focusable} /> }
+    { children || makeLabel(dataKey, label, value) }
   </Button>
 );
 
-const DeleteButton = ({dataKey, onDelete}) => (
+const DeleteButton = ({dataKey, onDelete, focusable}) => (
   <Button
     onClick={ (e) => {
       e.stopPropagation();
       e.preventDefault();
       onDelete(dataKey); } }
     aria-label={i18n._t('Admin.REMOVE_TAG', 'Remove Tag')}
+    tabIndex={focusable ? undefined : -1}
     className="Tag__Delete font-icon-cancel btn--no-text btn--icon-sm"
   />
 );
@@ -71,6 +75,8 @@ Tag.propTypes = {
   dataKey: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.string,
+  title: PropTypes.string,
+  focusable: PropTypes.bool,
 };
 
 Tag.defaultProps = {
@@ -78,6 +84,7 @@ Tag.defaultProps = {
   onClick: () => {},
   onDelete: () => {},
   onBackSpace: () => {},
+  focusable: true,
 };
 
 export default Tag;
