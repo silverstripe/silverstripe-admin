@@ -3,10 +3,13 @@ import Tag from './Tag';
 import classnames from 'classnames';
 import i18n from 'i18n';
 
-const TagList = ({tags, deletable}) => (
+const TagList = ({tags, deletable, focusable}) => (
   <div className="TagList">
     { tags.map( (props) => (
-      <Tag deletable={deletable} dataKey={props.key} {...props} />
+      <Tag {...props}
+        deletable={deletable}
+        dataKey={props.key}
+        focusable={focusable} />
     ))}
   </div>
 );
@@ -21,11 +24,13 @@ TagList.propTypes = {
       label: PropTypes.string,
       value: PropTypes.string,
     })
-  )
+  ),
+  focusable: PropTypes.bool,
 };
 
 TagList.defaultProps = {
-  deletable: false
+  deletable: false,
+  focusable: true,
 };
 
 export default TagList;
