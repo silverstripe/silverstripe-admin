@@ -127,7 +127,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     private static $tree_class = null;
 
     /**
-     * The url used for the link in the Help tab in the backend
+     * @deprecated [version] The url used for the link in the Help tab in the backend
      *
      * @config
      * @var string
@@ -593,20 +593,6 @@ class LeftAndMain extends Controller implements PermissionProvider
         $member = Security::getCurrentUser();
         if (!empty($member->Locale)) {
             i18n::set_locale($member->Locale);
-        }
-
-        if ($helpLink = LeftAndMain::config()->uninherited('help_link')) {
-            // can't be done in cms/_config.php as locale is not set yet
-            CMSMenu::add_link(
-                'Help',
-                _t(__CLASS__ . '.HELP', 'Help', 'Menu title'),
-                $helpLink,
-                -2,
-                array(
-                    'target' => '_blank'
-                ),
-                'font-icon-help-circled'
-            );
         }
 
         // Allow customisation of the access check by a extension
@@ -1737,6 +1723,33 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
+     * Return the version number of the CMS restricted to minor version. ie. 4.2
+     *
+     * @return string
+     */
+    public function MinorCMSVersion()
+    {
+        $moduleName = array_keys($this->getVersionProvider()->getModules())[0];
+        $lockModules = $this->getVersionProvider()->getModuleVersionFromComposer([$moduleName]);
+
+        if (!isset($lockModules[$moduleName])) {
+            return '';
+        }
+
+        // Remove any '-dev'
+        $version = explode('-', $lockModules[$moduleName])[0];
+
+        // Only use the minor version
+        $parts = explode('.', $version);
+
+        if (isset($parts[1])) {
+            return implode([$parts[0], $parts[1]], '.');
+        }
+
+        return $parts[0];
+    }
+
+    /**
      * @return array
      */
     public function SwitchView()
@@ -1755,6 +1768,38 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function SiteConfig()
     {
         return class_exists(SiteConfig::class) ? SiteConfig::current_site_config() : null;
+    }
+
+    /**
+     * The urls used for the links in the Help dropdown in the backend
+     *
+     * @config
+     * @var array
+     */
+    private static $help_links = [
+        'CMS User help' => 'https//userhelp.silverstripe.org/en/4',
+        'Developer docs' => 'https://docs.silverstripe.org/en/4/',
+        'Community' => 'https://www.silverstripe.org/',
+        'Feedback' => 'https://www.silverstripe.org/give-feedback/',
+    ];
+
+    /**
+     * Returns help_links in a format readable by a template
+     * @return ArrayList
+     */
+    public function getHelpLinks()
+    {
+        $helpLinks = $this->config()->get('help_links');
+        $formattedLinks = [];
+
+        foreach ($helpLinks as $key => $value) {
+            $formattedLinks[] = [
+                'Title' => $key,
+                'URL' => $value
+            ];
+        }
+
+        return ArrayList::create($formattedLinks);
     }
 
     /**

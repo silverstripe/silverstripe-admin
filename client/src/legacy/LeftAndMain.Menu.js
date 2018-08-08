@@ -462,4 +462,10 @@ $.entwine('ss', function($){
       this._super();
     }
   });
+
+  $('.cms-help__menu').entwine({
+    onclick: function () {
+      $('.cms-help__toggle').toggleClass('cms-help__toggle--show');
+    }
+  });
 });
