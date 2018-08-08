@@ -76,7 +76,7 @@ class CompactTagList extends Component {
     );
 
     return (
-      <div className="compact-tag-list" style={{'maxWidth': `${maxSize}px`}}>
+      <div className="compact-tag-list">
         <ResizeAware onResize={this.onResize} className="compact-tag-list__placeholder" aria-hidden={true}>
           <TagList {...listProps} focusable={false} />
         </ResizeAware>
@@ -91,8 +91,11 @@ class CompactTagList extends Component {
 }
 
 CompactTagList.propTypes = Object.assign({}, TagList.propTypes, {
-  maxSize: PropTypes.number.required
+  maxSize: PropTypes.number
 });
 
+CompactTagList.defaultProps = {
+  maxSize: 0
+};
 
 export default CompactTagList;

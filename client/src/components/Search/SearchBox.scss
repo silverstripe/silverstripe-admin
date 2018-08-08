@@ -37,6 +37,14 @@ $search-box-height: 52px;
   }
 }
 
+.search-box__tags {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: 10px 0;
+  left: 55px;
+}
+
 .search-box__cancel,
 .search-box__filter-trigger,
 .search-box__enter,

@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import Tag from './Tag';
+import TagPropType from './TagPropType';
 import classnames from 'classnames';
 import i18n from 'i18n';
 
@@ -18,13 +19,7 @@ TagList.propTypes = {
   onTagClick: PropTypes.func,
   onTagDelete: PropTypes.func,
   deletable: PropTypes.bool,
-  tags: PropTypes.arrayOf(
-    PropTypes.shape({
-      key: PropTypes.string.required,
-      label: PropTypes.string,
-      value: PropTypes.string,
-    })
-  ),
+  tags: PropTypes.arrayOf(TagPropType),
   focusable: PropTypes.bool,
 };
 
