@@ -13,6 +13,8 @@ import getFormState from 'lib/getFormState';
 import SearchBox from './SearchBox';
 import SearchForm from './SearchForm';
 import SearchToggle from './SearchToggle';
+import schemaFieldValues, { schemaMerge } from 'lib/schemaFieldValues';
+import mapFormSchemaToTags from './mapFormSchemaToTags';
 
 
 const DISPLAY = {
@@ -412,6 +414,8 @@ function mapStateToProps(state, ownProps) {
     return { formData: {} };
   }
 
+  const tagData = mapFormSchemaToTags(schema);
+
   const schemaName = schema.name;
 
   const form = getIn(getFormState(state), schemaName);
@@ -419,7 +423,7 @@ function mapStateToProps(state, ownProps) {
   const formData = (form && form.values) || {};
   const formIsDirty = isDirty(schemaName, getFormState)(state);
 
-  return { formData, formIsDirty, schemaName };
+  return { formData, formIsDirty, schemaName, tagData };
 }
 
 function mapDispatchToProps(dispatch) {
