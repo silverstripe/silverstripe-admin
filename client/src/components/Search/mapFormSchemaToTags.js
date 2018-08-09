@@ -9,10 +9,8 @@ const mapFormSchemaToTags = (formSchema) => {
 
   const fields = formSchema.schema.fields;
   const fieldStates = formSchema.state.fields;
-  const fieldOverrides = formSchema.stateOverride.fields;
-  console.dir(formSchema);
-
-
+  const fieldOverrides = formSchema.stateOverride ? formSchema.stateOverride.fields : [];
+  
   const tags = fields.map( field => ({
     key: field.name,
     label: field.title,
