@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import * as schemaActions from 'state/schema/SchemaActions';
 import { reset, initialize } from 'redux-form';
 import { isDirty } from 'redux-form/lib/immutable';
+import { change } from 'redux-form/lib';
 import getIn from 'redux-form/lib/structure/plain/getIn';
 import Focusedzone from '../Focusedzone/Focusedzone';
 import getFormState from 'lib/getFormState';
@@ -57,6 +58,7 @@ class Search extends Component {
     this.searchTermIsDirty = this.searchTermIsDirty.bind(this);
     this.clearFilters = this.clearFilters.bind(this);
     this.clearSearchBox = this.clearSearchBox.bind(this);
+    this.clearFormFilter = this.clearFormFilter.bind(this);
 
     const term = props.term || (props.filters && props.filters[props.name]) || '';
     this.state = {
@@ -208,13 +210,21 @@ class Search extends Component {
       this.setState({ searchText: '' });
     }
 
-    const schemaUrl = (props && props.formSchemaUrl) || this.props.formSchemaUrl;
-    if (schemaUrl) {
+    const formSchemaUrl = (props && props.formSchemaUrl) || this.props.formSchemaUrl;
+    if (formSchemaUrl) {
       const identifier = (props && props.identifier) || this.props.identifier;
-      this.props.actions.schema.setSchemaStateOverrides(schemaUrl, null);
+      this.props.actions.schema.setSchemaStateOverrides(formSchemaUrl, null);
       this.props.actions.reduxForm.initialize(identifier, {}, Object.keys(this.props.formData));
       this.props.actions.reduxForm.reset(identifier);
     }
+  }
+
+  /**
+   * Clear a search filter and execute a new search
+   * @param string key Search filter name to clear
+   */
+  clearFormFilter(key) {
+    this.doSearch({[key]: undefined});
   }
 
   /**
@@ -284,18 +294,19 @@ class Search extends Component {
 
   /**
    * Wrap up all the data into an object and call the onSearch method provided via the props.
+   * @param Object overrides Data to overrides over our existing form data.
    */
-  doSearch() {
+  doSearch(overrides={}) {
     this.setState({
       display: DISPLAY.VISIBLE,
       initialSearchText: this.state.searchText
     });
 
-    const formData = this.getData(true);
+    const formData = Object.assign({}, this.getData(true), overrides);
     this.props.actions.schema.setSchemaStateOverrides(this.props.schemaUrl, null);
     this.props.actions.reduxForm.initialize(this.props.schemaName, formData);
 
-    const data = this.getData();
+    const data = Object.assign({}, this.getData(), overrides);
     this.props.onSearch(data);
   }
 
@@ -348,7 +359,7 @@ class Search extends Component {
         <SearchBox
           {...props}
           onChange={this.handleChange}
-          onSearch={this.doSearch}
+          onSearch={ this.doSearch }
           onToggleFilter={this.toggle}
           onHide={this.hide}
           onClear={this.clearSearchBox}
@@ -359,6 +370,7 @@ class Search extends Component {
           showFilters={Boolean(forceFilters || formSchemaUrl)}
           dirty={dirty}
           clearable={clearable}
+          onTagDelete={this.clearFormFilter}
         >
 
           <SearchForm
@@ -414,13 +426,12 @@ function mapStateToProps(state, ownProps) {
     return { formData: {} };
   }
 
-  const tagData = mapFormSchemaToTags(schema);
-
   const schemaName = schema.name;
 
   const form = getIn(getFormState(state), schemaName);
 
   const formData = (form && form.values) || {};
+  const tagData = mapFormSchemaToTags(schema, ownProps.filters);
   const formIsDirty = isDirty(schemaName, getFormState)(state);
 
   return { formData, formIsDirty, schemaName, tagData };
@@ -430,7 +441,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: {
       schema: bindActionCreators(schemaActions, dispatch),
-      reduxForm: bindActionCreators({ reset, initialize }, dispatch),
+      reduxForm: bindActionCreators({ reset, initialize, change }, dispatch),
     },
   };
 }
