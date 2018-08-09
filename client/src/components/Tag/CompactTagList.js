@@ -1,7 +1,7 @@
 import React, {PropTypes, Component} from 'react';
 import TagList from './TagList';
 import SummaryTag from './SummaryTag';
-import ResizeAware from 'react-resize-aware';
+import ResizeAware from '../ResizeAware/ResizeAware';
 import classnames from 'classnames';
 import i18n from 'i18n';
 import ReactDOM from "react-dom";
