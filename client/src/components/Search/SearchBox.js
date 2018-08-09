@@ -170,11 +170,16 @@ class SearchBox extends Component {
   }
 
   renderTags() {
-    const { tagData, onTagDelete } = this.props;
+    const { tagData, onTagDelete, onTagClick } = this.props;
     return (
       <div className="search-box__tags">
         <ResizeAware onResize={this.onTagListResize}>
-          <CompactTagList onTagDelete={onTagDelete} tags={tagData} maxSize={this.calculateSpaceForTags()} deletable />
+          <CompactTagList
+            onTagDelete={onTagDelete}
+            onTagClick={onTagClick}
+            tags={tagData}
+            maxSize={this.calculateSpaceForTags()}
+            deletable />
         </ResizeAware>
       </div>
     );
@@ -288,6 +293,7 @@ SearchBox.propTypes = {
   onChange: PropTypes.func,
   onHide: PropTypes.func,
   onTagDelete: PropTypes.func,
+  onTagClick: PropTypes.func,
 
   placeholder: PropTypes.string,
   expanded: PropTypes.bool,

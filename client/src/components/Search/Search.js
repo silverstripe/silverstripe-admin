@@ -59,6 +59,7 @@ class Search extends Component {
     this.clearFilters = this.clearFilters.bind(this);
     this.clearSearchBox = this.clearSearchBox.bind(this);
     this.clearFormFilter = this.clearFormFilter.bind(this);
+    this.focusFormFilter = this.focusFormFilter.bind(this);
 
     const term = props.term || (props.filters && props.filters[props.name]) || '';
     this.state = {
@@ -177,7 +178,7 @@ class Search extends Component {
   /**
    * Try to find the first form field in the advanced form and focus on it.
    */
-  focusFirstFormField() {
+  focusFirstFormField(filter='input, textarea, select, button') {
     if (this.state.display !== DISPLAY.EXPANDED) {
       return;
     }
@@ -192,7 +193,7 @@ class Search extends Component {
       return;
     }
 
-    const input = form.querySelector('input, textarea, select, button');
+    const input = form.querySelector(filter);
     if (input) {
       input.focus();
       if (input.select) {
@@ -225,6 +226,15 @@ class Search extends Component {
    */
   clearFormFilter(key) {
     this.doSearch({[key]: undefined});
+  }
+
+  /**
+   * Focus on the requested search filter name.
+   * @param string key Search filter name.
+   */
+  focusFormFilter(key) {
+    this.expand();
+    setTimeout(() => this.focusFirstFormField(`[name=${key}]`), 50);
   }
 
   /**
@@ -371,6 +381,7 @@ class Search extends Component {
           dirty={dirty}
           clearable={clearable}
           onTagDelete={this.clearFormFilter}
+          onTagClick={this.focusFormFilter}
         >
 
           <SearchForm
