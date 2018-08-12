@@ -1,6 +1,7 @@
 import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import { ApolloLink } from 'apollo-link';
+import Config from 'lib/Config';
 
 const buildNetworkComponents = (baseUrl) => {
   const httpLink = new HttpLink({
@@ -24,6 +25,7 @@ const buildNetworkComponents = (baseUrl) => {
     operation.setContext({
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        'X-CSRF-TOKEN': Config.get('SecurityID'),
       },
     });
 
