@@ -75,28 +75,14 @@
   }
 }
 
-
-// Modal slide up response
-@keyframes modal--slideup {
-  from {
-    bottom: -100%;
-    opacity: .5;
-  }
-
-  to {
-    bottom: 0;
-    opacity: 1;
-  }
-}
-
 .modal__response {
+  overflow: auto;
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   height: calc(100% + #{$toolbar-total-height});
   width: 100%;
-  animation: modal--slideup .6s 1;
   background: $body-bg;
   border-radius: $border-radius-lg;
   z-index: 1;
@@ -105,12 +91,40 @@
   justify-content: center;
   align-items: center;
   padding: $panel-padding-y $panel-padding-x;
+
+  // This prevents a scroll bar appearing during
+  // the modal--slideup animation
+  animation: modal--prevent-overflow $transition-speed-mid * 2;
+  @keyframes modal--prevent-overflow {
+    from {
+      overflow: hidden;
+    }
+
+    to {
+      overflow: auto;
+    }
+  }
 }
 
 // Response messages
 .modal__response--good,
 .modal__response--error {
   font-size: $font-size-lg;
+
+  span {
+    animation: modal--slideup $transition-speed-mid;
+    @keyframes modal--slideup {
+      from {
+        transform: translateY(200%);
+        opacity: .5;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  }
 
   span::before {
     font-family: silverstripe;
