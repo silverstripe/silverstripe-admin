@@ -43,6 +43,7 @@ class SearchBox extends Component {
     this.calculateInputLeftPadding = this.calculateInputLeftPadding.bind(this);
     this.onTagListResize = this.onTagListResize.bind(this);
     this.focusOnLastTag = this.focusOnLastTag.bind(this);
+    this.focusOnInput = this.focusOnInput.bind(this);
 
     this.state = {
       hasFocus: false,
@@ -164,13 +165,21 @@ class SearchBox extends Component {
       return;
     }
     const lastTag = node.querySelector('.compact-tag-list__visible .Tag:last-child');
-    console.dir(lastTag);
     if (lastTag) {
-
       lastTag.focus();
     }
   }
 
+  focusOnInput() {
+    const node = ReactDOM.findDOMNode(this);
+    if (!node) {
+      return;
+    }
+    const input = node.querySelector('input');
+    if (input) {
+      input.focus();
+    }
+  }
 
   /**
    * Render the input for the search box.
@@ -207,6 +216,7 @@ class SearchBox extends Component {
           <CompactTagList
             onTagDelete={onTagDelete}
             onTagClick={onTagClick}
+            onHolderFocus={this.focusOnInput}
             tags={tagData}
             onSummary={onToggleFilter}
             maxSize={this.calculateSpaceForTags()}
