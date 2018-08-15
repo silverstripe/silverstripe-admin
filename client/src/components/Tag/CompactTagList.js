@@ -67,7 +67,7 @@ class CompactTagList extends Component {
 
   render() {
 
-    const {maxSize, ...listProps} = this.props;
+    const {maxSize, onSummary, ...listProps} = this.props;
     const showSummaryView = this.state.showSummaryView;
     const count = this.props.tags.length;
     const classes = classnames(
@@ -81,7 +81,7 @@ class CompactTagList extends Component {
           <TagList {...listProps} focusable={false} />
         </ResizeAware>
         { showSummaryView ?
-          <SummaryTag count={count} /> :
+          <SummaryTag count={count} onClick={onSummary} /> :
           <TagList {...listProps} />
         }
       </div>
@@ -91,11 +91,13 @@ class CompactTagList extends Component {
 }
 
 CompactTagList.propTypes = Object.assign({}, TagList.propTypes, {
-  maxSize: PropTypes.number
+  maxSize: PropTypes.number,
+  onSummary: PropTypes.func
 });
 
 CompactTagList.defaultProps = {
-  maxSize: 0
+  maxSize: 0,
+  onSummary: () => {}
 };
 
 export default CompactTagList;
