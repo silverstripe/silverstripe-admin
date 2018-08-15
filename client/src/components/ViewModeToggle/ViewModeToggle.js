@@ -3,7 +3,8 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap
 import i18n from 'i18n';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { selectEditMode, selectPreviewMode, selectSplitMode } from 'state/viewMode/viewModeActions';
+import { selectEditMode, selectPreviewMode, selectSplitMode } from 'state/viewMode/ViewModeActions';
+import { VIEW_MODE_STATES } from 'state/viewMode/ViewModeStates';
 import classNames from 'classnames';
 
 class ViewModeToggle extends Component {
@@ -24,9 +25,9 @@ class ViewModeToggle extends Component {
     const { activeState, editIconClass, previewIconClass, splitIconClass } = this.props;
 
     switch (activeState) {
-      case 'edit':
+      case VIEW_MODE_STATES.EDIT:
         return editIconClass;
-      case 'preview':
+      case VIEW_MODE_STATES.PREVIEW:
         return previewIconClass;
       default:
         return splitIconClass;
@@ -37,9 +38,9 @@ class ViewModeToggle extends Component {
     const { activeState } = this.props;
 
     switch (activeState) {
-      case 'edit':
+      case VIEW_MODE_STATES.EDIT:
         return i18n._t('Admin.EDIT_MODE', 'Edit mode');
-      case 'preview':
+      case VIEW_MODE_STATES.PREVIEW:
         return i18n._t('Admin.PREVIEW_MODE', 'Preview mode');
       default:
         return i18n._t('Admin.SPLIT_MODE', 'Split mode');
@@ -54,8 +55,6 @@ class ViewModeToggle extends Component {
 
   /**
    * Event handler for the split mode button.
-   *
-   * @param {Object} event
    */
   handleSplitSelect() {
     // notify and update the store
@@ -64,8 +63,6 @@ class ViewModeToggle extends Component {
 
   /**
    * Event handler for the preview mode button.
-   *
-   * @param {Object} event
    */
   handlePreviewSelect() {
     // notify and update the store
@@ -74,8 +71,6 @@ class ViewModeToggle extends Component {
 
   /**
    * Event handler for the edit mode button.
-   *
-   * @param {Object} event
    */
   handleEditSelect() {
     // notify and update the store
@@ -89,7 +84,8 @@ class ViewModeToggle extends Component {
       'btn', 'icon-view', 'first',
       splitIconClass,
       {
-        'viewMode-selected': (activeState === 'split'),
+        'viewmode-toggle__button': true,
+        'viewmode-toggle--selected': (activeState === VIEW_MODE_STATES.SPLIT),
         disabled: (!splitAvailable)
       }
   );
@@ -97,8 +93,9 @@ class ViewModeToggle extends Component {
     return (
       <DropdownItem
         type="button"
+        disabled={!splitAvailable}
         className={itemClass}
-        value="split"
+        value={VIEW_MODE_STATES.SPLIT}
         onClick={this.handleSplitSelect}
         id="splitModeButton"
       >
@@ -112,9 +109,9 @@ class ViewModeToggle extends Component {
 
     // Highlight if chosen view mode
     const itemClass = classNames(
-      'btn', 'icon-view', 'last',
+      'btn', 'icon-view', 'last', 'viewmode-toggle__button',
       editIconClass,
-      { 'viewMode-selected': (activeState === 'edit') }
+      { 'viewmode-toggle--selected': (activeState === VIEW_MODE_STATES.EDIT) }
     );
 
     return (
@@ -133,9 +130,10 @@ class ViewModeToggle extends Component {
     const { activeState, previewIconClass } = this.props;
 
     // Highlight if chosen view mode
-    const itemClass = classNames('btn', 'icon-view',
+    const itemClass = classNames(
+      'btn', 'icon-view', 'viewmode-toggle__button',
       previewIconClass,
-      { 'viewMode-selected': (activeState === 'preview') }
+      { 'viewmode-toggle--selected': (activeState === VIEW_MODE_STATES.PREVIEW) }
     );
 
     return (
@@ -159,14 +157,14 @@ class ViewModeToggle extends Component {
       } = this.props;
 
       // Hide button in CMS content area when preview panel is open
-      if (area === 'edit' && activeState === 'split') {
+      if (area === VIEW_MODE_STATES.EDIT && activeState === VIEW_MODE_STATES.SPLIT) {
           return null;
       }
 
       const toggleClassName = classNames(
         this.getIconClass(),
         'btn',
-        'viewmode-dropdown-toggle',
+        'viewmode-toggle__dropdown',
         dropdownToggleProps.classname
       );
 
@@ -174,14 +172,14 @@ class ViewModeToggle extends Component {
         <Dropdown
           isOpen={this.state.dropdownOpen}
           toggle={this.toggle}
-          className="viewModeToggle"
+          className="viewmode-toggle"
         >
           <DropdownToggle
             className={toggleClassName}
             caret
             {...dropdownToggleProps}
           >
-            <span className="viewModeToggle-chosenView-title" >{this.getTitle()}</span>
+            <span className="viewmode-toggle__chosen-view-title" >{this.getTitle()}</span>
           </DropdownToggle>
           <DropdownMenu >
             {this.renderSplitDropdownItem()}
@@ -201,7 +199,7 @@ class ViewModeToggle extends Component {
 }
 
 ViewModeToggle.propTypes = {
-  activeState: PropTypes.string,
+  activeState: PropTypes.oneOf(Object.values(VIEW_MODE_STATES)),
   area: PropTypes.string.isRequired,
   splitAvailable: PropTypes.bool,
   onPreviewSelect: PropTypes.func,

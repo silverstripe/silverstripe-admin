@@ -34,6 +34,8 @@ import ReduxForm from 'containers/Form/Form';
 import UsedOnTable from 'components/UsedOnTable/UsedOnTable';
 import Loading from 'components/Loading/Loading';
 import ViewModeToggle from 'components/ViewModeToggle/ViewModeToggle';
+import Search from 'components/Search/Search';
+import SearchToggle from 'components/Search/SearchToggle';
 
 export default () => {
   Injector.component.registerMany({
@@ -72,5 +74,7 @@ export default () => {
     UsedOnTable,
     Loading,
     ViewModeToggle,
+    Search,
+    SearchToggle,
   });
 };

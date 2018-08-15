@@ -1,4 +1,4 @@
-import ACTION_TYPES from './viewModeActionTypes';
+import ACTION_TYPES from './ViewModeActionTypes';
 
 export function selectEditMode() {
   return {

@@ -4,7 +4,7 @@ import { ApolloLink } from 'apollo-link';
 
 const buildNetworkComponents = (baseUrl) => {
   const httpLink = new HttpLink({
-    uri: `${baseUrl}graphql`,
+    uri: `${baseUrl}admin/graphql`,
     fetchOptions: {
       credentials: 'same-origin',
       headers: {

@@ -25,9 +25,16 @@ storiesOf('Admin/FormAlert', module)
     </div>
   ))
   .add('Dismissable', () => (
-    <FormAlert
-      type="success"
-      value="This is an alert that can be dismissed"
-      closeLabel="close"
-    />
+    <div>
+      <FormAlert
+        type="success"
+        value="This is an alert that can be dismissed"
+        closeLabel="close"
+      />
+      <FormAlert
+        type="danger"
+        value="This is an alert that can be dismissed"
+        closeLabel="close"
+      />
+    </div>
   ));
