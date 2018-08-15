@@ -15,7 +15,7 @@ import SearchBox from './SearchBox';
 import SearchForm from './SearchForm';
 import SearchToggle from './SearchToggle';
 import schemaFieldValues, { schemaMerge } from 'lib/schemaFieldValues';
-import mapFormSchemaToTags from './mapFormSchemaToTags';
+import mapFormSchemaToTags from './utilities/mapFormSchemaToTags';
 
 
 const DISPLAY = {
@@ -225,7 +225,12 @@ class Search extends Component {
    * @param string key Search filter name to clear
    */
   clearFormFilter(key) {
-    this.doSearch({[key]: undefined});
+    const tag = this.props.tagData[key];
+    let clearables = {[key]: undefined};
+    if (Array.isArray(tag.linkedFields)) {
+      tag.linkedFields.forEach( key => ( clearables[key] = undefined) );
+    }
+    this.doSearch(clearables);
   }
 
   /**
@@ -233,8 +238,11 @@ class Search extends Component {
    * @param string key Search filter name.
    */
   focusFormFilter(key) {
+    const tag = this.props.tagData[key];
+    const selector = tag.focusSelector || `[name=${key}]`;
+    console.dir(tag);
     this.expand();
-    setTimeout(() => this.focusFirstFormField(`[name=${key}]`), 50);
+    setTimeout(() => this.focusFirstFormField(selector), 50);
   }
 
   /**
@@ -338,7 +346,7 @@ class Search extends Component {
 
   render() {
     const { formSchemaUrl, forceFilters, id, displayBehavior,
-      identifier, formIsDirty, ...props } = this.props;
+      identifier, formIsDirty, tagData, ...props } = this.props;
 
     // If the box is not to be displayed
     if (this.state.display === DISPLAY.NONE) {
@@ -363,6 +371,11 @@ class Search extends Component {
     const dirty = formIsDirty || this.searchTermIsDirty();
     const data = this.getData();
     const clearable = (Object.keys(data).length > 0);
+    const tagDataAsPlainArray = tagData ?
+      Object.values(tagData).map( ({key, label, value}) => ({key, label, value}) ) :
+      [];
+
+    console.dir(tagDataAsPlainArray);
 
     return (
       <Focusedzone onClickOut={this.show} className="search">
@@ -382,6 +395,7 @@ class Search extends Component {
           clearable={clearable}
           onTagDelete={this.clearFormFilter}
           onTagClick={this.focusFormFilter}
+          tagData={tagDataAsPlainArray}
         >
 
           <SearchForm

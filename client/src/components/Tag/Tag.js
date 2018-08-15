@@ -33,7 +33,7 @@ const onKeyDown = (e, key, onDelete, onBackSpace) => {
  * @returns {string}
  */
 const makeLabel = (key, label, value) => (
-  (label || key) + (value ? ':' + value : '')
+  (label || key) + (value ? ': ' + value : '')
 );
 
 /**
