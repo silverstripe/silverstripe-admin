@@ -80,10 +80,12 @@ class CompactTagList extends Component {
         <ResizeAware onResize={this.onResize} className="compact-tag-list__placeholder" aria-hidden={true}>
           <TagList {...listProps} focusable={false} />
         </ResizeAware>
+        <div className="compact-tag-list__visible">
         { showSummaryView ?
           <SummaryTag count={count} onClick={onSummary} /> :
           <TagList {...listProps} />
         }
+        </div>
       </div>
     );
   }

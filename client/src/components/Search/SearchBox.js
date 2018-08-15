@@ -9,12 +9,24 @@ import ResizeAware from '../ResizeAware/ResizeAware';
 import ReactDOM from "react-dom";
 
 /**
+ * Code of the enter key
+ * @type {number}
+ */
+const ENTER_KEY=13;
+
+/**
+ * Code of keys that will be detected as going back for our purposes. (Left arrow key and backspace)
+ * @type {number[]}
+ */
+const BACK_KEYS=[8,37];
+
+/**
  * Displays a search box and a few buttons related buttons.
  */
 class SearchBox extends Component {
   constructor(props) {
     super(props);
-    this.handleKeyUp = this.handleKeyUp.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.renderInput = this.renderInput.bind(this);
@@ -30,6 +42,7 @@ class SearchBox extends Component {
     this.calculateSpaceForTags = this.calculateSpaceForTags.bind(this);
     this.calculateInputLeftPadding = this.calculateInputLeftPadding.bind(this);
     this.onTagListResize = this.onTagListResize.bind(this);
+    this.focusOnLastTag = this.focusOnLastTag.bind(this);
 
     this.state = {
       hasFocus: false,
@@ -48,9 +61,13 @@ class SearchBox extends Component {
    *
    * @param {Object} event
    */
-  handleKeyUp(event) {
-    if (event.keyCode === 13) {
+  handleKeyDown(event) {
+    if (event.keyCode === ENTER_KEY) {
+      // Trigger search when the user hits the enter key
       this.props.onSearch();
+    } else if (BACK_KEYS.includes(event.keyCode) && event.target.selectionStart === 0) {
+      // Set focus on last tag when the user hits a back key at the start of the search box
+      this.focusOnLastTag();
     }
   }
 
@@ -141,6 +158,19 @@ class SearchBox extends Component {
     return node.getBoundingClientRect().width;
   }
 
+  focusOnLastTag() {
+    const node = ReactDOM.findDOMNode(this);
+    if (!node) {
+      return;
+    }
+    const lastTag = node.querySelector('.compact-tag-list__visible .Tag:last-child');
+    console.dir(lastTag);
+    if (lastTag) {
+
+      lastTag.focus();
+    }
+  }
+
 
   /**
    * Render the input for the search box.
@@ -156,7 +186,7 @@ class SearchBox extends Component {
         name={name}
         placeholder={placeholder}
         className="form-control search-box__content-field"
-        onKeyUp={this.handleKeyUp}
+        onKeyDown={this.handleKeyDown}
         onChange={onChange}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
