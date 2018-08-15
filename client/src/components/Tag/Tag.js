@@ -5,6 +5,8 @@ import i18n from 'i18n';
 
 const BACKSPACE = 8;
 const DELETE = 46;
+const LEFT_ARROW = 37;
+const RIGHT_ARROW = 39;
 
 /**
  * Detect the keydown on the delete or backspace key.
@@ -14,13 +16,23 @@ const DELETE = 46;
  * @param onBackSpace Function to trigger when the backspace key is press.
  * @return void
  */
-const onKeyDown = (e, key, onDelete, onBackSpace) => {
+const onKeyDown = (e, key, onDeleteKey, onBackSpace, onPrevious, onNext) => {
   switch (e.keyCode) {
     case BACKSPACE:
+      e.preventDefault();
       onBackSpace(key);
       break;
     case DELETE:
-      onDelete(key);
+      e.preventDefault();
+      onDeleteKey(key);
+      break;
+    case LEFT_ARROW:
+      e.preventDefault();
+      onPrevious(key);
+      break;
+    case RIGHT_ARROW:
+      e.preventDefault();
+      onNext(key);
       break;
   }
 };
@@ -40,7 +52,7 @@ const makeLabel = (key, label, value) => (
  * Component to display a tag the user can interact with.
  */
 const Tag = ({
-  onClick, onDelete, deletable, dataKey, label, value, onBackSpace, children, focusable, ...props
+  onClick, onDelete, deletable, dataKey, label, value, onDeleteKey, onBackSpace, onPrevious, onNext, children, focusable, ...props
 }) => (
   <Button
     {...props}
@@ -48,7 +60,7 @@ const Tag = ({
     onClick={(e) => { e.preventDefault(); onClick(dataKey); } }
     href="#"
     tabIndex={focusable ? undefined : -1}
-    onKeyDown={(e) => {onKeyDown(e, dataKey, onDelete, onBackSpace)}}>
+    onKeyDown={(e) => {onKeyDown(e, dataKey, onDeleteKey, onBackSpace, onPrevious, onNext)}}>
     { deletable && <DeleteButton onDelete={onDelete} dataKey={dataKey} focusable={focusable} /> }
     { children || makeLabel(dataKey, label, value) }
   </Button>
@@ -70,7 +82,10 @@ const DeleteButton = ({dataKey, onDelete, focusable}) => (
 Tag.propTypes = {
   onClick: PropTypes.func,
   onDelete: PropTypes.func,
+  onDeleteKey: PropTypes.func,
   onBackSpace: PropTypes.func,
+  onPrevious: PropTypes.func,
+  onNext: PropTypes.func,
   deletable: PropTypes.bool,
   dataKey: PropTypes.string,
   label: PropTypes.string,
@@ -83,7 +98,10 @@ Tag.defaultProps = {
   deletable: false,
   onClick: () => {},
   onDelete: () => {},
+  onDeleteKey: () => {},
   onBackSpace: () => {},
+  onPrevious: () => {},
+  onNext: () => {},
   focusable: true,
 };
 

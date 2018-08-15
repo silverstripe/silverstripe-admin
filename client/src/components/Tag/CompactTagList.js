@@ -82,7 +82,7 @@ class CompactTagList extends Component {
         </ResizeAware>
         <div className="compact-tag-list__visible">
         { showSummaryView ?
-          <SummaryTag count={count} onClick={onSummary} /> :
+          <SummaryTag count={count} onClick={onSummary} onNext={listProps.onHolderFocus} /> :
           <TagList {...listProps} />
         }
         </div>
