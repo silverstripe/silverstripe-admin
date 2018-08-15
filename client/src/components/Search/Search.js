@@ -240,7 +240,6 @@ class Search extends Component {
   focusFormFilter(key) {
     const tag = this.props.tagData[key];
     const selector = tag.focusSelector || `[name=${key}]`;
-    console.dir(tag);
     this.expand();
     setTimeout(() => this.focusFirstFormField(selector), 50);
   }
@@ -375,8 +374,6 @@ class Search extends Component {
       Object.values(tagData).map( ({key, label, value}) => ({key, label, value}) ) :
       [];
 
-    console.dir(tagDataAsPlainArray);
-
     return (
       <Focusedzone onClickOut={this.show} className="search">
         <SearchBox
@@ -431,6 +428,7 @@ Search.propTypes = {
   formIsDirty: PropTypes.bool,
   identifier: PropTypes.string,
   schemaName: PropTypes.string,
+  tagHandlers: PropTypes.object
 };
 
 Search.defaultProps = {
@@ -456,7 +454,7 @@ function mapStateToProps(state, ownProps) {
   const form = getIn(getFormState(state), schemaName);
 
   const formData = (form && form.values) || {};
-  const tagData = mapFormSchemaToTags(schema, ownProps.filters);
+  const tagData = mapFormSchemaToTags(schema, ownProps.filters, ownProps.tagHandlers || {});
   const formIsDirty = isDirty(schemaName, getFormState)(state);
 
   return { formData, formIsDirty, schemaName, tagData };
