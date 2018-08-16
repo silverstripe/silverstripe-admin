@@ -319,7 +319,7 @@ $.entwine('ss', function($) {
         filterState='hidden';
       }
 
-      if (this.hasClass('ss-gridfield-pagination-action')) {
+      if (this.hasClass('ss-gridfield-pagination-action') || this.hasClass('grid-field__sort')) {
         triggerChange = false;
       }
 
