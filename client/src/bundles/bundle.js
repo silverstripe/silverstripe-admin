@@ -43,6 +43,8 @@ require('expose-loader?LiteralField!components/LiteralField/LiteralField');
 require('expose-loader?Toolbar!components/Toolbar/Toolbar');
 require('expose-loader?Breadcrumb!components/Breadcrumb/Breadcrumb');
 require('expose-loader?Tag!components/Tag/Tag');
+require('expose-loader?TagList!components/Tag/TagList');
+require('expose-loader?CompactTagList!components/Tag/CompactTagList');
 require('expose-loader?Search!components/Search/Search');
 require('expose-loader?SearchToggle!components/Search/SearchToggle');
 require('expose-loader?TreeDropdownFieldNode!components/TreeDropdownField/TreeDropdownFieldNode');

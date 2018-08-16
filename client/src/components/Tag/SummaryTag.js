@@ -1,8 +1,10 @@
 import React, {PropTypes} from 'react';
-import Tag from './Tag';
-import classnames from 'classnames';
+import Tag from 'components/Tag/Tag';
 import i18n from 'i18n';
 
+/**
+ * Display a tag with a *filter* icons and a number to summarise a greater number of other tags.
+ */
 const SummaryTag = ({label, count, ...props}) => (
   <Tag {...props} deletable={false} title={`${count} ${label}`}>
     { count } <span className="font-icon-sliders" aria-label={label} />
