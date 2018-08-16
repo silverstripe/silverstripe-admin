@@ -1,8 +1,6 @@
 import React, {PropTypes} from 'react';
-import Tag from './Tag';
+import Tag from 'components/Tag/Tag';
 import TagPropType from './TagPropType';
-import classnames from 'classnames';
-import i18n from 'i18n';
 
 const FORWARD = true;
 const BACKWARD = false;
@@ -53,4 +51,5 @@ TagList.defaultProps = {
   onHolderFocus: () => {}
 };
 
+export { TagList as Component };
 export default TagList;

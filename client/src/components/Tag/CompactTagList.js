@@ -1,10 +1,9 @@
 import React, {PropTypes, Component} from 'react';
-import TagList from './TagList';
+import TagList from 'components/Tag/TagList';
 import SummaryTag from './SummaryTag';
 import ResizeAware from '../ResizeAware/ResizeAware';
 import classnames from 'classnames';
-import i18n from 'i18n';
-import ReactDOM from "react-dom";
+import ReactDOM from 'react-dom';
 
 
 class CompactTagList extends Component {
