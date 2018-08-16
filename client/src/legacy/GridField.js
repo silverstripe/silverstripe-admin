@@ -69,7 +69,11 @@ $.entwine('ss', function($) {
           form.removeClass('loading');
           if(successCallback) successCallback.apply(this, arguments);
           self.trigger('reload', self);
+
+          // Trigger change if it's not specifically supressed
+          if (ajaxOpts.data[0].triggerChange !== false) {
           self.trigger('change');
+          }
         },
         error: function(e) {
           alert(i18n._t('Admin.ERRORINTRANSACTION'));
@@ -303,6 +307,7 @@ $.entwine('ss', function($) {
   $('.grid-field .action:button').entwine({
     onclick: function (e) {
       var filterState='show'; //filterstate should equal current state.
+      let triggerChange = true;
 
       // If the button is disabled, do nothing.
       if (this.is(':disabled')) {
@@ -314,8 +319,17 @@ $.entwine('ss', function($) {
         filterState='hidden';
       }
 
+      if (this.hasClass('ss-gridfield-pagination-action')) {
+        triggerChange = false;
+      }
+
       this.getGridField().reload({
-        data: [{name: this.attr('name'), value: this.val(), filter: filterState}]
+        data: [{
+          name: this.attr('name'),
+          value: this.val(),
+          filter: filterState,
+          triggerChange
+        }]
       });
 
       e.preventDefault();
@@ -510,7 +524,14 @@ $.entwine('ss', function($) {
           filterState='hidden';
         }
 
-        this.getGridField().reload({data: [{name: btns.attr('name'), value: btns.val(), filter: filterState}]});
+        this.getGridField().reload({
+          data: [{
+            name: btns.attr('name'),
+            value: btns.val(),
+            filter: filterState,
+            triggerChange: false
+          }]
+        });
         return false;
       }else{
         filterbtn.addClass('hover-alike');
@@ -557,6 +578,7 @@ $.entwine('ss', function($) {
   $(".grid-field .pagination-page-number input").entwine({
     onkeydown: function(event) {
       if(event.keyCode == 13) {
+        event.preventDefault();
         var newpage = parseInt($(this).val(), 10);
 
         var gridfield = $(this).getGridField();
