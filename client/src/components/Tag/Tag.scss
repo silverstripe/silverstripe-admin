@@ -8,7 +8,12 @@
   padding: 6px 10px;
   position: relative;
 
-  &.btn-secondary:not(:disabled):not(.disabled):focus {
+  &:focus-within {
+    border-color: green;
+  }
+
+  &.btn-secondary:not(:disabled):not(.disabled):focus,
+  &:focus-within {
     border-color: $component-active-border-color;
     box-shadow: none;
     background: none;
