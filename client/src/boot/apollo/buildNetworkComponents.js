@@ -15,6 +15,7 @@ const buildNetworkComponents = (baseUrl) => {
 
   const errorLink = onError(({ networkError }) => {
     if (networkError) {
+      // eslint-disable-next-line no-console
       console.log(`[Network error]: ${networkError}`);
     }
   });
