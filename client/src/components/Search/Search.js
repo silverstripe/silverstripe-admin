@@ -14,7 +14,6 @@ import getFormState from 'lib/getFormState';
 import SearchBox from './SearchBox';
 import SearchForm from './SearchForm';
 import SearchToggle from './SearchToggle';
-import schemaFieldValues, { schemaMerge } from 'lib/schemaFieldValues';
 import mapFormSchemaToTags from './utilities/mapFormSchemaToTags';
 
 
@@ -178,7 +177,7 @@ class Search extends Component {
   /**
    * Try to find the first form field in the advanced form and focus on it.
    */
-  focusFirstFormField(filter='input, textarea, select, button') {
+  focusFirstFormField(filter = 'input, textarea, select, button') {
     if (this.state.display !== DISPLAY.EXPANDED) {
       return;
     }
@@ -226,9 +225,9 @@ class Search extends Component {
    */
   clearFormFilter(key) {
     const tag = this.props.tagData[key];
-    let clearables = {[key]: undefined};
+    const clearables = { [key]: undefined };
     if (Array.isArray(tag.linkedFields)) {
-      tag.linkedFields.forEach( key => ( clearables[key] = undefined) );
+      tag.linkedFields.forEach(linkFieldkey => { clearables[linkFieldkey] = undefined; });
     }
     this.doSearch(clearables);
   }
@@ -313,7 +312,7 @@ class Search extends Component {
    * Wrap up all the data into an object and call the onSearch method provided via the props.
    * @param Object overrides Data to overrides over our existing form data.
    */
-  doSearch(overrides={}) {
+  doSearch(overrides = {}) {
     this.setState({
       display: DISPLAY.VISIBLE,
       initialSearchText: this.state.searchText
@@ -371,7 +370,7 @@ class Search extends Component {
     const data = this.getData();
     const clearable = (Object.keys(data).length > 0);
     const tagDataAsPlainArray = tagData ?
-      Object.values(tagData).map( ({key, label, value}) => ({key, label, value}) ) :
+      Object.values(tagData).map(({ key, label, value }) => ({ key, label, value })) :
       [];
 
     return (
@@ -379,7 +378,7 @@ class Search extends Component {
         <SearchBox
           {...props}
           onChange={this.handleChange}
-          onSearch={ this.doSearch }
+          onSearch={this.doSearch}
           onToggleFilter={this.toggle}
           onHide={this.hide}
           onClear={this.clearSearchBox}

@@ -1,4 +1,4 @@
-import {createElement, Component, Children,
+import { createElement, Component, Children,
   cloneElement, isValidElement, PropTypes } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
@@ -8,7 +8,6 @@ import ResizeObserver from 'resize-observer-polyfill';
  * Adapted from https://github.com/FezVrasta/react-resize-aware created by Federico Zivolo.
  */
 export default class ResizeAware extends Component {
-
   constructor(props) {
     super(props);
 
@@ -20,10 +19,9 @@ export default class ResizeAware extends Component {
     // Initialise Resize Observer
     this.observer = new ResizeObserver(
       entries => entries.forEach(
-        ({contentRect}) => this.handleResize(contentRect)
+        ({ contentRect }) => this.handleResize(contentRect)
       )
     );
-
   }
 
   componentDidMount() {
@@ -45,17 +43,20 @@ export default class ResizeAware extends Component {
   /**
    * Handler for the resize events.
    *
-   * @note ResizeObserver measure other dimensions aside from height and width, but we don't care about those.
+   * @note ResizeObserver measure other dimensions aside from height and width,
+   * but we don't care about those.
    * @param sizes
    */
   handleResize(sizes) {
-    const {width, height} = this.state;
+    const { width, height } = this.state;
     if (width !== sizes.width || height !== sizes.height) {
       this.setState(sizes);
     }
 
-    this.props.onResize && this.props.onResize(sizes);
-  };
+    if (this.props.onResize) {
+      this.props.onResize(sizes);
+    }
+  }
 
   /**
    * Render the component
@@ -85,7 +86,7 @@ export default class ResizeAware extends Component {
     return createElement(
       component,
       {
-        [hasCustomComponent ? 'getRef' : 'ref']: el => (this.container = el),
+        [hasCustomComponent ? 'getRef' : 'ref']: el => { this.container = el; },
         ...(hasCustomComponent && sizes),
         ...props,
       },
@@ -94,9 +95,9 @@ export default class ResizeAware extends Component {
         : Children.map(
         children,
         child =>
-          isValidElement(child)
+          (isValidElement(child)
             ? cloneElement(child, !onlyEvent ? sizes : null)
-            : child
+            : child)
         )
     );
   }

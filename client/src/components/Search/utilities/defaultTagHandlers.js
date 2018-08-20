@@ -10,27 +10,27 @@ import genericDateTagHandler from './genericDateTagHandler';
  */
 const selectTagHandler = (key, values, formSchema) => {
   // Make sure the provided values are a non empty array
-  if ( !Array.isArray(values) || values.length == 0 ) {
+  if (!Array.isArray(values) || values.length === 0) {
     return false;
   }
 
   // Isolate the field state from the form schema for our provided key
-  const fieldState = formSchema.state.fields.find( ({name}) => (name == key) );
+  const fieldState = formSchema.state.fields.find(({ name }) => (name === key));
 
   if (fieldState && fieldState.source) {
     // Convert our values to their display title equivalent.
-    const value = values.map( (selectedValue) => {
-      const sourceEntry = fieldState.source.find( ({value}) => value==selectedValue);
+    const labelValue = values.map((selectedValue) => {
+      const sourceEntry = fieldState.source.find(({ value }) => value === selectedValue);
       return sourceEntry && sourceEntry.title ?
         sourceEntry.title :
         selectedValue;
     }).join(', ');
 
-    return value || false;
+    return labelValue || false;
   }
 
   return false;
-}
+};
 
 /**
  * Tag Handlers that will be use to generate tags for specific field.
@@ -42,40 +42,43 @@ const selectTagHandler = (key, values, formSchema) => {
  * * `formSchema` is the redux-form schema for the current form.
  * * `formData` is the data for the current redux-form.
  *
- * If the handler returns `false`, no tag will be generated for this field. Otherwise an `enrichedTag` object should be returned with the following attributes.
+ * If the handler returns `false`, no tag will be generated for this field. Otherwise an
+ * `enrichedTag` object should be returned with the following attributes.
  * * `key`: unique identifier for the field (mandatory),
  * * `label`: String to display in the tag (defaults to `key` if not provided),
- * * `value`: The value to attach to the tag, can be left undefined if the tag should be valueless,
- * * `focusSelector`: Selector used to identified the form field that should be focus on when the user clicks the tag. If left undefined, they `key` will be used to build the selector.
- * * `linkedFields`: An array of formData keys that should be cleared when the tag is dismissed. If not provided, `key` will be used to determined which attribute should be cleared from formData.
+ * * `value`: The value to attach to the tag, can be left undefined if the tag should be
+ * valueless,
+ * * `focusSelector`: Selector used to identified the form field that should be focus on when
+ * the user clicks the tag. If left undefined, they `key` will be used to build the selector.
+ * * `linkedFields`: An array of formData keys that should be cleared when the tag is dismissed. If
+ * not provided, `key` will be used to determined which attribute should be cleared from formData.
  *
  */
 const defaultTagHandlers = {
-  'Date': genericDateTagHandler('ll'),
-  'Time': genericDateTagHandler('LT'),
-  'Datetime': genericDateTagHandler('lll'),
-  'Hidden': () => false,
-  'SingleSelect': (tag, field, formSchema) => {
-    if (typeof tag.value == 'undefined') {
+  Date: genericDateTagHandler('ll'),
+  Time: genericDateTagHandler('LT'),
+  Datetime: genericDateTagHandler('lll'),
+  Hidden: () => false,
+  SingleSelect: (tag, field, formSchema) => {
+    if (typeof tag.value === 'undefined') {
       return false;
     }
 
     const value = selectTagHandler(tag.key, [tag.value], formSchema);
-    return value ? Object.assign({}, tag, {value}) : false;
+    return value ? Object.assign({}, tag, { value }) : false;
   },
-  'Boolean': (tag) => {
+  Boolean: (tag) => {
     if (tag.value) {
-      const {value, ...valuelessTag} = tag;
+      const { value, ...valuelessTag } = tag;
       return valuelessTag;
-    } else {
-      return false;
     }
+      return false;
   },
-  'MultiSelect': (tag, field, formSchema) => {
+  MultiSelect: (tag, field, formSchema) => {
     const value = selectTagHandler(tag.key, tag.value, formSchema);
-    return value ? Object.assign({}, tag, {value}) : false;
+    return value ? Object.assign({}, tag, { value }) : false;
   },
-  'default': (tag) => (tag.value ? tag : false)
+  default: (tag) => (tag.value ? tag : false)
 };
 
 export default defaultTagHandlers;

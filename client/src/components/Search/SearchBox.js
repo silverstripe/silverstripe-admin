@@ -3,22 +3,22 @@ import i18n from 'i18n';
 import React, { PropTypes, Component } from 'react';
 import { Label, Button } from 'reactstrap';
 import classNames from 'classnames';
-import TagPropType from "../Tag/TagPropType";
-import CompactTagList from "components/Tag/CompactTagList";
+import TagPropType from '../Tag/TagPropType';
+import CompactTagList from 'components/Tag/CompactTagList';
 import ResizeAware from '../ResizeAware/ResizeAware';
-import ReactDOM from "react-dom";
+import ReactDOM from 'react-dom';
 
 /**
  * Code of the enter key
  * @type {number}
  */
-const ENTER_KEY=13;
+const ENTER_KEY = 13;
 
 /**
  * Code of keys that will be detected as going back for our purposes. (Left arrow key and backspace)
  * @type {number[]}
  */
-const BACK_KEYS=[8,37];
+const BACK_KEYS = [8, 37];
 
 /**
  * Displays a search box and a few buttons related buttons.
@@ -58,73 +58,6 @@ class SearchBox extends Component {
   }
 
   /**
-   * Handle enter key submission in search box
-   *
-   * @param {Object} event
-   */
-  handleKeyDown(event) {
-    if (event.keyCode === ENTER_KEY) {
-      // Trigger search when the user hits the enter key
-      this.props.onSearch();
-    } else if (BACK_KEYS.includes(event.keyCode) && event.target.selectionStart === 0) {
-      // Set focus on last tag when the user hits a back key at the start of the search box
-      this.focusOnLastTag();
-    }
-  }
-
-  /**
-   * Set the focus attribute on the internal state.
-   */
-  handleFocus() {
-    if (!this.state.hasFocus) {
-      this.setState({ hasFocus: true });
-    }
-  }
-
-  /**
-   * Unset the focus attribute on the internal state.
-   */
-  handleBlur() {
-    if (this.state.hasFocus) {
-      this.setState({ hasFocus: false });
-    }
-  }
-
-  /**
-   * Calculate the max-width available for tags.
-   */
-  calculateSpaceForTags() {
-    let width = this.state.width;
-
-    // Keep a minimal amount of space for the input field.
-    width -= 150;
-
-    // Remove the icon space and the enter/clear box
-    width = width - 55 - 52;
-
-    const {hideable, showFilters } = this.props;
-
-    // Remove space for the Hide button
-    if (hideable) {
-      width -= 52;
-    }
-
-    // Remove space for the filter button
-    if (showFilters) {
-      width -= 52;
-    }
-
-    // Don't return negative values
-    width = Math.max(width, 0);
-
-    return width;
-  }
-
-  calculateInputLeftPadding() {
-    return this.state.tagWidth + 55;
-  }
-
-  /**
    * Detect resizing of the component.
    * If it's bigger, the summary view is triggered.
    * @param tagListDimension
@@ -159,12 +92,83 @@ class SearchBox extends Component {
     return node.getBoundingClientRect().width;
   }
 
+  /**
+   * Calculate our input's left padding base on the width of our tag list.
+   * @returns {number}
+   */
+  calculateInputLeftPadding() {
+    return this.state.tagWidth + 55;
+  }
+
+  /**
+   * Calculate the max-width available for tags.
+   */
+  calculateSpaceForTags() {
+    let width = this.state.width;
+
+    // Keep a minimal amount of space for the input field.
+    width -= 150;
+
+    // Remove the icon space and the enter/clear box
+    width = width - 55 - 52;
+
+    const { hideable, showFilters } = this.props;
+
+    // Remove space for the Hide button
+    if (hideable) {
+      width -= 52;
+    }
+
+    // Remove space for the filter button
+    if (showFilters) {
+      width -= 52;
+    }
+
+    // Don't return negative values
+    width = Math.max(width, 0);
+
+    return width;
+  }
+
+  /**
+   * Handle enter key submission in search box
+   *
+   * @param {Object} event
+   */
+  handleKeyDown(event) {
+    if (event.keyCode === ENTER_KEY) {
+      // Trigger search when the user hits the enter key
+      this.props.onSearch();
+    } else if (BACK_KEYS.includes(event.keyCode) && event.target.selectionStart === 0) {
+      // Set focus on last tag when the user hits a back key at the start of the search box
+      this.focusOnLastTag();
+    }
+  }
+
+  /**
+   * Set the focus attribute on the internal state.
+   */
+  handleFocus() {
+    if (!this.state.hasFocus) {
+      this.setState({ hasFocus: true });
+    }
+  }
+
+  /**
+   * Unset the focus attribute on the internal state.
+   */
+  handleBlur() {
+    if (this.state.hasFocus) {
+      this.setState({ hasFocus: false });
+    }
+  }
+
   focusOnLastTag() {
     const node = ReactDOM.findDOMNode(this);
     if (!node) {
       return;
     }
-    const lastTag = node.querySelector('.compact-tag-list__visible .Tag:last-child');
+    const lastTag = node.querySelector('.compact-tag-list__visible .tag:last-child');
     if (lastTag) {
       lastTag.focus();
     }
@@ -220,7 +224,8 @@ class SearchBox extends Component {
             tags={tagData}
             onSummary={onToggleFilter}
             maxSize={this.calculateSpaceForTags()}
-            deletable />
+            deletable
+          />
         </ResizeAware>
       </div>
     );

@@ -1,4 +1,5 @@
-import { action } from "@storybook/addon-actions";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { action } from '@storybook/addon-actions';
 
 /**
  * Reduce an array of function names to an object of action that can pass to a component.
@@ -9,7 +10,7 @@ import { action } from "@storybook/addon-actions";
 const actionMaker = (accumulator, actionName) => {
   const fn = action(actionName);
   fn.toString = () => actionName;
-  return {...accumulator, [actionName]: fn}
+  return { ...accumulator, [actionName]: fn };
 };
 
 /**
@@ -20,7 +21,4 @@ const actionMaker = (accumulator, actionName) => {
 const actionListMaker = (...actionNames) => (actionNames.reduce(actionMaker, {}));
 
 export default actionListMaker;
-
-
-
 

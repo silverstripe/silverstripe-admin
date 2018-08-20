@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from 'moment';
 
 /**
  * Generate a tag handler for the provided time format.
@@ -6,7 +6,7 @@ import moment from "moment";
  * @returns {Function}
  */
 const genericDateTagHandler = (format) => (
-  (tag, {lang}) => {
+  (tag, { lang }) => {
     if (!tag.value) {
       return false;
     }
@@ -15,7 +15,7 @@ const genericDateTagHandler = (format) => (
       moment.locale(lang);
       const dateObject = moment(tag.value);
       if (dateObject.isValid()) {
-        return Object.assign({}, tag, {value: dateObject.format(format)})
+        return Object.assign({}, tag, { value: dateObject.format(format) });
       }
     }
 
