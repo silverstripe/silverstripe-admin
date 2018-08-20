@@ -1,4 +1,4 @@
-import {PropTypes} from "react";
+import { PropTypes } from 'react';
 
 const TagPropType = PropTypes.shape({
   key: PropTypes.string.required,
@@ -6,4 +6,4 @@ const TagPropType = PropTypes.shape({
   value: PropTypes.string,
 });
 
-export default TagPropType
+export default TagPropType;
