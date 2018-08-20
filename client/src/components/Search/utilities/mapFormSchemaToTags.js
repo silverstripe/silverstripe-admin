@@ -18,7 +18,7 @@ const tagListReducer = (accumulator, { key, value, label }) => (
 const mapFormSchemaToTags = (formSchema, formData, tagHandlerOverrides = {}) => {
   // if the form schema is still loading, let's bail
   if (formSchema.metadata.loading) {
-    return [];
+    return {};
   }
 
   /**
@@ -50,6 +50,12 @@ const mapFormSchemaToTags = (formSchema, formData, tagHandlerOverrides = {}) => 
     return handler(tag, field, formSchema, formData);
   };
 
+  /**
+   *
+   * @param tag
+   * @param field
+   * @returns {boolean}
+   */
   const structuralTagHandler = (tag, field) => {
     const { children } = field;
 
