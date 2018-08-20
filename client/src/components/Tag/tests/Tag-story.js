@@ -1,5 +1,4 @@
 import React from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { storiesOf, setAddon } from '@storybook/react';
 import actionListMaker from '../../../stories/actionListMaker';
 import { withKnobs, text, boolean, number, object } from '@storybook/addon-knobs/react';
@@ -11,10 +10,10 @@ import JSXAddon from 'storybook-addon-jsx';
 setAddon(JSXAddon);
 
 const tags = [
-  {key: 'justKey'},
-  {key: 'KeyPair', value: '123'},
-  {key: 'KeyLabel', label: 'Some label'},
-  {key: 'KeyPairLabel', label: 'Some label', value: '123'}
+  { key: 'justKey' },
+  { key: 'KeyPair', value: '123' },
+  { key: 'KeyLabel', label: 'Some label' },
+  { key: 'KeyPairLabel', label: 'Some label', value: '123' }
 ];
 
 const tagActions = actionListMaker('onClick', 'onDelete', 'onDeleteKey', 'onBackSpace', 'onNext', 'onPrevious');
@@ -22,23 +21,22 @@ const tagListActions = actionListMaker('onHolderFocus', 'onTagClick', 'onTagDele
 const compactTagListActions = actionListMaker('onSummary');
 
 
-
 storiesOf('Admin/Tag', module)
   .addDecorator(story => (
-    <div style={{"background": 'white', 'padding': '20px'}}>
+    <div style={{ background: 'white', padding: '20px' }}>
       {story()}
     </div>
   ))
   .addDecorator(withKnobs)
   .addWithJSX('Tag', () => (
-      <Tag
-        dataKey={text('dataKey', 'HelloWorld')}
-        label={text('label', '')}
-        value={text('value', '')}
-        deletable={boolean('Deletable', false)}
-        focusable={boolean('focusable', true)}
-        {...tagActions}
-       />
+    <Tag
+      dataKey={text('dataKey', 'HelloWorld')}
+      label={text('label', '')}
+      value={text('value', '')}
+      deletable={boolean('Deletable', false)}
+      focusable={boolean('focusable', true)}
+      {...tagActions}
+    />
   ))
   .addWithJSX('TagList', () => (
     <TagList

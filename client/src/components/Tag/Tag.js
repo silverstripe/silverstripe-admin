@@ -1,15 +1,34 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { Button } from 'reactstrap';
 import classnames from 'classnames';
 import i18n from 'i18n';
 
+/**
+ * Backspace key code.
+ * @type {number}
+ */
 const BACKSPACE = 8;
+
+/**
+ * Delete key code.
+ * @type {number}
+ */
 const DELETE = 46;
+
+/**
+ * Left arrow key.
+ * @type {number}
+ */
 const LEFT_ARROW = 37;
+
+/**
+ * Right arrow key
+ * @type {number}
+ */
 const RIGHT_ARROW = 39;
 
 /**
- * Detect the keydown on the delete or backspace key.
+ * High jack some keys to fire off matching events.
  * @param e KeyDown event.
  * @param key Key tag to trigger.
  * @param onDelete Function to trigger when the delete key is press.
@@ -34,47 +53,57 @@ const onKeyDown = (e, key, onDeleteKey, onBackSpace, onPrevious, onNext) => {
       e.preventDefault();
       onNext(key);
       break;
+    default:
+      // Let the browser handle all other cases natively.
+      break;
   }
 };
 
 /**
- * Generate a label text
+ * Combine the key, label and value to generate the text of the tag.
  * @param key Key of tag. Will be used as fallback if label is not provide
  * @param label Text to attach to the tag.
  * @param value Optional value attached to the tag.
  * @returns {string}
  */
 const makeLabel = (key, label, value) => (
-  (label || key) + (value ? ': ' + value : '')
+  (label || key) + (value ? `: ${value}` : '')
 );
 
 /**
  * Component to display a tag the user can interact with.
  */
 const Tag = ({
-  onClick, onDelete, deletable, dataKey, label, value, onDeleteKey, onBackSpace, onPrevious, onNext, children, focusable, ...props
+  onClick, onDelete, onDeleteKey, onBackSpace, onPrevious, onNext,
+  deletable, dataKey, label, value, children, focusable, ...props
 }) => (
   <Button
     {...props}
-    className={ classnames("Tag", {"Tag__deletable": deletable}) }
-    onClick={(e) => { e.preventDefault(); onClick(dataKey); } }
+    className={classnames('tag', { tag__deletable: deletable })}
+    onClick={(e) => { e.preventDefault(); onClick(dataKey); }}
     href="#"
     tabIndex={focusable ? undefined : -1}
-    onKeyDown={(e) => {onKeyDown(e, dataKey, onDeleteKey, onBackSpace, onPrevious, onNext)}}>
+    onKeyDown={(e) => { onKeyDown(e, dataKey, onDeleteKey, onBackSpace, onPrevious, onNext); }}
+  >
     { deletable && <DeleteButton onDelete={onDelete} dataKey={dataKey} focusable={focusable} /> }
     { children || makeLabel(dataKey, label, value) }
   </Button>
 );
 
-const DeleteButton = ({dataKey, onDelete, focusable}) => (
+/**
+ * Optional _remove tag_ button displayed in the tag.
+ * @param dataKey
+ * @param onDelete
+ * @param focusable
+ * @returns {*}
+ * @constructor
+ */
+const DeleteButton = ({ dataKey, onDelete, focusable }) => (
   <Button
-    onClick={ (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      onDelete(dataKey); } }
+    onClick={(e) => { e.preventDefault(); onDelete(dataKey); }}
     aria-label={i18n._t('Admin.REMOVE_TAG', 'Remove Tag')}
     tabIndex={focusable ? undefined : -1}
-    className="Tag__Delete font-icon-cancel btn--no-text btn--icon-sm"
+    className="tag__delete font-icon-cancel btn--no-text btn--icon-sm"
   />
 );
 
@@ -90,7 +119,6 @@ Tag.propTypes = {
   dataKey: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.string,
-  title: PropTypes.string,
   focusable: PropTypes.bool,
 };
 
