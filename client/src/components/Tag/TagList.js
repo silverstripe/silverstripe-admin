@@ -65,7 +65,7 @@ const TagList = ({ tags, deletable, focusable, onTagDelete, onTagClick, onHolder
   };
 
   return (
-    <div className="TagList">
+    <div className="tag-list">
       {tags.map((props) => (
         <Tag
           {...props}

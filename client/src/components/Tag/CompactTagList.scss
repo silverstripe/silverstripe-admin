@@ -2,14 +2,14 @@
   position: relative;
   overflow: hidden;
 
-  .TagList {
+  .tag-list {
     white-space: nowrap;
   }
 
   &__placeholder {
     margin-left: -9999px;
     position: absolute;
-    opacity:0;
+    opacity: 0;
   }
 }
 
