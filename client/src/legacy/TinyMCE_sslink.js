@@ -1,4 +1,4 @@
-/* global tinymce */
+/* global tinymce navigator */
 import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
 import ReactDOM from 'react-dom';
 import jQuery from 'jquery';
@@ -18,9 +18,11 @@ const plugin = {
         { onclick: () => action.onclick(editor) }
       ));
 
+    const metaKey = navigator.platform.toUpperCase().includes('MAC') ? '⌘' : 'Ctrl';
+
     editor.addButton('sslink', {
       icon: 'link',
-      title: 'Insert Link',
+      title: `Insert Link [${metaKey} + k]`,
       type: 'menubutton',
       menu: actions,
     });
@@ -29,6 +31,10 @@ const plugin = {
       icon: 'link',
       text: 'Insert Link',
       menu: actions,
+    });
+
+    editor.addShortcut('Meta+k', 'Open link menu', () => {
+      jQuery('[aria-label^=\"Insert Link\"] > button', editor.container).first().click();
     });
 
     function openLinkDialog() {
