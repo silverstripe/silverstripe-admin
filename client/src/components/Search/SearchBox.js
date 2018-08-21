@@ -5,7 +5,7 @@ import { Label, Button } from 'reactstrap';
 import classNames from 'classnames';
 import TagPropType from '../Tag/TagPropType';
 import CompactTagList from 'components/Tag/CompactTagList';
-import ResizeAware from '../ResizeAware/ResizeAware';
+import ResizeAware from 'components/ResizeAware/ResizeAware';
 import ReactDOM from 'react-dom';
 
 /**

@@ -42,6 +42,7 @@ require('expose-loader?TextField!components/TextField/TextField');
 require('expose-loader?LiteralField!components/LiteralField/LiteralField');
 require('expose-loader?Toolbar!components/Toolbar/Toolbar');
 require('expose-loader?Breadcrumb!components/Breadcrumb/Breadcrumb');
+require('expose-loader?ResizeAware!components/ResizeAware/ResizeAware');
 require('expose-loader?Tag!components/Tag/Tag');
 require('expose-loader?TagList!components/Tag/TagList');
 require('expose-loader?CompactTagList!components/Tag/CompactTagList');
