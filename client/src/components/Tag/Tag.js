@@ -100,7 +100,7 @@ const Tag = ({
  */
 const DeleteButton = ({ dataKey, onDelete, focusable }) => (
   <Button
-    onClick={(e) => { e.preventDefault(); onDelete(dataKey); }}
+    onClick={(e) => { e.stopPropagation(); e.preventDefault(); onDelete(dataKey); }}
     aria-label={i18n._t('Admin.REMOVE_TAG', 'Remove Tag')}
     tabIndex={focusable ? undefined : -1}
     className="tag__delete font-icon-cancel btn--no-text btn--icon-sm"
