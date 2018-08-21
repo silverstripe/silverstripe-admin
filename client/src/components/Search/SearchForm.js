@@ -19,12 +19,12 @@ const SearchForm = ({ expanded, onSearch, onClear, formSchemaUrl, id, identifier
       />}
       <Button
         className="search-form__submit"
-        onClick={onSearch}
+        onClick={() => onSearch()}
         color="primary"
       >{searchLabel}</Button>
       <Button
         className="search-form__clear"
-        onClick={onClear}
+        onClick={() => onClear()}
         disabled={!clearable}
       >{clearLabel}</Button>
     </div>

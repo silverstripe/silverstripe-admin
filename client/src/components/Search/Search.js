@@ -7,12 +7,14 @@ import { bindActionCreators } from 'redux';
 import * as schemaActions from 'state/schema/SchemaActions';
 import { reset, initialize } from 'redux-form';
 import { isDirty } from 'redux-form/lib/immutable';
+import { change } from 'redux-form/lib';
 import getIn from 'redux-form/lib/structure/plain/getIn';
 import Focusedzone from '../Focusedzone/Focusedzone';
 import getFormState from 'lib/getFormState';
 import SearchBox from './SearchBox';
 import SearchForm from './SearchForm';
 import SearchToggle from './SearchToggle';
+import mapFormSchemaToTags from './utilities/mapFormSchemaToTags';
 
 
 const DISPLAY = {
@@ -55,6 +57,8 @@ class Search extends Component {
     this.searchTermIsDirty = this.searchTermIsDirty.bind(this);
     this.clearFilters = this.clearFilters.bind(this);
     this.clearSearchBox = this.clearSearchBox.bind(this);
+    this.clearFormFilter = this.clearFormFilter.bind(this);
+    this.focusFormFilter = this.focusFormFilter.bind(this);
 
     const term = props.term || (props.filters && props.filters[props.name]) || '';
     this.state = {
@@ -173,7 +177,7 @@ class Search extends Component {
   /**
    * Try to find the first form field in the advanced form and focus on it.
    */
-  focusFirstFormField() {
+  focusFirstFormField(filter = 'input, textarea, select, button') {
     if (this.state.display !== DISPLAY.EXPANDED) {
       return;
     }
@@ -188,7 +192,7 @@ class Search extends Component {
       return;
     }
 
-    const input = form.querySelector('input, textarea, select, button');
+    const input = form.querySelector(filter);
     if (input) {
       input.focus();
       if (input.select) {
@@ -206,13 +210,37 @@ class Search extends Component {
       this.setState({ searchText: '' });
     }
 
-    const schemaUrl = (props && props.formSchemaUrl) || this.props.formSchemaUrl;
-    if (schemaUrl) {
+    const formSchemaUrl = (props && props.formSchemaUrl) || this.props.formSchemaUrl;
+    if (formSchemaUrl) {
       const identifier = (props && props.identifier) || this.props.identifier;
-      this.props.actions.schema.setSchemaStateOverrides(schemaUrl, null);
+      this.props.actions.schema.setSchemaStateOverrides(formSchemaUrl, null);
       this.props.actions.reduxForm.initialize(identifier, {}, Object.keys(this.props.formData));
       this.props.actions.reduxForm.reset(identifier);
     }
+  }
+
+  /**
+   * Clear a search filter and execute a new search
+   * @param string key Search filter name to clear
+   */
+  clearFormFilter(key) {
+    const tag = this.props.tagData[key];
+    const clearables = { [key]: undefined };
+    if (Array.isArray(tag.linkedFields)) {
+      tag.linkedFields.forEach(linkFieldkey => { clearables[linkFieldkey] = undefined; });
+    }
+    this.doSearch(clearables);
+  }
+
+  /**
+   * Focus on the requested search filter name.
+   * @param string key Search filter name.
+   */
+  focusFormFilter(key) {
+    const tag = this.props.tagData[key];
+    const selector = tag.focusSelector || `[name=${key}]`;
+    this.expand();
+    setTimeout(() => this.focusFirstFormField(selector), 50);
   }
 
   /**
@@ -282,18 +310,19 @@ class Search extends Component {
 
   /**
    * Wrap up all the data into an object and call the onSearch method provided via the props.
+   * @param Object overrides Data to overrides over our existing form data.
    */
-  doSearch() {
+  doSearch(overrides = {}) {
     this.setState({
       display: DISPLAY.VISIBLE,
       initialSearchText: this.state.searchText
     });
 
-    const formData = this.getData(true);
+    const formData = Object.assign({}, this.getData(true), overrides);
     this.props.actions.schema.setSchemaStateOverrides(this.props.schemaUrl, null);
     this.props.actions.reduxForm.initialize(this.props.schemaName, formData);
 
-    const data = this.getData();
+    const data = Object.assign({}, this.getData(), overrides);
     this.props.onSearch(data);
   }
 
@@ -315,7 +344,7 @@ class Search extends Component {
 
   render() {
     const { formSchemaUrl, forceFilters, id, displayBehavior,
-      identifier, formIsDirty, ...props } = this.props;
+      identifier, formIsDirty, tagData, ...props } = this.props;
 
     // If the box is not to be displayed
     if (this.state.display === DISPLAY.NONE) {
@@ -340,6 +369,9 @@ class Search extends Component {
     const dirty = formIsDirty || this.searchTermIsDirty();
     const data = this.getData();
     const clearable = (Object.keys(data).length > 0);
+    const tagDataAsPlainArray = tagData ?
+      Object.values(tagData).map(({ key, label, value }) => ({ key, label, value })) :
+      [];
 
     return (
       <Focusedzone onClickOut={this.show} className="search">
@@ -357,6 +389,9 @@ class Search extends Component {
           showFilters={Boolean(forceFilters || formSchemaUrl)}
           dirty={dirty}
           clearable={clearable}
+          onTagDelete={this.clearFormFilter}
+          onTagClick={this.focusFormFilter}
+          tagData={tagDataAsPlainArray}
         >
 
           <SearchForm
@@ -392,6 +427,7 @@ Search.propTypes = {
   formIsDirty: PropTypes.bool,
   identifier: PropTypes.string,
   schemaName: PropTypes.string,
+  tagHandlers: PropTypes.object
 };
 
 Search.defaultProps = {
@@ -417,16 +453,17 @@ function mapStateToProps(state, ownProps) {
   const form = getIn(getFormState(state), schemaName);
 
   const formData = (form && form.values) || {};
+  const tagData = mapFormSchemaToTags(schema, ownProps.filters, ownProps.tagHandlers || {});
   const formIsDirty = isDirty(schemaName, getFormState)(state);
 
-  return { formData, formIsDirty, schemaName };
+  return { formData, formIsDirty, schemaName, tagData };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: {
       schema: bindActionCreators(schemaActions, dispatch),
-      reduxForm: bindActionCreators({ reset, initialize }, dispatch),
+      reduxForm: bindActionCreators({ reset, initialize, change }, dispatch),
     },
   };
 }

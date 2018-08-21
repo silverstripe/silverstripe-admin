@@ -1,0 +1,41 @@
+.tag {
+  height: 34px;
+  border-radius: $border-radius-sm;
+  border: 1px solid $gray-100;
+  color: $gray-500;
+  display: inline-block;
+  margin-right: $btn-icon-spacing;
+  padding: 6px 10px;
+  position: relative;
+
+  &:focus-within {
+    border-color: green;
+  }
+
+  &.btn-secondary:not(:disabled):not(.disabled):focus,
+  &:focus-within {
+    border-color: $component-active-border-color;
+    box-shadow: none;
+    background: none;
+  }
+
+  &.btn-secondary:not(:disabled):not(.disabled):hover {
+    background: #eef2f4;
+  }
+
+  &__deletable {
+    padding-left: 6px + 14px + 6px;
+  }
+
+  &__delete {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    padding: 5px;
+    line-height: 0;
+    background: 0;
+  }
+
+}

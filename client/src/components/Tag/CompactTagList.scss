@@ -1,0 +1,18 @@
+.compact-tag-list {
+  position: relative;
+  overflow: hidden;
+
+  .tag-list {
+    white-space: nowrap;
+  }
+
+  &__placeholder {
+    margin-left: -9999px;
+    position: absolute;
+    opacity: 0;
+  }
+}
+
+
+
+

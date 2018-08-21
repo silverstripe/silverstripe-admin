@@ -34,6 +34,10 @@ import ReduxForm from 'containers/Form/Form';
 import UsedOnTable from 'components/UsedOnTable/UsedOnTable';
 import Loading from 'components/Loading/Loading';
 import ViewModeToggle from 'components/ViewModeToggle/ViewModeToggle';
+import ResizeAware from 'components/ResizeAware/ResizeAware';
+import Tag from 'components/Tag/Tag';
+import TagList from 'components/Tag/TagList';
+import CompactTagList from 'components/Tag/CompactTagList';
 import Search from 'components/Search/Search';
 import SearchToggle from 'components/Search/SearchToggle';
 
@@ -74,6 +78,10 @@ export default () => {
     UsedOnTable,
     Loading,
     ViewModeToggle,
+    ResizeAware,
+    Tag,
+    TagList,
+    CompactTagList,
     Search,
     SearchToggle,
   });

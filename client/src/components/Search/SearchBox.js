@@ -3,6 +3,22 @@ import i18n from 'i18n';
 import React, { PropTypes, Component } from 'react';
 import { Label, Button } from 'reactstrap';
 import classNames from 'classnames';
+import TagPropType from '../Tag/TagPropType';
+import CompactTagList from 'components/Tag/CompactTagList';
+import ResizeAware from 'components/ResizeAware/ResizeAware';
+import ReactDOM from 'react-dom';
+
+/**
+ * Code of the enter key
+ * @type {number}
+ */
+const ENTER_KEY = 13;
+
+/**
+ * Code of keys that will be detected as going back for our purposes. (Left arrow key and backspace)
+ * @type {number[]}
+ */
+const BACK_KEYS = [8, 37];
 
 /**
  * Displays a search box and a few buttons related buttons.
@@ -10,7 +26,7 @@ import classNames from 'classnames';
 class SearchBox extends Component {
   constructor(props) {
     super(props);
-    this.handleKeyUp = this.handleKeyUp.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.renderInput = this.renderInput.bind(this);
@@ -18,7 +34,100 @@ class SearchBox extends Component {
     this.renderClearButton = this.renderClearButton.bind(this);
     this.renderEnterHint = this.renderEnterHint.bind(this);
     this.renderHideButton = this.renderHideButton.bind(this);
-    this.state = { hasFocus: false };
+    this.componentDidUpdate = this.componentDidUpdate.bind(this);
+    this.onResize = this.onResize.bind(this);
+    this.setWidth = this.setWidth.bind(this);
+    this.renderTags = this.renderTags.bind(this);
+    this.getComponentWidth = this.getComponentWidth.bind(this);
+    this.calculateSpaceForTags = this.calculateSpaceForTags.bind(this);
+    this.calculateInputLeftPadding = this.calculateInputLeftPadding.bind(this);
+    this.onTagListResize = this.onTagListResize.bind(this);
+    this.focusOnLastTag = this.focusOnLastTag.bind(this);
+    this.focusOnInput = this.focusOnInput.bind(this);
+
+    this.state = {
+      hasFocus: false,
+      width: window.innerWidth - 180 - 55,
+      tagWidth: 0
+    };
+  }
+
+  componentDidUpdate() {
+    const width = this.getComponentWidth();
+    this.setWidth(width);
+  }
+
+  /**
+   * Detect resizing of the component.
+   * If it's bigger, the summary view is triggered.
+   * @param tagListDimension
+   */
+  onResize(dimension) {
+    this.setWidth(dimension.width);
+  }
+
+  onTagListResize(dimensions) {
+    const tagWidth = dimensions.width;
+    if (this.state.tagWidth !== tagWidth) {
+      this.setState({ tagWidth });
+    }
+  }
+
+  setWidth(width) {
+    if (this.state.width !== width) {
+      this.setState({ width });
+    }
+  }
+
+  /**
+   * Measure the width of the component.
+   * @returns number
+   */
+  getComponentWidth() {
+    const node = ReactDOM.findDOMNode(this);
+    if (!node) {
+      return 0;
+    }
+
+    return node.getBoundingClientRect().width;
+  }
+
+  /**
+   * Calculate our input's left padding base on the width of our tag list.
+   * @returns {number}
+   */
+  calculateInputLeftPadding() {
+    return this.state.tagWidth + 55;
+  }
+
+  /**
+   * Calculate the max-width available for tags.
+   */
+  calculateSpaceForTags() {
+    let width = this.state.width;
+
+    // Keep a minimal amount of space for the input field.
+    width -= 150;
+
+    // Remove the icon space and the enter/clear box
+    width = width - 55 - 52;
+
+    const { hideable, showFilters } = this.props;
+
+    // Remove space for the Hide button
+    if (hideable) {
+      width -= 52;
+    }
+
+    // Remove space for the filter button
+    if (showFilters) {
+      width -= 52;
+    }
+
+    // Don't return negative values
+    width = Math.max(width, 0);
+
+    return width;
   }
 
   /**
@@ -26,9 +135,13 @@ class SearchBox extends Component {
    *
    * @param {Object} event
    */
-  handleKeyUp(event) {
-    if (event.keyCode === 13) {
+  handleKeyDown(event) {
+    if (event.keyCode === ENTER_KEY) {
+      // Trigger search when the user hits the enter key
       this.props.onSearch();
+    } else if (BACK_KEYS.includes(event.keyCode) && event.target.selectionStart === 0) {
+      // Set focus on last tag when the user hits a back key at the start of the search box
+      this.focusOnLastTag();
     }
   }
 
@@ -50,11 +163,35 @@ class SearchBox extends Component {
     }
   }
 
+  focusOnLastTag() {
+    const node = ReactDOM.findDOMNode(this);
+    if (!node) {
+      return;
+    }
+    const lastTag = node.querySelector('.compact-tag-list__visible .tag:last-child');
+    if (lastTag) {
+      lastTag.focus();
+    }
+  }
+
+  focusOnInput() {
+    const node = ReactDOM.findDOMNode(this);
+    if (!node) {
+      return;
+    }
+    const input = node.querySelector('input');
+    if (input) {
+      input.focus();
+    }
+  }
+
   /**
    * Render the input for the search box.
    */
   renderInput() {
     const { id, searchText, onChange, placeholder, name } = this.props;
+    const style = { paddingLeft: `${this.calculateInputLeftPadding()}px` };
+
     return (
       <input
         aria-labelledby={`${id}_label`}
@@ -62,7 +199,7 @@ class SearchBox extends Component {
         name={name}
         placeholder={placeholder}
         className="form-control search-box__content-field"
-        onKeyUp={this.handleKeyUp}
+        onKeyDown={this.handleKeyDown}
         onChange={onChange}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
@@ -70,7 +207,27 @@ class SearchBox extends Component {
         id={id}
         // eslint-disable-next-line jsx-a11y/no-autofocus
         autoFocus
+        style={style}
       />
+    );
+  }
+
+  renderTags() {
+    const { tagData, onTagDelete, onTagClick, onToggleFilter } = this.props;
+    return (
+      <div className="search-box__tags">
+        <ResizeAware onResize={this.onTagListResize}>
+          <CompactTagList
+            onTagDelete={onTagDelete}
+            onTagClick={onTagClick}
+            onHolderFocus={this.focusOnInput}
+            tags={tagData}
+            onSummary={onToggleFilter}
+            maxSize={this.calculateSpaceForTags()}
+            deletable
+          />
+        </ResizeAware>
+      </div>
     );
   }
 
@@ -155,18 +312,21 @@ class SearchBox extends Component {
 
     return (
       <div className={searchClasses}>
-        <div className="search-box__group">
-          <Label for={id} id={`${id}_label`} hidden>
-            {i18n._t('Admin.SEARCH', 'Search')}
-          </Label>
-          { this.renderInput() }
-          { showEnter && this.renderEnterHint() }
-          { showClear && this.renderClearButton() }
-          { children }
-          <div className="icon font-icon-search" />
-          { showFilters && this.renderFilterButton() }
-          { hideable && this.renderHideButton() }
-        </div>
+        <ResizeAware onResize={this.onResize}>
+          <div className="search-box__group">
+            <Label for={id} id={`${id}_label`} hidden>
+              {i18n._t('Admin.SEARCH', 'Search')}
+            </Label>
+            { this.renderTags() }
+            { this.renderInput() }
+            { showEnter && this.renderEnterHint() }
+            { showClear && this.renderClearButton() }
+            { children }
+            <div className="icon font-icon-search" />
+            { showFilters && this.renderFilterButton() }
+            { hideable && this.renderHideButton() }
+          </div>
+        </ResizeAware>
       </div>
     );
   }
@@ -178,6 +338,8 @@ SearchBox.propTypes = {
   onToggleFilter: PropTypes.func,
   onChange: PropTypes.func,
   onHide: PropTypes.func,
+  onTagDelete: PropTypes.func,
+  onTagClick: PropTypes.func,
 
   placeholder: PropTypes.string,
   expanded: PropTypes.bool,
@@ -189,11 +351,13 @@ SearchBox.propTypes = {
   name: PropTypes.string,
   dirty: PropTypes.bool,
   clearable: PropTypes.bool,
+  tagData: PropTypes.arrayOf(TagPropType)
+
 };
 
 SearchBox.defaultProps = {
   placeholder: i18n._t('Admin.SEARCH', 'Search'),
-
+  tagData: [],
   filters: {},
   formData: {},
   term: '',
