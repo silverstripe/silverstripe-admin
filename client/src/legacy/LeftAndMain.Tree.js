@@ -140,15 +140,25 @@ $.entwine('ss.tree', function($){
 
     'from .cms-container form': {
       onaftersubmitform: function(e){
-        var id = $('.cms-edit-form :input[name=ID]').val();
+        const id = $('.cms-edit-form :input[name=ID]').val();
         // TODO Trigger by implementing and inspecting "changed records" metadata
         // sent by form submission response (as HTTP response headers)
-        var node = this.find(`[data-id=${id}]`);
-        var ids = [+id];
+        const node = this.find(`[data-id=${id}]`);
+        let ids = [+id];
         node.find('li').each(function () {
           ids.push($(this).data('id'));
         });
-        this.updateNodesFromServer(ids);
+        // Break ids up into reasonable chunks
+        const chunks = [];
+        let chunkSize = 50;
+        while(ids.length) {
+          const chunk = ids.slice(0, chunkSize);
+          chunks.push(chunk);
+          ids = ids.slice(chunkSize);
+        }
+
+        chunks.map((chunk) => this.updateNodesFromServer(chunk, false))
+              .reduce((chain, curr) => chain.then(curr), Promise.resolve());
       }
     },
 
@@ -363,8 +373,10 @@ $.entwine('ss.tree', function($){
      * Parameters:
      *  (Array) List of IDs to retrieve
      */
-    updateNodesFromServer: function(ids) {
-      if(this.getIsUpdatingTree() || !this.getIsLoaded()) return;
+    updateNodesFromServer: function(ids, blocking = true) {
+      if (!this.getIsLoaded()) return;
+
+      if(blocking && this.getIsUpdatingTree()) return;
 
       var self = this, i, includesNewNode = false;
       this.setIsUpdatingTree(true);
@@ -385,54 +397,58 @@ $.entwine('ss.tree', function($){
       self.jstree('save_opened');
       self.jstree('save_selected');
 
-      $.ajax({
-        url: $.path.addSearchParams(this.data('urlUpdatetreenodes'), 'ids=' + ids.join(',')),
-        dataType: 'json',
-        success: function(data, xhr) {
-          $.each(data, function(nodeId, nodeData) {
-            var node = self.getNodeByID(nodeId);
+      return new Promise(resolve => {
+        $.ajax({
+          url: $.path.addSearchParams(this.data('urlUpdatetreenodes'), 'ids=' + ids.join(',')),
+          dataType: 'json',
+          success: function (data, xhr) {
+            resolve(data);
+            $.each(data, function (nodeId, nodeData) {
+              var node = self.getNodeByID(nodeId);
 
-            // If no node data is given, assume the node has been removed
-            if(!nodeData) {
-              self.jstree('delete_node', node);
-              return;
-            }
-
-            // Check if node exists, create if necessary
-            if(node.length) {
-              self.updateNode(node, nodeData.html, nodeData);
-              setTimeout(function() {
-                correctStateFn(node);
-              }, 500);
-            } else {
-              includesNewNode = true;
-
-              // If the parent node can't be found, it might have not been loaded yet.
-              // This can happen for deep trees which require ajax loading.
-              // Assumes that the new node has been submitted to the server already.
-              if(nodeData.ParentID && !self.find('li[data-id='+nodeData.ParentID+']').length) {
-                self.jstree('load_node', -1, function() {
-                  newNode = self.find('li[data-id='+nodeId+']');
-                  correctStateFn(newNode);
-                });
-              } else {
-                self.createNode(nodeData.html, nodeData, function(newNode) {
-                  correctStateFn(newNode);
-                });
+              // If no node data is given, assume the node has been removed
+              if (!nodeData) {
+                self.jstree('delete_node', node);
+                return;
               }
-            }
-          });
 
-          if(!includesNewNode) {
-            self.jstree('deselect_all');
-            self.jstree('reselect');
-            self.jstree('reopen');
+              // Check if node exists, create if necessary
+              if (node.length) {
+                self.updateNode(node, nodeData.html, nodeData);
+                setTimeout(function () {
+                  correctStateFn(node);
+                }, 500);
+              } else {
+                includesNewNode = true;
+
+                // If the parent node can't be found, it might have not been loaded yet.
+                // This can happen for deep trees which require ajax loading.
+                // Assumes that the new node has been submitted to the server already.
+                if (nodeData.ParentID && !self.find('li[data-id=' + nodeData.ParentID + ']').length) {
+                  self.jstree('load_node', -1, function () {
+                    newNode = self.find('li[data-id=' + nodeId + ']');
+                    correctStateFn(newNode);
+                  });
+                } else {
+                  self.createNode(nodeData.html, nodeData, function (newNode) {
+                    correctStateFn(newNode);
+                  });
+                }
+              }
+            });
+
+            if (!includesNewNode) {
+              self.jstree('deselect_all');
+              self.jstree('reselect');
+              self.jstree('reopen');
+            }
+          },
+          complete: function () {
+            self.setIsUpdatingTree(false);
           }
-        },
-        complete: function() {
-          self.setIsUpdatingTree(false);
-        }
+        });
       });
+
     }
 
   });
