@@ -380,6 +380,7 @@ class Search extends Component {
           onChange={this.handleChange}
           onSearch={this.doSearch}
           onToggleFilter={this.toggle}
+          onHideFilter={this.show}
           onHide={this.hide}
           onClear={this.clearSearchBox}
           searchText={searchText}

@@ -152,6 +152,9 @@ class SearchBox extends Component {
     if (!this.state.hasFocus) {
       this.setState({ hasFocus: true });
     }
+    if (this.props.onHideFilter) {
+      this.props.onHideFilter();
+    }
   }
 
   /**
@@ -336,10 +339,12 @@ class SearchBox extends Component {
 SearchBox.propTypes = {
   onSearch: PropTypes.func,
   onToggleFilter: PropTypes.func,
+  onHideFilter: PropTypes.func,
   onChange: PropTypes.func,
   onHide: PropTypes.func,
   onTagDelete: PropTypes.func,
   onTagClick: PropTypes.func,
+
 
   placeholder: PropTypes.string,
   expanded: PropTypes.bool,
