@@ -79,7 +79,7 @@ const Tag = ({
 }) => (
   <Button
     {...props}
-    className={classnames('tag', { tag__deletable: deletable })}
+    className={classnames('tag', 'btn-sm', { tag__deletable: deletable })}
     onClick={(e) => { e.preventDefault(); onClick(dataKey); }}
     href="#"
     tabIndex={focusable ? undefined : -1}
