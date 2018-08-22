@@ -13,7 +13,11 @@ class ActionMenu extends PureComponent {
     };
   }
 
-  toggle() {
+  toggle(event) {
+    if (this.props.toggleCallback) {
+      this.props.toggleCallback(event);
+    }
+
     this.setState({
       isOpen: !this.state.isOpen
     });
@@ -51,6 +55,7 @@ class ActionMenu extends PureComponent {
 }
 
 ActionMenu.PropTypes = {
+  toggleCallback: PropTypes.func,
   dropdownToggleClassName: PropTypes.arrayOf(PropTypes.string),
 };
 
