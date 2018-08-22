@@ -407,7 +407,7 @@ $.entwine('ss', function($) {
         : i18n._t('Admin.DELETECONFIRMMESSAGE');
 
       if (!confirm(confirmMessage)) {
-        e.preventDefault(confirmMessage);
+        e.preventDefault();
         return false;
       } else {
         this._super(e);
