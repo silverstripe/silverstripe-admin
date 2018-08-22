@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, PropTypes } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 import i18n from 'i18n';
 import classnames from 'classnames';
@@ -20,23 +20,23 @@ class ActionMenu extends PureComponent {
   }
 
   render() {
-    const { dropdownToggleProps, dropdownMenuProps, ...restProps } = this.props;
-    let { className } = this.props;
-    className = classnames('action-menu', className);
+    const {
+      dropdownToggleProps,
+      dropdownMenuProps,
+      dropdownToggleClassName,
+      className,
+      ...restProps
+    } = this.props;
 
     const toggleClassName = classnames(
-      'action-menu__toggle',
-      'btn',
-      'btn--icon-xl',
-      'btn--no-text',
-      'font-icon-dot-3',
+      dropdownToggleClassName,
       dropdownToggleProps.className
     );
     const menuClassName = classnames('action-menu__dropdown', dropdownMenuProps.className);
 
     return (
       <Dropdown
-        className={className}
+        className={classnames('action-menu', className)}
         isOpen={this.state.isOpen}
         toggle={this.toggle}
         {...restProps}
@@ -50,9 +50,19 @@ class ActionMenu extends PureComponent {
   }
 }
 
+ActionMenu.PropTypes = {
+  dropdownToggleClassName: PropTypes.arrayOf(PropTypes.string),
+};
 
 ActionMenu.defaultProps = {
   className: '',
+  dropdownToggleClassName: [
+    'action-menu__toggle',
+    'btn',
+    'btn--no-text',
+    'btn--icon-xl',
+    'font-icon-dot-3'
+  ],
   dropdownToggleProps: {},
   dropdownMenuProps: {},
 };
