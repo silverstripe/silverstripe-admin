@@ -67,7 +67,7 @@ const onKeyDown = (e, key, onDeleteKey, onBackSpace, onPrevious, onNext) => {
  * @returns {string}
  */
 const makeLabel = (key, label, value) => (
-  (label || key) + (value ? `: ${value}` : '')
+  (label || key) + (value ? `:${value}` : '')
 );
 
 /**
