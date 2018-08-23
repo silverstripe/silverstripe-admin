@@ -124,7 +124,12 @@ import debounce from 'lodash.debounce';
       };
 
       // Handler for detecting global changes
-      var detectChanges = function () {
+      var detectChanges = function (e) {
+        // If the event came from an untracked input, we don't need to invoke
+        // the global handler.
+        if (e && $(e.target).is(options.ignoreFieldSelector)) {
+          return;
+        }
         var changed = isChanged();
         self.toggleClass(options.changedCssClass, changed);
       };
