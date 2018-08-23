@@ -14,8 +14,9 @@ class ActionMenu extends PureComponent {
   }
 
   toggle(event) {
-    if (this.props.toggleCallback) {
-      this.props.toggleCallback(event);
+    const { toggleCallback } = this.props;
+    if (toggleCallback) {
+      toggleCallback(event);
     }
 
     this.setState({
@@ -27,13 +28,13 @@ class ActionMenu extends PureComponent {
     const {
       dropdownToggleProps,
       dropdownMenuProps,
-      dropdownToggleClassName,
+      dropdownToggleClassNames,
       className,
       ...restProps
     } = this.props;
 
     const toggleClassName = classnames(
-      dropdownToggleClassName,
+      dropdownToggleClassNames,
       dropdownToggleProps.className
     );
     const menuClassName = classnames('action-menu__dropdown', dropdownMenuProps.className);
@@ -56,12 +57,12 @@ class ActionMenu extends PureComponent {
 
 ActionMenu.PropTypes = {
   toggleCallback: PropTypes.func,
-  dropdownToggleClassName: PropTypes.arrayOf(PropTypes.string),
+  dropdownToggleClassNames: PropTypes.arrayOf(PropTypes.string),
 };
 
 ActionMenu.defaultProps = {
   className: '',
-  dropdownToggleClassName: [
+  dropdownToggleClassNames: [
     'action-menu__toggle',
     'btn',
     'btn--no-text',
