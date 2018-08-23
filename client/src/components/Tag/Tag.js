@@ -76,19 +76,31 @@ const makeLabel = (key, label, value) => (
 const Tag = ({
   onClick, onDelete, onDeleteKey, onBackSpace, onPrevious, onNext,
   deletable, dataKey, label, value, children, focusable, ...props
-}) => (
-  <Button
-    {...props}
-    className={classnames('tag', 'btn-sm', { tag__deletable: deletable })}
-    onClick={(e) => { e.preventDefault(); onClick(dataKey); }}
-    href="#"
-    tabIndex={focusable ? undefined : -1}
-    onKeyDown={(e) => { onKeyDown(e, dataKey, onDeleteKey, onBackSpace, onPrevious, onNext); }}
-  >
-    { deletable && <DeleteButton onDelete={onDelete} dataKey={dataKey} focusable={focusable} /> }
-    { children || makeLabel(dataKey, label, value) }
-  </Button>
-);
+}) => {
+  const title = makeLabel(dataKey, label, value);
+  return (
+    <Button
+      {...props}
+      className={classnames('tag', 'btn-sm', { tag__deletable: deletable })}
+      onClick={(e) => { e.preventDefault(); onClick(dataKey); }}
+      href="#"
+      tabIndex={focusable ? undefined : -1}
+      onKeyDown={(e) => { onKeyDown(e, dataKey, onDeleteKey, onBackSpace, onPrevious, onNext); }}
+      title={title}
+    >
+      { deletable && <DeleteButton onDelete={onDelete} dataKey={dataKey} /> }
+      { children || title }
+    </Button>
+  );
+}
+
+/**
+ * Move focus to parent element. We don't want delete button to be focusable.
+ * @param e
+ */
+const focusOnParent = (e) => {
+  e.target.parentElement.focus();
+}
 
 /**
  * Optional _remove tag_ button displayed in the tag.
@@ -98,11 +110,12 @@ const Tag = ({
  * @returns {*}
  * @constructor
  */
-const DeleteButton = ({ dataKey, onDelete, focusable }) => (
+const DeleteButton = ({ dataKey, onDelete }) => (
   <Button
     onClick={(e) => { e.stopPropagation(); e.preventDefault(); onDelete(dataKey); }}
     aria-label={i18n._t('Admin.REMOVE_TAG', 'Remove Tag')}
-    tabIndex={focusable ? undefined : -1}
+    onFocus={focusOnParent}
+    tabIndex={-1}
     className="tag__delete font-icon-cancel btn--no-text btn--icon-sm"
   />
 );

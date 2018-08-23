@@ -428,7 +428,13 @@ Search.propTypes = {
   formIsDirty: PropTypes.bool,
   identifier: PropTypes.string,
   schemaName: PropTypes.string,
-  tagHandlers: PropTypes.object
+  tagHandlers: PropTypes.object,
+  borders: PropTypes.shape({
+    top: PropTypes.bool,
+    right: PropTypes.bool,
+    bottom: PropTypes.bool,
+    left: PropTypes.bool,
+  })
 };
 
 Search.defaultProps = {

@@ -31,7 +31,6 @@ class SearchBox extends Component {
     this.handleBlur = this.handleBlur.bind(this);
     this.renderInput = this.renderInput.bind(this);
     this.renderFilterButton = this.renderFilterButton.bind(this);
-    this.renderClearButton = this.renderClearButton.bind(this);
     this.renderEnterHint = this.renderEnterHint.bind(this);
     this.renderHideButton = this.renderHideButton.bind(this);
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
@@ -138,9 +137,11 @@ class SearchBox extends Component {
   handleKeyDown(event) {
     if (event.keyCode === ENTER_KEY) {
       // Trigger search when the user hits the enter key
+      event.preventDefault();
       this.props.onSearch();
     } else if (BACK_KEYS.includes(event.keyCode) && event.target.selectionStart === 0) {
       // Set focus on last tag when the user hits a back key at the start of the search box
+      event.preventDefault();
       this.focusOnLastTag();
     }
   }
@@ -192,8 +193,21 @@ class SearchBox extends Component {
    * Render the input for the search box.
    */
   renderInput() {
-    const { id, searchText, onChange, placeholder, name } = this.props;
+    const { id, searchText, onChange, placeholder, name, borders } = this.props;
     const style = { paddingLeft: `${this.calculateInputLeftPadding()}px` };
+
+    const mergedBorders = Object.assign({}, SearchBox.defaultProps.borders, borders);
+    const classe = 'search-box__content-field';
+    const classeNames = classNames(
+      'form-control', classe,
+      {
+        [`${classe}__top-border`]: mergedBorders.top,
+        [`${classe}__right-border`]: mergedBorders.right,
+        [`${classe}__bottom-border`]: mergedBorders.bottom,
+        [`${classe}__left-border`]: mergedBorders.left,
+      }
+      ,
+    );
 
     return (
       <input
@@ -201,7 +215,7 @@ class SearchBox extends Component {
         type="text"
         name={name}
         placeholder={placeholder}
-        className="form-control search-box__content-field"
+        className={classeNames}
         onKeyDown={this.handleKeyDown}
         onChange={onChange}
         onFocus={this.handleFocus}
@@ -239,24 +253,13 @@ class SearchBox extends Component {
    */
   renderEnterHint() {
     return (
-      <div className="search-box__enter">
+      <div
+        role="presentation"
+        className="search-box__enter"
+        onClick={e => { e.stopPropagation(); e.preventDefault(); this.props.onSearch(); }}
+      >
         {i18n._t('Admin.ENTER', 'Enter')}&nbsp;↵
       </div>
-    );
-  }
-
-  /**
-   * Render the Clear button.
-   */
-  renderClearButton() {
-    const { formId, onClear } = this.props;
-    return (
-      <Button
-        aria-controls={formId}
-        onClick={onClear}
-        className="search-box__clear"
-        title={i18n._t('Admin.CLEAR', 'Clear')}
-      >{i18n._t('Admin.CLEAR', 'Clear')}</Button>
     );
   }
 
@@ -266,7 +269,8 @@ class SearchBox extends Component {
   renderFilterButton() {
     const { expanded, onToggleFilter, formId } = this.props;
     const classes = classNames(
-        'btn--icon-md',
+        'btn--icon-sm',
+        'btn-sm',
         'btn--no-text',
         'font-icon-caret-down-two',
         'search-box__filter-trigger',
@@ -311,7 +315,6 @@ class SearchBox extends Component {
     });
 
     const showEnter = (dirty || !clearable) && this.state.hasFocus;
-    const showClear = !showEnter && clearable;
 
     return (
       <div className={searchClasses}>
@@ -323,7 +326,6 @@ class SearchBox extends Component {
             { this.renderTags() }
             { this.renderInput() }
             { showEnter && this.renderEnterHint() }
-            { showClear && this.renderClearButton() }
             { children }
             <div className="icon font-icon-search" />
             { showFilters && this.renderFilterButton() }
@@ -357,7 +359,6 @@ SearchBox.propTypes = {
   dirty: PropTypes.bool,
   clearable: PropTypes.bool,
   tagData: PropTypes.arrayOf(TagPropType)
-
 };
 
 SearchBox.defaultProps = {
@@ -366,6 +367,12 @@ SearchBox.defaultProps = {
   filters: {},
   formData: {},
   term: '',
+  borders: {
+    top: false,
+    right: false,
+    bottom: true,
+    left: true,
+  }
 };
 
 
