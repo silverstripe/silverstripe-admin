@@ -26,9 +26,9 @@ describe('Tag', () => {
       const tags = wrapper.find('Tag');
       expect(tags).toHaveLength(4);
       expect(tags.at(0).text()).toEqual('justKey');
-      expect(tags.at(1).text()).toEqual('KeyPair: 123');
+      expect(tags.at(1).text()).toEqual('KeyPair:123');
       expect(tags.at(2).text()).toEqual('Some label');
-      expect(tags.at(3).text()).toEqual('Some label: 123');
+      expect(tags.at(3).text()).toEqual('Some label:123');
 
       tags.forEach((tag) => {
         expect(tag.getDOMNode().attributes.getNamedItem('tabindex')).toEqual(null);

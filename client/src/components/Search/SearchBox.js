@@ -206,7 +206,6 @@ class SearchBox extends Component {
         [`${classe}__bottom-border`]: mergedBorders.bottom,
         [`${classe}__left-border`]: mergedBorders.left,
       }
-      ,
     );
 
     return (
@@ -216,6 +215,7 @@ class SearchBox extends Component {
         name={name}
         placeholder={placeholder}
         className={classeNames}
+
         onKeyDown={this.handleKeyDown}
         onChange={onChange}
         onFocus={this.handleFocus}
@@ -346,8 +346,6 @@ SearchBox.propTypes = {
   onHide: PropTypes.func,
   onTagDelete: PropTypes.func,
   onTagClick: PropTypes.func,
-
-
   placeholder: PropTypes.string,
   expanded: PropTypes.bool,
   formId: PropTypes.string,

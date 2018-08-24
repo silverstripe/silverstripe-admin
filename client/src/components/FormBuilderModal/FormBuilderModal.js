@@ -27,6 +27,7 @@ class FormBuilderModal extends Component {
     }
     return (
       <FormBuilderLoader
+        autoFocus={this.props.autoFocus}
         schemaUrl={this.props.schemaUrl}
         onSubmit={this.handleSubmit}
         onAction={this.props.onAction}
@@ -185,6 +186,7 @@ class FormBuilderModal extends Component {
 }
 
 FormBuilderModal.propTypes = {
+  autoFocus: React.PropTypes.bool,
   isOpen: React.PropTypes.bool,
   title: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.bool]),
   className: React.PropTypes.string,

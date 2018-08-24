@@ -34,10 +34,10 @@
     left: 0;
     top: 0;
     bottom: 0;
-    margin: 0 0;
+    margin: 0;
     padding: 5px;
     line-height: 0;
-    background: 0;
+    background: none;
 
     &.btn[class*="font-icon-"]::before {
       line-height: 10px;

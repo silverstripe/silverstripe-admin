@@ -8,9 +8,12 @@ class Form extends Component {
     }
 
     if (this.form) {
-      const input = this.form.querySelector('input, select, textarea');
+      const input = this.form.querySelector('input:not([type=hidden]), select, textarea');
       if (input) {
         input.focus();
+        if (input.select) {
+          input.select();
+        }
       }
     }
   }

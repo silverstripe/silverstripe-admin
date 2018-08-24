@@ -150,8 +150,8 @@ class Search extends Component {
       this.setState({ searchText: value });
     }
 
-    const {schemaName, formData, name, actions} = this.props
-    if (typeof formData[name] !== undefined ) {
+    const { schemaName, formData, name, actions } = this.props;
+    if (typeof formData[name] !== 'undefined') {
       actions.reduxForm.change(schemaName, name, value);
     }
   }
@@ -277,8 +277,8 @@ class Search extends Component {
       this.setState({ display: DISPLAY.VISIBLE });
     }
 
-    const {schemaName, formData, name, actions} = this.props
-    if (typeof formData[name] !== undefined ) {
+    const { schemaName, formData, name, actions } = this.props;
+    if (typeof formData[name] !== 'undefined') {
       actions.reduxForm.change(schemaName, name, this.state.searchText);
     }
   }

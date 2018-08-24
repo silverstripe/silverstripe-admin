@@ -92,7 +92,7 @@ const Tag = ({
       { children || title }
     </Button>
   );
-}
+};
 
 /**
  * Move focus to parent element. We don't want delete button to be focusable.
@@ -100,7 +100,8 @@ const Tag = ({
  */
 const focusOnParent = (e) => {
   e.target.parentElement.focus();
-}
+};
+
 
 /**
  * Optional _remove tag_ button displayed in the tag.
