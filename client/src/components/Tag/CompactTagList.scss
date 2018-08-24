@@ -11,6 +11,10 @@
     position: absolute;
     opacity: 0;
   }
+
+  .font-icon-sliders::before {
+    vertical-align: text-top;
+  }
 }
 
 

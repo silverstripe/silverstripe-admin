@@ -149,6 +149,11 @@ class Search extends Component {
     if (this.state.searchText !== value) {
       this.setState({ searchText: value });
     }
+
+    const {schemaName, formData, name, actions} = this.props
+    if (typeof formData[name] !== undefined ) {
+      actions.reduxForm.change(schemaName, name, value);
+    }
   }
 
   /**
@@ -248,7 +253,7 @@ class Search extends Component {
    */
   open() {
     this.show();
-    setTimeout(this.focusInput, 50);
+    this.focusInput();
   }
 
   /**
@@ -270,6 +275,11 @@ class Search extends Component {
   show() {
     if (this.state.display !== DISPLAY.VISIBLE) {
       this.setState({ display: DISPLAY.VISIBLE });
+    }
+
+    const {schemaName, formData, name, actions} = this.props
+    if (typeof formData[name] !== undefined ) {
+      actions.reduxForm.change(schemaName, name, this.state.searchText);
     }
   }
 
@@ -313,17 +323,29 @@ class Search extends Component {
    * @param Object overrides Data to overrides over our existing form data.
    */
   doSearch(overrides = {}) {
-    this.setState({
-      display: DISPLAY.VISIBLE,
-      initialSearchText: this.state.searchText
-    });
+    // Data to send to the remote service
+    const searchData = Object.assign({}, this.getData(), overrides);
+    const searchText = searchData[this.props.name] || '';
 
+    // Data to store in the redux state
     const formData = Object.assign({}, this.getData(true), overrides);
+
+    if (
+      this.state.display !== DISPLAY.VISIBLE ||
+      this.state.initialSearchText !== searchText ||
+      this.state.searchText !== searchText
+    ) {
+      this.setState({
+        display: DISPLAY.VISIBLE,
+        initialSearchText: searchText,
+        searchText
+      });
+    }
+
     this.props.actions.schema.setSchemaStateOverrides(this.props.schemaUrl, null);
     this.props.actions.reduxForm.initialize(this.props.schemaName, formData);
 
-    const data = Object.assign({}, this.getData(), overrides);
-    this.props.onSearch(data);
+    this.props.onSearch(searchData);
   }
 
   /**

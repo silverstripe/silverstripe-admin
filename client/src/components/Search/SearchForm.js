@@ -16,17 +16,17 @@ const SearchForm = ({ expanded, onSearch, onClear, formSchemaUrl, id, identifier
       {formSchemaUrl && <FormBuilderLoader
         identifier={identifier}
         schemaUrl={formSchemaUrl}
+        onSubmit={() => onSearch()}
       />}
       <Button
         className="search-form__submit"
         onClick={() => onSearch()}
         color="primary"
       >{searchLabel}</Button>
-      <Button
+      { clearable && <Button
         className="search-form__clear"
         onClick={() => onClear()}
-        disabled={!clearable}
-      >{clearLabel}</Button>
+      >{clearLabel}</Button> }
     </div>
   </Collapse>
 );
