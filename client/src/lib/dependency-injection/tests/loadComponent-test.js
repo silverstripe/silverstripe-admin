@@ -3,6 +3,9 @@
 
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
+import { createStore } from 'redux';
+
+const mockStore = createStore(state => state);
 
 function TestComponent() {
   return <span>abc</span>;
@@ -75,7 +78,7 @@ describe('loadComponent', () => {
   });
 
   it('should return a rendered ApolloProvider if it has mounted', () => {
-    const Temp = loadComponent(TestComponent, {}, mockProvider);
+    const Temp = loadComponent(TestComponent, { store: mockStore }, mockProvider);
     const temp = ReactTestUtils.renderIntoDocument(<Temp />);
     const rendered = temp.render();
 
