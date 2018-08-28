@@ -39,6 +39,9 @@ class ActionMenu extends PureComponent {
     );
     const menuClassName = classnames('action-menu__dropdown', dropdownMenuProps.className);
 
+    // Prevent a "toggleCallback" event being applied to a div.
+    delete restProps.toggleCallback;
+
     return (
       <Dropdown
         className={classnames('action-menu', className)}
