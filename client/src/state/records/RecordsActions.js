@@ -28,7 +28,7 @@ function populate(template, params) {
  */
 export function fetchRecords(recordType, method, url) {
   const payload = { recordType };
-  const headers = { Accept: 'text/json' };
+  const headers = { Accept: 'application/json' };
   const methodToLowerCase = method.toLowerCase();
 
   return (dispatch) => {
@@ -69,7 +69,7 @@ export function fetchRecords(recordType, method, url) {
  */
 export function fetchRecord(recordType, method, url) {
   const payload = { recordType };
-  const headers = { Accept: 'text/json' };
+  const headers = { Accept: 'application/json' };
   const methodToLowerCase = method.toLowerCase();
 
   return (dispatch) => {

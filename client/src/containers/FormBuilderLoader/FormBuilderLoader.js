@@ -413,6 +413,7 @@ class FormBuilderLoader extends Component {
       onSubmitSuccess: this.props.onSubmitSuccess,
       onSubmit: this.handleSubmit,
       onAutofill: this.handleAutofill,
+      autoFocus: this.props.autoFocus
     });
 
     return <FormBuilder {...props} />;
@@ -424,6 +425,7 @@ FormBuilderLoader.propTypes = Object.assign({}, basePropTypes, {
     schema: PropTypes.object,
     reduxFrom: PropTypes.object,
   }),
+  autoFocus: PropTypes.bool,
   identifier: PropTypes.string.isRequired,
   schemaUrl: PropTypes.string.isRequired,
   schema: schemaPropType,

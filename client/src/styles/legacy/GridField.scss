@@ -98,6 +98,11 @@
       margin-right: 0;
       display: inline-block;
     }
+
+    .action-menu__toggle {
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+    }
   }
 
   .grid-field__table {
@@ -181,10 +186,6 @@
             border: 1px solid #7C8816;
             background-color: #DAE79A;
           }
-        }
-
-        button.gridfield-button-delete span.btn-icon-decline {
-          left: 2px;
         }
 
         a.view-link {

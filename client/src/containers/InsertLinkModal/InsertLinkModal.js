@@ -32,6 +32,7 @@ class InsertLinkModal extends Component {
       {
         onSubmit: this.handleSubmit,
         onClosed: this.props.onClosed,
+        autoFocus: true,
         showErrorMessage: true,
       }
     );
