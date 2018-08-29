@@ -536,7 +536,8 @@ $.entwine('ss', function($) {
       const ajaxData = [{
         name: props.clearAction,
         value: '',
-        filter: 'hidden'
+        filter: 'hidden',
+        triggerChange: false
       }];
 
       this.getGridField().reload({ data: ajaxData });
@@ -548,7 +549,8 @@ $.entwine('ss', function($) {
       const ajaxData = [{
         name: props.searchAction,
         value: '',
-        filter: 'show'
+        filter: 'show',
+        triggerChange: false
       }];
 
       for (const [key, value] of Object.entries(data)) {
