@@ -5,6 +5,9 @@ import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import IframeDialog from 'components/IframeDialog/IframeDialog';
+import Search from 'components/Search/Search.js';
+import { schemaMerge } from 'lib/schemaFieldValues';
+import { loadComponent } from 'lib/Injector';
 
 require('../legacy/ssui.core.js');
 
@@ -1426,6 +1429,87 @@ $.entwine('ss', function($) {
     onclick: function () {
       this.showHide();
     }
+  });
+
+  $('.js-injector-boot .search-holder').entwine({
+    Timer: null,
+    Component: null,
+
+    onmatch() {
+      this._super();
+
+      const cmsContent = this.closest('.cms-content').attr('id');
+      const context = (cmsContent)
+        ? { context: cmsContent }
+        : {};
+
+      const Search = loadComponent('Search', context);
+      this.setComponent(Search);
+
+      this.refresh();
+
+      const props = this.getAttributes();
+      if (props.filters && $('#filters-button').data('collapsed')) {
+        $('#filters-button').showHide();
+      }
+    },
+
+    onunmatch() {
+      this._super();
+      // solves errors given by ReactDOM "no matched root found" error.
+      const container = this[0];
+      if (container) {
+        ReactDOM.unmountComponentAtNode(container);
+      }
+    },
+
+    close() {
+      $('#filters-button').showHide();
+    },
+
+    search(data) {
+      let url = $('.cms-search-form').attr('action');
+
+      if(url && data) {
+        const params = [];
+        for (const [key, value] of Object.entries(data)) {
+          params[`q[${key}]`] = value;
+        }
+        url = $.path.addSearchParams(
+          url,
+          params
+        );
+
+        var container = this.closest('.cms-container');
+        container.loadPanel(url, "", {}, true);
+      }
+    },
+
+    refresh() {
+      const props = this.getAttributes();
+      const Search = this.getComponent();
+      const fieldData = this.data('search-field-data');
+      const handleHide = () => this.close();
+      const handleSearch = (data) => this.search(data);
+
+      // TODO: rework entwine so that react has control of holder
+      ReactDOM.render(
+        <Search
+          id="Search"
+          display="VISIBLE"
+          onHide={handleHide}
+          onSearch={handleSearch}
+          {...props}
+        />,
+        this[0]
+      );
+    },
+
+    getAttributes() {
+      const state = this.data('state');
+      const schema = this.data('schema');
+      return schemaMerge(schema, state);
+    },
   });
 });
 

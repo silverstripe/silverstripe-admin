@@ -89,6 +89,7 @@ abstract class ModelAdmin extends LeftAndMain
     );
 
     private static $url_handlers = array(
+        'GET $ModelClass/schema/$FormName/$ItemID/$OtherItemID' => 'schema',
         '$ModelClass/$Action' => 'handleAction'
     );
 
@@ -245,17 +246,37 @@ abstract class ModelAdmin extends LeftAndMain
     {
         $context = DataObject::singleton($this->modelClass)->getDefaultSearchContext();
 
-        // Namespace fields, for easier detection if a search is present
-        foreach ($context->getFields() as $field) {
-            $field->setName(sprintf('q[%s]', $field->getName()));
-        }
-        foreach ($context->getFilters() as $filter) {
-            $filter->setFullName(sprintf('q[%s]', $filter->getFullName()));
-        }
-
         $this->extend('updateSearchContext', $context);
 
         return $context;
+    }
+
+    /**
+     * Returns the search form schema for the current model
+     *
+     * @return string
+     */
+    public function getSearchFieldSchema()
+    {
+        $schemaUrl = Controller::join_links($this->Link($this->sanitiseClassName($this->modelClass)), 'schema/SearchForm');
+
+        $context = $this->getSearchContext();
+        $params = $this->getRequest()->requestVar('q') ?: [];
+        $context->setSearchParams($params);
+
+        $searchField = $context->getSearchFields()->first();
+        $searchField = $searchField && property_exists($searchField, 'name') ? $searchField->name : null;
+
+        $name = singleton($this->modelClass)->i18n_plural_name();
+
+        $schema = [
+            'formSchemaUrl' => $schemaUrl,
+            'name' => $searchField,
+            'placeholder' => sprintf('Search "%s"', $name),
+            'filters' => $context->getSearchParams() ?: null
+        ];
+
+        return Convert::raw2json($schema);
     }
 
     /**
@@ -275,7 +296,7 @@ abstract class ModelAdmin extends LeftAndMain
     /**
      * @return \SilverStripe\Forms\Form|bool
      */
-    public function SearchForm()
+    public function getSearchForm()
     {
         if (!$this->showSearchForm ||
             (is_array($this->showSearchForm) && !in_array($this->modelClass, $this->showSearchForm))
@@ -288,14 +309,7 @@ abstract class ModelAdmin extends LeftAndMain
             $this,
             "SearchForm",
             $context->getSearchFields(),
-            new FieldList(
-                FormAction::create('search', _t(__CLASS__ . '.APPLY_FILTER', 'Apply Filter'))
-                    ->setUseButtonTag(true)->addExtraClass('btn-primary'),
-                FormAction::create('clearsearch', _t(__CLASS__ . '.RESET', 'Reset'))
-                    ->setAttribute('type', 'reset')
-                    ->setUseButtonTag(true)->addExtraClass('btn-secondary')
-            ),
-            new RequiredFields()
+            new FieldList()
         );
         $form->setFormMethod('get');
         $form->setFormAction($this->Link($this->sanitiseClassName($this->modelClass)));
