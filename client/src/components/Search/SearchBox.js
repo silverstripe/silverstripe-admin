@@ -1,4 +1,4 @@
-/* global document */
+/* global document window */
 import i18n from 'i18n';
 import React, { PropTypes, Component } from 'react';
 import { Label, Button } from 'reactstrap';
@@ -7,18 +7,6 @@ import TagPropType from '../Tag/TagPropType';
 import CompactTagList from 'components/Tag/CompactTagList';
 import ResizeAware from 'components/ResizeAware/ResizeAware';
 import ReactDOM from 'react-dom';
-
-/**
- * Code of the enter key
- * @type {number}
- */
-const ENTER_KEY = 13;
-
-/**
- * Code of keys that will be detected as going back for our purposes. (Left arrow key and backspace)
- * @type {number[]}
- */
-const BACK_KEYS = [8, 37];
 
 /**
  * Displays a search box and a few buttons related buttons.
@@ -135,11 +123,11 @@ class SearchBox extends Component {
    * @param {Object} event
    */
   handleKeyDown(event) {
-    if (event.keyCode === ENTER_KEY) {
+    if (event.key === 'Enter') {
       // Trigger search when the user hits the enter key
       event.preventDefault();
       this.props.onSearch();
-    } else if (BACK_KEYS.includes(event.keyCode) && event.target.selectionStart === 0) {
+    } else if (['ArrowLeft', 'Backspace'].includes(event.key) && event.target.selectionStart === 0) {
       // Set focus on last tag when the user hits a back key at the start of the search box
       event.preventDefault();
       this.focusOnLastTag();
@@ -211,7 +199,7 @@ class SearchBox extends Component {
     return (
       <input
         aria-labelledby={`${id}_label`}
-        type="text"
+        type="search"
         name={name}
         placeholder={placeholder}
         className={classeNames}

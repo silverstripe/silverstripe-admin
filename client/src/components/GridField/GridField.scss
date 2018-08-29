@@ -110,7 +110,7 @@
 }
 
 .grid-field__filter-open {
-  .grid-field & {
+  .grid-field__table & {
     vertical-align: bottom;
     margin: 0;
     float: right;
@@ -136,6 +136,19 @@
     &::before {
       color: $white;
     }
+  }
+}
+
+.grid-field__search-holder {
+  margin-left: -$panel-padding-x;
+  margin-right: -$panel-padding-x;
+
+  .grid-field:first-child & {
+    margin-top: -$panel-padding-y;
+  }
+
+  .show-filter & + .ss-gridfield-buttonrow {
+    margin-top: 0;
   }
 }
 

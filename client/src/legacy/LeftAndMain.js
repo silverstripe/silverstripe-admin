@@ -1432,7 +1432,6 @@ $.entwine('ss', function($) {
   });
 
   $('.js-injector-boot .search-holder').entwine({
-    Timer: null,
     Component: null,
 
     onmatch() {
@@ -1448,10 +1447,7 @@ $.entwine('ss', function($) {
 
       this.refresh();
 
-      const props = this.getAttributes();
-      if (props.filters && $('#filters-button').data('collapsed')) {
-        $('#filters-button').showHide();
-      }
+      const props = this.data('schema');
     },
 
     onunmatch() {
@@ -1463,11 +1459,24 @@ $.entwine('ss', function($) {
       }
     },
 
+    // Prevent search filters form appearing below other elements
+    onfocusin() {
+      this.css('z-index', '100');
+    },
+
+    onfocusout() {
+      this.css('z-index', '');
+    },
+
     close() {
       $('#filters-button').showHide();
+      const url = $('.cms-search-form').attr('action');
+      const container = this.closest('.cms-container');
+      container.loadPanel(url, "", {}, true);
     },
 
     search(data) {
+      this._super();
       let url = $('.cms-search-form').attr('action');
 
       if(url && data) {
@@ -1475,10 +1484,9 @@ $.entwine('ss', function($) {
         for (const [key, value] of Object.entries(data)) {
           params[`q[${key}]`] = value;
         }
-        url = $.path.addSearchParams(
-          url,
-          params
-        );
+        url = $.path.addSearchParams(url, params);
+
+        $('.cms-panel-deferred.cms-content-view').data('deferredNoCache', true);
 
         var container = this.closest('.cms-container');
         container.loadPanel(url, "", {}, true);
@@ -1486,9 +1494,8 @@ $.entwine('ss', function($) {
     },
 
     refresh() {
-      const props = this.getAttributes();
+      const props = this.data('schema');
       const Search = this.getComponent();
-      const fieldData = this.data('search-field-data');
       const handleHide = () => this.close();
       const handleSearch = (data) => this.search(data);
 
@@ -1496,19 +1503,15 @@ $.entwine('ss', function($) {
       ReactDOM.render(
         <Search
           id="Search"
+          identifier="Search"
           display="VISIBLE"
+          displayBehavior={"HIDEABLE"}
           onHide={handleHide}
           onSearch={handleSearch}
           {...props}
         />,
         this[0]
       );
-    },
-
-    getAttributes() {
-      const state = this.data('state');
-      const schema = this.data('schema');
-      return schemaMerge(schema, state);
     },
   });
 });

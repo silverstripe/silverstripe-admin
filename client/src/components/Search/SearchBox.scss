@@ -1,5 +1,5 @@
 $search-base-padding: 15px;
-$search-box-height: 52px;
+$search-box-height: 53px;
 
 .search-box {
   position: relative;
@@ -104,6 +104,8 @@ $search-box-height: 52px;
 
 .search-box__clear {
   right: 0;
+  width: auto;
+  padding: $search-base-padding;
   color: $link-color;
 
   .search-box__has-filters &,
@@ -146,9 +148,8 @@ $search-box-height: 52px;
   padding-top: 7px;
   border-style: none;
   border-radius: 0;
-  font-size: $font-size-lg;
   font-weight: bold;
-  height: 52px;
+  height: $search-box-height;
   opacity: 1;
   width: $search-width-max;
   float: right;
