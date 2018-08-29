@@ -84,7 +84,9 @@ class SearchBox extends Component {
    * @returns {number}
    */
   calculateInputLeftPadding() {
-    return this.state.tagWidth + 55;
+    // Account for if the search icon is hidden in compact mode
+    const existingPadding = this.state.width > 576 ? 55 : 20;
+    return this.state.tagWidth + existingPadding;
   }
 
   /**
@@ -127,8 +129,14 @@ class SearchBox extends Component {
       // Trigger search when the user hits the enter key
       event.preventDefault();
       this.props.onSearch();
-    } else if (['ArrowLeft', 'Backspace'].includes(event.key) && event.target.selectionStart === 0) {
+    } else if (
+      event.target.selectionStart === 0
+      && (event.key === 'ArrowLeft'
+      || (event.key === 'Backspace'
+      && event.target.selectionEnd - event.target.selectionStart === 0))
+    ) {
       // Set focus on last tag when the user hits a back key at the start of the search box
+      // and only if they don't have text selected to delete
       event.preventDefault();
       this.focusOnLastTag();
     }
@@ -189,10 +197,10 @@ class SearchBox extends Component {
     const classeNames = classNames(
       'form-control', classe,
       {
-        [`${classe}__top-border`]: mergedBorders.top,
-        [`${classe}__right-border`]: mergedBorders.right,
-        [`${classe}__bottom-border`]: mergedBorders.bottom,
-        [`${classe}__left-border`]: mergedBorders.left,
+        [`${classe}--top-border`]: mergedBorders.top,
+        [`${classe}--right-border`]: mergedBorders.right,
+        [`${classe}--bottom-border`]: mergedBorders.bottom,
+        [`${classe}--left-border`]: mergedBorders.left,
       }
     );
 
@@ -257,8 +265,7 @@ class SearchBox extends Component {
   renderFilterButton() {
     const { expanded, onToggleFilter, formId } = this.props;
     const classes = classNames(
-        'btn--icon-sm',
-        'btn-sm',
+        'btn--icon',
         'btn--no-text',
         'font-icon-caret-down-two',
         'search-box__filter-trigger',
@@ -293,13 +300,14 @@ class SearchBox extends Component {
     const { children, id, hideable, expanded, showFilters, dirty, clearable } = this.props;
 
     const searchClasses = classNames('search-box', {
-      'search-box__hideable': hideable,
-      'search-box__not-hideable': !hideable,
-      'search-box__has-focus': this.state.hasFocus,
-      'search-box__has-not-focus': !this.state.hasFocus,
-      'search-box__has-filters': showFilters,
-      'search-box__has-not-filters': !showFilters,
-      'search-box__expanded': expanded
+      'search-box--hideable': hideable,
+      'search-box--not-hideable': !hideable,
+      'search-box--has-focus': this.state.hasFocus,
+      'search-box--has-not-focus': !this.state.hasFocus,
+      'search-box--has-filters': showFilters,
+      'search-box--has-not-filters': !showFilters,
+      'search-box--compact': this.state.width < 576, // 'sm' breakpoint
+      'search-box--expanded': expanded
     });
 
     const showEnter = (dirty || !clearable) && this.state.hasFocus;

@@ -1470,9 +1470,13 @@ $.entwine('ss', function($) {
 
     close() {
       $('#filters-button').showHide();
-      const url = $('.cms-search-form').attr('action');
-      const container = this.closest('.cms-container');
-      container.loadPanel(url, "", {}, true);
+      const props = this.data('schema');
+
+      if(props.filters) {
+        const url = $('.cms-search-form').attr('action');
+        const container = this.closest('.cms-container');
+        container.loadPanel(url, "", {}, true);
+      }
     },
 
     search(data) {
@@ -1482,7 +1486,9 @@ $.entwine('ss', function($) {
       if(url && data) {
         const params = [];
         for (const [key, value] of Object.entries(data)) {
-          params[`q[${key}]`] = value;
+          if (value) {
+            params[`q[${key}]`] = value;
+          }
         }
         url = $.path.addSearchParams(url, params);
 
@@ -1498,6 +1504,7 @@ $.entwine('ss', function($) {
       const Search = this.getComponent();
       const handleHide = () => this.close();
       const handleSearch = (data) => this.search(data);
+      const narrowView = this.closest('.cms-content-tools').attr('id') === 'cms-content-tools-CMSMain';
 
       // TODO: rework entwine so that react has control of holder
       ReactDOM.render(
@@ -1508,6 +1515,9 @@ $.entwine('ss', function($) {
           displayBehavior={"HIDEABLE"}
           onHide={handleHide}
           onSearch={handleSearch}
+          borders={{
+            left: !narrowView
+          }}
           {...props}
         />,
         this[0]

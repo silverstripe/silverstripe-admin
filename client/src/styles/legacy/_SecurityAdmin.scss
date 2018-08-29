@@ -82,3 +82,10 @@ green tick icon as a background this is created using gulp-sprity generated clas
     }
   }
 }
+
+.cms .cms-content.SecurityAdmin {
+  // Remove extra space between the permanent alert message and search field
+  .alert + .grid-field .grid-field__search-holder {
+    margin-top: -$spacer-xs;
+  }
+}

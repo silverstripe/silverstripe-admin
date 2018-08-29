@@ -139,23 +139,6 @@
   }
 }
 
-.grid-field__search-holder {
-  margin-left: -$panel-padding-x;
-  margin-right: -$panel-padding-x;
-
-  .grid-field:first-child & {
-    margin-top: -$panel-padding-y;
-  }
-
-  .show-filter & + .ss-gridfield-buttonrow {
-    margin-top: 0;
-  }
-
-  &--hidden {
-    display: none;
-  }
-}
-
 input.grid-field__sort-field {
   margin-left: -$input-btn-padding-x;
   margin-right: -$input-btn-padding-x;

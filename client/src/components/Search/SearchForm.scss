@@ -3,12 +3,18 @@
   background: $white;
   margin: 0;
   right: 0;
-  top: $toolbar-total-height - 1px;
+  top: $toolbar-total-height;
   z-index: 9999;
   box-shadow: 0 2px 4px 0 $shadow-level-4, 0 4px 8px 0 $shadow-level-3;
   border-radius: 0 0 $border-radius $border-radius;
   max-width: 100%;
   width: $mobile-width;
+
+  @media(min-width: $mobile-width + $toolbar-height) {
+    .search-box--hideable & {
+      right: $toolbar-total-height;
+    }
+  }
 }
 
 .search-form__wrapper {

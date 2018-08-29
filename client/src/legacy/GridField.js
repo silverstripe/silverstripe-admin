@@ -555,8 +555,10 @@ $.entwine('ss', function($) {
       }];
 
       for (const [key, value] of Object.entries(data)) {
-        const name = `filter[${props.gridfield}][${key}]`
-        ajaxData.push({ name, value });
+        if (value) {
+          const name = `filter[${props.gridfield}][${key}]`
+          ajaxData.push({ name, value });
+        }
       }
 
       this.getGridField().reload({ data: ajaxData });
@@ -571,7 +573,6 @@ $.entwine('ss', function($) {
       ReactDOM.render(
         <Search
           id={`${props.gridfield}Search`}
-          className="no-change-track"
           identifier={`${props.gridfield}Search`}
           display="VISIBLE"
           displayBehavior="HIDEABLE"
