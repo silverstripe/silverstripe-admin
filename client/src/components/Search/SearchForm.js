@@ -16,7 +16,7 @@ const SearchForm = ({ expanded, onSearch, onClear, formSchemaUrl, id, identifier
       {formSchemaUrl && <FormBuilderLoader
         identifier={identifier}
         schemaUrl={formSchemaUrl}
-        onSubmit={() => onSearch()}
+        onSubmit={() => { onSearch(); return Promise.resolve(); }}
       />}
       <Button
         className="search-form__submit"
