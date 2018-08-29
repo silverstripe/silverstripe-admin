@@ -59,6 +59,7 @@ class Search extends Component {
     this.clearSearchBox = this.clearSearchBox.bind(this);
     this.clearFormFilter = this.clearFormFilter.bind(this);
     this.focusFormFilter = this.focusFormFilter.bind(this);
+    this.formatTagData = this.formatTagData.bind(this);
 
     const term = props.term || (props.filters && props.filters[props.name]) || '';
     this.state = {
@@ -364,6 +365,25 @@ class Search extends Component {
       this.focusInput();
   }
 
+  /**
+   * Take the provided tagData and format in way that will make sense for TagList.
+   * @return Object[]
+   */
+  formatTagData() {
+    const { tagData, name } = this.props;
+    // Remove any tag matching the name of our form field.
+    if (tagData && tagData[name]) {
+      delete tagData[name];
+    }
+
+    // Convert the tag data to a plain array and remove un-needed attributes.
+    const tagDataAsPlainArray = tagData ?
+      Object.values(tagData).map(({ key, label, value }) => ({ key, label, value })) :
+      [];
+
+    return tagDataAsPlainArray;
+  }
+
   render() {
     const { formSchemaUrl, forceFilters, id, displayBehavior,
       identifier, formIsDirty, tagData, ...props } = this.props;
@@ -391,9 +411,6 @@ class Search extends Component {
     const dirty = formIsDirty || this.searchTermIsDirty();
     const data = this.getData();
     const clearable = (Object.keys(data).length > 0);
-    const tagDataAsPlainArray = tagData ?
-      Object.values(tagData).map(({ key, label, value }) => ({ key, label, value })) :
-      [];
 
     return (
       <Focusedzone onClickOut={this.show} className="search">
@@ -414,7 +431,7 @@ class Search extends Component {
           clearable={clearable}
           onTagDelete={this.clearFormFilter}
           onTagClick={this.focusFormFilter}
-          tagData={tagDataAsPlainArray}
+          tagData={this.formatTagData()}
         >
 
           <SearchForm
