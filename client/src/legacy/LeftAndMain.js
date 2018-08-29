@@ -1419,10 +1419,10 @@ $.entwine('ss', function($) {
       // previously using "slideDown"/"slideUp" jQuery, but it was causing issues
       if (collapsed) {
         this.addClass('active');
-        $filters.css('display', 'block');
+        $filters.removeClass('cms-content-filters--hidden');
       } else {
         this.removeClass('active');
-        $filters.css('display', '');
+        $filters.addClass('cms-content-filters--hidden');
       }
       self.data('collapsed', !collapsed);
     },

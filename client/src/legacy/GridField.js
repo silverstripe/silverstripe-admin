@@ -124,15 +124,16 @@ $.entwine('ss', function($) {
 
     injectSearchButton: function(visible) {
       const hasLegacyFilterHeader = this.find('.grid-field__filter-header').length;
+      let content;
       if (visible) {
-        let content = '<span class="non-sortable"></span>';
-        this.addClass('show-filter').find('.grid-field__filter-header, .grid-field__search-holder').show();
+        content = '<span class="non-sortable"></span>';
+        this.addClass('show-filter').find('.grid-field__filter-header, .grid-field__search-holder').removeClass('grid-field__search-holder--hidden');
         if (!hasLegacyFilterHeader) {
-          $('.grid-field :button[name=showFilter]').hide();
+          this.find('.grid-field :button[name=showFilter]').hide();
         }
       } else {
-        let content = '<button type="button" title="Open search and filter" name="showFilter" class="btn btn-secondary font-icon-search btn--no-text btn--icon-large grid-field__filter-open"></button>';
-        this.removeClass('show-filter').find('.grid-field__filter-header, .grid-field__search-holder').hide();
+        content = '<button type="button" title="Open search and filter" name="showFilter" class="btn btn-secondary font-icon-search btn--no-text btn--icon-large grid-field__filter-open"></button>';
+        this.removeClass('show-filter').find('.grid-field__filter-header, .grid-field__search-holder').addClass('grid-field__search-holder--hidden');
       }
       if (hasLegacyFilterHeader) {
         this.find('.sortable-header th:last').html(content);
@@ -208,7 +209,7 @@ $.entwine('ss', function($) {
     onclick: function(e) {
       this.closest('.grid-field')
         .find('.grid-field__filter-header, .grid-field__search-holder')
-        .show()
+        .removeClass('grid-field__search-holder--hidden')
         .find(':input:first').focus(); // focus first search field
 
       this.closest('.grid-field').addClass('show-filter');

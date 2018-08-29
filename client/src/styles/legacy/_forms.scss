@@ -679,8 +679,6 @@ div.switch-states{
 // This is a toggleable element that displays a form for filtering content.
 // ----------------------------------------------------------------- */
 .cms-content-filters {
-  display: none;
-
   .chosen-results {
     max-height: 180px;
   }
@@ -691,6 +689,10 @@ div.switch-states{
     &:after {
       display: none;
     }
+  }
+
+  &--hidden {
+    display: none;
   }
 }
 

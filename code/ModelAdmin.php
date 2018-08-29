@@ -191,7 +191,7 @@ abstract class ModelAdmin extends LeftAndMain
         if (!$this->showSearchForm ||
             (is_array($this->showSearchForm) && !in_array($this->modelClass, $this->showSearchForm))
         ) {
-            $listField->removeComponentByType(GridFieldFilterHeader::class);
+            $listField->getConfig()->removeComponentsByType(GridFieldFilterHeader::class);
         }
 
         // Validation

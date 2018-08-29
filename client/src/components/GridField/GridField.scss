@@ -150,6 +150,10 @@
   .show-filter & + .ss-gridfield-buttonrow {
     margin-top: 0;
   }
+
+  &--hidden {
+    display: none;
+  }
 }
 
 input.grid-field__sort-field {
