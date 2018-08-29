@@ -67,7 +67,7 @@ const onKeyDown = (e, key, onDeleteKey, onBackSpace, onPrevious, onNext) => {
  * @returns {string}
  */
 const makeLabel = (key, label, value) => (
-  (label || key) + (value ? `:${value}` : '')
+  (label || key) + (value ? `: ${value}` : '')
 );
 
 /**
@@ -115,6 +115,7 @@ const DeleteButton = ({ dataKey, onDelete }) => (
   <Button
     onClick={(e) => { e.stopPropagation(); e.preventDefault(); onDelete(dataKey); }}
     aria-label={i18n._t('Admin.REMOVE_TAG', 'Remove Tag')}
+    title={i18n._t('Admin.REMOVE_TAG', 'Remove Tag')}
     onFocus={focusOnParent}
     tabIndex={-1}
     className="tag__delete font-icon-cancel btn--no-text btn--icon-sm"

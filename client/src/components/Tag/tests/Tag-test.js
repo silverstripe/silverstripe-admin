@@ -34,10 +34,10 @@ describe('Tag', () => {
 
     it('value get appended', () => {
       let wrapper = mount(<Tag dataKey="MyTagKey" value="123" />);
-      expect(wrapper.text()).toEqual('MyTagKey:123');
+      expect(wrapper.text()).toEqual('MyTagKey: 123');
 
       wrapper = mount(<Tag dataKey="MyTagKey" label="My Tag Label" value="123" />);
-      expect(wrapper.text()).toEqual('My Tag Label:123');
+      expect(wrapper.text()).toEqual('My Tag Label: 123');
     });
 
     it('children ignores value', () => {
