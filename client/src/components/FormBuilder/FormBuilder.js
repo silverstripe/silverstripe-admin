@@ -203,13 +203,14 @@ class FormBuilder extends Component {
    */
   handleSubmit(data) {
     // Add form action data (or default to first action, same as browser behaviour)
-    const action = this.state.submittingAction
-      ? this.state.submittingAction
-      : this.props.schema.schema.actions[0].name;
+    let action = '';
+    if (this.state.submittingAction) {
+      action = this.state.submittingAction;
+    } else if (this.props.schema.schema.actions[0]) {
+      action = this.props.schema.schema.actions[0].name;
+    }
 
-    const dataWithAction = Object.assign({}, data, {
-      [action]: 1,
-    });
+    const dataWithAction = Object.assign({}, data, action ? { [action]: 1 } : {});
     const requestedSchema = this.props.responseRequestedSchema.join();
     const headers = {
       'X-Formschema-Request': requestedSchema,
