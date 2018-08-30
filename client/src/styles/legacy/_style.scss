@@ -1281,6 +1281,7 @@ form.member-profile-form {
   .cms-content {
     background: $body-bg;
     height: 100%;
+    z-index: 0;
   }
 
   .cms-content-fields {
