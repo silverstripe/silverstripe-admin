@@ -20,7 +20,9 @@ const selectTagHandler = (key, values, formSchema) => {
   if (fieldState && fieldState.source) {
     // Convert our values to their display title equivalent.
     const labelValue = values.map((selectedValue) => {
-      const sourceEntry = fieldState.source.find(({ value }) => value === selectedValue);
+      const sourceEntry = fieldState.source.find(
+        ({ value }) => value.toString() === selectedValue.toString()
+      );
       return sourceEntry && sourceEntry.title ?
         sourceEntry.title :
         selectedValue;
