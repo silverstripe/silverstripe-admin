@@ -65,8 +65,8 @@ ActionMenu.defaultProps = {
   dropdownToggleClassNames: [
     'action-menu__toggle',
     'btn',
+    'btn-sm',
     'btn--no-text',
-    'btn--icon-xl',
     'font-icon-dot-3'
   ],
   dropdownToggleProps: {},
