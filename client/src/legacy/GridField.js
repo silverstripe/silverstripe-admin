@@ -123,13 +123,13 @@ $.entwine('ss', function($) {
     },
 
     injectSearchButton: function(visible) {
-      const hasLegacyFilterHeader = this.find('.grid-field__filter-header').length;
+      const hasLegacyFilterHeader = this.find('.grid-field__filter-header').length > 0;
       let content;
       if (visible) {
         content = '<span class="non-sortable"></span>';
         this.addClass('show-filter').find('.grid-field__filter-header, .grid-field__search-holder').removeClass('grid-field__search-holder--hidden');
         if (!hasLegacyFilterHeader) {
-          this.find('.grid-field :button[name=showFilter]').hide();
+          this.find(':button[name=showFilter]').hide();
         }
       } else {
         content = '<button type="button" title="Open search and filter" name="showFilter" class="btn btn-secondary font-icon-search btn--no-text btn--icon-large grid-field__filter-open"></button>';

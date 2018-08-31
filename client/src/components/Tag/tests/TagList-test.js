@@ -91,9 +91,9 @@ describe('Tag', () => {
       const wrapper = mount(<TagList tags={tagData} deletable onTagDelete={onTagDelete} />);
       const tags = wrapper.find('Tag');
 
-      const thirdTag = tags.at(3).find('a.tag');
+      const thirdTag = tags.at(3).find('li.tag');
 
-      thirdTag.simulate('keyDown', { keyCode: 46, preventDefault }); // Backspace
+      thirdTag.simulate('keyDown', { key: 'Backspace', preventDefault });
 
       expect(onTagDelete.mock.calls).toHaveLength(1);
       expect(onTagDelete.mock.calls[0]).toEqual(['KeyPairLabel']);
@@ -106,9 +106,9 @@ describe('Tag', () => {
       const wrapper = mount(<TagList tags={tagData} deletable onTagDelete={onTagDelete} />);
       const tags = wrapper.find('Tag');
 
-      const thirdTag = tags.at(3).find('a.tag');
+      const thirdTag = tags.at(3).find('li.tag');
 
-      thirdTag.simulate('keyDown', { keyCode: 8, preventDefault }); // Backspace
+      thirdTag.simulate('keyDown', { key: 'Delete', preventDefault });
 
       expect(onTagDelete.mock.calls).toHaveLength(1);
       expect(onTagDelete.mock.calls[0]).toEqual(['KeyPairLabel']);

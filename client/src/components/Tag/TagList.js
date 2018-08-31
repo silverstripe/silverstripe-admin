@@ -65,10 +65,11 @@ const TagList = ({ tags, deletable, focusable, onTagDelete, onTagClick, onHolder
   };
 
   return (
-    <div className="tag-list">
+    <ul className="tag-list">
       {tags.map((props) => (
         <Tag
           {...props}
+          tag="li"
           deletable={deletable}
           dataKey={props.key}
           focusable={focusable}
@@ -81,7 +82,7 @@ const TagList = ({ tags, deletable, focusable, onTagDelete, onTagClick, onHolder
           onClick={onTagClick}
         />
       ))}
-    </div>
+    </ul>
   );
 };
 

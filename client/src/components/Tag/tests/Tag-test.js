@@ -128,12 +128,12 @@ describe('Tag', () => {
         <Tag dataKey="MyTagKey" deletable {...handlers} />
       );
 
-      wrapper.simulate('keyDown', { keyCode: 8, preventDefault }); // Delete
-      wrapper.simulate('keyDown', { keyCode: 46, preventDefault }); // Backspace
-      wrapper.simulate('keyDown', { keyCode: 37, preventDefault }); // Previous
-      wrapper.simulate('keyDown', { keyCode: 39, preventDefault }); // Next
+      wrapper.simulate('keyDown', { key: 'Delete', preventDefault });
+      wrapper.simulate('keyDown', { key: 'Backspace', preventDefault });
+      wrapper.simulate('keyDown', { key: 'ArrowLeft', preventDefault });
+      wrapper.simulate('keyDown', { key: 'ArrowRight', preventDefault });
 
-      wrapper.simulate('keyDown', { keyCode: 13, preventDefault }); // Random one
+      wrapper.simulate('keyDown', { keyCode: 'Enter', preventDefault }); // Random one
 
       expect(handlers.onDeleteKey.mock.calls).toHaveLength(1);
       expect(handlers.onDeleteKey.mock.calls[0]).toEqual(['MyTagKey']);

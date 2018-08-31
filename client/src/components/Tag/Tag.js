@@ -4,30 +4,6 @@ import classnames from 'classnames';
 import i18n from 'i18n';
 
 /**
- * Backspace key code.
- * @type {number}
- */
-const BACKSPACE = 8;
-
-/**
- * Delete key code.
- * @type {number}
- */
-const DELETE = 46;
-
-/**
- * Left arrow key.
- * @type {number}
- */
-const LEFT_ARROW = 37;
-
-/**
- * Right arrow key
- * @type {number}
- */
-const RIGHT_ARROW = 39;
-
-/**
  * High jack some keys to fire off matching events.
  * @param e KeyDown event.
  * @param key Key tag to trigger.
@@ -36,20 +12,20 @@ const RIGHT_ARROW = 39;
  * @return void
  */
 const onKeyDown = (e, key, onDeleteKey, onBackSpace, onPrevious, onNext) => {
-  switch (e.keyCode) {
-    case BACKSPACE:
+  switch (e.key) {
+    case 'Backspace':
       e.preventDefault();
       onBackSpace(key);
       break;
-    case DELETE:
+    case 'Delete':
       e.preventDefault();
       onDeleteKey(key);
       break;
-    case LEFT_ARROW:
+    case 'ArrowLeft':
       e.preventDefault();
       onPrevious(key);
       break;
-    case RIGHT_ARROW:
+    case 'ArrowRight':
       e.preventDefault();
       onNext(key);
       break;
@@ -81,9 +57,9 @@ const Tag = ({
   return (
     <Button
       {...props}
+      role="button"
       className={classnames('tag', 'btn-sm', { tag__deletable: deletable })}
       onClick={(e) => { e.preventDefault(); onClick(dataKey); }}
-      href="#"
       tabIndex={focusable ? undefined : -1}
       onKeyDown={(e) => { onKeyDown(e, dataKey, onDeleteKey, onBackSpace, onPrevious, onNext); }}
       title={title}
@@ -138,6 +114,7 @@ Tag.propTypes = {
 };
 
 Tag.defaultProps = {
+  tag: 'span',
   deletable: false,
   onClick: () => {},
   onDelete: () => {},
