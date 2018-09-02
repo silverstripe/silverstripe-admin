@@ -407,9 +407,13 @@ $.entwine('ss', function($) {
   });
 
   // Covers both tabular delete button, and the button on the detail form
-  $('.grid-field .grid-field__col-compact .action.gridfield-button-delete, .cms-edit-form .btn-toolbar button.action.action-delete').entwine({
+  $('.grid-field .grid-field__col-compact .action--delete, .grid-field .grid-field__col-compact .action--archive, .cms-edit-form .btn-toolbar .action--delete, .cms-edit-form .btn-toolbar .action--archive').entwine({
     onclick: function(e){
-      if(!confirm(i18n._t('Admin.DELETECONFIRMMESSAGE'))) {
+      const confirmMessage = $(this).hasClass('action--archive')
+        ? i18n._t('Admin.ARCHIVECONFIRMMESSAGE')
+        : i18n._t('Admin.DELETECONFIRMMESSAGE');
+
+      if (!confirm(confirmMessage)) {
         e.preventDefault();
         return false;
       } else {
