@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@silverstripe/eslint-config@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@silverstripe/eslint-config/-/eslint-config-0.0.4.tgz#5f19b8c4def3ee1f34e33885e99b56ae1a719f81"
+"@silverstripe/eslint-config@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@silverstripe/eslint-config/-/eslint-config-0.0.5.tgz#ab94d58e6f328d4efbcc1910572fdff5d85fc4ec"
   dependencies:
     eslint "^4.6.1"
     eslint-config-airbnb "^15.1.0"
@@ -14,9 +14,9 @@
     eslint-plugin-jsx-a11y "^5.1.1"
     eslint-plugin-react "^7.3.0"
 
-"@silverstripe/webpack-config@^0.10.0":
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/@silverstripe/webpack-config/-/webpack-config-0.10.0.tgz#5cb3f9aeb4197f9325660c6ea5c9f15fb3ccf2a4"
+"@silverstripe/webpack-config@0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@silverstripe/webpack-config/-/webpack-config-0.11.0.tgz#54f083784083e12f4de5b376c0e655a1d8cc5f73"
   dependencies:
     autoprefixer "^6.4.0"
     babel-core "^6.24.1"
