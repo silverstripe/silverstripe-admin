@@ -23,5 +23,6 @@ setOptions({
   sidebarAnimations: false,
   hierarchySeparator: /\/|\./,
   hierarchyRootSeparator: /\/|\./,
+  addonPanelInRight: false,
 });
 configure(loadStories, module);

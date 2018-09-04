@@ -21,11 +21,18 @@ body {
 
 
 // TODO move out of layout
-@include media-breakpoint-down(md) {
-  .CMSPageEditController, // sass-lint:disable-line class-name-format
-  .CMSPageSettingsController { // sass-lint:disable-line class-name-format
-    &.has-panel .cms-content-tools {
-      display: none;
+.CMSPageEditController, // sass-lint:disable-line class-name-format
+.CMSPageSettingsController { // sass-lint:disable-line class-name-format
+  &.has-panel {
+    @include media-breakpoint-down(md) {
+      .cms-content-tools {
+        display: none;
+      }
+    }
+
+    // Fixes search date range inputs overflow
+    .fieldgroup .field.date {
+      max-width: calc(50% - #{$spacer / 4});
     }
   }
 }

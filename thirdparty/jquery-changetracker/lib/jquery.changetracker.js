@@ -48,8 +48,8 @@ import debounce from 'lodash.debounce';
     }
 
     this.defaults = {
-      fieldSelector: ':input:not(:button,[type="submit"])',
-      ignoreFieldSelector: '.no-change-track',
+      fieldSelector: ':input:not(:button,[type="submit"],[type="search"])',
+      ignoreFieldSelector: '.no-change-track,[type="search"]',
       changedCssClass: 'changed'
     };
 
@@ -220,7 +220,7 @@ import debounce from 'lodash.debounce';
     this.getFields = function() {
       return this
         .find(options.fieldSelector)
-        .not(options.ignoreFieldSelector);
+        .not(options.ignoreFieldSelector + ', .search-box *');
     };
 
     // Support invoking "public" methods as string arguments

@@ -1,4 +1,4 @@
-<div class="cms-content fill-height flexbox-area-grow cms-tabset center $BaseCSSClasses" data-layout-type="border" data-pjax-fragment="Content">
+<div class="cms-content fill-height flexbox-area-grow cms-tabset center $BaseCSSClasses" data-layout-type="border" data-pjax-fragment="Content" id="ModelAdmin">
 
 	<div class="cms-content-header north">
 		<div class="cms-content-header-info vertical-align-items flexbox-area-grow">
@@ -31,15 +31,6 @@
 		$Tools
 
 		<div class="cms-content-view">
-			<% if $SearchSummary %>
-				<p class="message notice">
-						<a href="$Link" class="clear-search btn btn-notice font-icon-cancel"><%t SilverStripe\Admin\ModelAdmin.CLEARSEARCH 'Clear search' %></a>
-                        <%t SilverStripe\Admin\ModelAdmin.SEARCHRESULTSFOR 'Search results for' %>
-					<% loop $SearchSummary %>
-						$Field<% if $Value %>: <strong>$Value</strong><% end_if %>
-					<% end_loop %>
-				</p>
-			<% end_if %>
 			$EditForm
 		</div>
 	</div>

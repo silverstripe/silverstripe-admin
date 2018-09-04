@@ -5,6 +5,9 @@ import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import IframeDialog from 'components/IframeDialog/IframeDialog';
+import Search from 'components/Search/Search.js';
+import { schemaMerge } from 'lib/schemaFieldValues';
+import { loadComponent } from 'lib/Injector';
 
 require('../legacy/ssui.core.js');
 
@@ -1416,16 +1419,113 @@ $.entwine('ss', function($) {
       // previously using "slideDown"/"slideUp" jQuery, but it was causing issues
       if (collapsed) {
         this.addClass('active');
-        $filters.css('display', 'block');
+        $filters.removeClass('cms-content-filters--hidden');
       } else {
         this.removeClass('active');
-        $filters.css('display', '');
+        $filters.addClass('cms-content-filters--hidden');
       }
       self.data('collapsed', !collapsed);
     },
     onclick: function () {
       this.showHide();
     }
+  });
+
+  $('.js-injector-boot .search-holder').entwine({
+    Component: null,
+
+    onmatch() {
+      this._super();
+
+      const cmsContent = this.closest('.cms-content').attr('id');
+      const context = (cmsContent)
+        ? { context: cmsContent }
+        : {};
+
+      const Search = loadComponent('Search', context);
+      this.setComponent(Search);
+
+      this.refresh();
+
+      const props = this.data('schema');
+    },
+
+    onunmatch() {
+      this._super();
+      // solves errors given by ReactDOM "no matched root found" error.
+      const container = this[0];
+      if (container) {
+        ReactDOM.unmountComponentAtNode(container);
+      }
+    },
+
+    // Prevent search filters form appearing below other elements
+    onfocusin() {
+      this.css('z-index', '100');
+    },
+
+    onfocusout() {
+      this.css('z-index', '');
+    },
+
+    close() {
+      $('#filters-button').showHide();
+      const props = this.data('schema');
+
+      if(props.filters) {
+        const url = $('.cms-search-form').attr('action');
+        const container = this.closest('.cms-container');
+        container.loadPanel(url, "", {}, true);
+      }
+    },
+
+    search(data) {
+      this._super();
+      let url = $('.cms-search-form').attr('action');
+
+      if(url && data) {
+        const params = [];
+        for (const [key, value] of Object.entries(data)) {
+          if (value) {
+            params[`q[${key}]`] = value;
+          }
+        }
+        if (Object.keys(params).length === 0) {
+          params[`q[${this.data('schema').name}]`] = "";
+        }
+        url = $.path.addSearchParams(url, params);
+
+        $('.cms-panel-deferred.cms-content-view').data('deferredNoCache', true);
+
+        var container = this.closest('.cms-container');
+        container.loadPanel(url, "", {}, true);
+      }
+    },
+
+    refresh() {
+      const props = this.data('schema');
+      const Search = this.getComponent();
+      const handleHide = () => this.close();
+      const handleSearch = (data) => this.search(data);
+      const narrowView = this.closest('.cms-content-tools').attr('id') === 'cms-content-tools-CMSMain';
+
+      // TODO: rework entwine so that react has control of holder
+      ReactDOM.render(
+        <Search
+          id="Search"
+          identifier="Search"
+          display="VISIBLE"
+          displayBehavior={"HIDEABLE"}
+          onHide={handleHide}
+          onSearch={handleSearch}
+          borders={{
+            left: !narrowView
+          }}
+          {...props}
+        />,
+        this[0]
+      );
+    },
   });
 });
 

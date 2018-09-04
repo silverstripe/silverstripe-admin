@@ -103,10 +103,6 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
         $memberValidator = Member::singleton()->getValidator();
         $detailForm->setValidator($memberValidator);
 
-        /** @var GridFieldPageCount $memberPaginator */
-        $memberListConfig->removeComponentsByType(GridFieldPageCount::class);
-        $memberListConfig->addComponent(new GridFieldPageCount('buttons-before-right'));
-
         /** @var GridFieldPageCount $groupPaginator */
         $groupListConfig->removeComponentsByType(GridFieldPageCount::class);
         $groupListConfig->addComponent(new GridFieldPageCount('buttons-before-right'));
