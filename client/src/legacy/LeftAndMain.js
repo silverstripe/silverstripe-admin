@@ -1490,6 +1490,9 @@ $.entwine('ss', function($) {
             params[`q[${key}]`] = value;
           }
         }
+        if (Object.keys(params).length === 0) {
+          params[`q[${this.data('schema').name}]`] = "";
+        }
         url = $.path.addSearchParams(url, params);
 
         $('.cms-panel-deferred.cms-content-view').data('deferredNoCache', true);
