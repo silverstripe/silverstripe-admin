@@ -2,7 +2,6 @@ import React from 'react';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import { Component as DateField } from '../DateField/DateField';
 import moment from 'moment';
-import modernizr from 'modernizr';
 import i18n from 'i18n';
 
 const localFormat = 'L LT';
@@ -66,18 +65,9 @@ class DatetimeField extends DateField {
   }
 }
 
-DatetimeField.propTypes = {
-  lang: React.PropTypes.string,
-  modernizr: React.PropTypes.object,
-  data: React.PropTypes.shape({
-    html5: React.PropTypes.boolean,
-  }),
-};
+DatetimeField.propTypes = DateField.propTypes;
 
-DatetimeField.defaultProps = {
-  modernizr,
-  data: {},
-};
+DatetimeField.defaultProps = DateField.defaultProps;
 
 export { DatetimeField as Component };
 
