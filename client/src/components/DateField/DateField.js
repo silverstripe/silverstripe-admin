@@ -12,10 +12,21 @@ class DateField extends TextField {
     return super.render();
   }
 
+  moment(...args) {
+    moment.locale(this.getLang());
+    return moment(...args);
+  }
+
+  getLang() {
+      const lang = this.asHTML5() ? this.props.isoLang : this.props.lang;
+
+    return lang || moment().locale();
+  }
+
   /**
    * If this field is to be rendered as a HTML5 date input
    *
-   * @return {Boolean}
+   * @return {Boolean }
    */
   asHTML5() {
     return this.props.data.html5 && this.hasNativeSupport();
@@ -33,7 +44,7 @@ class DateField extends TextField {
   getInputProps() {
     const placeholder = i18n.inject(
       i18n._t('Admin.FormatExample', 'Example: {format}'),
-      { format: moment().endOf('month').format(localFormat) }
+      { format: this.moment().endOf('month').format(localFormat) }
     );
 
     const defaultValue = this.asHTML5()
@@ -90,12 +101,11 @@ class DateField extends TextField {
   }
 
   convertToIso(localDate) {
-    moment.locale(this.props.lang);
     let isoDate = '';
 
     if (localDate) {
       // Input value can be in local format 'L' or ISO format
-      const dateObject = moment(localDate, [localFormat, 'YYYY-MM-DD']);
+      const dateObject = this.moment(localDate, [localFormat, 'YYYY-MM-DD']);
       if (dateObject.isValid()) {
         isoDate = dateObject.format('YYYY-MM-DD');
       }
@@ -105,10 +115,9 @@ class DateField extends TextField {
   }
 
   convertToLocalised(isoDate) {
-    moment.locale(this.props.lang);
     let localDate = '';
     if (isoDate) {
-      const dateObject = moment(isoDate);
+      const dateObject = this.moment(isoDate);
       if (dateObject.isValid()) {
         localDate = dateObject.format(localFormat);
       }
@@ -119,6 +128,7 @@ class DateField extends TextField {
 
 DateField.propTypes = {
   lang: React.PropTypes.string,
+  isoLang: React.PropTypes.string,
   modernizr: React.PropTypes.object,
   data: React.PropTypes.shape({
     html5: React.PropTypes.bool,
