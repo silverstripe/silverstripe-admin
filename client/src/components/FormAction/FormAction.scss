@@ -65,7 +65,10 @@
   font-size: 17px;
 }
 
-.btn--icon-large[class*="font-icon-"]::before {
+// Please use .btn--icon-lg 
+// TODO .btn--icon-large to be deprecated across CMS
+.btn--icon-large[class*="font-icon-"]::before,
+.btn--icon-lg[class*="font-icon-"]::before {
   font-size: 20px;
 }
 

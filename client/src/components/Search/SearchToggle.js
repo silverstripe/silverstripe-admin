@@ -9,7 +9,7 @@ const toggleBtnClasses = (toggled) => classnames(
   'btn--no-text',
   'search-toggle',
   'font-icon-search',
-  'btn--icon-large',
+  'btn--icon-lg',
   { 'search-toggle__active': toggled }
 );
 
