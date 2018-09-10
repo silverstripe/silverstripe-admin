@@ -72,7 +72,7 @@
         display: inline-block;
       }
 
-      &:hover, &.chosen-single-with-drop  {
+      &:hover, &.chosen-single-with-drop {
         background-color: #e4e8ec;
       }
       &.chosen-single-with-drop {
@@ -80,6 +80,12 @@
       }
       div {
         display: none;
+      }
+    }
+
+    .chosen-container-active {
+      .chosen-single {
+        background-color: #e4e8ec;
       }
     }
 
