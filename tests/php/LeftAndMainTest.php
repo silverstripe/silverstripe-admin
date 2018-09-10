@@ -3,6 +3,7 @@
 namespace SilverStripe\Admin\Tests;
 
 use SilverStripe\Assets\File;
+use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Manifest\ModuleLoader;
 use SilverStripe\Admin\CMSMenu;
 use SilverStripe\Admin\LeftAndMain;
@@ -45,15 +46,6 @@ class LeftAndMainTest extends FunctionalTest
     {
         CMSMenu::clear_menu();
         CMSMenu::populate_menu();
-        CMSMenu::add_link(
-            'Help',
-            _t('SilverStripe\\Admin\\LeftAndMain.HELP', 'Help', 'Menu title'),
-            LeftAndMain::config()->help_link,
-            -2,
-            array(
-                'target' => '_blank'
-            )
-        );
     }
 
     public function tearDown()
@@ -135,7 +127,6 @@ class LeftAndMainTest extends FunctionalTest
 
         $this->assertEquals(
             array(
-                'Help',
                 'SilverStripe-Admin-CMSProfileController',
                 'SilverStripe-Admin-SecurityAdmin'
             ),
@@ -157,11 +148,6 @@ class LeftAndMainTest extends FunctionalTest
             $menuItems->column('Code'),
             'Group with CMS_ACCESS_SilverStripe\\Admin\\LeftAndMain permission can access all sections'
         );
-        $this->assertContains(
-            'Help',
-            $menuItems->column('Code'),
-            'Group with CMS_ACCESS_SilverStripe\\Admin\\LeftAndMain permission can access all sections'
-        );
 
         // admin
         $this->logInAs($adminuser);
@@ -174,5 +160,23 @@ class LeftAndMainTest extends FunctionalTest
         );
 
         $this->session()->set('loggedInAs', null);
+    }
+
+    /**
+     * Test that getHelpLinks transforms $help_links into the correct format
+     */
+    public function testGetHelpLinks()
+    {
+        Config::modify()->set(LeftAndMain::class, 'help_links', [
+            'SilverStripe' => 'www.silverstripe.org',
+        ]);
+
+        $helpLinks = LeftAndMain::singleton()->getHelpLinks();
+        $this->assertCount(1, $helpLinks);
+
+        $silverstripeLink = $helpLinks->first();
+
+        $this->assertEquals('SilverStripe', $silverstripeLink['Title']);
+        $this->assertEquals('www.silverstripe.org', $silverstripeLink['URL']);
     }
 }

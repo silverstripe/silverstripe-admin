@@ -5,11 +5,12 @@
 // Anything below this line should only be used by non-bootstrap code
 
 $brand-secondary: #005a93;
+$brand-secondary-hover: darken($brand-secondary, 2);
 $brand-primary: #29abe2;
 $brand-success: #3fa142;
 $brand-danger: #d40404;
 
-// offical silverstripe brand color
+// Offical SilverStripe brand color
 $color-brand: #43c7f4 !default;
 
 // Generic colors

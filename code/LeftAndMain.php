@@ -127,12 +127,12 @@ class LeftAndMain extends Controller implements PermissionProvider
     private static $tree_class = null;
 
     /**
-     * @deprecated [version] The url used for the link in the Help tab in the backend
+     * @deprecated 5.0 use $help_links instead
      *
      * @config
      * @var string
      */
-    private static $help_link = '//userhelp.silverstripe.org/en/4';
+    private static $help_link = '';
 
     /**
      * @var array
@@ -1713,7 +1713,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * Return the version number of this application.
+     * Return the version number of this application, ie. 'CMS: 4.2.1'
      *
      * @return string
      */
@@ -1723,11 +1723,11 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * Return the version number of the CMS restricted to minor version. ie. 4.2
+     * Return the version number of the CMS, ie. '4.2.1'
      *
      * @return string
      */
-    public function MinorCMSVersion()
+    public function CMSVersionNumber()
     {
         $moduleName = array_keys($this->getVersionProvider()->getModules())[0];
         $lockModules = $this->getVersionProvider()->getModuleVersionFromComposer([$moduleName]);
@@ -1736,17 +1736,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             return '';
         }
 
-        // Remove any '-dev'
-        $version = explode('-', $lockModules[$moduleName])[0];
-
-        // Only use the minor version
-        $parts = explode('.', $version);
-
-        if (isset($parts[1])) {
-            return implode([$parts[0], $parts[1]], '.');
-        }
-
-        return $parts[0];
+        return $lockModules[$moduleName];
     }
 
     /**
@@ -1777,7 +1767,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      * @var array
      */
     private static $help_links = [
-        'CMS User help' => 'https//userhelp.silverstripe.org/en/4',
+        'CMS User help' => 'https://userhelp.silverstripe.org/en/4',
         'Developer docs' => 'https://docs.silverstripe.org/en/4/',
         'Community' => 'https://www.silverstripe.org/',
         'Feedback' => 'https://www.silverstripe.org/give-feedback/',
@@ -1792,9 +1782,17 @@ class LeftAndMain extends Controller implements PermissionProvider
         $helpLinks = $this->config()->get('help_links');
         $formattedLinks = [];
 
+        $helpLink = $this->config()->get('help_link');
+        if ($helpLink) {
+            Deprecation::notice('5.0', 'Use $help_links instead of $help_link');
+            $helpLinks['CMS User help'] = $helpLink;
+        }
+
         foreach ($helpLinks as $key => $value) {
+            $translationKey = str_replace(' ', '', $key);
+
             $formattedLinks[] = [
-                'Title' => $key,
+                'Title' => _t(__CLASS__ . '.' . $translationKey, $key),
                 'URL' => $value
             ];
         }
