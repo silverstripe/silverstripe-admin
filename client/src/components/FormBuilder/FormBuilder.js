@@ -321,6 +321,7 @@ class FormBuilder extends Component {
       form,
       afterMessages,
       autoFocus,
+      formTag,
     } = this.props;
 
     const props = {
@@ -345,7 +346,8 @@ class FormBuilder extends Component {
       persistentSubmitErrors,
       validate: this.validateForm,
       autoFocus,
-      setDOM: (formDOM) => { this.formDOM = formDOM; }
+      setDOM: (formDOM) => { this.formDOM = formDOM; },
+      formTag,
     };
 
     return (

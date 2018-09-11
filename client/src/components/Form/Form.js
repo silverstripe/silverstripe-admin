@@ -42,6 +42,7 @@ class Form extends Component {
     const fields = this.props.mapFieldsToComponents(this.props.fields);
     const actions = this.props.mapActionsToComponents(this.props.actions);
     const messages = this.renderMessages();
+    const FormTag = this.props.formTag;
 
     const className = ['form'];
     if (valid === false) {
@@ -57,9 +58,10 @@ class Form extends Component {
     };
 
     return (
-      <form
+      <FormTag
         {...formProps}
         ref={(form) => { this.form = form; this.props.setDOM(form); }}
+        role="form"
       >
         {fields &&
           <fieldset>
@@ -74,7 +76,7 @@ class Form extends Component {
           ? <div className="btn-toolbar" role="group">{actions}</div>
           : null
         }
-      </form>
+      </FormTag>
     );
   }
 }
@@ -102,10 +104,12 @@ Form.propTypes = {
     value: PropTypes.any,
     type: PropTypes.string,
   })),
+  formTag: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
 };
 
 Form.defaultProps = {
   setDOM: () => null,
+  formTag: 'form',
 };
 
 export default Form;

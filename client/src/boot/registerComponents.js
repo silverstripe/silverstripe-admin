@@ -40,6 +40,7 @@ import TagList from 'components/Tag/TagList';
 import CompactTagList from 'components/Tag/CompactTagList';
 import Search from 'components/Search/Search';
 import SearchToggle from 'components/Search/SearchToggle';
+import HtmlEditorField from 'components/HtmlEditorField/HtmlEditorField';
 
 export default () => {
   Injector.component.registerMany({
@@ -84,5 +85,6 @@ export default () => {
     CompactTagList,
     Search,
     SearchToggle,
+    HtmlEditorField,
   });
 };
