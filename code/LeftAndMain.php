@@ -13,6 +13,7 @@ use SilverStripe\Control\Director;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Control\HTTPResponse_Exception;
+use SilverStripe\Control\Middleware\HTTPCacheControlMiddleware;
 use SilverStripe\Control\PjaxResponseNegotiator;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Core\Config\Config;
@@ -582,6 +583,8 @@ class LeftAndMain extends Controller implements PermissionProvider
     protected function init()
     {
         parent::init();
+
+        HTTPCacheControlMiddleware::singleton()->disableCache();
 
         SSViewer::setRewriteHashLinksDefault(false);
         ContentNegotiator::setEnabled(false);

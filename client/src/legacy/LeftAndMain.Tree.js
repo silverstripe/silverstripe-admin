@@ -313,6 +313,9 @@ $.entwine('ss.tree', function($){
      *  (Object) Map of additional data, e.g. ParentID
      */
     updateNode: function(node, html, data) {
+      // Strip any HTML comments out of the input data, in case of e.g. source file comments
+      html = html.replace(/<!--[\s\S]*?-->/g, '');
+
       var self = this, newNode = $(html);
 
       var nextNode = data.NextID ? this.getNodeByID(data.NextID) : false;

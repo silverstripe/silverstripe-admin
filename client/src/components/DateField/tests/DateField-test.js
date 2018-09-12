@@ -108,6 +108,52 @@ describe('DateField', () => {
     });
   });
 
+  describe('getLang()', () => {
+    beforeEach(() => {
+      props = { ...props, lang: 'en_GB', value: '2017-01-05', isoLang: 'en_CA' };
+    });
+
+    it('should use isoLang when html5', () => {
+      props = {
+        ...props,
+        data: {
+          ...props.data,
+          html5: true,
+        },
+        modernizr: {
+          inputtypes: {
+            date: true,
+          },
+        },
+
+      };
+      dateField = ReactTestUtils.renderIntoDocument(
+        <DateField {...props} />
+      );
+      expect(dateField.getLang()).toBe('en_CA');
+    });
+
+    it('should use local lang when not html5', () => {
+      props = {
+        ...props,
+        data: {
+          ...props.data,
+          html5: true,
+        },
+        modernizr: {
+          inputtypes: {
+            date: false,
+          },
+        },
+
+      };
+      dateField = ReactTestUtils.renderIntoDocument(
+        <DateField {...props} html5={false} />
+      );
+      expect(dateField.getLang()).toBe('en_GB');
+    });
+  });
+
   describe('Browser doesn\'t support html5 date input', () => {
     beforeEach(() => {
       props = {
@@ -142,6 +188,7 @@ describe('DateField', () => {
       expect(inputField.type).toBe('text');
       expect(inputField.value).toBe('05/01/2017');
     });
+
 
     it('should pass iso format instead of localised format', () => {
       const value = '05/02/2018';

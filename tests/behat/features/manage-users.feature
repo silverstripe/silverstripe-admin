@@ -34,6 +34,40 @@ Feature: Manage users
     Then I should see "admin@example.org" in the "#Root_Users" element
     And I should see "staffmember@example.org" in the "#Root_Users" element
 
+  Scenario: I can search for an existing user by name
+    When I click the "Users" CMS tab
+    And I press the "Open search and filter" button
+    And I fill in "FirstName" with "ADMIN"
+    And I press the "Enter" key in the "FirstName" field
+    Then I should see "admin@example.org" in the "#Root_Users" element
+    But I should not see "staffmember@example.org" in the "#Root_Users" element
+    # Required to avoid "unsaved changes" browser dialog
+    Then I press the "Close" button
+
+  Scenario: I can search for an existing user by email
+    When I click the "Users" CMS tab
+    And I press the "Open search and filter" button
+    And I press the "Advanced" button
+    And I fill in "Email" with "staffmember@example.org"
+    And I press the "Search" button
+    Then I should see "staffmember@example.org" in the "#Root_Users" element
+    But I should not see "admin@example.org" in the "#Root_Users" element
+    # Required to avoid "unsaved changes" browser dialog
+    Then I press the "Close" button
+
+  Scenario: I can clear a search for an existing user
+    Given I click the "Users" CMS tab
+    And I press the "Open search and filter" button
+    And I press the "Advanced" button
+    And I fill in "Email" with "staffmember@example.org"
+    And I press the "Search" button
+    And I should see "staffmember@example.org" in the "#Root_Users" element
+    And I should not see "admin@example.org" in the "#Root_Users" element
+    When I press the "Close" button
+    Then I should see a "Open search and filter" button
+    And I should see "staffmember@example.org" in the "#Root_Users" element
+    And I should see "admin@example.org" in the "#Root_Users" element
+
   Scenario: I can list all users in a specific group
     When I click the "Groups" CMS tab
     # TODO Please check how performant this is

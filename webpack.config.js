@@ -50,6 +50,9 @@ const config = [
         minChunks: module => module.context && module.context.indexOf('/node_modules/') > -1,
       }),
     ],
+    watchOptions: {
+      poll: true
+    }
   },
   {
     name: 'i18n',

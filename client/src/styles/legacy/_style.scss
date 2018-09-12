@@ -1281,6 +1281,7 @@ form.member-profile-form {
   .cms-content {
     background: $body-bg;
     height: 100%;
+    z-index: 0;
   }
 
   .cms-content-fields {
@@ -1569,11 +1570,28 @@ body.cms-dialog {
 /** --------------------------------------------
  * Search forms (used in AssetAdmin, ModelAdmin, etc)
  * -------------------------------------------- */
-.cms-search-form {
-  margin-bottom: $spacer;
 
-  .filter & {
-    margin-bottom: 0;
+ // Necessary for z-index to function, allows the search form to be above other elements
+.search-holder {
+  position: relative;
+}
+
+// Override form styling inherited from cms-edit form
+.cms-edit-form {
+  .cms-search-form.cms-search-form { // double selector to override without using important
+    .form-group {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .form__field {
+      &-label, &-holder {
+        max-width: 100%;
+        flex: 0 0 100%;
+        padding-right: 0;
+        padding-left: 0;
+      }
+    }
   }
 }
 

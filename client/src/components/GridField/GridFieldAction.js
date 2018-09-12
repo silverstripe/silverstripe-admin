@@ -13,7 +13,7 @@ class GridFieldAction extends Component {
   render() {
     return (
       <button
-        className={`grid-field__icon-action font-icon-${this.props.icon} btn--icon-large`}
+        className={`grid-field__icon-action font-icon-${this.props.icon} btn--icon-lg`}
         onClick={this.handleClick}
       />
     );

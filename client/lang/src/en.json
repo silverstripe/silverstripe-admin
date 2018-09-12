@@ -30,5 +30,7 @@
     "Admin.ADVANCED": "Advanced",
     "Admin.ENTER": "Enter",
     "Admin.CLEAR": "Clear",
-    "Admin.SHOW_SEARCH": "Show search"
+    "Admin.SHOW_SEARCH": "Show search",
+    "Admin.REMOVE_TAG": "Remove Tag",
+    "Admin.SUMMARY_TAG_LABEL": "filters"
 }

@@ -298,6 +298,11 @@ jQuery.entwine('ss', function($) {
       this._super();
     },
 
+    onmatch: function() {
+      this.getEditor() || this.onadd();
+      this._super();
+    },
+
     /**
      * Destructor: onunmatch
      */

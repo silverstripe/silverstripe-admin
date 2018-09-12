@@ -370,6 +370,38 @@
   }
 }
 
+.grid-field__search-holder {
+  // Match gridfield full-width style
+  margin-left: -$panel-padding-x;
+  margin-right: -$panel-padding-x;
+
+  // If the gridfield is at the top of the form fill top gap
+  .grid-field:first-child & {
+    margin-top: -$panel-padding-y;
+  }
+
+  // Make the tab menu bottom border and the top of the search bar one line
+  .tab-pane .grid-field:first-child & .search-box__content-field {
+    margin-top: -1px;
+    border-top-style: solid;
+  }
+
+  // Remove extra spacing when the search field is visible
+  .show-filter & + .ss-gridfield-buttonrow {
+    margin-top: 0;
+  }
+
+  // Remove double border in model admin context
+  .ModelAdmin & .search-box__content-field {
+    border-left-style: none;
+  }
+
+  // Class for entwine hide/show
+  &--hidden {
+    display: none;
+  }
+}
+
 .grid-field {
   // If gridfield isn't first thing on page
   .field + & {

@@ -1,8 +1,8 @@
 <% if $SearchForm %>
     <div id="cms-content-tools-ModelAdmin" class="cms-content-filters">
-        <% if $SearchForm %>
-            <h3 class="cms-panel-header"><%t SilverStripe\Admin\ModelAdmin.SEARCH 'Search' %></h3>
-            $SearchForm
-        <% end_if %>
+        <div
+            class="search-holder"
+            data-schema="$SearchFieldSchema"
+        ></div>
     </div>
 <% end_if %>
