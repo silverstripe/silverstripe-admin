@@ -1,18 +1,7 @@
-.form-builder-modal__close-button {
-  position: relative;
-  z-index: 2;
-  font-size: 28px;
-  height: 32px;
-  opacity: .5;
-  margin-top: 0;
-
-  span {
-    overflow: hidden;
-    display: block;
-    margin-top: -6px;
-  }
-
-  &:hover {
-    opacity: .7;
+.form-builder-modal {
+  .loading--form {
+    flex: 1 1 auto;
+    position: relative;
+    height: 200px;
   }
 }

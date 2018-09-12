@@ -64,7 +64,7 @@ class Form extends Component {
         role="form"
       >
         {fields &&
-          <fieldset>
+          <fieldset {...this.props.fieldHolder}>
             {messages}
             {this.props.afterMessages}
 
@@ -73,7 +73,10 @@ class Form extends Component {
         }
 
         { actions && actions.length
-          ? <div className="btn-toolbar" role="group">{actions}</div>
+          ?
+            <div {...this.props.actionHolder}>
+              {actions}
+            </div>
           : null
         }
       </FormTag>
@@ -86,6 +89,13 @@ Form.propTypes = {
   setDOM: PropTypes.func,
   valid: PropTypes.bool,
   actions: PropTypes.array,
+  fieldHolder: PropTypes.shape({
+    className: PropTypes.string
+  }),
+  actionHolder: PropTypes.shape({
+    className: PropTypes.string
+  }),
+  extraClass: React.PropTypes.string,
   afterMessages: PropTypes.node,
   attributes: PropTypes.shape({
     action: PropTypes.string.isRequired,
@@ -110,6 +120,9 @@ Form.propTypes = {
 Form.defaultProps = {
   setDOM: () => null,
   formTag: 'form',
+  actionHolder: {
+    className: 'btn-toolbar'
+  }
 };
 
 export default Form;

@@ -20,6 +20,13 @@
   border: 0;
 }
 
+.modal__dialog {
+  .form-group:last-of-type,
+  .form-group:last-of-type .form-group {
+    margin-bottom: 0;
+  }
+}
+
 .modal__dialog--scrollable {
   overflow: auto;
 }
@@ -34,20 +41,13 @@
   .close {
     position: relative;
     z-index: 2;
-    font-size: 28px;
     height: 32px;
-    opacity: .5;
+    opacity: 1;
     margin-top: 0;
     margin-right: -$panel-padding-x;
 
     span {
-      overflow: hidden;
-      display: block;
-      margin-top: -6px;
-    }
-
-    &:hover {
-      opacity: .7;
+      display: none;
     }
   }
 
@@ -59,20 +59,43 @@
   }
 }
 
-.modal-body {
-  min-height: 200px;
-  display: flex;
+.modal__close-button,
+.modal-header .close {
+  opacity: 1;
 
-  &>.form,
-  &>div {
-    flex: 1;
-    height: auto;
-    width: 100%;
+  // We can't insert our own classes into the header close button
+  // so manually add font icon styles
+  &::before {
+    content: "\44"; // font-icon-cancel
+    color: $body-color;
+    position: relative;
+    top: -.2em;
+    font-size: 22px; // btn-icon-xl
+    font-family: silverstripe;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    transition: color $transition-speed-fast;
   }
 
-  &>.alert {
-    flex-grow: 0;
+  &:hover::before {
+    color: $link-hover-color;
   }
+
+  // Hide default modal close icon
+  span {
+    display: none;
+  }
+}
+
+.modal-footer {
+  justify-content: flex-start;
 }
 
 .modal__response {
