@@ -1653,7 +1653,11 @@ class LeftAndMain extends Controller implements PermissionProvider
         if (isset($this->urlParams['ID']) && is_numeric($this->urlParams['ID'])) {
             return $this->urlParams['ID'];
         }
-
+        
+        if (isset($this->getRequest()->param('ID')) && is_numeric($this->getRequest()->param('ID')) {
+            return $this->getRequest()->param('ID');
+        }
+        
         /** @deprecated */
         $session = $this->getRequest()->getSession();
         return $session->get($this->sessionNamespace() . ".currentPage") ?: null;
