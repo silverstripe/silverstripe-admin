@@ -4,6 +4,7 @@
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 import { createStore } from 'redux';
+import PropTypes from 'prop-types';
 
 const mockStore = createStore(state => state);
 
@@ -34,8 +35,8 @@ jest.mock('../provideInjector', () => function mockInjector(Injected) {
   }
 
   MockedInjector.childContextTypes = {
-    injector: React.PropTypes.shape({
-      get: React.PropTypes.func,
+    injector: PropTypes.shape({
+      get: PropTypes.func,
     }),
   };
 

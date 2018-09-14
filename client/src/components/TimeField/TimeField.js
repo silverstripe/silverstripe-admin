@@ -4,6 +4,7 @@ import { Component as DateField } from '../DateField/DateField';
 import moment from 'moment';
 import modernizr from 'modernizr';
 import i18n from 'i18n';
+import PropTypes from 'prop-types';
 
 const localFormat = 'LT';
 
@@ -53,10 +54,10 @@ class TimeField extends DateField {
 }
 
 TimeField.propTypes = {
-  lang: React.PropTypes.string,
-  modernizr: React.PropTypes.object,
-  data: React.PropTypes.shape({
-    html5: React.PropTypes.boolean,
+  lang: PropTypes.string,
+  modernizr: PropTypes.object,
+  data: PropTypes.shape({
+    html5: PropTypes.boolean,
   }),
 };
 

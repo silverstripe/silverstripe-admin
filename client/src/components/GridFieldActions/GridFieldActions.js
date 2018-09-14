@@ -4,6 +4,7 @@ import GridFieldDropdownAction from './GridFieldDropdownAction';
 import ActionMenu from '../ActionMenu/ActionMenu';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 class GridFieldActions extends PureComponent {
   constructor(props) {
@@ -96,7 +97,7 @@ const actionShape = GridFieldDropdownAction.propTypes;
 actionShape.group = PropTypes.string;
 
 GridFieldActions.propTypes = PropTypes.arrayOf(
-  React.PropTypes.shape(actionShape)
+  PropTypes.shape(actionShape)
 ).isRequired;
 
 export default GridFieldActions;
