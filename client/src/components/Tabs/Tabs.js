@@ -117,15 +117,18 @@ class Tabs extends Component {
   }
 
   render() {
+    const { hideNav, children } = this.props;
+    const { activeTab } = this.state;
+
     const containerProps = this.getContainerProps();
-    const nav = this.renderNav();
+    const nav = hideNav ? null : this.renderNav();
 
     return (
       <div {...containerProps}>
         <div className="wrapper">
           {nav}
-          <TabContent activeTab={this.state.activeTab}>
-            {this.props.children}
+          <TabContent activeTab={activeTab}>
+            {children}
           </TabContent>
         </div>
       </div>
@@ -137,11 +140,13 @@ Tabs.propTypes = {
   id: React.PropTypes.string.isRequired,
   defaultActiveKey: React.PropTypes.string,
   extraClass: React.PropTypes.string,
+  hideNav: React.PropTypes.bool,
 };
 
 Tabs.defaultProps = {
   className: '',
   extraClass: '',
+  hideNav: false
 };
 
 export default Tabs;
