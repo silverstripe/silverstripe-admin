@@ -1,4 +1,3 @@
-import React from 'react';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import { Component as DateField } from '../DateField/DateField';
 import moment from 'moment';

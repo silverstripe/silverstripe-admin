@@ -1,5 +1,6 @@
 import i18n from 'i18n';
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, bindActionCreators } from 'redux';
 import fetch from 'isomorphic-fetch';

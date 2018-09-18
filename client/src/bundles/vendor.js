@@ -16,6 +16,7 @@ require('expose-loader?jQuery!jquery');
 
 // Expose the libraries as globals for other modules to access
 // Note that these are order-dependent - earlier items should not depend on later ones
+require('expose-loader?PropTypes!prop-types');
 require('expose-loader?classnames!classnames');
 require('expose-loader?DeepFreezeStrict!deep-freeze-strict');
 require('expose-loader?React!react');

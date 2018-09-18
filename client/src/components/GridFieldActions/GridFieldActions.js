@@ -4,7 +4,6 @@ import GridFieldDropdownAction from './GridFieldDropdownAction';
 import ActionMenu from '../ActionMenu/ActionMenu';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import PropTypes from 'prop-types';
 
 class GridFieldActions extends PureComponent {
   constructor(props) {

@@ -4,7 +4,6 @@
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 import { createStore } from 'redux';
-import PropTypes from 'prop-types';
 
 const mockStore = createStore(state => state);
 
@@ -17,6 +16,9 @@ const mockProvider = Item => Item;
 jest.mock('../provideInjector', () => function mockInjector(Injected) {
   // eslint-disable-next-line
   const React = require('react');
+  // eslint-disable-next-line
+  const PropTypes = require('prop-types');
+
   function TestRegisteredComponent() {
     return <span>def</span>;
   }

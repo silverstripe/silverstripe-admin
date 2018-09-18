@@ -21,8 +21,8 @@ class GridFieldAction extends Component {
   }
 }
 
-GridFieldAction.PropTypes = {
-  Click: PropTypes.func.isRequired,
+GridFieldAction.propTypes = {
+  onClick: PropTypes.func.isRequired,
 };
 
 export default GridFieldAction;

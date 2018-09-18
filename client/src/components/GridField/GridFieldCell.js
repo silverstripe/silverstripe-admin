@@ -34,7 +34,7 @@ class GridFieldCell extends Component {
   }
 }
 
-GridFieldCell.PropTypes = {
+GridFieldCell.propTypes = {
   className: PropTypes.string,
   onDrillDown: PropTypes.func,
 };
