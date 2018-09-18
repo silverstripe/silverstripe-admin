@@ -1,6 +1,6 @@
 /* global document */
 import i18n from 'i18n';
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
@@ -15,7 +15,7 @@ import SearchBox from './SearchBox';
 import SearchForm from './SearchForm';
 import SearchToggle from './SearchToggle';
 import mapFormSchemaToTags from './utilities/mapFormSchemaToTags';
-
+import PropTypes from 'prop-types';
 
 const DISPLAY = {
   NONE: 'NONE',

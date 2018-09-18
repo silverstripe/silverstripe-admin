@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Tag from 'components/Tag/Tag';
 import i18n from 'i18n';
+import PropTypes from 'prop-types';
 
 /**
  * Display a tag with a *filter* icons and a number to summarise a greater number of other tags.

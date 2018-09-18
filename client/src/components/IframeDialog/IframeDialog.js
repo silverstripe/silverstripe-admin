@@ -1,6 +1,7 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 class IframeDialog extends Component {
   constructor(props) {

@@ -3,6 +3,7 @@ import { Button, DropdownItem } from 'reactstrap';
 import GridFieldDropdownAction from './GridFieldDropdownAction';
 import ActionMenu from '../ActionMenu/ActionMenu';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 class GridFieldActions extends PureComponent {
   constructor(props) {
@@ -92,9 +93,9 @@ class GridFieldActions extends PureComponent {
 }
 
 const actionShape = GridFieldDropdownAction.propTypes;
-actionShape.group = React.PropTypes.string;
+actionShape.group = PropTypes.string;
 
-GridFieldActions.propTypes = React.PropTypes.arrayOf(
+GridFieldActions.propTypes = PropTypes.arrayOf(
   React.PropTypes.shape(actionShape)
 ).isRequired;
 

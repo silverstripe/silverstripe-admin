@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Button } from 'reactstrap';
 import classnames from 'classnames';
 import i18n from 'i18n';
+import PropTypes from 'prop-types';
 
 /**
  * High jack some keys to fire off matching events.

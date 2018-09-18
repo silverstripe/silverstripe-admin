@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class GridFieldAction extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class GridFieldAction extends Component {
 }
 
 GridFieldAction.PropTypes = {
-  Click: React.PropTypes.func.isRequired,
+  Click: PropTypes.func.isRequired,
 };
 
 export default GridFieldAction;

@@ -1,5 +1,6 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import FormAlert from 'components/FormAlert/FormAlert';
+import PropTypes from 'prop-types';
 
 class Form extends Component {
   componentDidMount() {

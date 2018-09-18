@@ -12,6 +12,7 @@ import GridFieldAction from './GridFieldAction';
 import FormConstants from 'components/Form/FormConstants';
 import * as actions from 'state/records/RecordsActions';
 import castStringToElement from 'lib/castStringToElement';
+import PropTypes from 'prop-types';
 
 const NotYetLoaded = [];
 
@@ -158,12 +159,12 @@ class GridField extends Component {
 }
 
 GridField.propTypes = {
-  data: React.PropTypes.shape({
-    recordType: React.PropTypes.string.isRequired,
-    headerColumns: React.PropTypes.array,
-    collectionReadEndpoint: React.PropTypes.object,
-    onDrillDown: React.PropTypes.func,
-    onEditRecord: React.PropTypes.func,
+  data: PropTypes.shape({
+    recordType: PropTypes.string.isRequired,
+    headerColumns: PropTypes.array,
+    collectionReadEndpoint: PropTypes.object,
+    onDrillDown: PropTypes.func,
+    onEditRecord: PropTypes.func,
   }),
 };
 

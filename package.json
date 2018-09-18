@@ -66,6 +66,7 @@
     "modernizr": "^3.5.0",
     "moment": "^2.18.1",
     "page.js": "^4.13.3",
+    "prop-types": "^15.6.2",
     "qs": "^6.1.0",
     "react": "15.3.1",
     "react-addons-css-transition-group": "15.3.1",

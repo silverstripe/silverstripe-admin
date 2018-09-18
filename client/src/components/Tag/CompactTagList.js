@@ -1,9 +1,10 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import TagList from 'components/Tag/TagList';
 import SummaryTag from './SummaryTag';
 import ResizeAware from 'components/ResizeAware/ResizeAware';
 import classnames from 'classnames';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 
 /**
  * Extension of TagList that is aware of its size and switch to a summary view if greater than a

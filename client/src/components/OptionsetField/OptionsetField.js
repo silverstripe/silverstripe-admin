@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import OptionField from 'components/OptionsetField/OptionField';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
+import PropTypes from 'prop-types';
 
 class OptionsetField extends Component {
   constructor(props) {
@@ -79,19 +80,19 @@ class OptionsetField extends Component {
 }
 
 OptionsetField.propTypes = {
-  extraClass: React.PropTypes.string,
-  itemClass: React.PropTypes.string,
-  id: React.PropTypes.string,
-  name: React.PropTypes.string.isRequired,
-  source: React.PropTypes.arrayOf(React.PropTypes.shape({
-    value: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-    title: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-    disabled: React.PropTypes.bool,
+  extraClass: PropTypes.string,
+  itemClass: PropTypes.string,
+  id: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  source: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    title: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    disabled: PropTypes.bool,
   })),
-  onChange: React.PropTypes.func,
-  value: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-  readOnly: React.PropTypes.bool,
-  disabled: React.PropTypes.bool,
+  onChange: PropTypes.func,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  readOnly: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 OptionsetField.defaultProps = {

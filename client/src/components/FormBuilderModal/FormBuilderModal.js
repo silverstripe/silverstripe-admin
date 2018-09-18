@@ -4,6 +4,7 @@ import { Modal, ModalHeader } from 'reactstrap';
 import FormBuilderLoader from 'containers/FormBuilderLoader/FormBuilderLoader';
 import castStringToElement from 'lib/castStringToElement';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 const noop = () => null;
 
@@ -185,24 +186,24 @@ class FormBuilderModal extends Component {
 }
 
 FormBuilderModal.propTypes = {
-  autoFocus: React.PropTypes.bool,
-  isOpen: React.PropTypes.bool,
-  title: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.bool]),
-  className: React.PropTypes.string,
-  bodyClassName: React.PropTypes.string,
-  modalClassName: React.PropTypes.string,
-  showCloseButton: React.PropTypes.bool,
-  size: React.PropTypes.string,
-  onClosed: React.PropTypes.func,
-  schemaUrl: React.PropTypes.string,
-  onSubmit: React.PropTypes.func,
-  onAction: React.PropTypes.func,
-  responseClassGood: React.PropTypes.string,
-  responseClassBad: React.PropTypes.string,
-  identifier: React.PropTypes.string,
+  autoFocus: PropTypes.bool,
+  isOpen: PropTypes.bool,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  className: PropTypes.string,
+  bodyClassName: PropTypes.string,
+  modalClassName: PropTypes.string,
+  showCloseButton: PropTypes.bool,
+  size: PropTypes.string,
+  onClosed: PropTypes.func,
+  schemaUrl: PropTypes.string,
+  onSubmit: PropTypes.func,
+  onAction: PropTypes.func,
+  responseClassGood: PropTypes.string,
+  responseClassBad: PropTypes.string,
+  identifier: PropTypes.string,
   // Ignored and assumed true if onLoadingError is unassigned
-  showErrorMessage: React.PropTypes.bool,
-  onLoadingError: React.PropTypes.func,
+  showErrorMessage: PropTypes.bool,
+  onLoadingError: PropTypes.func,
 };
 
 FormBuilderModal.defaultProps = {

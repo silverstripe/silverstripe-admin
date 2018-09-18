@@ -1,9 +1,9 @@
-import React from 'react';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import { Component as TextField } from '../TextField/TextField';
 import moment from 'moment';
 import modernizr from 'modernizr';
 import i18n from 'i18n';
+import PropTypes from 'prop-types';
 
 const localFormat = 'L';
 
@@ -127,11 +127,11 @@ class DateField extends TextField {
 }
 
 DateField.propTypes = {
-  lang: React.PropTypes.string,
-  isoLang: React.PropTypes.string,
-  modernizr: React.PropTypes.object,
-  data: React.PropTypes.shape({
-    html5: React.PropTypes.bool,
+  lang: PropTypes.string,
+  isoLang: PropTypes.string,
+  modernizr: PropTypes.object,
+  data: PropTypes.shape({
+    html5: PropTypes.bool,
   }),
 };
 

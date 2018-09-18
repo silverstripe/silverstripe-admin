@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Tag from 'components/Tag/Tag';
 import TagPropType from './TagPropType';
+import PropTypes from 'prop-types';
 
 /**
  * Whatever the focus should move forward.

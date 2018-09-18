@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { FormGroup, InputGroup, InputGroupAddon, Label } from 'reactstrap';
 import castStringToElement from 'lib/castStringToElement';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 function fieldHolder(Field) {
   class FieldHolder extends Component {

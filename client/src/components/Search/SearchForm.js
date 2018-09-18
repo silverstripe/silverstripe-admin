@@ -1,8 +1,9 @@
 /* global document */
 import i18n from 'i18n';
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import FormBuilderLoader from 'containers/FormBuilderLoader/FormBuilderLoader';
 import { Collapse, Button } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 const searchLabel = i18n._t('Admin.SEARCH', 'Search');
 const clearLabel = i18n._t('Admin.CLEAR', 'Clear');
