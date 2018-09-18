@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import { TabContent, Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';
+import { connect } from 'react-redux';
+import { setActiveTab } from 'state/tabs/TabsActions';
 
 class Tabs extends Component {
   constructor(props) {
     super(props);
 
-    this.toggle = this.toggle.bind(this);
+    this.handleSetActiveTab = this.handleSetActiveTab.bind(this);
     this.renderTab = this.renderTab.bind(this);
-    this.state = {
-      activeTab: this.getDefaultActiveKey()
-    };
+  }
+
+  componentDidMount() {
+    this.handleSetActiveTab(this.getDefaultActiveKey());
   }
 
   /**
@@ -60,13 +63,19 @@ class Tabs extends Component {
     return active;
   }
 
-  toggle(activeTab) {
-    if (this.state.activeTab !== activeTab) {
-      this.setState({
-        activeTab,
-      });
+  /**
+   * Set the active tab
+   *
+   * @param activeTab
+   */
+  handleSetActiveTab(activeTab) {
+    const { onSetActiveTab } = this.props;
+
+    if (this.props.activeTab !== activeTab) {
+      onSetActiveTab(activeTab);
     }
   }
+
 
   /**
    * Render an individual link for the tabset
@@ -79,14 +88,14 @@ class Tabs extends Component {
       return null;
     }
     const classNames = classnames({
-      active: this.state.activeTab === child.props.name,
+      active: this.props.activeTab === child.props.name,
       [child.props.tabClassName]: child.props.tabClassName,
     });
 
     return (
       <NavItem>
         <NavLink
-          onClick={() => (this.toggle(child.props.name))}
+          onClick={() => (this.handleSetActiveTab(child.props.name))}
           disabled={child.props.disabled}
           className={classNames}
         >
@@ -117,8 +126,7 @@ class Tabs extends Component {
   }
 
   render() {
-    const { hideNav, children } = this.props;
-    const { activeTab } = this.state;
+    const { hideNav, children, activeTab } = this.props;
 
     const containerProps = this.getContainerProps();
     const nav = hideNav ? null : this.renderNav();
@@ -141,12 +149,36 @@ Tabs.propTypes = {
   defaultActiveKey: React.PropTypes.string,
   extraClass: React.PropTypes.string,
   hideNav: React.PropTypes.bool,
+  activeTab: React.PropTypes.string,
+  onSetActiveTab: React.PropTypes.func,
 };
 
 Tabs.defaultProps = {
   className: '',
   extraClass: '',
-  hideNav: false
+  hideNav: false,
 };
 
-export default Tabs;
+function mapStateToProps(state) {
+  const {
+    activeTab,
+  } = state.tabs;
+
+  return {
+    activeTab,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onSetActiveTab(activeTab) {
+      dispatch(setActiveTab(activeTab));
+    },
+  };
+}
+
+export { Tabs as Component };
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Tabs);
