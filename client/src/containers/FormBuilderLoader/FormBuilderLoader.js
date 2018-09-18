@@ -405,7 +405,7 @@ class FormBuilderLoader extends Component {
     // If the response from fetching the initial data
     // hasn't come back yet, don't render anything.
     if (!this.props.schema || !this.props.schema.schema || this.props.loading) {
-      return <Loading />;
+      return <Loading containerClass="loading--form flexbox-area-grow" />;
     }
 
     const props = Object.assign({}, this.props, {

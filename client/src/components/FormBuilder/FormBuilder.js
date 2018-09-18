@@ -312,6 +312,8 @@ class FormBuilder extends Component {
 
     const {
       asyncValidate,
+      fieldHolder,
+      actionHolder,
       onSubmitFail,
       onSubmitSuccess,
       shouldAsyncValidate,
@@ -328,7 +330,9 @@ class FormBuilder extends Component {
       form, // required as redux-form identifier
       afterMessages,
       fields: this.normalizeFields(schema.fields, state),
+      fieldHolder,
       actions: this.normalizeFields(schema.actions, state),
+      actionHolder,
       attributes,
       data: schema.data,
       initialValues: schemaFieldValues(schema, state),

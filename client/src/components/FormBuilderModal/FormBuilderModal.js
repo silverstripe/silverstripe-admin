@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import i18n from 'i18n';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Modal, ModalHeader } from 'reactstrap';
 import FormBuilderLoader from 'containers/FormBuilderLoader/FormBuilderLoader';
 import castStringToElement from 'lib/castStringToElement';
+import classnames from 'classnames';
 
 const noop = () => null;
 
@@ -27,6 +28,8 @@ class FormBuilderModal extends Component {
     }
     return (
       <FormBuilderLoader
+        fieldHolder={{ className: classnames('modal-body', this.props.bodyClassName) }}
+        actionHolder={{ className: 'modal-footer' }}
         autoFocus={this.props.autoFocus}
         schemaUrl={this.props.schemaUrl}
         onSubmit={this.handleSubmit}
@@ -150,12 +153,10 @@ class FormBuilderModal extends Component {
       return (
         <button
           type="button"
-          className="close form-builder-modal__close-button"
+          className="close modal__close-button"
           onClick={this.handleHide}
           aria-label={i18n._t('Admin.CLOSE', 'Close')}
-        >
-          <span aria-hidden="true">×</span>
-        </button>
+        />
       );
     }
 
@@ -175,11 +176,9 @@ class FormBuilderModal extends Component {
         size={this.props.size}
       >
         {this.renderHeader()}
-        <ModalBody className={this.props.bodyClassName}>
-          {response}
-          {form}
-          {this.props.children}
-        </ModalBody>
+        {response}
+        {form}
+        {this.props.children}
       </Modal>
     );
   }
@@ -212,6 +211,7 @@ FormBuilderModal.defaultProps = {
   onLoadingError: noop,
   isOpen: false,
   title: null,
+  modalClassName: 'form-builder-modal',
   responseClassGood: 'alert alert-success',
   responseClassBad: 'alert alert-danger',
 };
