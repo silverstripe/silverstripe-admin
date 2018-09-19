@@ -43,7 +43,9 @@ class FormBuilderLoader extends Component {
   }
 
   componentDidMount() {
-    this.fetch();
+    if (!this.props.schema) {
+      this.fetch();
+    }
   }
 
   componentDidUpdate(prevProps) {

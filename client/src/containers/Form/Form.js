@@ -25,4 +25,5 @@ const InjectedForm = inject(
 
 export default reduxForm({
   getFormState,
+  destroyOnUnmount: false,
 })(InjectedForm);

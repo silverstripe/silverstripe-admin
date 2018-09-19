@@ -46,17 +46,8 @@ class HtmlEditorField extends TextField {
     return <Script url={this.props.data.editorjs} onLoad={this.handleReady} />;
   }
 
-  /**
-   * Renders the rich text editor (TinyMCE)
-   * Happens only after the dependency script has been loaded
-   */
-  renderRichTextEditor() {
-    const config = JSON.parse(this.props.data.attributes['data-config']);
-    return super.render(config);
-  }
-
   render() {
-    return (this.state.isReady) ? this.renderRichTextEditor() : this.renderDependencyScript();
+    return (this.state.isReady) ? super.render() : this.renderDependencyScript();
   }
 
   /**
@@ -72,6 +63,21 @@ class HtmlEditorField extends TextField {
       const editorElement = document.getElementById(this.getInputProps().id);
       mountEvent.targets = [editorElement];
       $(document).triggerHandler(mountEvent);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.state.isReady) {
+      const { document, jQuery: $ } = window;
+      const unmountEvent = $.Event('EntwineElementsRemoved');
+      const editorElement = document.getElementById(this.getInputProps().id);
+      unmountEvent.targets = [editorElement];
+      // Ensure that redux knows of the latest changes before the editor is destroyed.
+      // This is pretty awful because TinyMCE triggers jQuery events which aren't picked up
+      // by the react components. We also can't manufacture an event with the right target
+      // without actually dispatching the event, and by then it's too late.
+      super.handleChange({ target: editorElement });
+      $(document).triggerHandler(unmountEvent);
     }
   }
 }
