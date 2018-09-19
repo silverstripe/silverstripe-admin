@@ -1,7 +1,7 @@
 /* global jest, describe, it, expect */
 
 import React from 'react';
-import Tabs from '../Tabs';
+import { Component as Tabs } from '../Tabs';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-15.4/build/index';
 

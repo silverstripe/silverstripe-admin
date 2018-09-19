@@ -12,6 +12,7 @@ import UnsavedFormsReducer from 'state/unsavedForms/UnsavedFormsReducer';
 import usedOnReducer from 'state/usedOn/usedOnReducer';
 import applyFormMiddleware from 'lib/dependency-injection/applyFormMiddleware';
 import ViewModeReducer from 'state/viewMode/ViewModeReducer';
+import TabsReducer from 'state/tabs/TabsReducer';
 
 
 export default (extra = {}) => {
@@ -28,6 +29,7 @@ export default (extra = {}) => {
     routing: routerReducer,
     treeDropdownField: TreeDropdownFieldReducer,
     mobileMenu: MobileMenuReducer,
+    tabs: TabsReducer,
     unsavedForms: UnsavedFormsReducer,
     usedOn: usedOnReducer,
     viewMode: ViewModeReducer,
