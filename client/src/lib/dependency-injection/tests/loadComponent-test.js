@@ -16,6 +16,9 @@ const mockProvider = Item => Item;
 jest.mock('../provideInjector', () => function mockInjector(Injected) {
   // eslint-disable-next-line
   const React = require('react');
+  // eslint-disable-next-line
+  const PropTypes = require('prop-types');
+
   function TestRegisteredComponent() {
     return <span>def</span>;
   }
@@ -34,8 +37,8 @@ jest.mock('../provideInjector', () => function mockInjector(Injected) {
   }
 
   MockedInjector.childContextTypes = {
-    injector: React.PropTypes.shape({
-      get: React.PropTypes.func,
+    injector: PropTypes.shape({
+      get: PropTypes.func,
     }),
   };
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class LiteralField extends Component {
   /**
@@ -37,10 +38,10 @@ class LiteralField extends Component {
 }
 
 LiteralField.propTypes = {
-  id: React.PropTypes.string,
-  name: React.PropTypes.string.isRequired,
-  extraClass: React.PropTypes.string,
-  value: React.PropTypes.string,
+  id: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  extraClass: PropTypes.string,
+  value: PropTypes.string,
 };
 
 LiteralField.defaultProps = {

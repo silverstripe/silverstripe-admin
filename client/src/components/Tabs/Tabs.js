@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { TabContent, Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 class Tabs extends Component {
   constructor(props) {
@@ -137,10 +138,10 @@ class Tabs extends Component {
 }
 
 Tabs.propTypes = {
-  id: React.PropTypes.string.isRequired,
-  defaultActiveKey: React.PropTypes.string,
-  extraClass: React.PropTypes.string,
-  hideNav: React.PropTypes.bool,
+  id: PropTypes.string.isRequired,
+  defaultActiveKey: PropTypes.string,
+  extraClass: PropTypes.string,
+  hideNav: PropTypes.bool,
 };
 
 Tabs.defaultProps = {

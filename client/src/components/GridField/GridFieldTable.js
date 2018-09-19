@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class GridFieldTable extends Component {
   /**
@@ -54,9 +55,9 @@ class GridFieldTable extends Component {
 }
 
 GridFieldTable.propTypes = {
-  data: React.PropTypes.object,
-  header: React.PropTypes.object,
-  rows: React.PropTypes.array,
+  data: PropTypes.object,
+  header: PropTypes.object,
+  rows: PropTypes.array,
 };
 
 export default GridFieldTable;

@@ -1,7 +1,8 @@
 import i18n from 'i18n';
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Button } from 'reactstrap';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 const label = i18n._t('Admin.SHOW_SEARCH', 'Show search');
 

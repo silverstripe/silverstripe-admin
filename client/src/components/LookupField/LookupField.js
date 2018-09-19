@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Input } from 'reactstrap';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import i18n from 'i18n';
+import PropTypes from 'prop-types';
 
 class LookupField extends Component {
   constructor(props) {
@@ -70,15 +71,15 @@ class LookupField extends Component {
 }
 
 LookupField.propTypes = {
-  extraClass: React.PropTypes.string,
-  id: React.PropTypes.string,
-  name: React.PropTypes.string.isRequired,
-  source: React.PropTypes.arrayOf(React.PropTypes.shape({
-    value: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-    title: React.PropTypes.any,
-    disabled: React.PropTypes.bool,
+  extraClass: PropTypes.string,
+  id: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  source: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    title: PropTypes.any,
+    disabled: PropTypes.bool,
   })),
-  value: React.PropTypes.any,
+  value: PropTypes.any,
 };
 
 LookupField.defaultProps = {

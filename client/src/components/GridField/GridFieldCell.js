@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 class GridFieldCell extends Component {
   constructor(props) {
@@ -33,9 +34,9 @@ class GridFieldCell extends Component {
   }
 }
 
-GridFieldCell.PropTypes = {
-  className: React.PropTypes.string,
-  onDrillDown: React.PropTypes.func,
+GridFieldCell.propTypes = {
+  className: PropTypes.string,
+  onDrillDown: PropTypes.func,
 };
 
 export default GridFieldCell;

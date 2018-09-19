@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import merge from 'merge';
 import schemaFieldValues, { schemaMerge } from 'lib/schemaFieldValues';
 import { createErrorBlock } from 'lib/createErrorBlock';

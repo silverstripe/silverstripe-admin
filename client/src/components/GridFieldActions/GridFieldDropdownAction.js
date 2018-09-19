@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { DropdownItem } from 'reactstrap';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 class GridFieldDropdownAction extends PureComponent {
   render() {
@@ -38,10 +39,10 @@ class GridFieldDropdownAction extends PureComponent {
 }
 
 GridFieldDropdownAction.propTypes = {
-  data: React.PropTypes.object,
-  title: React.PropTypes.string.isRequired,
-  type: React.PropTypes.oneOf(['submit', 'link']),
-  url: React.PropTypes.string,
+  data: PropTypes.object,
+  title: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(['submit', 'link']),
+  url: PropTypes.string,
 };
 
 export default GridFieldDropdownAction;

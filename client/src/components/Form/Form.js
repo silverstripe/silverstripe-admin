@@ -1,5 +1,6 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import FormAlert from 'components/FormAlert/FormAlert';
+import PropTypes from 'prop-types';
 
 class Form extends Component {
   componentDidMount() {
@@ -95,7 +96,7 @@ Form.propTypes = {
   actionHolder: PropTypes.shape({
     className: PropTypes.string
   }),
-  extraClass: React.PropTypes.string,
+  extraClass: PropTypes.string,
   afterMessages: PropTypes.node,
   attributes: PropTypes.shape({
     action: PropTypes.string.isRequired,

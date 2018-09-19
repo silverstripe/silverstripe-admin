@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class HeaderField extends Component {
   /**
@@ -25,13 +26,13 @@ class HeaderField extends Component {
 }
 
 HeaderField.propTypes = {
-  extraClass: React.PropTypes.string,
-  id: React.PropTypes.string,
-  data: React.PropTypes.oneOfType([
-    React.PropTypes.array,
-    React.PropTypes.shape({
-      headingLevel: React.PropTypes.number,
-      title: React.PropTypes.string,
+  extraClass: PropTypes.string,
+  id: PropTypes.string,
+  data: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.shape({
+      headingLevel: PropTypes.number,
+      title: PropTypes.string,
     }),
   ]).isRequired,
 };

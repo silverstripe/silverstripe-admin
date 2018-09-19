@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import { Input } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class TextField extends Component {
   constructor(props) {
@@ -78,17 +79,17 @@ class TextField extends Component {
 }
 
 TextField.propTypes = {
-  extraClass: React.PropTypes.string,
-  id: React.PropTypes.string,
-  name: React.PropTypes.string.isRequired,
-  onChange: React.PropTypes.func,
-  value: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-  readOnly: React.PropTypes.bool,
-  disabled: React.PropTypes.bool,
-  placeholder: React.PropTypes.string,
-  type: React.PropTypes.string,
-  autoFocus: React.PropTypes.bool,
-  attributes: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.array]),
+  extraClass: PropTypes.string,
+  id: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  readOnly: PropTypes.bool,
+  disabled: PropTypes.bool,
+  placeholder: PropTypes.string,
+  type: PropTypes.string,
+  autoFocus: PropTypes.bool,
+  attributes: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
 TextField.defaultProps = {

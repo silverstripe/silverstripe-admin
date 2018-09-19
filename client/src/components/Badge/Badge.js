@@ -1,5 +1,6 @@
-import React, { PureComponent, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 class Badge extends PureComponent {
   render() {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Fade, TabPane } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class TabItem extends Component {
   /**
@@ -44,9 +45,9 @@ class TabItem extends Component {
 }
 
 TabItem.propTypes = {
-  name: React.PropTypes.string.isRequired,
-  extraClass: React.PropTypes.string,
-  tabClassName: React.PropTypes.string,
+  name: PropTypes.string.isRequired,
+  extraClass: PropTypes.string,
+  tabClassName: PropTypes.string,
 };
 
 TabItem.defaultProps = {
@@ -55,7 +56,7 @@ TabItem.defaultProps = {
 };
 
 TabItem.contextTypes = {
-  activeTabId: React.PropTypes.string
+  activeTabId: PropTypes.string
 };
 
 export default TabItem;
