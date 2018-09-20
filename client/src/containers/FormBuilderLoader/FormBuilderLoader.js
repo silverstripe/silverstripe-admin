@@ -43,7 +43,11 @@ class FormBuilderLoader extends Component {
   }
 
   componentDidMount() {
-    this.fetch();
+    const { schema, refetchSchemaOnMount } = this.props;
+
+    if (refetchSchemaOnMount || !schema) {
+      this.fetch();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -430,11 +434,16 @@ FormBuilderLoader.propTypes = Object.assign({}, basePropTypes, {
   identifier: PropTypes.string.isRequired,
   schemaUrl: PropTypes.string.isRequired,
   schema: schemaPropType,
+  refetchSchemaOnMount: PropTypes.bool.isRequired,
   form: PropTypes.string,
   submitting: PropTypes.bool,
   onFetchingSchema: PropTypes.func,
   loadingComponent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]).isRequired,
 });
+
+FormBuilderLoader.defaultProps = {
+  refetchSchemaOnMount: true,
+};
 
 function mapStateToProps(state, ownProps) {
   const schema = state.form.formSchemas[ownProps.schemaUrl];

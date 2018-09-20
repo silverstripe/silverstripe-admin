@@ -82,7 +82,7 @@
     "react-select": "^1.0.0-rc.5",
     "reactstrap": "^5.0.0-beta",
     "redux": "https://registry.npmjs.org/redux/-/redux-3.0.5.tgz",
-    "redux-form": "^6.0.2",
+    "redux-form": "^6.8.0",
     "redux-thunk": "^2.1.0",
     "resize-observer-polyfill": "^1.5.0",
     "toposort": "^1.0.3",
