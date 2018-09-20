@@ -38,9 +38,19 @@ class GridFieldActions extends PureComponent {
     }, []);
 
     const dropdownMenuProps = { right: true };
+    const dropdownToggleClassNames = [
+      'action-menu__toggle',
+      'btn',
+      'btn--no-text',
+      'btn-sm',
+      'font-icon-dot-3'
+    ];
 
     return (
-      <ActionMenu dropdownMenuProps={dropdownMenuProps}>
+      <ActionMenu
+        dropdownMenuProps={dropdownMenuProps}
+        dropdownToggleClassNames={dropdownToggleClassNames}
+      >
         {Object.keys(groupedActions).map(
           (group, index) => [
             index !== 0 && <DropdownItem divider />,
