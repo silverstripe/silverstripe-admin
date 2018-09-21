@@ -33,6 +33,8 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.VALIDATOR_MESSAGE_DATE": "{name} is not a proper date format.",
     "Admin.VALIDATOR_MESSAGE_ALPHANUMERIC": "{name} is not an alphanumeric value.",
     "Admin.VALIDATOR_MESSAGE_ALPHA": "{name} is not only letters.",
-    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} is not a valid value."
+    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} is not a valid value.",
+    "Admin.INSERT_LINK": "Insert link",
+    "Admin.INSERT_LINK_WITH_SHORTCUT": "Insert link {shortcut}"
 });
 }
