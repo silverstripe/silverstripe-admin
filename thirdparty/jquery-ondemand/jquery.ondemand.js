@@ -19,6 +19,16 @@
 		return str.replace(/%2C/g,',').replace(/\&amp;/g, '&').replace(/^\s+|\s+$/g, '');
 	};
 
+    var stripParams = function(str, whitelist) {
+    	str = str.replace(new RegExp('('+whitelist.join('|')+')=([^&]*)&?', 'g'), '');
+    	if (str.lastIndexOf("?") === str.length-1) {
+    		str = str.substr(0, str.length-1);
+		}
+        return str;
+    };
+
+    const whitelist = ['m','_'];
+
 	$.extend({
 
 		// loaded files list - to protect against loading existed file again  (by PGA)
@@ -33,7 +43,10 @@
 				this._ondemand_loaded_list = {};
 				$('script').each(function() {
 					src = $(this).attr('src');
-					if(src) self._ondemand_loaded_list[src] = 1;
+					if(src) {
+				  		src = stripParams(decodePath(src), whitelist);
+				  		self._ondemand_loaded_list[src] = 1;
+                    }
 				});
 				$('link[rel="stylesheet"]').each(function() {
 					src = $(this).attr('href');
@@ -92,7 +105,8 @@
 			if(xhr.getResponseHeader && xhr.getResponseHeader('X-Include-JS')) {
 				var jsIncludes = xhr.getResponseHeader('X-Include-JS').split(',');
 				for(var i=0;i<jsIncludes.length;i++) {
-					var jsIncludePath = decodePath(jsIncludes[i]);
+					var jsIncludePath = stripParams(decodePath(jsIncludes[i]), whitelist);
+
 					if(!$.isItemLoaded(jsIncludePath)) {
 						newJsIncludes.push(jsIncludePath);
 					}
