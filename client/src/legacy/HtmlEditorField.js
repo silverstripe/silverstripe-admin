@@ -105,12 +105,59 @@ ss.editorWrappers.tinyMCE = (function() {
      * Create a new instance based on a textarea field.
      */
     create: function() {
+      let timeLastScrolled;
+      let showAfterScrollFunc;
+      let initialOffset;
+
+      // Recalculate floatpanels (ie. image tools) absolute position then show it
+      function showAfterScroll(panel, initialOffset) {
+        // The position scrolled to
+        const finalOffset = $(panel).scrollTop();
+
+        // Reposition the floatpanels by length scrolled
+        $('.mce-floatpanel').each((i, el) => {
+          const oldPosition = parseFloat(el.style.top);
+          $(el).css('top', `${oldPosition - (finalOffset - initialOffset)}px`);
+        });
+        $('.mce-floatpanel').css('opacity', '1');
+
+        // Allow the floatpanels to be hidden again
+        timeLastScrolled = undefined;
+      };
+
+      // Hide floatpanels (ie. image tools) while scrolling forms and
+      // then recalculate position
+      function hideOnScroll(e) {
+        // Which element is being scrolled
+        const panel = e.target;
+
+        // If this is the first scroll event or the first one after 500ms
+        if(!timeLastScrolled || ((new Date() - timeLastScrolled) / 100) > 500) {
+          // Get the starting scroll position
+          initialOffset = $(panel).scrollTop();
+          $('.mce-floatpanel').css('opacity', '0');
+        } else {
+          // If this event is triggered before the 500ms timout reset the timeout
+          window.clearTimeout(showAfterScrollFunc);
+        }
+        timeLastScrolled = new Date();
+        // Set a function to trigger if no scrolling occurs within 500ms
+        showAfterScrollFunc = window.setTimeout(() => showAfterScroll(panel, initialOffset), 500)
+      }
+
       var config = this.getConfig();
       // hack to set baseURL safely
       if(typeof config.baseURL !== 'undefined') {
         tinymce.EditorManager.baseURL = config.baseURL;
       }
-      tinymce.init(config);
+
+      // Bind the floatpanel hide and reposition listener to the closest scrollable panel
+      tinymce.init(config).then((editors) => {
+        if(editors.length > 0 && editors[0].container) {
+          const scrollPanel = $(editors[0].container).closest('.panel--scrollable');
+          scrollPanel.on('scroll', (e) => hideOnScroll(e));
+        }
+      });
     },
 
     /**
