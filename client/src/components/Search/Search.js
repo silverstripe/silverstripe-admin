@@ -133,8 +133,13 @@ class Search extends Component {
     // Filter empty values
     Object.keys(this.props.formData).forEach((key) => {
       const value = this.props.formData[key];
+      // Strip any "Search__" from the key
+      let dataKey = key;
+      if (dataKey.startsWith('Search__')) {
+        dataKey = dataKey.substring(8);
+      }
       if (value) {
-        data[key] = value;
+        data[dataKey] = value;
       }
     });
 
@@ -386,7 +391,7 @@ class Search extends Component {
 
   render() {
     const { formSchemaUrl, forceFilters, id, displayBehavior,
-      identifier, formIsDirty, tagData, ...props } = this.props;
+      identifier, formIsDirty, tagData, name, ...props } = this.props;
 
     // If the box is not to be displayed
     if (this.state.display === DISPLAY.NONE) {
@@ -416,6 +421,7 @@ class Search extends Component {
       <Focusedzone onClickOut={this.show} className="search">
         <SearchBox
           {...props}
+          name={`SearchBox__${name}`}
           onChange={this.handleChange}
           onSearch={this.doSearch}
           onToggleFilter={this.toggle}
