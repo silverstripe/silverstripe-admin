@@ -120,7 +120,7 @@ class Search extends Component {
 
   /**
    * Get the search criteria compiled into an object.
-   * @return Object
+   * @returns {Object}
    */
   getData(ignoreSearchTerm = false) {
     const data = {};
@@ -148,7 +148,7 @@ class Search extends Component {
 
   /**
    * Update the state search term form an input field change event.
-   * @param event onChangeEvent from a input field.
+   * @param {Object} event onChangeEvent from a input field.
    */
   handleChange(event) {
     const value = event.target.value;
@@ -214,7 +214,7 @@ class Search extends Component {
 
   /**
    * Clear the search term and any advanced search form data.
-   * @param props
+   * @param {Object} props
    */
   clearFormData(props) {
     if (this.state.searchText !== '') {
@@ -232,7 +232,7 @@ class Search extends Component {
 
   /**
    * Clear a search filter and execute a new search
-   * @param string key Search filter name to clear
+   * @param {string} key Search filter name to clear
    */
   clearFormFilter(key) {
     const tag = this.props.tagData[key];
@@ -245,7 +245,7 @@ class Search extends Component {
 
   /**
    * Focus on the requested search filter name.
-   * @param string key Search filter name.
+   * @param {string} key Search filter name.
    */
   focusFormFilter(key) {
     const tag = this.props.tagData[key];
@@ -326,7 +326,7 @@ class Search extends Component {
 
   /**
    * Wrap up all the data into an object and call the onSearch method provided via the props.
-   * @param Object overrides Data to overrides over our existing form data.
+   * @param {Object} overrides Data to overrides over our existing form data.
    */
   doSearch(overrides = {}) {
     // Data to send to the remote service
@@ -372,7 +372,7 @@ class Search extends Component {
 
   /**
    * Take the provided tagData and format in way that will make sense for TagList.
-   * @return Object[]
+   * @returns {Object[]}
    */
   formatTagData() {
     const { tagData, name } = this.props;

@@ -21,7 +21,7 @@ class SearchForm extends Component {
   /**
    * Handle enter key submission in search form
    *
-   * @param {Object} event
+   * @param {Object} e
    */
   handleKeyDown(e) {
     if (e.key === 'Enter') {
@@ -41,6 +41,7 @@ class SearchForm extends Component {
         >
           {formSchemaUrl && <FormBuilderLoader
             className="no-change-track"
+            formTag="div"
             identifier={identifier}
             schemaUrl={formSchemaUrl}
             onSubmit={() => { onSearch(); return Promise.resolve(); }}
