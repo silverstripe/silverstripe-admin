@@ -212,7 +212,6 @@ class SearchBox extends Component {
         name={name}
         placeholder={placeholder}
         className={classeNames}
-
         onKeyDown={this.handleKeyDown}
         onChange={onChange}
         onFocus={this.handleFocus}

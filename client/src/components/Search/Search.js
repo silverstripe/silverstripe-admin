@@ -61,7 +61,10 @@ class Search extends Component {
     this.focusFormFilter = this.focusFormFilter.bind(this);
     this.formatTagData = this.formatTagData.bind(this);
 
-    const term = props.term || (props.filters && props.filters[props.name]) || '';
+    const term = props.term
+      || (props.filters && props.filters[`Search__${props.name}`])
+      || '';
+
     this.state = {
       display: props.display,
       searchText: term,
@@ -123,23 +126,20 @@ class Search extends Component {
    * @returns {Object}
    */
   getData(ignoreSearchTerm = false) {
+    const { name, formData } = this.props;
+    const { searchText } = this.state;
     const data = {};
 
     // Merge data from redux-forms with text field
-    if (!ignoreSearchTerm && this.state.searchText) {
-      data[this.props.name] = this.state.searchText.trim();
+    if (!ignoreSearchTerm && searchText) {
+      data[name] = searchText.trim();
     }
 
     // Filter empty values
-    Object.keys(this.props.formData).forEach((key) => {
-      const value = this.props.formData[key];
-      // Strip any "Search__" from the key
-      let dataKey = key;
-      if (dataKey.startsWith('Search__')) {
-        dataKey = dataKey.substring(8);
-      }
+    Object.keys(formData).forEach((key) => {
+      const value = formData[key];
       if (value) {
-        data[dataKey] = value;
+        data[key] = value;
       }
     });
 
@@ -330,9 +330,26 @@ class Search extends Component {
    */
   doSearch(overrides = {}) {
     // Data to send to the remote service
-    const searchData = Object.assign({}, this.getData(), overrides);
-    const searchText = searchData[this.props.name] || '';
+    const { name } = this.props;
+    const searchData = {};
 
+    Object.entries(this.getData()).forEach(([key, value]) => {
+      // Strip any "Search__" from the key
+      let newKey = key;
+      let newValue = value;
+
+      if (overrides.hasOwnProperty(key)) {
+        newValue = overrides[key];
+      }
+
+      if (key !== `Search__${name}` && key.startsWith('Search__')) {
+        newKey = key.substring(8);
+      }
+
+     searchData[newKey] = newValue;
+    });
+
+    const searchText = searchData[name] || '';
     // Data to store in the redux state
     const formData = Object.assign({}, this.getData(true), overrides);
 
@@ -376,17 +393,18 @@ class Search extends Component {
    */
   formatTagData() {
     const { tagData, name } = this.props;
+    const tagDataCopy = Object.assign({}, tagData);
+    const nameKey = `Search__${name}`;
+
     // Remove any tag matching the name of our form field.
-    if (tagData && tagData[name]) {
-      delete tagData[name];
+    if (tagDataCopy && tagDataCopy[nameKey]) {
+      delete tagDataCopy[nameKey];
     }
 
     // Convert the tag data to a plain array and remove un-needed attributes.
-    const tagDataAsPlainArray = tagData ?
-      Object.values(tagData).map(({ key, label, value }) => ({ key, label, value })) :
+    return tagDataCopy ?
+      Object.values(tagDataCopy).map(({ key, label, value }) => ({ key, label, value })) :
       [];
-
-    return tagDataAsPlainArray;
   }
 
   render() {
@@ -407,6 +425,7 @@ class Search extends Component {
 
     // Build classes
     const expanded = this.state.display === DISPLAY.EXPANDED;
+    const visible = this.state.display === DISPLAY.VISIBLE;
 
     // Decide if we display the X button
     const hideable =
@@ -443,6 +462,7 @@ class Search extends Component {
           <SearchForm
             id={formId}
             identifier={identifier}
+            visible={visible}
             expanded={expanded}
             formSchemaUrl={formSchemaUrl}
             onSearch={this.doSearch}
