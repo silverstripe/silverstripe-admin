@@ -28,7 +28,7 @@ $.entwine('ss', function($) {
     reload: function(ajaxOpts, successCallback) {
       var self = this, form = this.closest('form'),
         focusedElName = this.find(':input:focus').attr('name'), // Save focused element for restoring after refresh
-        data = form.find(':input').serializeArray();
+        data = form.find(':input:not(.grid-field__search-holder :input, .add-existing-autocompleter :input)').serializeArray();
 
       if(!ajaxOpts) ajaxOpts = {};
       if(!ajaxOpts.data) ajaxOpts.data = [];
