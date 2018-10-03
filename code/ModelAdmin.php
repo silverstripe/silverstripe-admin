@@ -7,6 +7,7 @@ use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Convert;
 use SilverStripe\Dev\BulkLoader;
+use SilverStripe\Dev\Deprecation;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\DatetimeField;
 use SilverStripe\Forms\FieldList;
@@ -81,6 +82,7 @@ abstract class ModelAdmin extends LeftAndMain
 
     private static $allowed_actions = array(
         'ImportForm',
+        'SearchForm'
     );
 
     private static $url_handlers = array(
@@ -188,6 +190,19 @@ abstract class ModelAdmin extends LeftAndMain
                 ->addComponents(new GridFieldPrintButton('buttons-before-left'))
         );
 
+        // Remove default and add our own filter header with extension points
+        // to retain API until deprecation in 5.0
+        $listField->getConfig()->removeComponentsByType(GridFieldFilterHeader::class);
+        $listField->getConfig()->addComponent(new GridFieldFilterHeader(
+            false,
+            function ($context) {
+                 $this->extend('updateSearchContext', $context);
+            },
+            function ($form) {
+                $this->extend('updateSearchForm', $form);
+            }
+        ));
+
         if (!$this->showSearchForm ||
             (is_array($this->showSearchForm) && !in_array($this->modelClass, $this->showSearchForm))
         ) {
@@ -237,6 +252,69 @@ abstract class ModelAdmin extends LeftAndMain
     {
         return singleton($this->modelClass)->summaryFields();
     }
+
+    /**
+     * @deprecated 5.0
+     * @return \SilverStripe\ORM\Search\SearchContext
+     */
+    public function getSearchContext()
+    {
+        Deprecation::notice('5.0', 'Will be removed in favor of GridFieldFilterHeader in 5.0');
+
+        $gridField = $this->getEditForm()->fields()
+            ->fieldByName($this->sanitiseClassName($this->modelClass));
+
+        $filterHeader = $gridField->getConfig()
+            ->getComponentByType(GridFieldFilterHeader::class);
+
+        $context = $filterHeader
+            ->getSearchContext($gridField);
+
+        return $context;
+    }
+
+    /**
+     * Gets a list of fields that have been searched
+     *
+     * @deprecated 5.0
+     * @return ArrayList
+     */
+    public function SearchSummary()
+    {
+        Deprecation::notice('5.0', 'Will be removed in favor of GridFieldFilterHeader in 5.0');
+
+        $context = $this->getSearchContext();
+
+        return $context->getSummary();
+    }
+
+    /**
+     * Returns the search form
+     *
+     * @deprecated 5.0
+     * @return Form|bool
+     */
+    public function SearchForm()
+    {
+        Deprecation::notice('5.0', 'Will be removed in favor of GridFieldFilterHeader  in 5.0');
+
+        if (!$this->showSearchForm
+            || (is_array($this->showSearchForm) && !in_array($this->modelClass, $this->showSearchForm))
+        ) {
+            return false;
+        }
+
+        $gridField = $this->getEditForm()->fields()
+        ->fieldByName($this->sanitiseClassName($this->modelClass));
+
+        $filterHeader = $gridField->getConfig()
+            ->getComponentByType(GridFieldFilterHeader::class);
+
+        $form = $filterHeader->getSearchForm($gridField);
+
+        return $form;
+    }
+
 
     /**
      * You can override how ModelAdmin returns DataObjects by either overloading this method, or defining an extension
