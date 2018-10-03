@@ -9,4 +9,4 @@ SilverStripe\Core\Injector\Injector:
   SilverStripe\GraphQL\Controller.admin:
     class: SilverStripe\GraphQL\Controller
     constructor:
-      manager: %$SilverStripe\GraphQL\Manager.admin
+      manager: '%$SilverStripe\GraphQL\Manager.admin'
