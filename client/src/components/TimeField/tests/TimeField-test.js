@@ -1,7 +1,7 @@
 /* global jest, describe, beforeEach, it, expect, modernizr */
 
 jest.unmock('react');
-jest.unmock('react-addons-test-utils');
+jest.unmock('react-dom/test-utils');
 jest.unmock('../TimeField');
 
 jest.mock('modernizr', () => ({
@@ -11,7 +11,7 @@ jest.mock('modernizr', () => ({
 }));
 
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
+import ReactTestUtils from 'react-dom/test-utils';
 import { Component as TimeField } from '../TimeField';
 
 describe('TimeField without html5 time field support', () => {
@@ -33,7 +33,7 @@ describe('TimeField without html5 time field support', () => {
           time: false,
         },
       },
-      onChange: jest.genMockFunction(),
+      onChange: jest.fn(),
     };
   });
 

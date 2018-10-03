@@ -1,7 +1,7 @@
 /* global jest, describe, beforeEach, it, expect, Event */
 
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
+import ReactTestUtils from 'react-dom/test-utils';
 import { Component as Form } from '../Form';
 import FormAlert from '../../FormAlert/FormAlert';
 

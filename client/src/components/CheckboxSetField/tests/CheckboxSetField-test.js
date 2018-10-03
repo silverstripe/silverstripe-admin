@@ -1,7 +1,7 @@
 /* global jest, describe, beforeEach, it, expect, Event */
 
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
+import ReactTestUtils from 'react-dom/test-utils';
 // get non-default because it uses FieldHolder by default
 import { Component as CheckboxSetField } from '../CheckboxSetField';
 
@@ -20,7 +20,7 @@ describe('CheckboxSetField', () => {
         { value: 'three', title: '3' },
         { value: 'four', title: '4' },
       ],
-      onChange: jest.genMockFunction(),
+      onChange: jest.fn(),
     };
   });
 

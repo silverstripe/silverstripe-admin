@@ -1,11 +1,11 @@
 /* global jest, describe, beforeEach, it, expect, require */
 
 jest.unmock('react');
-jest.unmock('react-addons-test-utils');
+jest.unmock('react-dom/test-utils');
 jest.unmock('../LookupField');
 
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
+import ReactTestUtils from 'react-dom/test-utils';
 import { Component as LookupField } from '../LookupField';
 
 describe('LookupField', () => {

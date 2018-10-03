@@ -433,6 +433,7 @@ class TreeDropdownField extends Component {
    */
   handleNavigate(event, id) {
     event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
     event.preventDefault();
 
     if (this.hasSearch()) {

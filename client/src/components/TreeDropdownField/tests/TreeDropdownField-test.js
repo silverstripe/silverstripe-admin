@@ -8,7 +8,7 @@ jest.mock('isomorphic-fetch', () =>
 );
 
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
+import ReactTestUtils from 'react-dom/test-utils';
 import { Component as TreeDropdownField, MULTI_EMPTY_VALUE, SINGLE_EMPTY_VALUE } from '../TreeDropdownField';
 import mockTree from './mockTree';
 
@@ -456,6 +456,7 @@ describe('TreeDropdownField', () => {
 
     beforeEach(() => {
       event = document.createEvent('Event');
+      event.nativeEvent = { stopImmediatePropagation: jest.fn() };
       props.visible = [5, 9];
       field = ReactTestUtils.renderIntoDocument(
         <TreeDropdownField {...props} />

@@ -3,7 +3,7 @@
 import React from 'react';
 import { Component as Tabs } from '../Tabs';
 import Enzyme, { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-15.4/build/index';
+import Adapter from 'enzyme-adapter-react-16/build/index';
 
 Enzyme.configure({ adapter: new Adapter() });
 

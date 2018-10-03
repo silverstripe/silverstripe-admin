@@ -4,7 +4,7 @@
 global.console = { warn: jest.fn() };
 
 jest.unmock('react');
-jest.unmock('react-addons-test-utils');
+jest.unmock('react-dom/test-utils');
 jest.unmock('../Validator');
 jest.unmock('i18n');
 
@@ -78,7 +78,7 @@ describe('Validator', () => {
   describe('validateFieldSchema()', () => {
     it('should call validateField() with proper params', () => {
       validator = new Validator({});
-      validator.validateField = jest.genMockFunction();
+      validator.validateField = jest.fn();
 
       validator.validateFieldSchema({
         name: 'one',
@@ -117,7 +117,7 @@ describe('Validator', () => {
 
     it('should return only required message if blank and required', () => {
       validator.setValues({ one: '' });
-      validator.validateValue = jest.genMockFunction();
+      validator.validateValue = jest.fn();
 
       validator.validateField('one', rules, 'One Field');
 
@@ -126,7 +126,7 @@ describe('Validator', () => {
 
     it('should return only a numeric error if alpha characters were provided', () => {
       validator.setValues({ one: 'abc' });
-      validator.validateValue = jest.genMockFunction();
+      validator.validateValue = jest.fn();
 
       validator.validateField('one', rules, 'One Field');
 

@@ -69,10 +69,10 @@ describe('setupTinyMceInlineToolbar function', () => {
         Factory: {
           create: function create() {
             return {
-              hide: jest.genMockFunction(),
-              remove: jest.genMockFunction(),
-              show: jest.genMockFunction(),
-              renderTo: jest.genMockFunction(),
+              hide: jest.fn(),
+              remove: jest.fn(),
+              show: jest.fn(),
+              renderTo: jest.fn(),
               getEl: () => document.createDocumentFragment(),
             };
           },
