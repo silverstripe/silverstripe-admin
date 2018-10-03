@@ -165,7 +165,7 @@ var $window = $( window ),
       var u = path.parseUrl( url ),
         params = ( typeof params === "string" ) ? path.convertSearchToArray( params ) : params,
         newParams = $.extend( path.convertSearchToArray( u.search ), params ),
-        paramStr = $.param( newParams ).replace(/\%2B/g, '+');
+        paramStr = path.convertObjectToSearch(newParams);
 
       return u.hrefNoSearch + '?' + paramStr + ( u.hash || "" );
     },
@@ -188,6 +188,22 @@ var $window = $( window ),
         params[decodeURIComponent(tmp[0])] = decodeURIComponent(tmp[1]);
       }
       return params;
+    },
+
+    /**
+     * Converts a hash to a query string (foo=bar&baz=bla)
+     *
+     * @param {Object} params
+     * @returns {string}
+     */
+    convertObjectToSearch(params) {
+      let encodedParts = [];
+      for (var key in params) {
+        encodedParts.push(
+          encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
+        );
+      }
+      return encodedParts.join('&');
     },
 
     convertUrlToDataUrl: function( absUrl ) {

@@ -1238,41 +1238,6 @@ $.entwine('ss', function($) {
     }
   });
 
-
-  /**
-   * Generic search form in the CMS, often hooked up to a GridField results display.
-   */
-  $('.cms-search-form').entwine({
-    onsubmit: function(e) {
-      // Remove empty elements and make the URL prettier
-      var nonEmptyInputs,
-        url;
-
-      nonEmptyInputs = this.find(':input:not(:submit)').filter(function() {
-        // Use fieldValue() from jQuery.form plugin rather than jQuery.val(),
-        // as it handles checkbox values more consistently
-        var vals = $.grep($(this).fieldValue(), function(val) { return (val);});
-        return (vals.length);
-      });
-
-      url = this.attr('action');
-
-      if(nonEmptyInputs.length) {
-        url = $.path.addSearchParams(
-          url,
-          // Undo jQuery's non-standard serialisation
-          // See https://github.com/jquery/jquery/blob/1.7.2/src/ajax.js#L797
-          nonEmptyInputs.serialize().replace('+', '%20')
-        );
-      }
-
-      var container = this.closest('.cms-container');
-      container.loadPanel(url, "", {}, true);
-
-      return false;
-    }
-  });
-
   /**
    * Reset button handler. IE8 does not bubble reset events to
    */
