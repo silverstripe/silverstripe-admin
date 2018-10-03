@@ -52,4 +52,6 @@ CompositeField.defaultProps = {
   extraClass: '',
 };
 
+export { CompositeField as Component };
+
 export default CompositeField;
