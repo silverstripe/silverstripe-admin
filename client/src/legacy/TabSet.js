@@ -17,6 +17,13 @@ $.entwine('ss', function($){
 		onadd: function() {
 			var hash = window.location.hash;
 
+			this.on("tabsactivate", (function (event, {newPanel}) {
+			  this.lazyLoadGridFields(newPanel);
+      }).bind(this))
+      this.on("tabscreate", (function(event, {panel}) {
+        this.lazyLoadGridFields(panel);
+      }).bind(this));
+
 			// Can't name redraw() as it clashes with other CMS entwine classes
 			this.redrawTabs();
 
@@ -32,10 +39,10 @@ $.entwine('ss', function($){
 			this._super();
 		},
 
-		redrawTabs: function() {
-			this.rewriteHashlinks();
-			this.tabs();
-		},
+    redrawTabs: function() {
+      this.rewriteHashlinks();
+      this.tabs();
+    },
 
 		/**
 		 * @func openTabFromURL
@@ -77,7 +84,23 @@ $.entwine('ss', function($){
 				if(!matches) return;
 				$(this).attr('href', document.location.href.replace(/#.*/, '') + matches[0]);
 			});
-		}
+		},
+
+    /**
+     * @func lazyLoadGridFields
+     * @desc Find all the lazy loadable gridfield in the panel and trigger their reload.
+     * @param panel
+     */
+		lazyLoadGridFields: function(panel) {
+		  panel.find('.grid-field-lazy-loadable').each((i, el) => {
+		    const gridfield = $(el);
+		    // Avoid triggering all gridfields when using nested tabs
+		    if (gridfield.closest('.ss-tabset').is(this)) {
+          $(el).lazyload();
+        }
+      });
+    }
+
 	});
 
   // adding bootstrap theme classes to corresponding jQueryUI elements

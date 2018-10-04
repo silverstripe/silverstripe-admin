@@ -19,12 +19,26 @@ $.entwine('ss', function($) {
         this.fixColumns();
         this.injectSearchButton(false);
       }
+
+      if (this.is('.grid-field-lazy-loadable') && this.closest('.ss-tabset').length === 0) {
+        // If our GridField is not inside a tabset for an immidiate reload
+        this.reload();
+      }
     },
+
+    /**
+     * @func Trigger a lazy load on this gridfield
+     */
+    lazyload: function() {
+      this.removeClass('grid-field-lazy-loadable')
+        .addClass('grid-field-lazy-loaded')
+        .reload();
+    },
+
     /**
      * @param {Object} Additional options for jQuery.ajax() call
      * @param {successCallback} callback to call after reloading succeeded.
      */
-
     reload: function(ajaxOpts, successCallback) {
       var self = this, form = this.closest('form'),
         focusedElName = this.find(':input:focus').attr('name'), // Save focused element for restoring after refresh
