@@ -29,11 +29,16 @@ en:
     ACCESSALLINTERFACESHELP: 'Overrules more specific access settings.'
     BROWSER_WARNING_HEADING: 'Unsupported browser'
     BROWSER_WARNING_TEXT: 'You&apos;re using a web browser that&apos;s not supported by SilverStripe.<br />Please upgrade to one of the following options.'
-    CollapsePanel: 'Collapse Panel'
+    CMSUserhelp: 'CMS User help'
+    CollapsePanel: 'Collapse panel'
+    Community: Community
     DELETED: Deleted.
+    Developerdocs: 'Developer docs'
     DropdownBatchActionsDefault: 'Choose an action...'
-    ExpandPanel: 'Expand Panel'
+    ExpandPanel: 'Expand panel'
+    Feedback: Feedback
     HELP: Help
+    HelpMenu: 'Help menu'
     LOGOUT: 'Log out'
     MenuToggleAuto: Auto
     MenuToggleStickyNav: 'Sticky nav'
@@ -47,6 +52,7 @@ en:
     SAVEDUP: Saved.
     SUBMIT_BUTTON_LABEL: Go
     ValidationError: 'Validation error'
+    Version: 'Version'
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
     Auto: Auto
     ChangeViewMode: 'Change view mode'

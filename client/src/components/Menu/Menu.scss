@@ -13,6 +13,7 @@
   background: $base-menu-bg;
   // Add `!important` to ignore width set in `.cms-panel` entwine`
   width: $cms-menu-width !important; // sass-lint:disable-line no-important
+  overflow: hidden;
 
   @include media-breakpoint-down(sm) {
     position: absolute;
@@ -33,9 +34,9 @@
   }
 
   .cms-panel-content {
-    box-shadow: inset #C1C7CC -1px 0 0;
+    box-shadow: inset $border-color -1px 0 0;
     overflow-x: hidden;
-    // account for logo, logout and south bar
+    // Account for logo, logout and south bar
     height: calc(100% - #{$toolbar-total-height * 3}) !important; // sass-lint:disable-line no-important
   }
 
@@ -78,8 +79,12 @@
       }
 
       .cms-sitename {
-
         .cms-sitename__link {
+          color: $color-brand;
+          font-size: $h1-font-size;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           width: $cms-menu-width-collapsed;
           height: $toolbar-height; // IE fix
         }
@@ -90,7 +95,6 @@
       }
 
       .cms-login-status {
-
         .cms-login-status__profile-link {
           width: auto;
           right: 0;
@@ -110,8 +114,12 @@
       }
 
       .sticky-toggle {
-        background-position: 12px center;
-        width: 40px;
+        background-position: center center;
+      }
+
+      .cms-help__menu,
+      .cms-help__toggle {
+        display: none;
       }
     }
   }
@@ -122,31 +130,40 @@
     box-shadow: inset $border-color -1px 0 0;
     position: relative;
     padding-left: 0;
+    justify-content: flex-end;
+    border-top: 1px solid rgba($border-color, .5);
 
     @include media-breakpoint-down(sm) {
-      display: none;
+      .toggle-collapse,
+      .toggle-expand,
+      .sticky-toggle {
+        display: none;
+      }
     }
 
     a,
     a.toggle-expand {
-      width: 50%;
       padding-top: 14px;
       padding-bottom: 14px;
     }
   }
+
+
 
   .sticky-toggle {
     text-indent: -999em;
     background-color: transparent;
     background-image: url("../images/sticky-toggle-off.png");
     background-repeat: no-repeat;
-    background-position: 16px center;
+    background-position: center center;
     border: 0;
     transition: position $transition-speed-fast;
-    z-index: 2;
+    width: 24px;
+    margin-right: -3px;
 
     &:hover {
       box-shadow: 0 0 0;
+      cursor: pointer;
 
       // When the button is hovered, show the status indicator
       + .sticky-status-indicator {
@@ -163,7 +180,7 @@
     display: none;
     position: absolute;
     top: 3px;
-    left: 10px;
+    right: 22px;
     font-size: 9px;
     color: #555d60;
     text-transform: uppercase;
@@ -251,10 +268,11 @@
   height: $toolbar-total-height;
   font-weight: bold;
   display: flex;
+  justify-content: center;
 
   &:hover,
   &:focus {
-    background-color: darken($brand-secondary, 2);
+    background-color: $brand-secondary-hover;
   }
 
   @include media-breakpoint-down(sm) {
@@ -262,21 +280,7 @@
   }
 
   .cms-sitename__link {
-    color: #44C7F4;
-    font-size: 22px;
-    min-width: 40px;
-    line-height: 20px; // For IE
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &:hover {
-      color: lighten(#44C7F4, 6);
-    }
-
-    &:before {
-      vertical-align: middle;
-    }
+    display: none;
   }
 
   .cms-sitename__title {
@@ -321,7 +325,7 @@
     &:focus {
       opacity: .9;
       text-decoration: none;
-      background-color: darken($brand-secondary, 2);
+      background-color: $brand-secondary-hover;
     }
   }
 
@@ -337,7 +341,7 @@
 
     &:hover,
     &:focus {
-      background-color: darken($brand-secondary, 2);
+      background-color: $brand-secondary-hover;
     }
 
     i {
@@ -640,5 +644,138 @@
 
   @include media-breakpoint-down(sm) {
     display: block;
+  }
+}
+
+.cms-help {
+  &__menu {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    padding: 1rem $spacer-sm;
+    border: 0;
+
+    &:hover {
+      cursor: pointer;
+
+      .cms-help__logo {
+        background-color: darken($brand-secondary, 5);
+      }
+    }
+  }
+
+  &__logo {
+    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $white;
+    background: $brand-secondary;
+    border-radius: 50%;
+    height: 26px;
+    width: 26px;
+    padding: 0;
+    margin-right: 4px;
+    font-size: $font-size-lg;
+  }
+
+  &__caret {
+    color: $gray-700;
+    margin-left: -3px;
+    margin-top: 2px;
+  }
+
+  &__toggle-title,
+  &__badge {
+    display: none;
+  }
+
+  &__toggle-title {
+    color: $gray-700;
+  }
+
+  &__links a.cms-help__link {
+    display: none;
+    color: $gray-700;
+    padding: 4px 12px;
+
+    &:hover {
+      color: $gray-800;
+    }
+  }
+
+  &__badge {
+    margin-left: 4px;
+    margin-right: 2px;
+  }
+
+  &__toggle {
+    position: absolute;
+    padding: 0 0 20px 0;
+    background: $base-menu-bg;
+    top: -$toolbar-total-height;
+    left: 0;
+    transform: translateY($toolbar-total-height);
+    transition: transform $transition-speed-fast;
+
+    &--show {
+      transform: none;
+      top: auto;
+      bottom: 0;
+      z-index: 3;
+      right: 1px;
+      border-top: 1px solid rgba($border-color, .5);
+
+      .cms-help__menu {
+        width: 100%;
+      }
+
+      a.cms-help__link {
+        display: block;
+      }
+
+      .cms-help__caret {
+        display: block;
+        margin-left: auto;
+        margin-top: -6px;
+        transform: rotate(180deg);
+      }
+
+      .cms-help__toggle-title,
+      .cms-help__badge {
+        display: block;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-between(sm, sm) {
+  .cms-help {
+    &__links a.cms-help__link {
+      display: none;
+      padding: 0 6px;
+    }
+
+    &__toggle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      box-shadow: inset -1px 0 0 #ced5e1;
+
+      &--show {
+        .cms-help__menu {
+          width: auto;
+        }
+
+        a.cms-help__link {
+          display: inline-flex;
+        }
+
+        .cms-help__caret {
+          margin-left: 4px;
+        }
+      }
+    }
   }
 }

@@ -1,6 +1,6 @@
 .cms-mobile-menu-toggle {
   $child-left-right: 30%;
-  $child-top-bottom: 36%;
+  $child-top-bottom: 50%;
   $child-height: 2px;
 
   display: block;
@@ -19,20 +19,15 @@
     background: lighten($brand-secondary, 80%);
     border-radius: 5px;
     transition: 0.1s all;
+    margin-top: -($child-height / 2);
 
-    &:nth-child(2) {
-      top: 50%;
-      margin-top: -($child-height / 2);
-    }
-
+    &:nth-child(2),
     &:nth-child(3) {
-      top: 50%;
-      margin-top: -($child-height / 2);
+      top: calc(#{$child-top-bottom} - 7px);
     }
 
     &:last-child {
-      top: auto;
-      bottom: $child-top-bottom;
+      top: calc(#{$child-top-bottom} + 7px);
     }
   }
 
@@ -40,21 +35,23 @@
     > span {
 
       &:first-child {
-        top: 50%;
+        top: $child-top-bottom;
         margin-top: -($child-height / 2);
         opacity: 0;
       }
 
       &:nth-child(2) {
         transform: rotate(45deg);
+        top: $child-top-bottom;
       }
 
       &:nth-child(3) {
         transform: rotate(-45deg);
+        top: $child-top-bottom;
       }
 
       &:last-child {
-        top: 50%;
+        top: $child-top-bottom;
         margin-top: -($child-height / 2);
         opacity: 0;
       }
