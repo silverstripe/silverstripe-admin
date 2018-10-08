@@ -1,3 +1,5 @@
+export const ROOT_FIELD = 'root';
+
 const paginationFields = {
   limit: 'Int',
   offset: 'Int',
@@ -24,22 +26,39 @@ export const getVariables = ({ params, pagination = true }) => {
 
 export const getParams = ({ params, pagination = true }) => {
   const items = (pagination) ? { ...params, ...paginationFields } : params;
-
-  const paramList = Object.keys(items)
-    .map((key) => (
-      `${key}: $${key}`
+  const paramList = Object.entries(items)
+    .map(([paramName, varName]) => (
+      `${paramName}: $${varName}`
     ));
 
   return paramList.length ? `(${paramList.join(', ')})` : '';
 };
 
-export const getFields = ({ fields, pagination = true }) => {
-  const strings = fields.map(field => (
-    (Array.isArray(field))
-      // nested fields shouldn't also have pagination
-      ? `{ ${getFields({ fields: field, pagination: false })} }`
-      : field
-  ));
+export const getRootParams = ({ args, pagination = true }) => {
+  const fieldParams = args[ROOT_FIELD] || {};
+
+  return getParams({ params: fieldParams, pagination });
+};
+
+export const getFields = ({ args, fields, pagination = true }, stack = [ROOT_FIELD]) => {
+  const strings = fields.map((field, i) => {
+    if (Array.isArray(field)) {
+      return `
+      {
+        ${getFields(
+          { args, fields: field, pagination: false},
+          [...stack, fields[i-1]],
+        )}
+      }`;
+    }
+    const path = [...stack, field];
+    const key = path.join('/');
+    const fieldParams = args[key] || {};
+
+    const str = `${field}${getParams({ params: fieldParams, pagination: false })}`;
+
+    return str;
+  });
 
   if (pagination) {
     return paginateFields(strings);

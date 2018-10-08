@@ -1,11 +1,13 @@
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { ROOT_FIELD } from './graphql/helpers';
 
 const TEMPLATE_OVERRIDE = '__TEMPLATE_OVERRIDE__';
 const protectedConfig = ['templateName', 'fields', 'params', 'fragments'];
 const deferredApolloConfig = ['options', 'props', 'variables', 'skip', 'update'];
 const configDefaults = {
-  params: [],
+  params: {},
+  args: {},
   fields: [],
   fragments: [],
   pagination: true,
@@ -133,8 +135,10 @@ class ApolloGraphqlManager {
    * @param param
    * @returns {ApolloGraphqlManager}
    */
-  addParam(param) {
-    return this.addParams([param]);
+  addParam(name, type) {
+    return this.addParams({
+      [name]: type
+    });
   }
 
   /**
@@ -142,7 +146,7 @@ class ApolloGraphqlManager {
    * @param params
    * @returns {ApolloGraphqlManager}
    */
-  addParams(params = []) {
+  addParams(params = {}) {
     const existing = this.config.params;
     this.config.params = [
       ...existing,
@@ -153,12 +157,39 @@ class ApolloGraphqlManager {
   }
 
   /**
+   * Adds an arg to the query
+   * @param param
+   * @returns {ApolloGraphqlManager}
+   */
+  addArg(path = ROOT_FIELD, name, type) {
+    return this.addArgs(path, {
+      [name]: type
+    });
+  }
+
+  /**
+   * Adds multiple args to the query
+   * @param path The path to the field where the args are applied
+   * @param args
+   * @returns {ApolloGraphqlManager}
+   */
+  addArgs(path = ROOT_FIELD, args = {}) {
+    const existing = this.config.args[path] || {};
+    this.config.args[path] = {
+      ...existing,
+      ...args,
+    };
+
+    return this;
+  }
+
+  /**
    * Adds a field to the query
    * @param field
    * @returns {ApolloGraphqlManager}}
    */
-  addField(field) {
-    return this.addFields([field]);
+  addField(path = ROOT_FIELD, field) {
+    return this.addFields(path, [field]);
   }
 
   /**
@@ -166,13 +197,22 @@ class ApolloGraphqlManager {
    * @param fields
    * @returns {ApolloGraphqlManager}
    */
-  addFields(fields = []) {
-    const existing = this.config.fields;
-    this.config.fields = [
-      ...existing,
-      ...fields,
-    ];
+  addFields(path = ROOT_FIELD, fields = []) {
+    let fieldArray = [];
+    path.split('/').forEach(part => {
+      if (part === ROOT_FIELD) {
+        fieldArray = this.config.fields;
+      } else {
+        const index = fieldArray.indexOf(part);
+        const next = fieldArray[index + 1];
+        if (index === -1 || !Array.isArray(next)) {
+          throw new Error(`Invalid path to field: ${path}`);
+        }
 
+        fieldArray = next;
+      }
+    });
+      fields.forEach(f => fieldArray.push(f));
     return this;
   }
 
@@ -383,7 +423,6 @@ Tried to use template '${name}', which could not be found. Please make sure that
       // process any template functions that may have been made available
       return expression(config);
     });
-
     return gql(template.strings, ...expressed);
   }
 
