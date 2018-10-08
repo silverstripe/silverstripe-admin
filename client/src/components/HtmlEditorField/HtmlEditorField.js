@@ -71,6 +71,8 @@ class HtmlEditorField extends TextField {
       const { document, jQuery: $ } = window;
       const unmountEvent = $.Event('EntwineElementsRemoved');
       const editorElement = document.getElementById(this.getInputProps().id);
+      // Tell tinyMCE to persist changes into the text field
+      $(editorElement).entwine('ss').getEditor().save();
       unmountEvent.targets = [editorElement];
       // Ensure that redux knows of the latest changes before the editor is destroyed.
       // This is pretty awful because TinyMCE triggers jQuery events which aren't picked up
