@@ -15,7 +15,7 @@
         <div class="cms-help__links">
             <% loop $HelpLinks %>
                 <% if $URL %>
-                    <a class="cms-help__link" href="$URL" target="_blank">$Title</a>
+                    <a class="cms-help__link" href="$URL" target="_blank" rel="noopener noreferrer">$Title</a>
                 <% end_if %>
             <% end_loop %>
         </div>
