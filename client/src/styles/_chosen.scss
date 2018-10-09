@@ -5,10 +5,6 @@
 }
 
 // Avoid chosen dropdowns overflowing when not active
-.chosen-container {
+.chosen-container:not(.chosen-container-active) {
   overflow: hidden;
-
-  &.chosen-with-drop {
-    overflow: visible;
-  }
 }
