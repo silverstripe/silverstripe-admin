@@ -13,6 +13,14 @@ html [type="button"] {
   display: none;
 }
 
+// Keep the "show" class for Reactstrap Collapse support, styles removed from Bootstrap 4.0 -> 4.1
+// https://github.com/reactstrap/reactstrap/blob/5.0.0/src/Collapse.js#L32
+// https://github.com/twbs/bootstrap/blob/v4.0.0/scss/_transitions.scss#L12-L17
+// https://github.com/twbs/bootstrap/blob/v4.1.2/scss/_transitions.scss#L11-L15
+.collapse.show {
+  display: block;
+}
+
 // Fix margin for btn in btn-toolbar without btn-group
 .btn-toolbar > .btn:not(:first-child) {
   margin-left: 5px;
