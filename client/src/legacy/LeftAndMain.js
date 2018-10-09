@@ -1044,7 +1044,7 @@ $.entwine('ss', function($) {
    * Not applied to all "*.loading" elements to avoid secondary regions
    * like the breadcrumbs showing unnecessary loading status.
    */
-  $('form.loading,.cms-content.loading,.cms-content-fields.loading,.cms-content-view.loading').entwine({
+  $('form.loading,.cms-content.loading,.cms-content-fields.loading,.cms-content-view.loading,.ss-gridfield-item.loading').entwine({
     onmatch: function() {
       this.append('<div class="cms-content-loading-overlay ui-widget-overlay-light"></div><div class="cms-content-loading-spinner"></div>');
       this._super();

@@ -96,7 +96,7 @@ $.entwine('ss', function($){
 		    const gridfield = $(el);
 		    // Avoid triggering all gridfields when using nested tabs
 		    if (gridfield.closest('.ss-tabset').is(this)) {
-          $(el).lazyload();
+		      $(el).lazyload();
         }
       });
     }

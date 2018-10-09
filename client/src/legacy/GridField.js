@@ -20,19 +20,28 @@ $.entwine('ss', function($) {
         this.injectSearchButton(false);
       }
 
-      if (this.is('.grid-field-lazy-loadable') && this.closest('.ss-tabset').length === 0) {
+      if (this.is('.grid-field-lazy-loadable') && (
+        (this.closest('.ss-tabset').length === 0) || (this.data('gridfield-lazy-load-state') === 'force') )
+      ) {
         // If our GridField is not inside a tabset for an immidiate reload
-        this.reload();
+        this.data('gridfield-lazy-load-state', 'ready');
+        this.lazyload();
       }
+
+      this.data('gridfield-lazy-load-state', 'ready');
     },
 
     /**
      * @func Trigger a lazy load on this gridfield
      */
     lazyload: function() {
-      this.removeClass('grid-field-lazy-loadable')
-        .addClass('grid-field-lazy-loaded')
-        .reload();
+      if (this.data('gridfield-lazy-load-state') !== 'ready') {
+        this.data('gridfield-lazy-load-state', 'force');
+      } else {
+        this.removeClass('grid-field-lazy-loadable').addClass('grid-field-lazy-loaded');
+        this.reload();
+      }
+
     },
 
     /**
@@ -42,7 +51,10 @@ $.entwine('ss', function($) {
     reload: function(ajaxOpts, successCallback) {
       var self = this, form = this.closest('form'),
         focusedElName = this.find(':input:focus').attr('name'), // Save focused element for restoring after refresh
-        data = form.find(':input:not(.grid-field__search-holder :input, .add-existing-autocompleter :input)').serializeArray();
+        data = form.find(':input:not(.grid-field__search-holder :input, .add-existing-autocompleter :input)').serializeArray(),
+        tbody = this.find('tbody'),
+        colspan = this.find('.grid-field__title-row th').attr('colspan');
+      ;
 
       if(!ajaxOpts) ajaxOpts = {};
       if(!ajaxOpts.data) ajaxOpts.data = [];
@@ -55,14 +67,21 @@ $.entwine('ss', function($) {
         ajaxOpts.data = window.location.search.replace(/^\?/, '') + '&' + $.param(ajaxOpts.data);
       }
 
-      form.addClass('loading');
+      // Enable loading animation
+      tbody.find('tr').remove();
+      var loadingCell = $('<td />')
+        .addClass('ss-gridfield-item loading')
+        .attr('colspan', colspan);
+      tbody.append($('<tr />').append(loadingCell));
 
-      $.ajax($.extend({}, {
+      var request = $.ajax($.extend({}, {
         headers: {"X-Pjax" : 'CurrentField'},
         type: "POST",
         url: this.data('url'),
         dataType: 'html',
-        success: function(data) {
+        async:true,
+        success: function (data) {
+          console.dir(data)
           // Replace the grid field with response, not the form.
           // TODO Only replaces all its children, to avoid replacing the current scope
           // of the executing method. Means that it doesn't retrigger the onmatch() on the main container.
@@ -81,18 +100,19 @@ $.entwine('ss', function($) {
             self.injectSearchButton(visible);
           }
 
-          form.removeClass('loading');
           if(successCallback) successCallback.apply(this, arguments);
           self.trigger('reload', self);
 
           // Trigger change if it's not specifically supressed
           if (ajaxOpts.data[0].triggerChange !== false) {
-          self.trigger('change');
+            self.trigger('change');
           }
         },
         error: function(e) {
           alert(i18n._t('Admin.ERRORINTRANSACTION'));
-          form.removeClass('loading');
+        },
+        complete: function(request, status) {
+          self.find('.loading').removeClass('loading');
         }
       }, ajaxOpts));
     },
