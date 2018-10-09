@@ -20,6 +20,7 @@ use SilverStripe\Forms\GridField\GridFieldDetailForm;
 use SilverStripe\Forms\GridField\GridFieldExportButton;
 use SilverStripe\Forms\GridField\GridFieldFilterHeader;
 use SilverStripe\Forms\GridField\GridFieldImportButton;
+use SilverStripe\Forms\GridField\GridFieldPaginator;
 use SilverStripe\Forms\GridField\GridFieldPrintButton;
 use SilverStripe\Forms\HiddenField;
 use SilverStripe\Forms\LiteralField;
@@ -202,6 +203,9 @@ abstract class ModelAdmin extends LeftAndMain
                 $this->extend('updateSearchForm', $form);
             }
         ));
+        // GridFieldPaginator has to be added after filter header for it to function correctly
+        $listField->getConfig()->removeComponentsByType(GridFieldPaginator::class);
+        $listField->getConfig()->addComponent(new GridFieldPaginator());
 
         if (!$this->showSearchForm ||
             (is_array($this->showSearchForm) && !in_array($this->modelClass, $this->showSearchForm))
