@@ -340,6 +340,10 @@ class FormBuilderLoader extends Component {
             { keepSubmitSucceeded: true }
           );
 
+          if (typeof this.props.onReduxFormInit === 'function') {
+            this.props.onReduxFormInit();
+          }
+
           return overriddenSchema;
         }
         return formSchema;
@@ -438,6 +442,7 @@ FormBuilderLoader.propTypes = Object.assign({}, basePropTypes, {
   form: PropTypes.string,
   submitting: PropTypes.bool,
   onFetchingSchema: PropTypes.func,
+  onReduxFormInit: PropTypes.func,
   loadingComponent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]).isRequired,
 });
 

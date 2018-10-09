@@ -9,9 +9,6 @@ class Tabs extends Component {
 
     this.toggle = this.toggle.bind(this);
     this.renderTab = this.renderTab.bind(this);
-    this.state = {
-      activeTab: this.getDefaultActiveKey()
-    };
   }
 
   /**
@@ -62,10 +59,8 @@ class Tabs extends Component {
   }
 
   toggle(activeTab) {
-    if (this.state.activeTab !== activeTab) {
-      this.setState({
-        activeTab,
-      });
+    if (this.props.value !== activeTab) {
+      this.props.onChange(activeTab);
     }
   }
 
@@ -79,8 +74,11 @@ class Tabs extends Component {
     if (child.props.title === null) {
       return null;
     }
+
+    const currentTab = this.props.value || this.getDefaultActiveKey();
+
     const classNames = classnames({
-      active: this.state.activeTab === child.props.name,
+      active: currentTab === child.props.name,
       [child.props.tabClassName]: child.props.tabClassName,
     });
 
@@ -118,8 +116,7 @@ class Tabs extends Component {
   }
 
   render() {
-    const { hideNav, children } = this.props;
-    const { activeTab } = this.state;
+    const { hideNav, children, value } = this.props;
 
     const containerProps = this.getContainerProps();
     const nav = hideNav ? null : this.renderNav();
@@ -128,7 +125,7 @@ class Tabs extends Component {
       <div {...containerProps}>
         <div className="wrapper">
           {nav}
-          <TabContent activeTab={activeTab}>
+          <TabContent activeTab={value || this.getDefaultActiveKey()}>
             {children}
           </TabContent>
         </div>
@@ -142,6 +139,7 @@ Tabs.propTypes = {
   defaultActiveKey: PropTypes.string,
   extraClass: PropTypes.string,
   hideNav: PropTypes.bool,
+  onChange: PropTypes.func, // Comes from ReduxFormField
 };
 
 Tabs.defaultProps = {
