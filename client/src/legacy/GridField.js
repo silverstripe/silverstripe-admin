@@ -20,7 +20,7 @@ $.entwine('ss', function($) {
         this.injectSearchButton(false);
       }
 
-      if (this.is('.grid-field-lazy-loadable') && (
+      if (this.is('.grid-field-lazy--loadable') && (
         (this.closest('.ss-tabset').length === 0) || (this.data('gridfield-lazy-load-state') === 'force') )
       ) {
         // If our GridField is not inside a tabset for an immidiate reload
@@ -38,7 +38,7 @@ $.entwine('ss', function($) {
       if (this.data('gridfield-lazy-load-state') !== 'ready') {
         this.data('gridfield-lazy-load-state', 'force');
       } else {
-        this.removeClass('grid-field-lazy-loadable').addClass('grid-field-lazy-loaded');
+        this.removeClass('grid-field-lazy--loadable').addClass('grid-field-lazy--loaded');
         this.reload();
       }
 
@@ -79,9 +79,7 @@ $.entwine('ss', function($) {
         type: "POST",
         url: this.data('url'),
         dataType: 'html',
-        async:true,
         success: function (data) {
-          console.dir(data)
           // Replace the grid field with response, not the form.
           // TODO Only replaces all its children, to avoid replacing the current scope
           // of the executing method. Means that it doesn't retrigger the onmatch() on the main container.

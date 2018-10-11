@@ -89,10 +89,10 @@ $.entwine('ss', function($){
     /**
      * @func lazyLoadGridFields
      * @desc Find all the lazy loadable gridfield in the panel and trigger their reload.
-     * @param panel
+     * @param {Object} panel
      */
 		lazyLoadGridFields: function(panel) {
-		  panel.find('.grid-field-lazy-loadable').each((i, el) => {
+		  panel.find('.grid-field--lazy-loadable').each((i, el) => {
 		    const gridfield = $(el);
 		    // Avoid triggering all gridfields when using nested tabs
 		    if (gridfield.closest('.ss-tabset').is(this)) {
