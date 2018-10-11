@@ -8,6 +8,10 @@ class PopoverOptionSet extends Component {
   constructor(props) {
     super(props);
 
+    this.handleToggle = this.handleToggle.bind(this);
+    this.handleClear = this.handleClear.bind(this);
+    this.handleSearchValueChange = this.handleSearchValueChange.bind(this);
+
     this.state = {
       searchValue: ''
     };
@@ -123,7 +127,10 @@ class PopoverOptionSet extends Component {
    * @returns {DOMElement}
    */
   render() {
-    const { container, extraClass, isOpen, placement, target, searchPlaceholder } = this.props;
+    const {
+      container, extraClass, isOpen, placement,
+      target, searchPlaceholder, disableSearch,
+    } = this.props;
     const { searchValue } = this.state;
     const popoverClassNames = classNames(
       'popover-option-set',
@@ -140,7 +147,7 @@ class PopoverOptionSet extends Component {
         target={target}
         toggle={this.handleToggle}
       >
-        <InputGroup className="popover-option-set__search">
+        { disableSearch || <InputGroup className="popover-option-set__search">
           <Input
             autoFocus
             className="popover-option-set__search-input"
@@ -151,7 +158,7 @@ class PopoverOptionSet extends Component {
             value={searchValue}
           />
           {this.renderClearLink()}
-        </InputGroup>
+        </InputGroup> }
         {this.renderPopoverOptionSetContent()}
       </Popover>
     );
@@ -175,11 +182,15 @@ PopoverOptionSet.propTypes = {
   target: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]).isRequired,
   toggle: PropTypes.func.isRequired,
   searchPlaceholder: PropTypes.string,
+  disableSearch: PropTypes.bool
 };
 
 PopoverOptionSet.defaultProps = {
   searchPlaceholder: i18n._t('PopoverOptionSet.SEARCH_PLACEHOLDER', 'Search'),
-  onSearch: (query, buttons) => buttons.filter(({ text }) => text.contains(query)),
+  onSearch: (query, buttons) => buttons.filter(
+    ({ text }) => text.toLowerCase().includes(query.toLowerCase())
+  ),
+  disableSearch: false,
 };
 
 export { buttonType };

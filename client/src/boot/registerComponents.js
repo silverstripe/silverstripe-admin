@@ -42,6 +42,7 @@ import Search from 'components/Search/Search';
 import SearchToggle from 'components/Search/SearchToggle';
 import HtmlEditorField from 'components/HtmlEditorField/HtmlEditorField';
 import NumberField from 'components/NumberField/NumberField';
+import PopoverOptionSet from 'components/PopoverOptionSet/PopoverOptionSet';
 
 export default () => {
   Injector.component.registerMany({
@@ -88,5 +89,6 @@ export default () => {
     SearchToggle,
     HtmlEditorField,
     NumberField,
+    PopoverOptionSet,
   });
 };
