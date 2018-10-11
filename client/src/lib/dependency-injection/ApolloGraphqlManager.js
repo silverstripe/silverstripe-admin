@@ -77,6 +77,10 @@ class ApolloGraphqlManager {
       ...configDefaults,
       ...config,
     };
+    // Fields array is mutated by reference, so this has to be dereferenced from the configDefaults
+    mergedConfig.fields = [
+      ...mergedConfig.fields
+    ];
     const {
       apolloConfig,
       ...otherConfig
@@ -132,10 +136,14 @@ class ApolloGraphqlManager {
 
   /**
    * Adds a param to the query
-   * @param param
+   * @param string name
+   * @param string type
    * @returns {ApolloGraphqlManager}
    */
   addParam(name, type) {
+    if (!name || !type) {
+      throw new Error('addParam must be passed a name and type parameter');
+    }
     return this.addParams({
       [name]: type
     });
@@ -148,22 +156,25 @@ class ApolloGraphqlManager {
    */
   addParams(params = {}) {
     const existing = this.config.params;
-    this.config.params = [
+    this.config.params = {
       ...existing,
       ...params,
-    ];
+    };
 
     return this;
   }
 
   /**
    * Adds an arg to the query
-   * @param param
+   * @param string path The path to the field where the args are applied
+   * @param string name
+   * @param string variableName
+   *
    * @returns {ApolloGraphqlManager}
    */
-  addArg(path = ROOT_FIELD, name, type) {
+  addArg(path = ROOT_FIELD, name, variableName) {
     return this.addArgs(path, {
-      [name]: type
+      [name]: variableName
     });
   }
 
@@ -423,6 +434,7 @@ Tried to use template '${name}', which could not be found. Please make sure that
       // process any template functions that may have been made available
       return expression(config);
     });
+
     return gql(template.strings, ...expressed);
   }
 
