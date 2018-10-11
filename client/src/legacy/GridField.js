@@ -20,7 +20,7 @@ $.entwine('ss', function($) {
         this.injectSearchButton(false);
       }
 
-      if (this.is('.grid-field-lazy--loadable') && (
+      if (this.is('.grid-field--lazy-loadable') && (
         (this.closest('.ss-tabset').length === 0) || (this.data('gridfield-lazy-load-state') === 'force') )
       ) {
         // If our GridField is not inside a tabset for an immidiate reload
@@ -38,7 +38,7 @@ $.entwine('ss', function($) {
       if (this.data('gridfield-lazy-load-state') !== 'ready') {
         this.data('gridfield-lazy-load-state', 'force');
       } else {
-        this.removeClass('grid-field-lazy--loadable').addClass('grid-field-lazy--loaded');
+        this.removeClass('grid-field--lazy-loadable').addClass('grid-field--lazy-loaded');
         this.reload();
       }
 
