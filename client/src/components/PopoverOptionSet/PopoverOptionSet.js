@@ -170,11 +170,11 @@ class PopoverOptionSet extends Component {
 const buttonType = PropTypes.shape({
   key: PropTypes.string.required,
   content: PropTypes.string.required,
-  className: PropTypes.oneOfType(
+  className: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,
     PropTypes.arrayOf(PropTypes.string)
-  ),
+  ]),
 });
 
 PopoverOptionSet.propTypes = {
@@ -198,7 +198,7 @@ PopoverOptionSet.defaultProps = {
   searchPlaceholder: i18n._t('PopoverOptionSet.SEARCH_PLACEHOLDER', 'Search'),
   onSearch: (query, buttons) => buttons.filter(
     // Default search handler assumes button content to be plain text
-    ({ text }) => text.toLowerCase().includes(query.toLowerCase())
+    ({ content }) => content.toLowerCase().includes(query.toLowerCase())
   ),
   disableSearch: false,
   ButtonComponent: Button,
