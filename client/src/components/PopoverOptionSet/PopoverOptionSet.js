@@ -9,7 +9,7 @@ class PopoverOptionSet extends Component {
     super(props);
 
     this.handleToggle = this.handleToggle.bind(this);
-    this.handleClear = this.handleClear.bind(this);
+    this.handleSearchValueClear = this.handleSearchValueClear.bind(this);
     this.handleSearchValueChange = this.handleSearchValueChange.bind(this);
 
     this.state = {
@@ -24,13 +24,13 @@ class PopoverOptionSet extends Component {
     const { toggle } = this.props;
 
     toggle();
-    this.handleClear();
+    this.handleSearchValueClear();
   }
 
   /**
    * Handle click on clear button within search bar
    */
-  handleClear() {
+  handleSearchValueClear() {
     this.setState(
       { searchValue: '' }
     );
@@ -38,7 +38,7 @@ class PopoverOptionSet extends Component {
 
   /**
    * Update the internal state on user input change
-   * @param event
+   * @param {Event}
    */
   handleSearchValueChange(event) {
     this.setState(
@@ -50,7 +50,7 @@ class PopoverOptionSet extends Component {
    * Render a link to clear the search field if user entered input
    * @returns {DOMElement}
    */
-  renderClearLink() {
+  renderSearchValueClearLink() {
     const { searchValue } = this.state;
 
     if (searchValue.length === 0) {
@@ -61,11 +61,38 @@ class PopoverOptionSet extends Component {
       <InputGroupAddon addonType="append">
         <button
           className="popover-option-set__search-clear btn-link"
-          onClick={this.handleClear}
+          onClick={this.handleSearchValueClear}
         >
           {i18n._t('PopoverOptionSet.CLEAR', 'Clear')}
         </button>
       </InputGroupAddon>
+    );
+  }
+
+  /**
+   * Render the search value intput box (which is in turn used to filter the buttons)
+   *
+   * @return {DOMElement}
+   */
+  renderSearchBox() {
+    const { searchPlaceholder, disableSearch } = this.props;
+    const { searchValue } = this.state;
+    if (disableSearch) {
+      return null;
+    }
+    return (
+      <InputGroup className="popover-option-set__search">
+        <Input
+          autoFocus
+          className="popover-option-set__search-input"
+          id="popover-option-set__search-input"
+          onChange={this.handleSearchValueChange}
+          placeholder={searchPlaceholder}
+          type="text"
+          value={searchValue}
+        />
+        {this.renderSearchValueClearLink()}
+      </InputGroup>
     );
   }
 
@@ -75,7 +102,7 @@ class PopoverOptionSet extends Component {
    * @returns {DOMElement}
    */
   renderOptionButtons() {
-    const { onSearch, onButtonClick } = this.props;
+    const { onSearch, onButtonClick, ButtonComponent } = this.props;
     let { buttons } = this.props;
     const { searchValue } = this.state;
 
@@ -91,33 +118,23 @@ class PopoverOptionSet extends Component {
       );
     }
 
-    return buttons.map((button) =>
-      (
-        <Button
-          className={
-            classNames(
-              button.className,
-              'btn--icon-xl',
-              'popover-option-set__button'
-            )
-          }
-          key={button.key}
-          onClick={onButtonClick(button)}
-        >
-          {button.text}
-        </Button>
-      )
-    );
-  }
-
-  /**
-   * Render the container for the option set popover content
-   * @returns {DOMElement}
-   */
-  renderPopoverOptionSetContent() {
     return (
       <div className="popover-option-set__button-container">
-        {this.renderOptionButtons()}
+        {buttons.map((button) => (
+          <ButtonComponent
+            className={
+              classNames(
+                button.className,
+                'btn--icon-xl',
+                'popover-option-set__button'
+              )
+            }
+            key={button.key}
+            onClick={onButtonClick(button)}
+          >
+            {button.content}
+          </ButtonComponent>
+        ))}
       </div>
     );
   }
@@ -127,11 +144,7 @@ class PopoverOptionSet extends Component {
    * @returns {DOMElement}
    */
   render() {
-    const {
-      container, extraClass, isOpen, placement,
-      target, searchPlaceholder, disableSearch,
-    } = this.props;
-    const { searchValue } = this.state;
+    const { container, extraClass, isOpen, placement, target } = this.props;
     const popoverClassNames = classNames(
       'popover-option-set',
       extraClass
@@ -147,19 +160,8 @@ class PopoverOptionSet extends Component {
         target={target}
         toggle={this.handleToggle}
       >
-        { disableSearch || <InputGroup className="popover-option-set__search">
-          <Input
-            autoFocus
-            className="popover-option-set__search-input"
-            id="popover-option-set__search-input"
-            onChange={this.handleSearchValueChange}
-            placeholder={searchPlaceholder}
-            type="text"
-            value={searchValue}
-          />
-          {this.renderClearLink()}
-        </InputGroup> }
-        {this.renderPopoverOptionSetContent()}
+        {this.renderSearchBox()}
+        {this.renderOptionButtons()}
       </Popover>
     );
   }
@@ -167,13 +169,19 @@ class PopoverOptionSet extends Component {
 
 const buttonType = PropTypes.shape({
   key: PropTypes.string.required,
-  text: PropTypes.string.required,
-  className: PropTypes.string,
+  content: PropTypes.string.required,
+  className: PropTypes.oneOfType(
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.arrayOf(PropTypes.string)
+  ),
 });
 
 PopoverOptionSet.propTypes = {
   buttons: PropTypes.arrayOf(buttonType),
   onSearch: PropTypes.func,
+  // function that accepts a button object & returns an event handler
+  // e.g. (button) => (event) => event.preventDefault() && togglePopover();
   onButtonClick: PropTypes.func.isRequired,
   container: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
   extraClass: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
@@ -182,15 +190,18 @@ PopoverOptionSet.propTypes = {
   target: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]).isRequired,
   toggle: PropTypes.func.isRequired,
   searchPlaceholder: PropTypes.string,
-  disableSearch: PropTypes.bool
+  disableSearch: PropTypes.bool,
+  ButtonComponent: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
 };
 
 PopoverOptionSet.defaultProps = {
   searchPlaceholder: i18n._t('PopoverOptionSet.SEARCH_PLACEHOLDER', 'Search'),
   onSearch: (query, buttons) => buttons.filter(
+    // Default search handler assumes button content to be plain text
     ({ text }) => text.toLowerCase().includes(query.toLowerCase())
   ),
   disableSearch: false,
+  ButtonComponent: Button,
 };
 
 export { buttonType };
