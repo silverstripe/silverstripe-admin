@@ -38,7 +38,7 @@ class PopoverOptionSet extends Component {
 
   /**
    * Update the internal state on user input change
-   * @param {Event}
+   * @param {Event} event
    */
   handleSearchValueChange(event) {
     this.setState(
@@ -112,8 +112,10 @@ class PopoverOptionSet extends Component {
 
     if (buttons.length === 0) {
       return (
-        <div className="popover-option-set__no-results">
-          {i18n._t('PopoverOptionSet.NO_RESULTS', 'No results found')}
+        <div className="popover-option-set__button-container">
+          <div className="popover-option-set__no-results">
+            {i18n._t('PopoverOptionSet.NO_RESULTS', 'No results found')}
+          </div>
         </div>
       );
     }
