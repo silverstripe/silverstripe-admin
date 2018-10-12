@@ -121,7 +121,7 @@ deploy:
 - provider: pages
   skip_cleanup: true
   keep-history: false
-  github-token: $GITHUB_API_TOKEN
+  github-token: $GITHUB_AUTO_PUBLISH_API_TOKEN
   local-dir: storybook-static
   on:
     branch: 1
