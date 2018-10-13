@@ -4,6 +4,10 @@ import { Button, Input, InputGroup, InputGroupAddon, Popover } from 'reactstrap'
 import classNames from 'classnames';
 import i18n from 'i18n';
 
+/**
+ * Fills a popover with buttons and a search box to filter the buttons.
+ * See the storybook for more details
+ */
 class PopoverOptionSet extends Component {
   constructor(props) {
     super(props);
@@ -11,6 +15,7 @@ class PopoverOptionSet extends Component {
     this.handleToggle = this.handleToggle.bind(this);
     this.handleSearchValueClear = this.handleSearchValueClear.bind(this);
     this.handleSearchValueChange = this.handleSearchValueChange.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
 
     this.state = {
       searchValue: ''
@@ -44,6 +49,25 @@ class PopoverOptionSet extends Component {
     this.setState(
       { searchValue: event.target.value }
     );
+  }
+
+  handleKeyDown(event) {
+    if (
+      // Ignore key presses in the search field...
+      event.target
+      && event.target.nodeName === 'INPUT'
+      // ...but allow "escape"
+      && event.key !== 'Escape'
+    ) {
+      return;
+    }
+
+    switch (event.key) {
+      case 'Escape':
+        this.handleToggle();
+        break;
+      default:
+    }
   }
 
   /**
@@ -160,6 +184,7 @@ class PopoverOptionSet extends Component {
         placement={placement}
         target={target}
         toggle={this.handleToggle}
+        onKeyDown={this.handleKeyDown}
       >
         {this.renderSearchBox()}
         {this.renderOptionButtons()}
@@ -179,7 +204,7 @@ const buttonType = PropTypes.shape({
 });
 
 PopoverOptionSet.propTypes = {
-  buttons: PropTypes.arrayOf(buttonType),
+  buttons: PropTypes.arrayOf(buttonType).isRequired,
   // Accepts a function that takes a search term as a first parameter and a set
   // of buttons to match against that returns a filtered set of buttons
   // Default search handler assumes button content to be plain text and performs
