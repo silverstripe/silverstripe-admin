@@ -127,7 +127,6 @@ class PopoverOptionSet extends Component {
             className={
               classNames(
                 button.className,
-                'btn--icon-xl',
                 'popover-option-set__button'
               )
             }
@@ -171,7 +170,7 @@ class PopoverOptionSet extends Component {
 
 const buttonType = PropTypes.shape({
   key: PropTypes.string.required,
-  content: PropTypes.string.required,
+  content: PropTypes.node.required,
   className: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,
@@ -181,6 +180,10 @@ const buttonType = PropTypes.shape({
 
 PopoverOptionSet.propTypes = {
   buttons: PropTypes.arrayOf(buttonType),
+  // Accepts a function that takes a search term as a first parameter and a set
+  // of buttons to match against that returns a filtered set of buttons
+  // Default search handler assumes button content to be plain text and performs
+  // a simple string.contains check.
   onSearch: PropTypes.func,
   // function that accepts a button object & returns an event handler
   // e.g. (button) => (event) => event.preventDefault() && togglePopover();
@@ -199,7 +202,6 @@ PopoverOptionSet.propTypes = {
 PopoverOptionSet.defaultProps = {
   searchPlaceholder: i18n._t('PopoverOptionSet.SEARCH_PLACEHOLDER', 'Search'),
   onSearch: (query, buttons) => buttons.filter(
-    // Default search handler assumes button content to be plain text
     ({ content }) => content.toLowerCase().includes(query.toLowerCase())
   ),
   disableSearch: false,
