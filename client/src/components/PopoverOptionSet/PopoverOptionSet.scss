@@ -1,10 +1,8 @@
 .popover-option-set {
   min-width: 320px;
-  max-height: 356px; // TODO Find variable!
   display: flex;
   flex-direction: column;
   border-radius: $border-radius; // Change to equal 4px
-  overflow-y: scroll;
 
   &:focus,
   &:hover {
@@ -19,6 +17,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    max-height: 305px;
+    overflow-y: auto;
 
     :nth-child(odd) {
       margin-right: $panel-padding-x/2;
