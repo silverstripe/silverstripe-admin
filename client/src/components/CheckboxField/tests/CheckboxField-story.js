@@ -1,27 +1,27 @@
 import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { storiesOf } from '@storybook/react';
+import { storiesOf, setAddon } from '@storybook/react';
+import { withKnobs, text, select } from '@storybook/addon-knobs/react';
+import JSXAddon from 'storybook-addon-jsx';
+
 import CheckboxField from 'components/CheckboxField/CheckboxField';
 import ValueTracker from 'stories/ValueTracker';
 
-const props = {
-  title: 'one',
-  value: '1',
-};
+setAddon(JSXAddon);
 
-storiesOf('Admin/CheckboxField', module)
+storiesOf('Admin/FormFields', module)
   .addDecorator((storyFn) => (
     <ValueTracker>{storyFn()}</ValueTracker>
   ))
-  .add('Checkbox', () => (
+  .addDecorator(withKnobs)
+  .addWithJSX('CheckboxField', () => (
     <CheckboxField
-      {...props}
-    />
-  ))
-  .add('All titles', () => (
-    <CheckboxField
-      {...props}
-      message={{ type: 'error', value: 'My error message' }}
-      description="This is a description"
+      title={text('title', 'a checkbox field')}
+      value={text('value', '1')}
+      message={{
+        type: select('message type', ['', 'error'], 'error'),
+        value: text('message', 'A message about the field.') }
+      }
+      description={text('description', 'A description of the field.')}
     />
   ));
