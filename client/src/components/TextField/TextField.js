@@ -69,6 +69,9 @@ class TextField extends Component {
    */
   handleChange(event) {
     if (typeof this.props.onChange === 'function') {
+      if (!event.target) {
+        return;
+      }
       this.props.onChange(event, { id: this.props.id, value: event.target.value });
     }
   }
