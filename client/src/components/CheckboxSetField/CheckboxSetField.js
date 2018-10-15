@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import OptionField from 'components/OptionsetField/OptionField';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
+import PropTypes from 'prop-types';
 
 // a group of check boxes
 class CheckboxSetField extends Component {
@@ -112,20 +113,20 @@ class CheckboxSetField extends Component {
 }
 
 CheckboxSetField.propTypes = {
-  className: React.PropTypes.string,
-  extraClass: React.PropTypes.string,
-  itemClass: React.PropTypes.string,
-  id: React.PropTypes.string,
-  name: React.PropTypes.string.isRequired,
-  source: React.PropTypes.arrayOf(React.PropTypes.shape({
-    value: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-    title: React.PropTypes.any,
-    disabled: React.PropTypes.bool,
+  className: PropTypes.string,
+  extraClass: PropTypes.string,
+  itemClass: PropTypes.string,
+  id: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  source: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    title: PropTypes.any,
+    disabled: PropTypes.bool,
   })),
-  onChange: React.PropTypes.func,
-  value: React.PropTypes.any,
-  readOnly: React.PropTypes.bool,
-  disabled: React.PropTypes.bool,
+  onChange: PropTypes.func,
+  value: PropTypes.any,
+  readOnly: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 CheckboxSetField.defaultProps = {

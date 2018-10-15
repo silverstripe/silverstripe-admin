@@ -127,12 +127,12 @@ class LeftAndMain extends Controller implements PermissionProvider
     private static $tree_class = null;
 
     /**
-     * The url used for the link in the Help tab in the backend
+     * @deprecated 5.0 use $help_links instead
      *
      * @config
      * @var string
      */
-    private static $help_link = '//userhelp.silverstripe.org/en/4';
+    private static $help_link = '';
 
     /**
      * @var array
@@ -264,6 +264,18 @@ class LeftAndMain extends Controller implements PermissionProvider
     private static $frame_options = 'SAMEORIGIN';
 
     /**
+     * The configuration passed to the supporting JS for each CMS section includes a 'name' key
+     * that by default matches the FQCN of the current class. This setting allows you to change
+     * the key if necessary (for example, if you are overloading CMSMain or another core class
+     * and want to keep the core JS - which depends on the core class names - functioning, you
+     * would need to set this to the FQCN of the class you are overloading).
+     *
+     * @config
+     * @var string|null
+     */
+    private static $section_name = null;
+
+    /**
      * @var PjaxResponseNegotiator
      */
     protected $responseNegotiator;
@@ -274,7 +286,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     protected $versionProvider;
 
     /**
-     * Gets the combined configuration of all LeafAndMain subclasses required by the client app.
+     * Gets the combined configuration of all LeftAndMain subclasses required by the client app.
      *
      * @return string
      *
@@ -316,10 +328,17 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     public function getClientConfig()
     {
+        // Allows the section name to be overridden in config
+        $name = $this->config()->get('section_name');
+
+        if (!$name) {
+            $name = static::class;
+        }
+
         $clientConfig = [
             // Trim leading/trailing slash to make it easier to concatenate URL
             // and use in routing definitions.
-            'name' => static::class,
+            'name' => $name,
             'url' => trim($this->Link(), '/'),
             'form' => [
                 'EditorExternalLink' => [
@@ -593,20 +612,6 @@ class LeftAndMain extends Controller implements PermissionProvider
         $member = Security::getCurrentUser();
         if (!empty($member->Locale)) {
             i18n::set_locale($member->Locale);
-        }
-
-        if ($helpLink = LeftAndMain::config()->uninherited('help_link')) {
-            // can't be done in cms/_config.php as locale is not set yet
-            CMSMenu::add_link(
-                'Help',
-                _t(__CLASS__ . '.HELP', 'Help', 'Menu title'),
-                $helpLink,
-                -2,
-                array(
-                    'target' => '_blank'
-                ),
-                'font-icon-help-circled'
-            );
         }
 
         // Allow customisation of the access check by a extension
@@ -1727,13 +1732,30 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * Return the version number of this application.
+     * Return the version number of this application, ie. 'CMS: 4.2.1'
      *
      * @return string
      */
     public function CMSVersion()
     {
         return $this->getVersionProvider()->getVersion();
+    }
+
+    /**
+     * Return the version number of the CMS, ie. '4.2.1'
+     *
+     * @return string
+     */
+    public function CMSVersionNumber()
+    {
+        $moduleName = array_keys($this->getVersionProvider()->getModules())[0];
+        $lockModules = $this->getVersionProvider()->getModuleVersionFromComposer([$moduleName]);
+
+        if (!isset($lockModules[$moduleName])) {
+            return '';
+        }
+
+        return $lockModules[$moduleName];
     }
 
     /**
@@ -1755,6 +1777,46 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function SiteConfig()
     {
         return class_exists(SiteConfig::class) ? SiteConfig::current_site_config() : null;
+    }
+
+    /**
+     * The urls used for the links in the Help dropdown in the backend
+     *
+     * @config
+     * @var array
+     */
+    private static $help_links = [
+        'CMS User help' => 'https://userhelp.silverstripe.org/en/4',
+        'Developer docs' => 'https://docs.silverstripe.org/en/4/',
+        'Community' => 'https://www.silverstripe.org/',
+        'Feedback' => 'https://www.silverstripe.org/give-feedback/',
+    ];
+
+    /**
+     * Returns help_links in a format readable by a template
+     * @return ArrayList
+     */
+    public function getHelpLinks()
+    {
+        $helpLinks = $this->config()->get('help_links');
+        $formattedLinks = [];
+
+        $helpLink = $this->config()->get('help_link');
+        if ($helpLink) {
+            Deprecation::notice('5.0', 'Use $help_links instead of $help_link');
+            $helpLinks['CMS User help'] = $helpLink;
+        }
+
+        foreach ($helpLinks as $key => $value) {
+            $translationKey = str_replace(' ', '', $key);
+
+            $formattedLinks[] = [
+                'Title' => _t(__CLASS__ . '.' . $translationKey, $key),
+                'URL' => $value
+            ];
+        }
+
+        return ArrayList::create($formattedLinks);
     }
 
     /**

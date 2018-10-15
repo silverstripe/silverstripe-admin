@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import i18n from 'i18n';
 import { Input } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class SingleSelectField extends Component {
   constructor(props) {
@@ -108,22 +109,22 @@ class SingleSelectField extends Component {
 }
 
 SingleSelectField.propTypes = {
-  id: React.PropTypes.string,
-  name: React.PropTypes.string.isRequired,
-  onChange: React.PropTypes.func,
-  value: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-  readOnly: React.PropTypes.bool,
-  disabled: React.PropTypes.bool,
-  source: React.PropTypes.arrayOf(React.PropTypes.shape({
-    value: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-    title: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-    disabled: React.PropTypes.bool,
+  id: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  readOnly: PropTypes.bool,
+  disabled: PropTypes.bool,
+  source: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    title: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    disabled: PropTypes.bool,
   })),
-  data: React.PropTypes.oneOfType([
-    React.PropTypes.array,
-    React.PropTypes.shape({
-      hasEmptyDefault: React.PropTypes.bool,
-      emptyString: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
+  data: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.shape({
+      hasEmptyDefault: PropTypes.bool,
+      emptyString: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     }),
   ]),
 };

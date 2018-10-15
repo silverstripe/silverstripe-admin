@@ -3,6 +3,7 @@ import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
 import ReactDOM from 'react-dom';
 import jQuery from 'jquery';
 import { setupTinyMceInlineToolbar } from 'components/TinymceInlineToolbar/TinymceInlineToolbar';
+import i18n from 'i18n';
 
 const plugin = {
   /**
@@ -11,6 +12,12 @@ const plugin = {
    * @param {Object} editor
    */
   init(editor) {
+    const metaKey = navigator.platform.toUpperCase().includes('MAC') ? '⌘' : 'Ctrl';
+    const title = i18n._t('Admin.INSERT_LINK', 'Insert link');
+    const titleWithShortcut = i18n.inject(
+      i18n._t('Admin.INSERT_LINK_WITH_SHORTCUT', 'Insert link {shortcut}'),
+      { shortcut: `[${metaKey}+K]` }
+    );
     const actions = TinyMCEActionRegistrar.getSortedActions('sslink')
       .map(action => Object.assign(
         {},
@@ -18,23 +25,21 @@ const plugin = {
         { onclick: () => action.onclick(editor) }
       ));
 
-    const metaKey = navigator.platform.toUpperCase().includes('MAC') ? '⌘' : 'Ctrl';
-
     editor.addButton('sslink', {
       icon: 'link',
-      title: `Insert Link [${metaKey} + k]`,
+      title: titleWithShortcut,
       type: 'menubutton',
       menu: actions,
     });
 
     editor.addMenuItem('sslink', {
       icon: 'link',
-      text: 'Insert Link',
+      text: title,
       menu: actions,
     });
 
     editor.addShortcut('Meta+k', 'Open link menu', () => {
-      jQuery('[aria-label^=\"Insert Link\"] > button', editor.container).first().click();
+      jQuery(`[aria-label^=\"${title}\"] > button`, editor.container).first().click();
     });
 
     function openLinkDialog() {

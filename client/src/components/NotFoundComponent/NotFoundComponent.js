@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import i18n from 'i18n';
 import classnames from 'classnames';
 import FormAlert from 'components/FormAlert/FormAlert';
+import PropTypes from 'prop-types';
 
 const NotFoundComponent = ({ itemName, name, value }) => (
   <div className={classnames(itemName, 'not-found-component')}>

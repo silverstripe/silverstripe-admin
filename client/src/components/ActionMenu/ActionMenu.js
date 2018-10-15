@@ -1,4 +1,5 @@
-import React, { PureComponent, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { Dropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 import i18n from 'i18n';
 import classnames from 'classnames';
@@ -55,7 +56,7 @@ class ActionMenu extends PureComponent {
   }
 }
 
-ActionMenu.PropTypes = {
+ActionMenu.propTypes = {
   toggleCallback: PropTypes.func,
   dropdownToggleClassNames: PropTypes.arrayOf(PropTypes.string),
 };
@@ -65,8 +66,8 @@ ActionMenu.defaultProps = {
   dropdownToggleClassNames: [
     'action-menu__toggle',
     'btn',
-    'btn-sm',
     'btn--no-text',
+    'btn--icon-xl',
     'font-icon-dot-3'
   ],
   dropdownToggleProps: {},

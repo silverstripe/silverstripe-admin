@@ -16,7 +16,7 @@ TinyMCEConfig::get('cms')
         'priority' => '50',
         'skin' => 'silverstripe',
         'body_class' => 'typography',
-        'contextmenu' => "sslink ssmedia inserttable | cell row column deletetable",
+        'contextmenu' => "sslink ssmedia ssembed inserttable | cell row column deletetable",
         'use_native_selects' => false,
         'valid_elements' => "@[id|class|style|title],a[id|rel|rev|dir|tabindex|accesskey|type|name|href|target|title"
             . "|class],-strong/-b[class],-em/-i[class],-strike[class],-u[class],#p[id|dir|class|align|style],-ol[class],"
@@ -46,6 +46,6 @@ TinyMCEConfig::get('cms')
         'sslinkexternal' => $module->getResource('client/dist/js/TinyMCE_sslink-external.js'),
         'sslinkemail' => $module->getResource('client/dist/js/TinyMCE_sslink-email.js'),
     ])
-    ->setOption('contextmenu', 'sslink inserttable | cell row column deletetable');
+    ->setOption('contextmenu', 'sslink ssmedia ssembed inserttable | cell row column deletetable');
 
 CMSMenu::remove_menu_class(CMSProfileController::class);

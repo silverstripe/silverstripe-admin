@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import castStringToElement from 'lib/castStringToElement';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 class FormAction extends Component {
   constructor(props) {
@@ -169,23 +170,23 @@ class FormAction extends Component {
 }
 
 FormAction.propTypes = {
-  id: React.PropTypes.string,
-  name: React.PropTypes.string,
-  onClick: React.PropTypes.func,
-  title: React.PropTypes.string,
-  type: React.PropTypes.string,
-  loading: React.PropTypes.bool,
-  icon: React.PropTypes.string,
-  disabled: React.PropTypes.bool,
-  readOnly: React.PropTypes.bool,
-  data: React.PropTypes.oneOfType([
-    React.PropTypes.array,
-    React.PropTypes.shape({
-      buttonStyle: React.PropTypes.string,
+  id: PropTypes.string,
+  name: PropTypes.string,
+  onClick: PropTypes.func,
+  title: PropTypes.string,
+  type: PropTypes.string,
+  loading: PropTypes.bool,
+  icon: PropTypes.string,
+  disabled: PropTypes.bool,
+  readOnly: PropTypes.bool,
+  data: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.shape({
+      buttonStyle: PropTypes.string,
     }),
   ]),
-  extraClass: React.PropTypes.string,
-  attributes: React.PropTypes.object,
+  extraClass: PropTypes.string,
+  attributes: PropTypes.object,
 };
 
 FormAction.defaultProps = {

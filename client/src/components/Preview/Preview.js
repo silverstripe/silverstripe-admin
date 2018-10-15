@@ -1,8 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import i18n from 'i18n';
 import ActionMenu from '../ActionMenu/ActionMenu';
 import classnames from 'classnames';
 import { inject } from 'lib/Injector';
+import PropTypes from 'prop-types';
 
 /**
  * Renders the right-hand collapsable change preview panel
@@ -120,11 +121,11 @@ class Preview extends Component {
 }
 
 Preview.propTypes = {
-  className: React.PropTypes.string,
-  itemLinks: React.PropTypes.object,
-  itemId: React.PropTypes.number,
-  onBack: React.PropTypes.func,
-  moreActions: React.PropTypes.arrayOf(React.PropTypes.element),
+  className: PropTypes.string,
+  itemLinks: PropTypes.object,
+  itemId: PropTypes.number,
+  onBack: PropTypes.func,
+  moreActions: PropTypes.arrayOf(PropTypes.element),
   ViewModeComponent: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 };
 

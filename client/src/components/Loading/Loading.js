@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Renders a SilverStripe loading animation
@@ -17,7 +18,7 @@ class Loading extends PureComponent {
 }
 
 Loading.propTypes = {
-  containerClass: React.PropTypes.string,
+  containerClass: PropTypes.string,
 };
 
 Loading.defaultProps = {

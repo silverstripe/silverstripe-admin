@@ -1,12 +1,13 @@
 /* global document window */
 import i18n from 'i18n';
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import { Label, Button } from 'reactstrap';
 import classNames from 'classnames';
 import TagPropType from '../Tag/TagPropType';
 import CompactTagList from 'components/Tag/CompactTagList';
 import ResizeAware from 'components/ResizeAware/ResizeAware';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 
 /**
  * Displays a search box and a few buttons related buttons.
@@ -211,7 +212,6 @@ class SearchBox extends Component {
         name={name}
         placeholder={placeholder}
         className={classeNames}
-
         onKeyDown={this.handleKeyDown}
         onChange={onChange}
         onFocus={this.handleFocus}

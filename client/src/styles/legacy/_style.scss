@@ -1358,10 +1358,10 @@ form.member-profile-form {
     .toggle-collapse,
     .toggle-expand {
       text-align: right;
-      padding: 14px 0;
+      padding: 16px 0;
       text-decoration: none;
       line-height: 20px;
-      margin: -#{map_get($spacers, xs)} #{0 - $panel-padding-x};
+      margin: -#{map_get($spacers, xs)} #{0 - $panel-padding-x} -#{map_get($spacers, xs)} 0;
 
       span {
         display: inline-block;

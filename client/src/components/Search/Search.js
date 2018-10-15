@@ -1,6 +1,6 @@
 /* global document */
 import i18n from 'i18n';
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
@@ -15,7 +15,7 @@ import SearchBox from './SearchBox';
 import SearchForm from './SearchForm';
 import SearchToggle from './SearchToggle';
 import mapFormSchemaToTags from './utilities/mapFormSchemaToTags';
-
+import PropTypes from 'prop-types';
 
 const DISPLAY = {
   NONE: 'NONE',
@@ -61,7 +61,10 @@ class Search extends Component {
     this.focusFormFilter = this.focusFormFilter.bind(this);
     this.formatTagData = this.formatTagData.bind(this);
 
-    const term = props.term || (props.filters && props.filters[props.name]) || '';
+    const term = props.term
+      || (props.filters && props.filters[`Search__${props.name}`])
+      || '';
+
     this.state = {
       display: props.display,
       searchText: term,
@@ -120,19 +123,21 @@ class Search extends Component {
 
   /**
    * Get the search criteria compiled into an object.
-   * @return Object
+   * @returns {Object}
    */
   getData(ignoreSearchTerm = false) {
+    const { name, formData } = this.props;
+    const { searchText } = this.state;
     const data = {};
 
     // Merge data from redux-forms with text field
-    if (!ignoreSearchTerm && this.state.searchText) {
-      data[this.props.name] = this.state.searchText.trim();
+    if (!ignoreSearchTerm && searchText) {
+      data[name] = searchText.trim();
     }
 
     // Filter empty values
-    Object.keys(this.props.formData).forEach((key) => {
-      const value = this.props.formData[key];
+    Object.keys(formData).forEach((key) => {
+      const value = formData[key];
       if (value) {
         data[key] = value;
       }
@@ -143,7 +148,7 @@ class Search extends Component {
 
   /**
    * Update the state search term form an input field change event.
-   * @param event onChangeEvent from a input field.
+   * @param {Object} event onChangeEvent from a input field.
    */
   handleChange(event) {
     const value = event.target.value;
@@ -209,7 +214,7 @@ class Search extends Component {
 
   /**
    * Clear the search term and any advanced search form data.
-   * @param props
+   * @param {Object} props
    */
   clearFormData(props) {
     if (this.state.searchText !== '') {
@@ -227,7 +232,7 @@ class Search extends Component {
 
   /**
    * Clear a search filter and execute a new search
-   * @param string key Search filter name to clear
+   * @param {string} key Search filter name to clear
    */
   clearFormFilter(key) {
     const tag = this.props.tagData[key];
@@ -240,7 +245,7 @@ class Search extends Component {
 
   /**
    * Focus on the requested search filter name.
-   * @param string key Search filter name.
+   * @param {string} key Search filter name.
    */
   focusFormFilter(key) {
     const tag = this.props.tagData[key];
@@ -321,13 +326,30 @@ class Search extends Component {
 
   /**
    * Wrap up all the data into an object and call the onSearch method provided via the props.
-   * @param Object overrides Data to overrides over our existing form data.
+   * @param {Object} overrides Data to overrides over our existing form data.
    */
   doSearch(overrides = {}) {
     // Data to send to the remote service
-    const searchData = Object.assign({}, this.getData(), overrides);
-    const searchText = searchData[this.props.name] || '';
+    const { name } = this.props;
+    const searchData = {};
 
+    Object.entries(this.getData()).forEach(([key, value]) => {
+      // Strip any "Search__" from the key
+      let newKey = key;
+      let newValue = value;
+
+      if (overrides.hasOwnProperty(key)) {
+        newValue = overrides[key];
+      }
+
+      if (key !== `Search__${name}` && key.startsWith('Search__')) {
+        newKey = key.substring(8);
+      }
+
+     searchData[newKey] = newValue;
+    });
+
+    const searchText = searchData[name] || '';
     // Data to store in the redux state
     const formData = Object.assign({}, this.getData(true), overrides);
 
@@ -367,26 +389,27 @@ class Search extends Component {
 
   /**
    * Take the provided tagData and format in way that will make sense for TagList.
-   * @return Object[]
+   * @returns {Object[]}
    */
   formatTagData() {
     const { tagData, name } = this.props;
+    const tagDataCopy = Object.assign({}, tagData);
+    const nameKey = `Search__${name}`;
+
     // Remove any tag matching the name of our form field.
-    if (tagData && tagData[name]) {
-      delete tagData[name];
+    if (tagDataCopy && tagDataCopy[nameKey]) {
+      delete tagDataCopy[nameKey];
     }
 
     // Convert the tag data to a plain array and remove un-needed attributes.
-    const tagDataAsPlainArray = tagData ?
-      Object.values(tagData).map(({ key, label, value }) => ({ key, label, value })) :
+    return tagDataCopy ?
+      Object.values(tagDataCopy).map(({ key, label, value }) => ({ key, label, value })) :
       [];
-
-    return tagDataAsPlainArray;
   }
 
   render() {
     const { formSchemaUrl, forceFilters, id, displayBehavior,
-      identifier, formIsDirty, tagData, ...props } = this.props;
+      identifier, formIsDirty, tagData, name, ...props } = this.props;
 
     // If the box is not to be displayed
     if (this.state.display === DISPLAY.NONE) {
@@ -402,6 +425,7 @@ class Search extends Component {
 
     // Build classes
     const expanded = this.state.display === DISPLAY.EXPANDED;
+    const visible = this.state.display === DISPLAY.VISIBLE;
 
     // Decide if we display the X button
     const hideable =
@@ -416,6 +440,7 @@ class Search extends Component {
       <Focusedzone onClickOut={this.show} className="search">
         <SearchBox
           {...props}
+          name={`SearchBox__${name}`}
           onChange={this.handleChange}
           onSearch={this.doSearch}
           onToggleFilter={this.toggle}
@@ -437,6 +462,7 @@ class Search extends Component {
           <SearchForm
             id={formId}
             identifier={identifier}
+            visible={visible}
             expanded={expanded}
             formSchemaUrl={formSchemaUrl}
             onSearch={this.doSearch}

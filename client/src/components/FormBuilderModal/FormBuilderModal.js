@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import i18n from 'i18n';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Modal, ModalHeader } from 'reactstrap';
 import FormBuilderLoader from 'containers/FormBuilderLoader/FormBuilderLoader';
 import castStringToElement from 'lib/castStringToElement';
+import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 const noop = () => null;
 
@@ -27,6 +29,8 @@ class FormBuilderModal extends Component {
     }
     return (
       <FormBuilderLoader
+        fieldHolder={{ className: classnames('modal-body', this.props.bodyClassName) }}
+        actionHolder={{ className: 'modal-footer' }}
         autoFocus={this.props.autoFocus}
         schemaUrl={this.props.schemaUrl}
         onSubmit={this.handleSubmit}
@@ -150,12 +154,10 @@ class FormBuilderModal extends Component {
       return (
         <button
           type="button"
-          className="close form-builder-modal__close-button"
+          className="close modal__close-button"
           onClick={this.handleHide}
           aria-label={i18n._t('Admin.CLOSE', 'Close')}
-        >
-          <span aria-hidden="true">×</span>
-        </button>
+        />
       );
     }
 
@@ -175,35 +177,33 @@ class FormBuilderModal extends Component {
         size={this.props.size}
       >
         {this.renderHeader()}
-        <ModalBody className={this.props.bodyClassName}>
-          {response}
-          {form}
-          {this.props.children}
-        </ModalBody>
+        {response}
+        {form}
+        {this.props.children}
       </Modal>
     );
   }
 }
 
 FormBuilderModal.propTypes = {
-  autoFocus: React.PropTypes.bool,
-  isOpen: React.PropTypes.bool,
-  title: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.bool]),
-  className: React.PropTypes.string,
-  bodyClassName: React.PropTypes.string,
-  modalClassName: React.PropTypes.string,
-  showCloseButton: React.PropTypes.bool,
-  size: React.PropTypes.string,
-  onClosed: React.PropTypes.func,
-  schemaUrl: React.PropTypes.string,
-  onSubmit: React.PropTypes.func,
-  onAction: React.PropTypes.func,
-  responseClassGood: React.PropTypes.string,
-  responseClassBad: React.PropTypes.string,
-  identifier: React.PropTypes.string,
+  autoFocus: PropTypes.bool,
+  isOpen: PropTypes.bool,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  className: PropTypes.string,
+  bodyClassName: PropTypes.string,
+  modalClassName: PropTypes.string,
+  showCloseButton: PropTypes.bool,
+  size: PropTypes.string,
+  onClosed: PropTypes.func,
+  schemaUrl: PropTypes.string,
+  onSubmit: PropTypes.func,
+  onAction: PropTypes.func,
+  responseClassGood: PropTypes.string,
+  responseClassBad: PropTypes.string,
+  identifier: PropTypes.string,
   // Ignored and assumed true if onLoadingError is unassigned
-  showErrorMessage: React.PropTypes.bool,
-  onLoadingError: React.PropTypes.func,
+  showErrorMessage: PropTypes.bool,
+  onLoadingError: PropTypes.func,
 };
 
 FormBuilderModal.defaultProps = {
@@ -212,6 +212,7 @@ FormBuilderModal.defaultProps = {
   onLoadingError: noop,
   isOpen: false,
   title: null,
+  modalClassName: 'form-builder-modal',
   responseClassGood: 'alert alert-success',
   responseClassBad: 'alert alert-danger',
 };

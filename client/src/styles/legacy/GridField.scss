@@ -418,4 +418,9 @@
       margin-left: -5px;
     }
   }
+
+  .ss-gridfield-item.loading {
+    position: relative;
+    padding: $grid-gutter-width;
+  }
 }

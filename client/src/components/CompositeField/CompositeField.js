@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import castStringToElement from 'lib/castStringToElement';
+import PropTypes from 'prop-types';
 
 class CompositeField extends Component {
   /**
@@ -36,19 +37,21 @@ class CompositeField extends Component {
 }
 
 CompositeField.propTypes = {
-  data: React.PropTypes.oneOfType([
-    React.PropTypes.array,
-    React.PropTypes.shape({
-      tag: React.PropTypes.string,
-      legend: React.PropTypes.string,
+  data: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.shape({
+      tag: PropTypes.string,
+      legend: PropTypes.string,
     }),
   ]),
-  extraClass: React.PropTypes.string,
+  extraClass: PropTypes.string,
 };
 
 CompositeField.defaultProps = {
   className: '',
   extraClass: '',
 };
+
+export { CompositeField as Component };
 
 export default CompositeField;

@@ -1,5 +1,6 @@
 import i18n from 'i18n';
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, bindActionCreators } from 'redux';
 import fetch from 'isomorphic-fetch';
@@ -42,7 +43,11 @@ class FormBuilderLoader extends Component {
   }
 
   componentDidMount() {
-    this.fetch();
+    const { schema, refetchSchemaOnMount } = this.props;
+
+    if (refetchSchemaOnMount || !schema) {
+      this.fetch();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -335,6 +340,10 @@ class FormBuilderLoader extends Component {
             { keepSubmitSucceeded: true }
           );
 
+          if (typeof this.props.onReduxFormInit === 'function') {
+            this.props.onReduxFormInit();
+          }
+
           return overriddenSchema;
         }
         return formSchema;
@@ -405,7 +414,7 @@ class FormBuilderLoader extends Component {
     // If the response from fetching the initial data
     // hasn't come back yet, don't render anything.
     if (!this.props.schema || !this.props.schema.schema || this.props.loading) {
-      return <Loading />;
+      return <Loading containerClass="loading--form flexbox-area-grow" />;
     }
 
     const props = Object.assign({}, this.props, {
@@ -429,11 +438,17 @@ FormBuilderLoader.propTypes = Object.assign({}, basePropTypes, {
   identifier: PropTypes.string.isRequired,
   schemaUrl: PropTypes.string.isRequired,
   schema: schemaPropType,
+  refetchSchemaOnMount: PropTypes.bool.isRequired,
   form: PropTypes.string,
   submitting: PropTypes.bool,
   onFetchingSchema: PropTypes.func,
+  onReduxFormInit: PropTypes.func,
   loadingComponent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]).isRequired,
 });
+
+FormBuilderLoader.defaultProps = {
+  refetchSchemaOnMount: true,
+};
 
 function mapStateToProps(state, ownProps) {
   const schema = state.form.formSchemas[ownProps.schemaUrl];

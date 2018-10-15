@@ -2,6 +2,7 @@ import React from 'react';
 import { reduxForm } from 'redux-form';
 import { inject } from 'lib/Injector';
 import getFormState from 'lib/getFormState';
+import PropTypes from 'prop-types';
 
 const InjectableForm = (props) => {
   const FormComponent = props.formComponent;
@@ -14,7 +15,7 @@ const InjectableForm = (props) => {
 };
 
 InjectableForm.propTypes = {
-  formComponent: React.PropTypes.func.isRequired,
+  formComponent: PropTypes.func.isRequired,
 };
 
 const InjectedForm = inject(
@@ -24,4 +25,5 @@ const InjectedForm = inject(
 
 export default reduxForm({
   getFormState,
+  destroyOnUnmount: false,
 })(InjectedForm);

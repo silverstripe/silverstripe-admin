@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import { Input } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class HtmlReadonlyField extends Component {
   constructor(props) {
@@ -46,10 +47,10 @@ class HtmlReadonlyField extends Component {
 }
 
 HtmlReadonlyField.propTypes = {
-  id: React.PropTypes.string,
-  name: React.PropTypes.string.isRequired,
-  extraClass: React.PropTypes.string,
-  value: React.PropTypes.string,
+  id: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  extraClass: PropTypes.string,
+  value: PropTypes.string,
 };
 
 HtmlReadonlyField.defaultProps = {

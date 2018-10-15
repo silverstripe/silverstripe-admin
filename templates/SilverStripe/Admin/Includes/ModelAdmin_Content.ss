@@ -14,9 +14,6 @@
 		</div>
 
 		<div class="cms-content-header-tabs cms-tabset-nav-primary ss-ui-tabs-nav">
-            <% if $SearchForm %>
-			    <button id="filters-button" class="btn btn-secondary btn--icon-lg font-icon-search no-text" title="<%t SilverStripe\Admin\ModelAdmin.SEARCH 'Search' %>"></button>
-            <% end_if %>
 			<ul class="cms-tabset-nav-primary">
 				<% loop $ManagedModelTabs %>
 				<li class="tab-$ClassName $LinkOrCurrent<% if $LinkOrCurrent == 'current' %> ui-tabs-active<% end_if %>">

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class ListGroupItem extends Component {
   constructor(props) {
@@ -23,8 +24,8 @@ class ListGroupItem extends Component {
 }
 
 ListGroupItem.propTypes = {
-  onClickArg: React.PropTypes.any,
-  onClick: React.PropTypes.func,
+  onClickArg: PropTypes.any,
+  onClick: PropTypes.func,
 };
 
 export default ListGroupItem;

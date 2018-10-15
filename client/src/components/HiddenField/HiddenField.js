@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Input } from 'reactstrap';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 class HiddenField extends Component {
   /**
@@ -26,10 +27,10 @@ class HiddenField extends Component {
 }
 
 HiddenField.propTypes = {
-  id: React.PropTypes.string,
-  extraClass: React.PropTypes.string,
-  name: React.PropTypes.string.isRequired,
-  value: React.PropTypes.any,
+  id: PropTypes.string,
+  extraClass: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.any,
 };
 
 HiddenField.defaultProps = {

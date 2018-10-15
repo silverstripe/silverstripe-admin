@@ -1,6 +1,7 @@
 import { createElement, Component, Children,
-  cloneElement, isValidElement, PropTypes } from 'react';
+  cloneElement, isValidElement } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
+import PropTypes from 'prop-types';
 
 /**
  * Can be wrapped around a component to detect dimension changes.

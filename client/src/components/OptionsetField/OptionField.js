@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FormGroup, Input, Label } from 'reactstrap';
 import classnames from 'classnames';
 import castStringToElement from 'lib/castStringToElement';
+import PropTypes from 'prop-types';
 
 class OptionField extends Component {
   constructor(props) {
@@ -83,20 +84,20 @@ class OptionField extends Component {
 }
 
 OptionField.propTypes = {
-  type: React.PropTypes.oneOf(['checkbox', 'radio']),
-  leftTitle: React.PropTypes.any,
-  title: React.PropTypes.any,
-  extraClass: React.PropTypes.string,
-  id: React.PropTypes.string,
-  name: React.PropTypes.string,
-  onChange: React.PropTypes.func,
-  value: React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.number,
-    React.PropTypes.bool,
+  type: PropTypes.oneOf(['checkbox', 'radio']),
+  leftTitle: PropTypes.any,
+  title: PropTypes.any,
+  extraClass: PropTypes.string,
+  id: PropTypes.string,
+  name: PropTypes.string,
+  onChange: PropTypes.func,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.bool,
   ]),
-  readOnly: React.PropTypes.bool,
-  disabled: React.PropTypes.bool,
+  readOnly: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 OptionField.defaultProps = {

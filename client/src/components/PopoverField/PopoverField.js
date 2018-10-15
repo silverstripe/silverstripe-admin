@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 class PopoverField extends Component {
   constructor(props) {

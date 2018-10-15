@@ -1,5 +1,6 @@
 import React from 'react';
 import ListGroupItem from './ListGroupItem';
+import PropTypes from 'prop-types';
 
 const ListGroup = (props) => (
   <div className="list-group">
@@ -8,7 +9,7 @@ const ListGroup = (props) => (
 );
 
 ListGroup.propTypes = {
-  items: React.PropTypes.array,
+  items: PropTypes.array,
 };
 
 export default ListGroup;
