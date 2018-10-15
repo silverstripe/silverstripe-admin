@@ -615,11 +615,12 @@ $.entwine('ss', function($) {
       const Search = this.getComponent();
       const handleHide = () => this.close();
       const handleSearch = (data) => this.search(data);
+      const idName = String(props.gridfield).replace(/\-/g, '.');
 
       ReactDOM.render(
         <Search
           id={`${props.gridfield}Search`}
-          identifier={`${props.gridfield}Search`}
+          identifier={`${idName}Search`}
           display="VISIBLE"
           displayBehavior="HIDEABLE"
           onHide={handleHide}

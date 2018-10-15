@@ -157,8 +157,8 @@ class Search extends Component {
     }
 
     const { schemaName, formData, name, actions } = this.props;
-    if (typeof formData[name] !== 'undefined') {
-      actions.reduxForm.change(schemaName, name, value);
+    if (typeof formData[`Search__${name}`] !== 'undefined') {
+      actions.reduxForm.change(schemaName, `Search__${name}`, value);
     }
   }
 
@@ -224,7 +224,7 @@ class Search extends Component {
     const formSchemaUrl = (props && props.formSchemaUrl) || this.props.formSchemaUrl;
     if (formSchemaUrl) {
       const identifier = (props && props.identifier) || this.props.identifier;
-      this.props.actions.schema.setSchemaStateOverrides(formSchemaUrl, null);
+      this.props.actions.schema.setSchemaStateOverrides(formSchemaUrl, { fields: [] });
       this.props.actions.reduxForm.initialize(identifier, {}, Object.keys(this.props.formData));
       this.props.actions.reduxForm.reset(identifier);
     }
@@ -284,8 +284,8 @@ class Search extends Component {
     }
 
     const { schemaName, formData, name, actions } = this.props;
-    if (typeof formData[name] !== 'undefined') {
-      actions.reduxForm.change(schemaName, name, this.state.searchText);
+    if (typeof formData[`Search__${name}`] !== 'undefined') {
+      actions.reduxForm.change(schemaName, `Search__${name}`, this.state.searchText);
     }
   }
 
@@ -342,11 +342,11 @@ class Search extends Component {
         newValue = overrides[key];
       }
 
-      if (key !== `Search__${name}` && key.startsWith('Search__')) {
+      if (key.startsWith('Search__')) {
         newKey = key.substring(8);
       }
 
-     searchData[newKey] = newValue;
+      searchData[newKey] = newValue;
     });
 
     const searchText = searchData[name] || '';
