@@ -136,8 +136,9 @@ class ApolloGraphqlManager {
 
   /**
    * Adds a param to the query
-   * @param string name
-   * @param string type
+   *
+   * @param {string} name
+   * @param {string} type
    * @returns {ApolloGraphqlManager}
    */
   addParam(name, type) {
@@ -151,7 +152,8 @@ class ApolloGraphqlManager {
 
   /**
    * Adds multiple params to the query
-   * @param params
+   *
+   * @param {object} params
    * @returns {ApolloGraphqlManager}
    */
   addParams(params = {}) {
@@ -166,10 +168,10 @@ class ApolloGraphqlManager {
 
   /**
    * Adds an arg to the query
-   * @param string path The path to the field where the args are applied
-   * @param string name
-   * @param string variableName
    *
+   * @param {string} path The path to the field where the args are applied
+   * @param {string} name
+   * @param {string} variableName
    * @returns {ApolloGraphqlManager}
    */
   addArg(path = ROOT_FIELD, name, variableName) {
@@ -180,8 +182,9 @@ class ApolloGraphqlManager {
 
   /**
    * Adds multiple args to the query
-   * @param path The path to the field where the args are applied
-   * @param args
+   *
+   * @param {string} path The path to the field where the args are applied
+   * @param {object} args
    * @returns {ApolloGraphqlManager}
    */
   addArgs(path = ROOT_FIELD, args = {}) {
@@ -196,7 +199,9 @@ class ApolloGraphqlManager {
 
   /**
    * Adds a field to the query
-   * @param field
+   *
+   * @param {string} path
+   * @param {string} field
    * @returns {ApolloGraphqlManager}}
    */
   addField(path = ROOT_FIELD, field) {
@@ -205,7 +210,8 @@ class ApolloGraphqlManager {
 
   /**
    * Adds a list of fields to the query
-   * @param fields
+   *
+   * @param {string[]} fields
    * @returns {ApolloGraphqlManager}
    */
   addFields(path = ROOT_FIELD, fields = []) {
@@ -223,13 +229,14 @@ class ApolloGraphqlManager {
         fieldArray = next;
       }
     });
-      fields.forEach(f => fieldArray.push(f));
+    fields.forEach(f => fieldArray.push(f));
     return this;
   }
 
   /**
    * Includes a fragment in the query
-   * @param name
+   *
+   * @param {string} name
    * @returns {ApolloGraphqlManager}
    */
   useFragment(name) {
@@ -244,8 +251,8 @@ class ApolloGraphqlManager {
   /**
    * Change to another template to use
    *
-   * @param name
-   * @return {ApolloGraphqlManager}
+   * @param {string} name
+   * @returns {ApolloGraphqlManager}
    */
   useTemplate(name) {
     if (!Object.keys(this.templates).includes(name)) {
