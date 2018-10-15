@@ -1,11 +1,13 @@
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { ROOT_FIELD } from './graphql/helpers';
 
 const TEMPLATE_OVERRIDE = '__TEMPLATE_OVERRIDE__';
 const protectedConfig = ['templateName', 'fields', 'params', 'fragments'];
 const deferredApolloConfig = ['options', 'props', 'variables', 'skip', 'update'];
 const configDefaults = {
-  params: [],
+  params: {},
+  args: {},
   fields: [],
   fragments: [],
   pagination: true,
@@ -75,6 +77,10 @@ class ApolloGraphqlManager {
       ...configDefaults,
       ...config,
     };
+    // Fields array is mutated by reference, so this has to be dereferenced from the configDefaults
+    mergedConfig.fields = [
+      ...mergedConfig.fields
+    ];
     const {
       apolloConfig,
       ...otherConfig
@@ -130,55 +136,107 @@ class ApolloGraphqlManager {
 
   /**
    * Adds a param to the query
-   * @param param
+   *
+   * @param {string} name
+   * @param {string} type
    * @returns {ApolloGraphqlManager}
    */
-  addParam(param) {
-    return this.addParams([param]);
+  addParam(name, type) {
+    if (!name || !type) {
+      throw new Error('addParam must be passed a name and type parameter');
+    }
+    return this.addParams({
+      [name]: type
+    });
   }
 
   /**
    * Adds multiple params to the query
-   * @param params
+   *
+   * @param {object} params
    * @returns {ApolloGraphqlManager}
    */
-  addParams(params = []) {
+  addParams(params = {}) {
     const existing = this.config.params;
-    this.config.params = [
+    this.config.params = {
       ...existing,
       ...params,
-    ];
+    };
+
+    return this;
+  }
+
+  /**
+   * Adds an arg to the query
+   *
+   * @param {string} path The path to the field where the args are applied
+   * @param {string} name
+   * @param {string} variableName
+   * @returns {ApolloGraphqlManager}
+   */
+  addArg(path = ROOT_FIELD, name, variableName) {
+    return this.addArgs(path, {
+      [name]: variableName
+    });
+  }
+
+  /**
+   * Adds multiple args to the query
+   *
+   * @param {string} path The path to the field where the args are applied
+   * @param {object} args
+   * @returns {ApolloGraphqlManager}
+   */
+  addArgs(path = ROOT_FIELD, args = {}) {
+    const existing = this.config.args[path] || {};
+    this.config.args[path] = {
+      ...existing,
+      ...args,
+    };
 
     return this;
   }
 
   /**
    * Adds a field to the query
-   * @param field
+   *
+   * @param {string} path
+   * @param {string} field
    * @returns {ApolloGraphqlManager}}
    */
-  addField(field) {
-    return this.addFields([field]);
+  addField(path = ROOT_FIELD, field) {
+    return this.addFields(path, [field]);
   }
 
   /**
    * Adds a list of fields to the query
-   * @param fields
+   *
+   * @param {string[]} fields
    * @returns {ApolloGraphqlManager}
    */
-  addFields(fields = []) {
-    const existing = this.config.fields;
-    this.config.fields = [
-      ...existing,
-      ...fields,
-    ];
+  addFields(path = ROOT_FIELD, fields = []) {
+    let fieldArray = [];
+    path.split('/').forEach(part => {
+      if (part === ROOT_FIELD) {
+        fieldArray = this.config.fields;
+      } else {
+        const index = fieldArray.indexOf(part);
+        const next = fieldArray[index + 1];
+        if (index === -1 || !Array.isArray(next)) {
+          throw new Error(`Invalid path to field: ${path}`);
+        }
 
+        fieldArray = next;
+      }
+    });
+    fields.forEach(f => fieldArray.push(f));
     return this;
   }
 
   /**
    * Includes a fragment in the query
-   * @param name
+   *
+   * @param {string} name
    * @returns {ApolloGraphqlManager}
    */
   useFragment(name) {
@@ -193,8 +251,8 @@ class ApolloGraphqlManager {
   /**
    * Change to another template to use
    *
-   * @param name
-   * @return {ApolloGraphqlManager}
+   * @param {string} name
+   * @returns {ApolloGraphqlManager}
    */
   useTemplate(name) {
     if (!Object.keys(this.templates).includes(name)) {

@@ -82,7 +82,7 @@ describe('Dynamic graphql injection', () => {
       'test-transform',
       (updater) => {
         updater.test('MyTestReadQuery', (manager) => {
-          manager.addField('Plates');
+          manager.addField('root', 'Plates');
           manager.transformApolloConfig('props', () => (previous) => ({
               ...previous,
               qux: 'baz'
@@ -119,7 +119,7 @@ describe('Dynamic graphql injection', () => {
       'test-transform',
       (updater) => {
         updater.test('MyTestReadOneQuery', (manager) => {
-          manager.addField('Plates');
+          manager.addField('root', 'Plates');
         });
       }
     );
@@ -151,7 +151,7 @@ describe('Dynamic graphql injection', () => {
       'test-transform',
       (updater) => {
         updater.test('MyTestUpdateQuery', (manager) => {
-          manager.addField('Plates');
+          manager.addField('root', 'Plates');
         });
       }
     );
@@ -182,7 +182,7 @@ describe('Dynamic graphql injection', () => {
       'test-transform',
       (updater) => {
         updater.test('MyTestDeleteQuery', (manager) => {
-          manager.addField('ID');
+          manager.addField('root', 'ID');
         });
       }
     );
@@ -214,7 +214,7 @@ describe('Dynamic graphql injection', () => {
       'test-transform',
       (updater) => {
         updater.test('MyTestCreateQuery', (manager) => {
-          manager.addField('Claws');
+          manager.addField('root', 'Claws');
         });
       }
     );
