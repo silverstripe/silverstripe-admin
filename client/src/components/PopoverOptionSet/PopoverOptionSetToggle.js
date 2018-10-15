@@ -55,7 +55,7 @@ class PopoverOptionSetToggle extends Component {
   }
 }
 
-PopoverOptionSetToggle.proptypes = {
+PopoverOptionSetToggle.propTypes = {
   id: PropTypes.string.isRequired,
   // Provide props for the toggle button
   buttonProps: PropTypes.object,

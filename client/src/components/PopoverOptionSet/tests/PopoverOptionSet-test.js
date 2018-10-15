@@ -31,7 +31,7 @@ describe('PopoverOptionSet', () => {
 
     props = {
       buttons: [buttonTypeA, buttonTypeB],
-      onButtonClick: jest.fn(),
+      provideButtonClickHandler: jest.fn(),
       container: jest.fn(),
       extraClass: '',
       isOpen: false,
