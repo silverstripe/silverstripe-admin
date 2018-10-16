@@ -50,7 +50,7 @@ const buildBreadCrumb = (position, rank, icon) => {
   return crumb;
 };
 
-storiesOf('Admin', module)
+storiesOf('Admin/Breadcrumb', module)
   .addDecorator(withKnobs)
   .addWithJSX('Breadcrumb', () => (
     <Breadcrumb crumbs={buildBreadCrumb(
