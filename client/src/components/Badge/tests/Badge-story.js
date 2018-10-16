@@ -9,7 +9,7 @@ import Badge, { statuses } from 'components/Badge/Badge';
 
 setAddon(JSXAddon);
 
-storiesOf('Admin', module)
+storiesOf('Admin/Badges', module)
   .addDecorator(story => <div>{story()}</div>)
   .addDecorator(withKnobs)
   .addWithJSX('Badge', () => (

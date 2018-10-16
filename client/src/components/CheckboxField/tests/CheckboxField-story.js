@@ -9,7 +9,7 @@ import ValueTracker from 'stories/ValueTracker';
 
 setAddon(JSXAddon);
 
-storiesOf('Admin/FormFields', module)
+storiesOf('Admin/CheckboxField', module)
   .addDecorator((storyFn) => (
     <ValueTracker>{storyFn()}</ValueTracker>
   ))
