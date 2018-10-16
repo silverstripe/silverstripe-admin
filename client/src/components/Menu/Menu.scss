@@ -129,7 +129,7 @@
     background-color: $base-menu-bg;
     box-shadow: inset $border-color -1px 0 0;
     position: relative;
-    padding-left: 0;
+    padding: 0 1px 0 0;
     justify-content: flex-end;
     border-top: 1px solid rgba($border-color, .5);
 
@@ -140,49 +140,73 @@
         display: none;
       }
     }
-
-    a,
-    a.toggle-expand {
-      padding-top: 14px;
-      padding-bottom: 14px;
-    }
   }
 
-
-
   .sticky-toggle {
+    position: relative;
+  }
+
+  .sticky-toggle__button {
+    position: relative;
     text-indent: -999em;
     background-color: transparent;
-    background-image: url("../images/sticky-toggle-off.png");
-    background-repeat: no-repeat;
-    background-position: center center;
     border: 0;
     transition: position $transition-speed-fast;
-    width: 24px;
-    margin-right: -3px;
+    width: 28px;
+    height: 54px;
+    padding: 0 8px;
+
+    &:before,
+    &:after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      border-radius: 50%;
+      content: "";
+      transform: translate(-50%, -50%);
+    }
+
+    &:before {
+      width: 13px;
+      height: 13px;
+      border: solid 1px $gray-600;
+    }
+
+    &:after {
+      display: none;
+      width: 8px;
+      height: 8px;
+      background: $gray-600;
+      border-radius: 50%;
+    }
 
     &:hover {
+      background-color: $base-menu;
       box-shadow: 0 0 0;
       cursor: pointer;
 
       // When the button is hovered, show the status indicator
-      + .sticky-status-indicator {
+      + .sticky-toggle__status {
         display: block;
       }
     }
 
     &.active {
-      background-image: url("../images/sticky-toggle-on.png");
+      &:after {
+        display: block;
+      }
     }
   }
 
-  .sticky-status-indicator {
+  .sticky-toggle__status {
     display: none;
     position: absolute;
     top: 3px;
-    right: 22px;
+    left: 0;
+    width: 100%;
     font-size: 9px;
-    color: #555d60;
+    color: $gray-600;
+    text-align: center;
     text-transform: uppercase;
   }
 
