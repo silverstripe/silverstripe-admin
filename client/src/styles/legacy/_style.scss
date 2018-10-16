@@ -1357,17 +1357,20 @@ form.member-profile-form {
 
     .toggle-collapse,
     .toggle-expand {
+      height: 54px;
       text-align: right;
-      padding: 16px 0;
       text-decoration: none;
-      line-height: 20px;
-      margin: -#{map_get($spacers, xs)} #{0 - $panel-padding-x} -#{map_get($spacers, xs)} 0;
+      line-height: 53px;
+
+      &:hover {
+        background-color: $base-menu;
+      }
 
       span {
         display: inline-block;
         margin: 0 8px;
-        color: #555d60;
-        font-size: 16px;
+        color: $gray-600;
+        font-size: 18px;
       }
     }
 
@@ -1376,7 +1379,6 @@ form.member-profile-form {
     }
 
     .toggle-expand {
-      width: 60px; // will set the collapsed width
       display: none;
     }
   }
