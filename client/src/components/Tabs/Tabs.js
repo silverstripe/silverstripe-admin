@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { TabContent, Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import * as Actions from 'state/tabs/TabsActions';
 
 class Tabs extends Component {
   constructor(props) {
@@ -59,8 +61,8 @@ class Tabs extends Component {
   }
 
   toggle(activeTab) {
-    if (this.props.value !== activeTab) {
-      this.props.onChange(activeTab);
+    if (this.props.activeTab !== activeTab) {
+      this.props.activateTab(activeTab);
     }
   }
 
@@ -75,7 +77,7 @@ class Tabs extends Component {
       return null;
     }
 
-    const currentTab = this.props.value || this.getDefaultActiveKey();
+    const currentTab = this.props.activeTab || this.getDefaultActiveKey();
 
     const classNames = classnames({
       active: currentTab === child.props.name,
@@ -116,7 +118,7 @@ class Tabs extends Component {
   }
 
   render() {
-    const { hideNav, children, value } = this.props;
+    const { hideNav, children, activeTab } = this.props;
 
     const containerProps = this.getContainerProps();
     const nav = hideNav ? null : this.renderNav();
@@ -125,7 +127,7 @@ class Tabs extends Component {
       <div {...containerProps}>
         <div className="wrapper">
           {nav}
-          <TabContent activeTab={value || this.getDefaultActiveKey()}>
+          <TabContent activeTab={activeTab || this.getDefaultActiveKey()}>
             {children}
           </TabContent>
         </div>
@@ -139,7 +141,8 @@ Tabs.propTypes = {
   defaultActiveKey: PropTypes.string,
   extraClass: PropTypes.string,
   hideNav: PropTypes.bool,
-  onChange: PropTypes.func, // Comes from ReduxFormField
+  activateTab: PropTypes.func,
+  activeTab: PropTypes.string,
 };
 
 Tabs.defaultProps = {
@@ -148,4 +151,28 @@ Tabs.defaultProps = {
   hideNav: false
 };
 
-export default Tabs;
+export { Tabs as Component };
+
+function mapStateToProps(state, ownProps) {
+  const id = ownProps.id;
+  const field = (state.tabs.fields[id])
+    ? state.tabs.fields[id]
+    : {
+      activeTab: null,
+    };
+
+    return { ...field };
+}
+
+function mapDispatchToProps(dispatch, ownProps) {
+  return {
+    activateTab(activeTab) {
+      dispatch(Actions.activateTab(ownProps.id, activeTab));
+    }
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Tabs);
