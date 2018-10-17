@@ -129,8 +129,7 @@
     background-color: $base-menu-bg;
     box-shadow: inset $border-color -1px 0 0;
     position: relative;
-    padding: 0 1px 0 0;
-    justify-content: flex-end;
+    padding-right: 1px;
     border-top: 1px solid rgba($border-color, .5);
 
     @include media-breakpoint-down(sm) {

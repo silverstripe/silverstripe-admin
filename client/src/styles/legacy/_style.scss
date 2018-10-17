@@ -1354,13 +1354,17 @@ form.member-profile-form {
 
 .cms-panel {
   .cms-panel-toggle {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0;
 
     .toggle-collapse,
     .toggle-expand {
-      height: 54px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       text-align: right;
       text-decoration: none;
-      line-height: 53px;
 
       &:hover {
         background-color: $base-menu;
@@ -1375,7 +1379,7 @@ form.member-profile-form {
     }
 
     .toggle-collapse {
-      display: block;
+      display: flex;
     }
 
     .toggle-expand {
@@ -1392,7 +1396,7 @@ form.member-profile-form {
     }
 
     .cms-panel-toggle a.toggle-expand {
-      display: block;
+      display: flex;
       width: auto;
     }
   }
