@@ -141,6 +141,6 @@ export { CheckboxSet as Component };
 const CheckboxSetField = (props) => {
   const FieldHolder = fieldHolder(CheckboxSet);
   return <FieldHolder {...props} />;
-}
+};
 
 export default CheckboxSetField;
