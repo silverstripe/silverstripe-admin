@@ -7,6 +7,7 @@ import SchemaReducer from 'state/schema/SchemaReducer';
 import RecordsReducer from 'state/records/RecordsReducer';
 import BreadcrumbsReducer from 'state/breadcrumbs/BreadcrumbsReducer';
 import TreeDropdownFieldReducer from 'state/treeDropdownField/TreeDropdownFieldReducer';
+import TabsReducer from 'state/tabs/TabsReducer';
 import MobileMenuReducer from 'state/mobileMenu/MobileMenuReducer';
 import UnsavedFormsReducer from 'state/unsavedForms/UnsavedFormsReducer';
 import usedOnReducer from 'state/usedOn/usedOnReducer';
@@ -27,6 +28,7 @@ export default (extra = {}) => {
     breadcrumbs: BreadcrumbsReducer,
     routing: routerReducer,
     treeDropdownField: TreeDropdownFieldReducer,
+    tabs: TabsReducer,
     mobileMenu: MobileMenuReducer,
     unsavedForms: UnsavedFormsReducer,
     usedOn: usedOnReducer,
