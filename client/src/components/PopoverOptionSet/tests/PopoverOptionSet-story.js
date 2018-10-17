@@ -24,7 +24,7 @@ storiesOf('Admin/PopoverOptionSet', module)
   .addWithJSX('Simple Example', () => (
     <PopoverOptionSetToggle
       buttons={buttons}
-      onButtonClick={defaultButtonClickHandler}
+      provideButtonClickHandler={defaultButtonClickHandler}
       id="Sample"
       disableSearch={!boolean('Search', true)}
     />
@@ -50,7 +50,7 @@ storiesOf('Admin/PopoverOptionSet', module)
     return (
       <PopoverOptionSetToggle
         buttons={iconButtons}
-        onButtonClick={defaultButtonClickHandler}
+        provideButtonClickHandler={defaultButtonClickHandler}
         id="Sample"
         disableSearch={!boolean('Search', true)}
       />
@@ -74,7 +74,7 @@ storiesOf('Admin/PopoverOptionSet', module)
     return (
       <PopoverOptionSetToggle
         buttons={customButtons}
-        onButtonClick={defaultButtonClickHandler}
+        provideButtonClickHandler={defaultButtonClickHandler}
         id="Sample"
         disableSearch
       />
@@ -90,7 +90,7 @@ storiesOf('Admin/PopoverOptionSet', module)
     return (
       <PopoverOptionSetToggle
         buttons={buttons}
-        onButtonClick={defaultButtonClickHandler}
+        provideButtonClickHandler={defaultButtonClickHandler}
         id="Sample"
         onSearch={handleSearch}
         searchPlaceholder="Custom search placeholder"

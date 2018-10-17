@@ -142,7 +142,7 @@ class PopoverOptionSet extends Component {
       buttonsToRender = onSearch(searchValue, buttonsToRender);
     }
 
-    if (buttons.length === 0) {
+    if (buttonsToRender.length === 0) {
       return (
         <div className={classNames(buttonContainerClassName)}>
           <div className={classNames(emptyResultClassName)}>
@@ -156,6 +156,7 @@ class PopoverOptionSet extends Component {
       <div className={classNames(buttonContainerClassName)}>
         {buttonsToRender.map((button) => (
           <ButtonComponent
+            {...button.buttonProps}
             className={
               classNames(
                 button.className,
@@ -199,13 +200,14 @@ class PopoverOptionSet extends Component {
 
 PopoverOptionSet.propTypes = {
   buttons: PropTypes.arrayOf(PropTypes.shape({
-    key: PropTypes.string.required,
-    content: PropTypes.node.required,
+    key: PropTypes.string.isRequired,
+    content: PropTypes.node.isRequired,
     className: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.object,
       PropTypes.arrayOf(PropTypes.string)
     ]),
+    buttonProps: PropTypes.object,
   })).isRequired,
   // Accepts a function that takes a search term as a first parameter and a set
   // of buttons to match against that returns a filtered set of buttons
@@ -244,7 +246,7 @@ PopoverOptionSet.defaultProps = {
   className: 'popover-option-set',
   searchClassName: 'popover-option-set__search',
   searchInputClassName: 'popover-option-set__search-input',
-  clearButtonClassName: 'popover-option-set__search-clear btn-link',
+  clearButtonClassName: 'popover-option-set__search-clear btn btn-link',
   buttonContainerClassName: 'popover-option-set__button-container',
   emptyResultClassName: 'popover-option-set__no-results',
   buttonClassName: 'popover-option-set__button',
