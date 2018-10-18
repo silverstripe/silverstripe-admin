@@ -153,21 +153,24 @@ Tabs.defaultProps = {
 
 export { Tabs as Component };
 
+const createFieldID = (props) => `${props.formid}__${props.id}`;
+
 function mapStateToProps(state, ownProps) {
-  const id = ownProps.id;
-  const field = (state.tabs.fields[id])
-    ? state.tabs.fields[id]
+  const fieldID = createFieldID(ownProps);
+  const field = (state.tabs.fields[fieldID])
+    ? state.tabs.fields[fieldID]
     : {
       activeTab: null,
     };
 
-    return { ...field };
+  return { ...field };
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
+  const fieldID = createFieldID(ownProps);
   return {
     activateTab(activeTab) {
-      dispatch(Actions.activateTab(ownProps.id, activeTab));
+      dispatch(Actions.activateTab(fieldID, activeTab));
     }
   };
 }

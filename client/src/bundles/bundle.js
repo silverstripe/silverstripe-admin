@@ -70,7 +70,6 @@ require('expose-loader?TinyMCEActionRegistrar!lib/TinyMCEActionRegistrar');
 require('expose-loader?ShortcodeSerialiser!lib/ShortcodeSerialiser');
 require('expose-loader?formatWrittenNumber!lib/formatWrittenNumber');
 
-
 // Legacy CMS
 require('../legacy/sspath');
 require('../legacy/ssui.core');
