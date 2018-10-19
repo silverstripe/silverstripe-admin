@@ -2,10 +2,12 @@
 
 namespace SilverStripe\Admin\Tests;
 
-use SilverStripe\Assets\File;
-use SilverStripe\Core\Manifest\ModuleLoader;
+use SilverStripe\Admin\AdminRootController;
 use SilverStripe\Admin\CMSMenu;
 use SilverStripe\Admin\LeftAndMain;
+use SilverStripe\Assets\File;
+use SilverStripe\Control\HTTPResponse;
+use SilverStripe\Core\Manifest\ModuleLoader;
 use SilverStripe\Dev\FunctionalTest;
 use SilverStripe\Security\Member;
 use SilverStripe\View\Requirements;
@@ -81,7 +83,7 @@ class LeftAndMainTest extends FunctionalTest
     }
 
     /**
-     * Check that all subclasses of leftandmain can be accessed
+     * Check that subclasses of LeftAndMain can be accessed
      */
     public function testLeftAndMainSubclasses()
     {
@@ -91,23 +93,19 @@ class LeftAndMainTest extends FunctionalTest
         $menuItems = LeftAndMain::singleton()->MainMenu(false);
         $this->assertGreaterThan(0, count($menuItems));
 
-        foreach ($menuItems as $menuItem) {
-            $link = $menuItem->Link;
+        $adminUrl = AdminRootController::admin_url();
+        $menuItem = $menuItems->find('Link', $adminUrl . 'security/');
+        $this->assertNotEmpty($menuItem, 'Security not found in the menu items list');
 
-            // don't test external links
-            if (preg_match('/^(https?:)?\/\//', $link)) {
-                continue;
-            }
+        $link = $menuItem->Link;
+        $response = $this->get($link);
 
-            $response = $this->get($link);
-
-            $this->assertInstanceOf('SilverStripe\\Control\\HTTPResponse', $response, "$link should return a response object");
-            $this->assertEquals(200, $response->getStatusCode(), "$link should return 200 status code");
-            // Check that a HTML page has been returned
-            $this->assertRegExp('/<html[^>]*>/i', $response->getBody(), "$link should contain <html> tag");
-            $this->assertRegExp('/<head[^>]*>/i', $response->getBody(), "$link should contain <head> tag");
-            $this->assertRegExp('/<body[^>]*>/i', $response->getBody(), "$link should contain <body> tag");
-        }
+        $this->assertInstanceOf(HTTPResponse::class, $response, "$link should return a response object");
+        $this->assertEquals(200, $response->getStatusCode(), "$link should return 200 status code");
+        // Check that a HTML page has been returned
+        $this->assertRegExp('/<html[^>]*>/i', $response->getBody(), "$link should contain <html> tag");
+        $this->assertRegExp('/<head[^>]*>/i', $response->getBody(), "$link should contain <head> tag");
+        $this->assertRegExp('/<body[^>]*>/i', $response->getBody(), "$link should contain <body> tag");
     }
 
     public function testCanView()
