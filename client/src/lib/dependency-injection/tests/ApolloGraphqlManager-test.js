@@ -1,6 +1,7 @@
 /* global jest, jasmine, describe, beforeEach, it, pit, expect, process */
 
 import ApolloGraphqlManager from '../ApolloGraphqlManager';
+import { getFields } from '../graphql/helpers';
 
 const createMock = (config = {}, templates = {}, fragments = {}) => (
   new ApolloGraphqlManager(config, templates, fragments)
@@ -51,14 +52,17 @@ describe('ApolloGraphqlManager', () => {
 
   it('adds params', () => {
     const manager = createMock();
-    manager.addParam('test');
-    manager.addParams(['rest', 'fest']);
+    manager.addParam('test', 'String');
+    manager.addParams({
+      foo: 'Boolean',
+      baz: 'Int!'
+    });
 
     const params = manager.getConfig().params;
-    expect(Array.isArray(params)).toBe(true);
-    expect(params).toContain('test');
-    expect(params).toContain('rest');
-    expect(params).toContain('fest');
+    expect(typeof params).toBe('object');
+    expect(params.test).toBe('String');
+    expect(params.foo).toBe('Boolean');
+    expect(params.baz).toBe('Int!');
   });
 
   it('adds fields', () => {
@@ -71,6 +75,44 @@ describe('ApolloGraphqlManager', () => {
     expect(fields).toContain('test');
     expect(fields).toContain('rest');
     expect(fields).toContain('fest');
+  });
+
+  it('adds nested fields', () => {
+    const manager = createMock();
+    manager.addFields(['FirstName', 'Surname']);
+    manager.addFields(['Avatar', []]);
+    manager.addField('URL', 'root/Avatar');
+
+    const fields = manager.getConfig().fields;
+    expect(Array.isArray(fields)).toBe(true);
+    expect(fields).toContain('FirstName');
+    expect(fields).toContain('Surname');
+    expect(fields).toContain('Avatar');
+    const i = fields.indexOf('Avatar') + 1;
+    expect(Array.isArray(fields[i])).toBe(true);
+    expect(fields[i]).toContain('URL');
+    expect(() => manager.addFields('Foo', 'root/Surname')).toThrow();
+  });
+
+  it('adds args to fields', () => {
+    const manager = createMock({ pagination: false });
+    manager.addFields(['FirstName', 'Surname']);
+    manager.addFields(['Avatar', []]);
+    manager.addField('URL', 'root/Avatar');
+
+    manager.addArg('Test', 'SomeVar', 'root/FirstName');
+    manager.addArgs({
+      Relative: 'SomeBool',
+    }, 'root/Avatar/URL');
+    // eslint-disable-next-line no-unused-expressions
+    manager.setTemplate`query test { ${getFields} }`;
+
+    const AST = manager.getGraphqlAST();
+
+    expect(AST.kind).toBe('Document');
+    const compiledQuery = AST.loc.source.body;
+    expect(compiledQuery).toMatch(/FirstName\s*\(Test:\s*\$SomeVar\s*\)/);
+    expect(compiledQuery).toMatch(/URL\s*\(Relative:\s*\$SomeBool\s*\)/);
   });
 
   it('uses fragments', () => {

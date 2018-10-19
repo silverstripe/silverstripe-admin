@@ -54,7 +54,7 @@ class SearchForm extends Component {
             className="search-form__submit"
             onClick={() => onSearch()}
             color="primary"
-            type="submit"
+            type="button"
           >{searchLabel}</Button>
           { clearable && <Button
             className="search-form__clear"

@@ -10,7 +10,7 @@
 		<% include SilverStripe\\Admin\\LeftAndMain_MenuList %>
 	</div>
 
-	<div class="toolbar toolbar--south cms-panel-toggle vertical-align-items">
+	<div class="toolbar toolbar--south cms-panel-toggle">
 		<% include SilverStripe\\Admin\\LeftAndMain_MenuToggle %>
 	</div>
 </div>
