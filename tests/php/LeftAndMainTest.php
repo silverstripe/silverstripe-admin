@@ -167,12 +167,15 @@ class LeftAndMainTest extends FunctionalTest
      */
     public function testGetHelpLinks()
     {
-        Config::modify()->set(LeftAndMain::class, 'help_links', [
-            'SilverStripe' => 'www.silverstripe.org',
-        ]);
+        Config::modify()
+            // Remove any deprecated help_link definitions
+            ->remove(LeftAndMain::class, 'help_link')
+            ->set(LeftAndMain::class, 'help_links', [
+                'SilverStripe' => 'www.silverstripe.org',
+            ]);
 
         $helpLinks = LeftAndMain::singleton()->getHelpLinks();
-        $this->assertCount(1, $helpLinks);
+        $this->assertCount(1, $helpLinks, 'Unexpected number of help links found');
 
         $silverstripeLink = $helpLinks->first();
 
