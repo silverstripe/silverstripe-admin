@@ -28,7 +28,7 @@ class GridFieldDropdownAction extends PureComponent {
       className={classNames}
       href={url}
       tag={elementType}
-      type={elementType === 'button' ? 'submit' : undefined}
+      type={elementType === 'button' ? 'button' : undefined}
       data-url={data['data-url']}
       name={data.name}
     >

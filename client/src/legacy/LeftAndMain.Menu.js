@@ -407,7 +407,7 @@ $.entwine('ss', function($){
   /**
    * Toggles the manual override of the left menu's automatic expand / collapse behaviour.
    */
-  $('.cms-menu .sticky-toggle').entwine({
+  $('.cms-menu .sticky-toggle__button').entwine({
 
     onadd: function () {
       var isSticky = $('.cms-menu').getPersistedStickyState() ? true : false;
@@ -433,7 +433,7 @@ $.entwine('ss', function($){
      * @desc Updates the indicator's text based on the sticky state of the menu.
      */
     toggleIndicator: function (isSticky) {
-      this.next('.sticky-status-indicator').text(isSticky ? 'fixed' : 'auto');
+      this.next('.sticky-toggle__status').text(isSticky ? 'fixed' : 'auto');
     },
 
     onclick: function () {

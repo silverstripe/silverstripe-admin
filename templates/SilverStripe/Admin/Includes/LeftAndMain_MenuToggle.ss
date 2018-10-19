@@ -22,8 +22,10 @@
     <% end_if %>
 </div>
 
-<button class="sticky-toggle" type="button" title="<%t SilverStripe\Admin\LeftAndMain.MenuToggleStickyNav "Sticky nav" %>"><%t SilverStripe\Admin\LeftAndMain.MenuToggleStickyNav "Sticky nav" %></button>
-<span class="sticky-status-indicator"><%t SilverStripe\Admin\LeftAndMain.MenuToggleAuto "Auto" %></span>
+<div class="sticky-toggle">
+    <button class="sticky-toggle__button" type="button" title="<%t SilverStripe\Admin\LeftAndMain.MenuToggleStickyNav "Sticky nav" %>"><%t SilverStripe\Admin\LeftAndMain.MenuToggleStickyNav "Sticky nav" %></button>
+    <span class="sticky-toggle__status sticky-status-indicator"><%t SilverStripe\Admin\LeftAndMain.MenuToggleAuto "Auto" %></span>
+</div>
 
 <a class="toggle-expand" href="#" data-toggle="tooltip" title="<%t SilverStripe\Admin\LeftAndMain.ExpandPanel "Expand panel" %>" aria-label="<%t SilverStripe\Admin\LeftAndMain.ExpandPanel "Expand panel" %>"><span>&raquo;</span></a>
 <a class="toggle-collapse" href="#" data-toggle="tooltip" title="<%t SilverStripe\Admin\LeftAndMain.CollapsePanel "Collapse panel" %>" aria-label="<%t SilverStripe\Admin\LeftAndMain.CollapsePanel "Collapse panel" %>"><span>&laquo;</span></a>

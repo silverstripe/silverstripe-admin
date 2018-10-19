@@ -169,25 +169,25 @@ class ApolloGraphqlManager {
   /**
    * Adds an arg to the query
    *
-   * @param {string} path The path to the field where the args are applied
    * @param {string} name
    * @param {string} variableName
+   * @param {string} path The path to the field where the args are applied
    * @returns {ApolloGraphqlManager}
    */
-  addArg(path = ROOT_FIELD, name, variableName) {
-    return this.addArgs(path, {
+  addArg(name, variableName, path = ROOT_FIELD) {
+    return this.addArgs({
       [name]: variableName
-    });
+    }, path);
   }
 
   /**
    * Adds multiple args to the query
    *
-   * @param {string} path The path to the field where the args are applied
    * @param {object} args
+   * @param {string} path The path to the field where the args are applied
    * @returns {ApolloGraphqlManager}
    */
-  addArgs(path = ROOT_FIELD, args = {}) {
+  addArgs(args = {}, path = ROOT_FIELD) {
     const existing = this.config.args[path] || {};
     this.config.args[path] = {
       ...existing,
@@ -200,21 +200,22 @@ class ApolloGraphqlManager {
   /**
    * Adds a field to the query
    *
-   * @param {string} path
    * @param {string} field
+   * @param {string} path
    * @returns {ApolloGraphqlManager}}
    */
-  addField(path = ROOT_FIELD, field) {
-    return this.addFields(path, [field]);
+  addField(field, path = ROOT_FIELD) {
+    return this.addFields([field], path);
   }
 
   /**
    * Adds a list of fields to the query
    *
    * @param {string[]} fields
+   * @param {string} path
    * @returns {ApolloGraphqlManager}
    */
-  addFields(path = ROOT_FIELD, fields = []) {
+  addFields(fields = [], path = ROOT_FIELD) {
     let fieldArray = [];
     path.split('/').forEach(part => {
       if (part === ROOT_FIELD) {

@@ -67,8 +67,8 @@ describe('ApolloGraphqlManager', () => {
 
   it('adds fields', () => {
     const manager = createMock();
-    manager.addField('root', 'test');
-    manager.addFields('root', ['rest', 'fest']);
+    manager.addField('test');
+    manager.addFields(['rest', 'fest']);
 
     const fields = manager.getConfig().fields;
     expect(Array.isArray(fields)).toBe(true);
@@ -79,9 +79,9 @@ describe('ApolloGraphqlManager', () => {
 
   it('adds nested fields', () => {
     const manager = createMock();
-    manager.addFields('root', ['FirstName', 'Surname']);
-    manager.addFields('root', ['Avatar', []]);
-    manager.addField('root/Avatar', 'URL');
+    manager.addFields(['FirstName', 'Surname']);
+    manager.addFields(['Avatar', []]);
+    manager.addField('URL', 'root/Avatar');
 
     const fields = manager.getConfig().fields;
     expect(Array.isArray(fields)).toBe(true);
@@ -91,19 +91,19 @@ describe('ApolloGraphqlManager', () => {
     const i = fields.indexOf('Avatar') + 1;
     expect(Array.isArray(fields[i])).toBe(true);
     expect(fields[i]).toContain('URL');
-    expect(() => manager.addFields('root/Surname', 'Foo')).toThrow();
+    expect(() => manager.addFields('Foo', 'root/Surname')).toThrow();
   });
 
   it('adds args to fields', () => {
     const manager = createMock({ pagination: false });
-    manager.addFields('root', ['FirstName', 'Surname']);
-    manager.addFields('root', ['Avatar', []]);
-    manager.addField('root/Avatar', 'URL');
+    manager.addFields(['FirstName', 'Surname']);
+    manager.addFields(['Avatar', []]);
+    manager.addField('URL', 'root/Avatar');
 
-    manager.addArg('root/FirstName', 'Test', 'SomeVar');
-    manager.addArgs('root/Avatar/URL', {
+    manager.addArg('Test', 'SomeVar', 'root/FirstName');
+    manager.addArgs({
       Relative: 'SomeBool',
-    });
+    }, 'root/Avatar/URL');
     // eslint-disable-next-line no-unused-expressions
     manager.setTemplate`query test { ${getFields} }`;
 

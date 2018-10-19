@@ -1354,29 +1354,35 @@ form.member-profile-form {
 
 .cms-panel {
   .cms-panel-toggle {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0;
 
     .toggle-collapse,
     .toggle-expand {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       text-align: right;
-      padding: 16px 0;
       text-decoration: none;
-      line-height: 20px;
-      margin: -#{map_get($spacers, xs)} #{0 - $panel-padding-x} -#{map_get($spacers, xs)} 0;
+
+      &:hover {
+        background-color: $base-menu;
+      }
 
       span {
         display: inline-block;
         margin: 0 8px;
-        color: #555d60;
-        font-size: 16px;
+        color: $gray-600;
+        font-size: 18px;
       }
     }
 
     .toggle-collapse {
-      display: block;
+      display: flex;
     }
 
     .toggle-expand {
-      width: 60px; // will set the collapsed width
       display: none;
     }
   }
@@ -1390,7 +1396,7 @@ form.member-profile-form {
     }
 
     .cms-panel-toggle a.toggle-expand {
-      display: block;
+      display: flex;
       width: auto;
     }
   }
