@@ -51,28 +51,20 @@ class PopoverOptionSet extends Component {
     );
   }
 
+  /**
+   * Handle key presses that are triggered while the popover is focused
+   *
+   * @param {SyntheticEvent} event
+   */
   handleKeyDown(event) {
-    if (
-      // Ignore key presses in the search field...
-      event.target
-      && event.target.nodeName === 'INPUT'
-      // ...but allow "escape"
-      && event.key !== 'Escape'
-    ) {
-      return;
-    }
-
-    switch (event.key) {
-      case 'Escape':
-        this.handleToggle();
-        break;
-      default:
+    if (event.key === 'Escape') {
+      this.handleToggle();
     }
   }
 
   /**
    * Render a link to clear the search field if user entered input
-   * @returns {DOMElement}
+   * @returns {InputGroupAddon|null}
    */
   renderSearchValueClearLink() {
     const { clearButtonClassName } = this.props;
@@ -97,7 +89,7 @@ class PopoverOptionSet extends Component {
   /**
    * Render the search value input box (which is in turn used to filter the buttons)
    *
-   * @return {DOMElement}
+   * @return {InputGroup|null}
    */
   renderSearchBox() {
     const {
@@ -175,7 +167,7 @@ class PopoverOptionSet extends Component {
 
   /**
    * Render the option set popover
-   * @returns {DOMElement}
+   * @returns {Popover}
    */
   render() {
     const { container, className, isOpen, placement, target } = this.props;

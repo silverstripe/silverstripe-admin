@@ -6,7 +6,7 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 import { withNotes } from '@storybook/addon-notes';
 import ValueTracker from 'stories/ValueTracker';
-import PopoverOptionSetToggle from '../PopoverOptionSetToggle';
+import { Component as PopoverOptionSetToggle } from '../PopoverOptionSetToggle';
 import JSXAddon from 'storybook-addon-jsx';
 
 setAddon(JSXAddon);
