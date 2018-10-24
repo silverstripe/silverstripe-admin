@@ -240,6 +240,7 @@ div.grid-field__sort-field + .form__fieldgroup-item {
 // Helpers
 // min-width columns which hold things like buttons
 .grid-field__col-compact {
+  text-align: right;
   width: 1px;
   white-space: nowrap;
 
