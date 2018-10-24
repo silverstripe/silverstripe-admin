@@ -24,6 +24,7 @@ Allows users to search by term or filter results with a sub form.
 * display (string): Controls whatever the display of the search component. Possible values are `NONE`, `VISIBLE`, `EXPANDED`. `NONE` will display a search toggle if `displayBeahvior` is set to `TOGGLABLE`. Otherwise nothing will be rendered.
 * displayBehavior (string): Controls how the user can interact with the display of the component. `TOGGLABLE` allows the user to hide and show the component. `HIDEABLE` allows the user to hide the component. `NONE` prevents the user for directly affecting the component's visibility.
 * filters (object): Submitted data, if any.
+* filterPrefix (string): Adds a prefix to the keys of the filters
 * forceFilters (bool): Force the rendering of the advanced filters. (For demoing purpose)
 * formData (object): Data to pre-populate the form with.
 * formSchemaUrl (string): URL to the form schema to use for the filter form.

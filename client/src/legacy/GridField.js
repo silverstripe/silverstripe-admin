@@ -623,6 +623,7 @@ $.entwine('ss', function($) {
           identifier={`${idName}Search`}
           display="VISIBLE"
           displayBehavior="HIDEABLE"
+          filterPrefix="Search__"
           onHide={handleHide}
           onSearch={handleSearch}
           {...props}

@@ -62,7 +62,7 @@ class Search extends Component {
     this.formatTagData = this.formatTagData.bind(this);
 
     const term = props.term
-      || (props.filters && props.filters[`Search__${props.name}`])
+      || (props.filters && props.filters[`${props.filterPrefix}${props.name}`])
       || '';
 
     this.state = {
@@ -126,14 +126,9 @@ class Search extends Component {
    * @returns {Object}
    */
   getData(ignoreSearchTerm = false) {
-    const { name, formData } = this.props;
+    const { name, filterPrefix, formData } = this.props;
     const { searchText } = this.state;
     const data = {};
-
-    // Merge data from redux-forms with text field
-    if (!ignoreSearchTerm && searchText) {
-      data[name] = searchText.trim();
-    }
 
     // Filter empty values
     Object.keys(formData).forEach((key) => {
@@ -142,6 +137,15 @@ class Search extends Component {
         data[key] = value;
       }
     });
+
+    // Merge data from redux-forms with text field
+    if (
+      !ignoreSearchTerm
+      && searchText
+      && typeof formData[`${filterPrefix}${name}`] === 'undefined'
+    ) {
+      data[`${filterPrefix}${name}`] = searchText.trim();
+    }
 
     return data;
   }
@@ -156,10 +160,8 @@ class Search extends Component {
       this.setState({ searchText: value });
     }
 
-    const { schemaName, formData, name, actions } = this.props;
-    if (typeof formData[`Search__${name}`] !== 'undefined') {
-      actions.reduxForm.change(schemaName, `Search__${name}`, value);
-    }
+    const { schemaName, name, filterPrefix, actions } = this.props;
+    actions.reduxForm.change(schemaName, `${filterPrefix}${name}`, value);
   }
 
   /**
@@ -284,8 +286,8 @@ class Search extends Component {
     }
 
     const { schemaName, formData, name, actions } = this.props;
-    if (typeof formData[`Search__${name}`] !== 'undefined') {
-      actions.reduxForm.change(schemaName, `Search__${name}`, this.state.searchText);
+    if (typeof formData[name] !== 'undefined') {
+      actions.reduxForm.change(schemaName, name, this.state.searchText);
     }
   }
 
@@ -330,11 +332,12 @@ class Search extends Component {
    */
   doSearch(overrides = {}) {
     // Data to send to the remote service
-    const { name } = this.props;
+    const { formSchemaUrl, identifier, name, filterPrefix } = this.props;
     const searchData = {};
+    const fieldData = this.getData();
 
-    Object.entries(this.getData()).forEach(([key, value]) => {
-      // Strip any "Search__" from the key
+    Object.entries(fieldData).forEach(([key, value]) => {
+      // Strip any prefix from the key
       let newKey = key;
       let newValue = value;
 
@@ -342,11 +345,18 @@ class Search extends Component {
         newValue = overrides[key];
       }
 
-      if (key.startsWith('Search__')) {
-        newKey = key.substring(8);
+      if (filterPrefix.length > 0 && key.startsWith(filterPrefix)) {
+        newKey = key.substring(filterPrefix.length);
       }
 
-      searchData[newKey] = newValue;
+      // Avoid adding prefixed and unprefixed keys, preferring the prefixed
+      if (
+        !filterPrefix.length > 0
+        || key !== name
+        || typeof fieldData[`${filterPrefix}${name}`] === 'undefined'
+      ) {
+        searchData[newKey] = newValue;
+      }
     });
 
     const searchText = searchData[name] || '';
@@ -365,8 +375,8 @@ class Search extends Component {
       });
     }
 
-    this.props.actions.schema.setSchemaStateOverrides(this.props.schemaUrl, null);
-    this.props.actions.reduxForm.initialize(this.props.schemaName, formData);
+    this.props.actions.schema.setSchemaStateOverrides(formSchemaUrl, { fields: [] });
+    this.props.actions.reduxForm.initialize(identifier, formData);
 
     this.props.onSearch(searchData);
   }
@@ -392,9 +402,9 @@ class Search extends Component {
    * @returns {Object[]}
    */
   formatTagData() {
-    const { tagData, name } = this.props;
+    const { tagData, name, filterPrefix } = this.props;
     const tagDataCopy = Object.assign({}, tagData);
-    const nameKey = `Search__${name}`;
+    const nameKey = `${filterPrefix}${name}`;
 
     // Remove any tag matching the name of our form field.
     if (tagDataCopy && tagDataCopy[nameKey]) {
@@ -489,6 +499,7 @@ Search.propTypes = {
   displayBehavior: PropTypes.oneOf(Object.values(BEHAVIOR)),
   term: PropTypes.string,
   name: PropTypes.string,
+  filterPrefix: PropTypes.string,
   forceFilters: PropTypes.bool,
   formIsDirty: PropTypes.bool,
   identifier: PropTypes.string,
@@ -509,6 +520,7 @@ Search.defaultProps = {
   filters: {},
   formData: {},
   term: '',
+  filterPrefix: '',
   forceFilters: false,
   name: 'searchTerm',
   identifier: 'Admin.SearchForm'
