@@ -17,7 +17,7 @@ const icons = [
   'font-icon-p-home',
   'font-icon-cart'
 ];
-const levels = ['First', 'Second', 'Third', 'Forth', 'Fifth', 'Sixth', 'Seventh', 'Eighth'];
+const levels = ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh', 'Eighth'];
 
 // Build an action to handle the click on the crumbs
 const crumbAction = (event) => {
