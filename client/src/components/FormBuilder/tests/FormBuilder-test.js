@@ -193,4 +193,27 @@ describe('FormBuilder', () => {
       expect(field.name).toBe('fieldTwoThree');
     });
   });
+
+  describe('getComponentForDataType()', () => {
+    let formBuilder = null;
+    let props = null;
+
+    beforeEach(() => {
+      props = { ...baseProps };
+
+      formBuilder = ReactTestUtils.renderIntoDocument(<FormBuilder {...props} />);
+
+      formBuilder.context.injector = {
+        get: jest.fn(),
+      };
+    });
+
+    it('should return a NumberField for Integer and Decimal data types', () => {
+      formBuilder.getComponentForDataType('Integer', 'My Integer Field');
+      expect(formBuilder.context.injector.get).toHaveBeenCalledWith('NumberField', 'undefined.My Integer Field');
+
+      formBuilder.getComponentForDataType('Decimal', 'My Decimal Field');
+      expect(formBuilder.context.injector.get).toHaveBeenCalledWith('NumberField', 'undefined.My Decimal Field');
+    });
+  });
 });
