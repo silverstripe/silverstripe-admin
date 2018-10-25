@@ -28,9 +28,9 @@ crumbAction.toString = () => 'onClick';
 
 /**
  * This method can be used to build an array of breadcrumbs
- * @param position 0-based index of the level
- * @param rank Textual representation of the rank level
- * @param string icon class to applu to the icon
+ * @param {int} position 0-based index of the level
+ * @param {string} rank Textual representation of the rank level
+ * @param {string} icon class to applu to the icon
  * @returns {Object[]}
  */
 const buildBreadCrumb = (position, rank, icon) => {
@@ -53,10 +53,11 @@ const buildBreadCrumb = (position, rank, icon) => {
 storiesOf('Admin/Breadcrumb', module)
   .addDecorator(withKnobs)
   .addWithJSX('Breadcrumb', () => (
-    <Breadcrumb crumbs={buildBreadCrumb(
+    <Breadcrumb
+      crumbs={buildBreadCrumb(
         0,
         select('Number of levels', levels, 'First'),
         select('icon', icons)
-    )}
+      )}
     />
   ));

@@ -20,8 +20,8 @@ storiesOf('Admin/CheckboxField', module)
       value={text('value', '1')}
       message={{
         type: select('message type', ['', 'error'], 'error'),
-        value: text('message', 'A message about the field.') }
-      }
+        value: text('message', 'A message about the field.')
+      }}
       description={text('description', 'A description of the field.')}
     />
   ));

@@ -12,7 +12,7 @@ const source = [
   { value: '2', title: 'two' },
   { value: '3', title: 'three' },
   { value: '4', title: 'four' },
-  ];
+];
 
 storiesOf('Admin/CheckboxSetField', module)
   .addDecorator((storyFn) => (
