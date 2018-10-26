@@ -51,9 +51,11 @@ Many of the proptypes of this component are forwarded onto a [Reactstrap Popover
 // Buttons to be shown in the popover
 buttons: PropTypes.arrayOf(PropTypes.shape({
   // Unique key for this button
-  key: PropTypes.string.required,
+  key: PropTypes.string.isRequired,
   // String (or JSX) for the content of the button
-  content: PropTypes.node.required,
+  content: PropTypes.node.isRequired,
+  // An event handler that is fired when the button is clicked
+  onClick: PropTypes.func.isRequired,
   // Classnames to be applied to the button
   className: PropTypes.oneOfType(PropTypes.string,
     PropTypes.object,
@@ -69,10 +71,6 @@ buttons: PropTypes.arrayOf(PropTypes.shape({
 // Returns a filtered set of buttons
 // Default search handler assumes button content to be plain text and performs a simple string.contains check.
 onSearch: PropTypes.func,
-
-// function that accepts a button object & returns an event handler that is fired when the button is clicked
-// e.g. (button) => (event) => event.preventDefault() && togglePopover();
-provideButtonClickHandler: PropTypes.func.isRequired,
 
 // The container to render the popover within. See the ReactStrap documentation for popovers
 container: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),

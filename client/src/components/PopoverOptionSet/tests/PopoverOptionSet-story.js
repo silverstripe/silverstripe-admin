@@ -14,9 +14,8 @@ setAddon(JSXAddon);
 const buttons = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(letter => ({
   content: `Button ${letter}`,
   key: letter,
+  onClick: (event) => action(`"Button ${letter}" Clicked`)(event),
 }));
-
-const defaultButtonClickHandler = button => () => action(`"${button.content}" Clicked`)(button);
 
 storiesOf('Admin/PopoverOptionSet', module)
   .addDecorator(withKnobs)
@@ -24,7 +23,6 @@ storiesOf('Admin/PopoverOptionSet', module)
   .addWithJSX('Simple Example', () => (
     <PopoverOptionSetToggle
       buttons={buttons}
-      provideButtonClickHandler={defaultButtonClickHandler}
       id="Sample"
       disableSearch={!boolean('Search', true)}
     />
@@ -50,7 +48,6 @@ storiesOf('Admin/PopoverOptionSet', module)
     return (
       <PopoverOptionSetToggle
         buttons={iconButtons}
-        provideButtonClickHandler={defaultButtonClickHandler}
         id="Sample"
         disableSearch={!boolean('Search', true)}
       />
@@ -74,7 +71,6 @@ storiesOf('Admin/PopoverOptionSet', module)
     return (
       <PopoverOptionSetToggle
         buttons={customButtons}
-        provideButtonClickHandler={defaultButtonClickHandler}
         id="Sample"
         disableSearch
       />
@@ -90,7 +86,6 @@ storiesOf('Admin/PopoverOptionSet', module)
     return (
       <PopoverOptionSetToggle
         buttons={buttons}
-        provideButtonClickHandler={defaultButtonClickHandler}
         id="Sample"
         onSearch={handleSearch}
         searchPlaceholder="Custom search placeholder"

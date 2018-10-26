@@ -123,7 +123,7 @@ class PopoverOptionSet extends Component {
    */
   renderOptionButtons() {
     const {
-      buttons, onSearch, provideButtonClickHandler, buttonContainerClassName,
+      buttons, onSearch, buttonContainerClassName,
       emptyResultClassName, buttonClassName, ButtonComponent
     } = this.props;
     const { searchValue } = this.state;
@@ -156,7 +156,7 @@ class PopoverOptionSet extends Component {
               )
             }
             key={button.key}
-            onClick={provideButtonClickHandler(button)}
+            onClick={button.onClick}
           >
             {button.content}
           </ButtonComponent>
@@ -194,6 +194,7 @@ PopoverOptionSet.propTypes = {
   buttons: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string.isRequired,
     content: PropTypes.node.isRequired,
+    onClick: PropTypes.func.isRequired,
     className: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.object,
@@ -206,9 +207,6 @@ PopoverOptionSet.propTypes = {
   // Default search handler assumes button content to be plain text and performs
   // a simple string.contains check.
   onSearch: PropTypes.func,
-  // function that accepts a button object & returns an event handler
-  // e.g. (button) => (event) => event.preventDefault() && togglePopover();
-  provideButtonClickHandler: PropTypes.func.isRequired,
   container: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
   isOpen: PropTypes.bool.isRequired,
   placement: PropTypes.string,
