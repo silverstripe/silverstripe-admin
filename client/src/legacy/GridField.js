@@ -620,7 +620,6 @@ $.entwine('ss', function($) {
       ReactDOM.render(
         <Search
           id={`${props.gridfield}Search`}
-          identifier={`${idName}Search`}
           display="VISIBLE"
           displayBehavior="HIDEABLE"
           filterPrefix="Search__"
