@@ -31,7 +31,7 @@ describe('Tag List', () => {
       expect(tags.at(3).text()).toEqual('Some label: 123');
 
       tags.forEach((tag) => {
-        expect(tag.getDOMNode().attributes.getNamedItem('tabindex').value).toEqual('-1');
+        expect(tag.getDOMNode().attributes.getNamedItem('tabindex').value).toEqual('0');
         expect(tag.find('.tag__delete').exists()).toEqual(false);
       });
     });
@@ -42,7 +42,7 @@ describe('Tag List', () => {
       expect(tags).toHaveLength(4);
 
       tags.forEach((tag) => {
-        expect(tag.getDOMNode().attributes.getNamedItem('tabindex').value).toEqual('-1');
+        expect(tag.getDOMNode().attributes.getNamedItem('tabindex').value).toEqual('0');
         expect(tag.find('.tag__delete').exists()).toEqual(true);
       });
     });

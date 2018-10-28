@@ -64,7 +64,7 @@ describe('Tag', () => {
   describe('focusable', () => {
     it('focusable', () => {
       const wrapper = mount(<Tag dataKey="MyTagKey" />);
-      expect(wrapper.getDOMNode().attributes.getNamedItem('tabindex').value).toEqual('-1');
+      expect(wrapper.getDOMNode().attributes.getNamedItem('tabindex').value).toEqual('0');
     });
 
     it('not focusable', () => {
@@ -74,7 +74,7 @@ describe('Tag', () => {
 
     it('deletable focusable', () => {
       const wrapper = mount(<Tag dataKey="MyTagKey" deletable />);
-      expect(wrapper.getDOMNode().attributes.getNamedItem('tabindex').value).toEqual('-1');
+      expect(wrapper.getDOMNode().attributes.getNamedItem('tabindex').value).toEqual('0');
       expect(
         wrapper.find('.tag__delete').at(0)
           .getDOMNode().attributes.getNamedItem('tabindex').value

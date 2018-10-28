@@ -61,7 +61,7 @@ const Tag = ({
       role="button"
       className={classnames('tag', 'btn-sm', { tag__deletable: deletable })}
       onClick={(e) => { e.preventDefault(); onClick(dataKey); }}
-      tabIndex={focusable ? -1 : undefined}
+      tabIndex={focusable ? 0 : undefined}
       onKeyDown={(e) => { onKeyDown(e, dataKey, onDeleteKey, onBackSpace, onPrevious, onNext); }}
       title={title}
     >
