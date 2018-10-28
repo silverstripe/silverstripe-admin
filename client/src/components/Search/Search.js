@@ -160,8 +160,10 @@ class Search extends Component {
       this.setState({ searchText: value });
     }
 
-    const { schemaName, name, filterPrefix, actions } = this.props;
-    actions.reduxForm.change(schemaName, `${filterPrefix}${name}`, value);
+    const { schemaName, name, filterPrefix, actions, formData } = this.props;
+    if (typeof formData[`${filterPrefix}${name}`] !== 'undefined') {
+      actions.reduxForm.change(schemaName, `${filterPrefix}${name}`, value);
+    }
   }
 
   /**
@@ -226,7 +228,6 @@ class Search extends Component {
     const formSchemaUrl = (props && props.formSchemaUrl) || this.props.formSchemaUrl;
     if (formSchemaUrl) {
       const identifier = (props && props.identifier) || this.props.identifier;
-      this.props.actions.schema.setSchemaStateOverrides(formSchemaUrl, { fields: [] });
       this.props.actions.reduxForm.initialize(identifier, {}, Object.keys(this.props.formData));
       this.props.actions.reduxForm.reset(identifier);
     }
