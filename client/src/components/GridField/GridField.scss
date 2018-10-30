@@ -53,7 +53,7 @@
 
     &:focus {
       outline: none;
-      border-bottom: $table-border-width solid $brand-primary;
+      border-bottom: $table-border-width solid $cyan;
     }
   }
 
@@ -64,17 +64,16 @@
   &::after {
     content: ")";
     display: inline-block;
-    color: lighten($text-muted, 20%);
     font-family: silverstripe;
   }
 
   &.ss-gridfield-sorted-desc, // TODO BEMify class
   &.ss-gridfield-sorted-asc {
-    border-bottom: 1px solid theme-color("primary");
+    border-bottom: $table-border-width solid $cyan;
 
     &::after,
     &:hover::after {
-      color: theme-color("primary");
+      color: $cyan;
     }
   }
 
