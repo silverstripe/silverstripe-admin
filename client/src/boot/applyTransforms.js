@@ -69,6 +69,9 @@ const applyTransforms = () => {
           const validator = new Validator(values);
           const errorMap = Object.keys(values).reduce((curr, key) => {
             const field = findField(schema.fields, key);
+            if (!field) {
+              return curr;
+            }
             const { valid, errors } = validator.validateFieldSchema(field);
             if (valid) {
               return curr;
