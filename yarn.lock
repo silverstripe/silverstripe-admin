@@ -79,6 +79,15 @@
     global "^4.3.2"
     prop-types "^15.5.10"
 
+"@storybook/addon-notes@^3.2.19":
+  version "3.4.11"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-notes/-/addon-notes-3.4.11.tgz#64676dd628d06447af614693410a26dff80a5a33"
+  dependencies:
+    babel-runtime "^6.26.0"
+    marked "^0.3.17"
+    prop-types "^15.6.1"
+    util-deprecate "^1.0.2"
+
 "@storybook/addon-options@^3.2.19":
   version "3.3.13"
   resolved "https://registry.yarnpkg.com/@storybook/addon-options/-/addon-options-3.3.13.tgz#d2cbddb640737d0853f2f4bc8958ba58be6cfa30"
@@ -6163,6 +6172,10 @@ markdown-loader@^2.0.1:
   dependencies:
     loader-utils "^1.1.0"
     marked "^0.3.9"
+
+marked@^0.3.17:
+  version "0.3.19"
+  resolved "http://registry.npmjs.org/marked/-/marked-0.3.19.tgz#5d47f709c4c9fc3c216b6d46127280f40b39d790"
 
 marked@^0.3.9:
   version "0.3.15"

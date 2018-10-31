@@ -24,7 +24,8 @@ describe('Search', () => {
         },
         reduxForm: {
           initialize: jest.fn(),
-          reset: jest.fn()
+          reset: jest.fn(),
+          change: jest.fn()
         }
       },
     };

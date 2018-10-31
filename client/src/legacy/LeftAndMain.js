@@ -1474,13 +1474,13 @@ $.entwine('ss', function($) {
       const handleSearch = (data) => this.search(data);
       const narrowView = this.closest('.cms-content-tools').attr('id') === 'cms-content-tools-CMSMain';
 
-      // TODO: rework entwine so that react has control of holder
       ReactDOM.render(
         <Search
           id="Search"
           identifier="Search"
           display="VISIBLE"
           displayBehavior={"HIDEABLE"}
+          filterPrefix="Search__"
           onHide={handleHide}
           onSearch={handleSearch}
           borders={{

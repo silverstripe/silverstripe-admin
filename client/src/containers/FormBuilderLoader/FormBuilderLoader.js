@@ -315,17 +315,20 @@ class FormBuilderLoader extends Component {
             }
           );
 
+
+          // Mock the will-be shape of the props so that the identifier is right
+          const identifier = createFormIdentifierFromProps({
+            ...this.props,
+            schema: {
+              ...this.props.schema,
+              ...overriddenSchema,
+            },
+          });
+
           this.props.actions.schema.setSchema(
             this.props.schemaUrl,
             overriddenSchema,
-            // Mock the will-be shape of the props so that the identifier is right
-            createFormIdentifierFromProps({
-              ...this.props,
-              schema: {
-                ...this.props.schema,
-                ...overriddenSchema,
-              },
-            })
+            identifier
           );
 
           const schemaData = formSchema.schema || this.props.schema.schema;
@@ -334,7 +337,7 @@ class FormBuilderLoader extends Component {
           // need to initialize the form again in case it was loaded before
           // this will re-trigger Injector.form APIs, reset values and reset pristine state as well
           this.props.actions.reduxForm.initialize(
-            this.getIdentifier(),
+            identifier,
             formData,
             false,
             { keepSubmitSucceeded: true }
