@@ -20,9 +20,9 @@ class TinyMCEActionRegistrar {
    * @param {Object} action Menu action option, with custom "priority" property
    * @return {TinyMCEActionRegistrar}
    */
-  addAction(menu, action) {
+  addAction(menu, action, config) {
     const priority = action.priority || 50;
-    this.actions[menu] = this.getActions(menu).concat([{ ...action, priority }]);
+    this.actions[`${config}.${menu}`] = this.getActions(menu, config).concat([{ ...action, priority }]);
     return this;
   }
 
@@ -32,12 +32,12 @@ class TinyMCEActionRegistrar {
    * @param {String} menu
    * @return {Array}
    */
-  getActions(menu) {
-    return this.actions[menu] || [];
+  getActions(menu, config) {
+    return this.actions[`${config}.${menu}`] || [];
   }
 
-  getSortedActions(menu) {
-    const actions = this.getActions(menu);
+  getSortedActions(menu, config) {
+    const actions = this.getActions(menu, config);
     return actions.sort((a, b) => {
       if (a.priority !== b.priority) {
         return a.priority < b.priority;

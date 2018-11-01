@@ -1,4 +1,4 @@
-/* global tinymce, window */
+/* global tinymce, editorIdentifier, window */
 import i18n from 'i18n';
 import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
 import React from 'react';
@@ -13,7 +13,7 @@ TinyMCEActionRegistrar.addAction('sslink', {
   // eslint-disable-next-line no-console
   onclick: (editor) => editor.execCommand('sslinkexternal'),
   priority: 52,
-});
+}, editorIdentifier);
 
 const plugin = {
   init(editor) {

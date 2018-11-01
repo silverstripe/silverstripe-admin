@@ -1,4 +1,4 @@
-/* global tinymce navigator */
+/* global tinymce, navigator */
 import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
 import ReactDOM from 'react-dom';
 import jQuery from 'jquery';
@@ -18,7 +18,7 @@ const plugin = {
       i18n._t('Admin.INSERT_LINK_WITH_SHORTCUT', 'Insert link {shortcut}'),
       { shortcut: `[${metaKey}+K]` }
     );
-    const actions = TinyMCEActionRegistrar.getSortedActions('sslink')
+    const actions = TinyMCEActionRegistrar.getSortedActions('sslink', editor.settings.editorIdentifier)
       .map(action => Object.assign(
         {},
         action,
