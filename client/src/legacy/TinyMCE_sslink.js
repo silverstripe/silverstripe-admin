@@ -18,7 +18,7 @@ const plugin = {
       i18n._t('Admin.INSERT_LINK_WITH_SHORTCUT', 'Insert link {shortcut}'),
       { shortcut: `[${metaKey}+K]` }
     );
-    const actions = TinyMCEActionRegistrar.getSortedActions('sslink', editor.settings.editorIdentifier)
+    const actions = TinyMCEActionRegistrar.getSortedActions('sslink', editor.settings.editorIdentifier, true)
       .map(action => Object.assign(
         {},
         action,
