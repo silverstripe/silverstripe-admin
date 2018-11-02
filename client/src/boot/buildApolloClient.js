@@ -1,6 +1,7 @@
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { printRequest } from 'apollo-client/transport/networkInterface';
 import qs from 'qs';
+import Config from 'lib/Config';
 
 function buildApolloClient(baseUrl) {
   const networkInterface = createNetworkInterface({
@@ -34,6 +35,7 @@ function buildApolloClient(baseUrl) {
         req.options.headers,
         {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+          'X-CSRF-TOKEN': Config.get('SecurityID'),
         }
       );
       // eslint-disable-next-line no-param-reassign
