@@ -51,7 +51,7 @@ $.entwine('ss', function($) {
     reload: function(ajaxOpts, successCallback) {
       var self = this, form = this.closest('form'),
         focusedElName = this.find(':input:focus').attr('name'), // Save focused element for restoring after refresh
-        data = form.find(':input:not(.grid-field__search-holder :input, .add-existing-autocompleter :input)').serializeArray(),
+        data = form.find(':input:not(.grid-field__search-holder :input, .relation-search)').serializeArray(),
         tbody = this.find('tbody'),
         colspan = this.find('.grid-field__title-row th').attr('colspan');
       ;
