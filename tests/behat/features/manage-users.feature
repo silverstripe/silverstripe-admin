@@ -79,7 +79,7 @@ Feature: Manage users
     When I click the "Users" CMS tab
     And I press the "Add Member" button
     And I fill in the following:
-      | First Name | John |
+      | First Name | Other Staff |
       | Surname | Doe |
       | Email | john.doe@example.org |
     And I press the "Create" button
@@ -88,8 +88,24 @@ Feature: Manage users
     When I go to "admin/security/"
     Then I should see "john.doe@example.org" in the "#Root_Users" element
 
+  Scenario: I can navigate users from the edit form and retain my search query
+    When I press the "Open search and filter" button
+    And I press the "Advanced" button
+    And I fill in "Search__FirstName" with "Staff"
+    And I press the "Search" button
+    Then I should see "staffmember@example.org" in the "#Root_Users" element
+    And I should see "john.doe@example.org" in the "#Root_Users" element
+    But I should not see "admin@example.org" in the "#Root_Users" element
+
+    When I click "john.doe@example.org" in the "#Root_Users" element
+    And I press the "Next" button
+    Then the "Email" field should contain "staffmember@example.org"
+    When I press the "Previous" button
+    Then the "Email" field should contain "john.doe@example.org"
+
   Scenario: I can edit an existing user and add him to an existing group
-    When I click the "Users" CMS tab
+    When I go to "admin/security/"
+    And I click the "Users" CMS tab
     And I click "staffmember@example.org" in the "#Root_Users" element
     And I select "ADMIN group" from "Groups"
     And I press the "Apply changes" button
