@@ -1,8 +1,18 @@
 /* global window */
+
+/**
+ * Creates a composite identifier for the actions key
+ * @param configId
+ * @param menu
+ * @returns {string}
+ */
+const createIdentifier = (configId, menu) => (
+  configId ? `${configId}.${menu}` : menu
+);
+
 /**
  * Acts as top level action registrar component for tinymce
  */
-
 class TinyMCEActionRegistrar {
   constructor() {
     this.actions = {};
@@ -23,11 +33,14 @@ class TinyMCEActionRegistrar {
    */
   addAction(menu, action, configId) {
     const priority = action.priority || 50;
-    const name = configId ? `${configId}.${menu}` : menu;
+    const name = createIdentifier(configId, menu);
     const actions = this.getActions(menu, configId, true);
     // If the action is not already registered either globally or within this config
-    if (!actions.some((registeredAction) => action.text === registeredAction.text)) {
-      this.actions[name] = this.getActions(menu, configId, false).concat([{ ...action, priority }]);
+    if (!actions.find((registeredAction) => action.text === registeredAction.text)) {
+      this.actions[name] = [
+        ...this.getActions(menu, configId, false),
+        { ...action, priority },
+      ];
     }
     return this;
   }
@@ -41,15 +54,19 @@ class TinyMCEActionRegistrar {
    * not registered to a specific config
    * @return {Array}
    */
-  getActions(menu, configId, includingGlobal) {
+  getActions(menu, configId, includingGlobal = true) {
     // Include global actions
     // - if registering a global action ie. without a specific config id
     // - by default or if set to true
-    let actions = (!configId || typeof includingGlobal === 'undefined' || includingGlobal === true) && this.actions[menu]
+    let actions = (!configId || includingGlobal) && this.actions[menu]
       ? this.actions[menu]
       : [];
-    if (configId && this.actions[`${configId}.${menu}`]) {
-      actions = actions.concat(this.actions[`${configId}.${menu}`]);
+    const name = createIdentifier(configId, menu);
+    if (configId && this.actions[name]) {
+      actions = [
+        ...actions,
+        ...this.actions[name],
+      ];
     }
     return actions;
   }
@@ -63,7 +80,7 @@ class TinyMCEActionRegistrar {
    * not registered to a specific config
    * @return {Array}
    */
-  getSortedActions(menu, configId, includingGlobal) {
+  getSortedActions(menu, configId, includingGlobal = true) {
     const actions = this.getActions(menu, configId, includingGlobal);
     return actions.sort((a, b) => {
       if (a.priority !== b.priority) {
