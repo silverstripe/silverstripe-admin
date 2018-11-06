@@ -25,11 +25,12 @@
 
   .rounded {
 
-    &.btn, >.btn {
+    &.btn,
+    >.btn {
       width: 32px;
       padding-left: 7px;
 
-      &:last-child{
+      &:last-child {
         border-top-right-radius: 100px !important;
         border-bottom-right-radius: 100px !important;
       }
@@ -43,7 +44,8 @@
 
     border-radius: 100px !important;
 
-    &::before, .btn::before {
+    &::before,
+    .btn::before {
       margin-right: 0;
     }
   }
