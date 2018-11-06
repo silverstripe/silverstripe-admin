@@ -45,6 +45,7 @@ const plugin = {
     function openLinkDialog() {
       const node = tinymce.activeEditor.selection.getNode();
       const href = node.getAttribute('href');
+
       if (href) {
         editor.execCommand(TinyMCEActionRegistrar.getEditorCommandFromUrl(href));
       }
@@ -54,7 +55,7 @@ const plugin = {
       setupTinyMceInlineToolbar(editor, [
         { type: 'button', onClick: openLinkDialog, text: 'Edit link' },
         { type: 'button', onClick: () => editor.execCommand('unlink'), text: 'Remove link' },
-      ]);
+      ], ['a[href]']);
     });
   },
 };
