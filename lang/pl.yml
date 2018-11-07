@@ -25,11 +25,8 @@ pl:
     ACCESSALLINTERFACESHELP: 'Zastępuje bardziej szczegółowe ustawienia dostępu.'
     BROWSER_WARNING_HEADING: 'Nieobsługiwane przeglądarki'
     BROWSER_WARNING_TEXT: 'Twoja przeglądarka nie obsłuży poprawnie CMS''a.<br />Uaktualnij ją, a najlepiej zmień na jedną z proponowanych opcji.'
-    CollapsePanel: 'Zwiń panel'
     DELETED: Usunięto.
     DropdownBatchActionsDefault: 'Wybierz akcję...'
-    ExpandPanel: 'Rozwiń panel'
-    HELP: Pomoc
     LOGOUT: 'Wyloguj się'
     MenuToggleAuto: Auto
     MenuToggleStickyNav: 'Sticky nav'
@@ -65,11 +62,9 @@ pl:
     ResultNone: 'Brak zmian'
     ResultUpdated: 'Zmieniono {count} użytkowników'
   SilverStripe\Admin\ModelAdmin:
-    APPLY_FILTER: 'Zastosuj filtr'
     DELETE: Usuń
     DELETEDRECORDS: 'Usunięto {count} rekordów.'
     EMPTYBEFOREIMPORT: 'Zastąp dane'
-    FILTER: Filtr
     IMPORT: 'Importuj z CSV'
     IMPORTEDRECORDS: 'Zaimportowano {count} rekordów.'
     IMPORTSPECFIELDS: 'Kolumny bazy danych'
@@ -78,7 +73,6 @@ pl:
     IMPORTSPECTITLE: 'Specyfikacja dla {model}'
     NOCSVFILE: 'Wyszukaj plik CSV do zaimportowania'
     NOIMPORT: 'Nic do zaimportowania'
-    RESET: Reset
     Title: 'Modele danych'
     UPDATEDRECORDS: 'Zmieniono {count} rekordów.'
   SilverStripe\Admin\SecurityAdmin:
@@ -93,5 +87,3 @@ pl:
     MemberListCaution: 'Uwaga: Usunięcie członków z tej listy spowoduje usunięcie ich ze wszystkich grup i bazy danych'
     TABROLES: Role
     Users: Użytkownicy
-  SilverStripe\CMS\Controllers\CMSMain:
-    SAVE: Zapisz
