@@ -1,12 +1,82 @@
 nl:
-  SilverStripe\Admin\CMSBatchAction:
-    PUBLISHED_PAGES: '%d pagina''s gepubliceerd'
-    PUBLISH_PAGES: Publiceer
-    RESTORE: Herstel
+  SilverStripe\Admin\CMSProfileController:
+    CANTEDIT: 'Je hebt geen toestemming om dat te doen'
+    MENUTITLE: 'Mijn profiel'
+  SilverStripe\Admin\Forms\EditorEmailLinkFormFactory:
+    EMAIL: 'E-mail adres'
+    LINKDESCR: 'Link omschrijving'
+    LINKTEXT: 'Link tekst'
+    SUBJECT: Onderwerp
+  SilverStripe\Admin\Forms\EditorExternalLinkFormFactory:
+    ANCHORVALUE: Anker
+    LINKDESCR: 'Link omschrijving'
+    LINKOPENNEWWIN: 'Open in nieuw venster/tab'
+    LINKTEXT: 'Link tekst'
+    URL: URL
+  SilverStripe\Admin\Forms\LinkFormFactory:
+    INSERT_LINK: 'Voeg link toe'
+  SilverStripe\Admin\Forms\UsedOnTable:
+    ADDEDTODRAFT: Concept
+    MODIFIEDONDRAFTSHORT: Aangepast
+  SilverStripe\Admin\GroupImportForm:
+    ResultCreated: '{count} groepen aangemaakt'
+    ResultDeleted: '{count} groepen gewist'
+    ResultUpdated: '{count} groepen geupdate'
+  SilverStripe\Admin\LeftAndMain:
+    ACCESSALLINTERFACES: 'Toegang tot alle CMS sekties'
+    ACCESSALLINTERFACESHELP: 'Overschrijft overige access instellingen.'
+    BROWSER_WARNING_HEADING: 'Browser wordt niet ondersteund'
+    DELETED: Gewist.
+    DropdownBatchActionsDefault: 'Kies een aktie...'
+    LOGOUT: Uitloggen
+    MenuToggleAuto: Auto
+    NavigateUp: 'Navigeer een niveau omhoog'
+    PERMAGAIN: 'U bent uitgelogd. Als je opnieuw in wil loggen, voer uw gebruikersnaam en wachtwoord hier onder opnieuw in.'
+    PERMALREADY: 'U heeft geen rechten binnen dit gedeelte van het CMS. Indien u in wil loggen als iemand anders, dan kan dat hier onder.'
+    PERMDEFAULT: 'U moet ingelogd zijn om het administratie gedeelte te kunnen benaderen; voer uw gegevens hier onder in.'
+    PreviewButton: Preview
+    REQUIREJS: 'Het CMS heeft het nodig dat JavaScript is ingeschakeld.'
+    SAVEDUP: Opgeslagen.
+    SUBMIT_BUTTON_LABEL: Ga
+    ValidationError: Validatiefout
+  SilverStripe\Admin\LeftAndMain_ViewModeSelector:
+    Auto: Auto
+    ChangeViewMode: 'Verander view modus'
+    Desktop: Desktop
+    DualWindowView: 'Dubbel Venster'
+    EditView: 'Edit modus'
+    Mobile: Mobiel
+    PreviewState: 'Preview Status'
+    PreviewView: 'Preview modus'
+    Responsive: Responsief
+    SplitView: 'Gespleten modus'
+    Tablet: Tablet
+    ViewDeviceWidth: 'Selecteer een preview breedte'
+    Width: breedte
+  SilverStripe\Admin\MemberImportForm:
+    BtnImport: 'Importeer vanuit CSV'
+    ResultCreated: '{count} leden aangemaakt'
+    ResultDeleted: '{count} leden verwijderd'
+    ResultNone: 'Geen veranderingen'
+    ResultUpdated: '{count} leden aangepast'
+  SilverStripe\Admin\ModelAdmin:
+    DELETE: Verwijder
+    DELETEDRECORDS: '{count} records verwijderd.'
+    EMPTYBEFOREIMPORT: 'Vervang gegevens'
+    IMPORT: 'Importeer vanuit CSV'
+    IMPORTEDRECORDS: '{count} records geïmporteerd '
+    IMPORTSPECFIELDS: 'Database kolommen'
+    IMPORTSPECLINK: 'Laat Specificatie zien voor {model}'
+    IMPORTSPECRELATIONS: Relaties
+    IMPORTSPECTITLE: 'Specificatie voor {model}'
+    NOIMPORT: 'Niets om te importeren'
+    Title: 'Data Modellen'
+    UPDATEDRECORDS: '{count} records aangepast'
   SilverStripe\Admin\SecurityAdmin:
-    GROUPNAME: 'Groep naam'
-    MEMBERS: Leden
-    NEWGROUP: 'Nieuwe Groep'
-    PERMISSIONS: Rechten
-    ROLES: Rollen
-    ROLESDESCRIPTION: 'In deze sectie kunt u rollen toevoegen aan deze groep. Rollen zijn logische groeperingen van rechten die in het Rollen tabblad gewijzigd kunnen worden.'
+    APPLY_ROLES: 'Toepassen rollen voor groepen'
+    EDITPERMISSIONS: 'Beheren toestemmingen voor groepen'
+    IMPORTGROUPS: 'Importeer groepen'
+    IMPORTUSERS: 'Importeer gebruikers'
+    MENUTITLE: Beveiliging
+    TABROLES: Rollen
+    Users: Gebruikers
