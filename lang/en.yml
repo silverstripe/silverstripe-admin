@@ -29,15 +29,10 @@ en:
     ACCESSALLINTERFACESHELP: 'Overrules more specific access settings.'
     BROWSER_WARNING_HEADING: 'Unsupported browser'
     BROWSER_WARNING_TEXT: 'You&apos;re using a web browser that&apos;s not supported by SilverStripe.<br />Please upgrade to one of the following options.'
-    CMSUserhelp: 'CMS User help'
     CollapsePanel: 'Collapse panel'
-    Community: Community
     DELETED: Deleted.
-    Developerdocs: 'Developer docs'
     DropdownBatchActionsDefault: 'Choose an action...'
     ExpandPanel: 'Expand panel'
-    Feedback: Feedback
-    HELP: Help
     HelpMenu: 'Help menu'
     LOGOUT: 'Log out'
     MenuToggleAuto: Auto
@@ -52,7 +47,7 @@ en:
     SAVEDUP: Saved.
     SUBMIT_BUTTON_LABEL: Go
     ValidationError: 'Validation error'
-    Version: 'Version'
+    Version: Version
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
     Auto: Auto
     ChangeViewMode: 'Change view mode'
@@ -77,8 +72,6 @@ en:
     ResultNone: 'No changes'
     ResultUpdated: 'Updated {count} members'
   SilverStripe\Admin\ModelAdmin:
-    APPLY_FILTER: 'Apply Filter'
-    CLEARSEARCH: 'Clear search'
     DELETE: Delete
     DELETEDRECORDS: 'Deleted {count} records.'
     EMPTYBEFOREIMPORT: 'Replace data'
@@ -90,9 +83,6 @@ en:
     IMPORTSPECTITLE: 'Specification for {model}'
     NOCSVFILE: 'Please browse for a CSV file to import'
     NOIMPORT: 'Nothing to import'
-    RESET: Reset
-    SEARCH: Search
-    SEARCHRESULTSFOR: 'Search results for'
     Title: 'Data Models'
     UPDATEDRECORDS: 'Updated {count} records.'
   SilverStripe\Admin\SecurityAdmin:
@@ -107,5 +97,3 @@ en:
     MemberListCaution: 'Caution: Removing members from this list will remove them from all groups and the database'
     TABROLES: Roles
     Users: Users
-  SilverStripe\CMS\Controllers\CMSMain:
-    SAVE: Save

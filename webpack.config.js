@@ -24,9 +24,6 @@ const config = [
       'LeftAndMain.Ping': `${PATHS.LEGACY_SRC}/LeftAndMain.Ping.js`,
       leaktools: `${PATHS.LEGACY_SRC}/leaktools.js`,
       MemberImportForm: `${PATHS.LEGACY_SRC}/MemberImportForm.js`,
-      TinyMCE_sslink: `${PATHS.LEGACY_SRC}/TinyMCE_sslink.js`,
-      'TinyMCE_sslink-external': `${PATHS.LEGACY_SRC}/TinyMCE_sslink-external.js`,
-      'TinyMCE_sslink-email': `${PATHS.LEGACY_SRC}/TinyMCE_sslink-email.js`,
       // For IE version 10 and below. These browsers doesn't handle large
       // resource files so need to break browser detection and warning code into
       // its own file
@@ -49,6 +46,28 @@ const config = [
         name: 'vendor',
         minChunks: module => module.context && module.context.indexOf('/node_modules/') > -1,
       }),
+    ],
+    watchOptions: {
+      poll: true
+    }
+  },
+  {
+    name: 'tinymce',
+    entry: {
+      TinyMCE_sslink: `${PATHS.LEGACY_SRC}/TinyMCE_sslink.js`,
+      'TinyMCE_sslink-external': `${PATHS.LEGACY_SRC}/TinyMCE_sslink-external.js`,
+      'TinyMCE_sslink-email': `${PATHS.LEGACY_SRC}/TinyMCE_sslink-email.js`,
+    },
+    output: {
+      path: PATHS.DIST,
+      filename: 'js/[name].js',
+    },
+    devtool: (ENV !== 'production') ? 'source-map' : '',
+    resolve: resolveJS(ENV, PATHS),
+    externals: externalJS(ENV, PATHS),
+    module: moduleJS(ENV, PATHS),
+    plugins: [
+      ...pluginJS(ENV, PATHS),
     ],
     watchOptions: {
       poll: true

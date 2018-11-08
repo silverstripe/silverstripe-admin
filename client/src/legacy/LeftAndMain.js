@@ -5,7 +5,8 @@ import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import IframeDialog from 'components/IframeDialog/IframeDialog';
-import Search from 'components/Search/Search.js';
+import Search from 'components/Search/Search';
+import Loading from 'components/Loading/Loading';
 import { schemaMerge } from 'lib/schemaFieldValues';
 import { loadComponent } from 'lib/Injector';
 
@@ -1045,13 +1046,19 @@ $.entwine('ss', function($) {
    * like the breadcrumbs showing unnecessary loading status.
    */
   $('form.loading,.cms-content.loading,.cms-content-fields.loading,.cms-content-view.loading,.ss-gridfield-item.loading').entwine({
-    onmatch: function() {
-      this.append('<div class="cms-content-loading-overlay ui-widget-overlay-light"></div><div class="cms-content-loading-spinner"></div>');
+    onadd: function() {
       this._super();
+      ReactDOM.render(
+        <Loading />,
+        this[0]
+      );
     },
     onunmatch: function() {
-      this.find('.cms-content-loading-overlay,.cms-content-loading-spinner').remove();
       this._super();
+      const container = this[0];
+      if (container) {
+        ReactDOM.unmountComponentAtNode(container);
+      }
     }
   });
 

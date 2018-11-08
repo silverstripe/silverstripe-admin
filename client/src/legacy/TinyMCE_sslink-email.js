@@ -1,4 +1,4 @@
-/* global tinymce, window */
+/* global tinymce, editorIdentifier, window */
 import i18n from 'i18n';
 import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
 import React from 'react';
@@ -10,14 +10,15 @@ import { loadComponent } from 'lib/Injector';
 const commandName = 'sslinkemail';
 
 // Link to email address
-TinyMCEActionRegistrar
-  .addAction('sslink', {
+TinyMCEActionRegistrar.addAction(
+  'sslink',
+  {
     text: i18n._t('Admin.LINKLABEL_EMAIL', 'Link to email address'),
-    // eslint-disable-next-line no-console
-    onclick: (editor) => editor.execCommand(commandName),
+    onclick: (editorInst) => editorInst.execCommand(commandName),
     priority: 51,
-  })
-  .addCommandWithUrlTest(commandName, /^mailto:/);
+  },
+  editorIdentifier,
+).addCommandWithUrlTest(commandName, /^mailto:/);
 
 const plugin = {
   init(editor) {
