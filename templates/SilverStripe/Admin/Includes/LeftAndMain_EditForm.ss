@@ -29,9 +29,9 @@
 
 	<div class="panel panel--padded panel--scrollable flexbox-area-grow <% if not $Fields.hasTabset %>cms-panel-padded<% end_if %>">
 		<% if $Message %>
-		<p id="{$FormName}_error" class="message $MessageType">$Message</p>
+		<p id="{$FormName}_error" class="alert $AlertType">$Message</p>
 		<% else %>
-		<p id="{$FormName}_error" class="message $MessageType" style="display: none"></p>
+		<p id="{$FormName}_error" class="alert $AlertType" style="display: none"></p>
 		<% end_if %>
 
 		<fieldset>
