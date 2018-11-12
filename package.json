@@ -84,6 +84,7 @@
     "redux-form": "^6.8.0",
     "redux-thunk": "^2.1.0",
     "resize-observer-polyfill": "^1.5.0",
+    "rxjs": "^6.3.3",
     "toposort": "^1.0.3",
     "url": "^0.11.0",
     "validator": "^6.1.0",
@@ -93,8 +94,9 @@
     "@silverstripe/eslint-config": "^0.0.5",
     "@silverstripe/webpack-config": "^0.12.0",
     "@storybook/addon-actions": "^3.2.19",
-    "@storybook/addon-options": "^3.2.19",
+    "@storybook/addon-knobs": "^3.4.10",
     "@storybook/addon-notes": "^3.2.19",
+    "@storybook/addon-options": "^3.2.19",
     "@storybook/react": "^3.2.19",
     "babel-jest": "^20.0.3",
     "copy-webpack-plugin": "^4.2.0",
@@ -103,7 +105,6 @@
     "html-loader": "^0.5.1",
     "jest-cli": "^19.0.2",
     "storybook-addon-jsx": "^5.4.0",
-    "@storybook/addon-knobs": "^3.4.10",
     "webpack": "^2"
   },
   "resolutions": {

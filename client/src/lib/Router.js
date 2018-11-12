@@ -5,6 +5,9 @@
  */
 import page from 'page.js';
 import url from 'url';
+import { Subject } from 'rxjs';
+
+const subject = new Subject();
 
 /**
  * Add leading slash to base-relative urls, as required by Page.js
@@ -38,9 +41,11 @@ function resolveURLToBase(path) {
  * @return {Function} Replacement function for show
  */
 function show(pageShow) {
-  return (path, state, dispatch, push) => (
-    pageShow(page.resolveURLToBase(path), state, dispatch, push)
-  );
+  return (path, state, dispatch, push) => {
+    const relativePath = page.resolveURLToBase(path);
+    subject.next({ path: relativePath, state, dispatch, push });
+    return pageShow(relativePath, state, dispatch, push);
+  };
 }
 
 /**
@@ -94,6 +99,7 @@ page.getAbsoluteBase = getAbsoluteBase.bind(page);
 page.resolveURLToBase = resolveURLToBase.bind(page);
 page.show = show(page.oldshow);
 page.routeAppliesToCurrentLocation = routeAppliesToCurrentLocation;
+page.subscribe = (func) => subject.subscribe(func);
 
 /*
  * We're assigning an instances to the `ss` namespace because singletons only
