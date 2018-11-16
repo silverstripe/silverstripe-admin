@@ -59,7 +59,7 @@ const Tag = ({
     <Button
       {...props}
       role="button"
-      className={classnames('tag', 'btn-sm', { tag__deletable: deletable })}
+      className={classnames('tag-component', 'btn-sm', { 'tag-component--deletable': deletable })}
       onClick={(e) => { e.preventDefault(); onClick(dataKey); }}
       tabIndex={focusable ? 0 : undefined}
       onKeyDown={(e) => { onKeyDown(e, dataKey, onDeleteKey, onBackSpace, onPrevious, onNext); }}
@@ -95,7 +95,7 @@ const DeleteButton = ({ dataKey, onDelete }) => (
     title={i18n._t('Admin.REMOVE_TAG', 'Remove Tag')}
     onFocus={focusOnParent}
     tabIndex={-1}
-    className="tag__delete font-icon-cancel btn--no-text btn--icon-sm"
+    className="tag-component__delete font-icon-cancel btn--no-text btn--icon-sm"
   />
 );
 
