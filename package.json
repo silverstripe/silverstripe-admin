@@ -90,7 +90,7 @@
   "devDependencies": {
     "@emotion/core": "^0",
     "@silverstripe/eslint-config": "^0.0.5",
-    "@silverstripe/webpack-config": "0.12.0",
+    "@silverstripe/webpack-config": "^1.0.0",
     "@storybook/addon-actions": "^3.4.10",
     "@storybook/addon-knobs": "^3.4.10",
     "@storybook/addon-notes": "^4.0.4",
