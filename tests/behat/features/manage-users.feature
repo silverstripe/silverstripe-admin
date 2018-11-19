@@ -91,13 +91,12 @@ Feature: Manage users
 
   @modal
   Scenario: I can navigate users from the edit form and retain my search query
-    When I press the "Open search and filter" button
-    And I press the "Advanced" button
-    And I fill in "Search__FirstName" with "Staff"
-    And I press the "Search" button
-    Then I should see "staffmember@example.org" in the "#Root_Users" element
+    When I click the "Users" CMS tab
+    And I press the "First Name" button
+
+    Then I should see "admin@example.org" in the "#Root_Users" element
     And I should see "otherstaffmember@example.org" in the "#Root_Users" element
-    But I should not see "admin@example.org" in the "#Root_Users" element
+    And I should see "staffmember@example.org" in the "#Root_Users" element
 
     When I click "otherstaffmember@example.org" in the "#Root_Users" element
     And I press the "Form_ItemEditForm_action_doNext" button
