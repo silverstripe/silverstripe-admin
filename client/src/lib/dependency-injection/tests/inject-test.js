@@ -1,7 +1,7 @@
 /* global jest, jasmine, describe, beforeEach, it, pit, expect, process */
 
 import React, { Component } from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
+import ReactTestUtils from 'react-dom/test-utils';
 import inject from '../inject';
 import injectorContext from '../injectorContext';
 
@@ -73,13 +73,8 @@ describe('inject()', () => {
 
     it('should throw an exception if mapDependenciesToProps returns a non-object', () => {
       const injected = inject(components, () => 'not an object')(emptyComponent);
-      const MyComponent = testInjector(injected);
 
-      expect(() => {
-        ReactTestUtils.renderIntoDocument(
-          <MyComponent />
-        );
-      }).toThrow();
+      expect(() => injected()).toThrow();
     });
 
     it('should provide the TestComponent in the TestComponent prop', () => {

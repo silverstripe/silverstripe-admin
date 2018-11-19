@@ -12,7 +12,7 @@ import backend from '../Backend';
  * Return a mock function that returns a promise
  */
 function getMockPromise(data) {
-  const mock = jest.genMockFunction();
+  const mock = jest.fn();
   mock.mockImplementation(() => Promise.resolve(data));
   return mock;
 }
@@ -158,7 +158,7 @@ describe('Backend', () => {
 
       return promise
         .catch((e) => expect(e).toBeFalsy())
-        .then(done);
+        .then(done());
     });
 
     it('should pass a JSON payload', (done) => {
@@ -182,7 +182,7 @@ describe('Backend', () => {
 
       return promise
         .catch((e) => expect(e).toBeFalsy())
-        .then(done);
+        .then(done());
     });
 
     it('should replace url template parameters', (done) => {
@@ -211,7 +211,7 @@ describe('Backend', () => {
 
       return promise
         .catch((e) => expect(e).toBeFalsy())
-        .then(done);
+        .then(done());
     });
 
     it('should add query parameters from spec for non-GET data', (done) => {
@@ -242,7 +242,7 @@ describe('Backend', () => {
 
       return promise
         .catch((e) => expect(e).toBeFalsy())
-        .then(done);
+        .then(done());
     });
 
     it('should add query parameters from payload for GET data', (done) => {
@@ -269,7 +269,7 @@ describe('Backend', () => {
 
       return promise
         .catch((e) => expect(e).toBeFalsy())
-        .then(done);
+        .then(done());
     });
 
     it('should merge defaultData into data argument', (done) => {
@@ -301,7 +301,7 @@ describe('Backend', () => {
 
       return promise
         .catch((e) => expect(e).toBeFalsy())
-        .then(done);
+        .then(done());
     });
   });
 });

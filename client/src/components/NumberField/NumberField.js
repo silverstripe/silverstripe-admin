@@ -8,10 +8,13 @@ class NumberField extends InputField {
    * @returns {object} properties
    */
   getInputProps() {
-    return {
-      ...this.props,
+    const props = super.getInputProps();
+
+    Object.assign(props, {
       type: 'number',
-    };
+    });
+
+    return props;
   }
 }
 

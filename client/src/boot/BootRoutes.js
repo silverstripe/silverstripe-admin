@@ -4,14 +4,12 @@ import $ from 'jquery';
 import React from 'react';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
-import { Router as ReactRouter, useRouterHistory } from 'react-router';
-import useBeforeUnload from 'history/lib/useBeforeUnload';
-import createHistory from 'history/lib/createBrowserHistory';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
 import Config from 'lib/Config';
 import pageRouter from 'lib/Router';
 import reactRouteRegister from 'lib/ReactRouteRegister';
 import App from 'containers/App/App';
-import { syncHistoryWithStore } from 'react-router-redux';
 import { ApolloProvider } from 'react-apollo';
 import i18n from 'i18n';
 import { isDirty } from 'redux-form';
@@ -94,22 +92,16 @@ class BootRoutes {
     reactRouteRegister.updateRootRoute({
       component: App,
     });
-    const history = syncHistoryWithStore(
-      useRouterHistory(useBeforeUnload(createHistory))({
-        basename: Config.get('baseUrl'),
-      }),
-      this.store
-    );
-    history.listenBeforeUnload(this.handleBeforeUnload);
-    history.listenBefore(this.handleBeforeRoute);
 
     ReactDOM.render(
       <ApolloProvider client={this.client}>
         <Provider store={this.store}>
-          <ReactRouter
-            history={history}
-            routes={reactRouteRegister.getRootRoute()}
-          />
+          <Router
+            basename={Config.get('baseUrl')}
+            getUserConfirmation={this.handleBeforeRoute}
+          >
+            {renderRoutes([reactRouteRegister.getRootRoute()])}
+          </Router>
         </Provider>
       </ApolloProvider>,
       document.getElementsByClassName('cms-content')[0]

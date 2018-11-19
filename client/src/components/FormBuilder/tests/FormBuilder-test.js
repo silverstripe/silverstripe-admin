@@ -1,7 +1,7 @@
 /* global jest, describe, expect, it, beforeEach */
 
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
+import ReactTestUtils from 'react-dom/test-utils';
 import { Component as FormBuilder } from '../FormBuilder';
 import schemaFieldValues, { findField, schemaMerge } from 'lib/schemaFieldValues';
 
@@ -117,7 +117,7 @@ describe('FormBuilder', () => {
     it('should include submitted action from schema', () => {
       formBuilder.setState({ submittingAction: 'actionTwo' });
 
-      const submitApiMock = jest.genMockFunction();
+      const submitApiMock = jest.fn();
       submitApiMock.mockImplementation(() => Promise.resolve({}));
       formBuilder.submitApi = submitApiMock;
 
@@ -133,7 +133,7 @@ describe('FormBuilder', () => {
     });
 
     it('should default to first button when none is specified', () => {
-      const submitApiMock = jest.genMockFunction();
+      const submitApiMock = jest.fn();
       submitApiMock.mockImplementation(() => Promise.resolve({}));
       formBuilder.submitApi = submitApiMock;
 

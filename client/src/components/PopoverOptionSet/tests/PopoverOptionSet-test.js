@@ -5,7 +5,7 @@ import React from 'react';
 import PopoverOptionSet from '../PopoverOptionSet';
 import { Button, InputGroup } from 'reactstrap';
 import Enzyme, { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-15.4';
+import Adapter from 'enzyme-adapter-react-16';
 
 Enzyme.configure({ adapter: new Adapter() });
 
