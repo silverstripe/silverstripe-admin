@@ -1046,7 +1046,7 @@ $.entwine('ss', function($) {
    * like the breadcrumbs showing unnecessary loading status.
    */
   $('form.loading,.cms-content.loading,.cms-content-fields.loading,.cms-content-view.loading,.ss-gridfield-item.loading').entwine({
-    onadd: function() {
+    onmatch: function() {
       this._super();
       const container = $('<div class="cms-loading-container"/>');
       this.append(container);
