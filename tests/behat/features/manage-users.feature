@@ -8,7 +8,7 @@ Feature: Manage users
     Given a "member" "ADMIN" belonging to "ADMIN group" with "Email"="admin@example.org"
     And the "member" "ADMIN" belonging to "ADMIN group2"
     And a "member" "Staff" belonging to "Staff group" with "Email"="staffmember@example.org"
-    And a "member" "Other Staff" belonging to "Staff group" with "Email"="otherstaffmember@example.org"
+    And a "member" "Other Staff" belonging to "Staff group" with "Email"="othermember@example.org"
     And the "group" "ADMIN group" has permissions "Full administrative rights"
     And the "group" "ADMIN group2" has permissions "Full administrative rights"
     And I am logged in with "ADMIN" permissions
@@ -95,14 +95,14 @@ Feature: Manage users
     And I press the "First Name" button
 
     Then I should see "admin@example.org" in the "#Root_Users" element
-    And I should see "otherstaffmember@example.org" in the "#Root_Users" element
+    And I should see "othermember@example.org" in the "#Root_Users" element
     And I should see "staffmember@example.org" in the "#Root_Users" element
 
-    When I click "otherstaffmember@example.org" in the "#Root_Users" element
+    When I click "othermember@example.org" in the "#Root_Users" element
     And I press the "Form_ItemEditForm_action_doNext" button
     Then the "Email" field should contain "staffmember@example.org"
     When I press the "Form_ItemEditForm_action_doPrevious" button
-    Then the "Email" field should contain "otherstaffmember@example.org"
+    Then the "Email" field should contain "othermember@example.org"
 
     When I fill in "FirstName" with "Staff Renamed"
     And I press the "Form_ItemEditForm_action_doNew" button
