@@ -62,10 +62,8 @@
 .font-icon-book-open:before {
   content: "\6f";
 }
-.font-icon-plus-thin:before {
-  content: "\44";
-  transform: rotate(45deg);
-  display: inline-block;
+.font-icon-plus:before {
+  content: "\6a";
 }
 .font-icon-tree:before {
   content: "\70";
@@ -561,4 +559,7 @@
 }
 .font-icon-accessibility:before {
   content: "\e04f";
+}
+.font-icon-plus-thin:before {
+  content: "\e050";
 }

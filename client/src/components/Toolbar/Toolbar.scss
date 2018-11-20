@@ -13,40 +13,26 @@
 
   .btn {
     margin-bottom: 0;
-  }
 
-  .right {
-    margin-left: auto;
-
-    .btn-group:not(last-child) {
-      margin-right: 10px !important;
-    }
-  }
-
-  .rounded {
-
-    &.btn,
-    >.btn {
+    &.circular {
+      border-radius: 100px;
       width: 32px;
       padding-left: 7px;
+    }
+  }
 
-      &:last-child {
-        border-top-right-radius: 100px !important;
-        border-bottom-right-radius: 100px !important;
-      }
+  .circular-group>.btn {
+    width: 32px;
+    padding-left: 7px;
 
-      &:first-child {
-        border-top-left-radius: 100px !important;
-        border-bottom-left-radius: 100px !important;
-      }
-
+    &:first-child {
+      border-top-left-radius: 100px;
+      border-bottom-left-radius: 100px;
     }
 
-    border-radius: 100px !important;
-
-    &::before,
-    .btn::before {
-      margin-right: 0;
+    &:last-child {
+      border-top-right-radius: 100px;
+      border-bottom-right-radius: 100px;
     }
   }
 }
