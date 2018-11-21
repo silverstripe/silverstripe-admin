@@ -372,15 +372,26 @@ $.entwine('ss', function($) {
         }
       }
 
-      this.getGridField().reload(
+      var data = [
         {
-          data: [{
-            name: this.attr('name'),
-            value: this.val(),
-            filter: filterState,
-            triggerChange
-          }],
+          name: this.attr('name'),
+          state: 'abc',
+          value: this.val(),
+          filter: filterState,
+          triggerChange
         },
+      ];
+
+      var actionState = this.data('action-state');
+      if (actionState) {
+        data.push({
+          name: 'ActionState',
+          value: encodeURIComponent(JSON.stringify(actionState)),
+        });
+      }
+
+      this.getGridField().reload(
+        { data },
         successCallback
       );
 
@@ -400,6 +411,12 @@ $.entwine('ss', function($) {
       // Add csrf
       if(csrf) {
         data += "&SecurityID=" + encodeURIComponent(csrf);
+      }
+
+      // Add action data
+      var actionState = this.data('action-state');
+      if (actionState) {
+        data += '&ActionState=' + encodeURIComponent(JSON.stringify(actionState))
       }
 
       // Include any GET parameters from the current URL, as the view
