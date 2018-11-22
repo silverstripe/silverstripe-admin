@@ -13,6 +13,27 @@
 
   .btn {
     margin-bottom: 0;
+
+    &.circular {
+      border-radius: 100px;
+      width: 32px;
+      padding-left: 7px;
+    }
+  }
+
+  .circular-group>.btn {
+    width: 32px;
+    padding-left: 7px;
+
+    &:first-child {
+      border-top-left-radius: 100px;
+      border-bottom-left-radius: 100px;
+    }
+
+    &:last-child {
+      border-top-right-radius: 100px;
+      border-bottom-right-radius: 100px;
+    }
   }
 }
 
