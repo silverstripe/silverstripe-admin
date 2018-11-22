@@ -366,11 +366,12 @@ $.entwine('ss', function($) {
         const messageText = response.getResponseHeader('X-Message-Text');
         const messageType = response.getResponseHeader('X-Message-Type');
         if (messageText && messageType) {
-          $("#Form_EditForm_error").addClass(messageType);
-          $("#Form_EditForm_error").html(messageText);
-          $("#Form_EditForm_error").show();
+          var formEditError = $("#Form_EditForm_error");
+          formEditError.addClass(messageType);
+          formEditError.html(messageText);
+          formEditError.show();
         }
-      }
+      };
 
       var data = [
         {
@@ -386,7 +387,7 @@ $.entwine('ss', function($) {
       if (actionState) {
         data.push({
           name: 'ActionState',
-          value: encodeURIComponent(JSON.stringify(actionState)),
+          value: JSON.stringify(actionState),
         });
       }
 
@@ -604,6 +605,13 @@ $.entwine('ss', function($) {
         triggerChange: false
       }];
 
+      if (props.clearActionState) {
+        ajaxData.push({
+          name: 'ActionState',
+          value: props.clearActionState,
+        });
+      }
+
       this.getGridField().reload({ data: ajaxData });
     },
 
@@ -616,6 +624,13 @@ $.entwine('ss', function($) {
         filter: 'show',
         triggerChange: false
       }];
+
+      if (props.searchActionState) {
+        ajaxData.push({
+          name: 'ActionState',
+          value: props.searchActionState,
+        });
+      }
 
       for (const [key, value] of Object.entries(data)) {
         if (value) {
@@ -693,13 +708,22 @@ $.entwine('ss', function($) {
           filterState='hidden';
         }
 
+        var ajaxData = [{
+          name: btns.attr('name'),
+          value: btns.val(),
+          filter: filterState,
+          triggerChange: false
+        }];
+
+        if (btns.data('action-state')) {
+          ajaxData.push({
+            name: 'ActionState',
+            value: btns.data('action-state'),
+          });
+        }
+
         this.getGridField().reload({
-          data: [{
-            name: btns.attr('name'),
-            value: btns.val(),
-            filter: filterState,
-            triggerChange: false
-          }]
+          data: ajaxData
         });
         return false;
       }else{
