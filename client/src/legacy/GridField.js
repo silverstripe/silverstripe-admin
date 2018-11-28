@@ -376,7 +376,6 @@ $.entwine('ss', function($) {
       var data = [
         {
           name: this.attr('name'),
-          state: 'abc',
           value: this.val(),
           filter: filterState,
           triggerChange
