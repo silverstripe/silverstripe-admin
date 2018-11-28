@@ -347,7 +347,9 @@ jQuery.entwine('ss', function($) {
     },
 
     onmatch: function() {
-      this.getEditor() || this.onadd();
+      if (!this.getEditor()) {
+        this.onadd();
+      }
       this._super();
     },
 
@@ -356,6 +358,13 @@ jQuery.entwine('ss', function($) {
      */
     onremove: function() {
       this.getEditor().destroy();
+      this._super();
+    },
+
+    onunmatch: function() {
+      if (this.getEditor()) {
+        this.onremove();
+      }
       this._super();
     },
 
