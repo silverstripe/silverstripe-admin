@@ -404,6 +404,7 @@
   font-size: $h3-font-size;
   min-width: 16px;
   background-repeat: no-repeat;
+  background-position: 50% 2px;
   transition: all $transition-speed-fast;
   color: darken($base-menu-bg, 44%);
 
