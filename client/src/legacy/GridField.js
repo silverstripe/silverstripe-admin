@@ -717,7 +717,7 @@ $.entwine('ss', function($) {
         if (btns.data('action-state')) {
           ajaxData.push({
             name: 'ActionState',
-            value: btns.data('action-state'),
+            value: JSON.stringify(btns.data('action-state')),
           });
         }
 
