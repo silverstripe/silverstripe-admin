@@ -1048,16 +1048,19 @@ $.entwine('ss', function($) {
   $('form.loading,.cms-content.loading,.cms-content-fields.loading,.cms-content-view.loading,.ss-gridfield-item.loading').entwine({
     onadd: function() {
       this._super();
+      const container = $('<div class="cms-loading-container"/>');
+      this.append(container);
       ReactDOM.render(
         <Loading />,
-        this[0]
+        container[0]
       );
     },
     onunmatch: function() {
       this._super();
-      const container = this[0];
+      const container = this.find('.cms-loading-container');
       if (container) {
-        ReactDOM.unmountComponentAtNode(container);
+        ReactDOM.unmountComponentAtNode(container[0]);
+        container.remove();
       }
     }
   });
