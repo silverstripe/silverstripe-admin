@@ -1,4 +1,4 @@
-.tag {
+.tag-component {
   list-style: none;
   border-radius: $border-radius-sm;
   border: 1px solid $gray-100;
@@ -26,7 +26,7 @@
     background: #eef2f4;
   }
 
-  &__deletable {
+  &--deletable {
     padding-left: 6px + 14px + 6px;
   }
 

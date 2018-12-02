@@ -16,17 +16,19 @@ describe('PopoverOptionSet', () => {
 
   const mockToggle = jest.fn();
 
-    beforeEach(() => {
+  beforeEach(() => {
     buttonTypeA = {
       key: 'dummy-key-a',
       content: 'Hello A',
-      className: 'dummy-classname-a'
+      className: 'dummy-classname-a',
+      onClick: () => {},
     };
 
     buttonTypeB = {
       key: 'dummy-key-b',
       content: 'Hello B',
       className: 'dummy-classname-b',
+      onClick: () => {},
     };
 
     props = {

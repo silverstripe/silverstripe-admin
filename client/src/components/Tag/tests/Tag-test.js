@@ -52,12 +52,12 @@ describe('Tag', () => {
   describe('deletable', () => {
     it('deletable', () => {
       const wrapper = mount(<Tag dataKey="MyTagKey" deletable />);
-      expect(wrapper.exists('.tag__delete')).toEqual(true);
+      expect(wrapper.exists('.tag-component__delete')).toEqual(true);
     });
 
     it('not deletable', () => {
       const wrapper = mount(<Tag dataKey="MyTagKey" deletable={false} />);
-      expect(wrapper.exists('.tag__delete')).toEqual(false);
+      expect(wrapper.exists('.tag-component__delete')).toEqual(false);
     });
   });
 
@@ -76,7 +76,7 @@ describe('Tag', () => {
       const wrapper = mount(<Tag dataKey="MyTagKey" deletable />);
       expect(wrapper.getDOMNode().attributes.getNamedItem('tabindex').value).toEqual('0');
       expect(
-        wrapper.find('.tag__delete').at(0)
+        wrapper.find('.tag-component__delete').at(0)
           .getDOMNode().attributes.getNamedItem('tabindex').value
       ).toEqual('-1');
     });
@@ -85,7 +85,7 @@ describe('Tag', () => {
       const wrapper = mount(<Tag dataKey="MyTagKey" deletable focusable={false} />);
       expect(wrapper.getDOMNode().attributes.getNamedItem('tabindex')).toEqual(null);
       expect(
-        wrapper.find('.tag__delete').at(0)
+        wrapper.find('.tag-component__delete').at(0)
           .getDOMNode().attributes.getNamedItem('tabindex').value
       ).toEqual('-1');
     });
@@ -109,7 +109,7 @@ describe('Tag', () => {
       const wrapper = mount(
         <Tag dataKey="MyTagKey" onDelete={onDelete} deletable />
       );
-      wrapper.find('.tag__delete').at(0).simulate('click', { preventDefault });
+      wrapper.find('.tag-component__delete').at(0).simulate('click', { preventDefault });
       expect(onDelete.mock.calls).toHaveLength(1);
       expect(onDelete.mock.calls[0]).toEqual(['MyTagKey']);
     });
