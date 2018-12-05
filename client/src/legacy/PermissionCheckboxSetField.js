@@ -54,12 +54,8 @@ $.entwine('ss', function($){
 				return (klass ? klass.match(/CMS_ACCESS_/) : false);
 			}).find('.checkbox').not(this);
 		},
-		onmatch: function() {
+		onadd: function() {
 			this.toggleCheckboxes();
-
-			this._super();
-		},
-		onunmatch: function() {
 			this._super();
 		},
 		onclick: function(e) {
