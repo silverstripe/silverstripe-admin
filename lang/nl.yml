@@ -15,9 +15,6 @@ nl:
     URL: URL
   SilverStripe\Admin\Forms\LinkFormFactory:
     INSERT_LINK: 'Voeg link toe'
-  SilverStripe\Admin\Forms\UsedOnTable:
-    ADDEDTODRAFT: Concept
-    MODIFIEDONDRAFTSHORT: Aangepast
   SilverStripe\Admin\GroupImportForm:
     ResultCreated: '{count} groepen aangemaakt'
     ResultDeleted: '{count} groepen gewist'
