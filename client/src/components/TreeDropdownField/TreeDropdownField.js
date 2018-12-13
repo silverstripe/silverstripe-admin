@@ -15,11 +15,6 @@ import { findTreeByPath, findTreeByID, findTreePath } from './treeUtils';
 
 const SEARCH_DELAY = 500; // ms
 
-// legacy value for multi-select's empty value
-const MULTI_EMPTY_VALUE = 'unchanged';
-
-const SINGLE_EMPTY_VALUE = 0;
-
 class TreeDropdownField extends Component {
   constructor(props) {
     super(props);
@@ -173,7 +168,7 @@ class TreeDropdownField extends Component {
     // require an empty option in some instances
     // value is an empty string by react-select cannot find the options
     options.unshift({
-      id: this.props.data.multiple ? '' : SINGLE_EMPTY_VALUE,
+      id: this.props.data.multiple ? '' : null,
       title: (this.props.data.hasEmptyDefault) ? this.props.data.emptyString : null,
       disabled: !options.length || !this.props.data.hasEmptyDefault,
     });
@@ -329,7 +324,7 @@ class TreeDropdownField extends Component {
     const parent = this.getVisibleTree();
 
     return options.filter((option) => {
-      if ((option.id === SINGLE_EMPTY_VALUE || option.id === '') &&
+      if ((option.id === null || option.id === '') &&
         (!this.props.data.hasEmptyDefault || this.props.visible.length || this.hasSearch())
       ) {
           return false;
@@ -393,7 +388,7 @@ class TreeDropdownField extends Component {
 
     this.handleSearchReset();
     if (this.props.data.multiple) {
-      mappedValue = MULTI_EMPTY_VALUE;
+      mappedValue = null;
 
       if (value && value.length) {
         const uniqueValues = value && value
@@ -417,7 +412,7 @@ class TreeDropdownField extends Component {
         this.props.actions.treeDropdownField.addSelectedValues(this.props.id, [object]);
       }
 
-      mappedValue = id || SINGLE_EMPTY_VALUE;
+      mappedValue = id || null;
     }
 
     if (typeof this.props.onChange === 'function') {
@@ -762,12 +757,12 @@ function mapStateToProps(state, ownProps) {
 
   let value = ownProps.value;
 
-  if (ownProps.data.multiple && ownProps.value === MULTI_EMPTY_VALUE) {
+  if (ownProps.data.multiple && ownProps.value === null) {
     value = [];
   }
 
   if (!ownProps.data.multiple && !ownProps.value) {
-    value = SINGLE_EMPTY_VALUE;
+    value = null;
   }
 
   return { ...field, value };
@@ -786,8 +781,6 @@ const ConnectedTreeDropdownField = connect(mapStateToProps, mapDispatchToProps)(
 export {
   TreeDropdownField as Component,
   ConnectedTreeDropdownField,
-  MULTI_EMPTY_VALUE,
-  SINGLE_EMPTY_VALUE,
   findTreePath,
   findTreeByID,
   findTreeByPath,

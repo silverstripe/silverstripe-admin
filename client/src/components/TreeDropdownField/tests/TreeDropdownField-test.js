@@ -9,7 +9,7 @@ jest.mock('isomorphic-fetch', () =>
 
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
-import { Component as TreeDropdownField, MULTI_EMPTY_VALUE, SINGLE_EMPTY_VALUE } from '../TreeDropdownField';
+import { Component as TreeDropdownField } from '../TreeDropdownField';
 import mockTree from './mockTree';
 
 describe('TreeDropdownField', () => {
@@ -193,7 +193,7 @@ describe('TreeDropdownField', () => {
         field.handleChange(null);
 
         expect(field.handleSearchReset).toBeCalled();
-        expect(field.props.onChange).toBeCalledWith(SINGLE_EMPTY_VALUE);
+        expect(field.props.onChange).toBeCalledWith(null);
         expect(field.props.actions.treeDropdownField.addSelectedValues).not.toBeCalled();
       });
     });
@@ -237,7 +237,7 @@ describe('TreeDropdownField', () => {
         field.handleChange([]);
 
         expect(field.handleSearchReset).toBeCalled();
-        expect(field.props.onChange).toBeCalledWith(MULTI_EMPTY_VALUE);
+        expect(field.props.onChange).toBeCalledWith(null);
         expect(field.props.actions.treeDropdownField.addSelectedValues).not.toBeCalled();
       });
     });
@@ -482,8 +482,8 @@ describe('TreeDropdownField', () => {
         <TreeDropdownField {...props} />
       );
       const options = field.getDropdownOptions();
-      const optionIds = options.map((option) => option.id).sort();
-      const childrenIds = props.tree.children.map((child) => child.id).sort();
+      const optionIds = options.map((option) => option.id);
+      const childrenIds = props.tree.children.map((child) => child.id);
 
       expect(optionIds[1]).toBe(childrenIds[0]);
       expect(optionIds[2]).toBe(childrenIds[1]);
@@ -495,7 +495,7 @@ describe('TreeDropdownField', () => {
         <TreeDropdownField {...props} />
       );
       const options = field.getDropdownOptions();
-      expect(options[0].id).toBe(0);
+      expect(options[0].id).toBe(null);
     });
 
     it('should return an empty first option if node has no children', () => {
@@ -506,7 +506,7 @@ describe('TreeDropdownField', () => {
       const options = field.getDropdownOptions();
 
       expect(options.length).toBe(1);
-      expect(options[0].id).toBe(0);
+      expect(options[0].id).toBe(null);
       expect(options[0].title).toBe(null);
       expect(options[0].disabled).toBe(true);
     });
