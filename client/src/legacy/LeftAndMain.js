@@ -1058,7 +1058,7 @@ $.entwine('ss', function($) {
     onunmatch: function() {
       this._super();
       const container = this.find('.cms-loading-container');
-      if (container) {
+      if (container && container.length) {
         ReactDOM.unmountComponentAtNode(container[0]);
         container.remove();
       }

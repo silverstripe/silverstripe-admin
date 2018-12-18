@@ -9,7 +9,7 @@
                     <span class="cms-sitename__version" title="$ApplicationName (<%t SilverStripe\Admin\LeftAndMain.Version "Version" %> - $CMSVersion)">$CMSVersionNumber.LimitCharacters(3, '')</span>
                 <% end_if %>
             </span>
-            <span class="cms-help__caret font-icon-caret-down-two"></span>
+            <span class="cms-help__caret font-icon-caret-up-two"></span>
     </button>
     <% if $HelpLinks %>
         <div class="cms-help__links">

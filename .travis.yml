@@ -70,13 +70,14 @@ before_script:
   - if [[ $BEHAT_TEST == cms ]]; then composer require silverstripe/recipe-cms:4.4.x-dev --no-update; fi
 
   - composer install --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile
+  - composer show
 
 # Install NPM dependencies
   - if [[ $NPM_TEST ]]; then nvm install $TRAVIS_NODE_VERSION && npm install -g yarn && yarn install --network-concurrency 1; fi
 
 # Start behat services
   - if [[ $BEHAT_TEST ]]; then mkdir artifacts; fi
-  - if [[ $BEHAT_TEST ]]; then cp composer.lock artifacts/; fi
+  - if [[ $BEHAT_TEST ]]; then cp composer.lock artifacts/; composer show -fjson > artifacts/composer-show.json; composer show > artifacts/composer-show.txt; fi
   - if [[ $BEHAT_TEST ]]; then sh -e /etc/init.d/xvfb start; sleep 3; fi
   - if [[ $BEHAT_TEST ]]; then (chromedriver > artifacts/chromedriver.log 2>&1 &); fi
   - if [[ $BEHAT_TEST == admin ]]; then (vendor/bin/serve --bootstrap-file vendor/silverstripe/framework/tests/behat/serve-bootstrap.php &> artifacts/serve.log &); fi
