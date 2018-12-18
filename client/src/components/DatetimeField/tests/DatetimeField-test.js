@@ -7,7 +7,7 @@ jest.mock('modernizr', () => ({
 }));
 
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
+import ReactTestUtils from 'react-dom/test-utils';
 import { Component as DatetimeField } from '../DatetimeField';
 
 describe('DatetimeField without html5 date time field support', () => {
@@ -29,7 +29,7 @@ describe('DatetimeField without html5 date time field support', () => {
           'datetime-local': false,
         },
       },
-      onChange: jest.genMockFunction(),
+      onChange: jest.fn(),
     };
   });
 
@@ -185,7 +185,7 @@ describe('DatetimeField without html5 date time field support', () => {
 
     it('should use iso format of date value in the input field', () => {
       expect(inputField.type).toBe('datetime-local');
-      expect(inputField.value).toBe('2017-01-05T02:23:22');
+      expect(inputField.value).toBe('2017-01-05T02:23');
     });
 
     it('should pass iso format as entered in the input field', () => {

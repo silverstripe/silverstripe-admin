@@ -8,6 +8,7 @@ Feature: Manage users
     Given a "member" "ADMIN" belonging to "ADMIN group" with "Email"="admin@example.org"
     And the "member" "ADMIN" belonging to "ADMIN group2"
     And a "member" "Staff" belonging to "Staff group" with "Email"="staffmember@example.org"
+    And a "member" "Other Staff" belonging to "Staff group" with "Email"="othermember@example.org"
     And the "group" "ADMIN group" has permissions "Full administrative rights"
     And the "group" "ADMIN group2" has permissions "Full administrative rights"
     And I am logged in with "ADMIN" permissions
@@ -88,8 +89,32 @@ Feature: Manage users
     When I go to "admin/security/"
     Then I should see "john.doe@example.org" in the "#Root_Users" element
 
-  Scenario: I can edit an existing user and add him to an existing group
+  @modal
+  Scenario: I can navigate users from the edit form and retain my search query
     When I click the "Users" CMS tab
+    And I press the "First Name" button
+
+    Then I should see "admin@example.org" in the "#Root_Users" element
+    And I should see "othermember@example.org" in the "#Root_Users" element
+    And I should see "staffmember@example.org" in the "#Root_Users" element
+
+    When I click "othermember@example.org" in the "#Root_Users" element
+    And I press the "Form_ItemEditForm_action_doNext" button
+    Then the "Email" field should contain "staffmember@example.org"
+    When I press the "Form_ItemEditForm_action_doPrevious" button
+    Then the "Email" field should contain "othermember@example.org"
+
+    When I fill in "FirstName" with "Staff Renamed"
+    And I press the "Form_ItemEditForm_action_doNew" button
+    Then I see the text "Are you sure you want to navigate away from this page?" in the alert
+    And I dismiss the dialog
+
+    When I go to "admin/security/"
+    Then I confirm the dialog
+
+  Scenario: I can edit an existing user and add him to an existing group
+    When I go to "admin/security/"
+    And I click the "Users" CMS tab
     And I click "staffmember@example.org" in the "#Root_Users" element
     And I select "ADMIN group" from "Groups"
     And I press the "Apply changes" button

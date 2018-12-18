@@ -1,7 +1,7 @@
 /* global jest, describe, it, expect */
 
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
+import ReactTestUtils from 'react-dom/test-utils';
 import Badge from '../Badge';
 
 describe('Badge', () => {

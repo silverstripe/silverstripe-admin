@@ -24,14 +24,14 @@ describe('ReactRouteRegister', () => {
         .toEqual([{
           path: 'test',
           component: DummyComponent,
-          childRoutes: [{ path: '**' }],
+          routes: [{ path: '**' }],
         }]);
 
       // Check root route
       expect(reactRouteRegister.getRootRoute())
         .toEqual({
           path: '/',
-          getChildRoutes: jasmine.any(Function),
+          routes: jasmine.any(Function),
         });
 
       // Add nested routes
@@ -49,15 +49,15 @@ describe('ReactRouteRegister', () => {
         .toEqual([{
           path: 'test',
           component: DummyComponent,
-          childRoutes: [
+          routes: [
             {
               path: 'nested',
               component: DummyComponent,
-              childRoutes: [
+              routes: [
                 {
                   path: 'leaf',
                   component: DummyComponent,
-                  childRoutes: [{ path: '**' }],
+                  routes: [{ path: '**' }],
                 },
                 { path: '**' },
               ],
@@ -73,7 +73,7 @@ describe('ReactRouteRegister', () => {
       reactRouteRegister.add({
         path: 'test',
         component: DummyComponent,
-        childRoutes: [{
+        routes: [{
           path: 'nested',
           component: DummyComponent,
         }],
@@ -89,7 +89,7 @@ describe('ReactRouteRegister', () => {
         .toEqual([{
           path: 'test',
           component: DummyComponent,
-          childRoutes: [
+          routes: [
             { path: '**' },
           ],
         }]);
@@ -101,14 +101,14 @@ describe('ReactRouteRegister', () => {
       reactRouteRegister.add({
         path: 'test',
         component: DummyComponent,
-        childRoutes: [{
+        routes: [{
           path: 'nested',
           component: DummyComponent,
         }],
       });
 
       reactRouteRegister.reset();
-      expect(reactRouteRegister.getChildRoutes())
+      expect(reactRouteRegister.childRoutes)
         .toEqual([]);
     });
   });
@@ -124,7 +124,7 @@ describe('ReactRouteRegister', () => {
         .toEqual({
           path: '/',
           component: MyApp,
-          getChildRoutes: jasmine.any(Function),
+          routes: jasmine.any(Function),
         });
     });
   });

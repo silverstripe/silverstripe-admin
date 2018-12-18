@@ -51,7 +51,7 @@ $.entwine('ss', function($) {
     reload: function(ajaxOpts, successCallback) {
       var self = this, form = this.closest('form'),
         focusedElName = this.find(':input:focus').attr('name'), // Save focused element for restoring after refresh
-        data = form.find(':input:not(.grid-field__search-holder :input, .add-existing-autocompleter :input)').serializeArray(),
+        data = form.find(':input:not(.grid-field__search-holder :input, .relation-search)').serializeArray(),
         tbody = this.find('tbody'),
         colspan = this.find('.grid-field__title-row th').attr('colspan');
       ;
@@ -366,21 +366,32 @@ $.entwine('ss', function($) {
         const messageText = response.getResponseHeader('X-Message-Text');
         const messageType = response.getResponseHeader('X-Message-Type');
         if (messageText && messageType) {
-          $("#Form_EditForm_error").addClass(messageType);
-          $("#Form_EditForm_error").html(messageText);
-          $("#Form_EditForm_error").show();
+          var formEditError = $("#Form_EditForm_error");
+          formEditError.addClass(messageType);
+          formEditError.html(messageText);
+          formEditError.show();
         }
+      };
+
+      var data = [
+        {
+          name: this.attr('name'),
+          value: this.val(),
+          filter: filterState,
+          triggerChange
+        },
+      ];
+
+      var actionState = this.data('action-state');
+      if (actionState) {
+        data.push({
+          name: 'ActionState',
+          value: JSON.stringify(actionState),
+        });
       }
 
       this.getGridField().reload(
-        {
-          data: [{
-            name: this.attr('name'),
-            value: this.val(),
-            filter: filterState,
-            triggerChange
-          }],
-        },
+        { data },
         successCallback
       );
 
@@ -400,6 +411,12 @@ $.entwine('ss', function($) {
       // Add csrf
       if(csrf) {
         data += "&SecurityID=" + encodeURIComponent(csrf);
+      }
+
+      // Add action data
+      var actionState = this.data('action-state');
+      if (actionState) {
+        data += '&ActionState=' + encodeURIComponent(JSON.stringify(actionState))
       }
 
       // Include any GET parameters from the current URL, as the view
@@ -587,6 +604,13 @@ $.entwine('ss', function($) {
         triggerChange: false
       }];
 
+      if (props.clearActionState) {
+        ajaxData.push({
+          name: 'ActionState',
+          value: props.clearActionState,
+        });
+      }
+
       this.getGridField().reload({ data: ajaxData });
     },
 
@@ -599,6 +623,13 @@ $.entwine('ss', function($) {
         filter: 'show',
         triggerChange: false
       }];
+
+      if (props.searchActionState) {
+        ajaxData.push({
+          name: 'ActionState',
+          value: props.searchActionState,
+        });
+      }
 
       for (const [key, value] of Object.entries(data)) {
         if (value) {
@@ -615,13 +646,14 @@ $.entwine('ss', function($) {
       const Search = this.getComponent();
       const handleHide = () => this.close();
       const handleSearch = (data) => this.search(data);
+      const idName = String(props.gridfield).replace(/\-/g, '.');
 
       ReactDOM.render(
         <Search
           id={`${props.gridfield}Search`}
-          identifier={`${props.gridfield}Search`}
           display="VISIBLE"
           displayBehavior="HIDEABLE"
+          filterPrefix="Search__"
           onHide={handleHide}
           onSearch={handleSearch}
           {...props}
@@ -675,13 +707,22 @@ $.entwine('ss', function($) {
           filterState='hidden';
         }
 
+        var ajaxData = [{
+          name: btns.attr('name'),
+          value: btns.val(),
+          filter: filterState,
+          triggerChange: false
+        }];
+
+        if (btns.data('action-state')) {
+          ajaxData.push({
+            name: 'ActionState',
+            value: JSON.stringify(btns.data('action-state')),
+          });
+        }
+
         this.getGridField().reload({
-          data: [{
-            name: btns.attr('name'),
-            value: btns.val(),
-            filter: filterState,
-            triggerChange: false
-          }]
+          data: ajaxData
         });
         return false;
       }else{

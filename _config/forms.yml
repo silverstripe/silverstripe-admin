@@ -4,3 +4,11 @@ Name: adminforms
 SilverStripe\Forms\GridField\GridFieldPrintButton:
   extensions:
     - SilverStripe\Admin\Forms\GridFieldPrintButtonExtension
+
+SilverStripe\Forms\Form:
+  extensions:
+  - SilverStripe\Forms\FormMessageBootstrapExtension
+
+SilverStripe\Forms\FormField:
+  extensions:
+  - SilverStripe\Forms\FormMessageBootstrapExtension

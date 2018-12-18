@@ -1,4 +1,4 @@
-/* global tinymce navigator */
+/* global tinymce, navigator */
 import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
 import ReactDOM from 'react-dom';
 import jQuery from 'jquery';
@@ -18,7 +18,7 @@ const plugin = {
       i18n._t('Admin.INSERT_LINK_WITH_SHORTCUT', 'Insert link {shortcut}'),
       { shortcut: `[${metaKey}+K]` }
     );
-    const actions = TinyMCEActionRegistrar.getSortedActions('sslink')
+    const actions = TinyMCEActionRegistrar.getSortedActions('sslink', editor.settings.editorIdentifier, true)
       .map(action => Object.assign(
         {},
         action,
@@ -45,6 +45,7 @@ const plugin = {
     function openLinkDialog() {
       const node = tinymce.activeEditor.selection.getNode();
       const href = node.getAttribute('href');
+
       if (href) {
         editor.execCommand(TinyMCEActionRegistrar.getEditorCommandFromUrl(href));
       }
@@ -54,7 +55,7 @@ const plugin = {
       setupTinyMceInlineToolbar(editor, [
         { type: 'button', onClick: openLinkDialog, text: 'Edit link' },
         { type: 'button', onClick: () => editor.execCommand('unlink'), text: 'Remove link' },
-      ]);
+      ], ['a[href]']);
     });
   },
 };

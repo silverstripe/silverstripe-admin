@@ -1,11 +1,11 @@
 /* global jest, describe, beforeEach, it, expect */
 
 jest.unmock('react');
-jest.unmock('react-addons-test-utils');
+jest.unmock('react-dom/test-utils');
 jest.unmock('../TextField');
 
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
+import ReactTestUtils from 'react-dom/test-utils';
 import { Component as TextField } from '../TextField';
 
 describe('TextField', () => {
@@ -16,7 +16,7 @@ describe('TextField', () => {
       title: '',
       name: '',
       value: '',
-      onChange: jest.genMockFunction(),
+      onChange: jest.fn(),
     };
   });
 

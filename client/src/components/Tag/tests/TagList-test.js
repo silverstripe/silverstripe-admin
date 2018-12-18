@@ -3,7 +3,7 @@
 import React from 'react';
 import TagList from '../TagList';
 import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-15.4/build/index';
+import Adapter from 'enzyme-adapter-react-16/build/index';
 
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -16,7 +16,7 @@ const tagData = [
 ];
 
 
-describe('Tag', () => {
+describe('Tag List', () => {
   beforeEach(() => {
   });
 
@@ -31,8 +31,8 @@ describe('Tag', () => {
       expect(tags.at(3).text()).toEqual('Some label: 123');
 
       tags.forEach((tag) => {
-        expect(tag.getDOMNode().attributes.getNamedItem('tabindex')).toEqual(null);
-        expect(tag.find('.tag__delete').exists()).toEqual(false);
+        expect(tag.getDOMNode().attributes.getNamedItem('tabindex').value).toEqual('0');
+        expect(tag.find('.tag-component__delete').exists()).toEqual(false);
       });
     });
 
@@ -42,8 +42,8 @@ describe('Tag', () => {
       expect(tags).toHaveLength(4);
 
       tags.forEach((tag) => {
-        expect(tag.getDOMNode().attributes.getNamedItem('tabindex')).toEqual(null);
-        expect(tag.find('.tag__delete').exists()).toEqual(true);
+        expect(tag.getDOMNode().attributes.getNamedItem('tabindex').value).toEqual('0');
+        expect(tag.find('.tag-component__delete').exists()).toEqual(true);
       });
     });
 
@@ -53,8 +53,8 @@ describe('Tag', () => {
       expect(tags).toHaveLength(4);
 
       tags.forEach((tag) => {
-        expect(tag.getDOMNode().attributes.getNamedItem('tabindex').value).toEqual('-1');
-        expect(tag.find('.tag__delete').exists()).toEqual(false);
+        expect(tag.getDOMNode().attributes.getNamedItem('tabindex')).toEqual(null);
+        expect(tag.find('.tag-component__delete').exists()).toEqual(false);
       });
     });
   });
@@ -78,7 +78,7 @@ describe('Tag', () => {
 
       const wrapper = mount(<TagList tags={tagData} deletable onTagDelete={onTagDelete} />);
       const tags = wrapper.find('Tag');
-      tags.at(2).find('.tag__delete').at(0).simulate('click', { preventDefault });
+      tags.at(2).find('.tag-component__delete').at(0).simulate('click', { preventDefault });
 
       expect(onTagDelete.mock.calls).toHaveLength(1);
       expect(onTagDelete.mock.calls[0]).toEqual(['KeyLabel']);
@@ -91,7 +91,7 @@ describe('Tag', () => {
       const wrapper = mount(<TagList tags={tagData} deletable onTagDelete={onTagDelete} />);
       const tags = wrapper.find('Tag');
 
-      const thirdTag = tags.at(3).find('li.tag');
+      const thirdTag = tags.at(3).find('li.tag-component');
 
       thirdTag.simulate('keyDown', { key: 'Backspace', preventDefault });
 
@@ -106,7 +106,7 @@ describe('Tag', () => {
       const wrapper = mount(<TagList tags={tagData} deletable onTagDelete={onTagDelete} />);
       const tags = wrapper.find('Tag');
 
-      const thirdTag = tags.at(3).find('li.tag');
+      const thirdTag = tags.at(3).find('li.tag-component');
 
       thirdTag.simulate('keyDown', { key: 'Delete', preventDefault });
 

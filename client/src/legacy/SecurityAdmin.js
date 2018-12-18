@@ -41,12 +41,8 @@ $.entwine('ss', function($){
    * checking all boxes is purely presentational.
    */
   $('.permissioncheckboxset .checkbox[value=ADMIN]').entwine({
-    onmatch: function() {
+    onadd: function () {
       this.toggleCheckboxes();
-
-      this._super();
-    },
-    onunmatch: function() {
       this._super();
     },
     /**

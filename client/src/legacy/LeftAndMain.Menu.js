@@ -465,7 +465,10 @@ $.entwine('ss', function($){
 
   $('.cms-help__menu').entwine({
     onclick: function () {
-      $('.cms-help__toggle').toggleClass('cms-help__toggle--show');
+      var expandedState = (this.attr('aria-expanded') === 'true');
+
+      this.attr('aria-expanded', !expandedState);
+      $('.cms-help__toggle').toggleClass('cms-help__toggle--show')
     }
   });
 });

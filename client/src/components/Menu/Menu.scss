@@ -166,8 +166,8 @@
     }
 
     &:before {
-      width: 13px;
-      height: 13px;
+      width: 14px;
+      height: 14px;
       border: solid 1px $gray-600;
     }
 
@@ -402,6 +402,9 @@
   margin-top: -1px;
   left: 13px;
   font-size: $h3-font-size;
+  min-width: 16px;
+  background-repeat: no-repeat;
+  background-position: 50% 2px;
   transition: all $transition-speed-fast;
   color: darken($base-menu-bg, 44%);
 

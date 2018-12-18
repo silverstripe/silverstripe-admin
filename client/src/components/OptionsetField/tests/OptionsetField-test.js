@@ -1,11 +1,11 @@
 /* global jest, describe, beforeEach, it, expect, Event */
 
 jest.unmock('react');
-jest.unmock('react-addons-test-utils');
+jest.unmock('react-dom/test-utils');
 jest.unmock('../OptionsetField');
 
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
+import ReactTestUtils from 'react-dom/test-utils';
 import { Component as OptionsetField } from '../OptionsetField';
 
 describe('OptionsetField', () => {
@@ -24,7 +24,7 @@ describe('OptionsetField', () => {
         { value: 'three', title: '3' },
         { value: 'four', title: '4' },
       ],
-      onChange: jest.genMockFunction(),
+      onChange: jest.fn(),
     };
 
     setField = ReactTestUtils.renderIntoDocument(

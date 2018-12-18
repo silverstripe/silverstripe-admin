@@ -2,9 +2,9 @@ import React from 'react';
 import { storiesOf, setAddon } from '@storybook/react';
 import actionListMaker from '../../../stories/actionListMaker';
 import { withKnobs, text, boolean, number, object } from '@storybook/addon-knobs/react';
-import Tag from 'components/Tag//Tag';
-import TagList from 'components/Tag//TagList';
-import CompactTagList from 'components/Tag//CompactTagList';
+import Tag from 'components/Tag/Tag';
+import TagList from 'components/Tag/TagList';
+import CompactTagList from 'components/Tag/CompactTagList';
 import JSXAddon from 'storybook-addon-jsx';
 
 setAddon(JSXAddon);

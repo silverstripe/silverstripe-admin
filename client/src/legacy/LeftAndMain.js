@@ -5,7 +5,8 @@ import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import IframeDialog from 'components/IframeDialog/IframeDialog';
-import Search from 'components/Search/Search.js';
+import Search from 'components/Search/Search';
+import Loading from 'components/Loading/Loading';
 import { schemaMerge } from 'lib/schemaFieldValues';
 import { loadComponent } from 'lib/Injector';
 
@@ -1046,12 +1047,21 @@ $.entwine('ss', function($) {
    */
   $('form.loading,.cms-content.loading,.cms-content-fields.loading,.cms-content-view.loading,.ss-gridfield-item.loading').entwine({
     onmatch: function() {
-      this.append('<div class="cms-content-loading-overlay ui-widget-overlay-light"></div><div class="cms-content-loading-spinner"></div>');
       this._super();
+      const container = $('<div class="cms-loading-container"/>');
+      this.append(container);
+      ReactDOM.render(
+        <Loading />,
+        container[0]
+      );
     },
     onunmatch: function() {
-      this.find('.cms-content-loading-overlay,.cms-content-loading-spinner').remove();
       this._super();
+      const container = this.find('.cms-loading-container');
+      if (container && container.length) {
+        ReactDOM.unmountComponentAtNode(container[0]);
+        container.remove();
+      }
     }
   });
 
@@ -1076,6 +1086,14 @@ $.entwine('ss', function($) {
 
       $('.cms-container').loadPanel(url, null, data);
       e.preventDefault();
+    }
+  });
+
+  $('.cms button.action.discard-confirmation').entwine({
+    onclick: function(e) {
+      if (!$('.cms-container').checkCanNavigate()) {
+        e.preventDefault();
+      }
     }
   });
 
@@ -1474,13 +1492,13 @@ $.entwine('ss', function($) {
       const handleSearch = (data) => this.search(data);
       const narrowView = this.closest('.cms-content-tools').attr('id') === 'cms-content-tools-CMSMain';
 
-      // TODO: rework entwine so that react has control of holder
       ReactDOM.render(
         <Search
           id="Search"
           identifier="Search"
           display="VISIBLE"
           displayBehavior={"HIDEABLE"}
+          filterPrefix="Search__"
           onHide={handleHide}
           onSearch={handleSearch}
           borders={{

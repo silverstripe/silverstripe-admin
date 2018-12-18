@@ -1,5 +1,5 @@
 <div class="cms-help__toggle">
-    <button class="cms-help__menu" type="button" title="<%t SilverStripe\Admin\LeftAndMain.HelpMenu "Help menu" %>" aria-label="<%t SilverStripe\Admin\LeftAndMain.HelpMenu "Help menu" %>">
+    <button class="cms-help__menu" type="button" title="<%t SilverStripe\Admin\LeftAndMain.HelpMenu "Help menu" %>" aria-label="<%t SilverStripe\Admin\LeftAndMain.HelpMenu "Help menu" %>" aria-expanded="false">
         <span class="cms-help__logo font-icon-silverstripe"></span>
         <span class="cms-help__toggle-title">
             $ApplicationName
@@ -9,7 +9,7 @@
                     <span class="cms-sitename__version" title="$ApplicationName (<%t SilverStripe\Admin\LeftAndMain.Version "Version" %> - $CMSVersion)">$CMSVersionNumber.LimitCharacters(3, '')</span>
                 <% end_if %>
             </span>
-            <span class="cms-help__caret font-icon-caret-down-two"></span>
+            <span class="cms-help__caret font-icon-caret-up-two"></span>
     </button>
     <% if $HelpLinks %>
         <div class="cms-help__links">

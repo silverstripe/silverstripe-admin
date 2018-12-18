@@ -36,6 +36,9 @@ class FormBuilder extends Component {
     const get = (type) => this.context.injector.get(type, `${identifier}.${name}`);
 
     switch (dataType) {
+      case 'Integer':
+      case 'Decimal':
+        return get('NumberField');
       case 'String':
       case 'Text':
         return get('TextField');

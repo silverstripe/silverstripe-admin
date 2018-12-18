@@ -5,7 +5,7 @@
 jest.mock('containers/FormBuilderLoader/FormBuilderLoader', () => () => null);
 
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
+import ReactTestUtils from 'react-dom/test-utils';
 import { Component as Search, hasFilters } from '../Search';
 
 describe('Search', () => {
@@ -24,7 +24,8 @@ describe('Search', () => {
         },
         reduxForm: {
           initialize: jest.fn(),
-          reset: jest.fn()
+          reset: jest.fn(),
+          change: jest.fn()
         }
       },
     };

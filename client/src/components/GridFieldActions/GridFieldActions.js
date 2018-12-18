@@ -52,14 +52,15 @@ class GridFieldActions extends PureComponent {
         dropdownToggleClassNames={dropdownToggleClassNames}
       >
         {Object.keys(groupedActions).map(
-          (group, index) => [
-            index !== 0 && <DropdownItem divider />,
-            groupedActions[group].map((action) =>
+          (group, groupIndex) => [
+            groupIndex !== 0 && <DropdownItem divider key={group} />,
+            groupedActions[group].map((action, actionIndex) =>
               (<GridFieldDropdownAction
                 data={action.data}
                 title={action.title}
                 type={action.type}
                 url={action.url}
+                key={actionIndex} // eslint-disable-line react/no-array-index-key
               />)
             )
           ]

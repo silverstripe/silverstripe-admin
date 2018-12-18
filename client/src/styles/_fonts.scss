@@ -14,6 +14,7 @@
 
 [class^="font-icon-"]:before,
 [class*=" font-icon-"]:before {
+  // sass-lint:disable-block no-important
   font-family: "silverstripe" !important;
   font-style: normal !important;
   font-weight: normal !important;
@@ -719,4 +720,8 @@
 
 .font-icon-accessibility:before {
   content: "\e04f";
+}
+
+.font-icon-plus-thin:before {
+  content: "\e050";
 }

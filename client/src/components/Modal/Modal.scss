@@ -67,7 +67,7 @@
   // so manually add font icon styles
   &::before {
     content: "\44"; // font-icon-cancel
-    color: $body-color;
+    color: $text-muted;
     position: relative;
     top: -.2em;
     font-size: 22px; // btn-icon-xl
@@ -80,12 +80,12 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-
     transition: color $transition-speed-fast;
   }
 
-  &:hover::before {
-    color: $link-hover-color;
+  // Extra specificity to override bootstrap
+  &:not(.disabled):hover {
+    opacity: 1;
   }
 
   // Hide default modal close icon

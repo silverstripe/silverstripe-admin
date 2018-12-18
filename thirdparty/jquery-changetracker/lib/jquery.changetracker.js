@@ -48,7 +48,7 @@ import debounce from 'lodash.debounce';
     }
 
     this.defaults = {
-      fieldSelector: ':input:not(:button,[type="submit"],[type="search"])',
+      fieldSelector: ':input:not(:button,[type="submit"],[type="search"],.gridstate)',
       ignoreFieldSelector: '.no-change-track,[type="search"]',
       changedCssClass: 'changed'
     };
