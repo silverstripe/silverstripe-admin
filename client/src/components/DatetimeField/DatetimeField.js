@@ -1,9 +1,7 @@
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import { Component as DateField } from '../DateField/DateField';
 import moment from 'moment';
-import modernizr from 'modernizr';
 import i18n from 'i18n';
-import PropTypes from 'prop-types';
 
 const localFormat = 'L LT';
 
@@ -11,7 +9,7 @@ class DatetimeField extends DateField {
   getInputProps() {
     const placeholder = i18n.inject(
       i18n._t('Admin.FormatExample', 'Example: {format}'),
-      { format: moment().endOf('month').format(localFormat) }
+      { format: this.moment().endOf('month').format(localFormat) }
     );
     const type = this.asHTML5() ? 'datetime-local' : 'text';
     return {
@@ -44,7 +42,7 @@ class DatetimeField extends DateField {
     moment.locale(this.props.lang);
     let localTime = '';
     if (isoTime) {
-      const timeObject = moment(isoTime);
+      const timeObject = this.moment(isoTime);
       if (timeObject.isValid()) {
         localTime = timeObject.format(localFormat);
       }
@@ -57,7 +55,7 @@ class DatetimeField extends DateField {
     let isoTime = '';
     if (localTime) {
       // Input value can be in local format 'L' or ISO format
-      const timeObject = moment(localTime, [localFormat, moment.ISO_8601]);
+      const timeObject = this.moment(localTime, [localFormat, moment.ISO_8601]);
       if (timeObject.isValid()) {
         isoTime = timeObject.format('YYYY-MM-DDTHH:mm:ss');
       }
@@ -66,18 +64,9 @@ class DatetimeField extends DateField {
   }
 }
 
-DatetimeField.propTypes = {
-  lang: PropTypes.string,
-  modernizr: PropTypes.object,
-  data: PropTypes.shape({
-    html5: PropTypes.boolean,
-  }),
-};
+DatetimeField.propTypes = DateField.propTypes;
 
-DatetimeField.defaultProps = {
-  modernizr,
-  data: {},
-};
+DatetimeField.defaultProps = DateField.defaultProps;
 
 export { DatetimeField as Component };
 
