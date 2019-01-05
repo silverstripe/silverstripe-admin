@@ -1,13 +1,99 @@
 fr:
-  SilverStripe\Admin\CMSBatchAction:
-    PUBLISHED_PAGES: '%d pages publiées, %d échecs'
-    PUBLISH_PAGES: Publier
-    RESTORE: Restaurer
-    RESTORED_PAGES: '%d pages restaurées'
+  SilverStripe\Admin\CMSProfileController:
+    CANTEDIT: 'Vous n''avez pas les permissions de faire cette action'
+    MENUTITLE: 'Mon profil'
+  SilverStripe\Admin\Forms\EditorEmailLinkFormFactory:
+    EMAIL: 'Adresse email'
+    LINKDESCR: 'Description du lien'
+    LINKTEXT: 'Texte du lien'
+    SUBJECT: Sujet
+  SilverStripe\Admin\Forms\EditorExternalLinkFormFactory:
+    ANCHORVALUE: Ancre
+    LINKDESCR: 'Description du lien'
+    LINKOPENNEWWIN: 'Ouvrir dans une nouvelle fenêtre/onglet'
+    LINKTEXT: 'Texte du lien'
+    URL: URL
+  SilverStripe\Admin\Forms\LinkFormFactory:
+    INSERT_LINK: 'Ajouter un lien'
+  SilverStripe\Admin\Forms\UsedOnTable:
+    ADDEDTODRAFT: Brouillon
+    MODIFIEDONDRAFTSHORT: Modifié
+  SilverStripe\Admin\GroupImportForm:
+    Help1: '<p>Importer un ou plus de groupe en <em>format CSV</em> (valeurs s&eacute;par&eacute;es par une virgule). <small><a href="#" class="toggle-advanced">Montrer l&apos;utilisation avanc&eacute;e</a></small></p>'
+    Help2: '<div class="advanced"><h4>Usage avanc&eacute;e</h4><ul><li>Colonnes permises: <em>{columns}</em></li><li>Les groupes existants sont li&eacute;s par leur propri&eacute;t&eacute; unique <em>Code</em> et mis &ecirc; jour avec les nouvelles valeurs du fichier import&eacute;.</li><li>La hiérarchies des groupes peut-&ecirc;tre cr&eacute;&eacute; en utilisant la colonne <em>ParentCode</em>.</li><li>Les codes de permission peuvent être assignés avec la colonne <em>PermissionCode</em>. Les codes de permission ne seront pas effac&eacute;s.</li></ul></div>'
+    ResultCreated: '{count} groupes créés'
+    ResultDeleted: '{count} groupes supprimés'
+    ResultUpdated: '{count} groupes mis à jour'
+  SilverStripe\Admin\LeftAndMain:
+    ACCESSALLINTERFACES: 'Accès à toutes les sections du CMS'
+    ACCESSALLINTERFACESHELP: 'Remplace des paramètres d''accès plus spécifiques.   Overrules more specific access settings.'
+    BROWSER_WARNING_HEADING: 'Navigateur non supporté'
+    BROWSER_WARNING_TEXT: 'Vous utilisez un navigateur qui n&apos;est pas support&eacute; par SilverStripe.<br />Veuillez en utiliser un avec les options suivantes.'
+    CollapsePanel: 'Réduire le panneau'
+    DELETED: Effacé.
+    DropdownBatchActionsDefault: 'Choisir une action...'
+    ExpandPanel: 'Élargir le panneau'
+    HelpMenu: 'Menu aide'
+    LOGOUT: 'Déconnexion'
+    MenuToggleAuto: Auto
+    MenuToggleStickyNav: 'Navigation collée'
+    NavigateUp: 'Naviguer dans un dossier'
+    PERMAGAIN: 'Vous avez été déconnecté du CMS. Si vous souhaitez vous reconnecter, entrez un nom d''utilisateur et un mot de passe ci-dessous.'
+    PERMALREADY: 'Je suis désolé, mais vous ne pouvez pas accéder à cette partie du CMS. Si vous souhaitez vous connecter en tant que quelqu''un d''autre, faites-le ci-dessous.'
+    PERMDEFAULT: 'Vous devez être connecté pour accéder à la zone d''administration. Veuillez entrer vos identifiants ci-dessous.'
+    PROFILE: 'Profil {name}'
+    PreviewButton: Prévisualisation
+    REQUIREJS: 'Le CMS nécessite que le JavaScript soit activé.'
+    SAVEDUP: Sauvé.
+    SUBMIT_BUTTON_LABEL: Aller
+    ValidationError: 'Erreur de validation'
+    Version: Version
+  SilverStripe\Admin\LeftAndMain_ViewModeSelector:
+    Auto: Auto
+    ChangeViewMode: 'Changer le mode de visualisation'
+    Desktop: Bureau
+    DualWindowView: 'Fenêtre double'
+    EditView: 'Mode édition'
+    Mobile: Mobile
+    PreviewState: 'État de prévisualisation'
+    PreviewView: 'Mode prévisualisation'
+    Responsive: Responsive
+    SplitView: 'Mode divisé'
+    Tablet: Tablète
+    ViewDeviceWidth: 'Sélectionnez une largeur d''aperçu'
+    Width: largeur
+  SilverStripe\Admin\MemberImportForm:
+    BtnImport: 'Importer un fichier CSV'
+    FileFieldLabel: 'Fichier CSV <small>(Extensions allouées: *.csv)</small>'
+    Help1: '<p>Importer des utilisateurs en <em>format CSV</em> (valeurs s&eacute;par&eacute;es par une virgule). <small><a href="#" class="toggle-advanced">Montrer l&apos;utilisation avanc&eacute;e</a></small></p>'
+    Help2: '<div class="advanced"><h4>Usage avanc&eacute;e</h4><ul><li>Colonnes permises: <em>{columns}</em></li><li>Les utilisateurs existants sont li&eacute;s par leur propri&eacute;t&eacute; unique <em>Code</em>, et mis &ecirc; jour avec les nouvelles valeurs du fichier import&eacute;.</li><li>Les groupes peuvent &ecirc;tre assign&eacute;s par la colonne <em>Groupes</em>. Les groupes sont identifi&eacute;s par leur propri&eacute;t&eacute; <em>Code</em>, plusieurs groupes peuvent &ecirc;tre s&eacute;par&eacute;s par une virgule. Les appartenances de groupe existantes ne sont pas effac&eacute;es.</li></ul></div>'
+    ResultCreated: '{count} membres créés.'
+    ResultDeleted: '{count} membres supprimés'
+    ResultNone: 'Aucun changement'
+    ResultUpdated: '{count} membres mis à jour'
+  SilverStripe\Admin\ModelAdmin:
+    DELETE: Supprimer
+    DELETEDRECORDS: '{count} entrées supprimées.'
+    EMPTYBEFOREIMPORT: 'Remplacer les données'
+    IMPORT: 'Importer depuis un fichier CSV'
+    IMPORTEDRECORDS: '{count} entrées importées.'
+    IMPORTSPECFIELDS: 'Colonnes de la base de données'
+    IMPORTSPECLINK: 'Montrer les spécification pour {model}'
+    IMPORTSPECRELATIONS: Relations
+    IMPORTSPECTITLE: 'Spécification pour {model}'
+    NOCSVFILE: 'Veuillez explorer pour importer un fichier CSV'
+    NOIMPORT: 'Rien à importer'
+    Title: 'Modèles de données'
+    UPDATEDRECORDS: '{count} entrées mis à jour.'
   SilverStripe\Admin\SecurityAdmin:
-    GROUPNAME: 'Nom du group'
-    MEMBERS: Membres
-    NEWGROUP: 'Nouveau groupe'
-    PERMISSIONS: Autorisations
-    ROLES: Rôles
-    ROLESDESCRIPTION: 'Les rôles sont des regroupements logiques d’autorisations qui peuvent être assignés à des groupes.<br />Ils peuvent être hérités de groupes parents, si nécessaire.'
+    ACCESS_HELP: 'Autoriser l''affichage, l''ajout et la modification d''utilisateurs, ainsi que leur attribuer des permissions et des rôles.'
+    APPLY_ROLES: 'Appliquer des rôles à des groupes'
+    APPLY_ROLES_HELP: 'Possibilité de modifier les rôles assignés à un groupe. Nécessite la permission "Accès à la section ''Usagers''".'
+    EDITPERMISSIONS: 'Gérer les permissions pour les groupes'
+    EDITPERMISSIONS_HELP: 'Possibilité de modifier les permissions et les adresses IP d''un groupe. Nécessite la permission "Accès à la section ''Sécurité''".'
+    IMPORTGROUPS: 'Importer des groupes'
+    IMPORTUSERS: 'Importer des utilisateurs'
+    MENUTITLE: 'Sécurité'
+    MemberListCaution: 'Attention: supprimer des membres de cette liste les supprimera de tous les groupes et de la base de données'
+    TABROLES: 'Rôles'
+    Users: Utilisateurs
