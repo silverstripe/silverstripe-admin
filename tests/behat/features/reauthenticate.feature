@@ -14,19 +14,18 @@ Feature: Reauthenticate
   Scenario: Reauthenticate with correct login
     When I press the "Add Member" button
       And I switch to the "login-dialog-iframe" iframe
-    Then I should see "You must be logged in" in the ".cms-security__container" element
+    Then I should see "Your session has timed out due to inactivity" in the ".cms-security__container" element
     When I fill in "Password" with "Secret!123"
       And I press the "Let me back in" button
       And I am not in an iframe
       And I go to "/admin/security"
     When I press the "Add Member" button
-      And I wait for 5 seconds until I see the "#Form_ItemEditForm_action_doSave" element
     Then I should see "Create" in the "#Form_ItemEditForm_action_doSave" element
 
   Scenario: Reauthenticate with wrong login
     When I press the "Add Member" button
       And I switch to the "login-dialog-iframe" iframe
-    Then I should see "You must be logged in" in the ".cms-security__container" element
+    Then I should see "Your session has timed out due to inactivity" in the ".cms-security__container" element
     When I fill in "Password" with "wrong password"
       And I press the "Let me back in" button
     Then I should see "The provided details don't seem to be correct. Please try again."
@@ -35,5 +34,4 @@ Feature: Reauthenticate
       And I am not in an iframe
       And I go to "/admin/security"
     When I press the "Add Member" button
-      And I wait for 5 seconds until I see the "#Form_ItemEditForm_action_doSave" element
     Then I should see "Create" in the "#Form_ItemEditForm_action_doSave" element
