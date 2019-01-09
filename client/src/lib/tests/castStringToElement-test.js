@@ -1,7 +1,7 @@
 /* global jest, describe, beforeEach, it, expect */
 
 jest.unmock('react');
-jest.unmock('react-addons-test-utils');
+jest.unmock('react-dom/test-utils');
 jest.unmock('../castStringToElement');
 
 import castStringToElement, { mapHighlight } from '../castStringToElement';

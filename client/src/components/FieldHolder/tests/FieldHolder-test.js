@@ -3,7 +3,7 @@
 jest.mock('components/FormAlert/FormAlert');
 
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
+import ReactTestUtils from 'react-dom/test-utils';
 import fieldHolder from '../FieldHolder';
 
 describe('FieldHolder', () => {

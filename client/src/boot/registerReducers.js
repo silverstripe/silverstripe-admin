@@ -1,7 +1,6 @@
 import Injector from 'lib/Injector';
 import { combineReducers } from 'redux';
 import { reducer as ReduxFormReducer } from 'redux-form';
-import { routerReducer } from 'react-router-redux';
 import ConfigReducer from 'state/config/ConfigReducer';
 import SchemaReducer from 'state/schema/SchemaReducer';
 import RecordsReducer from 'state/records/RecordsReducer';
@@ -26,7 +25,6 @@ export default (extra = {}) => {
     form: FormReducer,
     records: RecordsReducer,
     breadcrumbs: BreadcrumbsReducer,
-    routing: routerReducer,
     treeDropdownField: TreeDropdownFieldReducer,
     tabs: TabsReducer,
     mobileMenu: MobileMenuReducer,

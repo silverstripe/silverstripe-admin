@@ -316,7 +316,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         $combinedClientConfig['environment'] = Director::get_environment_type();
         $combinedClientConfig['debugging'] = LeftAndMain::config()->uninherited('client_debugging');
 
-        return Convert::raw2json($combinedClientConfig);
+        return json_encode($combinedClientConfig);
     }
 
     /**
@@ -525,7 +525,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             $data = array_merge($data, $extraData);
         }
 
-        $response = new HTTPResponse(Convert::raw2json($data));
+        $response = new HTTPResponse(json_encode($data));
         $response->addHeader('Content-Type', 'application/json');
         return $response;
     }

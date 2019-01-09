@@ -37,10 +37,7 @@ class ReactRouteRegister {
     this.childRoutes = [];
     this.rootRoute = {
       path: '/',
-      // Gets called on every navigation event
-      getChildRoutes: (location, cb) => {
-        cb(null, this.childRoutes);
-      },
+      routes: () => this.getChildRoutes()
     };
   }
 
@@ -65,28 +62,34 @@ class ReactRouteRegister {
    * Leave blank for childRoutes registered on the root configuration.
    */
   add(route, parentPaths = []) {
-    const childRoutes = this.findChildRoute(parentPaths);
+    // If the routes are for the root route, c
+    if (route.path === this.rootRoute.path && Array.isArray(route.routes)) {
+      this.childRoutes = route.routes.concat(this.childRoutes);
+      return;
+    }
 
-    // Ensure that every config has a childRoutes key for later traversal
-    const newRoute = Object.assign({}, { childRoutes: [] }, route);
+    const routes = this.findChildRoute(parentPaths);
+
+    // Ensure that every config has a routes key for later traversal
+    const newRoute = Object.assign({}, { routes: [] }, route);
 
     // Ensure there's a "splat" route, which is required to match any further route segments
     // and give lazy routes a chance to load
-    let splatRoute = newRoute.childRoutes[newRoute.childRoutes.length - 1];
+    let splatRoute = newRoute.routes[newRoute.routes.length - 1];
     if (!splatRoute || splatRoute.path !== '**') {
       splatRoute = { path: '**' };
-      newRoute.childRoutes.push(splatRoute);
+      newRoute.routes.push(splatRoute);
     }
 
     // Add route to correct place
-    const newRouteIndex = childRoutes.findIndex(childRoute => childRoute.path === route.path);
+    const newRouteIndex = routes.findIndex(childRoute => childRoute.path === route.path);
     if (newRouteIndex >= 0) {
       // Overwrite existing route
-      childRoutes[newRouteIndex] = newRoute;
+      routes[newRouteIndex] = newRoute;
     } else {
       // Add route at beginning of routes (higher precendence)
       // See https://github.com/reactjs/react-router/blob/master/docs/guides/RouteMatching.md
-      childRoutes.unshift(newRoute);
+      routes.unshift(newRoute);
     }
   }
 
@@ -106,7 +109,7 @@ class ReactRouteRegister {
         if (!nextParent) {
           throw new Error(`Parent path ${path} could not be found.`);
         }
-        childRoutes = nextParent.childRoutes;
+        childRoutes = nextParent.routes;
       });
     }
 

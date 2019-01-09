@@ -1,7 +1,7 @@
 /* global jest, describe, beforeEach, it, expect */
 
-import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
+import React, { Component } from 'react';
+import ReactTestUtils from 'react-dom/test-utils';
 import TreeDropdownFieldMenu from '../TreeDropdownFieldMenu';
 
 describe('TreeDropdownField', () => {
@@ -148,11 +148,23 @@ describe('TreeDropdownField', () => {
     });
 
     it('should return a list of the tree children plus breadcrumbs', () => {
+      /* eslint-disable react/prefer-stateless-function */
+      class MyOptionComponent extends Component {
+        render() {
+          const { className, option } = this.props;
+          return (
+            <option className={className}>
+              { option.id }
+            </option>
+          );
+        }
+      }
+      /* eslint-enable react/prefer-stateless-function */
+
       props.renderMenuOptions = {
         valueArray: [],
         optionRenderer: () => <div>item</div>,
-        // eslint-disable-next-line react/prop-types
-        optionComponent: ({ option, className }) => <div className={className}>{option.id}</div>,
+        optionComponent: MyOptionComponent,
         onOptionRef: jest.fn(),
         options: props.tree.children,
       };

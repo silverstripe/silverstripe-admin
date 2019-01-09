@@ -76,7 +76,7 @@ abstract class CMSBatchAction
             );
         }
 
-        return Convert::raw2json($status);
+        return json_encode($status);
     }
 
     /**

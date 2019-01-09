@@ -43,6 +43,8 @@ abstract class LinkFormFactory implements FormFactory
         $form = Form::create($controller, $name, $fields, $actions, $validator);
         $form->addExtraClass('form--no-dividers');
 
+        $this->extend('updateForm', $form, $controller, $name, $context);
+
         return $form;
     }
 
@@ -54,6 +56,8 @@ abstract class LinkFormFactory implements FormFactory
             FormAction::create('insert', _t(__CLASS__.'.INSERT_LINK', 'Insert link'))
                 ->setSchemaData(['data' => ['buttonStyle' => 'primary']]),
         ]);
+
+        $this->extend('updateFormActions', $actions, $controller, $name, $context);
 
         return $actions;
     }

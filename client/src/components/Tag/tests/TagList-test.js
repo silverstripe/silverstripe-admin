@@ -3,7 +3,7 @@
 import React from 'react';
 import TagList from '../TagList';
 import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-15.4/build/index';
+import Adapter from 'enzyme-adapter-react-16/build/index';
 
 
 Enzyme.configure({ adapter: new Adapter() });

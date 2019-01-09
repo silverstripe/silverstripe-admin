@@ -2,6 +2,20 @@ import React, { PureComponent } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
+/**
+ * List of valid status for a Badge
+ * @type {string[]}
+ */
+export const statuses = [
+  'default',
+  'info',
+  'success',
+  'warning',
+  'danger',
+  'primary',
+  'secondary',
+];
+
 class Badge extends PureComponent {
   render() {
     const { status, inverted, className, message } = this.props;
@@ -27,15 +41,7 @@ class Badge extends PureComponent {
 
 Badge.propTypes = {
   message: PropTypes.node,
-  status: PropTypes.oneOf([
-    'default',
-    'info',
-    'success',
-    'warning',
-    'danger',
-    'primary',
-    'secondary',
-  ]),
+  status: PropTypes.oneOf(statuses),
   className: PropTypes.string,
   inverted: PropTypes.bool,
 };

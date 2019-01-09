@@ -1089,6 +1089,14 @@ $.entwine('ss', function($) {
     }
   });
 
+  $('.cms button.action.discard-confirmation').entwine({
+    onclick: function(e) {
+      if (!$('.cms-container').checkCanNavigate()) {
+        e.preventDefault();
+      }
+    }
+  });
+
   /**
    * Does an ajax loads of the link's 'href' attribute via ajax and displays any FormResponse messages from the CMS.
    * Little helper to avoid repetition, and make it easy to trigger actions via a link,

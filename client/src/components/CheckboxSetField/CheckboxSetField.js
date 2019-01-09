@@ -4,7 +4,7 @@ import fieldHolder from 'components/FieldHolder/FieldHolder';
 import PropTypes from 'prop-types';
 
 // a group of check boxes
-class CheckboxSetField extends Component {
+class CheckboxSet extends Component {
   constructor(props) {
     super(props);
 
@@ -112,7 +112,7 @@ class CheckboxSetField extends Component {
   }
 }
 
-CheckboxSetField.propTypes = {
+CheckboxSet.propTypes = {
   className: PropTypes.string,
   extraClass: PropTypes.string,
   itemClass: PropTypes.string,
@@ -129,13 +129,18 @@ CheckboxSetField.propTypes = {
   disabled: PropTypes.bool,
 };
 
-CheckboxSetField.defaultProps = {
+CheckboxSet.defaultProps = {
   // React considers "undefined" as an uncontrolled component.
   extraClass: '',
   className: '',
   value: [],
 };
 
-export { CheckboxSetField as Component };
+export { CheckboxSet as Component };
 
-export default fieldHolder(CheckboxSetField);
+const CheckboxSetField = (props) => {
+  const FieldHolder = fieldHolder(CheckboxSet);
+  return <FieldHolder {...props} />;
+};
+
+export default CheckboxSetField;
