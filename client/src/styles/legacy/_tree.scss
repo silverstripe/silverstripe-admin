@@ -638,25 +638,23 @@
   }
 }
 
+/* Page icons */
+
+.page-icon, a .jstree-pageicon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  color: $gray-500;
+
+  &::before {
+    font-size: $font-size-lg;
+  }
+}
+
 a .jstree-pageicon {
   float: left;
   margin-right: 4px;
   position: relative;
-  li.class-HomePage > &{
-    background-position: 0 -48px;
-  }
-  li.class-RedirectorPage > &,
-  li.class-SilverStripe_CMS_Model_RedirectorPage > & {
-    background-position: 0 -16px;
-  }
-  li.class-VirtualPage > &,
-  li.class-SilverStripe_CMS_Model_VirtualPage > & {
-    background-position: 0 -32px;
-  }
-  li.class-ErrorPage > &,
-  li.class-SilverStripe_ErrorPage_ErrorPage > & {
-    background-position: 0 -112px;
-  }
 }
 
 /* Tree status labels and dots */
@@ -665,7 +663,7 @@ a .jstree-pageicon {
   background: #ebfbff;
 }
 @mixin tree-status-icon($label, $dotColor, $textColor, $bgColor) {
-  .cms-tree.jstree .status-#{$label} > a .jstree-pageicon:before {
+  .cms-tree.jstree .status-#{$label} > a .jstree-pageicon:after {
     content:"";
     display: block;
     width: 8px;
@@ -688,7 +686,7 @@ a .jstree-pageicon {
     color: $textColor;
   }
   // Dots
-  .cms-tree.jstree .status-#{$label} > a .jstree-pageicon:before  {
+  .cms-tree.jstree .status-#{$label} > a .jstree-pageicon:after  {
     background-color:$dotColor;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3), inset 0 0 0 1px $textColor;
   }
