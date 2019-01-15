@@ -112,6 +112,10 @@ const config = [
           context: `${PATHS.SRC}/images`,
           from: 'chosen-sprite*.png',
           to: `${PATHS.DIST}/images`
+        },
+        {
+          from: `${PATHS.MODULES}/moment/locale`,
+          to: `${PATHS.DIST}/moment-locales`
         }
       ]),
     ],
