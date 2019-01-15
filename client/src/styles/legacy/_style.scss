@@ -1021,35 +1021,6 @@ html, body {
 }
 
 /** --------------------------------------------
- * Page icons
- * -------------------------------------------- */
-
-.page-icon, a .jstree-pageicon {
-  display: block;
-  width: 16px;
-  height: 16px;
-  background: transparent url(../images/sitetree_ss_pageclass_icons_default.png) no-repeat;
-}
-
-.page-icon {
-  &.class-HomePage {
-    background-position: 0 -48px;
-  }
-  &.class-RedirectorPage,
-  &.class-SilverStripe_CMS_Model_RedirectorPage {
-    background-position: 0 -16px;
-  }
-  &.class-VirtualPage,
-  &.class-SilverStripe_CMS_Model_VirtualPage {
-    background-position: 0 -32px;
-  }
-  &.class-ErrorPage,
-  &.class-SilverStripe_ErrorPage_ErrorPage {
-    background-position: 0 -112px;
-  }
-}
-
-/** --------------------------------------------
  * "Add page" dialog
  * -------------------------------------------- */
 
@@ -1066,8 +1037,7 @@ html, body {
     margin-left: -$panel-padding-x;
     margin-right: -$panel-padding-x;
     margin-bottom: 0;
-    padding: map_get($spacers, xs) $panel-padding-x #{$spacer * .75};
-    border-radius: $border-radius;
+    padding: $spacer-sm #{$spacer * 2};
 
     &:hover,
     &.selected {
@@ -1087,13 +1057,13 @@ html, body {
 
   input[type="radio"] {
     position: static;
+    margin-top: 0;
+    margin-right: 10px;
   }
 
   .page-icon {
     display: inline-block;
-    top: 3px;
     margin-right: 6px;
-    position: relative;
 
     + .title {
       margin-right: 6px;
@@ -1101,8 +1071,14 @@ html, body {
     }
   }
 
+  .form-check-label {
+    display: flex;
+    align-items: center;
+  }
+
   .form__field-description {
     font-style: italic;
+    margin: 1px 0 0;
   }
 }
 

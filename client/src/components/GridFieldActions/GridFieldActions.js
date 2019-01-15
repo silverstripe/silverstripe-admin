@@ -84,6 +84,7 @@ class GridFieldActions extends PureComponent {
         type={buttonType}
         href={url}
         data-url={data['data-url']}
+        data-action-state={data['data-action-state']}
         name={data.name}
         color="secondary"
       >
