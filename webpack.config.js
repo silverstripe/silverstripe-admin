@@ -46,6 +46,12 @@ const config = [
         name: 'vendor',
         minChunks: module => module.context && module.context.indexOf('/node_modules/') > -1,
       }),
+      new CopyWebpackPlugin([
+        {
+          from: `${PATHS.MODULES}/moment/locale`,
+          to: `${PATHS.DIST}/moment-locales`
+        }
+      ]),
     ],
     watchOptions: {
       poll: true
