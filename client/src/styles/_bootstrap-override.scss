@@ -38,6 +38,10 @@ html [type="button"] {
 .form-control {
   padding-top: $input-padding-y;
   padding-bottom: $input-padding-y;
+
+  &::placeholder {
+    font-style: italic;
+  }
 }
 
 // Restore bottom padding
