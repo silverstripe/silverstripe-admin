@@ -493,6 +493,29 @@
     ins {
       background-color: transparent;
       background-image: url(../images/sitetree_ss_default_icons.png);
+
+      &.font-icon-drag-handle {
+        background: none;
+        font-size: 16px;
+
+        &::before {
+          margin-left: -1px;
+        }
+      }
+
+      &.font-icon-right-dir {
+        visibility: hidden;
+        background: none;
+        font-size: 20px;
+        margin-top: 2px;
+        transition: transform 0.2s ease-in;
+
+        &::before {
+          line-height: 18px;
+          height: 18px;
+          display: block;
+        }
+      }
     }
     span.badge {
       margin-left: 3px;
@@ -546,10 +569,11 @@
       text-decoration: none;
     }
     .jstree-closed > ins {
-      background-position:2px -1px;
+      visibility: visible;
     }
     .jstree-open > ins {
-      background-position:-18px -1px;
+      visibility: visible;
+      transform: rotate(90deg);
     }
   }
 
