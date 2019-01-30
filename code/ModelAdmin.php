@@ -320,7 +320,6 @@ abstract class ModelAdmin extends LeftAndMain
         return $form;
     }
 
-
     /**
      * You can override how ModelAdmin returns DataObjects by either overloading this method, or defining an extension
      * to ModelAdmin that implements the `updateList` method (and takes a {@link \SilverStripe\ORM\DataList} as the
@@ -347,6 +346,16 @@ abstract class ModelAdmin extends LeftAndMain
         return $list;
     }
 
+    /**
+     * The model managed by this instance.
+     * See $managed_models for potential values.
+     *
+     * @return string
+     */
+    public function getModelClass()
+    {
+        return $this->modelClass;
+    }
 
     /**
      * @return \SilverStripe\ORM\ArrayList An ArrayList of all managed models to build the tabs for this ModelAdmin
