@@ -19,3 +19,10 @@
     @include badge-variant-inverted($value);
   }
 }
+
+// Versioning state badges
+.badge--state {
+  background-color: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}

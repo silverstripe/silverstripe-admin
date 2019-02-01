@@ -6,7 +6,6 @@ import JSXAddon from 'storybook-addon-jsx';
 
 import Badge, { statuses } from 'components/Badge/Badge';
 
-
 setAddon(JSXAddon);
 
 storiesOf('Admin/Badges', module)
@@ -18,5 +17,6 @@ storiesOf('Admin/Badges', module)
       status={select('status', statuses, 'default')}
       className={boolean('pill', true) ? 'badge-pill' : ''}
       inverted={boolean('inverted')}
+      stateBadge={boolean('stateBadge')}
     />
   ));

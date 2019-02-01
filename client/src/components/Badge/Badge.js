@@ -18,18 +18,19 @@ export const statuses = [
 
 class Badge extends PureComponent {
   render() {
-    const { status, inverted, className, message } = this.props;
+    const { status, inverted, stateBadge, className, message } = this.props;
     if (!status) {
       return null;
     }
-
-    const invertedClass = inverted ? `badge-${status}--inverted` : '';
 
     const compiledClassNames = classnames(
       className,
       'badge',
       `badge-${status}`,
-      invertedClass,
+      {
+        [`badge-${status}--inverted`]: inverted,
+        'badge--state': stateBadge,
+      }
     );
     return (
       <span className={compiledClassNames}>
@@ -44,12 +45,14 @@ Badge.propTypes = {
   status: PropTypes.oneOf(statuses),
   className: PropTypes.string,
   inverted: PropTypes.bool,
+  stateBadge: PropTypes.bool,
 };
 
 Badge.defaultProps = {
   status: 'default',
   className: 'badge-pill',
   inverted: false,
+  stateBadge: false,
 };
 
 export default Badge;
