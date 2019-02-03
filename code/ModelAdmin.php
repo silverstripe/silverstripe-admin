@@ -347,6 +347,16 @@ abstract class ModelAdmin extends LeftAndMain
         return $list;
     }
 
+    /**
+     * The model managed by this instance.
+     * See $managed_models for potential values.
+     *
+     * @return string
+     */
+    public function getModelClass()
+    {
+        return $this->modelClass;
+    }
 
     /**
      * @return \SilverStripe\ORM\ArrayList An ArrayList of all managed models to build the tabs for this ModelAdmin
