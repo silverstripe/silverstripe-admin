@@ -693,12 +693,6 @@ class LeftAndMain extends Controller implements PermissionProvider
             Requirements::javascript('silverstripe/admin: client/dist/js/LeftAndMain.Ping.js');
         }
 
-        if (Director::isDev()) {
-            // TODO Confuses jQuery.ondemand through document.write()
-            Requirements::javascript('silverstripe/admin: thirdparty/jquery-entwine/src/jquery.entwine.inspector.js');
-            Requirements::javascript('silverstripe/admin: client/dist/js/leaktools.js');
-        }
-
         // Custom requirements
         $extraJs = $this->config()->get('extra_requirements_javascript');
 
