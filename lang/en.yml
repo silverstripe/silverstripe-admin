@@ -29,11 +29,11 @@ en:
     ACCESSALLINTERFACESHELP: 'Overrules more specific access settings.'
     BROWSER_WARNING_HEADING: 'Unsupported browser'
     BROWSER_WARNING_TEXT: 'You&apos;re using a web browser that&apos;s not supported by SilverStripe.<br />Please upgrade to one of the following options.'
-    CollapsePanel: 'Collapse panel'
+    CollapsePanel: 'Collapse Panel'
     DELETED: Deleted.
     DropdownBatchActionsDefault: 'Choose an action...'
-    ExpandPanel: 'Expand panel'
-    HelpMenu: 'Help menu'
+    ExpandPanel: 'Expand Panel'
+    HELP: Help
     LOGOUT: 'Log out'
     MenuToggleAuto: Auto
     MenuToggleStickyNav: 'Sticky nav'
@@ -41,13 +41,11 @@ en:
     PERMAGAIN: 'You have been logged out of the CMS.  If you would like to log in again, enter a username and password below.'
     PERMALREADY: 'I''m sorry, but you can''t access that part of the CMS.  If you want to log in as someone else, do so below.'
     PERMDEFAULT: 'You must be logged in to access the administration area; please enter your credentials below.'
-    PROFILE: '{name} profile'
     PreviewButton: Preview
     REQUIREJS: 'The CMS requires that you have JavaScript enabled.'
     SAVEDUP: Saved.
     SUBMIT_BUTTON_LABEL: Go
     ValidationError: 'Validation error'
-    Version: Version
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
     Auto: Auto
     ChangeViewMode: 'Change view mode'
@@ -72,6 +70,8 @@ en:
     ResultNone: 'No changes'
     ResultUpdated: 'Updated {count} members'
   SilverStripe\Admin\ModelAdmin:
+    APPLY_FILTER: 'Apply Filter'
+    CLEARSEARCH: 'Clear search'
     DELETE: Delete
     DELETEDRECORDS: 'Deleted {count} records.'
     EMPTYBEFOREIMPORT: 'Replace data'
@@ -83,6 +83,9 @@ en:
     IMPORTSPECTITLE: 'Specification for {model}'
     NOCSVFILE: 'Please browse for a CSV file to import'
     NOIMPORT: 'Nothing to import'
+    RESET: Reset
+    SEARCH: Search
+    SEARCHRESULTSFOR: 'Search results for'
     Title: 'Data Models'
     UPDATEDRECORDS: 'Updated {count} records.'
   SilverStripe\Admin\SecurityAdmin:
@@ -97,3 +100,5 @@ en:
     MemberListCaution: 'Caution: Removing members from this list will remove them from all groups and the database'
     TABROLES: Roles
     Users: Users
+  SilverStripe\CMS\Controllers\CMSMain:
+    SAVE: Save
