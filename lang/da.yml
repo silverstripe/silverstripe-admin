@@ -15,9 +15,6 @@ da:
     URL: URL
   SilverStripe\Admin\Forms\LinkFormFactory:
     INSERT_LINK: 'Indsæt link'
-  SilverStripe\Admin\Forms\UsedOnTable:
-    ADDEDTODRAFT: Kladde
-    MODIFIEDONDRAFTSHORT: Ændret
   SilverStripe\Admin\GroupImportForm:
     Help1: '<p>Importer en eller flere grupper i <em>CSV</em> format (comma-separated values). <small><a href="#" class="toggle-advanced">Vis avanceret brug</a></small></p>'
     Help2: '<div class="advanced"><h4>Avanceret brug</h4><ul><li>Tilladte kolonner: <em>{columns}</em></li><li>Eksisterende grupper bliver matchet på deres unikke  <em>Code</em> værdi, og opdateres med evt. nye værdier fra import filen</li><li>Gruppe hierarkier kan oprettes ved at bruge en <em>ParentCode</em> kolonne.</li><li>Rettighedskoder kan tildeles med <em>PermissionCode</em> kolonnen. Eksisterende rettigheder slettes ikke.</li></ul></div>'
@@ -29,11 +26,8 @@ da:
     ACCESSALLINTERFACESHELP: 'Overskriver mere specifikke adgangstilladelser.'
     BROWSER_WARNING_HEADING: 'Ikke supporteret browser'
     BROWSER_WARNING_TEXT: 'Du bruger en web browser der ikke er understøttet af SilverStripe.<br />Opdater venligst til en af de følgende muligheder.'
-    CollapsePanel: 'Klap panelet sammen'
     DELETED: Slettet.
     DropdownBatchActionsDefault: 'Vælg en handling...'
-    ExpandPanel: 'Udvid panelet'
-    HelpMenu: 'Hjælpe menu'
     LOGOUT: 'Log ud'
     MenuToggleAuto: Auto
     MenuToggleStickyNav: 'Fikseret nav.'
@@ -41,13 +35,11 @@ da:
     PERMAGAIN: 'Du er blevet logget ud af CMS''et. Hvis du ønsker at logge ind igen så indtast et brugernavn og kodeord herunder.'
     PERMALREADY: 'Beklager, men du kan ikke tilgå denne del af CMS''et. Hvis du vil logge ind med en anden bruger, kan du gøre dette herunder.'
     PERMDEFAULT: 'Du skal være logget ind for at kunne tilgå administrationen; indtast venligst dine login oplysninger herunder.'
-    PROFILE: '{name} profil'
     PreviewButton: Preview
     REQUIREJS: 'CMS''et kræver at du har JavaScript akttiveret.'
     SAVEDUP: Gemt.
     SUBMIT_BUTTON_LABEL: Go
     ValidationError: Valideringsfejl
-    Version: Version
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
     Auto: Auto
     ChangeViewMode: 'Skift visningstilstand'
