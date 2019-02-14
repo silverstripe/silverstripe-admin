@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "yarn && yarn lint && yarn test && NODE_ENV=production webpack -p --bail --progress",
-    "dev": "NODE_ENV=development webpack --progress",
+    "dev": "rm -r client/es6src && tsc && rsync -a client/jsSrc/ client/es6src/ && NODE_ENV=development webpack --progress",
     "watch": "NODE_ENV=development webpack --watch --progress",
     "css": "WEBPACK_CHILD=css npm run build",
     "test": "jest",
@@ -60,7 +60,7 @@
     "json-js": "^1.1.2",
     "lodash.debounce": "^4.0.8",
     "merge": "^1.2.0",
-    "modernizr": "^3.5.0",
+    "modernizr": "^3.6.0",
     "moment": "^2.22.2",
     "page.js": "^4.13.3",
     "popper.js": "^1.14.4",
@@ -106,7 +106,7 @@
     "html-loader": "^0.5.1",
     "jest-cli": "^23.6.0",
     "storybook-addon-jsx": "^5.4.0",
-    "@storybook/addon-knobs": "^3.4.10",
+    "typescript": "^3.3.3",
     "webpack": "^2"
   },
   "resolutions": {
@@ -114,10 +114,10 @@
   },
   "jest": {
     "roots": [
-      "client/src"
+      "client/es6src"
     ],
     "moduleDirectories": [
-      "client/src",
+      "client/es6src",
       "node_modules",
       "node_modules/@silverstripe/webpack-config/node_modules"
     ],

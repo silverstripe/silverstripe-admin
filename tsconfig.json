@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "outDir": "client/es6src",
+    "module": "es6",
+    "target": "es6",
+    "rootDir": "client/src"
+  },
+  "exclude": [
+    "node_modules",
+    "client/es6src",
+    "client/jsSrc",
+    "client/lang",
+    "client/dist",
+    "webpack.config.js",
+    "webpack-vars.js",
+    "thirdparty",
+    "tests"
+  ]
+}

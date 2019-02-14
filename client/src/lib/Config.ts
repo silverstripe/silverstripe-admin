@@ -1,4 +1,3 @@
-/* global window */
 /**
  * Provides methods for interacting with the client config.
  * The client config is defined using the YAML/PHP config system.
@@ -15,8 +14,8 @@ class Config {
    * @param  {String} key
    * @return {mixed}
    */
-  static get(key) {
-    return window.ss.config[key];
+  static get(key: string): any {
+    return window['ss'].config[key];
   }
 
   /**
@@ -24,8 +23,8 @@ class Config {
    *
    * @return {Object}
    */
-  static getAll() {
-    return window.ss.config;
+  static getAll(): Object {
+    return window['ss'].config;
   }
 
   /**
@@ -35,8 +34,8 @@ class Config {
    *
    * @return object|undefined
    */
-  static getSection(key) {
-    return window.ss.config.sections.find((section) => section.name === key);
+  static getSection(key: string): Object|undefined {
+    return window['ss'].config.sections.find((section) => section.name === key);
   }
 
   /**
