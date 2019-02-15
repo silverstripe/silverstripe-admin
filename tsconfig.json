@@ -4,7 +4,10 @@
     "outDir": "client/es6src",
     "module": "es6",
     "target": "es6",
-    "rootDir": "client/src"
+    "rootDir": "client/src",
+    "moduleResolution": "node",
+    "jsx": "preserve",
+    "sourceMap": true
   },
   "exclude": [
     "node_modules",

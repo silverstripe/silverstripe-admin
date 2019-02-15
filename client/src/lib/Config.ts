@@ -14,8 +14,8 @@ class Config {
    * @param  {String} key
    * @return {mixed}
    */
-  static get(key: string): any {
-    return window['ss'].config[key];
+  public static get(key: string): any {
+    return window.ss.config[key];
   }
 
   /**
@@ -23,19 +23,19 @@ class Config {
    *
    * @return {Object}
    */
-  static getAll(): Object {
-    return window['ss'].config;
+  public static getAll(): any {
+    return window.ss.config;
   }
 
   /**
    * Gets the the config for a specific section.
    *
    * @param string key - The section config key.
-   *
+   * @types/jest ts-jest
    * @return object|undefined
    */
-  static getSection(key: string): Object|undefined {
-    return window['ss'].config.sections.find((section) => section.name === key);
+  public static getSection(key: string): Object|undefined {
+    return window.ss.config.sections.find((section) => section.name === key);
   }
 
   /**
