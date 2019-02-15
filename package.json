@@ -12,15 +12,16 @@
     "node": "^10.x"
   },
   "scripts": {
-    "build": "yarn && yarn lint && yarn test && NODE_ENV=production webpack -p --bail --progress",
-    "dev": "rm -rf client/es6src && tsc && rsync -a client/jsSrc/ client/es6src/ && NODE_ENV=development webpack --progress",
+    "build": "yarn && yarn lint && yarn test && yarn tscBuild && NODE_ENV=production webpack -p --bail --progress",
+    "dev": "yarn tscBuild && NODE_ENV=development webpack --progress",
     "watch": "NODE_ENV=development webpack --watch --progress",
     "css": "WEBPACK_CHILD=css npm run build",
     "test": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint client/src && sass-lint -v",
     "js-fix": "eslint client/src --fix",
-    "pattern-lib": "yarn && start-storybook -p 6006"
+    "pattern-lib": "yarn && start-storybook -p 6006",
+    "tscBuild": "rm -rf client/es6src && tsc && rsync -a client/jsSrc/ client/es6src/"
   },
   "repository": {
     "type": "git",
@@ -83,6 +84,7 @@
     "redux-thunk": "^2.1.0",
     "resize-observer-polyfill": "^1.5.0",
     "toposort": "^1.0.3",
+    "tslint-config-airbnb": "^5.11.1",
     "url": "^0.11.0",
     "validator": "^6.1.0",
     "webpack-sources": "^1.1.0"
@@ -99,6 +101,8 @@
     "@storybook/react": "^3.4.10",
     "@types/jest": "^24.0.5",
     "@types/jquery": "^3.3.29",
+    "@typescript-eslint/eslint-plugin": "^1.3.0",
+    "@typescript-eslint/parser": "^1.3.0",
     "babel-core": "^6.26.3",
     "babel-jest": "^23.6.0",
     "babel-runtime": "^6.26.0",
