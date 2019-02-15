@@ -8,12 +8,17 @@ declare global {
     interface Window {
         ss: {
             config?: {
-                sections: ConfigSection[]
+                sections: ConfigSection[],
+                baseUrl?: string,
+                absoluteBaseUrl?: string,
             },
             apolloClient?: ApolloClient<any>,
             store?: Store
         }
         jQuery(options: any): JQuery
+        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any
+        __REDUX_DEVTOOLS_EXTENSION__: any
+        devToolsExtension: any
     }
 }
 

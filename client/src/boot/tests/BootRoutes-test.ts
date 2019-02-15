@@ -28,7 +28,7 @@ describe('Bootroutes', () => {
 
   describe('add', () => {
     it('loading react section should boot react', () => {
-      const routes = new BootRoutes({});
+      const routes = new BootRoutes(null, null);
       expect(routes.matchesReactRoute('/subdir/admin/old-section'))
         .toEqual(false);
       expect(routes.matchesReactRoute('/subdir/admin/old-section/subpage'))

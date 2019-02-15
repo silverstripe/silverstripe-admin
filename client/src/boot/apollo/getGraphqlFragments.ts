@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch';
+import * as fetch from 'isomorphic-fetch';
 
 const parseResponse = result => {
   const fragmentData = result.data;
@@ -8,7 +8,7 @@ const parseResponse = result => {
   return fragmentData;
 };
 
-const handleError = response => {
+const handleError = (response: Response) => {
   if (!response.ok) {
     throw new Error(
       `The types.graphql file could not be loaded. You probably need to run a ?flush to generate it.
@@ -20,7 +20,7 @@ const handleError = response => {
   return response;
 };
 
-const getGraphqlFragments = async (baseUrl, preferStatic = true) => {
+const getGraphqlFragments = async (baseUrl:string, preferStatic:boolean = true): Promise<any> => {
   const urls = [
     `${baseUrl}assets/admin.types.graphql`,
     `${baseUrl}admin/graphql/types`
@@ -30,12 +30,11 @@ const getGraphqlFragments = async (baseUrl, preferStatic = true) => {
   }
   const [primaryURL, fallbackURL] = urls;
 
-  const fetchConfig = {
+  const fetchConfig: RequestInit = {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
     },
-    uri: `${baseUrl}`,
     credentials: 'same-origin',
   };
 

@@ -1,5 +1,5 @@
 export interface ConfigSection {
-    form: {
+    form?: {
         EditorEmailLink: {
             schemaUrl: string
         },
@@ -7,9 +7,10 @@ export interface ConfigSection {
             schemaUrl: string
         }
     },
-    graphql: {
+    graphql?: {
         cachedTypenames: boolean
     },
     name: string,
-    url: string
+    url: string,
+    reactRouter?: boolean
 }
