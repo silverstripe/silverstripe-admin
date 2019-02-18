@@ -31,9 +31,6 @@ class BootRoutes {
     // using page.js routing for this request.
     const base = Config.get('absoluteBaseUrl');
     pageRouter.setAbsoluteBase(base);
-
-    this.handleBeforeRoute = this.handleBeforeRoute.bind(this);
-    this.handleBeforeUnload = this.handleBeforeUnload.bind(this);
   }
 
   public setStore(store: Store) {
