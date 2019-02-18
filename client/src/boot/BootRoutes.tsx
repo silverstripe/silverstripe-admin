@@ -168,7 +168,7 @@ class BootRoutes {
       }
 
       if (typeof currBeforeUnload === 'function') {
-        return currBeforeUnload.bind(event);
+        return currBeforeUnload.call(event);
       }
 
       return undefined;
