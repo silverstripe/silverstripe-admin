@@ -1,8 +1,8 @@
-import Injector from 'lib/Injector';
-import Validator from 'lib/Validator';
+import Injector from '../lib/Injector';
+import Validator from '../lib/Validator';
 import classnames from 'classnames';
-import { findField } from 'lib/schemaFieldValues';
-import fieldHolder from 'components/FieldHolder/FieldHolder';
+import { findField } from '../lib/schemaFieldValues';
+import fieldHolder from '../components/FieldHolder/FieldHolder';
 
 const togglePristineState = (field, isPristine = false) => {
   // set pristine and dirty classes if they're defined

@@ -50,7 +50,7 @@ class i18n {
    * @param {String} context - Give translators context for the string
    * @return {String} : Translated word
    */
-  _t(entity, fallbackString, priority, context) {
+  _t(entity, fallbackString, priority=0, context='') {
     const fallback = fallbackString || '';
 
     if (!this.lang) {

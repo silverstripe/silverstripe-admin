@@ -1,20 +1,20 @@
 /* global window */
 import BootRoutes from './BootRoutes';
-import Injector from 'lib/Injector';
+import Injector from '../lib/Injector';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import Config from 'lib/Config';
-import buildApolloClient from 'boot/apollo/buildClient';
-import { setConfig } from 'state/config/ConfigActions';
-import registerComponents from 'boot/registerComponents';
-import registerReducers from 'boot/registerReducers';
-import applyDevtools from 'boot/applyDevtools';
-import applyTransforms from 'boot/applyTransforms';
+import Config from '../lib/Config';
+import buildApolloClient from './apollo/buildClient';
+import { setConfig } from '../state/config/ConfigActions';
+import registerComponents from './registerComponents';
+import registerReducers from './registerReducers';
+import applyDevtools from './applyDevtools';
+import applyTransforms from './applyTransforms';
+import '../types/SSWindow';
 
-window.ss = window.ss || {};
+async function appBoot(): Promise<void> {
+  const baseUrl: string = Config.get('absoluteBaseUrl');
 
-async function appBoot() {
-  const baseUrl = Config.get('absoluteBaseUrl');
   const apolloClient = await buildApolloClient(baseUrl);
   registerComponents();
   registerReducers();

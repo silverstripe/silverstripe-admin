@@ -1,9 +1,9 @@
 import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import { ApolloLink } from 'apollo-link';
-import Config from 'lib/Config';
+import Config from '../../lib/Config';
 
-const buildNetworkComponents = (baseUrl) => {
+const buildNetworkComponents = (baseUrl: string): ApolloLink[] => {
   const httpLink = new HttpLink({
     uri: `${baseUrl}admin/graphql`,
     fetchOptions: {

@@ -1,4 +1,3 @@
-/* global window */
 import { compose } from 'redux';
 
 export default function applyDevtools(middleware) {

@@ -1,19 +1,22 @@
 /* global window, document */
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 import React from 'react';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
-import Config from 'lib/Config';
-import pageRouter from 'lib/Router';
-import reactRouteRegister from 'lib/ReactRouteRegister';
-import App from 'containers/App/App';
+import Config from '../lib/Config';
+import pageRouter from '../lib/Router';
+import reactRouteRegister from '../lib/ReactRouteRegister';
+import App from '../containers/App/App';
 import { ApolloProvider } from 'react-apollo';
-import i18n from 'i18n';
+import i18n from '../i18n';
 import { isDirty } from 'redux-form';
-import getFormState from 'lib/getFormState';
+import getFormState from '../lib/getFormState';
+
+import { Store } from 'redux';
+import { ApolloClient } from 'apollo-client';
 
 /**
  * Bootstraps routes
@@ -23,24 +26,18 @@ class BootRoutes {
    * @param {Object} store Redux store
    * @param {Object} client The Apollo client
    */
-  constructor(store, client) {
-    this.store = store;
-    this.client = client;
-
+  constructor(private store: Store, private client: ApolloClient<any>) {
     // pageRouter must be initialised, regardless of whether we are
     // using page.js routing for this request.
     const base = Config.get('absoluteBaseUrl');
     pageRouter.setAbsoluteBase(base);
-
-    this.handleBeforeRoute = this.handleBeforeRoute.bind(this);
-    this.handleBeforeUnload = this.handleBeforeUnload.bind(this);
   }
 
-  setStore(store) {
+  public setStore(store: Store) {
     this.store = store;
   }
 
-  setClient(client) {
+  public setClient(client: ApolloClient<any>) {
     this.client = client;
   }
 
@@ -49,7 +46,7 @@ class BootRoutes {
    *
    * @param {String} location Current location to check
    */
-  start(location) {
+  public start(location: string) {
     // Decide which router to use, check for React routes first
     if (this.matchesReactRoute(location)) {
       this.initReactRouter();
@@ -65,7 +62,7 @@ class BootRoutes {
    * @param {String} location URL
    * @return {Boolean} True if this is a react route
    */
-  matchesReactRoute(location) {
+  public matchesReactRoute(location: string): boolean {
     const sections = Config.get('sections');
     const currentPath = pageRouter.resolveURLToBase(location).replace(/\/$/, '');
 
@@ -88,13 +85,13 @@ class BootRoutes {
   /**
    * Initialise routing to use react-route powered routing
    */
-  initReactRouter() {
+  private initReactRouter() {
     reactRouteRegister.updateRootRoute({
       component: App,
     });
 
     ReactDOM.render(
-      <ApolloProvider client={this.client}>
+      <ApolloProvider client={this.client} children={{}}>
         <Provider store={this.store}>
           <Router
             basename={Config.get('baseUrl')}
@@ -111,7 +108,7 @@ class BootRoutes {
   /**
    * Initialise routing to use page.js powered legacy routing for non-react sections
    */
-  initLegacyRouter() {
+  private initLegacyRouter() {
     const sections = Config.get('sections');
     const store = this.store;
 
@@ -156,8 +153,7 @@ class BootRoutes {
         if (ctx.path !== lastPath || forceReload) {
           // Load the panel and stop processing routes.
           lastPath = ctx.path.replace(/#.*$/, '');
-          $('.cms-container')
-            .entwine('ss')
+          $('.cms-container')['entwine']('ss')
             .handleStateChange(null, ctx.state);
         }
       });
@@ -166,13 +162,13 @@ class BootRoutes {
     // Legacy support – make sure we don't overwrite the `onbeforeunload`
     // handler in `LeftAndMain.EditForm.js` but run it after the new handler.
     const currBeforeUnload = window.onbeforeunload;
-    window.onbeforeunload = () => {
+    window.onbeforeunload = (event) => {
       if (this.shouldConfirmBeforeUnload()) {
         return i18n._t('Admin.CONFIRMUNSAVEDSHORT', 'WARNING: Your changes have not been saved.');
       }
 
       if (typeof currBeforeUnload === 'function') {
-        return currBeforeUnload();
+        return currBeforeUnload.call(event);
       }
 
       return undefined;
@@ -187,15 +183,15 @@ class BootRoutes {
    *
    * @return {Boolean}
    */
-  shouldConfirmBeforeUnload() {
+  private shouldConfirmBeforeUnload() {
     const state = this.store.getState();
     const forms = state.unsavedForms || [];
     const schemas = state.form.formSchemas;
 
     const changedForms = forms.filter((form) => {
-      const schema = Object.values(schemas).find(item => item.name === form.name);
+      const schema = Object.keys(schemas).find(item => item['name'] === form.name);
 
-      const notify = schema && schema.state && schema.state.notifyUnsavedChanges;
+      const notify = schema && schema['state'] && schema['state'].notifyUnsavedChanges;
 
       if (!notify) {
         return false;
@@ -207,7 +203,7 @@ class BootRoutes {
     return changedForms.length > 0;
   }
 
-  handleBeforeUnload() {
+  private handleBeforeUnload() {
     if (this.shouldConfirmBeforeUnload()) {
       return i18n._t('Admin.CONFIRMUNSAVEDSHORT', 'WARNING: Your changes have not been saved.');
     }
@@ -215,7 +211,7 @@ class BootRoutes {
     return undefined;
   }
 
-  handleBeforeRoute() {
+  private handleBeforeRoute() {
     if (this.shouldConfirmBeforeUnload()) {
       return i18n._t('Admin.CONFIRMUNSAVED', `Are you sure you want to navigate away
           from this page?\n\nWARNING: Your changes have not been saved.\n\n
