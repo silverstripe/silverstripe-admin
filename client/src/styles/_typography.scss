@@ -23,9 +23,15 @@ h1 {
     font-weight: normal;
   }
 
-  thead th {
-    border: 0;
-    background-color: transparent;
+  thead {
+    th {
+      border: 0;
+      background-color: transparent;
+    }
+
+    tr:last-child th {
+      border-bottom: $table-border-width solid $border-color-light;
+    }
   }
 
   th,
@@ -47,16 +53,12 @@ h1 {
     background-color: $white;
 
     tr.even {
-      background: $table-accent-bg; // can be altered in viariables
+      background: $table-accent-bg; // can be altered in variables
     }
 
     tr:hover,
     tr.even:hover {
       background: $table-hover-bg;
-    }
-
-    tr:first-child td {
-      border-top: $table-border-width solid $border-color-light;
     }
   }
 
