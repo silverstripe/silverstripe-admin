@@ -1,6 +1,6 @@
 /* global window, document */
 
-import * as $ from 'jquery';
+import $ from 'jquery';
 import React from 'react';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
@@ -26,7 +26,7 @@ class BootRoutes {
    * @param {Object} store Redux store
    * @param {Object} client The Apollo client
    */
-  constructor(private store: Store, private client: ApolloClient<any>) {
+  public constructor(private store: Store, private client: ApolloClient<any>) {
     // pageRouter must be initialised, regardless of whether we are
     // using page.js routing for this request.
     const base = Config.get('absoluteBaseUrl');

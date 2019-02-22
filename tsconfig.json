@@ -6,8 +6,9 @@
     "target": "es6",
 //    "rootDir": "client/src",
     "moduleResolution": "node",
-    "jsx": "preserve",
+    "jsx": "React",
 //    "sourceMap": true
+    "esModuleInterop": true
   },
   "exclude": [
     "node_modules",

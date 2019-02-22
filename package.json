@@ -62,7 +62,7 @@
     "json-js": "^1.1.2",
     "lodash.debounce": "^4.0.8",
     "merge": "^1.2.1",
-    "modernizr": "^3.5.0",
+    "modernizr": "^3.6.0",
     "moment": "^2.22.2",
     "page.js": "^4.13.3",
     "popper.js": "^1.14.4",
@@ -85,16 +85,14 @@
     "redux-thunk": "^2.1.0",
     "resize-observer-polyfill": "^1.5.0",
     "toposort": "^1.0.3",
-    "ts-loader": "^3.0",
-    "typescript": "^3.3.3",
     "url": "^0.11.0",
     "validator": "^6.1.0",
     "webpack-sources": "^1.1.0"
   },
   "devDependencies": {
     "@emotion/core": "^0",
-    "@silverstripe/eslint-config": "^0.0.5",
-    "@silverstripe/webpack-config": "^1.0.0",
+    "@silverstripe/eslint-config": "ssh://git@github.com:open-sausages/eslint-config.git#pulls/typescript-boom-boom-pow",
+    "@silverstripe/webpack-config": "ssh://git@github.com:open-sausages/webpack-config.git#pulls/typescript-boom-boom-pow",
     "@storybook/addon-actions": "^3.4.10",
     "@storybook/addon-knobs": "^3.4.10",
     "@storybook/addon-notes": "^3.4.10",
@@ -113,8 +111,10 @@
     "fast-glob": "^3.0.1",
     "html-loader": "^0.5.1",
     "jest-cli": "^23.6.0",
-    "storybook-addon-jsx": "^5.4.0",
-    "webpack": "^2"
+    "webpack": "^2",
+    "expose-loader": "^0.7.3",
+    "sass-loader": "^6.0.5",
+    "storybook-addon-jsx": "^5.4.0"
   },
   "resolutions": {
     "eslint": "^4.6.1"
@@ -123,16 +123,22 @@
     "roots": [
       "client/src"
     ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ],
     "moduleDirectories": [
       "client/src",
-      "node_modules",
-      "node_modules/@silverstripe/webpack-config/node_modules"
+      "node_modules"
     ],
     "testMatch": [
-      "**/tests/**/*-test.js?(x)"
+      "**/tests/**/*-test.(j|t)s?(x)"
     ],
     "transform": {
-      ".*": "babel-jest"
+      "^.+\\.(ts|tsx)$": "ts-jest",
+      "^.+\\.(js|jsx)$": "babel-jest"
     }
   },
   "babel": {
