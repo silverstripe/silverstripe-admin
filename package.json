@@ -139,6 +139,11 @@
     "transform": {
       "^.+\\.(ts|tsx)$": "ts-jest",
       "^.+\\.(js|jsx)$": "babel-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "node_modules/@silverstripe/webpack-config/tsconfig.json"
+      }
     }
   },
   "babel": {
