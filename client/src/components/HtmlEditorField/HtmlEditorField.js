@@ -16,6 +16,9 @@ class HtmlEditorField extends TextField {
     this.state = {
         isReady: !props.data.editorjs
     };
+
+    this.inputRef = null;
+
     this.handleReady = this.handleReady.bind(this);
   }
 
@@ -23,6 +26,7 @@ class HtmlEditorField extends TextField {
     return {
       ...super.getInputProps(),
       ...this.props.data.attributes,
+      innerRef: ref => { this.inputRef = ref; },
     };
   }
 
@@ -56,34 +60,53 @@ class HtmlEditorField extends TextField {
    * however since this is not added by entwine, the entwine hook for
    * onadd is not run - we must trigger this manually.
    */
-  componentDidUpdate() {
-    if (this.state.isReady) {
-      const { document, jQuery: $ } = window;
-      const mountEvent = $.Event('EntwineElementsAdded');
-      const editorElement = document.getElementById(this.getInputProps().id);
-      mountEvent.targets = [editorElement];
-      $(document).triggerHandler(mountEvent);
+  componentDidUpdate(prevProps, prevState) {
+    const { isReady } = this.state;
+
+    if (!isReady) {
+      return;
+    }
+
+    if (isReady !== prevState.isReady) {
+      setTimeout(() => {
+        const { document, jQuery: $ } = window;
+        const mountEvent = $.Event('EntwineElementsAdded');
+        const editorElement = document.getElementById(this.getInputProps().id);
+        mountEvent.targets = [editorElement];
+        $(document).triggerHandler(mountEvent);
+      }, 1);
+    }
+
+    const { value } = this.props;
+
+    if (value !== prevProps.value) {
+      const event = new Event('change', { bubbles: true });
+      event.simulated = true;
+      event.value = value;
+      this.inputRef.dispatchEvent(event);
     }
   }
 
   componentWillUnmount() {
-    if (this.state.isReady) {
-      const { document, jQuery: $ } = window;
-      const unmountEvent = $.Event('EntwineElementsRemoved');
-      const editorElement = document.getElementById(this.getInputProps().id);
-      // Tell tinyMCE to persist changes into the text field
-      const editor = $(editorElement).entwine('ss').getEditor();
-      if (editor) {
-        editor.save();
-      }
-      unmountEvent.targets = [editorElement];
-      // Ensure that redux knows of the latest changes before the editor is destroyed.
-      // This is pretty awful because TinyMCE triggers jQuery events which aren't picked up
-      // by the react components. We also can't manufacture an event with the right target
-      // without actually dispatching the event, and by then it's too late.
-      super.handleChange({ target: editorElement });
-      $(document).triggerHandler(unmountEvent);
+    if (!this.state.isReady) {
+      return;
     }
+
+    const { document, jQuery: $ } = window;
+    const unmountEvent = $.Event('EntwineElementsRemoved');
+    const editorElement = document.getElementById(this.getInputProps().id);
+    // Tell tinyMCE to persist changes into the text field
+    const editor = $(editorElement).entwine('ss').getEditor();
+    if (editor) {
+      editor.save();
+    }
+    unmountEvent.targets = [editorElement];
+    // Ensure that redux knows of the latest changes before the editor is destroyed.
+    // This is pretty awful because TinyMCE triggers jQuery events which aren't picked up
+    // by the react components. We also can't manufacture an event with the right target
+    // without actually dispatching the event, and by then it's too late.
+    super.handleChange({ target: editorElement });
+    $(document).triggerHandler(unmountEvent);
   }
 }
 
