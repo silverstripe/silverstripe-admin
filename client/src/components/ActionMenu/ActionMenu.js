@@ -31,6 +31,8 @@ class ActionMenu extends PureComponent {
       dropdownMenuProps,
       dropdownToggleClassNames,
       className,
+      // remove props that we don't want to pass through to Dropdown
+      toggleCallback, // eslint-disable-line no-unused-vars
       ...restProps
     } = this.props;
 

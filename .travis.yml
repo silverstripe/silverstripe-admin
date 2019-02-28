@@ -71,7 +71,7 @@ before_script:
   - composer show
 
 # Install NPM dependencies
-  - if [[ $NPM_TEST ]]; then nvm install $TRAVIS_NODE_VERSION && npm install -g yarn && yarn install --network-concurrency 1; fi
+  - if [[ $NPM_TEST ]]; then nvm install && npm install -g yarn && yarn install --network-concurrency 1; fi
 
 # Start behat services
   - if [[ $BEHAT_TEST ]]; then mkdir artifacts; fi

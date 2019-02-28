@@ -392,7 +392,7 @@ $input-focus-border-color:       #66afe9;
 $input-focus-box-shadow:         rgba(102, 175, 233, .6);
 //$input-focus-color:              $input-color !default;
 
-//$input-placeholder-color:        $gray-600 !default;
+$input-placeholder-color:        darken($gray-400, 4%); // #8295b2 - target 3:1 contrast ratio
 
 //$input-height-border:           $input-btn-border-width * 2 !default;
 

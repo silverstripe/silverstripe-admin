@@ -686,7 +686,8 @@ class LeftAndMain extends Controller implements PermissionProvider
         Requirements::javascript('silverstripe/admin: thirdparty/bootstrap/js/dist/util.js');
         Requirements::javascript('silverstripe/admin: thirdparty/bootstrap/js/dist/collapse.js');
         Requirements::css('silverstripe/admin: client/dist/styles/bundle.css');
-        Requirements::add_i18n_javascript('silverstripe/admin:client/lang', false, true);
+        Requirements::add_i18n_javascript('silverstripe/admin:client/lang');
+        Requirements::add_i18n_javascript('silverstripe/admin:client/dist/moment-locales', false, false, true);
 
         if (LeftAndMain::config()->uninherited('session_keepalive_ping')) {
             Requirements::javascript('silverstripe/admin: client/dist/js/LeftAndMain.Ping.js');

@@ -9,7 +9,7 @@ const shadow = document.createElement('html');
 shadow.innerHTML = content;
 
 const mapping = shadow.querySelector('.css-mapping');
-mapping.querySelectorAll('input').forEach((input) => input.classList.add('form-control'));
+Array.prototype.slice.call(mapping.querySelectorAll('input')).forEach((input) => input.classList.add('form-control'));
 
 const styles = `
   /* styles that help style the borrowed HTML */

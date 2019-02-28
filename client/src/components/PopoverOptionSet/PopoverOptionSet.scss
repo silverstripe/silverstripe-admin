@@ -74,7 +74,12 @@
     }
 
     &-input {
+      height: auto;
       padding-left: $panel-padding-x;
+    }
+
+    &-clear {
+      margin-right: 0;
     }
 
     // Nesting needed for specificity, adds padding to clear link
