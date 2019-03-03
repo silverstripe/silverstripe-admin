@@ -1,4 +1,4 @@
-import * as fetch from 'isomorphic-fetch';
+import fetch from 'isomorphic-fetch';
 
 const parseResponse = result => {
   const fragmentData = result.data;

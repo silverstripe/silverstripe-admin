@@ -1,4 +1,5 @@
-/* global window */
+import '../types/SSWindow';
+
 /**
  * Provides methods for interacting with the client config.
  * The client config is defined using the YAML/PHP config system.
