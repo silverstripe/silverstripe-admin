@@ -6,7 +6,6 @@ import thunkMiddleware from 'redux-thunk';
 import Config from '../lib/Config';
 import buildApolloClient from './apollo/buildClient';
 import { setConfig } from '../state/config/ConfigActions';
-import registerComponents from './registerComponents';
 import registerReducers from './registerReducers';
 import applyDevtools from './applyDevtools';
 import applyTransforms from './applyTransforms';
@@ -16,7 +15,6 @@ async function appBoot(): Promise<void> {
   const baseUrl: string = Config.get('absoluteBaseUrl');
 
   const apolloClient = await buildApolloClient(baseUrl);
-  registerComponents();
   registerReducers();
   const middleware = [
     thunkMiddleware
