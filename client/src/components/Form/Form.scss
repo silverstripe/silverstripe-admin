@@ -224,6 +224,11 @@ input.radio {
         .form__field-holder {
           margin-left: 0;
           left: 0;
+
+          &.form-check {
+            margin-left: $panel-padding-x;
+            left: 0;
+          }
         }
 
         // TODO make label display on the right side like normal .form__field-extra-label
