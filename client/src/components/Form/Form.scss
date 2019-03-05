@@ -315,10 +315,16 @@ input.radio {
       }
     }
 
-    .form-group.checkbox .form__field-holder,
     .form-group--no-label .form__field-holder,
     .form__field-holder--no-label {
       @include make-col-offset(2);
+    }
+
+    .form-group.checkbox .form__field-holder {
+      // Based off of make-col-offset() mixin but adding the panel padding-x to offset
+      // the checkbox width
+      $_field-margin-left: percentage(2 / $grid-columns);
+      margin-left: calc(#{$_field-margin-left} + #{$panel-padding-x});
     }
 
     .stacked .form__field-holder {
