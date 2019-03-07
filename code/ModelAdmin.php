@@ -10,7 +10,6 @@ use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\BulkLoader;
 use SilverStripe\Dev\Deprecation;
 use SilverStripe\Forms\CheckboxField;
-use SilverStripe\Forms\DatetimeField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\FileField;
 use SilverStripe\Forms\Form;
@@ -25,8 +24,6 @@ use SilverStripe\Forms\GridField\GridFieldPaginator;
 use SilverStripe\Forms\GridField\GridFieldPrintButton;
 use SilverStripe\Forms\HiddenField;
 use SilverStripe\Forms\LiteralField;
-use SilverStripe\Forms\RequiredFields;
-use SilverStripe\ORM\ArrayLib;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\ValidationResult;
@@ -259,12 +256,12 @@ abstract class ModelAdmin extends LeftAndMain
     }
 
     /**
-     * @deprecated 5.0
+     * @deprecated 4.3.0
      * @return \SilverStripe\ORM\Search\SearchContext
      */
     public function getSearchContext()
     {
-        Deprecation::notice('5.0', 'Will be removed in favor of GridFieldFilterHeader in 5.0');
+        Deprecation::notice('4.3', 'Will be removed in favor of GridFieldFilterHeader in 5.0');
 
         $gridField = $this->getEditForm()->fields()
             ->fieldByName($this->sanitiseClassName($this->modelClass));
@@ -281,12 +278,12 @@ abstract class ModelAdmin extends LeftAndMain
     /**
      * Gets a list of fields that have been searched
      *
-     * @deprecated 5.0
+     * @deprecated 4.3.0
      * @return ArrayList
      */
     public function SearchSummary()
     {
-        Deprecation::notice('5.0', 'Will be removed in favor of GridFieldFilterHeader in 5.0');
+        Deprecation::notice('4.3', 'Will be removed in favor of GridFieldFilterHeader in 5.0');
 
         $context = $this->getSearchContext();
 
@@ -296,12 +293,12 @@ abstract class ModelAdmin extends LeftAndMain
     /**
      * Returns the search form
      *
-     * @deprecated 5.0
+     * @deprecated 4.3.0
      * @return Form|bool
      */
     public function SearchForm()
     {
-        Deprecation::notice('5.0', 'Will be removed in favor of GridFieldFilterHeader  in 5.0');
+        Deprecation::notice('4.3', 'Will be removed in favor of GridFieldFilterHeader  in 5.0');
 
         if (!$this->showSearchForm
             || (is_array($this->showSearchForm) && !in_array($this->modelClass, $this->showSearchForm))
