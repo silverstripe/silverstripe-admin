@@ -469,8 +469,8 @@ $.entwine('ss', function($) {
   $('.grid-field .grid-field__col-compact .action--delete, .grid-field .grid-field__col-compact .action--archive, .cms-edit-form .btn-toolbar .action--delete, .cms-edit-form .btn-toolbar .action--archive').entwine({
     onclick: function(e){
       const confirmMessage = $(this).hasClass('action--archive')
-        ? i18n._t('Admin.ARCHIVECONFIRMMESSAGE')
-        : i18n._t('Admin.DELETECONFIRMMESSAGE');
+        ? i18n._t('Admin.ARCHIVECONFIRMMESSAGE', 'Are you sure you want to archive this record?')
+        : i18n._t('Admin.DELETECONFIRMMESSAGE', 'Are you sure you want to delete this record?');
 
       if (!confirm(confirmMessage)) {
         e.preventDefault();
