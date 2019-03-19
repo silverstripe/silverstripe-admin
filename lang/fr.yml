@@ -14,9 +14,6 @@ fr:
     LINKTEXT: 'Texte du lien'
   SilverStripe\Admin\Forms\LinkFormFactory:
     INSERT_LINK: 'Ajouter un lien'
-  SilverStripe\Admin\Forms\UsedOnTable:
-    ADDEDTODRAFT: Brouillon
-    MODIFIEDONDRAFTSHORT: Modifié
   SilverStripe\Admin\GroupImportForm:
     Help1: '<p>Importer un ou plus de groupe en format <em>CSV</em> (valeurs séparées par une virgule). <small><a href="#" class="toggle-advanced">Montrer l''utilisation avancée</a></small></p>'
     Help2: '<div class="advanced"><h4>Usage avancée</h4><ul><li>Colonnes permises: <em>{columns}</em></li><li>Les groupes existants sont liés par leur propriété unique <em>Code</em> et mis à jour avec les nouvelles valeurs du fichier importé.</li><li>La hiérarchies des groupes peut-être créé en utilisant la colonne <em>ParentCode.</em></li><li>Les codes d''autorisations peuvent être assignés avec la colonne <em>PermissionCode</em>. Les codes d''autorisations ne seront pas effacés.</li></ul></div>'
