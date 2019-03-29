@@ -1,7 +1,7 @@
 import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { storiesOf } from '@storybook/react';
-import { withKnobs, text } from '@storybook/addon-knobs';
+import { withKnobs, text, boolean, object } from '@storybook/addon-knobs/react';
 import SingleSelectField from 'components/SingleSelectField/SingleSelectField';
 
 const props = {
@@ -9,38 +9,42 @@ const props = {
   source: [
     {
       value: 1,
-      title: 'One'
+      title: 'One',
+      description: 'One is the first number'
     },
     {
       value: 2,
-      title: 'Two'
+      title: 'Two',
+      description: 'Two is the second number'
     },
     {
       value: 3,
-      title: 'Three'
+      title: 'Three',
+      description: 'Three is the third number'
     },
     {
       value: 4,
       title: 'Four (Disabled)',
-      disabled: true
+      disabled: true,
+      description: 'Four is the fourth number'
     },
   ],
 };
 
 storiesOf('Admin/SingleSelectField', module)
   .addDecorator(withKnobs)
-  .add('Default', () => {
-    const description = text('Option description');
-    let newSource = props.source;
-
-    if (description && description.length) {
-      newSource = props.source.map(item => ({ ...item, description }));
-    }
-
-    const newProps = { ...props, source: newSource };
-
-    return <SingleSelectField {...newProps} />;
-  })
+  .addWithJSX('Default', () => (
+    <SingleSelectField
+      {...props}
+      data={{
+        hasEmptyDefault: boolean('hasEmptyDefault', false),
+        emptyString: text('emptyString', 'Choose an option')
+      }}
+      value={text('value', 2)}
+      readOnly={boolean('readOnly', false)}
+      source={object('source', props.source)}
+    />
+  ))
   .add('Empty default', () => (
     <SingleSelectField
       {...props}
