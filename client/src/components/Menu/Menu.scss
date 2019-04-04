@@ -286,7 +286,7 @@
   border-bottom: 1px solid darken($brand-secondary, 4%);
   overflow: hidden;
   position: relative;
-  vertical-align: middle;
+  align-items: center;
   transition: padding $transition-speed-fast;
   height: $toolbar-total-height;
   font-weight: bold;
@@ -308,8 +308,7 @@
 
   .cms-sitename__title {
     color: $white;
-    display: block;
-    margin: 16px 1em 16px 0;
+    margin: 1rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
