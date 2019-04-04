@@ -68,9 +68,13 @@ class OptionField extends Component {
   }
 
   render() {
-    const labelText = this.props.leftTitle !== null
+    const leftTitle = this.props.leftTitle !== null
       ? this.props.leftTitle
       : this.props.title;
+
+    const labelText = this.props.rightTitle !== null
+      ? `${leftTitle} ${this.props.rightTitle}`
+      : leftTitle;
 
     return (
       <FormGroup check>
