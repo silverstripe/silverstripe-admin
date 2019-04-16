@@ -47,6 +47,7 @@ class InputField extends Component {
    * @param {Event} event
    */
   handleChange(event) {
+    console.log('change');
     if (typeof this.props.onChange === 'function') {
       if (!event.target) {
         return;

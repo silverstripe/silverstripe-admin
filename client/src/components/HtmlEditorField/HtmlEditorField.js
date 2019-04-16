@@ -30,6 +30,14 @@ class HtmlEditorField extends TextField {
     };
   }
 
+  getEditorElement() {
+    return document.getElementById(this.getInputProps().id);
+  }
+
+  getEditor() {
+    return window.TinyMCE && window.TinyMCE.get(this.getInputProps().id);
+  }
+
   /**
    * Once the dependency script is loaded, updating the internal state
    * will trigger a reload and present the editor to the user
@@ -39,6 +47,16 @@ class HtmlEditorField extends TextField {
       window.TinyMCE = window.tinymce;
     }
     this.setState({ isReady: true });
+  }
+
+  /**
+   * Forces the editor to invoke a change on the InputField
+   */
+  registerChangeListener() {
+    const target = this.getEditorElement();
+    this.getEditor().on('change keyup setcontent', () => {
+      super.handleChange({ target });
+    });
   }
 
   /**
@@ -71,9 +89,10 @@ class HtmlEditorField extends TextField {
       setTimeout(() => {
         const { document, jQuery: $ } = window;
         const mountEvent = $.Event('EntwineElementsAdded');
-        const editorElement = document.getElementById(this.getInputProps().id);
+        const editorElement = this.getEditorElement();
         mountEvent.targets = [editorElement];
         $(document).triggerHandler(mountEvent);
+        this.registerChangeListener();
       }, 1);
     }
 
@@ -86,7 +105,6 @@ class HtmlEditorField extends TextField {
       this.inputRef.dispatchEvent(event);
     }
   }
-
   componentWillUnmount() {
     if (!this.state.isReady) {
       return;
@@ -94,9 +112,9 @@ class HtmlEditorField extends TextField {
 
     const { document, jQuery: $ } = window;
     const unmountEvent = $.Event('EntwineElementsRemoved');
-    const editorElement = document.getElementById(this.getInputProps().id);
+    const editorElement = this.getEditorElement();
     // Tell tinyMCE to persist changes into the text field
-    const editor = $(editorElement).entwine('ss').getEditor();
+    const editor = this.getEditor();
     if (editor) {
       editor.save();
     }
