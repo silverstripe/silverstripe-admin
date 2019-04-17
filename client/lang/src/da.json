@@ -17,6 +17,7 @@
     "Admin.ANY": "Enhver",
     "Admin.ERRORINTRANSACTION": "Der skete en fejl ved hentning af data fra serveren\nPrøv venligst igen senere.",
     "Admin.DELETECONFIRMMESSAGE": "Er du sikker på du vil slette dette element?",
+    "Admin.ARCHIVECONFIRMMESSAGE": "Are you sure you want to archive this record?",
     "Admin.EXPANDPANEL": "Udvid panel",
     "Admin.COLLAPSEPANEL": "Minimer panel",
     "Admin.VALIDATOR_MESSAGE_REQUIRED": "{name} er krævet.",

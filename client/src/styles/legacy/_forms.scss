@@ -32,12 +32,16 @@ fieldset {
     box-shadow: none;
   }
 
-  &.checkbox label.right {
-    margin: ($spacer / 4) 0 0 0;
-    display:inline;
-    font-style: normal;
-    color: $body-color;
-    clear:none;
+  &.checkbox {
+    margin-top: 7px;
+
+    label.right {
+      margin: ($spacer / 4) 0 0 0;
+      display: inline;
+      font-style: normal;
+      color: $body-color;
+      clear: none;
+    }
   }
 
   span.readonly {

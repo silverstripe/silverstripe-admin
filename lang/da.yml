@@ -15,9 +15,6 @@ da:
     URL: URL
   SilverStripe\Admin\Forms\LinkFormFactory:
     INSERT_LINK: 'Indsæt link'
-  SilverStripe\Admin\Forms\UsedOnTable:
-    ADDEDTODRAFT: Kladde
-    MODIFIEDONDRAFTSHORT: Ændret
   SilverStripe\Admin\GroupImportForm:
     Help1: '<p>Importer en eller flere grupper i <em>CSV</em> format (comma-separated values). <small><a href="#" class="toggle-advanced">Vis avanceret brug</a></small></p>'
     Help2: '<div class="advanced"><h4>Avanceret brug</h4><ul><li>Tilladte kolonner: <em>{columns}</em></li><li>Eksisterende grupper bliver matchet på deres unikke  <em>Code</em> værdi, og opdateres med evt. nye værdier fra import filen</li><li>Gruppe hierarkier kan oprettes ved at bruge en <em>ParentCode</em> kolonne.</li><li>Rettighedskoder kan tildeles med <em>PermissionCode</em> kolonnen. Eksisterende rettigheder slettes ikke.</li></ul></div>'
