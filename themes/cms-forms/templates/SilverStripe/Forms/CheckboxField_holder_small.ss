@@ -2,5 +2,6 @@
 	<label class="form-check-label">
 		$Field
 		$Title
+        $RightTitle
 	</label>
 </div>
