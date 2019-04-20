@@ -27,9 +27,6 @@
         "phpunit/PHPUnit": "^5.7"
     },
     "extra": {
-        "branch-alias": {
-            "1.x-dev": "1.4.x-dev"
-        },
         "expose": [
             "client/dist",
             "client/lang",
