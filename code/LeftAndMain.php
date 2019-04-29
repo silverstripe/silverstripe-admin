@@ -732,8 +732,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             }
         }
 
-        $dummy = null;
-        $this->extend('init', $dummy);
+        $this->extend('init');
 
         // Load the editor with original user themes before overwriting
         // them with admin themes
