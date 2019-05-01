@@ -18,10 +18,14 @@
       border-radius: 100px;
       width: 32px;
       padding-left: 7px;
+
+      &:hover {
+        border-color: transparent;
+      }
     }
   }
 
-  .circular-group>.btn {
+  .circular-group > .btn {
     width: 32px;
     padding-left: 7px;
 
