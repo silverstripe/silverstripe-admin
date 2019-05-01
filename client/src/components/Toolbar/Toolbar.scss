@@ -1,3 +1,7 @@
+$circular-button-border-radius: 100px;
+$circular-button-size: 32px;
+$circular-button-padding: 7px;
+
 // TODO ensure .toolbar is used globally and remove toolbar--"modifier" classes from following block
 .toolbar,
 .toolbar--north,
@@ -14,10 +18,10 @@
   .btn {
     margin-bottom: 0;
 
-    &.circular {
-      border-radius: 100px;
-      width: 32px;
-      padding-left: 7px;
+    &--circular {
+      border-radius: $circular-button-border-radius;
+      width: $circular-button-size;
+      padding-left: $circular-button-padding;
 
       &:hover {
         border-color: transparent;
@@ -25,24 +29,33 @@
     }
   }
 
-  .circular-group > .btn {
-    border: 1px solid $border-color;
-    width: 30px;
-    padding-left: 7px;
-
-    &:first-child {
-      border-top-left-radius: 100px;
-      border-bottom-left-radius: 100px;
+  .btn-group {
+    // Specificity override from Bootstrap
+    > .btn--circular {
+      border-top-left-radius: $circular-button-border-radius;
+      border-bottom-left-radius: $circular-button-border-radius;
     }
 
-    &:last-child {
-      border-top-right-radius: 100px;
-      border-bottom-right-radius: 100px;
-      padding-left: 5px;
-    }
-
-    &:hover {
+    &--circular > .btn {
       border: 1px solid $border-color;
+      width: calc(#{$circular-button-size} - 2px);
+      padding-left: $circular-button-padding;
+
+      &:first-child {
+        border-top-left-radius: $circular-button-border-radius;
+        border-bottom-left-radius: $circular-button-border-radius;
+      }
+
+      &:last-child {
+        border-top-right-radius: $circular-button-border-radius;
+        border-bottom-right-radius: $circular-button-border-radius;
+        // Shift the caret icon slightly closer in. The default left padding is better for the LHS button.
+        padding-left: calc(#{$circular-button-padding} - 2px);
+      }
+
+      &:hover {
+        border: 1px solid $border-color;
+      }
     }
   }
 }
