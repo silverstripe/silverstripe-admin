@@ -1,13 +1,99 @@
 it:
-  SilverStripe\Admin\CMSBatchAction:
-    PUBLISHED_PAGES: 'Pubblicate %d pagine, %d non a buon fine'
-    PUBLISH_PAGES: Pubblica
-    RESTORE: Ripristina
-    RESTORED_PAGES: '%d pagine ripristinate'
+  SilverStripe\Admin\CMSProfileController:
+    CANTEDIT: 'Non hai il permesso di farlo'
+    MENUTITLE: 'Il mio profilo'
+  SilverStripe\Admin\Forms\EditorEmailLinkFormFactory:
+    EMAIL: 'Indirizzo email'
+    LINKDESCR: 'Descrizione del collegamento'
+    LINKTEXT: 'Link al testo'
+    SUBJECT: Oggetto
+  SilverStripe\Admin\Forms\EditorExternalLinkFormFactory:
+    ANCHORVALUE: Ancora
+    LINKDESCR: 'Descrizione del collegamento'
+    LINKOPENNEWWIN: 'Apri in una nuova finestra/scheda'
+    LINKTEXT: 'Link al testo'
+    URL: URL
+  SilverStripe\Admin\Forms\LinkFormFactory:
+    INSERT_LINK: 'Inserisci il link'
+  SilverStripe\Admin\Forms\UsedOnTable:
+    ADDEDTODRAFT: Bozza
+    MODIFIEDONDRAFTSHORT: Modificato
+  SilverStripe\Admin\GroupImportForm:
+    Help1: '<p>Importa uno o più gruppi nel formato <em>CSV</em> (valori separati da virgola). <small><a href="#" class="toggle-advanced">Mostra utilizzo avanzato</a></small></p>'
+    Help2: '<div class="advanced"><h4> Uso avanzato</h4><ul><li> Colonne consentite: <em>{columns}</em></li><li> I gruppi esistenti sono abbinati al loro valore di <em>Codice</em> unico e aggiornato con eventuali nuovi valori dal file importato</li><li> Le gerarchie di gruppo possono essere create utilizzando una colonna <em>ParentCode</em>.</li><li> I codici di autorizzazione possono essere assegnati dalla colonna <em>PermissionCode</em>. I codici di autorizzazione esistenti non vengono cancellati.</li></ul></div>'
+    ResultCreated: '{count} Gruppi creati'
+    ResultDeleted: '{count} Gruppi cancellati'
+    ResultUpdated: '{count} Gruppi aggiornati'
+  SilverStripe\Admin\LeftAndMain:
+    ACCESSALLINTERFACES: 'Accesso a tutte le sezioni CMS'
+    ACCESSALLINTERFACESHELP: 'Annulla le impostazioni di accesso più specifiche.'
+    BROWSER_WARNING_HEADING: 'Browser non supportato'
+    BROWSER_WARNING_TEXT: 'Si sta utilizzando un browser Web che non è supportato da SilverStripe. <br/> Effettuare l''aggiornamento a una delle seguenti opzioni.'
+    CollapsePanel: 'Comprimi pannello'
+    DELETED: Cancellato.
+    DropdownBatchActionsDefault: 'Scegli un''azione...'
+    ExpandPanel: 'Espandi pannello'
+    HelpMenu: 'Menu Aiuto'
+    LOGOUT: Disconnetti
+    MenuToggleAuto: Auto
+    MenuToggleStickyNav: 'Sticky nav'
+    NavigateUp: 'Navigare su una cartella'
+    PERMAGAIN: 'Sei stato disconnesso dal CMS. Se si desidera accedere di nuovo, immettere un nome utente e una password di seguito.'
+    PERMALREADY: 'Mi dispiace, ma non puoi accedere a questa parte del CMS. Se si desidera accedere come qualcun altro, farlo di seguito.'
+    PERMDEFAULT: 'Devi essere registrato per accedere all''area di amministrazione; inserisci le tue credenziali di seguito.'
+    PROFILE: '{name} profilo'
+    PreviewButton: Anteprima
+    REQUIREJS: 'Il CMS richiede che JavaScript sia abilitato.'
+    SAVEDUP: Salvato.
+    SUBMIT_BUTTON_LABEL: Vai
+    ValidationError: 'Errore di convalida'
+    Version: Versione
+  SilverStripe\Admin\LeftAndMain_ViewModeSelector:
+    Auto: Auto
+    ChangeViewMode: 'Cambia la modalità di visualizzazione'
+    Desktop: Desktop
+    DualWindowView: 'Doppia finestra'
+    EditView: 'Modalità modifica'
+    Mobile: Mobile
+    PreviewState: 'Stato di anteprima'
+    PreviewView: 'Modalità anteprima'
+    Responsive: Responsive
+    SplitView: 'Modalità divisa'
+    Tablet: Tablet
+    ViewDeviceWidth: 'Seleziona una larghezza di anteprima'
+    Width: larghezza
+  SilverStripe\Admin\MemberImportForm:
+    BtnImport: 'Importa da CSV'
+    FileFieldLabel: 'File CSV <small>(Estensioni consentite: *.csv)</small>'
+    Help1: '<p>Importa utenti in <em>formato CSV</em> (valori separati da virgola).<small><a href="#" class="toggle-advanced"> Mostra utilizzo avanzato</a></small></p>'
+    Help2: '<div class="advanced"><h4>Uso avanzato </h4><ul><li> Colonne consentite: <em>{columns}</em></li><li> Gli utenti esistenti sono abbinati dalla loro proprietà <em>Codice</em> univoca e aggiornati con qualsiasi nuovo valore dal file importato. </li><li> I gruppi possono essere assegnati dalla colonna <em>Gruppi</em>. I gruppi sono identificati dalla loro proprietà <em>Codice</em>, più gruppi possono essere separati da una virgola. Le appartenenze ai gruppi esistenti non vengono cancellate.</li></ul></div>'
+    ResultCreated: 'Creato {count} utenti'
+    ResultDeleted: 'Eliminati {count} utenti'
+    ResultNone: 'Nessun cambiamento'
+    ResultUpdated: 'Aggiornato {count} utenti'
+  SilverStripe\Admin\ModelAdmin:
+    DELETE: Elimina
+    DELETEDRECORDS: 'Eliminato {count} record.'
+    EMPTYBEFOREIMPORT: 'Sostituisci i dati'
+    IMPORT: 'Importa da CSV'
+    IMPORTEDRECORDS: 'Importati {count} record.'
+    IMPORTSPECFIELDS: 'Colonne del database'
+    IMPORTSPECLINK: 'Mostra specifica per {modello}'
+    IMPORTSPECRELATIONS: Relazioni
+    IMPORTSPECTITLE: 'Specifica per {modello}'
+    NOCSVFILE: 'Si prega di cercare un file CSV da importare'
+    NOIMPORT: 'Niente da importare'
+    Title: 'Modelli di dati'
+    UPDATEDRECORDS: 'Aggiornato {count} record.'
   SilverStripe\Admin\SecurityAdmin:
-    GROUPNAME: 'Nome del gruppo'
-    MEMBERS: Utenti
-    NEWGROUP: 'Nuovo gruppo'
-    PERMISSIONS: Permessi
-    ROLES: Ruoli
-    ROLESDESCRIPTION: 'I ruoli sono insiemi predefiniti di permessi che possono essere assegnati ai gruppi.<br />Se richiesto, questi possono essere ereditati dai gruppi padre.'
+    ACCESS_HELP: 'Consentire la visualizzazione, l''aggiunta e la modifica degli utenti, nonché l''assegnazione di autorizzazioni e ruoli.'
+    APPLY_ROLES: 'Applica ruoli ai gruppi'
+    APPLY_ROLES_HELP: 'Possibilità di modificare i ruoli assegnati a un gruppo. Richiede l''autorizzazione "Accesso a" Utenti "sezione".'
+    EDITPERMISSIONS: 'Gestisci le autorizzazioni per i gruppi'
+    EDITPERMISSIONS_HELP: 'Possibilità di modificare permessi e indirizzi IP per un gruppo. Richiede l''autorizzazione "Accesso a" Sicurezza "sezione".'
+    IMPORTGROUPS: 'Importa gruppi'
+    IMPORTUSERS: 'Importa utenti'
+    MENUTITLE: Sicurezza
+    MemberListCaution: 'Attenzione: la rimozione degli utenti da questo elenco li rimuoverà da tutti i gruppi e dal database'
+    TABROLES: Ruoli
+    Users: Utenti
