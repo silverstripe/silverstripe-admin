@@ -90,11 +90,13 @@ class OptionField extends Component {
 OptionField.propTypes = {
   type: PropTypes.oneOf(['checkbox', 'radio']),
   leftTitle: PropTypes.any,
+  rightTitle: PropTypes.any,
   title: PropTypes.any,
   extraClass: PropTypes.string,
   id: PropTypes.string,
   name: PropTypes.string,
   onChange: PropTypes.func,
+
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
@@ -110,6 +112,7 @@ OptionField.defaultProps = {
   className: '',
   type: 'radio',
   leftTitle: null,
+  rightTitle: null
 };
 
 export { OptionField as Component };
