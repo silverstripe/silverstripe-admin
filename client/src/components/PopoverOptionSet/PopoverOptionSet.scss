@@ -1,8 +1,16 @@
+$button-height: 40px;
+$column-width: 225px;
+
 .popover-option-set {
-  min-width: 320px;
+  max-width: $column-width;
+  min-width: 280px;
   display: flex;
   flex-direction: column;
   border-radius: $border-radius; // Change to equal 4px
+
+  @include media-breakpoint-up(sm) {
+    max-width: $column-width * 2;
+  }
 
   &:focus,
   &:hover {
@@ -17,11 +25,11 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    max-height: 305px;
+    max-height: $button-height * 10;
     overflow-y: auto;
 
     :nth-child(odd) {
-      margin-right: $panel-padding-x/2;
+      margin-right: $panel-padding-x / 2;
     }
 
     :nth-child(even) {
@@ -37,23 +45,30 @@
       vertical-align: middle;
       width: 100%;
       margin: 0;
-      padding: $panel-padding-x/2;
+      padding: $panel-padding-x / 2;
     }
   }
 
   &__button {
-    width: calc(100% * (1 / 2) - 5px);
-    padding: $panel-padding-x/2;
+    width: 100%;
+    padding: $panel-padding-x / 2;
     text-align: left;
     margin-bottom: 4px;
     border: 0;
-    max-height: 40px;
+    max-height: $button-height;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    @include media-breakpoint-up(sm) {
+      width: calc(50% - 5px);
+    }
   }
 
   // Adds necessary specificity to override default font-size and margins
   & &__button::before {
     font-size: 2.1rem;
-    margin-right: $panel-padding-x/2;
+    margin-right: $panel-padding-x / 2;
   }
 
   &__search {
