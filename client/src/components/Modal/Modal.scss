@@ -11,6 +11,7 @@
 }
 
 .modal-content {
+  background-color: $white;
   height: auto;
   min-height: 0;
   max-height: 100%;
@@ -36,6 +37,8 @@
 // Top section of the modal w/ title and dismiss
 .modal-header {
   min-height: $toolbar-total-height;
+  color: $text-muted;
+  background-color: $body-bg-dark;
 
   // Close icon
   .close {
@@ -45,6 +48,7 @@
     opacity: 1;
     margin-top: 0;
     margin-right: -$panel-padding-x;
+    color: $text-muted;
 
     span {
       display: none;
@@ -95,6 +99,9 @@
 }
 
 .modal-footer {
+  background-color: $white;
+  border-top: 0;
+  padding-top: 0;
   justify-content: flex-start;
 }
 
