@@ -24,6 +24,7 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.ANY": "Any",
     "Admin.ERRORINTRANSACTION": "An error occured while fetching data from the server\n Please try again later.",
     "Admin.DELETECONFIRMMESSAGE": "Are you sure you want to delete this record?",
+    "Admin.ARCHIVECONFIRMMESSAGE": "Are you sure you want to archive this record?",
     "Admin.EXPANDPANEL": "Expand panel",
     "Admin.COLLAPSEPANEL": "Collapse panel",
     "Admin.VALIDATOR_MESSAGE_REQUIRED": "{name} is required.",

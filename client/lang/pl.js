@@ -24,6 +24,7 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.ANY": "Każdy",
     "Admin.ERRORINTRANSACTION": "Wystąpił błąd podczas pobierania danych z serwera\nSpróbuj ponownie później.",
     "Admin.DELETECONFIRMMESSAGE": "Czy na pewno chcesz usunąć ten rekord?",
+    "Admin.ARCHIVECONFIRMMESSAGE": "Are you sure you want to archive this record?",
     "Admin.EXPANDPANEL": "Rozwiń panel",
     "Admin.COLLAPSEPANEL": "Zwiń panel",
     "Admin.VALIDATOR_MESSAGE_REQUIRED": "{name} jest wymagane.",
