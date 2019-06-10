@@ -860,7 +860,9 @@ class LeftAndMain extends Controller implements PermissionProvider
             // Get url_segment
             $segment = $this->config()->get('url_segment');
             if (!$segment) {
-                throw new BadMethodCallException("LeftAndMain subclasses must have url_segment");
+                throw new BadMethodCallException(
+                    sprintf('LeftAndMain subclasses (%s) must have url_segment', static::class)
+                );
             }
         }
 

@@ -4,7 +4,8 @@ import { VIEW_MODE_STATES } from './ViewModeStates';
 
 const initialState = {
   activeState: VIEW_MODE_STATES.SPLIT,
-  splitAvailable: true
+  splitAvailable: true,
+  lockState: false,
 };
 
 function reducer(state = initialState, action) {
@@ -13,6 +14,7 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         activeState: VIEW_MODE_STATES.EDIT,
+        lockState: true,
       };
     }
 
@@ -20,6 +22,7 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         activeState: VIEW_MODE_STATES.PREVIEW,
+        lockState: true,
       };
     }
 
@@ -27,6 +30,7 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         activeState: VIEW_MODE_STATES.SPLIT,
+        lockState: false,
       };
     }
 
@@ -34,8 +38,12 @@ function reducer(state = initialState, action) {
       const splitAvailable = action.payload.panelWidth > viewWideEnoughForSplitMode;
       let activeState = state.activeState;
 
-      if (activeState === VIEW_MODE_STATES.SPLIT && !splitAvailable) {
-         activeState = VIEW_MODE_STATES.EDIT;
+      if (!state.lockState && activeState === VIEW_MODE_STATES.SPLIT && !splitAvailable) {
+        // Resizing into a small viewport should automatically disable split view
+        activeState = VIEW_MODE_STATES.EDIT;
+      } else if (!state.lockState && activeState === VIEW_MODE_STATES.EDIT && splitAvailable) {
+        // Resizing away from small viewports should automatically re-enable split view
+        activeState = VIEW_MODE_STATES.SPLIT;
       }
 
       return {
