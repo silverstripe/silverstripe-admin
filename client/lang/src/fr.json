@@ -17,6 +17,7 @@
     "Admin.ANY": "Tout",
     "Admin.ERRORINTRANSACTION": "Une erreur est survenue lors du transfert de donnée à partir du serveur.\nSVP réessayez plus tard.",
     "Admin.DELETECONFIRMMESSAGE": "Etes-vous sûr de vouloir supprimer cet enregistrement?",
+    "Admin.ARCHIVECONFIRMMESSAGE": "Are you sure you want to archive this record?",
     "Admin.EXPANDPANEL": "Ouvrir le panneau",
     "Admin.COLLAPSEPANEL": "Fermer le panneau",
     "Admin.VALIDATOR_MESSAGE_REQUIRED": "{name} est requis.",
