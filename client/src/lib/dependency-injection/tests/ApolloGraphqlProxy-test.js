@@ -1,7 +1,6 @@
 /* global jest, jasmine, describe, beforeEach, it, pit, expect, process */
 
 import ApolloGraphqlProxy from '../ApolloGraphqlProxy';
-import { getFields } from '../graphql/helpers';
 import gql from 'graphql-tag';
 
 const createMock = (ast, config = {}) => (
@@ -12,7 +11,7 @@ describe('ApolloGraphqlProxy', () => {
   it('Constructs', () => {
     const proxy = createMock(
       'ast',
-      {foo: 'bar'}
+      { foo: 'bar' }
     );
 
     expect(proxy.getGraphqlAST()).toBe('ast');
