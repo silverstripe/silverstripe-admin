@@ -152,7 +152,7 @@ Otherwise, invoke the registerFragment() function with '{ force: true }' as the 
    *
    * @param {string} key
    * @param {Array} middlewareMatches
-   * @returns {function}
+   * @returns {ApolloGraphqlProxy}
    */
   getFactory(key, middlewareMatches) {
     return this.getProcessedManager(key, middlewareMatches).getContainer();
