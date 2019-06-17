@@ -27,8 +27,9 @@ const injectGraphql = (key, context) => (DataHandler) => {
         let error = true;
         let target = null;
         try {
-          const graphql = this.context.injector.query(key, context);
-          target = graphql(DataHandler);
+          const graphqlContainer = this.context.injector.query(key, context);
+          const apolloHOC = graphqlContainer.getApolloHOC();
+          target = apolloHOC(DataHandler);
           error = false;
         } catch (e) {
           this.setState({ target, error });
