@@ -169,6 +169,30 @@ class i18n {
       return (map[key]) ? map[key] : match;
     });
   }
+  
+  /**
+   * Substitutes variables with JSX from the given list of injections. This returns an array as JSX
+   * elements cannot be interpolated into strings. React will render arrays like a concatenated
+   * string. You may also use this function like `inject` or you can call `inject` before
+   * `injectJSX` for non-JSX injections.
+   *
+   * @param {String} s - The string to perform the substitutions on.
+   * @param {Object} map - An object with JSX elements to substitute e.g. (var: <b>value</b>}.
+   * @return {Array<JSX.Element|String>}
+   */
+  injectJSX(s, map) {
+    // Split the string by the regex for matches
+    const parts = s.split(this.matchRegex);
+
+    // The capturing group is put in where matches were found - this means all matches are at odd
+    // indexes in the "parts" array. We can replace those items (or leave the "{match}" syntax.
+    for (let i = 1, length = parts.length; i < length; i += 2) {
+      parts[i] = map[parts[i]] || `{${parts[i]}}`;
+    }
+
+    // Filter out any blank strings
+    return parts.filter(item => Boolean(item));
+  }
 
   /**
    * Detect document language settings by looking at <meta> tags.
