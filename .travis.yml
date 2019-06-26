@@ -95,29 +95,10 @@ after_failure:
   - php ./vendor/silverstripe/framework/tests/behat/travis-upload-artifacts.php --if-env BEHAT_TEST,ARTIFACTS_BUCKET,ARTIFACTS_KEY,ARTIFACTS_SECRET --target-path $TRAVIS_REPO_SLUG/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID --artifacts-base-url https://s3.amazonaws.com/$ARTIFACTS_BUCKET/ --artifacts-path ./artifacts/
 
 before_deploy:
-# Get asset-admin
-  - git clone https://github.com/silverstripe/silverstripe-asset-admin.git
-  - cd silverstripe-asset-admin
-  - yarn install
-  - cd ..
-  - mv silverstripe-asset-admin ../asset-admin
-
-# Get campaign admin
-  - git clone https://github.com/silverstripe/silverstripe-campaign-admin.git
-  - cd silverstripe-campaign-admin
-  - yarn install
-  - cd ..
-  - mv silverstripe-campaign-admin ../campaign-admin
-
-# Get CMS
-  - git clone https://github.com/silverstripe/silverstripe-cms.git
-  - cd silverstripe-cms
-  - yarn install
-  - cd ..
-  - mv silverstripe-cms ../cms
-
+# Use installer to fill in any possible dependencies
+  - composer require silverstripe/installer:4.4.x-dev
 # Do the build
-  - yarn install && yarn build-storybook
+  - yarn static-storybook
 
 deploy:
 - provider: pages
