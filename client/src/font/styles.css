@@ -269,9 +269,6 @@
 .font-icon-database:before {
   content: "\3f";
 }
-.font-icon-attention:before {
-  content: "\5b";
-}
 .font-icon-block:before {
   content: "\3c";
 }
@@ -562,4 +559,40 @@
 }
 .font-icon-plus-thin:before {
   content: "\e050";
+}
+.font-icon-dashboard:before {
+  content: "\e051";
+}
+.font-icon-block-embed:before {
+  content: "\e052";
+}
+.font-icon-minus-circle:before {
+  content: "\e053";
+}
+.font-icon-check-circle:before {
+  content: "\e054";
+}
+.font-icon-minus:before {
+  content: "\e055";
+}
+.font-icon-plus-1:before {
+  content: "\e056";
+}
+.font-icon-right-thin:before {
+  content: "\e057";
+}
+.font-icon-left-thin:before {
+  content: "\e058";
+}
+.font-icon-down-thin:before {
+  content: "\e059";
+}
+.font-icon-up-thin:before {
+  content: "\e05a";
+}
+.font-icon-attention:before {
+  content: "\5b";
+}
+.font-icon-integration:before {
+  content: "\e05b";
 }
