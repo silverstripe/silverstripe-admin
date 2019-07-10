@@ -18,14 +18,12 @@
   @include media-breakpoint-down(sm) {
     position: absolute;
     top: 0;
-    left: -100%;
-    width: calc(100% - 59px) !important; // sass-lint:disable-line no-important
-    transition: left $transition-speed-fast ease-in;
-
+    left: -260px;
+    width: 250px;
+    box-shadow: 1px 0 10px rgba(0, 0, 0, 0.2);
+    transition: transform $transition-speed-fast;
     &--open {
-      left: 0;
-      height: 100% !important; // sass-lint:disable-line no-important
-      box-shadow: 1px 0 10px rgba(0, 0, 0, 0.2);
+      transform: translateX(260px) !important;
     }
   }
 
@@ -250,19 +248,18 @@
 }
 
 .cms-menu-mobile-overlay {
+  display: block;
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.05);
+  transition: opacity .3s;
+  transform: translateX(-100%);
+  background-color: rgba(0, 0, 0, 0.25);
   z-index: $zindex-cms-content-header + 1;
   border: 0;
 }
 
-.cms-menu + .cms-menu-mobile-overlay {
-  display: none;
-}
-
 .cms-menu.cms-menu--open + .cms-menu-mobile-overlay {
   @include media-breakpoint-down(sm) {
-    display: block;
+    opacity: 1;transform: translateX(0);
   }
 }
 
