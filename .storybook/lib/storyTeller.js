@@ -19,7 +19,7 @@ const configName = '.ss-storybook.js';
  *
  * @param {string} root Root location to find stories
  * @param {bool} generate
- * @reutn {Array<Object>}
+ * @return {Array<Object>}
  */
 module.exports = {
   collectStoryRoots(root) {
