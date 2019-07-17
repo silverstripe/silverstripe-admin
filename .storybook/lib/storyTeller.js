@@ -7,21 +7,15 @@ const exec = promisify(require('child_process').exec);
 
 const configName = '.ss-storybook.js';
 
-/**
- * Locates modules in the given root (matching the base path and any composer style vendor folder
- * within that root) that define a .ss-storybook.js config file.
- *
- * Note that this function will also generate a .stories.js file that declares module roots in a way
- * that can be static analyzed for webpack to build a valid bundle for storybook. This script should
- * run before or during the webpack bundle for storybook.
- *
- * Returns an array of module configuration
- *
- * @param {string} root Root location to find stories
- * @param {bool} generate
- * @return {Array<Object>}
- */
 module.exports = {
+  /**
+   * "Collect" modules within the vendor folder OR the project root to show stories from. This will
+   * find any `.ss-storybook.js` file that provides configuration for locating stories (and their
+   * dependencies)
+   *
+   * @param {string} root
+   * @return {Array<Object>} Discovered configuration
+   */
   collectStoryRoots(root) {
     const modules = glob.sync(
       [`${root}/${configName}`, `${root}/vendor/**/${configName}`],
@@ -51,6 +45,13 @@ module.exports = {
     return output;
   },
 
+  /**
+   * Trigger a `yarn` in modules that have been "collected" but there doesn't appear to be a
+   * node_modules folder. This is intended for use with `collectStoryRoots`
+   *
+   * @param {Array<Object>} storyRoots
+   * @return {Promise<void>}
+   */
   async assertYarn(storyRoots) {
     const promises = [];
 
@@ -66,9 +67,15 @@ module.exports = {
     await Promise.all(promises);
   },
 
+  /**
+   * Generate a JavaScript file to the given output location that declares what contexts should be
+   * included when storybook builds bundles with webpack. This is generated as webpack cannot handle
+   * compiling dynamic routes - it will need to statically analyze file paths.
+   *
+   * @param {Array<Object>} storyRoots
+   * @param {string} output The output filename
+   */
   generateStoriesLoader(storyRoots, output = `${__dirname}/../.stories.js`) {
-    const realOutput = fs.realpathSync(output);
-
     const script = `export default [\n${storyRoots.reduce((acc, { src, fileMatcher }) => {
       const matcher = fileMatcher instanceof RegExp
         ? fileMatcher.toString()
@@ -77,22 +84,30 @@ module.exports = {
       return `${acc}  require.context('${src}', true, ${matcher}),\n`;
     }, '')}];`;
 
-    console.log(`Outputting story loader file to "${chalk.yellow(realOutput)}".`);
-
-    fs.writeFile(realOutput, script, err => {
+    fs.writeFile(output, script, err => {
       if (err) {
         console.log(chalk.bgRed(`Could not export modules: ${err}`));
       }
     });
+
+    console.log(`Outputted story loader file to "${chalk.yellow(fs.realpathSync(output))}".`);
   },
 
+  /**
+   * Attempt to determine the project root. This is fairly dumb and will only return the folder that
+   * is 3 folders up if a vendor folder does not exist in the current directory.
+   *
+   * @return {string}
+   */
   getDefaultRoot() {
-    // Check if a `vendor` folder exists in the project root.
+    // Move up to the admin root.
     let projectRoot = path.resolve(`${__dirname}/../../`);
 
     try {
+      // Check if there's a `vendor` folder
       fs.accessSync(`${projectRoot}/vendor/`);
     } catch (err) {
+      // Assume that we're already in vendor, so the root must be 3 folders up.
       projectRoot = path.resolve(`${projectRoot}/../../../`);
     }
 
