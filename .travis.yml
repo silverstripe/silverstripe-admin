@@ -23,6 +23,7 @@ env:
     - XVFBARGS=":99 -ac -screen 0 1024x768x16"
     - SS_BASE_URL="http://localhost:8080/"
     - SS_ENVIRONMENT_TYPE="dev"
+    - RECIPE_VERSION=4.5.x-dev
 
 matrix:
   fast_finish: true
@@ -62,11 +63,11 @@ before_script:
 
 # Install composer
   - composer validate
-  - composer require silverstripe/recipe-testing:^1 silverstripe/recipe-core:4.5.x-dev silverstripe/versioned:1.5.x-dev --no-update
+  - composer require silverstripe/recipe-testing:^1 silverstripe/recipe-core:$RECIPE_VERSION silverstripe/versioned:1.5.x-dev --no-update
   - if [[ $DB == PGSQL ]]; then composer require silverstripe/postgresql:2.x-dev --no-update; fi
   - if [[ $DB == SQLITE ]]; then composer require silverstripe/sqlite3:2.0.x-dev --no-update; fi
   - if [[ $PHPCS_TEST ]]; then composer global require squizlabs/php_codesniffer:^3 --prefer-dist --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile; fi
-  - if [[ $BEHAT_TEST == cms ]]; then composer require silverstripe/recipe-cms:4.5.x-dev --no-update; fi
+  - if [[ $BEHAT_TEST == cms ]]; then composer require silverstripe/recipe-cms:$RECIPE_VERSION --no-update; fi
 
   - composer install --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile
   - composer show
@@ -96,7 +97,7 @@ after_failure:
 
 before_deploy:
 # Use installer to fill in any possible dependencies
-  - composer require silverstripe/installer:4.4.x-dev
+  - composer require silverstripe/installer:$RECIPE_VERSION
 # Do the build
   - yarn static-storybook
 
