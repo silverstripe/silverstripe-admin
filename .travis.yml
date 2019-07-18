@@ -99,7 +99,7 @@ before_deploy:
 # Use installer to fill in any possible dependencies
   - composer require silverstripe/installer:$RECIPE_VERSION
 # Do the build
-  - yarn static-storybook
+  - yarn static-pattern-lib
 
 deploy:
 - provider: pages
