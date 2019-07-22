@@ -47,7 +47,7 @@ class DateField extends TextField {
       { format: this.moment().endOf('month').format(localFormat) }
     );
 
-    const defaultValue = this.asHTML5()
+    const value = this.asHTML5()
       ? this.props.value
       : this.getLocalisedValue();
     const type = this.asHTML5() ? 'date' : 'text';
@@ -57,12 +57,9 @@ class DateField extends TextField {
       // `parse()` of redux-form `Field` should be used for parsing the
       // localised input value to iso format to pass to redux store but `Field`
       // is not accessible in this context.
-      defaultValue,
+      value,
       placeholder,
     };
-
-    // Reset value so `defaultValue` is used
-    delete props.value;
 
     return props;
   }
