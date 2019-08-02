@@ -123,7 +123,7 @@ class TinymceInlineToolbar {
       top = selection.bottom + iframeRect.top + scrollY + topOffset;
     }
 
-    if (typeof top === 'undefined') {
+    if (top === 0) {
       top = scrollY + blockedTop + buffer;
     }
 

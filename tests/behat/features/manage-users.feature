@@ -99,13 +99,13 @@ Feature: Manage users
     And I should see "staffmember@example.org" in the "#Root_Users" element
 
     When I click "othermember@example.org" in the "#Root_Users" element
-    And I press the "Form_ItemEditForm_action_doNext" button
+    And I follow "Go to next record"
     Then the "Email" field should contain "staffmember@example.org"
-    When I press the "Form_ItemEditForm_action_doPrevious" button
-    Then the "Email" field should contain "othermember@example.org"
 
+    When I follow "Go to previous record"
+    Then the "Email" field should contain "othermember@example.org"
     When I fill in "FirstName" with "Staff Renamed"
-    And I press the "Form_ItemEditForm_action_doNew" button
+    And I follow "Add new record"
     Then I see the text "Are you sure you want to navigate away from this page?" in the alert
     And I dismiss the dialog
 

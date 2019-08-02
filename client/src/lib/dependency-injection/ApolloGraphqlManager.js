@@ -1,6 +1,6 @@
-import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { ROOT_FIELD } from './graphql/helpers';
+import ApolloGraphqlProxy from './ApolloGraphqlProxy';
 
 const TEMPLATE_OVERRIDE = '__TEMPLATE_OVERRIDE__';
 const protectedConfig = ['templateName', 'fields', 'params', 'fragments'];
@@ -451,7 +451,7 @@ Tried to use template '${name}', which could not be found. Please make sure that
    * @returns {Function}
    */
   getContainer() {
-    return graphql(this.getGraphqlAST(), this.getApolloConfig());
+    return new ApolloGraphqlProxy(this.getGraphqlAST(), this.getApolloConfig());
   }
 }
 

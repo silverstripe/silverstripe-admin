@@ -34,7 +34,7 @@ export function findField(fields, name) {
       return prev;
     }
     return findField(field.children, name);
-  }, fields.find(field => field.name === name));
+  }, fields.find(field => field.name === name || field.name === `${name}[]`));
 }
 
 /**
@@ -62,7 +62,7 @@ export default function schemaFieldValues(schema, state) {
       }
 
       return Object.assign({}, prev, {
-        [match.name]: curr.value,
+        [curr.name]: curr.value,
       });
     }, {});
 }

@@ -732,8 +732,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             }
         }
 
-        $dummy = null;
-        $this->extend('init', $dummy);
+        $this->extend('init');
 
         // Load the editor with original user themes before overwriting
         // them with admin themes
@@ -860,7 +859,9 @@ class LeftAndMain extends Controller implements PermissionProvider
             // Get url_segment
             $segment = $this->config()->get('url_segment');
             if (!$segment) {
-                throw new BadMethodCallException("LeftAndMain subclasses must have url_segment");
+                throw new BadMethodCallException(
+                    sprintf('LeftAndMain subclasses (%s) must have url_segment', static::class)
+                );
             }
         }
 
