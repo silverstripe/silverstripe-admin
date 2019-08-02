@@ -352,21 +352,14 @@
       background: #FFF;
       border: 1px solid silver;
       box-shadow: 0 0 10px #CCC;
-      &.col-2{
-        width:180px * 2; // 2x the size of the original ul
-        li {
-          width:50%;
-        }
+      &.vakata-col-2{
+        column-count: 2;
       }
-      &.col-3{
-        width:180px * 3; // 3x the size of the original ul
-        li {
-          width:33%;
-        }
+      &.vakata-col-3{
+        column-count: 3;
       }
       li {
         min-width:180px;
-        float:left;
         a {
           @include hide-text-overflow;
         }
