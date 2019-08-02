@@ -144,9 +144,16 @@ class FormBuilderModal extends Component {
   }
 
   renderHeader() {
-    if (this.props.title !== false) {
+    let { title } = this.props;
+
+    if (title !== false) {
+      if (typeof title === 'object') {
+        // FormSchema title occasionaly contains html, only render text for modal title
+        const doc = new DOMParser().parseFromString(title.html, 'text/html');
+        title = doc.body.textContent || '';
+      }
       return (
-        <ModalHeader toggle={this.handleHide}>{this.props.title}</ModalHeader>
+        <ModalHeader toggle={this.handleHide}>{title}</ModalHeader>
       );
     }
 
@@ -188,7 +195,11 @@ class FormBuilderModal extends Component {
 FormBuilderModal.propTypes = {
   autoFocus: PropTypes.bool,
   isOpen: PropTypes.bool,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  title: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool,
+    PropTypes.shape({ html: PropTypes.string })
+  ]),
   className: PropTypes.string,
   bodyClassName: PropTypes.string,
   modalClassName: PropTypes.string,
