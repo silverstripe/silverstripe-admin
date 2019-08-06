@@ -25,14 +25,14 @@ const plugin = {
         { onclick: () => action.onclick(editor) }
       ));
 
-    editor.addButton('sslink', {
+    editor.ui.registry.addButton('sslink', {
       icon: 'link',
       title: titleWithShortcut,
       type: 'menubutton',
       menu: actions,
     });
 
-    editor.addMenuItem('sslink', {
+    editor.ui.registry.addMenuItem('sslink', {
       icon: 'link',
       text: title,
       menu: actions,

@@ -40,7 +40,6 @@ TinyMCEConfig::get('cms')
 $module = ModuleLoader::inst()->getManifest()->getModule('silverstripe/admin');
 TinyMCEConfig::get('cms')
     ->enablePlugins([
-        'contextmenu' => null,
         'image' => null,
         'sslink' => $module->getResource('client/dist/js/TinyMCE_sslink.js'),
         'sslinkexternal' => $module->getResource('client/dist/js/TinyMCE_sslink-external.js'),

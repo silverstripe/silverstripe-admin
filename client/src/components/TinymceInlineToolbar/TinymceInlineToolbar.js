@@ -20,6 +20,7 @@ class TinymceInlineToolbar {
     }
 
     // type: tinymce.ui.Control
+    /*
     this.control = tinymce.ui.Factory.create({
       type: 'panel',
       classes: 'inline-toolbar',
@@ -31,30 +32,31 @@ class TinymceInlineToolbar {
         },
       ],
     });
+    */
   }
 
   remove() {
-    this.control.remove();
+    // this.control.remove();
     return this;
   }
 
   hide() {
-    this.control.hide();
+    // this.control.hide();
     return this;
   }
 
   show() {
-    this.control.show();
+    // this.control.show();
     return this;
   }
 
   renderTo(dom) {
-    this.control.renderTo(dom);
+    // this.control.renderTo(dom);
     return this;
   }
 
   setStyles(styles) {
-    tinymce.DOM.setStyles(this.control.getEl(), styles);
+    // tinymce.DOM.setStyles(this.control.getEl(), styles);
     return this;
   }
 
@@ -62,6 +64,8 @@ class TinymceInlineToolbar {
    * Source: https://github.com/Automattic/wp-calypso/blob/desktop/2.6.0/client/components/tinymce/plugins/wpcom/plugin.js
    */
   reposition(currSelection) {
+    return;
+
     if (!currSelection) {
       return this;
     }
