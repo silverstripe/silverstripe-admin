@@ -28,6 +28,11 @@ storiesOf('Admin/Breadcrumb', module)
         href: 'level1/level2',
         onClick: nodefault,
       },
+      {
+        text: 'Third level',
+        href: 'level1/level2/level3',
+        onClick: nodefault,
+      },
     ];
     return <Breadcrumb crumbs={breadcrumbs} />;
   })
