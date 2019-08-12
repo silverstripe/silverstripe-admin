@@ -113,8 +113,7 @@ body {
 
 // Item to take up available space
 .flexbox-area-grow {
-  -ms-flex: 1;
-  flex: 1;
+  flex: 1 1 auto;
   min-width: 0; // Allows some browsers to shrink below the width of their contents.
 }
 

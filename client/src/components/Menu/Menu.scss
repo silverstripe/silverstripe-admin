@@ -44,6 +44,7 @@
     &.collapsed {
       // Using important because JavaScript is overriding this value
       width: $cms-menu-width-collapsed !important; // sass-lint:disable-line no-important
+      flex: 0 0 auto; // Prevents shrinkage
       cursor: auto;
       z-index: 50;
 

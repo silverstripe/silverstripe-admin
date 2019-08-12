@@ -360,6 +360,14 @@ input.radio {
     .form-group.htmleditor.stacked .form__field-holder {
       @include make-col(12);
       max-width: calc(#{$input-max-width} + 16.66667%);
+
+      // IE 11 renders the field wider than 100% with the above max-width
+      @media all and (-ms-high-contrast: none) {
+        *::-ms-backdrop,
+        & {
+          max-width: 100%;
+        }
+      }
     }
 
     .form__field-extra-label {
