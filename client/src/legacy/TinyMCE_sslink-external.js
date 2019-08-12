@@ -12,7 +12,7 @@ TinyMCEActionRegistrar.addAction('sslink', {
   text: i18n._t('Admin.LINKLABEL_EXTERNALURL', 'Link to external URL'),
   // eslint-disable-next-line no-console
   onclick: (editor) => editor.execCommand('sslinkexternal'),
-  priority: 52,
+  priority: 70,
 }, editorIdentifier);
 
 const plugin = {
