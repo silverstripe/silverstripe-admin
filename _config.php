@@ -9,14 +9,25 @@ use SilverStripe\Admin\CMSProfileController;
 use SilverStripe\Core\Manifest\ModuleLoader;
 use SilverStripe\Forms\HTMLEditor\TinyMCEConfig;
 
-// Use module_priority config to prioritise module assignment
-TinyMCEConfig::get('cms')
+// Enable SilverStripe insert link dialog on the rich text editor
+$module = ModuleLoader::inst()->getManifest()->getModule('silverstripe/admin');
+/** @var TinyMCEConfig $editorConfig */
+$editorConfig = TinyMCEConfig::get('cms');
+$editorConfig
+    ->enablePlugins([
+        'contextmenu' => null,
+        'image' => null,
+        'anchor' => null,
+        'sslink' => $module->getResource('client/dist/js/TinyMCE_sslink.js'),
+        'sslinkexternal' => $module->getResource('client/dist/js/TinyMCE_sslink-external.js'),
+        'sslinkemail' => $module->getResource('client/dist/js/TinyMCE_sslink-email.js'),
+    ])
     ->setOptions([
         'friendly_name' => 'Default CMS',
         'priority' => '50',
         'skin' => 'silverstripe',
         'body_class' => 'typography',
-        'contextmenu' => "sslink ssmedia ssembed inserttable | cell row column deletetable",
+        'contextmenu' => "sslink anchor ssmedia ssembed inserttable | cell row column deletetable",
         'use_native_selects' => false,
         'valid_elements' => "@[id|class|style|title],a[id|rel|rev|dir|tabindex|accesskey|type|name|href|target|title"
             . "|class],-strong/-b[class],-em/-i[class],-strike[class],-u[class],#p[id|dir|class|align|style],-ol[class],"
@@ -35,17 +46,7 @@ TinyMCEConfig::get('cms')
             . "|usemap|data*],iframe[src|name|width|height|align|frameborder|marginwidth|marginheight|scrolling],"
             . "object[width|height|data|type],param[name|value],map[class|name|id],area[shape|coords|href|target|alt]"
     ]);
-
-// Re-enable media dialog
-$module = ModuleLoader::inst()->getManifest()->getModule('silverstripe/admin');
-TinyMCEConfig::get('cms')
-    ->enablePlugins([
-        'contextmenu' => null,
-        'image' => null,
-        'sslink' => $module->getResource('client/dist/js/TinyMCE_sslink.js'),
-        'sslinkexternal' => $module->getResource('client/dist/js/TinyMCE_sslink-external.js'),
-        'sslinkemail' => $module->getResource('client/dist/js/TinyMCE_sslink-email.js'),
-    ])
-    ->setOption('contextmenu', 'sslink ssmedia ssembed inserttable | cell row column deletetable');
+// enable ability to insert anchors
+$editorConfig->insertButtonsAfter('sslink', 'anchor');
 
 CMSMenu::remove_menu_class(CMSProfileController::class);
