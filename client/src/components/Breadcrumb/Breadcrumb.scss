@@ -13,7 +13,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  direction: rtl;
   padding-top: 0;
 
   .toolbar & {
@@ -24,7 +23,7 @@
     float: none;
     display: inline;
 
-    &:before {
+    &:after {
       padding-right: .5rem;
       padding-left: .5rem;
       color: #ced3d9;
