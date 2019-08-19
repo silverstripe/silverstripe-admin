@@ -35,6 +35,7 @@ class TinyMCEActionRegistrar {
     const priority = action.priority || 50;
     const name = createIdentifier(configId, menu);
     const actions = this.getActions(menu, configId, true);
+
     // If the action is not already registered either globally or within this config
     if (!actions.find((registeredAction) => action.text === registeredAction.text)) {
       this.actions[name] = [
@@ -83,11 +84,13 @@ class TinyMCEActionRegistrar {
   getSortedActions(menu, configId, includingGlobal = true) {
     const actions = this.getActions(menu, configId, includingGlobal);
     return actions.sort((a, b) => {
-      if (a.priority !== b.priority) {
-        return a.priority < b.priority;
+      // Sort by descending priority
+      const priorityDiff = b.priority - a.priority;
+      if (priorityDiff) {
+        return priorityDiff;
       }
-
-      return a.text.toLocaleLowerCase() > b.text.toLocaleLowerCase();
+      // If the two priorities are equal, sort by ascending label
+      return a.text.toLocaleLowerCase() > b.text.toLocaleLowerCase() ? 1 : -1;
     });
   }
 
