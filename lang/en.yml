@@ -97,5 +97,3 @@ en:
     MemberListCaution: 'Caution: Removing members from this list will remove them from all groups and the database'
     TABROLES: Roles
     Users: Users
-  SilverStripe\CMS\Controllers\CMSMain:
-    SAVE: Save
