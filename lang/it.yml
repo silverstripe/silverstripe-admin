@@ -29,11 +29,8 @@ it:
     ACCESSALLINTERFACESHELP: 'Annulla le impostazioni di accesso più specifiche.'
     BROWSER_WARNING_HEADING: 'Browser non supportato'
     BROWSER_WARNING_TEXT: 'Si sta utilizzando un browser Web che non è supportato da SilverStripe. <br/> Effettuare l''aggiornamento a una delle seguenti opzioni.'
-    CollapsePanel: 'Comprimi pannello'
     DELETED: Cancellato.
     DropdownBatchActionsDefault: 'Scegli un''azione...'
-    ExpandPanel: 'Espandi pannello'
-    HelpMenu: 'Menu Aiuto'
     LOGOUT: Disconnetti
     MenuToggleAuto: Auto
     MenuToggleStickyNav: 'Sticky nav'
@@ -41,13 +38,11 @@ it:
     PERMAGAIN: 'Sei stato disconnesso dal CMS. Se si desidera accedere di nuovo, immettere un nome utente e una password di seguito.'
     PERMALREADY: 'Mi dispiace, ma non puoi accedere a questa parte del CMS. Se si desidera accedere come qualcun altro, farlo di seguito.'
     PERMDEFAULT: 'Devi essere registrato per accedere all''area di amministrazione; inserisci le tue credenziali di seguito.'
-    PROFILE: '{name} profilo'
     PreviewButton: Anteprima
     REQUIREJS: 'Il CMS richiede che JavaScript sia abilitato.'
     SAVEDUP: Salvato.
     SUBMIT_BUTTON_LABEL: Vai
     ValidationError: 'Errore di convalida'
-    Version: Versione
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
     Auto: Auto
     ChangeViewMode: 'Cambia la modalità di visualizzazione'
