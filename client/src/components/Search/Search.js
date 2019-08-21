@@ -16,6 +16,7 @@ import SearchForm from './SearchForm';
 import SearchToggle from './SearchToggle';
 import mapFormSchemaToTags from './utilities/mapFormSchemaToTags';
 import PropTypes from 'prop-types';
+import { addQueryString } from 'lib/Backend';
 
 const DISPLAY = {
   NONE: 'NONE',
@@ -60,6 +61,8 @@ class Search extends Component {
     this.clearFormFilter = this.clearFormFilter.bind(this);
     this.focusFormFilter = this.focusFormFilter.bind(this);
     this.formatTagData = this.formatTagData.bind(this);
+    this.handlePopState = this.handlePopState.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 
     const term = props.term
       || (props.filters && props.filters[`${props.filterPrefix}${props.name}`])
@@ -86,8 +89,20 @@ class Search extends Component {
 
   componentWillUnmount() {
     this.setOverrides();
+    window.removeEventListener('popstate', this.handlePopState);
   }
 
+  componentDidMount() {
+    window.addEventListener('popstate', this.handlePopState);
+  }
+
+  handlePopState(event) {
+    if (event.state.identifier && event.state.identifier === this.props.identifier) {
+      debugger;
+      const { formData } = event.state;
+      this.doSearch(formData);
+    }
+  }
   /**
    * Populate search form with search in case a pre-existing search has been queried
    *
@@ -362,8 +377,9 @@ class Search extends Component {
 
     const searchText = searchData[name] || '';
     // Data to store in the redux state
+    console.log('overrides are ', overrides);
     const formData = Object.assign({}, this.getData(true), overrides);
-
+    console.log('formdata is ', formData);
     if (
       this.state.display !== DISPLAY.VISIBLE ||
       this.state.initialSearchText !== searchText ||
@@ -378,8 +394,21 @@ class Search extends Component {
 
     this.props.actions.schema.setSchemaStateOverrides(formSchemaUrl, { fields: [] });
     this.props.actions.reduxForm.initialize(identifier, formData);
-
     this.props.onSearch(searchData);
+
+    return searchData;
+  }
+
+  handleSubmit(overrides = {}) {
+    const formData = this.doSearch(overrides);
+    const url = window.location.pathname;
+    const serialisedData = JSON.stringify(formData);
+    const newURL = `${url}?${encodeURIComponent(serialisedData)}`;
+    window.history.pushState(
+      {identifier: this.props.identifier, formData},
+      document.title,
+      newURL
+    );
   }
 
   /**
@@ -453,7 +482,7 @@ class Search extends Component {
           {...props}
           name={`SearchBox__${name}`}
           onChange={this.handleChange}
-          onSearch={this.doSearch}
+          onSearch={this.handleSubmit}
           onToggleFilter={this.toggle}
           onHideFilter={this.show}
           onHide={this.hide}
@@ -476,7 +505,7 @@ class Search extends Component {
             visible={visible}
             expanded={expanded}
             formSchemaUrl={formSchemaUrl}
-            onSearch={this.doSearch}
+            onSearch={this.handleSubmit}
             onClear={this.clearFilters}
             clearable={clearable}
           />
