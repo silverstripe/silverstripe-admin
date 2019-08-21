@@ -1,1 +1,254 @@
-!function(e){function n(i){if(t[i])return t[i].exports;var r=t[i]={i:i,l:!1,exports:{}};return e[i].call(r.exports,r,r.exports,n),r.l=!0,r.exports}var t={};n.m=e,n.c=t,n.i=function(e){return e},n.d=function(e,t,i){n.o(e,t)||Object.defineProperty(e,t,{configurable:!1,enumerable:!0,get:i})},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,n){return Object.prototype.hasOwnProperty.call(e,n)},n.p="",n(n.s="./client/src/legacy/TinyMCE_sslink-external.js")}({"./client/src/legacy/TinyMCE_sslink-external.js":function(e,n,t){"use strict";function i(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(n,"__esModule",{value:!0});var r=t(2),o=i(r),a=t(1),l=i(a),s=t(6),u=i(s),c=t(0),d=i(c),f=t(3),p=i(f),x=t(5),m=t(4);l.default.addAction("sslink",{text:o.default._t("Admin.LINKLABEL_EXTERNALURL","Link to external URL"),onclick:function(e){return e.execCommand("sslinkexternal")},priority:70},editorIdentifier);var _={init:function(e){e.addCommand("sslinkexternal",function(){window.jQuery("#"+e.id).entwine("ss").openLinkExternalDialog()})}},g="insert-link__dialog-wrapper--external",k=(0,m.loadComponent)((0,x.createInsertLinkModal)("SilverStripe\\Admin\\LeftAndMain","EditorExternalLink"));p.default.entwine("ss",function(e){e("textarea.htmleditor").entwine({openLinkExternalDialog:function(){var n=e("#"+g);n.length||(n=e('<div id="'+g+'" />'),e("body").append(n)),n.addClass("insert-link__dialog-wrapper"),n.setElement(this),n.open()}}),e("#"+g).entwine({renderModal:function(e){var n=this,t=function(){return n.close()},i=function(){return n.handleInsert.apply(n,arguments)},r=this.getOriginalAttributes(),a=tinymce.activeEditor.selection,l=a.getContent()||"",s=a.getNode().tagName,c="A"!==s&&""===l.trim();d.default.render(u.default.createElement(k,{isOpen:e,onInsert:i,onClosed:t,title:o.default._t("Admin.LINK_EXTERNAL","Insert external link"),bodyClassName:"modal__dialog",className:"insert-link__dialog-wrapper--external",fileAttributes:r,identifier:"Admin.InsertLinkExternalModal",requireLinkText:c}),this[0])},buildAttributes:function(e){var n=this._super(e),t=n.href;return t.match(/:\/\//)||(t=window.location.protocol+"//"+t),t=t.replace(/.*:\/\/(#.*)$/,"$1"),t.match(/:\/\/$/)&&(t=""),n.href=t,n}})}),tinymce.PluginManager.add("sslinkexternal",function(e){return _.init(e)}),n.default=_},0:function(e,n){e.exports=ReactDom},1:function(e,n){e.exports=TinyMCEActionRegistrar},2:function(e,n){e.exports=i18n},3:function(e,n){e.exports=jQuery},4:function(e,n){e.exports=Injector},5:function(e,n){e.exports=InsertLinkModal},6:function(e,n){e.exports=React}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./client/src/legacy/TinyMCE_sslink-external.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./client/src/legacy/TinyMCE_sslink-external.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _i18n = __webpack_require__(2);
+
+var _i18n2 = _interopRequireDefault(_i18n);
+
+var _TinyMCEActionRegistrar = __webpack_require__(1);
+
+var _TinyMCEActionRegistrar2 = _interopRequireDefault(_TinyMCEActionRegistrar);
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(0);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _jquery = __webpack_require__(3);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _InsertLinkModal = __webpack_require__(5);
+
+var _Injector = __webpack_require__(4);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_TinyMCEActionRegistrar2.default.addAction('sslink', {
+  text: _i18n2.default._t('Admin.LINKLABEL_EXTERNALURL', 'Link to external URL'),
+
+  onclick: function onclick(editor) {
+    return editor.execCommand('sslinkexternal');
+  },
+  priority: 70
+}, editorIdentifier);
+
+var plugin = {
+  init: function init(editor) {
+    editor.addCommand('sslinkexternal', function () {
+      var field = window.jQuery('#' + editor.id).entwine('ss');
+
+      field.openLinkExternalDialog();
+    });
+  }
+};
+
+var modalId = 'insert-link__dialog-wrapper--external';
+var sectionConfigKey = 'SilverStripe\\Admin\\LeftAndMain';
+var formName = 'EditorExternalLink';
+var InsertLinkExternalModal = (0, _Injector.loadComponent)((0, _InsertLinkModal.createInsertLinkModal)(sectionConfigKey, formName));
+
+_jquery2.default.entwine('ss', function ($) {
+  $('textarea.htmleditor').entwine({
+    openLinkExternalDialog: function openLinkExternalDialog() {
+      var dialog = $('#' + modalId);
+
+      if (!dialog.length) {
+        dialog = $('<div id="' + modalId + '" />');
+        $('body').append(dialog);
+      }
+      dialog.addClass('insert-link__dialog-wrapper');
+
+      dialog.setElement(this);
+      dialog.open();
+    }
+  });
+
+  $('#' + modalId).entwine({
+    renderModal: function renderModal(isOpen) {
+      var _this = this;
+
+      var handleHide = function handleHide() {
+        return _this.close();
+      };
+      var handleInsert = function handleInsert() {
+        return _this.handleInsert.apply(_this, arguments);
+      };
+      var attrs = this.getOriginalAttributes();
+      var selection = tinymce.activeEditor.selection;
+      var selectionContent = selection.getContent() || '';
+      var tagName = selection.getNode().tagName;
+      var requireLinkText = tagName !== 'A' && selectionContent.trim() === '';
+
+      _reactDom2.default.render(_react2.default.createElement(InsertLinkExternalModal, {
+        isOpen: isOpen,
+        onInsert: handleInsert,
+        onClosed: handleHide,
+        title: _i18n2.default._t('Admin.LINK_EXTERNAL', 'Insert external link'),
+        bodyClassName: 'modal__dialog',
+        className: 'insert-link__dialog-wrapper--external',
+        fileAttributes: attrs,
+        identifier: 'Admin.InsertLinkExternalModal',
+        requireLinkText: requireLinkText
+      }), this[0]);
+    },
+    buildAttributes: function buildAttributes(data) {
+      var attributes = this._super(data);
+
+      var href = attributes.href;
+
+      if (!href.match(/:\/\//)) {
+        href = window.location.protocol + '//' + href;
+      }
+
+      href = href.replace(/.*:\/\/(#.*)$/, '$1');
+
+      if (href.match(/:\/\/$/)) {
+        href = '';
+      }
+      attributes.href = href;
+
+      return attributes;
+    }
+  });
+});
+
+tinymce.PluginManager.add('sslinkexternal', function (editor) {
+  return plugin.init(editor);
+});
+
+exports.default = plugin;
+
+/***/ }),
+
+/***/ 0:
+/***/ (function(module, exports) {
+
+module.exports = ReactDom;
+
+/***/ }),
+
+/***/ 1:
+/***/ (function(module, exports) {
+
+module.exports = TinyMCEActionRegistrar;
+
+/***/ }),
+
+/***/ 2:
+/***/ (function(module, exports) {
+
+module.exports = i18n;
+
+/***/ }),
+
+/***/ 3:
+/***/ (function(module, exports) {
+
+module.exports = jQuery;
+
+/***/ }),
+
+/***/ 4:
+/***/ (function(module, exports) {
+
+module.exports = Injector;
+
+/***/ }),
+
+/***/ 5:
+/***/ (function(module, exports) {
+
+module.exports = InsertLinkModal;
+
+/***/ }),
+
+/***/ 6:
+/***/ (function(module, exports) {
+
+module.exports = React;
+
+/***/ })
+
+/******/ });
+//# sourceMappingURL=TinyMCE_sslink-external.js.map
