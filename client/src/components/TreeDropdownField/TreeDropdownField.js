@@ -697,6 +697,32 @@ class TreeDropdownField extends Component {
   }
 }
 
+// Hack! Temporary fix until we can do a proper upgrade of react-select to >= 2.0.
+Select.prototype.componentWillReceiveProps = function (nextProps) {
+  function handleRequired(value, multi) {
+    if (!value) {
+      return true;
+    }
+    return multi ? value.length === 0 : Object.keys(value).length === 0;
+  }
+
+  const valueArray = this.getValueArray(nextProps.value, nextProps);
+
+  if (nextProps.required) {
+    this.setState({
+      required: handleRequired(valueArray[0], nextProps.multi)
+    });
+  } else if (this.props.required) {
+    // Used to be required but it's not any more
+    this.setState({ required: false });
+  }
+  // Array comparison in react-select is broken.
+  const [current, next] = [this.props.value, nextProps.value].map(JSON.stringify);
+  if (this.state.inputValue && current !== next && nextProps.onSelectResetsInput) {
+    this.setState({ inputValue: this.handleInputValueChange('') });
+  }
+};
+
 TreeDropdownField.propTypes = {
   extraClass: PropTypes.string,
   id: PropTypes.string,
