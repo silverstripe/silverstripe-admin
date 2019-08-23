@@ -6,21 +6,22 @@ const {
   pluginJS,
   moduleCSS,
 } = webpackConfig;
+const { collectStoryRoots, getDefaultRoot } = require('./lib/storyTeller');
 
 const ENV = 'development';
 const PATHS = require('../webpack-vars');
 
 // See https://storybook.js.org/configurations/custom-webpack-config/#full-control-mode
-module.exports = (config, configType) => {
+module.exports = (config) => {
   const resolve = resolveJS(ENV, PATHS);
   config.resolve = Object.assign({},
     resolve,
     {
       modules: [
         ...resolve.modules.filter(module => module !== 'node_modules'),
-        // make sure any modules we include in the story is included
-        path.resolve('../asset-admin/client/src'),
-        path.resolve('../campaign-admin/client/src'),
+        // Build modules that expose stories
+        ...collectStoryRoots(getDefaultRoot()).map(config => config.src),
+
         // make sure silverstripe-admin's node_modules is used
         path.resolve('./node_modules'),
         // need generic "node_modules" folder to be last - otherwise it causes multiple versions of React
@@ -47,4 +48,5 @@ module.exports = (config, configType) => {
     ...pluginJS(ENV),
   ];
 
-  return config;};
+  return config;
+};
