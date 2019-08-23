@@ -12,7 +12,32 @@ class Preview extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      frameLoaded: false,
+    };
+
     this.handleBackClick = this.handleBackClick.bind(this);
+    this.setFrameLoaded = this.setFrameLoaded.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    // Reset frame loaded state when the preview URL changes
+    if (!this.state.frameLoaded) {
+      return;
+    }
+
+    if (prevProps.previewUrl !== this.props.previewUrl) {
+      this.setFrameLoaded(false);
+    }
+  }
+
+  /**
+   * Update state to indicate that the preview page has completed loading
+   *
+   * @param {boolean} loaded
+   */
+  setFrameLoaded(loaded = true) {
+    this.setState({ frameLoaded: loaded });
   }
 
   handleBackClick(event) {
@@ -98,7 +123,12 @@ class Preview extends Component {
     }
 
     // Show iframe preview
-    return <iframe className="flexbox-area-grow preview__iframe" src={previewUrl} />;
+    return (<iframe
+      style={{ visibility: this.state.frameLoaded ? 'visible' : 'hidden' }}
+      className="flexbox-area-grow preview__iframe"
+      src={previewUrl}
+      onLoad={this.setFrameLoaded}
+    />);
   }
 
   render() {
