@@ -758,6 +758,8 @@ function mapStateToProps(state, ownProps) {
       failed: [],
       search: '',
       selectedValues: [],
+      // By default it's disabled until we init it
+      disabled: true,
     };
 
   let value = ownProps.value;
