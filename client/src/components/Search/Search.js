@@ -16,7 +16,8 @@ import SearchForm from './SearchForm';
 import SearchToggle from './SearchToggle';
 import mapFormSchemaToTags from './utilities/mapFormSchemaToTags';
 import PropTypes from 'prop-types';
-import { addQueryString } from 'lib/Backend';
+import url from 'url';
+
 
 const DISPLAY = {
   NONE: 'NONE',
@@ -73,6 +74,18 @@ class Search extends Component {
       searchText: term,
       initialSearchText: term,
     };
+
+    console.log(this.getTermFromURL());
+  }
+
+  getTermFromURL() {
+    const parsed = url.parse(window.location.href);
+    console.log(parsed);
+    if (parsed.query) {
+      return parsed.query[this.getQueryStringIdentifier()];
+    }
+
+    return null;
   }
 
   componentWillMount() {
@@ -377,9 +390,7 @@ class Search extends Component {
 
     const searchText = searchData[name] || '';
     // Data to store in the redux state
-    console.log('overrides are ', overrides);
     const formData = Object.assign({}, this.getData(true), overrides);
-    console.log('formdata is ', formData);
     if (
       this.state.display !== DISPLAY.VISIBLE ||
       this.state.initialSearchText !== searchText ||
@@ -401,14 +412,39 @@ class Search extends Component {
 
   handleSubmit(overrides = {}) {
     const formData = this.doSearch(overrides);
-    const url = window.location.pathname;
-    const serialisedData = JSON.stringify(formData);
-    const newURL = `${url}?${encodeURIComponent(serialisedData)}`;
+    const newURL = this.addFormDataToURL(formData);
     window.history.pushState(
       {identifier: this.props.identifier, formData},
       document.title,
       newURL
     );
+  }
+
+  getQueryStringIdentifier() {
+    return `${this.props.identifier}-${this.props.name}`.replace(/[^A-Za-z0-9_]/g, '');
+  }
+
+  addFormDataToURL(formData) {
+    const currentURL = window.location.href;
+    const parsed = url.parse(currentURL);
+    if (!parsed.query) {
+      parsed.query = {};
+    }
+    parsed.query[this.getQueryStringIdentifier()] = JSON.stringify(formData);
+    delete parsed.search;
+    const newURL = url.format(parsed);
+
+    return newURL;
+  }
+
+  getFormDataFromURL() {
+    const parsed = url.parse(window.location.href);
+    const formData = parsed[this.getQueryStringIdentifier()];
+    if (formData) {
+      return JSON.parse(formData);
+    }
+
+    return {};
   }
 
   /**

@@ -4916,7 +4916,9 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Backend = __webpack_require__(18);
+var _url = __webpack_require__("./node_modules/url/url.js");
+
+var _url2 = _interopRequireDefault(_url);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -4981,10 +4983,23 @@ var Search = function (_Component) {
       searchText: term,
       initialSearchText: term
     };
+
+    console.log(_this.getTermFromURL());
     return _this;
   }
 
   _createClass(Search, [{
+    key: 'getTermFromURL',
+    value: function getTermFromURL() {
+      var parsed = _url2.default.parse(window.location.href);
+      console.log(parsed);
+      if (parsed.query) {
+        return parsed.query[this.getQueryStringIdentifier()];
+      }
+
+      return null;
+    }
+  }, {
     key: 'componentWillMount',
     value: function componentWillMount() {
       this.setOverrides(this.props);
@@ -5269,9 +5284,7 @@ var Search = function (_Component) {
 
       var searchText = searchData[name] || '';
 
-      console.log('overrides are ', overrides);
       var formData = Object.assign({}, this.getData(true), overrides);
-      console.log('formdata is ', formData);
       if (this.state.display !== DISPLAY.VISIBLE || this.state.initialSearchText !== searchText || this.state.searchText !== searchText) {
         this.setState({
           display: DISPLAY.VISIBLE,
@@ -5292,10 +5305,38 @@ var Search = function (_Component) {
       var overrides = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
       var formData = this.doSearch(overrides);
-      var url = window.location.pathname;
-      var serialisedData = JSON.stringify(formData);
-      var newURL = url + '?' + encodeURIComponent(serialisedData);
+      var newURL = this.addFormDataToURL(formData);
       window.history.pushState({ identifier: this.props.identifier, formData: formData }, document.title, newURL);
+    }
+  }, {
+    key: 'getQueryStringIdentifier',
+    value: function getQueryStringIdentifier() {
+      return (this.props.identifier + '-' + this.props.name).replace(/[^A-Za-z0-9_]/g, '');
+    }
+  }, {
+    key: 'addFormDataToURL',
+    value: function addFormDataToURL(formData) {
+      var currentURL = window.location.href;
+      var parsed = _url2.default.parse(currentURL);
+      if (!parsed.query) {
+        parsed.query = {};
+      }
+      parsed.query[this.getQueryStringIdentifier()] = JSON.stringify(formData);
+      delete parsed.search;
+      var newURL = _url2.default.format(parsed);
+
+      return newURL;
+    }
+  }, {
+    key: 'getFormDataFromURL',
+    value: function getFormDataFromURL() {
+      var parsed = _url2.default.parse(window.location.href);
+      var formData = parsed[this.getQueryStringIdentifier()];
+      if (formData) {
+        return JSON.parse(formData);
+      }
+
+      return {};
     }
   }, {
     key: 'clearFilters',
@@ -21783,7 +21824,9 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Backend = __webpack_require__(18);
+var _url = __webpack_require__("./node_modules/url/url.js");
+
+var _url2 = _interopRequireDefault(_url);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -21848,10 +21891,23 @@ var Search = function (_Component) {
       searchText: term,
       initialSearchText: term
     };
+
+    console.log(_this.getTermFromURL());
     return _this;
   }
 
   _createClass(Search, [{
+    key: 'getTermFromURL',
+    value: function getTermFromURL() {
+      var parsed = _url2.default.parse(window.location.href);
+      console.log(parsed);
+      if (parsed.query) {
+        return parsed.query[this.getQueryStringIdentifier()];
+      }
+
+      return null;
+    }
+  }, {
     key: 'componentWillMount',
     value: function componentWillMount() {
       this.setOverrides(this.props);
@@ -22136,9 +22192,7 @@ var Search = function (_Component) {
 
       var searchText = searchData[name] || '';
 
-      console.log('overrides are ', overrides);
       var formData = Object.assign({}, this.getData(true), overrides);
-      console.log('formdata is ', formData);
       if (this.state.display !== DISPLAY.VISIBLE || this.state.initialSearchText !== searchText || this.state.searchText !== searchText) {
         this.setState({
           display: DISPLAY.VISIBLE,
@@ -22159,10 +22213,38 @@ var Search = function (_Component) {
       var overrides = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
       var formData = this.doSearch(overrides);
-      var url = window.location.pathname;
-      var serialisedData = JSON.stringify(formData);
-      var newURL = url + '?' + encodeURIComponent(serialisedData);
+      var newURL = this.addFormDataToURL(formData);
       window.history.pushState({ identifier: this.props.identifier, formData: formData }, document.title, newURL);
+    }
+  }, {
+    key: 'getQueryStringIdentifier',
+    value: function getQueryStringIdentifier() {
+      return (this.props.identifier + '-' + this.props.name).replace(/[^A-Za-z0-9_]/g, '');
+    }
+  }, {
+    key: 'addFormDataToURL',
+    value: function addFormDataToURL(formData) {
+      var currentURL = window.location.href;
+      var parsed = _url2.default.parse(currentURL);
+      if (!parsed.query) {
+        parsed.query = {};
+      }
+      parsed.query[this.getQueryStringIdentifier()] = JSON.stringify(formData);
+      delete parsed.search;
+      var newURL = _url2.default.format(parsed);
+
+      return newURL;
+    }
+  }, {
+    key: 'getFormDataFromURL',
+    value: function getFormDataFromURL() {
+      var parsed = _url2.default.parse(window.location.href);
+      var formData = parsed[this.getQueryStringIdentifier()];
+      if (formData) {
+        return JSON.parse(formData);
+      }
+
+      return {};
     }
   }, {
     key: 'clearFilters',
