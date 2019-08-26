@@ -1,7 +1,7 @@
 import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { storiesOf, setAddon } from '@storybook/react';
-import { withKnobs, select } from '@storybook/addon-knobs/react';
+import { withKnobs, select, boolean } from '@storybook/addon-knobs/react';
 import JSXAddon from 'storybook-addon-jsx';
 import { action } from '@storybook/addon-actions';
 
@@ -53,11 +53,14 @@ const buildBreadCrumb = (position, rank, icon) => {
 storiesOf('Admin/Breadcrumb', module)
   .addDecorator(withKnobs)
   .addWithJSX('Breadcrumb', () => (
-    <Breadcrumb
-      crumbs={buildBreadCrumb(
-        0,
-        select('Number of levels', levels, 'First'),
-        select('icon', icons)
-      )}
-    />
+    <div>
+      <Breadcrumb
+        crumbs={buildBreadCrumb(
+          0,
+          select('Number of levels', levels, 'First'),
+          select('icon', icons)
+        )}
+        showBackButton={boolean('showBackButton', true)}
+      />
+    </div>
   ));

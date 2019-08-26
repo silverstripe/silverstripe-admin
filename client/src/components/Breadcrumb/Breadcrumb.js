@@ -1,33 +1,50 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 
+/**
+ * Get the an element from the end of the array
+ * @param {array} list
+ * @param {number} idx
+ * @returns {Object}
+ */
+const fromEnd = (list, idx) => list[list.length - 1 - idx];
 
-const BackButton = () => {
-  const buttonClassNames = [
-    'btn',
-    'btn-secondary',
-    'action',
-    'font-icon-left-open-big',
-    'breadcrumb__back',
-    'btn--no-text',
-  ];
+const suppressClick = (onClick) => ((event) => {
+  if (typeof onClick === 'function') {
+    event.preventDefault();
+    onClick(event);
+  }
+});
+
+/**
+ * Render a back button that trigers the action of the second to last crumb
+ */
+const BackButton = ({ onClick, ...props }) => {
   const backButtonProps = {
-    className: buttonClassNames.join(' '),
-    onClick: console.log,
-    href: '#',
+    className: classNames(
+      'btn',
+      'btn-secondary',
+      'action',
+      'font-icon-left-open-big',
+      'breadcrumb__back',
+      'btn--no-text',
+    ),
     type: 'button',
+    onClick: suppressClick(onClick),
+    ...props
   };
 
   return <button {...backButtonProps} />;
 };
 
 /**
- * Render a single crumb
+ * Render an indivdual crumb
  */
-const Crumb = ({text, href, onClick}) => (
+const Crumb = ({ text, href, onClick }) => (
   <li className="breadcrumb__item">
-    <a className="breadcrumb__item-title" href={href} onClick={onClick}>
+    <a className="breadcrumb__item-title" href={href} onClick={suppressClick(onClick)}>
       {text}
     </a>
   </li>
@@ -36,12 +53,12 @@ const Crumb = ({text, href, onClick}) => (
 /**
  * Render all the crumbs except the last one
  */
-const Crumbs = ({crumbs}) => (
-  crumbs.length == 0 ?
+const Crumbs = ({ crumbs }) => (
+  crumbs.length === 0 ?
     null :
     <div className="breadcrumb__list-container">
       <ol className="breadcrumb">
-      {crumbs.map((crumb, idx) => <Crumb key={crumb.text + idx} {...crumb} />)}
+        {crumbs.map((crumb, idx) => <Crumb key={crumb.text + idx} {...crumb} />)}
       </ol>
     </div>
 );
@@ -49,29 +66,29 @@ const Crumbs = ({crumbs}) => (
 /**
  * Render the primary crumb
  */
-const CurrentCrumb = ({text, onClick, icon, label}) => (
+const CurrentCrumb = ({ text, icon, label }) => (
   <div className="breadcrumb__item breadcrumb__item--last">
     <h2 className="breadcrumb__item-title">
-    {text}
-    {icon && (
+      {text}
+      {icon &&
       <span
-        className={'breadcrumb__icon ' + (icon.className || '')}
+        className={classNames('breadcrumb__icon', icon.className)}
         role="button"
         tabIndex={0}
         aria-label={label}
         onClick={icon.onClick}
-      /> )}
+      />}
     </h2>
   </div>
 );
 
-const Breadcrumb = ({crumbs}) => (
-  <div class="breadcrumb fill-width">
-    { crumbs && crumbs.length > 1 && <BackButton /> }
+const Breadcrumb = ({ crumbs, showBackButton }) => (
+  <div className="breadcrumb fill-width">
+    { showBackButton && crumbs && crumbs.length > 1 && <BackButton {...fromEnd(crumbs, 1)} /> }
     <div className="breadcrumb__container fill-height flexbox-area-grow">
       { crumbs && crumbs.length > 0 && <React.Fragment>
-        <Crumbs crumbs={[...crumbs].slice(0,-1)} />
-        <CurrentCrumb {...([...crumbs].pop())} />
+        <Crumbs crumbs={[...crumbs].slice(0, -1)} />
+        <CurrentCrumb {...fromEnd(crumbs, 0)} />
       </React.Fragment> }
     </div>
   </div>
@@ -80,6 +97,7 @@ const Breadcrumb = ({crumbs}) => (
 Breadcrumb.propTypes = {
   crumbs: PropTypes.arrayOf(PropTypes.shape({
     onClick: PropTypes.func,
+    href: PropTypes.string,
     text: PropTypes.string,
     icon: PropTypes.shape({
       className: PropTypes.string,
@@ -88,6 +106,11 @@ Breadcrumb.propTypes = {
       action: (props) => { if (props.action) { throw new Error('action: no longer used'); } },
     })
   })),
+  showBackButton: PropTypes.bool
+};
+
+Breadcrumb.defaultProps = {
+  showBackButton: true
 };
 
 function mapStateToProps(state) {
