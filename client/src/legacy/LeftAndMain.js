@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom';
 import IframeDialog from 'components/IframeDialog/IframeDialog';
 import Search from 'components/Search/Search';
 import Loading from 'components/Loading/Loading';
+import {Component as Breadcrumb} from 'components/Breadcrumb/Breadcrumb';
 import { schemaMerge } from 'lib/schemaFieldValues';
 import { loadComponent } from 'lib/Injector';
 
@@ -984,6 +985,28 @@ $.entwine('ss', function($) {
       $('body').append(dialog);
       dialog.open();
     },
+  });
+
+  $('.react-breadcrumb').entwine({
+    onmatch: function() {
+      this._super();
+      const props = JSON.parse(this.attr('data-breadcrumb-state'));
+      console.dir(props);
+      const container = $('<div class="cms-loading-container"/>');
+      this.append(container);
+      ReactDOM.render(
+      <Breadcrumb {...props}/>,
+        container[0]
+    );
+    },
+    onunmatch: function() {
+      this._super();
+      const container = this.find('.cms-loading-container');
+      if (container && container.length) {
+        ReactDOM.unmountComponentAtNode(container[0]);
+        container.remove();
+      }
+    }
   });
 
   /**

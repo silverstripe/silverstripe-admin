@@ -3,6 +3,7 @@
 namespace SilverStripe\Admin;
 
 use BadMethodCallException;
+use Exception;
 use InvalidArgumentException;
 use LogicException;
 use ReflectionClass;
@@ -53,6 +54,7 @@ use SilverStripe\Versioned\Versioned;
 use SilverStripe\View\ArrayData;
 use SilverStripe\View\Requirements;
 use SilverStripe\View\SSViewer;
+use SilverStripe\View\ViewableData;
 
 /**
  * LeftAndMain is the parent class of all the two-pane views in the CMS.
@@ -1203,7 +1205,7 @@ class LeftAndMain extends Controller implements PermissionProvider
 
         return $items;
     }
-
+    
     /**
      * Cached search filter instance for current search
      *

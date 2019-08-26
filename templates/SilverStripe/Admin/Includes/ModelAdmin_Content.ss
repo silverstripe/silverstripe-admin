@@ -4,6 +4,7 @@
 		<div class="cms-content-header-info vertical-align-items flexbox-area-grow">
 			<div class="breadcrumbs-wrapper">
 				<span class="cms-panel-link crumb last">
+                    ModelAdmin_Content
 					<% if $SectionTitle %>
 						$SectionTitle
 					<% else %>

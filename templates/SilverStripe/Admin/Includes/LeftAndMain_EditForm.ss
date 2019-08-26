@@ -2,10 +2,9 @@
 <form $FormAttributes data-layout-type="border">
 <% end_if %>
 	<div class="toolbar toolbar--north cms-content-header vertical-align-items">
-		<div class="cms-content-header-info flexbox-area-grow vertical-align-items">
-			<% include SilverStripe\\Admin\\BackLink_Button %>
+		<div class="flexbox-area-grow vertical-align-items">
 			<% with $Controller %>
-				<% include SilverStripe\\Admin\\CMSBreadcrumbs %>
+                <% include SilverStripe\\Admin\\CMSBreadcrumbs %>
 			<% end_with %>
 		</div>
 		<% if $Fields.hasTabset %>

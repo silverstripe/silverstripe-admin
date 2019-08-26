@@ -255,7 +255,6 @@ html, body {
  * ----------------------------------------------------------------- */
 .breadcrumbs-wrapper {
   width: 250px; // to enable flexbox auto-grow
-  overflow: hidden;
   flex: 1;
 
   @include media-breakpoint-down(sm) {

@@ -1,10 +1,5 @@
-<div class="breadcrumbs-wrapper flexbox-area-grow" data-pjax-fragment="Breadcrumbs">
-	<% loop $Breadcrumbs %>
-		<% if $Last %>
-			<span class="cms-panel-link crumb last">$Title<% if $Extra %>$Extra<% end_if %></span>
-		<% else %>
-			<a class="cms-panel-link crumb" href="$Link">$Title</a>
-			<span class="sep">/</span>
-		<% end_if %>
-	<% end_loop %>
+<div
+    class="breadcrumbs-wrapper flexbox-area-grow react-breadcrumb"
+    data-pjax-fragment="Breadcrumbs"
+    data-breadcrumb-state="$BreadcrumbsData">
 </div>

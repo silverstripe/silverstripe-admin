@@ -31,12 +31,11 @@ const BackButton = ({ onClick, ...props }) => {
       'breadcrumb__back',
       'btn--no-text',
     ),
-    type: 'button',
     onClick: suppressClick(onClick),
     ...props
   };
 
-  return <button {...backButtonProps} />;
+  return <a {...backButtonProps} />;
 };
 
 /**
