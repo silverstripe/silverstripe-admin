@@ -227,6 +227,25 @@ class LeftAndMain extends Controller implements PermissionProvider
     private static $extra_requirements_javascript = array();
 
     /**
+     * Register additional translation sources to be included in the CMS client side code.
+     * This can be use to override SilverStripe translations. This configuration option
+     * expects a list of browser accessible directories that can be pass to
+     * {@link Requirements::add_i18n_javascript()}.
+     *
+     * YAML configuration example:
+     * <code>
+     * LeftAndMain:
+     *   $extra_requirements_i18n_javascript:
+     *     - mysite/client/lang
+     *     - my-company/my-module:client/lang
+     * </code>
+     *
+     * @var array
+     * @config
+     */
+    private static $extra_requirements_i18n_javascript = [];
+
+    /**
      * YAML configuration example:
      * <code>
      * LeftAndMain:
@@ -693,44 +712,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             Requirements::javascript('silverstripe/admin: client/dist/js/LeftAndMain.Ping.js');
         }
 
-        // Custom requirements
-        $extraJs = $this->config()->get('extra_requirements_javascript');
-
-        if ($extraJs) {
-            foreach ($extraJs as $file => $config) {
-                if (is_numeric($file)) {
-                    $file = $config;
-                }
-
-                Requirements::javascript($file);
-            }
-        }
-
-        $extraCss = $this->config()->get('extra_requirements_css');
-
-        if ($extraCss) {
-            foreach ($extraCss as $file => $config) {
-                if (is_numeric($file)) {
-                    $file = $config;
-                    $config = array();
-                }
-
-                Requirements::css($file, isset($config['media']) ? $config['media'] : null);
-            }
-        }
-
-        $extraThemedCss = $this->config()->get('extra_requirements_themedCss');
-
-        if ($extraThemedCss) {
-            foreach ($extraThemedCss as $file => $config) {
-                if (is_numeric($file)) {
-                    $file = $config;
-                    $config = array();
-                }
-
-                Requirements::themedCSS($file, isset($config['media']) ? $config['media'] : null);
-            }
-        }
+        $this->extraRequirements();
 
         $this->extend('init');
 
@@ -749,6 +731,61 @@ class LeftAndMain extends Controller implements PermissionProvider
 
         // Set default reading mode to suppress ?stage=Stage querystring params in CMS
         Versioned::set_default_reading_mode(Versioned::get_reading_mode());
+    }
+
+    /**
+     * Go through the `extra_requirements` config option and require them.
+     */
+    private function extraRequirements(): void
+    {
+        // Load the extra JS dependencies
+        $extraJs = $this->config()->get('extra_requirements_javascript');
+        if ($extraJs) {
+            foreach ($extraJs as $file => $config) {
+                if (is_numeric($file)) {
+                    $file = $config;
+                }
+
+                Requirements::javascript($file);
+            }
+        }
+
+        // Load extra client side translations
+        $extraI18nJs = $this->config()->get('extra_requirements_i18n_javascript');
+        if ($extraI18nJs) {
+            foreach ($extraI18nJs as $file => $config) {
+                if (is_numeric($file)) {
+                    $file = $config;
+                }
+                Requirements::add_i18n_javascript($file);
+            }
+        }
+
+        // Load extra CSS
+        $extraCss = $this->config()->get('extra_requirements_css');
+        if ($extraCss) {
+            foreach ($extraCss as $file => $config) {
+                if (is_numeric($file)) {
+                    $file = $config;
+                    $config = array();
+                }
+
+                Requirements::css($file, isset($config['media']) ? $config['media'] : null);
+            }
+        }
+
+        // Load some extra themed CSS
+        $extraThemedCss = $this->config()->get('extra_requirements_themedCss');
+        if ($extraThemedCss) {
+            foreach ($extraThemedCss as $file => $config) {
+                if (is_numeric($file)) {
+                    $file = $config;
+                    $config = array();
+                }
+
+                Requirements::themedCSS($file, isset($config['media']) ? $config['media'] : null);
+            }
+        }
     }
 
     public function handleRequest(HTTPRequest $request)
