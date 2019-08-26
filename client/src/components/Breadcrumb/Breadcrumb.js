@@ -1,5 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+
+const BackButton = () => {
+  const buttonClassNames = [
+    'btn',
+    'btn-secondary',
+    'action',
+    'font-icon-left-open-big',
+    'breadcrumb__back',
+    'btn--no-text',
+  ];
+  const backButtonProps = {
+    className: buttonClassNames.join(' '),
+    onClick: console.log,
+    href: '#',
+    type: 'button',
+  };
+
+  return <button {...backButtonProps} />;
+};
 
 /**
  * Render a single crumb
@@ -45,11 +66,14 @@ const CurrentCrumb = ({text, onClick, icon, label}) => (
 );
 
 const Breadcrumb = ({crumbs}) => (
-  <div className="breadcrumb__container fill-height flexbox-area-grow">
-    { crumbs && crumbs.length > 0 && <React.Fragment>
-      <Crumbs crumbs={[...crumbs].slice(0,-1)} />
-      <CurrentCrumb {...([...crumbs].pop())} />
-    </React.Fragment> }
+  <div class="breadcrumb fill-width">
+    { crumbs && crumbs.length > 1 && <BackButton /> }
+    <div className="breadcrumb__container fill-height flexbox-area-grow">
+      { crumbs && crumbs.length > 0 && <React.Fragment>
+        <Crumbs crumbs={[...crumbs].slice(0,-1)} />
+        <CurrentCrumb {...([...crumbs].pop())} />
+      </React.Fragment> }
+    </div>
   </div>
 );
 
