@@ -216,9 +216,9 @@ class LeftAndMain extends Controller implements PermissionProvider
      *
      * YAML configuration example:
      * <code>
-     * LeftAndMain:
+     * SilverStripe\Admin\LeftAndMain:
      *   extra_requirements_javascript:
-     *     - mysite/javascript/myscript.js
+     *     - app/javascript/myscript.js
      * </code>
      *
      * @config
@@ -234,9 +234,9 @@ class LeftAndMain extends Controller implements PermissionProvider
      *
      * YAML configuration example:
      * <code>
-     * LeftAndMain:
+     * SilverStripe\Admin\LeftAndMain:
      *   $extra_requirements_i18n_javascript:
-     *     - mysite/client/lang
+     *     - app/client/lang
      *     - my-company/my-module:client/lang
      * </code>
      *
@@ -248,9 +248,9 @@ class LeftAndMain extends Controller implements PermissionProvider
     /**
      * YAML configuration example:
      * <code>
-     * LeftAndMain:
+     * SilverStripe\Admin\LeftAndMain:
      *   extra_requirements_css:
-     *     mysite/css/mystyle.css:
+     *     app/css/mystyle.css:
      *       media: screen
      * </code>
      *
