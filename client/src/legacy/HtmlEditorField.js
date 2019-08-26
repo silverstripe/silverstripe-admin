@@ -98,7 +98,18 @@ ss.editorWrappers.tinyMCE = (function() {
       // Update change detection
       if(!options.silent) {
         jQuery(instance.getElement()).trigger("change");
-        instance.getElement().dispatchEvent(new Event('input', { bubbles: true }));
+
+        let event;
+        if (typeof (Event) === 'function') {
+          event = new Event('input');
+        } else {
+          event = document.createEvent('Event');
+          event.initEvent('input', true, true);
+        }
+        event.simulated = true;
+        event.value = value;
+
+        this.inputRef.dispatchEvent(event);
       }
     },
 

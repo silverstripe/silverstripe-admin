@@ -80,9 +80,16 @@ class HtmlEditorField extends TextField {
     const { value } = this.props;
 
     if (value !== prevProps.value) {
-      const event = new Event('change', { bubbles: true });
+      let event;
+      if (typeof (Event) === 'function') {
+        event = new Event('change');
+      } else {
+        event = document.createEvent('Event');
+        event.initEvent('change', true, true);
+      }
       event.simulated = true;
       event.value = value;
+
       this.inputRef.dispatchEvent(event);
     }
   }
