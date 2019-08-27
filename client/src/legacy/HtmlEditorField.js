@@ -165,7 +165,8 @@ ss.editorWrappers.tinyMCE = (function() {
      * Request an update to editor content
      */
     repaint: function() {
-      // NOOP
+      this.destroy();
+      this.create();
     },
 
     /**
