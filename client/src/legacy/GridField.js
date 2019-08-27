@@ -567,7 +567,7 @@ $.entwine('ss', function($) {
 
   $('.js-injector-boot .grid-field .grid-field__search-holder').entwine({
     Component: null,
-
+    Initial: true,
     onmatch() {
       this._super();
 
@@ -583,6 +583,7 @@ $.entwine('ss', function($) {
       this.setComponent(Search);
 
       this.refresh();
+      this.setInitial(false);
     },
 
     onunmatch() {
@@ -643,6 +644,8 @@ $.entwine('ss', function($) {
 
     refresh() {
       const props = this.data('schema');
+      const autoSubmit = this.data('auto-submit') === 1;
+      this.data('auto-submit', '0');
       const Search = this.getComponent();
       const handleHide = () => this.close();
       const handleSearch = (data) => this.search(data);
@@ -656,6 +659,7 @@ $.entwine('ss', function($) {
           filterPrefix="Search__"
           onHide={handleHide}
           onSearch={handleSearch}
+          autoSubmitOnInitialValue={autoSubmit}
           {...props}
         />,
         this[0]

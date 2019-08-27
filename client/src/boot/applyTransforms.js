@@ -3,6 +3,7 @@ import Validator from 'lib/Validator';
 import classnames from 'classnames';
 import { findField } from 'lib/schemaFieldValues';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
+import makeStateful from 'components/Search/SearchStatefulURL';
 
 const togglePristineState = (field, isPristine = false) => {
   // set pristine and dirty classes if they're defined
@@ -87,6 +88,13 @@ const applyTransforms = () => {
         }
       );
     });
+
+    Injector.transform(
+      'grid-search',
+      (updater) => {
+        updater.component('Search', makeStateful, 'Admin.SearchForm');
+      }
+    );
 };
 
 export default applyTransforms;

@@ -16,7 +16,6 @@ import SearchForm from './SearchForm';
 import SearchToggle from './SearchToggle';
 import mapFormSchemaToTags from './utilities/mapFormSchemaToTags';
 import PropTypes from 'prop-types';
-import url from 'url';
 
 
 const DISPLAY = {
@@ -62,34 +61,25 @@ class Search extends Component {
     this.clearFormFilter = this.clearFormFilter.bind(this);
     this.focusFormFilter = this.focusFormFilter.bind(this);
     this.formatTagData = this.formatTagData.bind(this);
-    this.handlePopState = this.handlePopState.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-
     const term = props.term
       || (props.filters && props.filters[`${props.filterPrefix}${props.name}`])
       || '';
-
     this.state = {
       display: props.display,
       searchText: term,
       initialSearchText: term,
     };
-
-    console.log(this.getTermFromURL());
   }
 
-  getTermFromURL() {
-    const parsed = url.parse(window.location.href);
-    console.log(parsed);
-    if (parsed.query) {
-      return parsed.query[this.getQueryStringIdentifier()];
-    }
-
-    return null;
-  }
 
   componentWillMount() {
     this.setOverrides(this.props);
+  }
+
+  componentDidMount() {
+    if (this.props.autoSubmitOnInitialValue && this.state.initialSearchText) {
+      this.doSearch();
+    }
   }
 
   componentWillReceiveProps(props) {
@@ -102,20 +92,8 @@ class Search extends Component {
 
   componentWillUnmount() {
     this.setOverrides();
-    window.removeEventListener('popstate', this.handlePopState);
   }
 
-  componentDidMount() {
-    window.addEventListener('popstate', this.handlePopState);
-  }
-
-  handlePopState(event) {
-    if (event.state.identifier && event.state.identifier === this.props.identifier) {
-      debugger;
-      const { formData } = event.state;
-      this.doSearch(formData);
-    }
-  }
   /**
    * Populate search form with search in case a pre-existing search has been queried
    *
@@ -410,43 +388,6 @@ class Search extends Component {
     return searchData;
   }
 
-  handleSubmit(overrides = {}) {
-    const formData = this.doSearch(overrides);
-    const newURL = this.addFormDataToURL(formData);
-    window.history.pushState(
-      {identifier: this.props.identifier, formData},
-      document.title,
-      newURL
-    );
-  }
-
-  getQueryStringIdentifier() {
-    return `${this.props.identifier}-${this.props.name}`.replace(/[^A-Za-z0-9_]/g, '');
-  }
-
-  addFormDataToURL(formData) {
-    const currentURL = window.location.href;
-    const parsed = url.parse(currentURL);
-    if (!parsed.query) {
-      parsed.query = {};
-    }
-    parsed.query[this.getQueryStringIdentifier()] = JSON.stringify(formData);
-    delete parsed.search;
-    const newURL = url.format(parsed);
-
-    return newURL;
-  }
-
-  getFormDataFromURL() {
-    const parsed = url.parse(window.location.href);
-    const formData = parsed[this.getQueryStringIdentifier()];
-    if (formData) {
-      return JSON.parse(formData);
-    }
-
-    return {};
-  }
-
   /**
    * Clear the Search component and focus on the first filter field.
    */
@@ -518,7 +459,7 @@ class Search extends Component {
           {...props}
           name={`SearchBox__${name}`}
           onChange={this.handleChange}
-          onSearch={this.handleSubmit}
+          onSearch={this.doSearch}
           onToggleFilter={this.toggle}
           onHideFilter={this.show}
           onHide={this.hide}
@@ -541,7 +482,6 @@ class Search extends Component {
             visible={visible}
             expanded={expanded}
             formSchemaUrl={formSchemaUrl}
-            onSearch={this.handleSubmit}
             onClear={this.clearFilters}
             clearable={clearable}
           />
@@ -555,7 +495,7 @@ class Search extends Component {
 Search.propTypes = {
   onSearch: PropTypes.func,
   onHide: PropTypes.func,
-
+  autoSubmitOnInitialValue: PropTypes.bool,
   id: PropTypes.string.isRequired,
   display: PropTypes.oneOf(Object.values(DISPLAY)),
   formSchemaUrl: PropTypes.string,
@@ -583,6 +523,7 @@ Search.defaultProps = {
   placeholder: i18n._t('Admin.SEARCH', 'Search'),
   display: DISPLAY.VISIBLE,
   displayBehavior: BEHAVIOR.NONE,
+  autoSubmitOnInitialValue: false,
   filters: {},
   formData: {},
   term: '',
