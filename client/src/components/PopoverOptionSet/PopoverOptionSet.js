@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Input, InputGroup, InputGroupAddon, Popover } from 'reactstrap';
+import { Button, Input, InputGroup, InputGroupAddon, Popover, Util as reactstrapUtil } from 'reactstrap';
 import classNames from 'classnames';
 import i18n from 'i18n';
 
@@ -16,6 +16,8 @@ class PopoverOptionSet extends Component {
     this.handleSearchValueClear = this.handleSearchValueClear.bind(this);
     this.handleSearchValueChange = this.handleSearchValueChange.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.doToggle = this.doToggle.bind(this);
+    this.focusOnTarget = this.focusOnTarget.bind(this);
 
     this.state = {
       searchValue: ''
@@ -23,13 +25,38 @@ class PopoverOptionSet extends Component {
   }
 
   /**
-   * Pass toggle to parent (props requires a toggle function) and clear the search input
+   * Handle the toggle from the underlying react strap component.
    */
   handleToggle() {
+    this.doToggle(false);
+  }
+
+  /**
+   * Pass toggle to parent (props requires a toggle function) and clear the search input
+   * @param {bool} focusOnTarget Whether we should give the focus back to the popover target.
+   */
+  doToggle(focusOnTarget) {
     const { toggle } = this.props;
 
     toggle();
     this.handleSearchValueClear();
+
+    if (focusOnTarget) {
+      this.focusOnTarget();
+    }
+  }
+
+  /**
+   * Move the focus back to the popover target
+   */
+  focusOnTarget() {
+    const { target } = this.props;
+    if (target) {
+      const el = reactstrapUtil.getTarget(target);
+      if (el) {
+        el.focus();
+      }
+    }
   }
 
   /**
@@ -58,7 +85,7 @@ class PopoverOptionSet extends Component {
    */
   handleKeyDown(event) {
     if (event.key === 'Escape') {
-      this.handleToggle();
+      this.doToggle(true);
     }
   }
 
