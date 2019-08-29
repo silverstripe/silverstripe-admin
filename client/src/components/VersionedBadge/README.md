@@ -6,7 +6,6 @@ Badge component for displaying versioning states in a Bootstrap "badge" based st
 ```js
 const props = {
   status: 'draft',
-  message: 'Draft',
   className: 'my-custom-class',
 };
 <VersionedBadge {...props} />
@@ -14,6 +13,5 @@ const props = {
 
 ## Properties
 
- * `status` (string): The status for the badge, takes versioning states e.g. `draft`, `modified`, `live`.
- * `message` (string): The string to display in the badge. Usually would be "Draft", "Published", etc.
+ * `status` (string): The status for the badge, takes versioning states e.g. `draft`, `modified`, `live`, `archived`.
  * `className` (string): Any extra classes to apply for the badge.

@@ -1,7 +1,8 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import Badge from 'components/Badge/Badge';
+import i18n from 'i18n';
 
 /**
  * List of valid versioned statuses for a Badge
@@ -10,44 +11,32 @@ import Badge from 'components/Badge/Badge';
 export const statuses = [
   'draft',
   'modified',
-  'live'
+  'live',
+  'archived',
 ];
 
-class VersionedBadge extends PureComponent {
-  render() {
-    const { status, className } = this.props;
-    if (!status) {
-      return null;
-    }
+/**
+ * Capitalise the first letter
+ * @param {string} str
+ * @returns {string}
+ */
+const toTitleCase = (str) => str.replace(/^\w/, c => c.toUpperCase());
 
-    const compiledClassNames = classnames(
-      className,
-      'versioned-badge',
-      `versioned-badge--${status}`,
-    );
+const VersionedBadge = ({ status, className }) => {
+  const props = {
+    className: classnames(className, 'versioned-badge', `versioned-badge--${status}`),
+    message: i18n._t(`ADMIN.${status.toUpperCase()}`, toTitleCase(status)),
+    status: 'default',
+  };
 
-    const props = {
-      ...this.props,
-      className: compiledClassNames,
-      status: 'default',
-      inverted: false,
-    };
-
-    return (
-      <Badge {...props} />
-    );
-  }
-}
-
-VersionedBadge.propTypes = {
-  message: PropTypes.node,
-  status: PropTypes.oneOf(statuses),
-  className: PropTypes.string,
+  return (
+    <Badge {...props} />
+  );
 };
 
-VersionedBadge.defaultProps = {
-  status: 'default',
-  className: '',
+VersionedBadge.propTypes = {
+  status: PropTypes.oneOf(statuses).isRequired,
+  className: PropTypes.string,
 };
 
 export default VersionedBadge;
