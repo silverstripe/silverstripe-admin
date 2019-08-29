@@ -2,9 +2,12 @@
   padding-left: 0;
   padding-right: 0;
 
-  &--draft,
+  &--draft {
+    color: $state-draft;
+  }
+
   &--modified {
-    color: $orange;
+    color: $state-modified;
   }
 
   &--live {

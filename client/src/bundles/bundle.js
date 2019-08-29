@@ -56,6 +56,7 @@ require('expose-loader?BreadcrumbsActions!state/breadcrumbs/BreadcrumbsActions')
 require('expose-loader?RecordsActionTypes!state/records/RecordsActionTypes');
 require('expose-loader?UnsavedFormsActions!state/unsavedForms/UnsavedFormsActions');
 require('expose-loader?Badge!components/Badge/Badge');
+require('expose-loader?VersionedBadge!components/VersionedBadge/VersionedBadge');
 require('expose-loader?CheckboxSetField!components/CheckboxSetField/CheckboxSetField');
 require('expose-loader?Preview!components/Preview/Preview');
 require('expose-loader?ViewModeStates!state/viewMode/ViewModeStates');
