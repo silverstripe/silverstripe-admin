@@ -11,6 +11,10 @@
   }
 
   &--live {
-    color: $green;
+    color: $state-live;
+  }
+
+  &--archived {
+    color: $state-archived;
   }
 }
