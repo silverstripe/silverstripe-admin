@@ -7,6 +7,7 @@
  */
 
 import jQuery from 'jquery';
+import 'events-polyfill';
 
 var ss = typeof window.ss !== 'undefined' ? window.ss : {};
 
