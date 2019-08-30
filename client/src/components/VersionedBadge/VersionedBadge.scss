@@ -1,0 +1,20 @@
+.versioned-badge {
+  padding-left: 0;
+  padding-right: 0;
+
+  &--draft {
+    color: $state-draft;
+  }
+
+  &--modified {
+    color: $state-modified;
+  }
+
+  &--live {
+    color: $state-live;
+  }
+
+  &--archived {
+    color: $state-archived;
+  }
+}
