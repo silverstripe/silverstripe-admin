@@ -322,6 +322,9 @@ $.entwine('ss.tree', function($){
       var prevNode = data.PrevID ? this.getNodeByID(data.PrevID) : false;
       var parentNode = data.ParentID ? this.getNodeByID(data.ParentID) : false;
 
+      // Store some of the node properties before we update them
+      var parentOpen = this.jstree('is_open', parentNode);
+
       // Copy attributes. We can't replace the node completely
       // without removing or detaching its children nodes.
       $.each(['id', 'style', 'class', 'data-pagetype'], function(i, attrName) {
@@ -340,6 +343,13 @@ $.entwine('ss.tree', function($){
       }
       else {
         this.jstree('move_node', node, parentNode.length ? parentNode : -1);
+      }
+
+      // Restore some of the node properties after the nodes are replaced
+      if (parentOpen) {
+        this.jstree('open_node', parentNode);
+      } else {
+        this.jstree('close_node', parentNode);
       }
     },
 
@@ -385,20 +395,10 @@ $.entwine('ss.tree', function($){
       this.setIsUpdatingTree(true);
       self.jstree('save_selected');
 
-      var correctStateFn = function(node) {
-        // Duplicates can be caused by the subtree reloading through
-        // a tree "open"/"select" event, while at the same time creating a new node
-        self.getNodeByID(node.data('id')).not(node).remove();
-
-        // Select this node
-        self.jstree('deselect_all');
-        self.jstree('select_node', node);
-      };
-
       // TODO 'initially_opened' config doesn't apply here
-      self.jstree('open_node', this.getNodeByID(0));
       self.jstree('save_opened');
       self.jstree('save_selected');
+      var selected = self.jstree('get_selected');
 
       return new Promise(resolve => {
         $.ajax({
@@ -418,9 +418,6 @@ $.entwine('ss.tree', function($){
               // Check if node exists, create if necessary
               if (node.length) {
                 self.updateNode(node, nodeData.html, nodeData);
-                setTimeout(function () {
-                  correctStateFn(node);
-                }, 500);
               } else {
                 includesNewNode = true;
 
@@ -428,22 +425,17 @@ $.entwine('ss.tree', function($){
                 // This can happen for deep trees which require ajax loading.
                 // Assumes that the new node has been submitted to the server already.
                 if (nodeData.ParentID && !self.find('li[data-id=' + nodeData.ParentID + ']').length) {
-                  self.jstree('load_node', -1, function () {
-                    newNode = self.find('li[data-id=' + nodeId + ']');
-                    correctStateFn(newNode);
-                  });
+                  self.jstree('load_node', -1);
                 } else {
-                  self.createNode(nodeData.html, nodeData, function (newNode) {
-                    correctStateFn(newNode);
-                  });
+                  self.createNode(nodeData.html, nodeData);
                 }
               }
             });
 
-            if (!includesNewNode) {
+            if (selected) {
               self.jstree('deselect_all');
-              self.jstree('reselect');
               self.jstree('reopen');
+              self.jstree('select_node', selected);
             }
           },
           complete: function () {
