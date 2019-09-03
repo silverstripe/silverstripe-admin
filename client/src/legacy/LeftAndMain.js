@@ -904,39 +904,45 @@ $.entwine('ss', function($) {
         sessionData = hasSessionStorage ? window.sessionStorage.getItem('tabs-' + url) : null,
         sessionStates = sessionData ? JSON.parse(sessionData) : false;
 
-      this.find('.cms-tabset, .ss-tabset').each(function() {
-        var index, tab,
-          tabset = $(this),
-          tabsetId = tabset.attr('id'),
-          forcedTab = tabset.children('ul').children('li.ss-tabs-force-active');
+      var tabset = this.find('.cms-tabset, .ss-tabset');
 
-        if(!tabset.data('tabs')){
-          return; // don't act on uninit'ed controls
-        }
+      if (tabset.length) {
+        tabset.each(function() {
+          var index, tab,
+            tabset = $(this),
+            tabsetId = tabset.attr('id'),
+            forcedTab = tabset.children('ul').children('li.ss-tabs-force-active');
 
-        // The tabs may have changed, notify the widget that it should update its internal state.
-        tabset.tabs('refresh');
-
-        // Make sure the intended tab is selected. Only force the tab on the correct tabset though
-        if(forcedTab.length) {
-          index = forcedTab.first().index();
-        } else if(overrideStates && overrideStates[tabsetId]) {
-          tab = tabset.find(overrideStates[tabsetId].tabSelector);
-          if(tab.length){
-            index = tab.index();
+          if(!tabset.data('tabs')){
+            return; // don't act on uninit'ed controls
           }
-        } else if(sessionStates) {
-          $.each(sessionStates, function(i, state) {
-            if(tabsetId == state.id) {
-              index = state.selected;
+
+          // The tabs may have changed, notify the widget that it should update its internal state.
+          tabset.tabs('refresh');
+
+          // Make sure the intended tab is selected. Only force the tab on the correct tabset though
+          if(forcedTab.length) {
+            index = forcedTab.first().index();
+          } else if(overrideStates && overrideStates[tabsetId]) {
+            tab = tabset.find(overrideStates[tabsetId].tabSelector);
+            if(tab.length){
+              index = tab.index();
             }
-          });
-        }
-        if(index !== null){
-          tabset.tabs('option', 'active', index);
-          self.trigger('tabstaterestored');
-        }
-      });
+          } else if(sessionStates) {
+            $.each(sessionStates, function(i, state) {
+              if(tabsetId == state.id) {
+                index = state.selected;
+              }
+            });
+          }
+          if(index !== null){
+            tabset.tabs('option', 'active', index);
+            self.trigger('tabstaterestored');
+          }
+        });
+      } else {
+          $('#Form_AddForm_action_doAdd').focus();
+      }
     },
 
     /**

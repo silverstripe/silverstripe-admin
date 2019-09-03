@@ -3,6 +3,7 @@ import React from 'react';
 import Script from 'react-load-script';
 import { Component as TextField } from 'components/TextField/TextField';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
+import 'events-polyfill';
 
 
 class HtmlEditorField extends TextField {

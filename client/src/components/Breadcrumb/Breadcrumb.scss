@@ -19,7 +19,7 @@
     padding-bottom: 0;
   }
 
-  >li {
+  &__item {
     float: none;
     display: inline;
 
@@ -53,6 +53,11 @@
 .breadcrumb__item--last {
   display: block;
   float: none;
+
+  &::after {
+    content: "";
+    display: none;
+  }
 
   &.breadcrumb__item--no-crumb {
     h2 {

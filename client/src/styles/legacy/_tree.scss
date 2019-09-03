@@ -681,7 +681,7 @@ a .jstree-pageicon {
 /* Tree status labels and dots */
 .jstree-apple .jstree-clicked,
 .jstree-apple .jstree-hovered {
-  background: #ebfbff;
+  background: #e8f5ff;
 }
 @mixin tree-status-icon($label, $dotColor, $textColor, $bgColor) {
   .cms-tree.jstree .status-#{$label} > a .jstree-pageicon:after {
@@ -712,11 +712,11 @@ a .jstree-pageicon {
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3), inset 0 0 0 1px $textColor;
   }
 }
-@include tree-status-icon('addedtodraft', #ff7f22, $state-draft, #fff7f2);
-@include tree-status-icon('modified', #fff2e8, $state-draft, #fff7f2);
-@include tree-status-icon('archived', #5F7688, #455b6c, #f7f7f7);
-@include tree-status-icon('deletedonlive', #f7f7f7, #455b6c, #f7f7f7);
-@include tree-status-icon('removedfromdraft', #f7f7f7, #455b6c, #f7f7f7);
+@include tree-status-icon('addedtodraft', #ff7f22, $state-draft, #fff2ea);
+@include tree-status-icon('modified', #fff2e8, $state-draft, #fff2ea);
+@include tree-status-icon('archived', #5F7688, #455b6c, #f1f3f6);
+@include tree-status-icon('deletedonlive', #f1f3f6, #455b6c, #f1f3f6);
+@include tree-status-icon('removedfromdraft', #f1f3f6, #455b6c, #f1f3f6);
 @include tree-status-icon('workflow-approval', #0070B4, #0070B4, #E8FAFF);
 
 .cms-tree {
