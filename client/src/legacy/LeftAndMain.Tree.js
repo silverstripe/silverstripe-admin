@@ -88,7 +88,13 @@ $.entwine('ss.tree', function($){
               }
             }
           })
-          .bind('move_node.jstree', function(e, data) {
+          .bind('move_node.jstree', async function(e, data) {
+            if (!await self.canMove(data)) {
+              // undo
+              $.jstree.rollback(data.rlbk);
+              return;
+            }
+
             if(self.getIsUpdatingTree()) return;
 
             var movedNode = data.rslt.o, newParentNode = data.rslt.np, oldParentNode = data.inst._get_parent(movedNode), newParentID = $(newParentNode).data('id') || 0, nodeID = $(movedNode).data('id');
@@ -160,6 +166,15 @@ $.entwine('ss.tree', function($){
         chunks.map((chunk) => this.updateNodesFromServer(chunk, false))
               .reduce((chain, curr) => chain.then(curr), Promise.resolve());
       }
+    },
+
+    /**
+     * Validates the moving of a node
+     * @param {Object} data provided by the move_node.jstree event
+     * @returns {Promise<boolean>} Returning false will prevent the node from moving
+     */
+    canMove: async function(data) {
+      return Promise.resolve(true);
     },
 
     getTreeConfig: function() {
