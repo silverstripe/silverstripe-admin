@@ -3,6 +3,7 @@ import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
 import ReactDOM from 'react-dom';
 import jQuery from 'jquery';
 import { setupTinyMceInlineToolbar } from 'components/TinymceInlineToolbar/TinymceInlineToolbar';
+import { createHTMLSanitiser } from 'lib/ShortcodeSerialiser';
 import i18n from 'i18n';
 
 const plugin = {
@@ -95,7 +96,7 @@ jQuery.entwine('ss', ($) => {
       /* noop */
     },
 
-    /**
+  /**
      * Default behaviour, recommended to overload this and sanitise where needed
      *
      * @param data
@@ -107,8 +108,9 @@ jQuery.entwine('ss', ($) => {
       editor.selection.moveToBookmark(this.getBookmark());
 
       const attributes = this.buildAttributes(data);
-
-      this.insertLinkInEditor(attributes, data.Text);
+      const sanitise = createHTMLSanitiser();
+      const linkText = sanitise(data.Text);
+      this.insertLinkInEditor(attributes, linkText);
       this.close();
 
       return Promise.resolve();
