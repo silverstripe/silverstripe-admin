@@ -133,4 +133,26 @@ const ShortcodeSerialiser = {
   },
 };
 
+const createHTMLSanitiser = () => {
+  const div = document.createElement('div');
+  return (str) => {
+    div.textContent = str;
+
+    return div.innerHTML;
+  };
+};
+
+const sanitiseShortCodeProperties = (rawProperties) => {
+  const sanitise = createHTMLSanitiser();
+  return Object.entries(rawProperties).reduce((props, [name, value]) => ({
+      ...props,
+      [name]: sanitise(value)
+  }), {});
+};
+
+export {
+  sanitiseShortCodeProperties,
+  createHTMLSanitiser,
+};
+
 export default ShortcodeSerialiser;
