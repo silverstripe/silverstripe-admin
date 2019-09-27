@@ -117,7 +117,7 @@ Feature: Manage users
     And I click the "Users" CMS tab
     And I click "staffmember@example.org" in the "#Root_Users" element
     And I select "ADMIN group" from "Groups"
-    And I press the "Apply changes" button
+    And I press the "Apply changes|Save" buttons
     Then I should see a "Saved Member" message
 
     When I go to "admin/security"
