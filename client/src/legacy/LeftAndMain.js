@@ -443,8 +443,9 @@ $.entwine('ss', function($) {
 
       // set button to "submitting" state
       $(button).addClass('btn--loading loading');
+      $(button).attr('disabled', 'disabled');
 
-      if($(button).is('button')) {
+      if($(button).is('button')) { 
         $(button).data('original-text', $(button).text());
 
         $(button).append($(
@@ -462,6 +463,7 @@ $.entwine('ss', function($) {
 
       var clearButton = function() {
         $(button).removeClass('btn--loading loading');
+        $(button).attr('disabled', false);
         $(button).find('.btn__loading-icon').remove();
         $(button).css('width', 'auto');
         $(button).text($(button).data('original-text'));
