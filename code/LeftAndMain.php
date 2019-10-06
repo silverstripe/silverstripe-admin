@@ -1186,26 +1186,6 @@ class LeftAndMain extends Controller implements PermissionProvider
                 'Link' => ($unlinked) ? false : $this->Link()
             ))
         ));
-        $record = $this->currentPage();
-        if ($record && $record->exists()) {
-            if ($record->hasExtension(Hierarchy::class)) {
-                /** @var DataObject|Hierarchy $record */
-                $ancestors = $record->getAncestors();
-                $ancestors = new ArrayList(array_reverse($ancestors->toArray()));
-                $ancestors->push($record);
-                foreach ($ancestors as $ancestor) {
-                    $items->push(new ArrayData(array(
-                        'Title' => ($ancestor->MenuTitle) ? $ancestor->MenuTitle : $ancestor->Title,
-                        'Link' => ($unlinked) ? false : Controller::join_links($this->Link('show'), $ancestor->ID)
-                    )));
-                }
-            } else {
-                $items->push(new ArrayData(array(
-                    'Title' => ($record->MenuTitle) ? $record->MenuTitle : $record->Title,
-                    'Link' => ($unlinked) ? false : Controller::join_links($this->Link('show'), $record->ID)
-                )));
-            }
-        }
 
         return $items;
     }
