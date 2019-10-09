@@ -1,12 +1,29 @@
 import React, { Component } from 'react';
-import { Input } from 'reactstrap';
+import {
+  Button,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  Popover,
+  PopoverBody,
+} from 'reactstrap';
 import PropTypes from 'prop-types';
 
 class InputField extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      tipOpen: false,
+    };
+
+    // Popover requires the target element (button) to be present in the DOM
+    setTimeout(() => {
+      this.setState({ tipOpen: props.tip && props.tip.autoOpen });
+    });
+
     this.handleChange = this.handleChange.bind(this);
+    this.handleTipToggle = this.handleTipToggle.bind(this);
   }
 
   /**
@@ -57,7 +74,44 @@ class InputField extends Component {
     }
   }
 
+  handleTipToggle() {
+    this.setState((state) => ({ tipOpen: !state.tipOpen }));
+  }
+
+  renderFieldWithTip() {
+    const id = this.props.id || this.props.name;
+    const { icon = 'lamp', iconColor = 'muted', content } = this.props.tip;
+    const { tipOpen } = this.state;
+
+    return (
+      <InputGroup>
+        <Input {...this.getInputProps()} />
+        <InputGroupAddon addonType="append">
+          <Button
+            color="outline-secondary"
+            id={`${id}-tip`}
+            onClick={this.handleTipToggle}
+            className={`btn--no-text font-icon-${icon} text-${iconColor}`}
+            aria-label={`Tip: ${content}`}
+          />
+          <Popover
+            role="presentation"
+            target={`${id}-tip`}
+            placement="top-end"
+            isOpen={tipOpen}
+          >
+            <PopoverBody>{content}</PopoverBody>
+          </Popover>
+        </InputGroupAddon>
+      </InputGroup>
+    );
+  }
+
   render() {
+    if (this.props.tip) {
+      return this.renderFieldWithTip();
+    }
+
     return <Input {...this.getInputProps()} />;
   }
 }
@@ -76,6 +130,12 @@ InputField.propTypes = {
   type: PropTypes.string,
   autoFocus: PropTypes.bool,
   attributes: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  tip: PropTypes.shape({
+    icon: PropTypes.string,
+    iconColor: PropTypes.string,
+    content: PropTypes.string.isRequired,
+    autoOpen: PropTypes.bool,
+  }),
 };
 
 InputField.defaultProps = {
