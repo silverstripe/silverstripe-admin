@@ -463,7 +463,7 @@ $.entwine('ss', function($) {
 
       var clearButton = function() {
         $(button).removeClass('btn--loading loading');
-        $(button).attr('disabled', false);
+        $(button).prop('disabled', false);
         $(button).find('.btn__loading-icon').remove();
         $(button).css('width', 'auto');
         $(button).text($(button).data('original-text'));
