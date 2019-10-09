@@ -140,9 +140,6 @@
 .font-icon-columns:before {
   content: "\72";
 }
-.font-icon-edit-write:before {
-  content: "\75";
-}
 .font-icon-monitor:before {
   content: "\78";
 }
@@ -595,4 +592,13 @@
 }
 .font-icon-integration:before {
   content: "\e05b";
+}
+.font-icon-lamp:before {
+  content: "\e05c";
+}
+.font-icon-flag:before {
+  content: "\e05d";
+}
+.font-icon-ticket:before {
+  content: "\e05e";
 }
