@@ -443,7 +443,7 @@ $.entwine('ss', function($) {
 
       // set button to "submitting" state
       $(button).addClass('btn--loading loading');
-      $(button).attr('disabled', 'disabled');
+      $(button).prop('disabled', true);
 
       if($(button).is('button')) { 
         $(button).data('original-text', $(button).text());
