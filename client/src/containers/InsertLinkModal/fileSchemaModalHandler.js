@@ -50,7 +50,7 @@ class FileSchemaHandler extends Component {
   }
 
   render() {
-    const { Component: TargetComponent, ...props} = this.props;
+    const { Component: TargetComponent, ...props } = this.props;
 
     return <TargetComponent setOverrides={this.setOverrides} {...props} />;
   }

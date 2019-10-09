@@ -26,6 +26,8 @@ class InputField extends Component {
       autoFocus: this.props.autoFocus,
       maxLength: this.props.data && this.props.data.maxlength,
       type: this.props.type ? this.props.type : null,
+      onBlur: this.props.onBlur,
+      onFocus: this.props.onFocus
     };
 
     if (this.props.attributes && !Array.isArray(this.props.attributes)) {
@@ -65,6 +67,8 @@ InputField.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func,
+  onBlur: PropTypes.func,
+  onFocus: PropTypes.func,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   readOnly: PropTypes.bool,
   disabled: PropTypes.bool,
