@@ -445,7 +445,7 @@ $.entwine('ss', function($) {
       $(button).addClass('btn--loading loading');
       $(button).prop('disabled', true);
 
-      if($(button).is('button')) { 
+      if($(button).is('button')) {
         $(button).data('original-text', $(button).text());
 
         $(button).append($(
