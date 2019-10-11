@@ -9,6 +9,16 @@ import {
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 
+const tipImportanceColorMap = {
+  normal: 'muted',
+  high: 'danger',
+};
+
+const tipImportanceMessageMap = {
+  normal: 'Tip',
+  high: 'Important tip',
+};
+
 class InputField extends Component {
   constructor(props) {
     super(props);
@@ -16,11 +26,6 @@ class InputField extends Component {
     this.state = {
       tipOpen: false,
     };
-
-    // Popover requires the target element (button) to be present in the DOM
-    setTimeout(() => {
-      this.setState({ tipOpen: props.tip && props.tip.autoOpen });
-    });
 
     this.handleChange = this.handleChange.bind(this);
     this.handleTipToggle = this.handleTipToggle.bind(this);
@@ -78,30 +83,44 @@ class InputField extends Component {
     this.setState((state) => ({ tipOpen: !state.tipOpen }));
   }
 
-  renderFieldWithTip() {
+  renderTip() {
     const id = this.props.id || this.props.name;
-    const { icon = 'lamp', iconColor = 'muted', content } = this.props.tip;
+    const title = this.props.title;
+    const { icon = 'lamp', importance = 'normal', content } = this.props.tip;
     const { tipOpen } = this.state;
 
+    const tipIconColor = tipImportanceColorMap[importance];
+    const tipType = tipImportanceMessageMap[importance];
+
+    return [
+      (
+        <Button
+          color="outline-secondary"
+          id={`${id}-tip`}
+          onClick={this.handleTipToggle}
+          className={`btn--no-text btn--last font-icon-${icon} text-${tipIconColor}`}
+          aria-label={`${tipType} for ${title}`}
+          aria-expanded={tipOpen}
+        />
+      ),
+      (
+        <Popover
+          target={`${id}-tip`}
+          placement="top-end"
+          isOpen={tipOpen}
+        >
+          <PopoverBody aria-live="assertive" aria-relevant="additions">{content}</PopoverBody>
+        </Popover>
+      )
+    ];
+  }
+
+  renderFieldWithTip() {
     return (
       <InputGroup>
         <Input {...this.getInputProps()} />
         <InputGroupAddon addonType="append">
-          <Button
-            color="outline-secondary"
-            id={`${id}-tip`}
-            onClick={this.handleTipToggle}
-            className={`btn--no-text font-icon-${icon} text-${iconColor}`}
-            aria-label={`Tip: ${content}`}
-          />
-          <Popover
-            role="presentation"
-            target={`${id}-tip`}
-            placement="top-end"
-            isOpen={tipOpen}
-          >
-            <PopoverBody>{content}</PopoverBody>
-          </Popover>
+          {this.renderTip()}
         </InputGroupAddon>
       </InputGroup>
     );
@@ -131,10 +150,9 @@ InputField.propTypes = {
   autoFocus: PropTypes.bool,
   attributes: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   tip: PropTypes.shape({
-    icon: PropTypes.string,
-    iconColor: PropTypes.string,
     content: PropTypes.string.isRequired,
-    autoOpen: PropTypes.bool,
+    importance: PropTypes.string,
+    icon: PropTypes.string,
   }),
 };
 

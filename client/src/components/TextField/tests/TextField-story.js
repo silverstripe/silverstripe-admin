@@ -14,6 +14,7 @@ import ValueTracker from 'stories/ValueTracker';
 
 const props = {
   name: 'MyField',
+  id: 'MyField',
   title: 'Field title',
   placeholder: 'Placeholder text',
 };
@@ -62,7 +63,7 @@ storiesOf('Admin/TextField', module)
             {...props}
             value="Default text"
             description="Field description"
-            tip={{ icon: 'lamp', iconColor: 'danger', content: 'Additional information about the field', autoOpen: true }}
+            tip={{ icon: 'lamp', importance: 'high', content: 'Additional information about the field' }}
           />
         </div>
     )
