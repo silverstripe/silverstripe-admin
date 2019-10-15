@@ -1,13 +1,10 @@
 import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { setAddon, storiesOf } from '@storybook/react';
-import { withKnobs } from '@storybook/addon-knobs';
-import { withNotes } from '@storybook/addon-notes';
+import { withKnobs, number, text } from '@storybook/addon-knobs';
 import JSXAddon from 'storybook-addon-jsx';
 
 setAddon(JSXAddon);
-
-import withTipNotes from './story-notes/with-tip.md';
 
 import TextField from 'components/TextField/TextField';
 import ValueTracker from 'stories/ValueTracker';
@@ -32,40 +29,26 @@ storiesOf('Admin/TextField', module)
   .add('Textarea', () => (
     <TextField
       {...props}
-      data={{ rows: 4, columns: 40 }}
+      data={{ rows: number('Rows', 4), columns: number('Columns', 40) }}
     />
   ))
   .add('All titles', () => (
     <TextField
       {...props}
       value="Default text"
-      rightTitle="Right title"
-      description="My description"
-      data={{ prefix: 'prefix', suffix: 'suffix' }}
+      rightTitle={text('Right Title', 'Right title')}
+      description={text('Description', 'My description')}
+      data={{ prefix: text('Prefix', 'prefix'), suffix: text('Suffix', 'suffix') }}
     />
   ))
   .add('Validation failed', () => (
     <TextField
       {...props}
       value="Default text"
-      description="Field description"
-      message={{ value: 'Validation message', type: 'error' }}
+      description={text('Description', 'Field description')}
+      message={{
+        value: text('Validation Message', 'Validation message'),
+        type: 'error' // This is the only type covered by our styles anyway
+      }}
     />
-  ))
-  .add(
-    'With tip',
-    withNotes(
-      withTipNotes
-    )(
-      () => (
-        <div style={{ margin: '5em', width: '30em' }}>
-          <TextField
-            {...props}
-            value="Default text"
-            description="Field description"
-            tip={{ icon: 'lamp', importance: 'high', content: 'Additional information about the field' }}
-          />
-        </div>
-    )
-    )
-  );
+  ));
