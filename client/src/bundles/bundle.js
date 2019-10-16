@@ -34,6 +34,8 @@ require('expose-loader?GridFieldRow!components/GridField/GridFieldRow');
 require('expose-loader?GridFieldTable!components/GridField/GridFieldTable');
 require('expose-loader?Accordion!components/Accordion/Accordion');
 require('expose-loader?AccordionBlock!components/Accordion/AccordionBlock');
+require('expose-loader?Button!components/Button/Button');
+require('expose-loader?BackButton!components/Button/BackButton');
 require('expose-loader?HiddenField!components/HiddenField/HiddenField');
 require('expose-loader?ListGroup!components/ListGroup/ListGroup');
 require('expose-loader?ListGroupItem!components/ListGroup/ListGroupItem');
@@ -57,6 +59,8 @@ require('expose-loader?BreadcrumbsActions!state/breadcrumbs/BreadcrumbsActions')
 require('expose-loader?RecordsActionTypes!state/records/RecordsActionTypes');
 require('expose-loader?UnsavedFormsActions!state/unsavedForms/UnsavedFormsActions');
 require('expose-loader?Badge!components/Badge/Badge');
+require('expose-loader?Button!components/Button/Button');
+require('expose-loader?BackButton!components/Button/BackButton');
 require('expose-loader?VersionedBadge!components/VersionedBadge/VersionedBadge');
 require('expose-loader?CheckboxSetField!components/CheckboxSetField/CheckboxSetField');
 require('expose-loader?Preview!components/Preview/Preview');

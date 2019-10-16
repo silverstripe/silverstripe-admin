@@ -23,6 +23,23 @@ class FormBuilder extends Component {
     this.validateForm = this.validateForm.bind(this);
   }
 
+  getComponent({ name, schemaComponent, schemaType }) {
+    const { identifier, getCustomFields } = this.props;
+
+    if (getCustomFields) {
+      const component = getCustomFields(schemaType, `${identifier}.${name}`);
+      if (component) {
+        return component;
+      }
+    }
+
+    if (schemaComponent !== null) {
+      return this.context.injector.get(schemaComponent, `${identifier}.${name}`);
+    }
+
+    return this.getComponentForDataType(schemaType, name);
+  }
+
   /**
    * Default data type to component mappings.
    * Used as a fallback when no component type is provided in the form schema.
@@ -119,12 +136,9 @@ class FormBuilder extends Component {
         : null,
     };
     delete componentProps.input;
-    const { identifier } = this.props;
-    const { name } = componentProps;
+
     // 'component' key is renamed to 'schemaComponent' in normalize*() methods
-    const SchemaComponent = componentProps.schemaComponent !== null
-      ? this.context.injector.get(componentProps.schemaComponent, `${identifier}.${name}`)
-      : this.getComponentForDataType(componentProps.schemaType, name);
+    const SchemaComponent = this.getComponent(componentProps);
 
     if (SchemaComponent === null) {
       return null;
@@ -400,6 +414,7 @@ const basePropTypes = {
   submitting: PropTypes.bool,
   baseFormComponent: PropTypes.func.isRequired,
   baseFieldComponent: PropTypes.func.isRequired,
+  getCustomFields: PropTypes.func,
   responseRequestedSchema: PropTypes.arrayOf(PropTypes.oneOf([
     'schema', 'state', 'errors', 'auto',
   ])),
