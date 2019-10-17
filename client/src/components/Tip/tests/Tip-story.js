@@ -34,6 +34,8 @@ storiesOf('Admin/Tip', module)
             <Input {...inputProps} />
             <InputGroupAddon addonType="append">
               <Tip
+                fieldTitle={'Tip Field'}
+                id={'tip-field'}
                 content={text('Content', 'Example tip contents')}
                 icon={text('Icon', 'lamp')}
                 importance={selectV2('Importance', Object.values(TIP_IMPORTANCE_LEVELS), 'normal')}

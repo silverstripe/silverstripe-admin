@@ -43,6 +43,7 @@ class Tip extends Component {
     return [
       (
         <Button
+          key={`${id}-tip-button`}
           color="outline-secondary"
           id={`${id}-tip`}
           onClick={this.handleTipToggle}
@@ -53,9 +54,10 @@ class Tip extends Component {
       ),
       (
         <Popover
+          key={`${id}-tip-popover`}
           target={`${id}-tip`}
           placement="top-end"
-          isOpen={open}
+          isOpen={this.state.open}
         >
           <PopoverBody aria-live="assertive" aria-relevant="additions">{content}</PopoverBody>
         </Popover>
@@ -66,7 +68,7 @@ class Tip extends Component {
 
 export const tipShape = {
   content: PropTypes.string.isRequired,
-  importance: PropTypes.oneOf(TIP_IMPORTANCE_LEVELS),
+  importance: PropTypes.oneOf(Object.values(TIP_IMPORTANCE_LEVELS)),
   icon: PropTypes.string,
 };
 
