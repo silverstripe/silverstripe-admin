@@ -201,9 +201,14 @@ abstract class ModelAdmin extends LeftAndMain
                 $this->extend('updateSearchForm', $form);
             }
         ));
+
         // GridFieldPaginator has to be added after filter header for it to function correctly
-        $listField->getConfig()->removeComponentsByType(GridFieldPaginator::class);
-        $listField->getConfig()->addComponent(Injector::inst()->get(GridFieldPaginator::class));
+        $paginator = $listField->getConfig()->getComponentByType(GridFieldPaginator::class);
+        if ($paginator) {
+            $listField->getConfig()
+                ->removeComponent($paginator)
+                ->addComponent($paginator);
+        }
 
         if (!$this->showSearchForm ||
             (is_array($this->showSearchForm) && !in_array($this->modelClass, $this->showSearchForm))
