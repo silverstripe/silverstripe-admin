@@ -29,26 +29,26 @@ const importanceLevels = Object.keys(TIP_IMPORTANCE_LEVELS)
 storiesOf('Admin/Tip', module)
   .addDecorator(withKnobs)
   .addDecorator((storyFn) => (
-    <ValueTracker>{storyFn()}</ValueTracker>
+    <div style={{ margin: '5em', width: '30em' }}>
+      <ValueTracker>{storyFn()}</ValueTracker>
+    </div>
   ))
   .addWithJSX(
     'Basic Example',
     withNotes(notes)(
       () => (
-        <div style={{ margin: '5em', width: '30em' }}>
-          <InputGroup>
-            <Input {...inputProps} />
-            <InputGroupAddon addonType="append">
-              <Tip
-                fieldTitle={'Tip Field'}
-                id={'tip-field'}
-                content={text('Content', 'Example tip contents')}
-                icon={selectV2('Icon (examples)', ['lamp', 'attention', 'flag'], 'lamp')}
-                importance={selectV2('Importance', importanceLevels, 'normal')}
-              />
-            </InputGroupAddon>
-          </InputGroup>
-        </div>
+        <InputGroup>
+          <Input {...inputProps} />
+          <InputGroupAddon addonType="append">
+            <Tip
+              fieldTitle={'Tip Field'}
+              id={'tip-field'}
+              content={text('Content', 'Example tip contents')}
+              icon={selectV2('Icon (examples)', ['lamp', 'attention', 'flag'], 'lamp')}
+              importance={selectV2('Importance', importanceLevels, 'normal')}
+            />
+          </InputGroupAddon>
+        </InputGroup>
       )
     )
   );

@@ -72,7 +72,7 @@ class Tip extends Component {
           key={`${id}-tip-popover`}
           target={`${id}-tip`}
           placement="top-end"
-          isOpen={this.state.open}
+          isOpen={open}
         >
           <PopoverBody aria-live="assertive" aria-relevant="additions">{content}</PopoverBody>
         </Popover>
@@ -81,6 +81,9 @@ class Tip extends Component {
   }
 }
 
+/**
+ * Core PropType shape for a Tip when used with a form field.
+ */
 export const tipShape = {
   content: PropTypes.string.isRequired,
   importance: PropTypes.oneOf(Object.values(TIP_IMPORTANCE_LEVELS)),
