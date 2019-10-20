@@ -1,23 +1,34 @@
 import React, { Component } from 'react';
-import { Button, Popover, PopoverBody } from 'reactstrap';
 import PropTypes from 'prop-types';
+import { Button, Popover, PopoverBody } from 'reactstrap';
+import i18n from 'i18n';
 
+/**
+ * List of values that can be passed in the `importance` prop of the `<Tip />` component.
+ * @type {{HIGH: string, NORMAL: string}}
+ */
 export const TIP_IMPORTANCE_LEVELS = {
   NORMAL: 'normal',
   HIGH: 'high',
 };
 
+/**
+ * Unique attributes related to each `TIP_IMPORTANCE_LEVEL`.
+ */
 const tipImportanceMap = {
   [TIP_IMPORTANCE_LEVELS.NORMAL]: {
-    color: 'muted',
-    description: 'Tip',
+    iconColor: 'muted',
+    type: i18n._t('Admin.NORMAL_TIP', 'Tip'),
   },
   [TIP_IMPORTANCE_LEVELS.HIGH]: {
-    color: 'danger',
-    description: 'Important tip',
+    iconColor: 'danger',
+    type: i18n._t('Admin.IMPORTANT_TIP', 'Important tip'),
   },
 };
 
+/**
+ * UI element displaying a toggle-able "Tip". Designed to be used as an 'input group suffix'.
+ */
 class Tip extends Component {
   constructor(props) {
     super(props);
@@ -37,8 +48,12 @@ class Tip extends Component {
     const { content, fieldTitle, icon, id, importance } = this.props;
     const { open } = this.state;
 
-    const tipIconColor = tipImportanceMap[importance].color;
-    const tipType = tipImportanceMap[importance].description;
+    const { iconColor, type } = tipImportanceMap[importance];
+
+    const label = i18n.inject(i18n._t('Admin.TIP_LABEL', '{type} for {fieldTitle}'), {
+      type,
+      fieldTitle
+    });
 
     return [
       (
@@ -47,8 +62,8 @@ class Tip extends Component {
           color="outline-secondary"
           id={`${id}-tip`}
           onClick={this.handleTipToggle}
-          className={`btn--no-text btn--last font-icon-${icon} text-${tipIconColor}`}
-          aria-label={`${tipType} for ${fieldTitle}`}
+          className={`btn--no-text btn--last font-icon-${icon} text-${iconColor}`}
+          aria-label={label}
           aria-expanded={open}
         />
       ),

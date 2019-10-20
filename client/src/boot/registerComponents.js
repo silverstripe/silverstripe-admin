@@ -39,6 +39,7 @@ import ResizeAware from 'components/ResizeAware/ResizeAware';
 import Tag from 'components/Tag/Tag';
 import TagList from 'components/Tag/TagList';
 import CompactTagList from 'components/Tag/CompactTagList';
+import Tip from 'components/Tip/Tip';
 import Search from 'components/Search/Search';
 import SearchToggle from 'components/Search/SearchToggle';
 import HtmlEditorField from 'components/HtmlEditorField/HtmlEditorField';
@@ -87,6 +88,7 @@ export default () => {
     Tag,
     TagList,
     CompactTagList,
+    Tip,
     Search,
     SearchToggle,
     HtmlEditorField,

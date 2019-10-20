@@ -11,8 +11,9 @@ The Tip component can accept the following configuration:
 - `content`: The text to render in the popover. Should be plaintext - HTML will not be parsed.
 - `icon`: An icon from the icon font to use. See the Icon reference in the Pattern Library UI. Defaults to `lamp`.
 - `importance`: Should be specified as `'normal'` or `'high'` (defaults to `'normal'`). Designates the colour used for
-   the icon, and the accessible label of the toggle. 
-   
+   the icon, and the accessible label of the toggle. Allowed values are defined in the exported `TIP_IMPORTANCE_LEVELS`
+   constant in `Tip.js`.
+
 It also requires the following configuration:
 
 - `fieldTitle`: A title for the field it relates to, which will be read aloud for screenreaders.

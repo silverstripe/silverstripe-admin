@@ -20,6 +20,12 @@ const inputProps = {
   placeholder: 'Placeholder text',
 };
 
+const importanceLevels = Object.keys(TIP_IMPORTANCE_LEVELS)
+  .reduce((accumulator, key) => ({
+    ...accumulator,
+    [`TIP_IMPORTANCE_LEVELS.${key}`]: TIP_IMPORTANCE_LEVELS[key]
+  }), {});
+
 storiesOf('Admin/Tip', module)
   .addDecorator(withKnobs)
   .addDecorator((storyFn) => (
@@ -37,8 +43,8 @@ storiesOf('Admin/Tip', module)
                 fieldTitle={'Tip Field'}
                 id={'tip-field'}
                 content={text('Content', 'Example tip contents')}
-                icon={text('Icon', 'lamp')}
-                importance={selectV2('Importance', Object.values(TIP_IMPORTANCE_LEVELS), 'normal')}
+                icon={selectV2('Icon (examples)', ['lamp', 'attention', 'flag'], 'lamp')}
+                importance={selectV2('Importance', importanceLevels, 'normal')}
               />
             </InputGroupAddon>
           </InputGroup>
