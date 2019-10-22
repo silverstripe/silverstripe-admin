@@ -15,12 +15,14 @@ class FieldGroup extends CompositeField {
 // Field group is essentially a composite field, but wrapped with a typical field holder
 // fieldHolder wrapping happens in the FormBuilder component
 
-FieldGroup.propTypes = Object.assign({}, CompositeField.propTypes, {
+FieldGroup.propTypes = {
+  ...CompositeField.propTypes,
   smallholder: PropTypes.bool
-});
+};
 
-FieldGroup.defaultProps = Object.assign({}, CompositeField.defaultProps, {
+FieldGroup.defaultProps = {
+  ...CompositeField.defaultProps,
   smallholder: true
-});
+};
 
 export default FieldGroup;
