@@ -98,7 +98,7 @@ class UsedOnTable extends PureComponent {
 UsedOnTable.propTypes = {
   loading: PropTypes.bool,
   usedOn: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     title: PropTypes.string,
     type: PropTypes.string,
     state: PropTypes.string,
