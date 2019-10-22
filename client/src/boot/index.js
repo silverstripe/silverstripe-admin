@@ -39,7 +39,7 @@ async function appBoot() {
   // Apply any injector transformations
   applyTransforms();
 
-  Injector.ready(() => {
+  Injector.init(() => {
     // need to build initial state of reducers for booting earlier
     const rootReducer = combineReducers(Injector.reducer.getAll());
     const store = createStoreWithMiddleware(rootReducer, {});
