@@ -698,7 +698,7 @@ class TreeDropdownField extends Component {
 }
 
 // Hack! Temporary fix until we can do a proper upgrade of react-select to >= 2.0.
-Select.prototype.componentWillReceiveProps = function (nextProps) {
+Select.prototype.componentWillReceiveProps = (nextProps) => {
   function handleRequired(value, multi) {
     if (!value) {
       return true;
