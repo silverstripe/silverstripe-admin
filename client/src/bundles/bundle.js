@@ -47,6 +47,7 @@ require('expose-loader?TabsActions!state/tabs/TabsActions');
 require('expose-loader?Tag!components/Tag/Tag');
 require('expose-loader?TagList!components/Tag/TagList');
 require('expose-loader?CompactTagList!components/Tag/CompactTagList');
+require('expose-loader?Tip!components/Tip/Tip');
 require('expose-loader?Search!components/Search/Search');
 require('expose-loader?SearchToggle!components/Search/SearchToggle');
 require('expose-loader?TreeDropdownFieldNode!components/TreeDropdownField/TreeDropdownFieldNode');

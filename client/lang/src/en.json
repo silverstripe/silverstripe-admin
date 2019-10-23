@@ -31,4 +31,7 @@
     "Admin.MODIFIED": "Modified",
     "Admin.LIVE": "Live",
     "Admin.ARCHIVED": "Archived",
+    "Admin.NORMAL_TIP": "Tip",
+    "Admin.IMPORTANT_TIP": "Important tip",
+    "Admin.TIP_LABEL": "{type} for {fieldTitle}"
 }

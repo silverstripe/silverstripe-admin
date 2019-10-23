@@ -40,6 +40,17 @@ module.exports = (config) => {
       options: {
         attrs: false,
       },
+    },
+    {
+      test: /\.md$/,
+      use: [
+        {
+          loader: 'html-loader',
+        },
+        {
+          loader: 'markdown-loader',
+        },
+      ]
     }
   ];
 

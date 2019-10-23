@@ -109,6 +109,7 @@
     "fast-glob": "^3.0.1",
     "html-loader": "^0.5.1",
     "jest-cli": "^23.6.0",
+    "markdown-loader": "^5.1.0",
     "storybook-addon-jsx": "^5.4.0",
     "webpack": "^2"
   },

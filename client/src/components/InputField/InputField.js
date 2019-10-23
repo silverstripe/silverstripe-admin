@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
-import { Input } from 'reactstrap';
+import {
+  Input,
+  InputGroup,
+  InputGroupAddon,
+} from 'reactstrap';
 import PropTypes from 'prop-types';
+
+import Tip, { tipShape } from 'components/Tip/Tip';
 
 class InputField extends Component {
   constructor(props) {
@@ -57,7 +63,28 @@ class InputField extends Component {
     }
   }
 
+  renderFieldWithTip() {
+    const { id, title, tip } = this.props;
+
+    return (
+      <InputGroup>
+        <Input {...this.getInputProps()} />
+        <InputGroupAddon addonType="append">
+          <Tip
+            {...tip}
+            fieldTitle={title}
+            id={`${id}-tip`}
+          />
+        </InputGroupAddon>
+      </InputGroup>
+    );
+  }
+
   render() {
+    if (this.props.tip) {
+      return this.renderFieldWithTip();
+    }
+
     return <Input {...this.getInputProps()} />;
   }
 }
@@ -76,6 +103,7 @@ InputField.propTypes = {
   type: PropTypes.string,
   autoFocus: PropTypes.bool,
   attributes: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  tip: PropTypes.shape(tipShape),
 };
 
 InputField.defaultProps = {
