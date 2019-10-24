@@ -11,7 +11,17 @@ const buildInjectorContainer = () => ({
    */
   initialised: false,
 
+  /**
+   * A series fired when injector is initialised
+   * @type {function[]}
+   */
   callbacks: [],
+
+  /**
+   * The first callback fired when injector is initialised
+   * @type {function}
+   */
+  onInit: null,
 
   /**
    * Register a service for the injector to provide
@@ -64,6 +74,9 @@ const buildInjectorContainer = () => ({
       .forEach(service => service.load());
 
     this.initialised = true;
+    if (this.onInit) {
+      this.onInit();
+    }
     this.callbacks.forEach((callback) => {
       callback();
     });
@@ -93,6 +106,10 @@ const buildInjectorContainer = () => ({
     callback(updater);
   },
 
+  /**
+   * Register an initialisation callback function
+   * @param {function} callback
+   */
   ready(callback) {
     if (typeof callback !== 'function') {
       throw new Error('Callback provided is not a function');
@@ -107,6 +124,21 @@ const buildInjectorContainer = () => ({
       callback,
     ];
   },
+
+  /**
+   * Register a single callback function to call on initialisation
+   * @param {function} callback
+   */
+  init(callback) {
+    if (typeof callback !== 'function') {
+      throw new Error('Callback provided is not a function');
+    }
+    if (this.initialised) {
+      throw new Error('Tried to add an init() callback after Injector was initialised');
+    }
+
+    this.onInit = callback;
+  }
 });
 
 export default buildInjectorContainer;

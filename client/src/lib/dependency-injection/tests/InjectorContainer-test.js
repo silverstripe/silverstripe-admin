@@ -51,6 +51,52 @@ describe('InjectorContainer', () => {
     });
   });
 
+  describe('init()', () => {
+    it('should throw exceptions when a function is not provided', () => {
+      expect(() => container.init('bob was here')).toThrow();
+      expect(() => container.init({ callback: () => 'contained callback' })).toThrow();
+      expect(() => container.init(() => 'this is a callback')).not.toThrow();
+    });
+
+    it('should throw if load has already happened', () => {
+      const callback = jest.fn(() => 'hello');
+
+      container.load();
+      expect(callback).not.toBeCalled();
+
+      expect(() => container.init(callback)).toThrow();
+    });
+
+    it('should hold the function when not initialised', () => {
+      const callback = jest.fn(() => 'hello');
+      container.init(callback);
+
+      expect(callback).not.toBeCalled();
+    });
+
+    it('should trigger the callback when load completes', () => {
+      const callback = jest.fn(() => 'hello');
+      container.init(callback);
+
+      expect(callback).not.toBeCalled();
+
+      container.load();
+      expect(callback).toBeCalled();
+    });
+
+    it('should execute before the ready() callbacks', () => {
+      let result = '';
+      container.ready(() => {
+        result = `${result}B`;
+      });
+      container.init(() => {
+        result = `${result}A`;
+      });
+      container.load();
+      expect(result).toBe('AB');
+    });
+  });
+
   describe('register()', () => {
     it('should error if called after initialising', () => {
       container.initialised = true;
