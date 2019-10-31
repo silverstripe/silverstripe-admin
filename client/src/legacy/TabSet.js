@@ -11,7 +11,7 @@ $.entwine('ss', function($){
 	/**
 	 * Lightweight wrapper around jQuery UI tabs for generic tab set-up
 	 */
-	$('.ss-tabset').entwine({
+	$('.cms-tabset').entwine({
 		IgnoreTabState: false,
 
 		onadd: function() {
@@ -19,10 +19,10 @@ $.entwine('ss', function($){
 
 			this.on("tabsactivate", (function (event, {newPanel}) {
 			  this.lazyLoadGridFields(newPanel);
-      }).bind(this))
-      this.on("tabscreate", (function(event, {panel}) {
-        this.lazyLoadGridFields(panel);
-      }).bind(this));
+			}).bind(this))
+			this.on("tabscreate", (function(event, {panel}) {
+				this.lazyLoadGridFields(panel);
+			}).bind(this));
 
 			// Can't name redraw() as it clashes with other CMS entwine classes
 			this.redrawTabs();
@@ -38,11 +38,6 @@ $.entwine('ss', function($){
 			if(this.data('tabs')) this.tabs('destroy');
 			this._super();
 		},
-
-    redrawTabs: function() {
-      this.rewriteHashlinks();
-      this.tabs();
-    },
 
 		/**
 		 * @func openTabFromURL
@@ -66,10 +61,7 @@ $.entwine('ss', function($){
 				return;
 			}
 
-			// Switch to the correct tab when AJAX loading completes.
-			$(document).ready('ajaxComplete', function () {
-				$trigger.click();
-			});
+			$trigger.click();
 		},
 
 		/**
@@ -86,19 +78,19 @@ $.entwine('ss', function($){
 			});
 		},
 
-    /**
-     * @func lazyLoadGridFields
-     * @desc Find all the lazy loadable gridfield in the panel and trigger their reload.
-     * @param {Object} panel
-     */
+		/**
+		 * @func lazyLoadGridFields
+		 * @desc Find all the lazy loadable gridfield in the panel and trigger their reload.
+		 * @param {Object} panel
+		 */
 		lazyLoadGridFields: function(panel) {
 		  panel.find('.grid-field--lazy-loadable').each((i, el) => {
 		    const gridfield = $(el);
 		    // Avoid triggering all gridfields when using nested tabs
-		    if (gridfield.closest('.ss-tabset').is(this)) {
+		    if (gridfield.closest('.cms-tabset').is(this)) {
 		      $(el).lazyload();
-        }
-      });
+        	}
+      	});
     }
 
 	});
