@@ -12,6 +12,8 @@ $.entwine('ss.tree', function($){
 
     IsUpdatingTree: false,
 
+    CanMoveCheckCompleted: false,
+
     IsLoaded: false,
 
     onadd: function(){
@@ -22,6 +24,58 @@ $.entwine('ss.tree', function($){
 
       var hints = this.attr('data-hints');
       if(hints) this.setHints($.parseJSON(hints));
+
+      const moveNodeCallback = function(e, data) {
+        let movedNode = data.rslt.o,
+          newParentNode = data.rslt.np,
+          newParentID = $(newParentNode).data('id') || 0,
+          nodeID = $(movedNode).data('id'),
+          siblingIDs = $.map($(movedNode).siblings().andSelf(), function (el) {
+            return $(el).data('id');
+          });
+
+        if(self.getIsUpdatingTree()) return;
+
+        // run asynchronous logic separately
+        if (!self.getCanMoveCheckCompleted()) {
+          self.canMove(data).then((success) => {
+            if (success) {
+              self.setCanMoveCheckCompleted(true);
+              moveNodeCallback(e, data);
+            } else {
+              // undo
+              $.jstree.rollback(data.rlbk);
+            }
+          });
+          return;
+        }
+        self.setCanMoveCheckCompleted(false);
+
+        $.ajax({
+          'url': $.path.addSearchParams(
+            self.data('urlSavetreenode'),
+            self.data('extraParams')
+          ),
+          'type': 'POST',
+          'data': {
+            ID: nodeID,
+            ParentID: newParentID,
+            SiblingIDs: siblingIDs
+          },
+          success: function() {
+            // We only need to update the ParentID if the current page we're on is the page being moved
+            if ($('.cms-edit-form :input[name=ID]').val() == nodeID) {
+              $('.cms-edit-form :input[name=ParentID]').val(newParentID);
+            }
+            self.updateNodesFromServer([nodeID]);
+          },
+          statusCode: {
+            403: function() {
+              $.jstree.rollback(data.rlbk);
+            }
+          }
+        });
+      };
 
       /**
        * @todo Icon and page type hover support
@@ -88,45 +142,7 @@ $.entwine('ss.tree', function($){
               }
             }
           })
-          .bind('move_node.jstree', async function(e, data) {
-            if (!await self.canMove(data)) {
-              // undo
-              $.jstree.rollback(data.rlbk);
-              return;
-            }
-
-            if(self.getIsUpdatingTree()) return;
-
-            var movedNode = data.rslt.o, newParentNode = data.rslt.np, oldParentNode = data.inst._get_parent(movedNode), newParentID = $(newParentNode).data('id') || 0, nodeID = $(movedNode).data('id');
-            var siblingIDs = $.map($(movedNode).siblings().andSelf(), function(el) {
-              return $(el).data('id');
-            });
-
-            $.ajax({
-              'url': $.path.addSearchParams(
-                self.data('urlSavetreenode'),
-                self.data('extraParams')
-              ),
-              'type': 'POST',
-              'data': {
-                ID: nodeID,
-                ParentID: newParentID,
-                SiblingIDs: siblingIDs
-              },
-              success: function() {
-                // We only need to update the ParentID if the current page we're on is the page being moved
-                if ($('.cms-edit-form :input[name=ID]').val() == nodeID) {
-                  $('.cms-edit-form :input[name=ParentID]').val(newParentID);
-                }
-                self.updateNodesFromServer([nodeID]);
-              },
-              statusCode: {
-                403: function() {
-                  $.jstree.rollback(data.rlbk);
-                }
-              }
-            });
-          })
+          .bind('move_node.jstree', moveNodeCallback)
           // Make some jstree events delegatable
           .bind('select_node.jstree check_node.jstree uncheck_node.jstree', function(e, data) {
             $(document).triggerHandler(e, data);
