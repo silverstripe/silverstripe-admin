@@ -14,9 +14,7 @@ $.entwine('ss', function($){
 	$('.cms-tabset, .ss-tabset').entwine({
 		IgnoreTabState: false,
 
-		onmatch: function() {
-			var hash = window.location.hash;
-
+		onadd: function() {
 			this.on("tabsactivate", (function (event, {newPanel}) {
 			  this.lazyLoadGridFields(newPanel);
 			}).bind(this));
@@ -26,6 +24,11 @@ $.entwine('ss', function($){
 
 			// Can't name redraw() as it clashes with other CMS entwine classes
 			this.redrawTabs();
+			this._super();
+		},
+
+		onmatch: function() {
+			var hash = window.location.hash;
 
 			if (hash !== '') {
 				this.openTabFromURL(hash);
@@ -34,7 +37,7 @@ $.entwine('ss', function($){
 			this._super();
 		},
 
-		onunmatch: function() {
+		onremove: function() {
 			if(this.data('tabs')) this.tabs('destroy');
 			this._super();
 		},
