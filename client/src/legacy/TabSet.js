@@ -11,15 +11,15 @@ $.entwine('ss', function($){
 	/**
 	 * Lightweight wrapper around jQuery UI tabs for generic tab set-up
 	 */
-	$('.cms-tabset').entwine({
+	$('.cms-tabset, .ss-tabset').entwine({
 		IgnoreTabState: false,
 
-		onadd: function() {
+		onmatch: function() {
 			var hash = window.location.hash;
 
 			this.on("tabsactivate", (function (event, {newPanel}) {
 			  this.lazyLoadGridFields(newPanel);
-			}).bind(this))
+			}).bind(this));
 			this.on("tabscreate", (function(event, {panel}) {
 				this.lazyLoadGridFields(panel);
 			}).bind(this));
@@ -34,9 +34,20 @@ $.entwine('ss', function($){
 			this._super();
 		},
 
-		onremove: function() {
+		onunmatch: function() {
 			if(this.data('tabs')) this.tabs('destroy');
 			this._super();
+		},
+
+		redrawTabs: function() {
+			// If accessing a tabset from a page in the CMS module
+			// alter how the tabs are rendered
+			if ($(this).hasClass('ss-tabset') == true) {
+				this.rewriteHashlinks();
+				this.tabs()
+			} else {
+				this._super();
+			}
 		},
 
 		/**
@@ -61,6 +72,7 @@ $.entwine('ss', function($){
 				return;
 			}
 
+			// Switch to the correct tab when AJAX loading completes.
 			$trigger.click();
 		},
 
@@ -87,7 +99,7 @@ $.entwine('ss', function($){
 		  panel.find('.grid-field--lazy-loadable').each((i, el) => {
 		    const gridfield = $(el);
 		    // Avoid triggering all gridfields when using nested tabs
-		    if (gridfield.closest('.cms-tabset').is(this)) {
+		    if (gridfield.closest('.cms-tabset, .ss-tabset').is(this)) {
 		      $(el).lazyload();
         	}
       	});
