@@ -127,6 +127,8 @@
 }
 
 .btn--loading {
+  min-width: 70px;
+
   & > .btn__title,
   &::before {
     visibility: hidden;
