@@ -198,25 +198,31 @@ abstract class ModelAdmin extends LeftAndMain
     /**
      * Generate the GridField field that will be used for this ModelAdmin.
      *
-     * Developers may override this method in their ModelAdmin class to customise their GridField.
+     * Developers may override this method in their ModelAdmin class to customise their GridField. Extensions can use
+     * the `updateGridField` hook for the same purpose.
      *
      * @see {@link getGridFieldConfig()}
      * @return GridField
      */
     protected function getGridField(): GridField
     {
-        return GridField::create(
+        $field = GridField::create(
             $this->sanitiseClassName($this->modelClass),
             false,
             $this->getList(),
             $this->getGridFieldConfig()
         );
+
+        $this->extend('updateGridField', $field);
+
+        return $field;
     }
 
     /**
      * Generate the GridField Configuration that will use for the ModelAdmin Gridfield.
      *
      * Developers may override this method in their ModelAdmin class to customise their GridFieldConfiguration.
+     * Extensions can use the `updateGridFieldConfig` hook for the same purpose.
      *
      * @return GridFieldConfig
      */
@@ -244,18 +250,18 @@ abstract class ModelAdmin extends LeftAndMain
             }
         ));
 
+        if (!$this->showSearchForm ||
+            (is_array($this->showSearchForm) && !in_array($this->modelClass, $this->showSearchForm))
+        ) {
+            $config->removeComponentsByType(GridFieldFilterHeader::class);
+        }
+
         // GridFieldPaginator has to be added after filter header for it to function correctly
         $paginator = $config->getComponentByType(GridFieldPaginator::class);
         if ($paginator) {
             $config
                 ->removeComponent($paginator)
                 ->addComponent($paginator);
-        }
-
-        if (!$this->showSearchForm ||
-            (is_array($this->showSearchForm) && !in_array($this->modelClass, $this->showSearchForm))
-        ) {
-            $config->removeComponentsByType(GridFieldFilterHeader::class);
         }
 
         // Validation
@@ -273,6 +279,8 @@ abstract class ModelAdmin extends LeftAndMain
                     ->setModalTitle(_t('SilverStripe\\Admin\\ModelAdmin.IMPORT', 'Import from CSV'))
             );
         }
+
+        $this->extend('updateGridFieldConfig', $config);
 
         return $config;
     }
