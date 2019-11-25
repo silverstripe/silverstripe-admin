@@ -15,6 +15,7 @@ use SilverStripe\Forms\FileField;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldConfig;
 use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
 use SilverStripe\Forms\GridField\GridFieldDetailForm;
 use SilverStripe\Forms\GridField\GridFieldExportButton;
@@ -177,65 +178,10 @@ abstract class ModelAdmin extends LeftAndMain
      */
     public function getEditForm($id = null, $fields = null)
     {
-        $list = $this->getList();
-        $exportButton = new GridFieldExportButton('buttons-before-left');
-        $exportButton->setExportColumns($this->getExportFields());
-        $listField = GridField::create(
-            $this->sanitiseClassName($this->modelClass),
-            false,
-            $list,
-            $fieldConfig = GridFieldConfig_RecordEditor::create($this->config()->get('page_length'))
-                ->addComponent($exportButton)
-                ->addComponents(new GridFieldPrintButton('buttons-before-left'))
-        );
-
-        // Remove default and add our own filter header with extension points
-        // to retain API until deprecation in 5.0
-        $listField->getConfig()->removeComponentsByType(GridFieldFilterHeader::class);
-        $listField->getConfig()->addComponent(new GridFieldFilterHeader(
-            false,
-            function ($context) {
-                 $this->extend('updateSearchContext', $context);
-            },
-            function ($form) {
-                $this->extend('updateSearchForm', $form);
-            }
-        ));
-
-        // GridFieldPaginator has to be added after filter header for it to function correctly
-        $paginator = $listField->getConfig()->getComponentByType(GridFieldPaginator::class);
-        if ($paginator) {
-            $listField->getConfig()
-                ->removeComponent($paginator)
-                ->addComponent($paginator);
-        }
-
-        if (!$this->showSearchForm ||
-            (is_array($this->showSearchForm) && !in_array($this->modelClass, $this->showSearchForm))
-        ) {
-            $listField->getConfig()->removeComponentsByType(GridFieldFilterHeader::class);
-        }
-
-        // Validation
-        if (singleton($this->modelClass)->hasMethod('getCMSValidator')) {
-            $detailValidator = singleton($this->modelClass)->getCMSValidator();
-            /** @var GridFieldDetailForm $detailform */
-            $detailform = $listField->getConfig()->getComponentByType(GridFieldDetailForm::class);
-            $detailform->setValidator($detailValidator);
-        }
-
-        if ($this->showImportForm) {
-            $fieldConfig->addComponent(
-                GridFieldImportButton::create('buttons-before-left')
-                    ->setImportForm($this->ImportForm())
-                    ->setModalTitle(_t('SilverStripe\\Admin\\ModelAdmin.IMPORT', 'Import from CSV'))
-            );
-        }
-
         $form = Form::create(
             $this,
             'EditForm',
-            new FieldList($listField),
+            new FieldList($this->getGridField()),
             new FieldList()
         )->setHTMLID('Form_EditForm');
         $form->addExtraClass('cms-edit-form cms-panel-padded center flexbox-area-grow');
@@ -247,6 +193,96 @@ abstract class ModelAdmin extends LeftAndMain
         $this->extend('updateEditForm', $form);
 
         return $form;
+    }
+
+    /**
+     * Generate the GridField field that will be used for this ModelAdmin.
+     *
+     * Developers may override this method in their ModelAdmin class to customise their GridField. Extensions can use
+     * the `updateGridField` hook for the same purpose.
+     *
+     * @see {@link getGridFieldConfig()}
+     * @return GridField
+     */
+    protected function getGridField(): GridField
+    {
+        $field = GridField::create(
+            $this->sanitiseClassName($this->modelClass),
+            false,
+            $this->getList(),
+            $this->getGridFieldConfig()
+        );
+
+        $this->extend('updateGridField', $field);
+
+        return $field;
+    }
+
+    /**
+     * Generate the GridField Configuration that will use for the ModelAdmin Gridfield.
+     *
+     * Developers may override this method in their ModelAdmin class to customise their GridFieldConfiguration.
+     * Extensions can use the `updateGridFieldConfig` hook for the same purpose.
+     *
+     * @return GridFieldConfig
+     */
+    protected function getGridFieldConfig(): GridFieldConfig
+    {
+        $config = GridFieldConfig_RecordEditor::create($this->config()->get('page_length'));
+
+        $exportButton = new GridFieldExportButton('buttons-before-left');
+        $exportButton->setExportColumns($this->getExportFields());
+
+        $config
+            ->addComponent($exportButton)
+            ->addComponents(new GridFieldPrintButton('buttons-before-left'));
+
+        // Remove default and add our own filter header with extension points
+        // to retain API until deprecation in 5.0
+        $config->removeComponentsByType(GridFieldFilterHeader::class);
+        $config->addComponent(new GridFieldFilterHeader(
+            false,
+            function ($context) {
+                $this->extend('updateSearchContext', $context);
+            },
+            function ($form) {
+                $this->extend('updateSearchForm', $form);
+            }
+        ));
+
+        if (!$this->showSearchForm ||
+            (is_array($this->showSearchForm) && !in_array($this->modelClass, $this->showSearchForm))
+        ) {
+            $config->removeComponentsByType(GridFieldFilterHeader::class);
+        }
+
+        // GridFieldPaginator has to be added after filter header for it to function correctly
+        $paginator = $config->getComponentByType(GridFieldPaginator::class);
+        if ($paginator) {
+            $config
+                ->removeComponent($paginator)
+                ->addComponent($paginator);
+        }
+
+        // Validation
+        if (singleton($this->modelClass)->hasMethod('getCMSValidator')) {
+            $detailValidator = singleton($this->modelClass)->getCMSValidator();
+            /** @var GridFieldDetailForm $detailform */
+            $detailform = $config->getComponentByType(GridFieldDetailForm::class);
+            $detailform->setValidator($detailValidator);
+        }
+
+        if ($this->showImportForm) {
+            $config->addComponent(
+                GridFieldImportButton::create('buttons-before-left')
+                    ->setImportForm($this->ImportForm())
+                    ->setModalTitle(_t('SilverStripe\\Admin\\ModelAdmin.IMPORT', 'Import from CSV'))
+            );
+        }
+
+        $this->extend('updateGridFieldConfig', $config);
+
+        return $config;
     }
 
     /**
