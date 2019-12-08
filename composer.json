@@ -27,9 +27,6 @@
         "phpunit/phpunit": "^5.7"
     },
     "extra": {
-        "branch-alias": {
-            "1.x-dev": "1.6.x-dev"
-        },
         "expose": [
             "client/dist",
             "client/lang",

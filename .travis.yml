@@ -18,12 +18,12 @@ addons:
 
 env:
   global:
-    - COMPOSER_ROOT_VERSION=1.6.x-dev
+    - COMPOSER_ROOT_VERSION=1.x-dev
     - DISPLAY=":99"
     - XVFBARGS=":99 -ac -screen 0 1024x768x16"
     - SS_BASE_URL="http://localhost:8080/"
     - SS_ENVIRONMENT_TYPE="dev"
-    - RECIPE_VERSION=4.6.x-dev
+    - RECIPE_VERSION=4.x-dev
 
 matrix:
   fast_finish: true
@@ -63,9 +63,9 @@ before_script:
 
 # Install composer
   - composer validate
-  - composer require silverstripe/recipe-testing:^1 silverstripe/recipe-core:$RECIPE_VERSION silverstripe/versioned:1.6.x-dev --no-update
+  - composer require silverstripe/recipe-testing:^1 silverstripe/recipe-core:$RECIPE_VERSION silverstripe/versioned:1.x-dev --no-update
   - if [[ $DB == PGSQL ]]; then composer require silverstripe/postgresql:2.x-dev --no-update; fi
-  - if [[ $DB == SQLITE ]]; then composer require silverstripe/sqlite3:2.2.x-dev --no-update; fi
+  - if [[ $DB == SQLITE ]]; then composer require silverstripe/sqlite3:2.x-dev --no-update; fi
   - if [[ $PHPCS_TEST ]]; then composer global require squizlabs/php_codesniffer:^3 --prefer-dist --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile; fi
   - if [[ $BEHAT_TEST == cms ]]; then composer require silverstripe/recipe-cms:$RECIPE_VERSION --no-update; fi
 
