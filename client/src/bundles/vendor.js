@@ -37,6 +37,7 @@ require('expose-loader?ApolloClient!apollo-client');
 require('expose-loader?ReactApollo!react-apollo');
 require('expose-loader?GraphQLTag!graphql-tag');
 require('expose-loader?GraphQLFragments!graphql-fragments');
+require('expose-loader?url!url');
 require('expose-loader?qs!qs');
 require('expose-loader?modernizr!modernizr');
 require('expose-loader?history!history');
