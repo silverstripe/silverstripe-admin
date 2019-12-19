@@ -74,10 +74,10 @@
     eslint-plugin-jsx-a11y "^5.1.1"
     eslint-plugin-react "^7.3.0"
 
-"@silverstripe/webpack-config@^1.0.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@silverstripe/webpack-config/-/webpack-config-1.3.0.tgz#66b122202b659bd59f1d13e0df0e54a150d216b4"
-  integrity sha512-YJcS4BSICzHGUSwA+uK4V4vPx4UJw6wDJ18xwMJ8mWkKED5YJeUeIWjFi2xAGvmohDD2mtenphHJDMO9wXRBCA==
+"@silverstripe/webpack-config@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@silverstripe/webpack-config/-/webpack-config-1.4.0.tgz#c26727f73a70ed588af9379129b16c56258d669e"
+  integrity sha512-6itUELU8mCx2h4xmRV1p7tlnhylG7bzbo4/ZDlBob+r2Twln99yffx7cx7v9kyqkYyp+APz89ti/9HQEpSvAig==
   dependencies:
     autoprefixer "^6.4.0"
     babel-core "^6.24.1"
@@ -8492,7 +8492,6 @@ npm@^6.0.0:
     cmd-shim "^3.0.3"
     columnify "~1.5.4"
     config-chain "^1.1.12"
-    debuglog "*"
     detect-indent "~5.0.0"
     detect-newline "^2.1.0"
     dezalgo "~1.0.3"
@@ -8507,7 +8506,6 @@ npm@^6.0.0:
     has-unicode "~2.0.1"
     hosted-git-info "^2.8.5"
     iferr "^1.0.2"
-    imurmurhash "*"
     infer-owner "^1.0.4"
     inflight "~1.0.6"
     inherits "^2.0.4"
@@ -8526,14 +8524,8 @@ npm@^6.0.0:
     libnpx "^10.2.0"
     lock-verify "^2.1.0"
     lockfile "^1.0.4"
-    lodash._baseindexof "*"
     lodash._baseuniq "~4.6.0"
-    lodash._bindcallback "*"
-    lodash._cacheindexof "*"
-    lodash._createcache "*"
-    lodash._getnative "*"
     lodash.clonedeep "~4.5.0"
-    lodash.restparam "*"
     lodash.union "~4.6.0"
     lodash.uniq "~4.5.0"
     lodash.without "~4.4.0"
