@@ -1013,8 +1013,9 @@ $.entwine('ss', function($) {
 
     renderModal(isOpen) {
       // Build properties
+      const baseUrl = Config.get('baseUrl').replace(/\/+$/, '');
       const tempid = $('body').data('member-tempid');
-      const url = $.path.addSearchParams(Config.get('baseUrl') + '/CMSSecurity/login', {
+      const url = $.path.addSearchParams(`${baseUrl}/CMSSecurity/login`, {
         tempid,
         BackURL: window.location.href,
       });
