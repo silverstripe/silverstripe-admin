@@ -26,12 +26,5 @@
     "Admin.VALIDATOR_MESSAGE_DATE": "{name} is not a proper date format.",
     "Admin.VALIDATOR_MESSAGE_ALPHANUMERIC": "{name} is not an alphanumeric value.",
     "Admin.VALIDATOR_MESSAGE_ALPHA": "{name} is not only letters.",
-    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} is not a valid value.",
-    "Admin.DRAFT": "Draft",
-    "Admin.MODIFIED": "Modified",
-    "Admin.LIVE": "Live",
-    "Admin.ARCHIVED": "Archived",
-    "Admin.NORMAL_TIP": "Tip",
-    "Admin.IMPORTANT_TIP": "Important tip",
-    "Admin.TIP_LABEL": "{type} for {fieldTitle}"
+    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} is not a valid value."
 }
