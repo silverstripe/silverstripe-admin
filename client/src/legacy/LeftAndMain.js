@@ -9,6 +9,7 @@ import Search from 'components/Search/Search';
 import Loading from 'components/Loading/Loading';
 import { schemaMerge } from 'lib/schemaFieldValues';
 import { loadComponent } from 'lib/Injector';
+import Config from 'lib/Config';
 
 require('../legacy/ssui.core.js');
 
@@ -1012,8 +1013,9 @@ $.entwine('ss', function($) {
 
     renderModal(isOpen) {
       // Build properties
+      const baseUrl = Config.get('baseUrl').replace(/\/+$/, '');
       const tempid = $('body').data('member-tempid');
-      const url = $.path.addSearchParams('CMSSecurity/login', {
+      const url = $.path.addSearchParams(`${baseUrl}/CMSSecurity/login`, {
         tempid,
         BackURL: window.location.href,
       });

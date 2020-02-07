@@ -159,6 +159,11 @@ var $window = $( window ),
       return protocol + doubleSlash + authority + pathname + search + hash;
     },
 
+    // Return the base URL
+    getBaseURL: function() {
+      return $('base').attr('href') || window.location.href.replace(/\/[^\/]*$/, '/');
+    },
+
     //Add search (aka query) params to the specified url.
     // 2013-12-06 ischommer: Customized to merge with existing keys
     addSearchParams: function( url, params ) {
