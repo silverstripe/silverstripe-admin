@@ -43,5 +43,8 @@ class CMSMenuItemTest extends SapphireTest
             (string)$menuItem->getAttributesHTML('data-foo'),
             'getAttributesHTML() ignores a string argument and falls back to class property'
         );
+
+        $menuItem->setAttributes(['<html>' => '<html>']);
+        $this->assertNotContains('<html>', $menuItem->getAttributesHTML(), 'Html is escaped for both name and value');
     }
 }
