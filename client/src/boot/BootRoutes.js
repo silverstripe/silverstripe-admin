@@ -4,7 +4,7 @@ import $ from 'jquery';
 import React from 'react';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Prompt } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 import Config from 'lib/Config';
 import pageRouter from 'lib/Router';
@@ -57,6 +57,21 @@ class BootRoutes {
       // Check legacy last, as `LeftAndMain` should be the absolute last called
       this.initLegacyRouter();
     }
+
+    // Legacy support – make sure we don't overwrite the `onbeforeunload`
+    // handler in `LeftAndMain.EditForm.js` but run it after the new handler.
+    const currBeforeUnload = window.onbeforeunload;
+    window.onbeforeunload = () => {
+      if (this.shouldConfirmBeforeUnload()) {
+        return i18n._t('Admin.CONFIRMUNSAVEDSHORT', 'WARNING: Your changes have not been saved.');
+      }
+
+      if (typeof currBeforeUnload === 'function') {
+        return currBeforeUnload();
+      }
+
+      return undefined;
+    };
   }
 
   /**
@@ -100,6 +115,7 @@ class BootRoutes {
             basename={Config.get('baseUrl')}
             getUserConfirmation={this.handleBeforeRoute}
           >
+            <Prompt message={i18n._t('Admin.CONFIRMUNSAVEDSHORT', 'WARNING: Your changes have not been saved.')} />
             {renderRoutes([reactRouteRegister.getRootRoute()])}
           </Router>
         </Provider>
@@ -163,21 +179,6 @@ class BootRoutes {
       });
     });
 
-    // Legacy support – make sure we don't overwrite the `onbeforeunload`
-    // handler in `LeftAndMain.EditForm.js` but run it after the new handler.
-    const currBeforeUnload = window.onbeforeunload;
-    window.onbeforeunload = () => {
-      if (this.shouldConfirmBeforeUnload()) {
-        return i18n._t('Admin.CONFIRMUNSAVEDSHORT', 'WARNING: Your changes have not been saved.');
-      }
-
-      if (typeof currBeforeUnload === 'function') {
-        return currBeforeUnload();
-      }
-
-      return undefined;
-    };
-
     pageRouter.start();
   }
 
@@ -207,22 +208,22 @@ class BootRoutes {
     return changedForms.length > 0;
   }
 
-  handleBeforeUnload() {
+  handleBeforeUnload(content, callback) {
     if (this.shouldConfirmBeforeUnload()) {
-      return i18n._t('Admin.CONFIRMUNSAVEDSHORT', 'WARNING: Your changes have not been saved.');
+      return callback(confirm(i18n._t('Admin.CONFIRMUNSAVEDSHORT', 'WARNING: Your changes have not been saved.')));
     }
 
-    return undefined;
+    return callback(true);
   }
 
-  handleBeforeRoute() {
+  handleBeforeRoute(content, callback) {
     if (this.shouldConfirmBeforeUnload()) {
-      return i18n._t('Admin.CONFIRMUNSAVED', `Are you sure you want to navigate away
+      return callback(confirm(i18n._t('Admin.CONFIRMUNSAVED', `Are you sure you want to navigate away
           from this page?\n\nWARNING: Your changes have not been saved.\n\n
-          Press OK to continue, or Cancel to stay on the current page.`);
+          Press OK to continue, or Cancel to stay on the current page.`)));
     }
 
-    return undefined;
+    return callback(true);
   }
 }
 
