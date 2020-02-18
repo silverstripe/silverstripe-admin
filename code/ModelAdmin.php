@@ -265,8 +265,8 @@ abstract class ModelAdmin extends LeftAndMain
         }
 
         // Validation
-        if (singleton($this->modelClass)->hasMethod('getCMSValidator')) {
-            $detailValidator = singleton($this->modelClass)->getCMSValidator();
+        if (singleton($this->modelClass)->hasMethod('getValidatorList')) {
+            $detailValidator = singleton($this->modelClass)->getValidatorList();
             /** @var GridFieldDetailForm $detailform */
             $detailform = $config->getComponentByType(GridFieldDetailForm::class);
             $detailform->setValidator($detailValidator);
