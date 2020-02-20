@@ -34,6 +34,8 @@ matrix:
       env: DB=MYSQL PHPUNIT_TEST=1 PHPCS_TEST=1
     - php: 7.3
       env: DB=MYSQL PHPUNIT_TEST=1
+    - php: 7.4
+      env: DB=MYSQL PHPUNIT_TEST=1
     - php: 7.1
       env: DB=MYSQL PHPUNIT_TEST=1 PDO=1
     - php: 7.2
