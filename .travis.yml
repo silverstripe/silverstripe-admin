@@ -1,10 +1,11 @@
 language: php
 
-dist: trusty
+dist: xenial
 
-before_install:
- - sudo apt-get update
- - sudo apt-get install chromium-chromedriver
+services:
+  - mysql
+  - postgresql
+  - xvfb
 
 cache:
   directories:
@@ -14,13 +15,12 @@ addons:
   apt:
     packages:
       - tidy
-  firefox: "31.0"
+      - chromium-chromedriver
+      - chromium-browser
 
 env:
   global:
     - COMPOSER_ROOT_VERSION=1.5.x-dev
-    - DISPLAY=":99"
-    - XVFBARGS=":99 -ac -screen 0 1024x768x16"
     - SS_BASE_URL="http://localhost:8080/"
     - SS_ENVIRONMENT_TYPE="dev"
     - RECIPE_VERSION=4.5.x-dev
@@ -33,6 +33,8 @@ matrix:
     - php: 7.2
       env: DB=MYSQL PHPUNIT_TEST=1 PHPCS_TEST=1
     - php: 7.3
+      env: DB=MYSQL PHPUNIT_TEST=1
+    - php: 7.4
       env: DB=MYSQL PHPUNIT_TEST=1
     - php: 7.1
       env: DB=MYSQL PHPUNIT_TEST=1 PDO=1
@@ -54,7 +56,6 @@ matrix:
 before_script:
 # Init PHP
   - export CORE_RELEASE=$TRAVIS_BRANCH
-  - export PATH=/usr/lib/chromium-browser/:$PATH
   - printf "\n" | pecl install imagick
   - phpenv rehash
   - phpenv config-rm xdebug.ini || true
@@ -75,10 +76,14 @@ before_script:
 # Install NPM dependencies
   - if [[ $NPM_TEST ]]; then nvm install && npm install -g yarn && yarn install --network-concurrency 1; fi
 
+# Remove preinstalled Chrome (google-chrome)
+# this would conflict with our chromium-browser installation
+# and its version is incompatible with chromium-chromedriver
+  - sudo apt-get remove -y --purge google-chrome-stable || true
+
 # Start behat services
   - if [[ $BEHAT_TEST ]]; then mkdir artifacts; fi
   - if [[ $BEHAT_TEST ]]; then cp composer.lock artifacts/; composer show -fjson > artifacts/composer-show.json; composer show > artifacts/composer-show.txt; fi
-  - if [[ $BEHAT_TEST ]]; then sh -e /etc/init.d/xvfb start; sleep 3; fi
   - if [[ $BEHAT_TEST ]]; then (chromedriver > artifacts/chromedriver.log 2>&1 &); fi
   - if [[ $BEHAT_TEST == admin ]]; then (vendor/bin/serve --bootstrap-file vendor/silverstripe/framework/tests/behat/serve-bootstrap.php &> artifacts/serve.log &); fi
   - if [[ $BEHAT_TEST == cms ]]; then (vendor/bin/serve --bootstrap-file vendor/silverstripe/cms/tests/behat/serve-bootstrap.php &> artifacts/serve.log &); fi
