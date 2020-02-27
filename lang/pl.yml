@@ -15,6 +15,9 @@ pl:
     URL: URL
   SilverStripe\Admin\Forms\LinkFormFactory:
     INSERT_LINK: 'Wstaw link'
+  SilverStripe\Admin\Forms\UsedOnTable:
+    ADDEDTODRAFT: Szkic
+    MODIFIEDONDRAFTSHORT: Zmodyfikowano
   SilverStripe\Admin\GroupImportForm:
     Help1: '<p>Zaimportuj jedną lub więcej grup via <em>CSV</em> format (comma-separated values). <small><a href="#" class="toggle-advanced">Pokaż zaawansowane użycie</a></small></p>'
     ResultCreated: 'Utworzono {count} grup'
@@ -25,8 +28,11 @@ pl:
     ACCESSALLINTERFACESHELP: 'Zastępuje bardziej szczegółowe ustawienia dostępu.'
     BROWSER_WARNING_HEADING: 'Nieobsługiwane przeglądarki'
     BROWSER_WARNING_TEXT: 'Twoja przeglądarka nie obsłuży poprawnie CMS''a.<br />Uaktualnij ją, a najlepiej zmień na jedną z proponowanych opcji.'
+    CollapsePanel: 'Zwiń panel'
     DELETED: Usunięto.
     DropdownBatchActionsDefault: 'Wybierz akcję...'
+    ExpandPanel: 'Rozwiń panel'
+    HelpMenu: Pomoc
     LOGOUT: 'Wyloguj się'
     MenuToggleAuto: Auto
     MenuToggleStickyNav: 'Sticky nav'
@@ -34,11 +40,13 @@ pl:
     PERMAGAIN: 'Zostałeś wylogowany z CMS. Jeśli chcesz się ponownie zalogować, wpisz poniżej nazwę użytkownika i hasło.'
     PERMALREADY: 'Przykro mi, ale nie masz dostępu do tej części CMS. Jeśli chcesz zalogować się jako ktoś inny, zrób to poniżej.'
     PERMDEFAULT: 'Musisz być zalogowany, aby uzyskać dostęp do obszaru administracyjnego; proszę wprowadź swoje dane uwierzytelniające poniżej.'
+    PROFILE: '{name} profil.'
     PreviewButton: Podgląd
     REQUIREJS: 'CMS wymaga włączenia obsługi JavaScript.'
     SAVEDUP: Zapisano.
     SUBMIT_BUTTON_LABEL: Idź
     ValidationError: 'Wykryto niepoprawne dane'
+    Version: Wersja
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
     Auto: Auto
     ChangeViewMode: 'Zmień tryb widoku'

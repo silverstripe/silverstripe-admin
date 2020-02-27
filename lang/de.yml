@@ -1,13 +1,99 @@
 de:
-  SilverStripe\Admin\CMSBatchAction:
-    PUBLISHED_PAGES: '%d Seiten veröffentlicht, %d Fehler'
-    PUBLISH_PAGES: Veröffentlichen
-    RESTORE: Wiederherstellen
-    RESTORED_PAGES: '%d Seiten wiederhergestellt'
+  SilverStripe\Admin\CMSProfileController:
+    CANTEDIT: 'Dafür haben Sie keine Berechtigung'
+    MENUTITLE: 'Mein Profil'
+  SilverStripe\Admin\Forms\EditorEmailLinkFormFactory:
+    EMAIL: 'E-Mail Adresse'
+    LINKDESCR: Link-Beschreibung
+    LINKTEXT: Link-Text
+    SUBJECT: Betreff
+  SilverStripe\Admin\Forms\EditorExternalLinkFormFactory:
+    ANCHORVALUE: Anker
+    LINKDESCR: Link-Beschreibung
+    LINKOPENNEWWIN: 'In neuem Tab/Fenster öffnen'
+    LINKTEXT: Link-Text
+    URL: URL
+  SilverStripe\Admin\Forms\LinkFormFactory:
+    INSERT_LINK: 'Link einfügen'
+  SilverStripe\Admin\Forms\UsedOnTable:
+    ADDEDTODRAFT: Entwurf
+    MODIFIEDONDRAFTSHORT: Bearbeitet
+  SilverStripe\Admin\GroupImportForm:
+    Help1: '<p>Eine oder mehrere Gruppen im <em>CSV</em> Format importieren. <small><a href="#" class="toggle-advanced">Zeige fortgeschrittenen Modus</a></small></p>'
+    Help2: '<div class="advanced"><h4>Fortgeschrittener Modus</h4><ul><li>Erlaubte Spalten: <em>{columns}</em></li><li>Existierende Gruppen werden anhand des eindeutigen <em>Code</em> zugeordnet, und mit den Werten der importierten Datei aktualisiert.</li><li>Gruppenhierarchien können mittels einer <em>ParentCode</em> Spalte definiert werden.</li><li>Berechtigungen können anhand der Spalte "<em>PermissionCode</em>" zugewiesen werden. Bereits zugewiesene Berechtigungen werden nicht entfernt.</li></ul></div>'
+    ResultCreated: '{count} Gruppe(n) angelegt'
+    ResultDeleted: '{count} Gruppe(n) gelöscht'
+    ResultUpdated: '{count} Gruppe(n) aktualisiert'
+  SilverStripe\Admin\LeftAndMain:
+    ACCESSALLINTERFACES: 'Zugang zu allen CMS-Sektionen'
+    ACCESSALLINTERFACESHELP: 'Setzt spezifischere Zugangsbestimmungen ausser Kraft.'
+    BROWSER_WARNING_HEADING: 'NIcht unterstützter Browser'
+    BROWSER_WARNING_TEXT: 'Sie verwenden einen Browser der nicht von SilverStripe unterstützt wird.<br />Bitte verwenden Sie eine der folgenden Optionen.'
+    CollapsePanel: 'Panel zuklappen'
+    DELETED: Gelöscht.
+    DropdownBatchActionsDefault: 'Aktion auswählen...'
+    ExpandPanel: 'Panel aufklappen'
+    HelpMenu: Hilfemenü
+    LOGOUT: Abmelden
+    MenuToggleAuto: Auto
+    MenuToggleStickyNav: Fixiert
+    NavigateUp: 'Einen Ordner nach oben'
+    PERMAGAIN: 'Sie wurden aus dem CMS abgemeldet. Wenn Sie sich wieder anmelden wollen, geben Sie unten Ihren Benutzer und Ihr Passwort ein.'
+    PERMALREADY: 'Es tut mir leid, Sie können diesen Teil des CMS nicht aufrufen. Wenn Sie sich als jemand anderes anmelden wollen, können Sie das unten tun.'
+    PERMDEFAULT: 'Sie müssen angemeldet sein um auf den Administrationsbereich zuzugreifen, bitte geben Sie unten Ihre Daten ein.'
+    PROFILE: '{name} Profil'
+    PreviewButton: Vorschau
+    REQUIREJS: 'Um das CMS zu verwenden müssen Sie JavaScript aktivieren.'
+    SAVEDUP: Gespeichert.
+    SUBMIT_BUTTON_LABEL: Los
+    ValidationError: Validierungsfehler
+    Version: Version
+  SilverStripe\Admin\LeftAndMain_ViewModeSelector:
+    Auto: Auto
+    ChangeViewMode: 'Ansicht ändern'
+    Desktop: Desktop
+    DualWindowView: 'Geteiltes Fenster'
+    EditView: Bearbeitungsmodus
+    Mobile: Mobil
+    PreviewState: Vorschau-Status
+    PreviewView: Vorschaumodus
+    Responsive: Responsive
+    SplitView: 'Geteilter Modus'
+    Tablet: Tablet
+    ViewDeviceWidth: 'Wählen Sie eine Vorschaubreite'
+    Width: Breite
+  SilverStripe\Admin\MemberImportForm:
+    BtnImport: 'Aus CSV importieren'
+    FileFieldLabel: 'CSV Datei <small>(Erlaubte Dateiendungen: *.csv)</small>'
+    Help1: '<p>Benutzer im <em>CSV</em> Format importieren. <small><a href="#" class="toggle-advanced">Zeige fortgeschrittenen Modus</a></small></p>'
+    Help2: '<div class="advanced"><h4>Fortgeschrittener Modus</h4><ul><li>Erlaubte Spalten: <em>{columns}</em></li><li>Existierende Benutzer werden anhand des eindeutigen <em>Code</em> zugeordnet, und mit den Werten der importierten Datei aktualisiert.</li><li>Gruppen können mittels der <em>Groups</em> Spalte definiert werden.  Gruppen werden anhand Ihres <em>Code</em> zugewiesen werden. Mehrere Gruppen können mit Komma getrennt angegeben werden, existierende Gruppenzugehörigkeiten werden nicht entfernt.</li></ul></div>'
+    ResultCreated: '{count} Benutzer angelegt'
+    ResultDeleted: '{count} Benutzer gelöscht'
+    ResultNone: 'Keine Änderungen'
+    ResultUpdated: '{count} Benutzer aktualisiert'
+  SilverStripe\Admin\ModelAdmin:
+    DELETE: Löschen
+    DELETEDRECORDS: '{count} Einträge gelöscht'
+    EMPTYBEFOREIMPORT: 'Daten ersetzen'
+    IMPORT: 'Aus CSV importieren'
+    IMPORTEDRECORDS: '{count} Einträge importiert.'
+    IMPORTSPECFIELDS: Datenbankspalten
+    IMPORTSPECLINK: 'Zeige Spezifikation für {model}'
+    IMPORTSPECRELATIONS: Beziehungen
+    IMPORTSPECTITLE: 'Spezifikation für {model}'
+    NOCSVFILE: 'Bitte wählen Sie eine CSV Datei zum importieren'
+    NOIMPORT: 'Nichts zu importieren'
+    Title: Datenmodelle
+    UPDATEDRECORDS: '{count} Einträge aktualisiert.'
   SilverStripe\Admin\SecurityAdmin:
-    GROUPNAME: Gruppenname
-    MEMBERS: Mitglieder
-    NEWGROUP: 'Neue Gruppe'
-    PERMISSIONS: Berechtigungen
-    ROLES: Rollen
-    ROLESDESCRIPTION: 'Hier können Sie der Gruppe Rollen zuweisen. Rollen sind logische Gruppierungen von Berechtigungen.'
+    ACCESS_HELP: 'Erlaubt anzeigen, hinzufügen und bearbeiten von Benutzern, wie auch das zuweisen von Berechtigungen und Rollen.'
+    APPLY_ROLES: 'Rollen auf Gruppen anwenden'
+    APPLY_ROLES_HELP: 'Möglichkeit, die Rollen einer Gruppe zu bearbeiten. Erfordert die "Zugang zu Benutzerverwaltung" Berechtigung'
+    EDITPERMISSIONS: 'Berechtigungen für Gruppen verwalten'
+    EDITPERMISSIONS_HELP: 'Möglichkeit die Berechtigungen und IP-Adressen für eine Gruppe zu bearbeiten. Erfordert die "Zugang zu ''Sicherheit''" Berechtigung.'
+    IMPORTGROUPS: 'Gruppen importieren'
+    IMPORTUSERS: 'Benutzer importieren'
+    MENUTITLE: Sicherheit
+    MemberListCaution: 'Achtung: Benutzer von dieser Liste zu entfernen, wird diese von allen Gruppen entfernen und aus der Datenbank löschen.'
+    TABROLES: Rollen
+    Users: Benutzer
