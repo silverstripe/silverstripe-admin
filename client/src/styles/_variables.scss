@@ -24,9 +24,9 @@ $body-color-dark: darken($body-color, 10);
 
 // Extra state colors
 $state-draft: #cf3f00;
-$state-draft-bg: #fff7f0;
+$state-draft-bg: #ff7f22;
 $state-modified: $state-draft;
-$state-modified-bg: #ff7f22;
+$state-modified-bg: #fff7f0;
 $state-archived: $gray-700;
 $state-live: $green;
 
