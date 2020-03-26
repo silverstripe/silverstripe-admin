@@ -19,7 +19,7 @@ class LeftAndMainTest extends FunctionalTest
 
     protected $backupCombined;
 
-    public function setUp()
+    protected function setUp() : void
     {
         parent::setUp();
 
@@ -50,7 +50,7 @@ class LeftAndMainTest extends FunctionalTest
         CMSMenu::populate_menu();
     }
 
-    public function tearDown()
+    protected function tearDown() : void
     {
         parent::tearDown();
         Requirements::set_combined_files_enabled($this->backupCombined);
