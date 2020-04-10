@@ -40,6 +40,7 @@ class Breadcrumb extends Component {
       <div className="breadcrumb__item breadcrumb__item--last">
         <h2 className="breadcrumb__item-title">
           {crumb.text}
+          {this.renderVisibility(crumb.isProtected)}
           {crumb.icon && (
             <span
               className={iconClassNames.join(' ')}
@@ -50,6 +51,15 @@ class Breadcrumb extends Component {
           )}
         </h2>
       </div>
+    );
+  }
+
+  renderVisibility(isProtected) {
+    const myTitle = isProtected ? 'Protected' : 'Public';
+    const myClassName = 'gallery-item--' + (isProtected ? 'protected' : 'public');
+    const myStyles = { display: 'inline-block' };
+    return (
+      <span title={myTitle} className={myClassName} style={myStyles}></span>
     );
   }
 
