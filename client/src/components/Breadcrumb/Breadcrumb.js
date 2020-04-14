@@ -41,6 +41,7 @@ class Breadcrumb extends Component {
         <h2 className="breadcrumb__item-title">
           {crumb.text}
           {this.renderVisibility(crumb.isProtected)}
+          {this.renderHasChildUserDefinedFormUploads(crumb.hasChildUserDefinedFormUploads)}
           {crumb.icon && (
             <span
               className={iconClassNames.join(' ')}
@@ -57,6 +58,18 @@ class Breadcrumb extends Component {
   renderVisibility(isProtected) {
     const myTitle = isProtected ? 'Protected' : 'Public';
     const myClassName = 'gallery-item--' + (isProtected ? 'protected' : 'public');
+    const myStyles = { display: 'inline-block' };
+    return (
+      <span title={myTitle} className={myClassName} style={myStyles}></span>
+    );
+  }
+  
+  renderHasChildUserDefinedFormUploads(hasChildUserDefinedFormUploads) {
+    if (!hasChildUserDefinedFormUploads) {
+      return '';
+    }
+    const myTitle = 'Contains UserDefinedForm uploads';
+    const myClassName = 'gallery-item--userdefinedform-upload';
     const myStyles = { display: 'inline-block' };
     return (
       <span title={myTitle} className={myClassName} style={myStyles}></span>

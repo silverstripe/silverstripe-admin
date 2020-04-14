@@ -18980,6 +18980,7 @@ var Breadcrumb = function (_Component) {
           { className: 'breadcrumb__item-title' },
           crumb.text,
           this.renderVisibility(crumb.isProtected),
+          this.renderHasChildUserDefinedFormUploads(crumb.hasChildUserDefinedFormUploads),
           crumb.icon && _react2.default.createElement('span', {
             className: iconClassNames.join(' '),
             role: 'button',
@@ -18994,6 +18995,17 @@ var Breadcrumb = function (_Component) {
     value: function renderVisibility(isProtected) {
       var myTitle = isProtected ? 'Protected' : 'Public';
       var myClassName = 'gallery-item--' + (isProtected ? 'protected' : 'public');
+      var myStyles = { display: 'inline-block' };
+      return _react2.default.createElement('span', { title: myTitle, className: myClassName, style: myStyles });
+    }
+  }, {
+    key: 'renderHasChildUserDefinedFormUploads',
+    value: function renderHasChildUserDefinedFormUploads(hasChildUserDefinedFormUploads) {
+      if (!hasChildUserDefinedFormUploads) {
+        return '';
+      }
+      var myTitle = 'Contains UserDefinedForm uploads';
+      var myClassName = 'gallery-item--userdefinedform-upload';
       var myStyles = { display: 'inline-block' };
       return _react2.default.createElement('span', { title: myTitle, className: myClassName, style: myStyles });
     }
