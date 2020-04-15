@@ -24327,7 +24327,7 @@ var TreeDropdownField = function (_Component) {
       if (!formFieldEl) {
         return;
       }
-      var fileUploadContainerEl = tmpEl.parentNode;
+      var fileUploadContainerEl = formFieldEl.parentNode;
       var el = fileUploadContainerEl.querySelector('.folder-icons');
 
       if (el && calledByRender) {

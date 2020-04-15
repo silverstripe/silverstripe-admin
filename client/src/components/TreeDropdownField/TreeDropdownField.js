@@ -617,7 +617,7 @@ class TreeDropdownField extends Component {
     if (!formFieldEl) {
       return;
     }
-    const fileUploadContainerEl = tmpEl.parentNode;
+    const fileUploadContainerEl = formFieldEl.parentNode;
     let el = fileUploadContainerEl.querySelector('.folder-icons');
     // ensure is only called by render() once
     if (el && calledByRender) {
