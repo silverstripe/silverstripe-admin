@@ -23794,6 +23794,10 @@ var TreeDropdownField = function (_Component) {
     _this.renderMenu = _this.renderMenu.bind(_this);
     _this.renderOption = _this.renderOption.bind(_this);
 
+    _this.hackInUserFormIcons = _this.hackInUserFormIcons.bind(_this);
+    _this.renderVisibility = _this.renderVisibility.bind(_this);
+    _this.renderUserFormUploads = _this.renderUserFormUploads.bind(_this);
+
     _this.getBreadcrumbs = _this.getBreadcrumbs.bind(_this);
     _this.getDropdownOptions = _this.getDropdownOptions.bind(_this);
     _this.getVisibleTree = _this.getVisibleTree.bind(_this);
@@ -24153,6 +24157,8 @@ var TreeDropdownField = function (_Component) {
       if (typeof this.props.onChange === 'function') {
         this.props.onChange(mappedValue);
       }
+
+      this.hackInUserFormIcons(value);
     }
   }, {
     key: 'handleNavigate',
@@ -24281,6 +24287,9 @@ var TreeDropdownField = function (_Component) {
         }
       }
 
+      var visibility = this.renderVisibility(tree, true);
+      var userFormUploads = this.renderUserFormUploads(tree, true);
+
       return _react2.default.createElement(
         'div',
         { className: 'treedropdownfield__option fill-width' },
@@ -24288,18 +24297,83 @@ var TreeDropdownField = function (_Component) {
           'div',
           { className: 'treedropdownfield__option-title-box flexbox-area-grow fill-height' },
           _react2.default.createElement(
-            'span',
-            { className: 'treedropdownfield__option-title' },
-            title
-          ),
-          subtitle && _react2.default.createElement(
-            'span',
-            { className: 'treedropdownfield__option-context' },
-            subtitle
+            'div',
+            { style: { 'display': 'flex' } },
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                'span',
+                { className: 'treedropdownfield__option-title' },
+                title
+              ),
+              subtitle && _react2.default.createElement(
+                'span',
+                { className: 'treedropdownfield__option-context' },
+                subtitle
+              )
+            ),
+            visibility,
+            userFormUploads
           )
         ),
         button
       );
+    }
+  }, {
+    key: 'hackInUserFormIcons',
+    value: function hackInUserFormIcons(obj, calledByRender) {
+      var fileUploadContainerEl = document.getElementById('Form_ItemEditForm_FolderID').parentNode;
+      var el = fileUploadContainerEl.querySelector('.folder-icons');
+
+      if (el && calledByRender) {
+        return;
+      }
+      if (!el) {
+        el = document.createElement('div');
+        el.className = 'folder-icons';
+        el.style.display = 'flex';
+        fileUploadContainerEl.appendChild(el);
+      }
+      var visiblity = this.renderVisibility(obj);
+      var userFormUploads = this.renderUserFormUploads(obj, false);
+      el.innerHTML = visiblity + userFormUploads;
+    }
+  }, {
+    key: 'renderVisibility',
+    value: function renderVisibility(obj, useJsx) {
+      if (!obj.hasOwnProperty('canViewAnonymous')) {
+        return '';
+      }
+      var title = obj.canViewAnonymous ? 'Public' : 'Protected';
+      var className = 'gallery-item--' + (obj.canViewAnonymous ? 'public' : 'protected');
+      if (useJsx) {
+        return _react2.default.createElement(
+          'div',
+          { style: { 'paddingLeft': '5px' } },
+          _react2.default.createElement('span', { title: title, className: className, style: { 'display': 'inline-block' } })
+        );
+      } else {
+        return ['<div style="padding-left:5px">', '<span title="', title, '" class="', className, '" style="display:inline-block"></span>', '</div>'].join('');
+      }
+    }
+  }, {
+    key: 'renderUserFormUploads',
+    value: function renderUserFormUploads(obj, useJsx) {
+      if (!obj.hasOwnProperty('hasChildUserDefinedFormUploads') || !obj.hasChildUserDefinedFormUploads) {
+        return '';
+      }
+      var title = obj.hasChildUserDefinedFormUploads ? 'UserDefinedForm upload' : '';
+      var className = 'gallery-item--userdefinedform-upload';
+      if (useJsx) {
+        return _react2.default.createElement(
+          'div',
+          { style: { 'paddingLeft': '5px' } },
+          _react2.default.createElement('span', { title: title, className: className, style: { 'display': 'inline-block' } })
+        );
+      } else {
+        return ['<div style="padding-left:5px">', '<span title="', title, '" class="', className, '" style="display:inline-block"></span>', '</div>'].join('');
+      }
     }
   }, {
     key: 'renderReadOnly',
@@ -24375,6 +24449,8 @@ var TreeDropdownField = function (_Component) {
 
       var resetValue = this.props.data.hasEmptyDefault && !this.props.visible.length ? '' : null;
       var showSearch = typeof this.props.data.showSearch !== 'undefined' ? this.props.data.showSearch : false;
+
+      this.hackInUserFormIcons(this.props.data.valueObject, true);
 
       return _react2.default.createElement(_reactSelect2.default, {
         searchable: showSearch,
