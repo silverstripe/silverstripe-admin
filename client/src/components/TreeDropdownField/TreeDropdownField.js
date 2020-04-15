@@ -613,7 +613,11 @@ class TreeDropdownField extends Component {
   // tmp demo
   // hacking this in because the root <Select> component lives in node_modules, so cannot easily update via react
   hackInUserFormIcons(obj, calledByRender) {
-    const fileUploadContainerEl = document.getElementById('Form_ItemEditForm_FolderID').parentNode;
+    const formFieldEl = document.getElementById('Form_ItemEditForm_FolderID');
+    if (!formFieldEl) {
+      return;
+    }
+    const fileUploadContainerEl = tmpEl.parentNode;
     let el = fileUploadContainerEl.querySelector('.folder-icons');
     // ensure is only called by render() once
     if (el && calledByRender) {
