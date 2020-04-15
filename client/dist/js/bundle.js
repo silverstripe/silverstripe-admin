@@ -24342,7 +24342,7 @@ var TreeDropdownField = function (_Component) {
   }, {
     key: 'renderVisibility',
     value: function renderVisibility(obj, useJsx) {
-      if (!obj.hasOwnProperty('canViewAnonymous')) {
+      if (!obj || !obj.hasOwnProperty('canViewAnonymous')) {
         return '';
       }
       var title = obj.canViewAnonymous ? 'Public' : 'Protected';
@@ -24360,7 +24360,7 @@ var TreeDropdownField = function (_Component) {
   }, {
     key: 'renderUserFormUploads',
     value: function renderUserFormUploads(obj, useJsx) {
-      if (!obj.hasOwnProperty('hasChildUserDefinedFormUploads') || !obj.hasChildUserDefinedFormUploads) {
+      if (!obj || !obj.hasOwnProperty('hasChildUserDefinedFormUploads') || !obj.hasChildUserDefinedFormUploads) {
         return '';
       }
       var title = obj.hasChildUserDefinedFormUploads ? 'UserDefinedForm upload' : '';

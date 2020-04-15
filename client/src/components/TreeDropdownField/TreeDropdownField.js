@@ -632,7 +632,7 @@ class TreeDropdownField extends Component {
   
   // tmp demo
   renderVisibility(obj, useJsx) {
-    if (!obj.hasOwnProperty('canViewAnonymous')) {
+    if (!obj || !obj.hasOwnProperty('canViewAnonymous')) {
       return '';
     }
     const title = obj.canViewAnonymous ? 'Public' : 'Protected';
@@ -654,7 +654,7 @@ class TreeDropdownField extends Component {
   
   // tmp demo
   renderUserFormUploads(obj, useJsx) {
-    if (!obj.hasOwnProperty('hasChildUserDefinedFormUploads') || !obj.hasChildUserDefinedFormUploads) {
+    if (!obj || !obj.hasOwnProperty('hasChildUserDefinedFormUploads') || !obj.hasChildUserDefinedFormUploads) {
       return '';
     }
     const title = obj.hasChildUserDefinedFormUploads ? 'UserDefinedForm upload' : '';
