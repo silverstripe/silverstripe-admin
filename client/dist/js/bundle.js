@@ -24323,7 +24323,11 @@ var TreeDropdownField = function (_Component) {
   }, {
     key: 'hackInUserFormIcons',
     value: function hackInUserFormIcons(obj, calledByRender) {
-      var fileUploadContainerEl = document.getElementById('Form_ItemEditForm_FolderID').parentNode;
+      var formFieldEl = document.getElementById('Form_ItemEditForm_FolderID');
+      if (!formFieldEl) {
+        return;
+      }
+      var fileUploadContainerEl = tmpEl.parentNode;
       var el = fileUploadContainerEl.querySelector('.folder-icons');
 
       if (el && calledByRender) {
