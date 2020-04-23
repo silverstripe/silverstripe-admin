@@ -40,7 +40,7 @@ class Breadcrumb extends Component {
       <div className="breadcrumb__item breadcrumb__item--last">
         <h2 className="breadcrumb__item-title">
           {crumb.text}
-          {this.renderVisibility(crumb.isProtected)}
+          {this.renderVisibility(crumb.isRestricted)}
           {this.renderHasChildUserDefinedFormUploads(crumb.hasChildUserDefinedFormUploads)}
           {crumb.icon && (
             <span
@@ -55,12 +55,11 @@ class Breadcrumb extends Component {
     );
   }
 
-  renderVisibility(isProtected) {
-    const myTitle = isProtected ? 'Protected' : 'Public';
-    const myClassName = 'gallery-item--' + (isProtected ? 'protected' : 'public');
-    const myStyles = { display: 'inline-block' };
+  renderVisibility(isRestricted) {
+    const myTitle = isRestricted ? 'Restricted' : 'Public';
+    const myClassName = 'gallery-item--icon gallery-item--' + (isRestricted ? '' : 'un') + 'restricted';
     return (
-      <span title={myTitle} className={myClassName} style={myStyles}></span>
+      <span title={myTitle} className={myClassName}></span>
     );
   }
   
@@ -69,10 +68,9 @@ class Breadcrumb extends Component {
       return '';
     }
     const myTitle = 'Contains UserDefinedForm uploads';
-    const myClassName = 'gallery-item--userdefinedform-upload';
-    const myStyles = { display: 'inline-block' };
+    const myClassName = 'gallery-item--icon gallery-icon--userdefinedform-upload';
     return (
-      <span title={myTitle} className={myClassName} style={myStyles}></span>
+      <span title={myTitle} className={myClassName}></span>
     );
   }
 

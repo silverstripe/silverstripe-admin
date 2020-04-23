@@ -18979,7 +18979,7 @@ var Breadcrumb = function (_Component) {
           'h2',
           { className: 'breadcrumb__item-title' },
           crumb.text,
-          this.renderVisibility(crumb.isProtected),
+          this.renderVisibility(crumb.isRestricted),
           this.renderHasChildUserDefinedFormUploads(crumb.hasChildUserDefinedFormUploads),
           crumb.icon && _react2.default.createElement('span', {
             className: iconClassNames.join(' '),
@@ -18992,11 +18992,10 @@ var Breadcrumb = function (_Component) {
     }
   }, {
     key: 'renderVisibility',
-    value: function renderVisibility(isProtected) {
-      var myTitle = isProtected ? 'Protected' : 'Public';
-      var myClassName = 'gallery-item--' + (isProtected ? 'protected' : 'public');
-      var myStyles = { display: 'inline-block' };
-      return _react2.default.createElement('span', { title: myTitle, className: myClassName, style: myStyles });
+    value: function renderVisibility(isRestricted) {
+      var myTitle = isRestricted ? 'Restricted' : 'Public';
+      var myClassName = 'gallery-item--icon gallery-item--' + (isRestricted ? '' : 'un') + 'restricted';
+      return _react2.default.createElement('span', { title: myTitle, className: myClassName });
     }
   }, {
     key: 'renderHasChildUserDefinedFormUploads',
@@ -19005,9 +19004,8 @@ var Breadcrumb = function (_Component) {
         return '';
       }
       var myTitle = 'Contains UserDefinedForm uploads';
-      var myClassName = 'gallery-item--userdefinedform-upload';
-      var myStyles = { display: 'inline-block' };
-      return _react2.default.createElement('span', { title: myTitle, className: myClassName, style: myStyles });
+      var myClassName = 'gallery-item--icon gallery-icon--userdefinedform-upload';
+      return _react2.default.createElement('span', { title: myTitle, className: myClassName });
     }
   }, {
     key: 'render',
