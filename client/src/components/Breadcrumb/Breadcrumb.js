@@ -57,9 +57,9 @@ class Breadcrumb extends Component {
 
   renderVisibility(isRestricted) {
     const myTitle = isRestricted ? 'Restricted' : 'Public';
-    const myClassName = 'gallery-item--icon gallery-item--' + (isRestricted ? '' : 'un') + 'restricted';
+    const myClassName = 'gallery-item-icon gallery-item-icon--' + (isRestricted ? '' : 'un') + 'restricted';
     return (
-      <span title={myTitle} className={myClassName}></span>
+      <span title={myTitle} className={myClassName} style={{display:'inline-block'}}></span>
     );
   }
   
@@ -68,9 +68,9 @@ class Breadcrumb extends Component {
       return '';
     }
     const myTitle = 'Contains UserDefinedForm uploads';
-    const myClassName = 'gallery-item--icon gallery-icon--userdefinedform-upload';
+    const myClassName = 'gallery-item-icon gallery-item-icon--userdefinedform-upload';
     return (
-      <span title={myTitle} className={myClassName}></span>
+      <span title={myTitle} className={myClassName} style={{display:'inline-block'}}></span>
     );
   }
 

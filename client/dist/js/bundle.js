@@ -18994,8 +18994,8 @@ var Breadcrumb = function (_Component) {
     key: 'renderVisibility',
     value: function renderVisibility(isRestricted) {
       var myTitle = isRestricted ? 'Restricted' : 'Public';
-      var myClassName = 'gallery-item--icon gallery-item--' + (isRestricted ? '' : 'un') + 'restricted';
-      return _react2.default.createElement('span', { title: myTitle, className: myClassName });
+      var myClassName = 'gallery-item-icon gallery-item-icon--' + (isRestricted ? '' : 'un') + 'restricted';
+      return _react2.default.createElement('span', { title: myTitle, className: myClassName, style: { display: 'inline-block' } });
     }
   }, {
     key: 'renderHasChildUserDefinedFormUploads',
@@ -19004,8 +19004,8 @@ var Breadcrumb = function (_Component) {
         return '';
       }
       var myTitle = 'Contains UserDefinedForm uploads';
-      var myClassName = 'gallery-item--icon gallery-icon--userdefinedform-upload';
-      return _react2.default.createElement('span', { title: myTitle, className: myClassName });
+      var myClassName = 'gallery-item-icon gallery-item-icon--userdefinedform-upload';
+      return _react2.default.createElement('span', { title: myTitle, className: myClassName, style: { display: 'inline-block' } });
     }
   }, {
     key: 'render',
