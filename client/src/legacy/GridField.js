@@ -64,7 +64,13 @@ $.entwine('ss', function($) {
       // Include any GET parameters from the current URL, as the view state might depend on it.
       // For example, a list prefiltered through external search criteria might be passed to GridField.
       if(window.location.search) {
-        ajaxOpts.data = window.location.search.replace(/^\?/, '') + '&' + $.param(ajaxOpts.data);
+        let searchParams = window.location.search.replace(/^\?/, '').split('&');
+        for (let i = 0; i < searchParams.length; i++) {
+          let parts = searchParams[i].split('=');
+          if (parts.length == 2) {
+            ajaxOpts.data.push({name: decodeURIComponent(parts[0]), value: decodeURIComponent(parts[1])});
+          }
+        }
       }
 
       // Enable loading animation
