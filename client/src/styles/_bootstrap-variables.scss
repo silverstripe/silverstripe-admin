@@ -73,16 +73,17 @@ $grays: (
   900: $gray-900
 ) !default;
 
-$blue:    #005a93; // custom
-$indigo:  #6610f2 !default; // bootstrap default
-$purple:  #6f42c1 !default; // bootstrap default
-$pink:    #e83e8c !default; // bootstrap default
-$red:     #da273b !default; // custom
-$orange:  #fd7e14 !default; // bootstrap default
-$yellow:  #ffc107 !default; // bootstrap default
-$green:   #008a00 !default; // custom
-$teal:    #20c997 !default; // bootstrap default
-$cyan:    #29abe2 !default; // custom
+$blue:     #005a93; // custom
+$mid-blue: #0071c4; // custom
+$indigo:   #6610f2 !default; // bootstrap default
+$purple:   #6f42c1 !default; // bootstrap default
+$pink:     #e83e8c !default; // bootstrap default
+$red:      #da273b !default; // custom
+$orange:   #fd7e14 !default; // bootstrap default
+$yellow:   #ffc107 !default; // bootstrap default
+$green:    #008a00 !default; // custom
+$teal:     #20c997 !default; // bootstrap default
+$cyan:     #29abe2 !default; // custom
 
 $colors: (
   blue: $blue,
@@ -104,7 +105,7 @@ $theme-colors: (
   primary: $green, // custom
   secondary: $gray-600, // bootstrap default
   success: $green, // bootstrap default
-  info: $cyan, // bootstrap default
+  info: $mid-blue, // bootstrap default
   warning: $yellow, // bootstrap default
   danger: $red, // bootstrap default
   light: $gray-100, // bootstrap default
