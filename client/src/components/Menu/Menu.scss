@@ -18,12 +18,13 @@
   @include media-breakpoint-down(sm) {
     position: absolute;
     top: 0;
-    left: -260px;
-    width: 250px;
+    left: 0;
     box-shadow: 1px 0 10px rgba(0, 0, 0, 0.2);
     transition: transform $transition-speed-fast;
+    will-change: transform;
+    transform: translateX(-110%);
     &--open {
-      transform: translateX(260px) !important;
+      transform: translateX(0%);
     }
   }
 
