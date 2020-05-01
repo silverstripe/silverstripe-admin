@@ -11,25 +11,27 @@ $.entwine('ss', function($){
 	/**
 	 * Lightweight wrapper around jQuery UI tabs for generic tab set-up
 	 */
-	$('.ss-tabset').entwine({
-		IgnoreTabState: false,
+  $('.cms-tabset, .ss-tabset').entwine({
+    IgnoreTabState: false,
 
 		onadd: function() {
-			var hash = window.location.hash;
-
-			this.on("tabsactivate", (function (event, {newPanel}) {
-			  this.lazyLoadGridFields(newPanel);
-      }).bind(this))
+      this.on("tabsactivate", (function (event, {newPanel}) {
+        this.lazyLoadGridFields(newPanel);
+      }).bind(this));
       this.on("tabscreate", (function(event, {panel}) {
         this.lazyLoadGridFields(panel);
       }).bind(this));
 
 			// Can't name redraw() as it clashes with other CMS entwine classes
 			this.redrawTabs();
+      this._super();
+    },
 
-			if (hash !== '') {
-				this.openTabFromURL(hash);
-			}
+    onmatch: function () {
+      var hash = window.location.hash;
+      if (hash !== '') {
+        this.openTabFromURL(hash);
+      }
 
 			this._super();
 		},
@@ -40,8 +42,14 @@ $.entwine('ss', function($){
 		},
 
     redrawTabs: function() {
-      this.rewriteHashlinks();
-      this.tabs();
+      // If accessing a tabset from a page in the CMS module
+      // alter how the tabs are rendered
+      if ($(this).hasClass('ss-tabset') == true) {
+        this.rewriteHashlinks();
+        this.tabs()
+      } else {
+        this._super();
+      }
     },
 
 		/**
@@ -66,10 +74,10 @@ $.entwine('ss', function($){
 				return;
 			}
 
-			// Switch to the correct tab when AJAX loading completes.
-			$(document).ready('ajaxComplete', function () {
-				$trigger.click();
-			});
+			// Switch to the correct tab when the page is loaded
+      $(document).ready(function () {
+        $trigger.click();
+      });
 		},
 
 		/**
@@ -95,8 +103,8 @@ $.entwine('ss', function($){
 		  panel.find('.grid-field--lazy-loadable').each((i, el) => {
 		    const gridfield = $(el);
 		    // Avoid triggering all gridfields when using nested tabs
-		    if (gridfield.closest('.ss-tabset').is(this)) {
-		      $(el).lazyload();
+        if (gridfield.closest('.cms-tabset, .ss-tabset').is(this)) {
+          $(el).lazyload();
         }
       });
     }
