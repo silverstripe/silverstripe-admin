@@ -28,11 +28,6 @@ class TreeDropdownField extends Component {
     this.render = this.render.bind(this);
     this.renderMenu = this.renderMenu.bind(this);
     this.renderOption = this.renderOption.bind(this);
-    
-    // tmp demo
-    this.hackInUserFormIcons = this.hackInUserFormIcons.bind(this);
-    this.renderVisibility = this.renderVisibility.bind(this);
-    this.renderUserFormUploads = this.renderUserFormUploads.bind(this);
 
     // Getters
     this.getBreadcrumbs = this.getBreadcrumbs.bind(this);
@@ -66,7 +61,7 @@ class TreeDropdownField extends Component {
     if (!this.props.readOnly && !this.props.disabled) {
       this.initialise();
     }
-    
+
     const id = this.props.id;
     const values = (this.props.data.multiple)
       ? this.props.data.valueObjects || []
@@ -263,7 +258,7 @@ class TreeDropdownField extends Component {
     // If any ancestor node in visible chain is either loading or failed then abort re-load
     const foundPrev = path.find((pathNode) => (
       this.props.loading.indexOf(pathNode) > -1
-        // TODO: investigate whether failed should not retry
+      // TODO: investigate whether failed should not retry
       || this.props.failed.indexOf(pathNode) > -1
     ));
     if (foundPrev) {
@@ -337,7 +332,7 @@ class TreeDropdownField extends Component {
       if ((option.id === SINGLE_EMPTY_VALUE || option.id === '') &&
         (!this.props.data.hasEmptyDefault || this.props.visible.length || this.hasSearch())
       ) {
-          return false;
+        return false;
       }
       const title = option.title && option.title.toLocaleLowerCase();
       // using this.props.search so that we do not get flash of filtered current content
@@ -428,9 +423,6 @@ class TreeDropdownField extends Component {
     if (typeof this.props.onChange === 'function') {
       this.props.onChange(mappedValue);
     }
-    
-    // tmp demo only
-    this.hackInUserFormIcons(value);
   }
 
   /**
@@ -545,9 +537,9 @@ class TreeDropdownField extends Component {
         search={this.hasSearch()}
         value={this.props.value}
       />
-    );
+  );
   }
-  
+
   /**
    * Renders an option in a menu level.
    * Replaces Select.js getOptionLabel() method
@@ -567,12 +559,12 @@ class TreeDropdownField extends Component {
         >
           <span className="treedropdownfield__option-count-icon font-icon-right-open-big" />
         </button>
-      );
+    );
     }
 
     const Highlight = ({ children }) => (
       <span className="treedropdownfield__option-title--highlighted">{children}</span>
-    );
+  );
     const title = (this.props.search.length)
       ? mapHighlight(tree.title, this.props.search, Highlight)
       : tree.title;
@@ -585,99 +577,20 @@ class TreeDropdownField extends Component {
         subtitle = this.props.data.emptyString;
       }
     }
-  
-    // tmp
-    // this is hacky, since it only really relates to userforms, and TreeDropdownField can be used for other stuff
-    const visibility = this.renderVisibility(tree, true);
-    const userFormUploads = this.renderUserFormUploads(tree, true);
-    
+
     return (
       <div className="treedropdownfield__option fill-width">
         <div className="treedropdownfield__option-title-box flexbox-area-grow fill-height">
-          <div style={{'display':'flex'}}>
-            <div>
-              <span className="treedropdownfield__option-title">{title}</span>
-              { subtitle &&
-              <span className="treedropdownfield__option-context">{subtitle}</span>
-              }
-            </div>
-            {visibility}
-            {userFormUploads}
-          </div>
+          <span className="treedropdownfield__option-title">{title}</span>
+          { subtitle &&
+          <span className="treedropdownfield__option-context">{subtitle}</span>
+          }
         </div>
         {button}
       </div>
     );
   }
-  
-  // tmp demo
-  // hacking this in because the root <Select> component lives in node_modules, so cannot easily update via react
-  hackInUserFormIcons(obj, calledByRender) {
-    const formFieldEl = document.getElementById('Form_ItemEditForm_FolderID');
-    if (!formFieldEl) {
-      return;
-    }
-    const fileUploadContainerEl = formFieldEl.parentNode;
-    let el = fileUploadContainerEl.querySelector('.folder-icons');
-    // ensure is only called by render() once
-    if (el && calledByRender) {
-      return;
-    }
-    if (!el) {
-      el = document.createElement('div');
-      el.className = 'folder-icons';
-      el.style.display = 'flex';
-      fileUploadContainerEl.appendChild(el);
-    }
-    const visiblity = this.renderVisibility(obj);
-    const userFormUploads = this.renderUserFormUploads(obj, false);
-    el.innerHTML = visiblity + userFormUploads;
-  }
-  
-  // tmp demo
-  renderVisibility(obj, useJsx) {
-    if (!obj || !obj.hasOwnProperty('canViewAnonymous')) {
-      return '';
-    }
-    const title = obj.canViewAnonymous ? 'Public' : 'Protected';
-    const className = 'gallery-item--' + (obj.canViewAnonymous ? 'public' : 'protected');
-    if (useJsx) {
-      return (
-        <div style={{'paddingLeft':'5px'}}>
-          <span title={title} className={className} style={{ 'display': 'inline-block' }} />
-        </div>
-    );
-    } else {
-      return [
-        '<div style="padding-left:5px">',
-        '<span title="', title, '" class="', className, '" style="display:inline-block"></span>',
-        '</div>'
-      ].join('');
-    }
-  }
-  
-  // tmp demo
-  renderUserFormUploads(obj, useJsx) {
-    if (!obj || !obj.hasOwnProperty('hasChildUserDefinedFormUploads') || !obj.hasChildUserDefinedFormUploads) {
-      return '';
-    }
-    const title = obj.hasChildUserDefinedFormUploads ? 'UserDefinedForm upload' : '';
-    const className = 'gallery-item--userdefinedform-upload';
-    if (useJsx) {
-      return (
-        <div style={{'paddingLeft':'5px'}}>
-          <span title={title} className={className} style={{ 'display': 'inline-block' }} />
-        </div>
-      );
-    } else {
-      return [
-        '<div style="padding-left:5px">',
-        '<span title="', title, '" class="', className, '" style="display:inline-block"></span>',
-        '</div>'
-      ].join('');
-    }
-  }
-  
+
   /**
    * Fallback to a textbox for readonly and disabled status react-select isn't ideal for display
    *
@@ -727,11 +640,10 @@ class TreeDropdownField extends Component {
   }
 
   render() {
-    
     if (this.props.readOnly || this.props.disabled) {
       return this.renderReadOnly();
     }
-    
+
     const inputProps = {
       id: this.props.id,
     };
@@ -755,9 +667,6 @@ class TreeDropdownField extends Component {
       ? this.props.data.showSearch
       : false;
 
-    // this is a hack. demo only
-    this.hackInUserFormIcons(this.props.data.valueObject, true)
-    
     return (
       <Select
         searchable={showSearch}
@@ -784,7 +693,7 @@ class TreeDropdownField extends Component {
         labelKey="title"
         valueKey="id"
       />
-    );
+  );
   }
 }
 
