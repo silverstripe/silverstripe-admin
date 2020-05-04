@@ -241,7 +241,7 @@ class TreeDropdownField extends Component {
     fetchURL.query.format = 'json';
     fetchURL.search = null;
     const fetchURLString = url.format(fetchURL);
-    return fetch(fetchURLString, {
+    return this.props.fetch(fetchURLString, {
       credentials: 'same-origin',
     })
       .then(response => response.json());
@@ -759,6 +759,7 @@ TreeDropdownField.propTypes = {
   actions: PropTypes.shape({
     treeDropdownField: PropTypes.object,
   }),
+  fetch: PropTypes.func, // Allows mocking / wrapping of fetch calls
 };
 
 TreeDropdownField.defaultProps = {
@@ -772,6 +773,7 @@ TreeDropdownField.defaultProps = {
   failed: [],
   findTreeByPath,
   findTreePath,
+  fetch,
 };
 
 function mapStateToProps(state, ownProps) {
