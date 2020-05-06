@@ -746,3 +746,12 @@
 .font-icon-edit-write:before {
   content: "\e08d";
 }
+.font-icon-user-lock:before {
+  content: "\e090";
+}
+.font-icon-address-card:before {
+  content: "\e08e";
+}
+.font-icon-address-card-warning:before {
+  content: "\e08f";
+}
