@@ -20,38 +20,32 @@ addons:
 
 env:
   global:
+    - DB=MYSQL
     - COMPOSER_ROOT_VERSION=1.x-dev
     - SS_BASE_URL="http://localhost:8080/"
     - SS_ENVIRONMENT_TYPE="dev"
     - RECIPE_VERSION=4.x-dev
+  jobs:
+    - BEHAT_TEST=admin
+    - BEHAT_TEST=cms
+    - PHPCS_TEST=1
+    - PHPUNIT_TEST=1
 
-matrix:
+
+php:
+  # Legacy Versions of PHP
+  - 7.1
+  - 7.2
+  # Currently Supported Versions of PHP; https://www.php.net/supported-versions.php
+  - 7.3
+  - 7.4
+
+jobs:
   fast_finish: true
   include:
-    - php: 7.1
-      env: DB=PGSQL PHPUNIT_TEST=1
-    - php: 7.2
-      env: DB=MYSQL PHPUNIT_TEST=1 PHPCS_TEST=1
-    - php: 7.3
-      env: DB=MYSQL PHPUNIT_TEST=1
-    - php: 7.4
-      env: DB=MYSQL PHPUNIT_TEST=1
-    - php: 7.1
-      env: DB=MYSQL PHPUNIT_TEST=1 PDO=1
-    - php: 7.2
-      env: DB=MYSQL PHPUNIT_TEST=1
-    - php: 7.3
-      env:
-        - NPM_TEST=1
-        - RELEASE=1
-    - php: 7.1
-      env:
-       - DB=MYSQL
-       - BEHAT_TEST=admin
-    - php: 7.2
-      env:
-       - DB=MYSQL
-       - BEHAT_TEST=cms
+    - env: NPM_TEST=1 RELEASE=1
+      language: node_js
+      node_js: 10
 
 before_script:
 # Init PHP
