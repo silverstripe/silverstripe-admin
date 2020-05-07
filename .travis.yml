@@ -42,6 +42,11 @@ php:
 
 jobs:
   fast_finish: true
+  allow_failures:
+    - php: 7.4
+      env: BEHAT_TEST=admin
+    - php: 7.4
+      env: BEHAT_TEST=cms
   include:
     - env: NPM_TEST=1 RELEASE=1
       language: node_js
