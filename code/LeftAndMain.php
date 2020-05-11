@@ -683,8 +683,17 @@ class LeftAndMain extends Controller implements PermissionProvider
 
         Requirements::javascript('silverstripe/admin: client/dist/js/vendor.js');
         Requirements::javascript('silverstripe/admin: client/dist/js/bundle.js');
+
+        // Bootstrap components
+        Requirements::javascript('silverstripe/admin: thirdparty/popper/popper.min.js');
         Requirements::javascript('silverstripe/admin: thirdparty/bootstrap/js/dist/util.js');
         Requirements::javascript('silverstripe/admin: thirdparty/bootstrap/js/dist/collapse.js');
+        Requirements::javascript('silverstripe/admin: thirdparty/bootstrap/js/dist/tooltip.js');
+        Requirements::customScript(
+            "window.jQuery('body').tooltip({ selector: '[data-toggle=tooltip]' });",
+            'bootstrap.tooltip-boot'
+        );
+
         Requirements::css('silverstripe/admin: client/dist/styles/bundle.css');
         Requirements::add_i18n_javascript('silverstripe/admin:client/lang');
         Requirements::add_i18n_javascript('silverstripe/admin:client/dist/moment-locales', false, false, true);

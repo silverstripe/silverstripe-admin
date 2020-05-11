@@ -50,6 +50,10 @@ const config = [
         {
           from: `${PATHS.MODULES}/moment/locale`,
           to: `${PATHS.DIST}/moment-locales`
+        },
+        {
+          from: `${PATHS.MODULES}/popper.js/dist/umd/popper.min.js`,
+          to: `${PATHS.THIRDPARTY}/popper/popper.min.js`
         }
       ]),
     ],

@@ -65,7 +65,7 @@
     "modernizr": "^3.5.0",
     "moment": "^2.22.2",
     "page.js": "^4.13.3",
-    "popper.js": "^1.14.4",
+    "popper.js": "^1.16.1",
     "prop-types": "^15.6.2",
     "qs": "^6.1.0",
     "react": "^16.6.1",
