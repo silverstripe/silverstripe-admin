@@ -23,9 +23,11 @@
     transition: transform $transition-speed-fast;
     will-change: transform;
     transform: translateX(-110%);
+
     &--open {
       transform: translateX(0%);
     }
+
   }
 
   a {
