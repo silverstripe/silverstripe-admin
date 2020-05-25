@@ -1,0 +1,22 @@
+.file-status-icon__icon {
+  display: inline-block;
+
+  // uses the pseudo element from 'font-icon' to display different icons
+  // e.g. class="icon file-status-icon font-icon-user-lock"
+  &::before {
+    font-size: 1.385rem;
+  }
+}
+
+// adds a white circle background, which will make the icon larger
+.file-status-icon--background .file-status-icon__icon {
+  height: 26px;
+  width: 26px;
+  background-color: white;
+  border-radius: 100%;
+  text-align: center;
+
+  &::before {
+    line-height: 2rem;
+  }
+}

@@ -55,5 +55,22 @@ describe('BreadcrumbsComponent', () => {
       const listEls = breadcrumbs.renderBreadcrumbs();
       expect(listEls).toBe(null);
     });
+
+    it('can have multiple icons for the last crumb', () => {
+      props.crumbs = [
+        { text: 'breadcrumb1', href: 'href1' },
+        { text: 'breadcrumb2',
+          href: 'href2',
+          icons: [
+            { className: 'breadcrumb2iconA', onClick: jest.fn() },
+            { className: 'breadcrumb2iconB', onClick: jest.fn() }
+          ]
+        },
+      ];
+      breadcrumbs = ReactTestUtils.renderIntoDocument(<Breadcrumb {...props} />);
+      const fn = ReactTestUtils.scryRenderedDOMComponentsWithClass;
+      expect(fn(breadcrumbs, 'breadcrumb2iconA')).toBeTruthy();
+      expect(fn(breadcrumbs, 'breadcrumb2iconB')).toBeTruthy();
+    });
   });
 });

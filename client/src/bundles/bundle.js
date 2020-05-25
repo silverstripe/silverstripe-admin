@@ -76,6 +76,7 @@ require('expose-loader?TinyMCEActionRegistrar!lib/TinyMCEActionRegistrar');
 require('expose-loader?ShortcodeSerialiser!lib/ShortcodeSerialiser');
 require('expose-loader?formatWrittenNumber!lib/formatWrittenNumber');
 require('expose-loader?withDragDropContext!lib/withDragDropContext');
+require('expose-loader?FileStatusIcon!components/FileStatusIcon/FileStatusIcon');
 
 // Legacy CMS
 require('../legacy/sspath');
