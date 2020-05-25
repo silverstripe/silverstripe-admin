@@ -79,11 +79,24 @@
   font-weight: normal;
   line-height: 24px;
   @include text-truncate;
+  display: flex;
+  align-items: center;
 }
 
 .breadcrumb__icon::before {
   margin-left: 1rem;
   font-size: 1.5rem;
   cursor: pointer;
-  vertical-align: middle;
+}
+
+.breadcrumb__icon {
+  margin-top: 5px;
+}
+
+.breadcrumb__icon.file-status-icon {
+  margin-left: 6px;
+
+  &:last-of-type {
+    margin-right: 6px;
+  }
 }

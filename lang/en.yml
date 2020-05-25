@@ -2,6 +2,10 @@ en:
   SilverStripe\Admin\CMSProfileController:
     CANTEDIT: 'You don''t have permission to do that'
     MENUTITLE: 'My Profile'
+  SilverStripe\Admin\FileStatusIcon:
+    ACCESS_RESTRICTED: 'Restricted access'
+    TRACKED_FORM_UPLOAD_RESTRICTED: 'Form submission'
+    TRACKED_FORM_UPLOAD_UNRESTRICTED: 'Form submission, unrestricted access'
   SilverStripe\Admin\Forms\EditorEmailLinkFormFactory:
     EMAIL: 'Email address'
     LINKDESCR: 'Link description'
