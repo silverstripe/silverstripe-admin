@@ -1441,8 +1441,8 @@ class LeftAndMain extends Controller implements PermissionProvider
         }
         $form->addExtraClass('fill-height');
 
-        // A ValidatorList is always available form a DataObject, but it may be empty (which is fine)
-        $form->setValidator($record->getValidatorList());
+        // A CompositeValidator is always available form a DataObject, but it may be empty (which is fine)
+        $form->setValidator($record->getCompositeValidator());
 
         // Check if this form is readonly
         if (!$record->canEdit()) {
