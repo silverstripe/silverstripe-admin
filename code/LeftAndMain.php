@@ -1442,7 +1442,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         $form->addExtraClass('fill-height');
 
         // A CompositeValidator is always available form a DataObject, but it may be empty (which is fine)
-        $form->setValidator($record->getCompositeValidator());
+        $form->setValidator($record->getCMSCompositeValidator());
 
         // Check if this form is readonly
         if (!$record->canEdit()) {
