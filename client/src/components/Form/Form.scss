@@ -136,7 +136,7 @@
 
   .icon {
     &::before {
-      font-size: 16px;
+      font-size: $font-size-lg;
       line-height: inherit;
       margin-right: 6px;
       vertical-align: middle;
