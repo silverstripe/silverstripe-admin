@@ -1,13 +1,99 @@
 sl:
-  SilverStripe\Admin\CMSBatchAction:
-    PUBLISHED_PAGES: 'Objavljenih je bilo %d strani. (Število napak %d)'
-    PUBLISH_PAGES: Objavi
-    RESTORE: Obnovi
-    RESTORED_PAGES: 'Obnovljene %d strani'
+  SilverStripe\Admin\CMSProfileController:
+    CANTEDIT: 'Nimate pravic za urejanje'
+    MENUTITLE: 'Moj profil'
+  SilverStripe\Admin\Forms\EditorEmailLinkFormFactory:
+    EMAIL: E-naslov
+    LINKDESCR: 'Opis povezave'
+    LINKTEXT: 'Besedilo povezave'
+    SUBJECT: Zadeva
+  SilverStripe\Admin\Forms\EditorExternalLinkFormFactory:
+    ANCHORVALUE: Sidro
+    LINKDESCR: 'Opis povezave'
+    LINKOPENNEWWIN: 'Odpri v novem zavihku'
+    LINKTEXT: 'Besedilo povezave'
+    URL: 'Naslov URL'
+  SilverStripe\Admin\Forms\LinkFormFactory:
+    INSERT_LINK: 'Vstavi povezavo'
+  SilverStripe\Admin\Forms\UsedOnTable:
+    ADDEDTODRAFT: Osnutek
+    MODIFIEDONDRAFTSHORT: Spremenjeno
+  SilverStripe\Admin\GroupImportForm:
+    Help1: '<p>Uvozite eno ali več skupin v formatu <em>CSV</em> (comma-separated values). <small><a href="#" class="toggle-advanced">Prikaži napredni način</a></small></p>'
+    Help2: '<div class="advanced"><h4>Napredni način</h4><ul><li>Na voljo so stolpci: <em>{columns}</em></li><li>Podatke o skupinah z ujemajočimi se vrednostmi <em>Code</em> bomo posodobili s podatki iz datoteke za uvoz.</li><li>Za vzpostavitev hierarhije med skupinami lahko uporabite stolpec <em>ParentCode</em>.</li><li>Za dodelitev pravic lahko v stolpec <em>PermissionCode</em> vnesete ustrezne šifre. Obstoječih pravicami ob uvozu ne bomo odstranili.</li></ul></div>'
+    ResultCreated: 'Ustvarili smo {count} skupin'
+    ResultDeleted: 'Izbrisali smo {count} skupin'
+    ResultUpdated: 'Posodobili smo {count} skupin'
+  SilverStripe\Admin\LeftAndMain:
+    ACCESSALLINTERFACES: 'Dostop do vseh razdelkov sistema za upravljanje'
+    ACCESSALLINTERFACESHELP: 'Prevlada nad specifičnimi pravicami za dostop.'
+    BROWSER_WARNING_HEADING: 'Sistem v tem brskalniku ne deluje.'
+    BROWSER_WARNING_TEXT: 'Uporabljate brskalnik, v katerem Silverstripe ne deluje.<br />Prosimo, da brskalnik nadgradite z eno od ponujenih možnosti.'
+    CollapsePanel: 'Zloži deščico'
+    DELETED: Izbrisano
+    DropdownBatchActionsDefault: 'Izberite akcijo ...'
+    ExpandPanel: 'Razpri deščico'
+    HelpMenu: Pomoč
+    LOGOUT: Odjava
+    MenuToggleAuto: Samodejno
+    MenuToggleStickyNav: 'Nepremična navigacija'
+    NavigateUp: 'Nivo višje'
+    PERMAGAIN: 'Odjavili smo vas iz urejevalnika. Za ponovno prijavo vnesite uporabniško ime in geslo. '
+    PERMALREADY: 'Nimate pravic za dostop do tega dela urejevalnika. Če se želite prijaviti kot drug uporabnik, to storite spodaj.'
+    PERMDEFAULT: 'Za dostop do urejevalnika morate biti prijavljeni. Identificirajte se s spodnjim obrazcem.'
+    PROFILE: 'Profil za {name}'
+    PreviewButton: Predogled
+    REQUIREJS: 'Sistem zahteva, da je omogočeno izvajanje JavaScript. '
+    SAVEDUP: Shranjeno
+    SUBMIT_BUTTON_LABEL: Izvedi
+    ValidationError: 'Nepravilna oblika vnosa'
+    Version: Različica
+  SilverStripe\Admin\LeftAndMain_ViewModeSelector:
+    Auto: Samodejno
+    ChangeViewMode: 'Zamenjaj pogled'
+    Desktop: 'Na monitorju'
+    DualWindowView: 'Dvojno okno'
+    EditView: Urejanje
+    Mobile: 'Na mobilniku'
+    PreviewState: 'Kot predogled'
+    PreviewView: Predogled
+    Responsive: 'Prilagodljiva širina'
+    SplitView: 'Hkratno urejanje/predogled'
+    Tablet: 'Na tablici'
+    ViewDeviceWidth: 'Izberite širino okna'
+    Width: širina
+  SilverStripe\Admin\MemberImportForm:
+    BtnImport: 'Uvozi iz CSV'
+    FileFieldLabel: 'Datoteka CSV <small>(Dovoljena pripona: *.csv)</small>'
+    Help1: '<p>Uvozite uporabnike v formatu <em>CSV</em> (comma-separated values). <small><a href="#" class="toggle-advanced">Prikaži napredni način</a></small></p>'
+    Help2: '<div class="advanced"><h4>Napredni način</h4><ul><li>Na voljo so stolpci: <em>{columns}</em></li><li>Podatke  uporabnikov z ujemajočimi se vrednostmi <em>Code</em> bomo posodobili s podatki iz datoteke za uvoz.</li><li>Za dodelitev skupin uporabnikom uporabite stolpec <em>Groups</em>. Skupine navajajte z uporabo njihove šifre <em>Code</em>. Za dodelitev več skupin hkrati, šifre skupin ločite z vejico. Obstoječih skupin ob uvozu ne bomo odstranili.</li></ul></div>'
+    ResultCreated: 'Ustvarili smo {count} račun/ov'
+    ResultDeleted: 'Izbrisali smo {count} račun/ov'
+    ResultNone: 'Ni sprememb'
+    ResultUpdated: 'Posodobili smo {count} račun/ov'
+  SilverStripe\Admin\ModelAdmin:
+    DELETE: Izbriši
+    DELETEDRECORDS: 'Izbrisali smo {count} zapis/ov'
+    EMPTYBEFOREIMPORT: 'Nadomesti podatke z novimi'
+    IMPORT: 'Uvozi iz CSV'
+    IMPORTEDRECORDS: 'Uvozili smo {count} zapis/ov'
+    IMPORTSPECFIELDS: 'Stolpci tabele'
+    IMPORTSPECLINK: 'Prikaži definicijo za {model}'
+    IMPORTSPECRELATIONS: Relacija
+    IMPORTSPECTITLE: 'Definicija za {model}'
+    NOCSVFILE: 'Pobrskajte za datoteko CSV, ki jo želite uvoziti'
+    NOIMPORT: 'Ničesar ni za uvoz'
+    Title: 'Podatkovni modeli'
+    UPDATEDRECORDS: 'Posodobili smo {count} zapis/ov.'
   SilverStripe\Admin\SecurityAdmin:
-    GROUPNAME: 'Ime skupine'
-    MEMBERS: Člani
-    NEWGROUP: 'Nova Skupina'
-    PERMISSIONS: Dovoljenja
-    ROLES: Vloge
-    ROLESDESCRIPTION: 'Tukaj lahko skupini dodajate vloge. Vloge so logični sklopi dovoljenj, ki jih urejate v zavihku "Vloge".'
+    ACCESS_HELP: 'Dovoljenje za pregled, dodajanje in urejanje uporabnikov ter dodeljevanje vlog in pravic uporabnikom.'
+    APPLY_ROLES: 'Dodeljevanje vlog skupinam'
+    APPLY_ROLES_HELP: 'Dovoljenje za urejanje skupinam dodeljenih vlog. Zahteva pravico za dostop do razdelka ''Uporabniki''. '
+    EDITPERMISSIONS: 'Upravljanje s pravicami posameznih skupin'
+    EDITPERMISSIONS_HELP: 'Dovoljenje za urejanje pravic in naslovov IP za skupine. Zahteva pravico za dostop do razdelka ''Varnost''. '
+    IMPORTGROUPS: 'Uvozi skupine'
+    IMPORTUSERS: 'Uvozi uporabnike'
+    MENUTITLE: Varnost
+    MemberListCaution: 'Previdno: S tem, ko boste odstranili uporabnike iz vseh skupin, jih boste tudi izbrisali iz baze podatkov.'
+    TABROLES: Vloge
+    Users: Uporabniki
