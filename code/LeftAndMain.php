@@ -754,12 +754,12 @@ class LeftAndMain extends Controller implements PermissionProvider
         SSViewer::set_themes(LeftAndMain::config()->uninherited('admin_themes'));
         
         // Check the presence of Silverstripe-Versioned module
-        if(class_exists(Versioned::class)) {
-           // Set the current reading mode
-           Versioned::set_stage(Versioned::DRAFT);
-
-           // Set default reading mode to suppress ?stage=Stage querystring params in CMS
-           Versioned::set_default_reading_mode(Versioned::get_reading_mode());
+        if (class_exists(Versioned::class)) {
+            // Set the current reading mode
+            Versioned::set_stage(Versioned::DRAFT);
+            
+            // Set default reading mode to suppress ?stage=Stage querystring params in CMS
+            Versioned::set_default_reading_mode(Versioned::get_reading_mode());
         }
     }
 
