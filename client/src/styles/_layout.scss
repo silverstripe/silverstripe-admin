@@ -29,11 +29,6 @@ body {
         display: none;
       }
     }
-
-    // Fixes search date range inputs overflow
-    .fieldgroup .field.date {
-      max-width: calc(50% - #{$spacer / 4});
-    }
   }
 }
 
