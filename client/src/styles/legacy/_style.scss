@@ -1650,6 +1650,15 @@ body.cms-dialog {
   position: relative;
 }
 
+// Fixes search date range inputs overflow
+.search-box {
+  .fieldgroup {
+    .field.date {
+      max-width: calc(50% - #{$spacer / 4});
+    }
+  }
+}
+
 // Override form styling inherited from cms-edit form
 .cms-edit-form {
   .cms-search-form.cms-search-form { // double selector to override without using important
