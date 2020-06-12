@@ -23,9 +23,9 @@ $color-good:    #72c34b !default;
 $body-color-dark: darken($body-color, 10);
 
 // Extra state colors
-$state-draft: #cf3f00;
+$state-draft: #cf3f00; // State draft border
 $state-draft-bg: #ff7f22;
-$state-modified: $state-draft;
+$state-modified: $state-draft; // State modified border
 $state-modified-bg: #fff7f0;
 $state-archived: $gray-700;
 $state-live: $green;
