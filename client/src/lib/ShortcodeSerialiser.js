@@ -136,6 +136,10 @@ const ShortcodeSerialiser = {
 const createHTMLSanitiser = () => {
   const div = document.createElement('div');
   return (str) => {
+    if (str === undefined) {
+      return '';
+    }
+
     div.textContent = str;
 
     return div.innerHTML;
