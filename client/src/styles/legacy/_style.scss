@@ -148,8 +148,15 @@ html, body {
         height: $toolbar-height;
       }
     }
+    .ui-tabs-nav {
+      min-width: max-content;
+    }
 
     // CMS admin
+    .cms-content-header-tabs {
+      overflow: auto hidden;
+      white-space: nowrap;
+    }
     .cms-content-header-nav .breadcrumbs-wrapper,
     .cms-content-header-nav .cms-content-header-tabs,
       // Model admin
