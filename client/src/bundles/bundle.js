@@ -20,6 +20,8 @@ require('expose-loader?Form!components/Form/Form');
 require('expose-loader?FormConstants!components/Form/FormConstants');
 require('expose-loader?FormAction!components/FormAction/FormAction');
 require('expose-loader?SchemaActions!state/schema/SchemaActions');
+require('expose-loader?ToastsActions!state/toasts/ToastsActions');
+require('expose-loader?FileStatusIcon!components/FileStatusIcon/FileStatusIcon');
 require('expose-loader?FormBuilder!components/FormBuilder/FormBuilder');
 require('expose-loader?FormBuilderLoader!containers/FormBuilderLoader/FormBuilderLoader');
 require('expose-loader?FormBuilderModal!components/FormBuilderModal/FormBuilderModal');
@@ -76,7 +78,6 @@ require('expose-loader?TinyMCEActionRegistrar!lib/TinyMCEActionRegistrar');
 require('expose-loader?ShortcodeSerialiser!lib/ShortcodeSerialiser');
 require('expose-loader?formatWrittenNumber!lib/formatWrittenNumber');
 require('expose-loader?withDragDropContext!lib/withDragDropContext');
-require('expose-loader?FileStatusIcon!components/FileStatusIcon/FileStatusIcon');
 
 // Legacy CMS
 require('../legacy/sspath');
@@ -97,6 +98,7 @@ require('../legacy/LeftAndMain.TreeDropdownField');
 require('../legacy/AddToCampaignForm');
 require('../legacy/SecurityAdmin');
 require('../legacy/ModelAdmin');
+require('../legacy/ToastsContainer');
 
 // Legacy form fields
 // Fields used by core legacy UIs, or available to users

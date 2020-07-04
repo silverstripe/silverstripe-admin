@@ -1,0 +1,148 @@
+.toasts {
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  width: 250px;
+  z-index: 9999;
+
+  &__notice-wrap {
+    position: absolute;
+  }
+}
+
+
+@keyframes toastFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes toastFadeOut {
+  0% {
+    opacity: 1;
+    max-height: 250px;
+    margin-bottom: map_get($spacers, sm);
+  }
+
+  50% {
+    opacity: 0;
+    max-height: 250px;
+    margin-bottom: map_get($spacers, sm);
+  }
+
+  100% {
+    opacity: 0;
+    max-height: 0;
+    margin-bottom: 0;
+  }
+}
+
+
+.toast {
+  animation: $transition-speed-mid ease-out 0s 1 toastFadeIn;
+  margin: 0 0 map_get($spacers, sm) 0;
+  word-wrap: break-word;
+  max-height: 250px;
+  border-left: $toast-border-radius solid;
+  opacity: 1;
+  transition: box-shadow $transition-speed-fast ease;
+  width: 100%;
+
+  &:hover {
+    box-shadow: $z-depth-2;
+  }
+
+  &--success,
+  &--good,
+  &--green {
+    border-color: map_get($theme-colors, success);
+  }
+
+  &--notice,
+  &--info,
+  &--blue {
+    border-color: map_get($colors, cyan);
+  }
+
+  &--warning,
+  &--caution,
+  &--yellow {
+    border-color: map_get($theme-colors, warning);
+  }
+
+  &--bad,
+  &--error,
+  &--red {
+    border-color: map_get($theme-colors, danger);
+  }
+
+  &--dismissing {
+    // toastFadeOut is a two step animation: a fade out and a slide up.
+    // Each step should take $transition-speed-mid, hence the multiplication by 2
+    animation: $transition-speed-mid*2 ease-out 0s 1 toastFadeOut;
+    opacity: 0;
+    max-height: 0;
+    margin-bottom: 0;
+
+    &:not(:last-child) {
+      margin-bottom: 0;
+    }
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+
+  &__body {
+    padding: 0;
+    margin: map_get($spacers, xs) map_get($spacers, xs) map_get($spacers, xs) map_get($spacers, sm);
+    display: flex;
+    flex-flow: row-reverse nowrap;
+    align-items: flex-start;
+  }
+
+  &__content {
+    flex: 1 0;
+    margin-right: map_get($spacers, sm);
+  }
+
+  &__close {
+    flex: 0 0 auto;
+    line-height: 0;
+    padding: 0;
+    margin: 0;
+    opacity: .8;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background: transparent;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    align-content: stretch;
+    border-top: 1px solid $border-color;
+  }
+
+  &__action {
+    flex: 1 0;
+    color: $gray-600;
+    text-decoration: none;
+    margin: 0;
+    border-radius: 0;
+
+    &:hover,
+    &:focus {
+      background: $gray-100;
+      color: $gray-600;
+      text-decoration: none;
+    }
+
+    &:nth-child(n+2) {
+      border-left: 1px solid $border-color;
+    }
+  }
+}

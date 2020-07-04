@@ -21,7 +21,7 @@ Feature: Manage my own settings
   Scenario: I can remove one of my admin groups
     When I click the "Admin group" option in the "DirectGroups" listbox
       And I press the "Save" button
-    Then I should see a "Saved" notice
+    Then I should see a "Saved" success toast
       And I should not see "Cannot remove all admin groups from your profile" in the "#Form_EditForm" element
 
   Scenario: I can edit my personal details

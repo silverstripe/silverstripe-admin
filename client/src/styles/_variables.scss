@@ -199,3 +199,14 @@ $transition-speed-fast:   .3s;
 
 // line height to be based off the root height
 $line-height-root: $line-height-base * 1rem;
+
+
+// Toasts
+$toast-max-width:                   250px;
+$toast-padding-x:                   map_get($spacers, sm);
+$toast-font-size:                   1rem;
+$toast-color:                       $gray-700;
+$toast-background-color:            #fff;
+$toast-border-width:                0;
+$toast-border-radius:               4px;
+$toast-box-shadow:                  $z-depth-1;

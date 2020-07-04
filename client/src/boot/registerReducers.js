@@ -12,6 +12,7 @@ import UnsavedFormsReducer from 'state/unsavedForms/UnsavedFormsReducer';
 import usedOnReducer from 'state/usedOn/usedOnReducer';
 import applyFormMiddleware from 'lib/dependency-injection/applyFormMiddleware';
 import ViewModeReducer from 'state/viewMode/ViewModeReducer';
+import ToastsReducer from 'state/toasts/ToastsReducer';
 
 
 export default (extra = {}) => {
@@ -31,6 +32,7 @@ export default (extra = {}) => {
     unsavedForms: UnsavedFormsReducer,
     usedOn: usedOnReducer,
     viewMode: ViewModeReducer,
+    toasts: ToastsReducer,
     ...extra,
   });
 

@@ -5,9 +5,7 @@ import Tag from '../Tag';
 import Enzyme, { shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16/build/index';
 
-
 Enzyme.configure({ adapter: new Adapter() });
-
 
 describe('Tag', () => {
   beforeEach(() => {
