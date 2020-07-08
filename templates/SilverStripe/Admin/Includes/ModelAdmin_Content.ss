@@ -16,7 +16,7 @@
 		<div class="cms-content-header-tabs cms-tabset-nav-primary ss-ui-tabs-nav">
 			<ul class="cms-tabset-nav-primary">
 				<% loop $ManagedModelTabs %>
-				<li class="tab-$ClassName $LinkOrCurrent<% if $LinkOrCurrent == 'current' %> ui-tabs-active<% end_if %>">
+				<li class="tab-$Tab $LinkOrCurrent<% if $LinkOrCurrent == 'current' %> ui-tabs-active<% end_if %>">
 					<a href="$Link" class="cms-panel-link" title="$Title.ATT">$Title</a>
 				</li>
 				<% end_loop %>

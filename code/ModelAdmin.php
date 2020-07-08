@@ -56,12 +56,14 @@ abstract class ModelAdmin extends LeftAndMain
      * Extended notation with options (e.g. custom titles):
      * <code>
      * array(
-     *   'MyObjectClass' => array('title' => "Custom title")
+     *   'MyObjectClass' => ['title' => "Custom title"]
+     *   'urlslug' => ['title' => "Another title", 'dataClass' => MyNamespacedClass::class]
      * )
      * </code>
      *
      * Available options:
      * - 'title': Set custom titles for the tabs or dropdown names
+     * - 'dataClass': The class name being managed. Defaults to the key. Useful for making shorter URLs or placing the same class in multiple tabs
      *
      * @config
      * @var array|string
@@ -93,6 +95,11 @@ abstract class ModelAdmin extends LeftAndMain
      * @var string The {@link \SilverStripe\ORM\DataObject} sub-class being managed during this object's lifetime.
      */
     protected $modelClass;
+
+        /**
+     * @var string The {@link \SilverStripe\ORM\DataObject} the currently active model tab, and key of managed_models.
+     */
+    protected $modelTab;
 
     /**
      * Change this variable if you don't want the Import from CSV form to appear.
@@ -141,14 +148,16 @@ abstract class ModelAdmin extends LeftAndMain
         $models = $this->getManagedModels();
 
         if ($this->getRequest()->param('ModelClass')) {
-            $this->modelClass = $this->unsanitiseClassName($this->getRequest()->param('ModelClass'));
+            $this->modelTab = $this->unsanitiseClassName($this->getRequest()->param('ModelClass'));
         } else {
             reset($models);
-            $this->modelClass = key($models);
+            $this->modelTab = key($models);
         }
 
+        $this->modelClass = $models[$this->modelTab]['dataClass'];
+
         // security check for valid models
-        if (!array_key_exists($this->modelClass, $models)) {
+        if (!array_key_exists($this->modelTab, $models)) {
             user_error('ModelAdmin::init(): Invalid Model class', E_USER_ERROR);
         }
     }
@@ -162,7 +171,7 @@ abstract class ModelAdmin extends LeftAndMain
     public function Link($action = null)
     {
         if (!$action) {
-            $action = $this->sanitiseClassName($this->modelClass);
+            $action = $this->sanitiseClassName($this->modelTab);
         }
         return parent::Link($action);
     }
@@ -186,7 +195,7 @@ abstract class ModelAdmin extends LeftAndMain
         )->setHTMLID('Form_EditForm');
         $form->addExtraClass('cms-edit-form cms-panel-padded center flexbox-area-grow');
         $form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
-        $editFormAction = Controller::join_links($this->Link($this->sanitiseClassName($this->modelClass)), 'EditForm');
+        $editFormAction = Controller::join_links($this->Link($this->sanitiseClassName($this->modelTab)), 'EditForm');
         $form->setFormAction($editFormAction);
         $form->setAttribute('data-pjax-fragment', 'CurrentForm');
 
@@ -207,7 +216,7 @@ abstract class ModelAdmin extends LeftAndMain
     protected function getGridField(): GridField
     {
         $field = GridField::create(
-            $this->sanitiseClassName($this->modelClass),
+            $this->sanitiseClassName($this->modelTab),
             false,
             $this->getList(),
             $this->getGridFieldConfig()
@@ -404,12 +413,13 @@ abstract class ModelAdmin extends LeftAndMain
         $models = $this->getManagedModels();
         $forms = new ArrayList();
 
-        foreach ($models as $class => $options) {
+        foreach ($models as $tab => $options) {
             $forms->push(new ArrayData(array(
                 'Title' => $options['title'],
-                'ClassName' => $class,
-                'Link' => $this->Link($this->sanitiseClassName($class)),
-                'LinkOrCurrent' => ($class == $this->modelClass) ? 'current' : 'link'
+                'Tab' => $tab,
+                'ClassName' => $options['dataClass'],
+                'Link' => $this->Link($this->sanitiseClassName($tab)),
+                'LinkOrCurrent' => ($tab == $this->modelTab) ? 'current' : 'link'
             )));
         }
 
@@ -459,8 +469,10 @@ abstract class ModelAdmin extends LeftAndMain
         // Normalize models to have their model class in array key
         foreach ($models as $k => $v) {
             if (is_numeric($k)) {
-                $models[$v] = array('title' => singleton($v)->i18n_plural_name());
+                $models[$v] = ['dataClass' => $v, 'title' => singleton($v)->i18n_plural_name()];
                 unset($models[$k]);
+            } elseif (is_array($v) && !isset($v['dataClass'])) {
+                $models[$k]['dataClass'] = $k;
             }
         }
 
@@ -506,13 +518,13 @@ abstract class ModelAdmin extends LeftAndMain
         $modelName = $modelSNG->i18n_singular_name();
         // check if a import form should be generated
         if (!$this->showImportForm ||
-            (is_array($this->showImportForm) && !in_array($this->modelClass, $this->showImportForm))
+            (is_array($this->showImportForm) && !in_array($this->modelTab, $this->showImportForm))
         ) {
             return false;
         }
 
         $importers = $this->getModelImporters();
-        if (!$importers || !isset($importers[$this->modelClass])) {
+        if (!$importers || !isset($importers[$this->modelTab])) {
             return false;
         }
 
@@ -526,7 +538,7 @@ abstract class ModelAdmin extends LeftAndMain
         );
 
         // get HTML specification for each import (column names etc.)
-        $importerClass = $importers[$this->modelClass];
+        $importerClass = $importers[$this->modelTab];
         /** @var BulkLoader $importer */
         $importer = new $importerClass($this->modelClass);
         $spec = $importer->getImportSpec();
@@ -566,7 +578,7 @@ abstract class ModelAdmin extends LeftAndMain
             $actions
         );
         $form->setFormAction(
-            Controller::join_links($this->Link($this->sanitiseClassName($this->modelClass)), 'ImportForm')
+            Controller::join_links($this->Link($this->sanitiseClassName($this->modelTab)), 'ImportForm')
         );
 
         $this->extend('updateImportForm', $form);
@@ -665,9 +677,9 @@ abstract class ModelAdmin extends LeftAndMain
             unset($params['url']);
         }
 
-        $items[0]->Title = $models[$this->modelClass]['title'];
+        $items[0]->Title = $models[$this->modelTab]['title'];
         $items[0]->Link = Controller::join_links(
-            $this->Link($this->sanitiseClassName($this->modelClass)),
+            $this->Link($this->sanitiseClassName($this->modelTab)),
             '?' . http_build_query($params)
         );
 
