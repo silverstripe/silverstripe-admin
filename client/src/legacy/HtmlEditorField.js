@@ -391,8 +391,8 @@ jQuery.entwine('ss', function($) {
      * Triggers insert-media dialog
      * See editor_plugin_src.js
      */
-    openMediaDialog: function() {
-      this.openDialog('media');
+    openMediaDialog: function(fileSelected = false) {
+      this.openDialog('media', {fileSelected});
     },
 
     /**
@@ -403,7 +403,7 @@ jQuery.entwine('ss', function($) {
       this.openDialog('embed');
     },
 
-    openDialog: function(type) {
+    openDialog: function(type, options = {}) {
       // Note: This requires asset-admin module
       if (type === 'media' && window.InsertMediaModal) {
         let dialog = $('#insert-media-react__dialog-wrapper');
@@ -414,6 +414,7 @@ jQuery.entwine('ss', function($) {
         }
 
         dialog.setElement(this);
+        dialog.attr('data-file-selected', options['fileSelected'] ? '1' : '0');
         dialog.open();
         return;
       }
