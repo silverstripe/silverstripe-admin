@@ -559,7 +559,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         }
 
         // Check for LeftAndMain sub-class permissions
-        $codes = $this->getRequiredPermissions();
+        $codes = static::getRequiredPermissions();
         if ($codes === false) { // allow explicit FALSE to disable subclass check
             return true;
         }
