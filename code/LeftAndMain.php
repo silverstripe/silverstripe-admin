@@ -1654,7 +1654,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             return $this->urlParams['ID'];
         }
         
-        if (is_numeric($this->getRequest()->param('ID'))){
+        if (is_numeric($this->getRequest()->param('ID'))) {
             return $this->getRequest()->param('ID');
         }
         
