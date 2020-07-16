@@ -1450,18 +1450,8 @@ class LeftAndMain extends Controller implements PermissionProvider
         }
         $form->addExtraClass('fill-height');
 
-        // Add a default or custom validator.
-        if ($record->hasMethod('getCMSValidator')) {
-            $validator = $record->getCMSValidator();
-            // The clientside (mainly LeftAndMain*.js) rely on ajax responses
-            // which can be evaluated as javascript, hence we need
-            // to override any global changes to the validation handler.
-            if ($validator) {
-                $form->setValidator($validator);
-            }
-        } else {
-            $form->unsetValidator();
-        }
+        // A CompositeValidator is always available form a DataObject, but it may be empty (which is fine)
+        $form->setValidator($record->getCMSCompositeValidator());
 
         // Check if this form is readonly
         if (!$record->canEdit()) {
