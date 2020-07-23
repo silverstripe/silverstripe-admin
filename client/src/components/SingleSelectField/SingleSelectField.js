@@ -50,9 +50,10 @@ class SingleSelectField extends Component {
       <Input type="select" {...this.getInputProps()}>
         { options.map((item, index) => {
           const key = `${this.props.name}-${item.value || `empty${index}`}`;
+          const description = item.description || null;
 
           return (
-            <option key={key} value={item.value} disabled={item.disabled}>
+            <option key={key} value={item.value} disabled={item.disabled} title={description}>
               {item.title}
             </option>
           );
@@ -118,6 +119,7 @@ SingleSelectField.propTypes = {
   source: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     title: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    description: PropTypes.string,
     disabled: PropTypes.bool,
   })),
   data: PropTypes.oneOfType([
