@@ -55,10 +55,25 @@ const plugin = {
     editor.on('preinit', () => {
       setupTinyMceInlineToolbar(editor, [
         { type: 'button', onClick: openLinkDialog, text: 'Edit link' },
-        { type: 'button', onClick: () => editor.execCommand('unlink'), text: 'Remove link' },
+        { type: 'button', onClick: () => this.handleRemoveLinkClick(editor), text: 'Remove link' },
       ], ['a[href]']);
     });
   },
+
+  /**
+   * @param {Object} editor
+   */
+  handleRemoveLinkClick(editor) {
+    const result = editor.execCommand('unlink');
+    // Merge adjacent textNodes after removing <a> nodes so that tinymce.js can properly
+    // calculate a value for 'isCollapsed'
+    const node = editor.selection.getNode();
+    // IE11 normalize() compatibility is unknown
+    if (node && (typeof node.normalize !== 'undefined')) {
+      node.normalize();
+    }
+    return result;
+  }
 };
 
 jQuery.entwine('ss', ($) => {
