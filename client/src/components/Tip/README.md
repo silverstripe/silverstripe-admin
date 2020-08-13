@@ -19,4 +19,4 @@ It also requires the following configuration:
 - `fieldTitle`: A title for the field it relates to, which will be read aloud for screenreaders.
 - `id`: A unique identifier for this instance of the tip
 
-See the `addTip` method in `FormField.php` for an explanation on how to add Tips from the backend.
+See the `addTip` method in `TextField.php` for an explanation on how to add Tips from the backend.
