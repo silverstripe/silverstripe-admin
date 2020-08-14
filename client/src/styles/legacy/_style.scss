@@ -959,6 +959,11 @@ html, body {
   margin: 0 0 $spacer; // gets padding from tab panel
 }
 
+.notice-wrap {
+  // using important because this is initially set to 20px in a jquery css file
+  top: 68px !important;
+}
+
 .notice-item {
   border-radius: 3px;
   font-family: inherit;
