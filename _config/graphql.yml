@@ -1,5 +1,7 @@
 ---
 Name: 'admin-graphql'
+Only:
+  classexists: 'SilverStripe\GraphQL\Schema\Schema'
 ---
 SilverStripe\Core\Injector\Injector:
   SilverStripe\GraphQL\Schema\Schema.admin:
@@ -11,3 +13,5 @@ SilverStripe\Core\Injector\Injector:
     constructor:
       schema: '%$SilverStripe\GraphQL\Schema\Schema.admin'
       queryHandler: '%$SilverStripe\GraphQL\QueryHandler\QueryHandlerInterface'
+SilverStripe\Admin\LeftAndMain:
+  graphql_legacy: false

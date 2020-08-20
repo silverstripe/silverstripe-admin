@@ -1,5 +1,14 @@
 ---
+Name: admin-graphql-legacy-extension
+---
+SilverStripe\Admin\LeftAndMain:
+  extensions:
+    - SilverStripe\Admin\GraphQLLegacyExtension
+
+---
 Name: admin-injector
+Only:
+  classexists: 'SilverStripe\GraphQL\Manager'
 ---
 SilverStripe\Core\Injector\Injector:
   SilverStripe\GraphQL\Manager.admin:
@@ -14,3 +23,5 @@ SilverStripe\Core\Injector\Injector:
     class: SilverStripe\GraphQL\Controller
     constructor:
       manager: '%$SilverStripe\GraphQL\Manager.admin'
+SilverStripe\Admin\LeftAndMain:
+  graphql_legacy: true
