@@ -33,6 +33,7 @@ use SilverStripe\Forms\HTMLEditor\TinyMCEConfig;
 use SilverStripe\Forms\LiteralField;
 use SilverStripe\Forms\PrintableTransformation;
 use SilverStripe\Forms\Schema\FormSchema;
+use SilverStripe\GraphQL\Schema\Schema;
 use SilverStripe\i18n\i18n;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\CMSPreviewable;
@@ -348,6 +349,8 @@ class LeftAndMain extends Controller implements PermissionProvider
                     'schemaUrl' => $this->Link('methodSchema/Modals/EditorEmailLink'),
                 ],
             ],
+            // coupling, but otherwise, every graphql dependent module has to do this.
+            'graphqlLegacy' => !class_exists(Schema::class),
         ];
 
         $this->extend('updateClientConfig', $clientConfig);

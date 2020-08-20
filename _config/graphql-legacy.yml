@@ -1,0 +1,16 @@
+---
+Name: admin-injector
+---
+SilverStripe\Core\Injector\Injector:
+  SilverStripe\GraphQL\Manager.admin:
+    class: SilverStripe\GraphQL\Manager
+    constructor:
+      identifier: admin
+    properties:
+      Middlewares:
+        CSRFMiddleware: '%$SilverStripe\GraphQL\Middleware\QueryMiddleware.csrf'
+        HTTPMethodMiddleware: '%$SilverStripe\GraphQL\Middleware\QueryMiddleware.httpMethod'
+  SilverStripe\GraphQL\Controller.admin:
+    class: SilverStripe\GraphQL\Controller
+    constructor:
+      manager: '%$SilverStripe\GraphQL\Manager.admin'

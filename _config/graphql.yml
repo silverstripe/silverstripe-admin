@@ -1,5 +1,5 @@
 ---
-Name: admin-injector
+Name: 'admin-graphql'
 ---
 SilverStripe\Core\Injector\Injector:
   SilverStripe\GraphQL\Schema\Schema.admin:
