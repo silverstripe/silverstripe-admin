@@ -4,14 +4,9 @@ Only:
   classexists: 'SilverStripe\GraphQL\Schema\Schema'
 ---
 SilverStripe\Core\Injector\Injector:
-  SilverStripe\GraphQL\Schema\Schema.admin:
-    class: SilverStripe\GraphQL\Schema\Schema
-    constructor:
-      schemaKey: admin
   SilverStripe\GraphQL\Controller.admin:
     class: SilverStripe\GraphQL\Controller
     constructor:
-      schema: '%$SilverStripe\GraphQL\Schema\Schema.admin'
-      queryHandler: '%$SilverStripe\GraphQL\QueryHandler\QueryHandlerInterface'
+      schema: admin
 SilverStripe\Admin\LeftAndMain:
   graphql_legacy: false
