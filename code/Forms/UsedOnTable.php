@@ -85,8 +85,8 @@ class UsedOnTable extends FormField
 
             $usageData[] = [
                 'id' => $userId,
-                'title' => $user->getTitle(),
-                'type' => $user->singular_name(),
+                'title' => $user->getTitle() ?: _t(__CLASS__ . '.UNTITLED', 'Untitled'),
+                'type' => ucwords($user->singular_name()),
                 'state' => $state,
                 'link' => $link,
             ];

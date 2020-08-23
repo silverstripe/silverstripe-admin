@@ -11,7 +11,6 @@ class UsedOnTable extends PureComponent {
         <tr>
           <th className="used-on__col--index">#</th>
           <th className="used-on__col--title">{i18n._t('Admin.USED_ON', 'Used on')}</th>
-          <th className="used-on__col--type">{i18n._t('Admin.TYPE', 'Type')}</th>
         </tr>
       </thead>
     );
@@ -64,23 +63,20 @@ class UsedOnTable extends PureComponent {
       id,
       title,
       type,
-      state,
       link,
     } = data;
 
-    const badge = (state)
-      ? <span className={classnames('badge', 'used-on__badge', `status-${state}`)}>{state}</span>
-      : null;
-
     const titleLabel = (link)
-      ? <a className="used-on__edit-link" href={link}>{title} {badge}</a>
-      : <span>{title} {badge}</span>;
+      ? <a className="used-on__edit-link" href={link}>{title}</a>
+      : <span>{title}</span>;
 
     return (
-      <tr key={id}>
+      <tr key={id} className="used-on__row">
         <td className="used-on__col--index">{index + 1}</td>
-        <td className="used-on__col--title">{titleLabel}</td>
-        <td className="used-on__col--type">{type}</td>
+        <td className="used-on__col--title">
+          <span className="used-on__title">{titleLabel}</span>
+          <span className="used-on__type">{type}</span>
+        </td>
       </tr>
     );
   }

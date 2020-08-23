@@ -132,38 +132,12 @@ describe('UsedOnTable', () => {
         table = ReactTestUtils.renderIntoDocument(
           <UsedOnTable {...props} />
         );
-        const index = ReactTestUtils.scryRenderedDOMComponentsWithClass(table, 'used-on__col--index');
         // header
-        expect(index[0].textContent).toBe('#');
+        const ths = ReactTestUtils.scryRenderedDOMComponentsWithTag(table, 'th');
+        expect(ths[0].textContent).toBe('#');
         // index we're testing
+        const index = ReactTestUtils.scryRenderedDOMComponentsWithClass(table, 'used-on__col--index');
         expect(index[1].textContent).toBe('1');
-      });
-
-      it('should show the state badge if item has state', () => {
-        props = {
-          usedOn: [
-            { ...item, state: 'draft' },
-          ]
-        };
-
-        table = ReactTestUtils.renderIntoDocument(
-          <UsedOnTable {...props} />
-        );
-        const badge = ReactTestUtils.findRenderedDOMComponentWithClass(table, 'used-on__badge');
-        expect(badge).toBeTruthy();
-        expect(badge.textContent).toContain('draft');
-      });
-
-      it('should not show a badge if the item has no state', () => {
-        props = {
-          usedOn: [item]
-        };
-
-        table = ReactTestUtils.renderIntoDocument(
-          <UsedOnTable {...props} />
-        );
-        const badge = ReactTestUtils.scryRenderedDOMComponentsWithClass(table, 'used-on__badge');
-        expect(badge[0]).toBeFalsy();
       });
 
       it('should wrap the title in a link if the property is provided', () => {
@@ -176,9 +150,9 @@ describe('UsedOnTable', () => {
         table = ReactTestUtils.renderIntoDocument(
           <UsedOnTable {...props} />
         );
-        const title = ReactTestUtils.scryRenderedDOMComponentsWithClass(table, 'used-on__col--title');
-        expect(title[1].textContent).toContain('now I know');
-        expect(title[1].children[0].tagName).toBe('A');
+        const title = ReactTestUtils.scryRenderedDOMComponentsWithClass(table, 'used-on__title');
+        expect(title[0].textContent).toContain('now I know');
+        expect(title[0].children[0].tagName).toBe('A');
       });
 
       it('should not wrap the title in a link when no property provided', () => {
@@ -189,9 +163,9 @@ describe('UsedOnTable', () => {
         table = ReactTestUtils.renderIntoDocument(
           <UsedOnTable {...props} />
         );
-        const title = ReactTestUtils.scryRenderedDOMComponentsWithClass(table, 'used-on__col--title');
-        expect(title[1].textContent).toContain('now I know');
-        expect(title[1].children[0].tagName).not.toBe('A');
+        const title = ReactTestUtils.scryRenderedDOMComponentsWithClass(table, 'used-on__title');
+        expect(title[0].textContent).toContain('now I know');
+        expect(title[0].children[0].tagName).not.toBe('A');
       });
 
       it('should show the type provided', () => {
@@ -204,8 +178,8 @@ describe('UsedOnTable', () => {
         table = ReactTestUtils.renderIntoDocument(
           <UsedOnTable {...props} />
         );
-        const title = ReactTestUtils.scryRenderedDOMComponentsWithClass(table, 'used-on__col--type');
-        expect(title[1].textContent).toContain('Boom!');
+        const type = ReactTestUtils.scryRenderedDOMComponentsWithClass(table, 'used-on__type');
+        expect(type[0].textContent).toContain('Boom!');
       });
     });
   });
