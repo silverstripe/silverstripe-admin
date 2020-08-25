@@ -2,10 +2,14 @@
 
 namespace SilverStripe\Admin\Forms;
 
+use League\Flysystem\Exception;
+use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
+use SilverStripe\Core\ClassInfo;
 use SilverStripe\Forms\FormField;
 use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\Tests\MySQLDatabaseTest\Data;
 use SilverStripe\Versioned\RecursivePublishable;
 use SilverStripe\Versioned\Versioned;
 
@@ -70,30 +74,119 @@ class UsedOnTable extends FormField
     public function usage(HTTPRequest $request)
     {
         $record = $this->getRecord();
-        $usage = $record->findOwners();
+        $dataObjects = $record->findOwners();
+        $siteTreeSubClasses = ClassInfo::subclassesFor(SiteTree::class);
 
-        $this->extend('updateUsage', $usage, $record);
+        // Example:
+        // public function updateUsage(ArrayList &$dataObjects, DataObject &$record)
+        //     $dataObjects = $dataObjects->exclude('ClassName', MyDataObject::class);
+        $this->extend('updateUsage', $dataObjects, $record);
 
-        $usageData = [];
+        // TODO: this is all pretty messy, needs a good tidy up before merging
+        $tmpArr = [];
         /**
-         * @var string $userId
-         * @var DataObject $user
+         * @var int $id
+         * @var DataObject $dataObject
          */
-        foreach ($usage as $userId => $user) {
-            $state = $this->getState($user);
-            $link = $user->hasMethod('CMSEditLink') ? $user->CMSEditLink() : null;
+        foreach ($dataObjects as $dataObject) {
+            //$state = $this->getState($user);
+            $link = $dataObject->hasMethod('CMSEditLink') ? $dataObject->CMSEditLink() : null;
 
-            $usageData[] = [
-                'id' => $userId,
-                'title' => $user->getTitle(),
-                'type' => $user->singular_name(),
-                'state' => $state,
+            $isPage = false;
+            $parentID = 0;
+            $parentClass = '';
+            if ($dataObject->ParentID && $parent = $dataObject->Parent()) {
+                $parentID = $parent->ID;
+                $parentClass = get_class($parent);
+            }
+            $ancestorPageID = 0;
+            $object = $dataObject;
+            // maximum of 3 levels
+            for ($i = 0; $i < 3; $i++) {
+                $isPage = in_array(get_class($object), $siteTreeSubClasses);
+                if ($isPage) {
+                    if ($object !== $dataObject) {
+                        $ancestorPageID = $object->ID;
+                    }
+                    break;
+                }
+                // extension
+                if ($object->ParentID && $parent = $object->Parent()) {
+                    $object = $parent;
+                    continue;
+                }
+                break;
+            }
+
+            $arr = [
+                'id' => $dataObject->ID,
+                'title' => $dataObject->getTitle() ?: _t(__CLASS__ . '.UNTITLED', 'Untitled'),
+                'type' => ucwords($dataObject->singular_name()),
+                //'state' => $state,
                 'link' => $link,
+                'class' => get_class($dataObject),
+                'parentID' => $parentID,
+                'parentClass' => $parentClass,
+                'ancestorPageID' => $ancestorPageID,
+                'isPage' => $isPage,
             ];
+            $this->extend('updateUsageArray', $arr, $dataObject);
+            $tmpArr[] = $arr;
+        }
+
+        $pages = [];
+        foreach ($tmpArr as $arr) {
+            if ($arr['isPage']) {
+                $id = $arr['id'];
+            } elseif ($arr['ancestorPageID'] !== 0) {
+                $id = $arr['ancestorPageID'];
+            } else {
+                continue;
+            }
+            $pages[$id] = $pages[$id] ?? [];
+            $pages[$id][] = $arr;
+        }
+        foreach (array_keys($pages) as $i) {
+            usort($pages[$i], function ($a, $b) use ($siteTreeSubClasses) {
+                if ($a['class'] === $b['parentClass'] && $a['ID'] === $b['parentID']) {
+                    return -1;
+                } elseif ($b['class'] === $a['parentClass'] && $b['ID'] === $a['parentID']) {
+                    return 1;
+                } elseif (in_array($a['class'], $siteTreeSubClasses)) {
+                    return -1;
+                } elseif (in_array($b['class'], $siteTreeSubClasses)) {
+                    return 1;
+                }
+                return 0;
+            });
+        }
+
+        $keepKeys = ['id', 'title', 'type', 'link'];
+        $usage = [];
+        foreach ($tmpArr as $arr) {
+            if ($arr['isPage']) {
+                $id = $arr['id'];
+                $data = $pages[$id];
+            } else {
+                if ($arr['ancestorPageID'] !== 0) {
+                    // will be nested in $pages
+                    continue;
+                }
+                // other type of dataObject not nested on a page
+                $data = [$arr];
+            }
+            foreach ($data as $i => $arr) {
+                foreach (array_keys($arr) as $key) {
+                    if (!in_array($key, $keepKeys)) {
+                        unset($data[$i][$key]);
+                    }
+                }
+            }
+            $usage[] = $data;
         }
 
         $data = [
-            'usage' => $usageData,
+            'usage' => $usage,
         ];
 
         $response = new HTTPResponse(json_encode($data));

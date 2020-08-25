@@ -6,11 +6,16 @@
 
 .used-on__col--index {
   width: 1em;
+  font-weight: 500;
 }
 
-.used-on__col--type {
-  width: 35%;
-  max-width: 10em;
+.used-on__title {
+  display: block;
+  font-weight: 500;
+}
+
+.used-on__type {
+  display: block;
 }
 
 .used-on__edit-link {

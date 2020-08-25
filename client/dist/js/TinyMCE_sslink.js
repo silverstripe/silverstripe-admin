@@ -1,1 +1,539 @@
-!function(t){function e(o){if(n[o])return n[o].exports;var i=n[o]={i:o,l:!1,exports:{}};return t[o].call(i.exports,i,i.exports,e),i.l=!0,i.exports}var n={};e.m=t,e.c=n,e.i=function(t){return t},e.d=function(t,n,o){e.o(t,n)||Object.defineProperty(t,n,{configurable:!1,enumerable:!0,get:o})},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="",e(e.s="./client/src/legacy/TinyMCE_sslink.js")}({"./client/src/components/TinymceInlineToolbar/TinymceInlineToolbar.js":function(t,e,n){"use strict";function o(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function i(t,e,n){var o=Array.isArray(n)?n:[n||""];return!(!t||!e)&&(o=o.map(function(t){return String(t)}).map(function(t){return t.toLowerCase()}),o.filter(function(e){if(e.indexOf("[")>-1&&e.indexOf("]")>-1){var n=e.substring(0,e.indexOf("[")),o=e.substring(e.indexOf("[")+1,e.indexOf("]"));if(n===t.tagName.toLowerCase()&&t.getAttribute(o))return!0}else if(t.tagName&&e===t.tagName.toLowerCase())return!0;return!1}).length>0)}function r(t,e){function n(){i(l,s,o)&&(r.hide(),clearTimeout(a),a=setTimeout(function(){r.show(),r.reposition(l)},300))}var o=arguments.length>2&&void 0!==arguments[2]?arguments[2]:["a"],r=new c(t,e),l=null,a=null,s=!1;return r.hide().renderTo(window.document.body),t.on("remove",function(){r.remove()}),t.on("focus",function(){s=!0}),t.on("blur hide",function(){r.hide(),s=!1}),t.on("nodechange",function(e){var n={element:e.element,parents:e.parents,collapsed:t.selection.isCollapsed()};l=n.selection||n.element,i(l,s,o)?(r.show(),r.reposition(l)):r.hide()}),window.addEventListener("scroll",function(e){e.target.contains(document.querySelector("#"+t.id))&&n()},!0),t.contentDocument.addEventListener("scroll",n),r}Object.defineProperty(e,"__esModule",{value:!0});var l=function(){function t(t,e){for(var n=0;n<e.length;n++){var o=e[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(t,o.key,o)}}return function(e,n,o){return n&&t(e.prototype,n),o&&t(e,o),e}}(),c=function(){function t(e,n){o(this,t),this.mceIframe=document.getElementById(e.id+"_ifr"),this.container=e.getContainer(),this.mceToolbar=null,this.mceStatusbar=null,this.container&&(this.mceToolbar=this.container.querySelector(".mce-toolbar-grp"),this.mceStatusbar=this.container.querySelector(".mce-statusbar")),this.control=tinymce.ui.Factory.create({type:"panel",classes:"inline-toolbar",layout:"stack",items:[{type:"toolbar",items:n}]})}return l(t,[{key:"remove",value:function(){return this.control.remove(),this}},{key:"hide",value:function(){return this.control.hide(),this}},{key:"show",value:function(){return this.control.show(),this}},{key:"renderTo",value:function(t){return this.control.renderTo(t),this}},{key:"setStyles",value:function(t){return tinymce.DOM.setStyles(this.control.getEl(),t),this}},{key:"reposition",value:function(t){if(!t)return this;var e=window.pageXOffset||document.documentElement.scrollLeft,n=window.pageYOffset||document.documentElement.scrollTop,o=window.innerWidth,i=window.innerHeight,r=this.mceIframe?this.mceIframe.getBoundingClientRect():{top:0,right:o,bottom:i,left:0,width:o,height:i},l=this.control.getEl(),c=l.offsetWidth,a=l.offsetHeight,s=t.getBoundingClientRect(),u=(s.left+s.right)/2,f=a+8+5,d=this.mceToolbar?this.mceToolbar.getBoundingClientRect().bottom:0,m=this.mceStatusbar?i-this.mceStatusbar.getBoundingClientRect().top:0,h=Math.max(0,d,r.top),p=Math.max(0,m,i-r.bottom),g=s.top+r.top-h,b=i-r.top-s.bottom-p,k=i-h-p,y="",v=0,w=0;return g>=k||b>=k?this.hide():(this.bottom?b>=f?(y=" mce-arrow-up",v=s.bottom+r.top+n+10):g>=f&&(y=" mce-arrow-down",v=s.top+r.top+n-a-8):g>=f?(y=" mce-arrow-down",v=s.top+r.top+n-a-8):b>=f&&k/2>s.bottom+r.top-h&&(y=" mce-arrow-up",v=s.bottom+r.top+n+10),0===v&&(v=n+h+5),w=u-c/2+r.left+e,s.left<0||s.right>r.width?w=r.left+e+(r.width-c)/2:c>=o?(y+=" mce-arrow-full",w=0):w<0&&s.left+c>o||w+c>o&&s.right-c<0?w=(o-c)/2:w<r.left+e?(y+=" mce-arrow-left",w=s.left+r.left+e):w+c>r.width+r.left+e&&(y+=" mce-arrow-right",w=s.right-c+r.left+e),l.className=l.className.replace(/ ?mce-arrow-[\w]+/g,"")+y,this.setStyles({left:w,top:v}),this)}}]),t}();e.default=c,e.setupTinyMceInlineToolbar=r,e.shouldShowToolbar=i},"./client/src/legacy/TinyMCE_sslink.js":function(t,e,n){"use strict";function o(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0});var i=n(1),r=o(i),l=n(0),c=o(l),a=n(3),s=o(a),u=n("./client/src/components/TinymceInlineToolbar/TinymceInlineToolbar.js"),f=n(7),d=n(2),m=o(d),h={init:function(t){function e(){var e=tinymce.activeEditor.selection.getNode(),n=e.getAttribute("href");n&&t.execCommand(r.default.getEditorCommandFromUrl(n))}var n=this,o=navigator.platform.toUpperCase().includes("MAC")?"⌘":"Ctrl",i=m.default._t("Admin.INSERT_LINK","Insert link"),l=m.default.inject(m.default._t("Admin.INSERT_LINK_WITH_SHORTCUT","Insert link {shortcut}"),{shortcut:"["+o+"+K]"}),c=r.default.getSortedActions("sslink",t.settings.editorIdentifier,!0).map(function(e){return Object.assign({},e,{onclick:function(){return e.onclick(t)}})});t.addButton("sslink",{icon:"link",title:l,type:"menubutton",menu:c}),t.addMenuItem("sslink",{icon:"link",text:i,menu:c}),t.addShortcut("Meta+k","Open link menu",function(){(0,s.default)('[aria-label^="'+i+'"] > button',t.container).first().click()}),t.on("preinit",function(){(0,u.setupTinyMceInlineToolbar)(t,[{type:"button",onClick:e,text:"Edit link"},{type:"button",onClick:function(){return n.handleRemoveLinkClick(t)},text:"Remove link"}],["a[href]"])})},handleRemoveLinkClick:function(t){var e=t.execCommand("unlink"),n=t.selection.getNode();return n&&void 0!==n.normalize&&n.normalize(),e}};s.default.entwine("ss",function(t){t(".insert-link__dialog-wrapper").entwine({Element:null,Data:{},Bookmark:null,onunmatch:function(){this._clearModal()},_clearModal:function(){c.default.unmountComponentAtNode(this[0])},open:function(){var t=this.getElement().getEditor().getInstance();this.setBookmark(t.selection.getBookmark(2,!0)),this.renderModal(!0)},close:function(){this.setData({}),this.renderModal(!1)},renderModal:function(){},handleInsert:function(t){this.getElement().getEditor().getInstance().selection.moveToBookmark(this.getBookmark());var e=this.buildAttributes(t),n=(0,f.createHTMLSanitiser)(),o=n(t.Text);return this.insertLinkInEditor(e,o),this.close(),Promise.resolve()},buildAttributes:function(t){var e=t.Anchor&&t.Anchor.length?"#"+t.Anchor:"";return{href:""+t.Link+e,target:t.TargetBlank?"_blank":"",title:t.Description}},insertLinkInEditor:function(t,e){var n=this.getElement().getEditor();n.insertLink(t,null,e),n.addUndo(),n.repaint();var o=n.getInstance(),i=o.selection;setTimeout(function(){return i&&i.collapse()},0)},getOriginalAttributes:function(){var e=this.getElement().getEditor(),n=t(e.getSelectedNode()),o=(n.attr("href")||"").split("#");return{Link:o[0]||"",Anchor:o[1]||"",Description:n.attr("title"),TargetBlank:!!n.attr("target")}}})}),tinymce.PluginManager.add("sslink",function(t){return h.init(t)}),e.default=h},0:function(t,e){t.exports=ReactDom},1:function(t,e){t.exports=TinyMCEActionRegistrar},2:function(t,e){t.exports=i18n},3:function(t,e){t.exports=jQuery},7:function(t,e){t.exports=ShortcodeSerialiser}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./client/src/legacy/TinyMCE_sslink.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./client/src/components/TinymceInlineToolbar/TinymceInlineToolbar.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var TinymceInlineToolbar = function () {
+  function TinymceInlineToolbar(editor, buttons) {
+    _classCallCheck(this, TinymceInlineToolbar);
+
+    this.mceIframe = document.getElementById(editor.id + '_ifr');
+    this.container = editor.getContainer();
+    this.mceToolbar = null;
+    this.mceStatusbar = null;
+
+    if (this.container) {
+      this.mceToolbar = this.container.querySelector('.mce-toolbar-grp');
+      this.mceStatusbar = this.container.querySelector('.mce-statusbar');
+    }
+
+    this.control = tinymce.ui.Factory.create({
+      type: 'panel',
+      classes: 'inline-toolbar',
+      layout: 'stack',
+      items: [{
+        type: 'toolbar',
+        items: buttons
+      }]
+    });
+  }
+
+  _createClass(TinymceInlineToolbar, [{
+    key: 'remove',
+    value: function remove() {
+      this.control.remove();
+      return this;
+    }
+  }, {
+    key: 'hide',
+    value: function hide() {
+      this.control.hide();
+      return this;
+    }
+  }, {
+    key: 'show',
+    value: function show() {
+      this.control.show();
+      return this;
+    }
+  }, {
+    key: 'renderTo',
+    value: function renderTo(dom) {
+      this.control.renderTo(dom);
+      return this;
+    }
+  }, {
+    key: 'setStyles',
+    value: function setStyles(styles) {
+      tinymce.DOM.setStyles(this.control.getEl(), styles);
+      return this;
+    }
+  }, {
+    key: 'reposition',
+    value: function reposition(currSelection) {
+      if (!currSelection) {
+        return this;
+      }
+
+      var scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+      var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      var windowWidth = window.innerWidth;
+      var windowHeight = window.innerHeight;
+      var iframeRect = this.mceIframe ? this.mceIframe.getBoundingClientRect() : {
+        top: 0,
+        right: windowWidth,
+        bottom: windowHeight,
+        left: 0,
+        width: windowWidth,
+        height: windowHeight
+      };
+      var toolbarEl = this.control.getEl();
+      var toolbarWidth = toolbarEl.offsetWidth;
+      var toolbarHeight = toolbarEl.offsetHeight;
+      var selection = currSelection.getBoundingClientRect();
+      var selectionMiddle = (selection.left + selection.right) / 2;
+      var buffer = 5;
+      var margin = 8;
+      var spaceNeeded = toolbarHeight + margin + buffer;
+      var mceToolbarBottom = this.mceToolbar ? this.mceToolbar.getBoundingClientRect().bottom : 0;
+      var mceStatusbarTop = this.mceStatusbar ? windowHeight - this.mceStatusbar.getBoundingClientRect().top : 0;
+      var blockedTop = Math.max(0, mceToolbarBottom, iframeRect.top);
+      var blockedBottom = Math.max(0, mceStatusbarTop, windowHeight - iframeRect.bottom);
+      var spaceTop = selection.top + iframeRect.top - blockedTop;
+      var spaceBottom = windowHeight - iframeRect.top - selection.bottom - blockedBottom;
+      var editorHeight = windowHeight - blockedTop - blockedBottom;
+      var topOffset = 10;
+      var className = '';
+      var top = 0;
+      var left = 0;
+
+      if (spaceTop >= editorHeight || spaceBottom >= editorHeight) {
+        return this.hide();
+      }
+
+      if (this.bottom) {
+        if (spaceBottom >= spaceNeeded) {
+          className = ' mce-arrow-up';
+          top = selection.bottom + iframeRect.top + scrollY + topOffset;
+        } else if (spaceTop >= spaceNeeded) {
+          className = ' mce-arrow-down';
+          top = selection.top + iframeRect.top + scrollY - toolbarHeight - margin;
+        }
+      } else if (spaceTop >= spaceNeeded) {
+        className = ' mce-arrow-down';
+        top = selection.top + iframeRect.top + scrollY - toolbarHeight - margin;
+      } else if (spaceBottom >= spaceNeeded && editorHeight / 2 > selection.bottom + iframeRect.top - blockedTop) {
+        className = ' mce-arrow-up';
+        top = selection.bottom + iframeRect.top + scrollY + topOffset;
+      }
+
+      if (top === 0) {
+        top = scrollY + blockedTop + buffer;
+      }
+
+      left = selectionMiddle - toolbarWidth / 2 + iframeRect.left + scrollX;
+
+      if (selection.left < 0 || selection.right > iframeRect.width) {
+        left = iframeRect.left + scrollX + (iframeRect.width - toolbarWidth) / 2;
+      } else if (toolbarWidth >= windowWidth) {
+        className += ' mce-arrow-full';
+        left = 0;
+      } else if (left < 0 && selection.left + toolbarWidth > windowWidth || left + toolbarWidth > windowWidth && selection.right - toolbarWidth < 0) {
+        left = (windowWidth - toolbarWidth) / 2;
+      } else if (left < iframeRect.left + scrollX) {
+        className += ' mce-arrow-left';
+        left = selection.left + iframeRect.left + scrollX;
+      } else if (left + toolbarWidth > iframeRect.width + iframeRect.left + scrollX) {
+        className += ' mce-arrow-right';
+        left = selection.right - toolbarWidth + iframeRect.left + scrollX;
+      }
+
+      toolbarEl.className = toolbarEl.className.replace(/ ?mce-arrow-[\w]+/g, '') + className;
+      this.setStyles({ left: left, top: top });
+
+      return this;
+    }
+  }]);
+
+  return TinymceInlineToolbar;
+}();
+
+function shouldShowToolbar(selection, isEditorFocused, tagTypes) {
+  var tags = Array.isArray(tagTypes) ? tagTypes : [tagTypes || ''];
+
+  if (selection && isEditorFocused) {
+    tags = tags.map(function (tag) {
+      return String(tag);
+    }).map(function (tag) {
+      return tag.toLowerCase();
+    });
+
+    var matching = tags.filter(function (t) {
+      if (t.indexOf('[') > -1 && t.indexOf(']') > -1) {
+        var tTag = t.substring(0, t.indexOf('['));
+        var tAttr = t.substring(t.indexOf('[') + 1, t.indexOf(']'));
+        if (tTag === selection.tagName.toLowerCase()) {
+          if (selection.getAttribute(tAttr)) {
+            return true;
+          }
+        }
+      } else if (selection.tagName && t === selection.tagName.toLowerCase()) {
+        return true;
+      }
+
+      return false;
+    });
+
+    return matching.length > 0;
+  }
+
+  return false;
+}
+
+function setupTinyMceInlineToolbar(editor, buttons) {
+  var tagTypes = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : ['a'];
+
+  var toolbar = new TinymceInlineToolbar(editor, buttons);
+  var currentSelection = null;
+  var scrollTimeoutId = null;
+  var focused = false;
+
+  toolbar.hide().renderTo(window.document.body);
+
+  editor.on('remove', function () {
+    toolbar.remove();
+  });
+
+  editor.on('focus', function () {
+    focused = true;
+  });
+
+  editor.on('blur hide', function () {
+    toolbar.hide();
+    focused = false;
+  });
+
+  editor.on('nodechange', function (event) {
+    var args = {
+      element: event.element,
+      parents: event.parents,
+      collapsed: editor.selection.isCollapsed()
+    };
+
+    currentSelection = args.selection || args.element;
+    if (shouldShowToolbar(currentSelection, focused, tagTypes)) {
+      toolbar.show();
+      toolbar.reposition(currentSelection);
+    } else {
+      toolbar.hide();
+    }
+  });
+
+  function handleScroll() {
+    if (shouldShowToolbar(currentSelection, focused, tagTypes)) {
+      toolbar.hide();
+
+      clearTimeout(scrollTimeoutId);
+      scrollTimeoutId = setTimeout(function () {
+        toolbar.show();
+        toolbar.reposition(currentSelection);
+      }, 300);
+    }
+  }
+
+  window.addEventListener('scroll', function (e) {
+    if (e.target.contains(document.querySelector('#' + editor.id))) {
+      handleScroll();
+    }
+  }, true);
+
+  editor.contentDocument.addEventListener('scroll', handleScroll);
+
+  return toolbar;
+}
+
+exports.default = TinymceInlineToolbar;
+exports.setupTinyMceInlineToolbar = setupTinyMceInlineToolbar;
+exports.shouldShowToolbar = shouldShowToolbar;
+
+/***/ }),
+
+/***/ "./client/src/legacy/TinyMCE_sslink.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _TinyMCEActionRegistrar = __webpack_require__(1);
+
+var _TinyMCEActionRegistrar2 = _interopRequireDefault(_TinyMCEActionRegistrar);
+
+var _reactDom = __webpack_require__(0);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _jquery = __webpack_require__(3);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _TinymceInlineToolbar = __webpack_require__("./client/src/components/TinymceInlineToolbar/TinymceInlineToolbar.js");
+
+var _ShortcodeSerialiser = __webpack_require__(7);
+
+var _i18n = __webpack_require__(2);
+
+var _i18n2 = _interopRequireDefault(_i18n);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var plugin = {
+  init: function init(editor) {
+    var _this = this;
+
+    var metaKey = navigator.platform.toUpperCase().includes('MAC') ? '⌘' : 'Ctrl';
+    var title = _i18n2.default._t('Admin.INSERT_LINK', 'Insert link');
+    var titleWithShortcut = _i18n2.default.inject(_i18n2.default._t('Admin.INSERT_LINK_WITH_SHORTCUT', 'Insert link {shortcut}'), { shortcut: '[' + metaKey + '+K]' });
+    var actions = _TinyMCEActionRegistrar2.default.getSortedActions('sslink', editor.settings.editorIdentifier, true).map(function (action) {
+      return Object.assign({}, action, { onclick: function onclick() {
+          return action.onclick(editor);
+        } });
+    });
+
+    editor.addButton('sslink', {
+      icon: 'link',
+      title: titleWithShortcut,
+      type: 'menubutton',
+      menu: actions
+    });
+
+    editor.addMenuItem('sslink', {
+      icon: 'link',
+      text: title,
+      menu: actions
+    });
+
+    editor.addShortcut('Meta+k', 'Open link menu', function () {
+      (0, _jquery2.default)('[aria-label^="' + title + '"] > button', editor.container).first().click();
+    });
+
+    function openLinkDialog() {
+      var node = tinymce.activeEditor.selection.getNode();
+      var href = node.getAttribute('href');
+
+      if (href) {
+        editor.execCommand(_TinyMCEActionRegistrar2.default.getEditorCommandFromUrl(href));
+      }
+    }
+
+    editor.on('preinit', function () {
+      (0, _TinymceInlineToolbar.setupTinyMceInlineToolbar)(editor, [{ type: 'button', onClick: openLinkDialog, text: 'Edit link' }, { type: 'button', onClick: function onClick() {
+          return _this.handleRemoveLinkClick(editor);
+        }, text: 'Remove link' }], ['a[href]']);
+    });
+  },
+  handleRemoveLinkClick: function handleRemoveLinkClick(editor) {
+    var result = editor.execCommand('unlink');
+
+    var node = editor.selection.getNode();
+
+    if (node && typeof node.normalize !== 'undefined') {
+      node.normalize();
+    }
+    return result;
+  }
+};
+
+_jquery2.default.entwine('ss', function ($) {
+  $('.insert-link__dialog-wrapper').entwine({
+    Element: null,
+
+    Data: {},
+
+    Bookmark: null,
+
+    onunmatch: function onunmatch() {
+      this._clearModal();
+    },
+    _clearModal: function _clearModal() {
+      _reactDom2.default.unmountComponentAtNode(this[0]);
+    },
+    open: function open() {
+      var editor = this.getElement().getEditor().getInstance();
+      this.setBookmark(editor.selection.getBookmark(2, true));
+
+      this.renderModal(true);
+    },
+    close: function close() {
+      this.setData({});
+      this.renderModal(false);
+    },
+    renderModal: function renderModal() {},
+    handleInsert: function handleInsert(data) {
+      var editor = this.getElement().getEditor().getInstance();
+      editor.selection.moveToBookmark(this.getBookmark());
+
+      var attributes = this.buildAttributes(data);
+      var sanitise = (0, _ShortcodeSerialiser.createHTMLSanitiser)();
+      var linkText = sanitise(data.Text);
+      this.insertLinkInEditor(attributes, linkText);
+      this.close();
+
+      return Promise.resolve();
+    },
+    buildAttributes: function buildAttributes(data) {
+      var anchor = data.Anchor && data.Anchor.length ? '#' + data.Anchor : '';
+      var href = '' + data.Link + anchor;
+
+      return {
+        href: href,
+        target: data.TargetBlank ? '_blank' : '',
+        title: data.Description
+      };
+    },
+    insertLinkInEditor: function insertLinkInEditor(attributes, linkText) {
+      var editor = this.getElement().getEditor();
+      editor.insertLink(attributes, null, linkText);
+      editor.addUndo();
+      editor.repaint();
+
+      var instance = editor.getInstance();
+      var selection = instance.selection;
+
+      setTimeout(function () {
+        return selection && selection.collapse();
+      }, 0);
+    },
+    getOriginalAttributes: function getOriginalAttributes() {
+      var editor = this.getElement().getEditor();
+      var node = $(editor.getSelectedNode());
+
+      var hrefParts = (node.attr('href') || '').split('#');
+
+      return {
+        Link: hrefParts[0] || '',
+        Anchor: hrefParts[1] || '',
+        Description: node.attr('title'),
+        TargetBlank: !!node.attr('target')
+      };
+    }
+  });
+});
+
+tinymce.PluginManager.add('sslink', function (editor) {
+  return plugin.init(editor);
+});
+
+exports.default = plugin;
+
+/***/ }),
+
+/***/ 0:
+/***/ (function(module, exports) {
+
+module.exports = ReactDom;
+
+/***/ }),
+
+/***/ 1:
+/***/ (function(module, exports) {
+
+module.exports = TinyMCEActionRegistrar;
+
+/***/ }),
+
+/***/ 2:
+/***/ (function(module, exports) {
+
+module.exports = i18n;
+
+/***/ }),
+
+/***/ 3:
+/***/ (function(module, exports) {
+
+module.exports = jQuery;
+
+/***/ }),
+
+/***/ 7:
+/***/ (function(module, exports) {
+
+module.exports = ShortcodeSerialiser;
+
+/***/ })
+
+/******/ });
+//# sourceMappingURL=TinyMCE_sslink.js.map
