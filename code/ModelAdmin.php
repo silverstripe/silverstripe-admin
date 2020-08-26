@@ -154,7 +154,7 @@ abstract class ModelAdmin extends LeftAndMain
             $this->modelTab = key($models);
         }
 
-        $this->modelClass = $models[$this->modelTab]['dataClass'];
+        $this->modelClass = isset($models[$this->modelTab]['dataClass']) ? $models[$this->modelTab]['dataClass'] : $this->modelTab;
 
         // security check for valid models
         if (!array_key_exists($this->modelTab, $models)) {
