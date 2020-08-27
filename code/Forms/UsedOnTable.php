@@ -72,10 +72,6 @@ class UsedOnTable extends FormField
         $record = $this->getRecord();
         $usage = $record->findOwners();
 
-        $usage = $usage->filterByCallback(function($item) {
-            return !$item->config()->get('hide_in_campaigns');
-        });
-
         $this->extend('updateUsage', $usage, $record);
 
         $usageData = [];

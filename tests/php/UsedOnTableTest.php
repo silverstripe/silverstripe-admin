@@ -11,8 +11,10 @@ class UsedOnTableTest extends SapphireTest
 {
     protected static $fixture_file = 'UsedOnTableTest.yml';
 
-    public function testOK()
+    public function testNotExcluded()
     {
+        UsedOnTable::config()->set('extensions', []);
+
         $usedOnTable = UsedOnTable::create("Used On");
 
         $file1 = $this->objFromFixture(File::class, 'file1');
@@ -25,7 +27,7 @@ class UsedOnTableTest extends SapphireTest
         $expected = [
             'usage' => [
                 [
-                    'id' => 'SilverStripe\Assets\Shortcodes\FileLink\/1',
+                    'id' => 'SilverStripe\Assets\Shortcodes\FileLink/1',
                     'title' => '#1',
                     'type' => 'File Link',
                     'state' => null,
@@ -38,7 +40,7 @@ class UsedOnTableTest extends SapphireTest
 
     public function testExtensionExclusion()
     {
-        UsedOnTable::config()->update('extensions', [
+        UsedOnTable::config()->set('extensions', [
             UsedOnTableTest\UsedOnTableExtension::class
         ]);
 
