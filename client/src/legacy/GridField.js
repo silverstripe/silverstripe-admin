@@ -274,7 +274,9 @@ $.entwine('ss', function($) {
       }
 
       var formLink = this.find('.edit-link, .view-link');
-      if(formLink.length) this.getGridField().showDetailView(formLink.prop('href'));
+      if(formLink.length) {
+        this.getGridField().showDetailView(formLink.prop('href'));
+      }
     },
     onmouseover: function() {
       if(this.find('.edit-link, .view-link').length) this.css('cursor', 'pointer');
