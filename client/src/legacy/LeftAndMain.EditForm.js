@@ -110,27 +110,40 @@ $.entwine('ss', function($){
     },
     'from .cms-tabset': {
       onafterredrawtabs: function () {
-        // Show validation errors if necessary
-        if(this.hasClass('validationerror')) {
-          // Ensure the first validation error is visible
-          var tabError = this.find('.message.validation, .message.required').first().closest('.tab');
-          $('.cms-container').clearCurrentTabState(); // clear state to avoid override later on
+        // Focus on the first tab with a validation error
 
-          // Attempt #1: Look for nearest .ss-tabset (usually nested deeper underneath a .cms-tabset).
-          var $tabSet = tabError.closest('.ss-tabset');
+        if(!this.hasClass('validationerror')) {
+          return;
+        }
 
-          // Attempt #2: Next level in tab-ception, try to select the tab within this higher level .cms-tabset if possible
-          if (!$tabSet.length) {
-            $tabSet = tabError.closest('.cms-tabset');
-          }
+        var $validationAlert = this.find('.alert');
+        if (!$validationAlert.length) {
+          return;
+        }
 
-          if ($tabSet.length) {
-            $tabSet.tabs('option', 'active', tabError.index('.tab'));
-          } else if (!this.getValidationErrorShown()) {
-            // Ensure that this error message popup won't be added more than once
-            this.setValidationErrorShown(true);
-            errorMessage(ss.i18n._t('Admin.VALIDATIONERROR', 'Validation Error'));
-          }
+        $('.cms-container').clearCurrentTabState(); // clear state to avoid override later on
+
+        var $invalidTabPane = $validationAlert.closest('.tab-pane');
+        var $tabContent = $invalidTabPane.closest('.tab-content');
+
+        // Attempt #1: Look for nearest .ss-tabset (usually nested deeper underneath a .cms-tabset).
+        var $tabSet = $tabContent.closest('.ss-tabset');
+
+        // Attempt #2: Next level in tab-ception, try to select the tab within this higher level .cms-tabset if possible
+        if (!$tabSet.length) {
+          $tabSet = $tabContent.closest('.cms-tabset');
+        }
+
+        if ($tabSet.length) {
+          var invalidTabPaneIndex = $tabContent.find('.tab-pane').index($invalidTabPane);
+          // https://api.jqueryui.com/tabs/#option-active
+          $tabSet.tabs('option', 'active', invalidTabPaneIndex);
+          $validationAlert.get(0).scrollIntoView(false);
+          $validationAlert.closest('.panel--scrollable').get(0).scrollBy(0, 50);
+        } else if (!this.getValidationErrorShown()) {
+          // Ensure that this error message popup won't be added more than once
+          this.setValidationErrorShown(true);
+          errorMessage(ss.i18n._t('Admin.VALIDATIONERROR', 'Validation Error'));
         }
       }
     },
