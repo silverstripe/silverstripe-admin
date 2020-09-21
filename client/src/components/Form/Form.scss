@@ -123,8 +123,6 @@
 
 .form__field-extra-label,
 .form__field-description {
-  display: flex;
-  align-items: center;
   color: $text-muted;
   margin-top: $input-padding-y;
   margin-bottom: $input-padding-y;
@@ -132,15 +130,6 @@
 
   &:empty {
     display: none;
-  }
-
-  .icon {
-    &::before {
-      font-size: $font-size-lg;
-      line-height: inherit;
-      margin-right: 6px;
-      vertical-align: middle;
-    }
   }
 }
 
