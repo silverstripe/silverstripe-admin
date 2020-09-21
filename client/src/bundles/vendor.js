@@ -51,8 +51,6 @@ require('../../../thirdparty/jquery-entwine/dist/jquery.entwine-dist.js');
 require('../../../thirdparty/jquery-cookie/jquery.cookie.js');
 require('../../../thirdparty/jquery-query/jquery.query.js');
 require('../../../thirdparty/jquery-form/jquery.form.js');
-require('../../../thirdparty/jquery-notice/jquery.notice.js');
-// require('../../../thirdparty/jquery-notice/jquery.notice.css');
 require('jquery-sizes/lib/jquery.sizes.js');
 require('../../../thirdparty/jstree/jquery.jstree.js');
 // require('../../../thirdparty/stree/themes/apple/style.css');

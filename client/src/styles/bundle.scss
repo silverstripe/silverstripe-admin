@@ -6,7 +6,6 @@
 @import "~bootstrap/scss/bootstrap";
 @import "../../../thirdparty/jquery-ui-themes/smoothness/jquery-ui.css";
 @import "../../../thirdparty/jstree/themes/apple/style.css";
-@import "../../../thirdparty/jquery-notice/jquery.notice.css";
 
 // Base
 @import "bootstrap-override";
@@ -65,6 +64,7 @@
 @import "../components/TinymceInlineToolbar/TinymceInlineToolbar";
 @import "../components/Toolbar/Toolbar";
 @import "../components/TreeDropdownField/TreeDropdownField";
+@import "../components/Toasts/Toasts";
 @import "../components/UsedOnTable/UsedOnTable";
 @import "../components/VersionedBadge/VersionedBadge";
 @import "../components/ViewModeToggle/ViewModeToggle";

@@ -1,12 +1,11 @@
 /* global jest, describe, beforeEach, it, expect, require */
 
-jest.unmock('react');
-jest.unmock('react-dom/test-utils');
-jest.unmock('../LookupField');
-
 import React from 'react';
-import ReactTestUtils from 'react-dom/test-utils';
 import { Component as LookupField } from '../LookupField';
+import Enzyme, { shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16/build/index';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('LookupField', () => {
   let props = null;
@@ -31,18 +30,14 @@ describe('LookupField', () => {
     it('should return an empty string', () => {
       props.value = [];
 
-      field = ReactTestUtils.renderIntoDocument(
-        <LookupField {...props} />
-      );
+      field = shallow(<LookupField {...props} />).instance();
       const value = field.getValueCSV();
 
       expect(value).toEqual('');
     });
 
     it('should return the string value', () => {
-      field = ReactTestUtils.renderIntoDocument(
-        <LookupField {...props} />
-      );
+      field = shallow(<LookupField {...props} />).instance();
       const value = field.getValueCSV();
 
       expect(value).toEqual('2');
@@ -51,9 +46,7 @@ describe('LookupField', () => {
     it('should return the string value', () => {
       props.value = ['two', 'three'];
 
-      field = ReactTestUtils.renderIntoDocument(
-        <LookupField {...props} />
-      );
+      field = shallow(<LookupField {...props} />).instance();
       const value = field.getValueCSV();
 
       expect(value).toEqual('2, 3');
