@@ -1,5 +1,6 @@
 .sass-cache
 /vendor/
+/resources/
 /node_modules/
 /**/*.js.map
 /**/*.css.map
@@ -7,3 +8,4 @@ yarn-error.log
 coverage/
 /storybook-static/
 /.storybook/.stories.js
+composer.lock
