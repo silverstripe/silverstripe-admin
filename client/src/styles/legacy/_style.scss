@@ -687,6 +687,17 @@ html, body {
   }
 }
 
+.validationerror .panel--padded .ui-tabs-nav {
+  margin-top: -$panel-padding-y;
+
+  .tab-attention {
+    color: $state-draft;
+    position: absolute;
+    margin-top: 12px;
+    margin-left: -4px;
+  }
+}
+
 // -------------------------------------------------------
 // Loading Interface
 // ------------------------------------------------------- */
