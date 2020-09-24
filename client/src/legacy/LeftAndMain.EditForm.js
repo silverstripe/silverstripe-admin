@@ -110,28 +110,95 @@ $.entwine('ss', function($){
     },
     'from .cms-tabset': {
       onafterredrawtabs: function () {
-        // Show validation errors if necessary
-        if(this.hasClass('validationerror')) {
-          // Ensure the first validation error is visible
-          var tabError = this.find('.message.validation, .message.required').first().closest('.tab');
-          $('.cms-container').clearCurrentTabState(); // clear state to avoid override later on
 
-          // Attempt #1: Look for nearest .ss-tabset (usually nested deeper underneath a .cms-tabset).
-          var $tabSet = tabError.closest('.ss-tabset');
+        // This function will:
+        // - Add an invalid icon on each tab that contains form fields than failed validation
+        // - Set an alert message in the edit form error banner
+        const iconClass = 'font-icon-attention-1 tab-attention';
+        const iconTitle = ss.i18n._t(
+          'VALIDATION_ERRORS_IN_TAB',
+          'This tab contains validation errors.'
+        );
+        const iconScreenReaderText = ss.i18n._t(
+          'VALIDATION_ERRORS_IN_TAB_SCREEN_READER',
+          '(Has validation errors)'
+        );
+        const alertMessageText = ss.i18n._t(
+          'Admin.VALIDATION_ERRORS_ON_PAGE',
+          'There are validation errors on this page, please fix them before saving or publishing.'
+        );
+        const toastNotificationMessage = ss.i18n._t(
+          'Admin.VALIDATIONERROR',
+          'Validation Error'
+        );
+        const $editFormErrorBanner = $("#Form_EditForm_error");
 
-          // Attempt #2: Next level in tab-ception, try to select the tab within this higher level .cms-tabset if possible
-          if (!$tabSet.length) {
-            $tabSet = tabError.closest('.cms-tabset');
-          }
+        // Remove any existing invalid tab icons and screen-reader text
+        this.find('.tab-attention, .tab-validation-error-sr').remove();
 
-          if ($tabSet.length) {
-            $tabSet.tabs('option', 'active', tabError.index('.tab'));
-          } else if (!this.getValidationErrorShown()) {
-            // Ensure that this error message popup won't be added more than once
-            this.setValidationErrorShown(true);
-            errorMessage(ss.i18n._t('Admin.VALIDATIONERROR', 'Validation Error'));
-          }
+        // Check if there are any form validation errors
+        let validationErrorExists = false;
+
+        // Validation errors from DataObject::getCMSValidator()
+        if (this.hasClass('validationerror')) {
+          validationErrorExists = true;
         }
+
+        // Validation errors from DataObject::validate() .. ValidationResult::addError();
+        if ($editFormErrorBanner.html() !== '') {
+          validationErrorExists = true;
+        }
+
+        // Validation errors from DataObject::validate() .. ValidationResult::addFieldError()
+        if (this.find('.alert.error').length > 0) {
+          validationErrorExists = true;
+        }
+
+        // If there are no validation errors then hide any old messages and exit
+        if (!validationErrorExists) {
+          $editFormErrorBanner.hide();
+          return;
+        }
+
+        // Show a toast notification for DataObject::getCMSValidator() validation errors
+        if (!this.getValidationErrorShown() && this.hasClass('validationerror')) {
+          errorMessage(toastNotificationMessage);
+          // Ensure that this error message popup won't be added more than once
+          this.setValidationErrorShown(true);
+        }
+
+        // Find tab-pane's with decedent validation .alert's
+        const $invalidTabPanes = this.find('.tab-pane .alert').closest('.tab-pane');
+        if (!$invalidTabPanes.length) {
+          // If we are at this point it's probably a failed DataObject::validate()
+          // where there was a general (non-field) error added via ValidationResult::addError()
+          return;
+        }
+
+        // Get the surrounding ss-tabset
+        const $ssTabSet = $invalidTabPanes.closest('.tab-content').closest('.ss-tabset');
+        if ($ssTabSet.length) {
+
+          // Add invalid icons to tabs
+          $invalidTabPanes.each((i) => {
+            const invalidTabPaneId = $invalidTabPanes.eq(i).attr('id');
+            const $tabLi = $ssTabSet.find(`#tab-${invalidTabPaneId}`).closest('li');
+            const $icon = $(`<i class="${iconClass}" title="${iconTitle}" aria-hidden="true"></i>`);
+            const $screenReaderSpan = $(`<span class="tab-validation-error-sr sr-only">${iconScreenReaderText}</span>`);
+            $tabLi.append($icon);
+            $tabLi.append($screenReaderSpan);
+          });
+
+          // Set an alert message in the edit form error banner
+          $editFormErrorBanner.attr('class', 'alert alert-danger');
+          $editFormErrorBanner.html(alertMessageText);
+          $editFormErrorBanner.show();
+        }
+
+        // Ensure the class "validationerror" is set for the scenario where
+        // the error came from validate() .. ValidationResult::addFieldError()
+        // so that css styles are applied to tab icons
+        this.addClass('validationerror');
       }
     },
     onremove: function() {
