@@ -116,11 +116,11 @@ $.entwine('ss', function($){
         // - Set an alert message in the edit form error banner
         const iconClass = 'font-icon-attention-1 tab-attention';
         const iconTitle = ss.i18n._t(
-          'VALIDATION_ERRORS_IN_TAB',
+          'Admin.VALIDATION_ERRORS_IN_TAB',
           'This tab contains validation errors.'
         );
         const iconScreenReaderText = ss.i18n._t(
-          'VALIDATION_ERRORS_IN_TAB_SCREEN_READER',
+          'Admin.VALIDATION_ERRORS_IN_TAB_SCREEN_READER',
           '(Has validation errors)'
         );
         const alertMessageText = ss.i18n._t(
