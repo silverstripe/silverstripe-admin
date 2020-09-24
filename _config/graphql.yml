@@ -8,5 +8,31 @@ SilverStripe\Core\Injector\Injector:
     class: SilverStripe\GraphQL\Controller
     constructor:
       schema: admin
+SilverStripe\GraphQL\Schema\Schema:
+  schemas:
+    default:
+      defaults:
+        operations:
+          read:
+            plugins:
+              filter:
+                before: paginateList
+              sort:
+                before: paginateList
+              paginateList: true
+              canView:
+                after: paginateList
+          readOne:
+            plugins:
+              canView: true
+              filter: true
+              sort: true
+              firstResult:
+                after: '*'
+        models:
+          DataObject:
+            plugins:
+              inheritance: true
+
 SilverStripe\Admin\LeftAndMain:
   graphql_legacy: false
