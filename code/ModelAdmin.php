@@ -106,7 +106,7 @@ abstract class ModelAdmin extends LeftAndMain
      * This variable can be a boolean or an array.
      * If array, you can list className you want the form to appear on. i.e. array('myClassOne','myClassTwo')
      */
-    public $showImportForm = true;
+    public $showImportForm = false;
 
     /**
      * Change this variable if you don't want the gridfield search to appear.

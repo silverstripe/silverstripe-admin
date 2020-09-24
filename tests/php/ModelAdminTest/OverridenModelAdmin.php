@@ -42,6 +42,8 @@ class OverridenModelAdmin extends ModelAdmin implements TestOnly
         'updateGridFieldConfig' => 0,
     ];
 
+    public $showImportForm = true;
+
 
     protected function getGridField(): GridField
     {
