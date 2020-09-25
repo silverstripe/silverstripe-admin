@@ -178,13 +178,6 @@ abstract class CMSBatchAction
         return $applicableIDs;
     }
 
-
-    // if your batchaction has parameters, return a FieldList here
-    public function getParameterFields()
-    {
-        return false;
-    }
-
     /**
      * If you wish to restrict the batch action to some users, overload this function.
      */
