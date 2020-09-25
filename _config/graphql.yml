@@ -33,6 +33,8 @@ SilverStripe\GraphQL\Schema\Schema:
           DataObject:
             plugins:
               inheritance: true
+              inheritedPlugins:
+                after: '*'
 
 SilverStripe\Admin\LeftAndMain:
   graphql_legacy: false
