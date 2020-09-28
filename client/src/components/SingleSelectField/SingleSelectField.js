@@ -12,27 +12,45 @@ class SingleSelectField extends Component {
   }
 
   /**
-   * Builds the select field in readonly mode with current props
+   * Fetches the properties for the select field
    *
-   * @returns {object}
+   * @returns {object} properties
    */
-  getReadonlyField() {
-    let label = this.props.source
-      && this.props.source.find((item) => item.value === this.props.value);
+  getInputProps() {
+    const props = {
+      // @TODO Prevent entwine chosen applying chosen
+      className: `${this.props.className} ${this.props.extraClass} no-chosen`,
+      id: this.props.id,
+      name: this.props.name,
+      disabled: this.props.disabled,
+    };
 
-    label = typeof label === 'string'
-      ? label
-      : (this.props.value || '');
+    if (!this.props.readOnly) {
+      Object.assign(props, {
+        onChange: this.handleChange,
+        value: this.props.value,
+      });
+    } else {
+      Object.assign(props, {
+        disabled: true
+      });
+    }
 
-    return <Input plaintext {...this.getInputProps()}>{label}</Input>;
+    return props;
   }
 
   /**
-   * Builds the select field with current props
+   * Handles changes to the select field's value.
    *
-   * @returns {object}
+   * @param {Event} event
    */
-  getSelectField() {
+  handleChange(event) {
+    if (typeof this.props.onChange === 'function') {
+      this.props.onChange(event, { id: this.props.id, value: event.target.value });
+    }
+  }
+
+  render() {
     // .slice() to copy the array, because we could modify it with an empty item
     const options = (this.props.source)
       ? this.props.source.slice()
@@ -60,52 +78,6 @@ class SingleSelectField extends Component {
         }) }
       </Input>
     );
-  }
-
-  /**
-   * Fetches the properties for the select field
-   *
-   * @returns {object} properties
-   */
-  getInputProps() {
-    const props = {
-      // @TODO Prevent entwine chosen applying chosen
-      className: `${this.props.className} ${this.props.extraClass} no-chosen`,
-      id: this.props.id,
-      name: this.props.name,
-      disabled: this.props.disabled,
-    };
-
-    if (!this.props.readOnly) {
-      Object.assign(props, {
-        onChange: this.handleChange,
-        value: this.props.value,
-      });
-    }
-
-    return props;
-  }
-
-  /**
-   * Handles changes to the select field's value.
-   *
-   * @param {Event} event
-   */
-  handleChange(event) {
-    if (typeof this.props.onChange === 'function') {
-      this.props.onChange(event, { id: this.props.id, value: event.target.value });
-    }
-  }
-
-  render() {
-    let field = null;
-    if (this.props.readOnly) {
-      field = this.getReadonlyField();
-    } else {
-      field = this.getSelectField();
-    }
-
-    return field;
   }
 }
 
