@@ -10,6 +10,25 @@ SilverStripe\Core\Injector\Injector:
       schema: admin
 SilverStripe\GraphQL\Schema\Schema:
   schemas:
+    '*':
+      defaults:
+        operations:
+          read:
+            plugins:
+              paginateList: true
+              canView:
+                after: paginateList
+          readOne:
+            plugins:
+              canView: true
+              firstResult:
+                after: '*'
+        models:
+          DataObject:
+            plugins:
+              inheritance: true
+              inheritedPlugins:
+                after: '*'
     default:
       defaults:
         operations:
@@ -19,22 +38,10 @@ SilverStripe\GraphQL\Schema\Schema:
                 before: paginateList
               sort:
                 before: paginateList
-              paginateList: true
-              canView:
-                after: paginateList
           readOne:
             plugins:
-              canView: true
               filter: true
               sort: true
-              firstResult:
-                after: '*'
-        models:
-          DataObject:
-            plugins:
-              inheritance: true
-              inheritedPlugins:
-                after: '*'
 
 SilverStripe\Admin\LeftAndMain:
   graphql_legacy: false
