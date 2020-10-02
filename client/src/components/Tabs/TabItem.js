@@ -1,22 +1,42 @@
 import React from 'react';
-import { TabPane } from 'reactstrap';
+import { TabPane, Fade } from 'reactstrap';
 import PropTypes from 'prop-types';
+import useTabContext, { TabContext } from 'hooks/useTabContext';
+import classnames from 'classnames';
 
-const TabItem = ({ name, className, extraClass, disabled, children }) => (
-  <TabPane tabId={name} className={`${className} ${extraClass}`} disabled={disabled}>
-    {children}
-  </TabPane>
-);
+/**
+ * Wraps the content of a tab.
+ * @param {string} name
+ * @param {string?} className
+ * @param {string?} extraClass
+ * @param {boolean?} disabled
+ * @param {JSX.Element} children
+ * @returns {JSX.Element}
+ */
+function TabItem({ name, className, extraClass, disabled, children }) {
+  const { activeTab, isOnActiveTab } = useTabContext();
+  const nextTabContext = {
+    activeTab,
+    currentTab: name,
+    // a tab embedded inside another tab can only be active if it's parent is also active
+    isOnActiveTab: isOnActiveTab !== false && activeTab === name
+  };
+  return (
+    <TabContext.Provider value={nextTabContext}>
+      <TabPane tabId={name} className={classnames(className, extraClass)} disabled={disabled}>
+        <Fade in={isOnActiveTab}>
+          {children}
+        </Fade>
+      </TabPane>
+    </TabContext.Provider>
+  );
+}
 
 TabItem.propTypes = {
   name: PropTypes.string.isRequired,
   extraClass: PropTypes.string,
   className: PropTypes.string,
-};
-
-TabItem.defaultProps = {
-  className: '',
-  extraClass: '',
+  disabled: PropTypes.bool,
 };
 
 export default TabItem;
