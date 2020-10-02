@@ -1,0 +1,25 @@
+---
+Name: 'graphql-schema-global'
+Only:
+  classexists: 'SilverStripe\GraphQL\Schema\Schema'
+---
+SilverStripe\GraphQL\Schema\Schema:
+  schemas:
+    '*':
+      modelConfig:
+        DataObject:
+          plugins:
+            inheritance: true
+            inheritedPlugins:
+              after: '*'
+          operations:
+            read:
+              plugins:
+                paginateList: true
+                canView:
+                  after: paginateList
+            readOne:
+              plugins:
+                canView: true
+                firstResult:
+                  after: '*'
