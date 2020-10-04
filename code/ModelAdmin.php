@@ -6,7 +6,6 @@ use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Convert;
-use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\BulkLoader;
 use SilverStripe\Dev\Deprecation;
 use SilverStripe\Forms\CheckboxField;
@@ -158,7 +157,7 @@ abstract class ModelAdmin extends LeftAndMain
 
         // security check for valid models
         if (!array_key_exists($this->modelTab, $models)) {
-            user_error('ModelAdmin::init(): Invalid Model class', E_USER_ERROR);
+            throw new \RuntimeException('ModelAdmin::init(): Invalid Model class');
         }
     }
 
@@ -458,11 +457,10 @@ abstract class ModelAdmin extends LeftAndMain
             $models = array($models);
         }
         if (!count($models)) {
-            user_error(
+            throw new \RuntimeException(
                 'ModelAdmin::getManagedModels():
 				You need to specify at least one DataObject subclass in private static $managed_models.
-				Make sure that this property is defined, and that its visibility is set to "private"',
-                E_USER_ERROR
+				Make sure that this property is defined, and that its visibility is set to "private"'
             );
         }
 
