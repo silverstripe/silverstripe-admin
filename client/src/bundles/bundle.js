@@ -45,6 +45,7 @@ require('expose-loader?Loading!components/Loading/Loading');
 require('expose-loader?TextField!components/TextField/TextField');
 require('expose-loader?LiteralField!components/LiteralField/LiteralField');
 require('expose-loader?Toolbar!components/Toolbar/Toolbar');
+require('expose-loader?FileStatusIcon!components/FileStatusIcon/FileStatusIcon');
 require('expose-loader?Breadcrumb!components/Breadcrumb/Breadcrumb');
 require('expose-loader?ResizeAware!components/ResizeAware/ResizeAware');
 require('expose-loader?TabsActions!state/tabs/TabsActions');
