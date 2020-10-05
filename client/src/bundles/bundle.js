@@ -43,6 +43,7 @@ require('expose-loader?Loading!components/Loading/Loading');
 require('expose-loader?TextField!components/TextField/TextField');
 require('expose-loader?LiteralField!components/LiteralField/LiteralField');
 require('expose-loader?Toolbar!components/Toolbar/Toolbar');
+require('expose-loader?FileStatusIcon!components/FileStatusIcon/FileStatusIcon');
 require('expose-loader?Breadcrumb!components/Breadcrumb/Breadcrumb');
 require('expose-loader?ResizeAware!components/ResizeAware/ResizeAware');
 require('expose-loader?TabsActions!state/tabs/TabsActions');
@@ -76,7 +77,6 @@ require('expose-loader?TinyMCEActionRegistrar!lib/TinyMCEActionRegistrar');
 require('expose-loader?ShortcodeSerialiser!lib/ShortcodeSerialiser');
 require('expose-loader?formatWrittenNumber!lib/formatWrittenNumber');
 require('expose-loader?withDragDropContext!lib/withDragDropContext');
-require('expose-loader?FileStatusIcon!components/FileStatusIcon/FileStatusIcon');
 
 // Legacy CMS
 require('../legacy/sspath');
