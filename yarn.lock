@@ -74,10 +74,10 @@
     eslint-plugin-jsx-a11y "^5.1.1"
     eslint-plugin-react "^7.3.0"
 
-"@silverstripe/webpack-config@^1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@silverstripe/webpack-config/-/webpack-config-1.5.0.tgz#638f2c39d710acebfcdf7c6c50adc72e0e51af19"
-  integrity sha512-Cbh7uQ0A83Xazh3T0IF94Hk+v/ecx8Huf0YzVQMi0TI+bgY/zYc1EeCVeujrNW5eQMFnAGEt6EqQFSBZCIHpCw==
+"@silverstripe/webpack-config@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@silverstripe/webpack-config/-/webpack-config-1.7.0.tgz#1fed0775d95c9120e4fc2031a611c50dc6c4b3f0"
+  integrity sha512-lwtiEW+4oRQzNL24fKRnTffIPE5FCKJCCL2IuOIDdrIDoxxm381fzkcwWuWfhK7Oxbjz9A49UIDfzkUQ1/oW5g==
   dependencies:
     autoprefixer "^6.4.0"
     babel-core "^6.24.1"
