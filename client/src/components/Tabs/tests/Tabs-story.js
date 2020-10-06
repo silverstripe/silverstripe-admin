@@ -1,7 +1,7 @@
 import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { storiesOf } from '@storybook/react';
-import Tabs from 'components/Tabs/Tabs';
+import { Component as Tabs } from 'components/Tabs/Tabs';
 import TabItem from 'components/Tabs/TabItem';
 
 storiesOf('Admin/Tabs', module)

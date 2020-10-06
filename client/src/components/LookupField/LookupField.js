@@ -58,15 +58,9 @@ class LookupField extends Component {
       return null;
     }
     const none = `('${i18n._t('Admin.NONE', 'None')}')`;
+    const value = this.getValueCSV() || none;
 
-    return (
-      <Input
-        plaintext
-        {...this.getFieldProps()}
-      >
-        { this.getValueCSV() || none }
-      </Input>
-    );
+    return <Input plaintext {...this.getFieldProps()} tag="p">{value}</Input>;
   }
 }
 
