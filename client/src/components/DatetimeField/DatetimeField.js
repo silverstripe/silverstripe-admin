@@ -55,7 +55,7 @@ class DatetimeField extends DateField {
     let isoTime = '';
     if (localTime) {
       // Input value can be in local format 'L' or ISO format
-      const timeObject = this.moment(localTime, [localFormat, moment.ISO_8601]);
+      const timeObject = this.moment(localTime, [localFormat, 'L', moment.ISO_8601]);
       if (timeObject.isValid()) {
         isoTime = timeObject.format('YYYY-MM-DDTHH:mm:ss');
       }
