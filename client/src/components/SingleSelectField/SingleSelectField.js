@@ -24,7 +24,7 @@ class SingleSelectField extends Component {
       ? label
       : (this.props.value || '');
 
-    return <Input plaintext {...this.getInputProps()}>{label}</Input>;
+    return <Input plaintext {...this.getInputProps()} tag="p">{label}</Input>;
   }
 
   /**
@@ -79,7 +79,7 @@ class SingleSelectField extends Component {
     if (!this.props.readOnly) {
       Object.assign(props, {
         onChange: this.handleChange,
-        value: this.props.value,
+        value: this.props.value || '',
       });
     }
 

@@ -15,7 +15,7 @@ class HiddenField extends Component {
       id: this.props.id,
       name: this.props.name,
       type: 'hidden',
-      value: this.props.value,
+      value: this.props.value || '',
     };
   }
 

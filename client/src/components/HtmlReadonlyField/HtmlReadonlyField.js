@@ -4,21 +4,6 @@ import { Input } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 class HtmlReadonlyField extends Component {
-  constructor(props) {
-    super(props);
-
-    this.getContent = this.getContent.bind(this);
-  }
-
-  /**
-   * Sets the content into a dangerouslySetInnerHTML object
-   *
-   * @returns {object} innerHtml
-   */
-  getContent() {
-    return { __html: this.props.value };
-  }
-
   /**
    * Fetches the properties for the text field
    *
@@ -38,9 +23,9 @@ class HtmlReadonlyField extends Component {
     return (
       <Input
         plaintext
+        tag="p"
+        dangerouslySetInnerHTML={{ __html: this.props.value }}
         {...this.getInputProps()}
-        // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={this.getContent()}
       />
     );
   }
