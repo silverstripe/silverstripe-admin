@@ -11,3 +11,27 @@ SilverStripe\Core\Injector\Injector:
 
 SilverStripe\Admin\LeftAndMain:
   graphql_legacy: false
+
+SilverStripe\GraphQL\Schema\Schema:
+  schemas:
+    admin:
+      modelConfig:
+        DataObject:
+          operations:
+            read:
+              plugins:
+                filter:
+                  before: paginateList
+                sort:
+                  before: paginateList
+            readOne:
+              plugins:
+                filter: true
+                sort: true
+          nested_query_plugins:
+            paginateList: true
+            filter:
+              before: paginateList
+            sort:
+              before: paginateList
+
