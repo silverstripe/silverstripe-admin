@@ -25,3 +25,6 @@ SilverStripe\GraphQL\Schema\Schema:
               before: paginateList
             sort:
               before: paginateList
+            canView:
+              after: paginateList
+
