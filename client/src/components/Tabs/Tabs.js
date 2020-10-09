@@ -1,139 +1,49 @@
-import React, { Component } from 'react';
-import { TabContent, Nav, NavItem, NavLink } from 'reactstrap';
+import React from 'react';
+import { TabContent } from 'reactstrap';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as Actions from 'state/tabs/TabsActions';
+import TabNav from './TabNav';
+import getDefaultActiveKey from './getDefaultActiveKey';
+import useTabContext, { TabContext } from 'hooks/useTabContext';
 
-class Tabs extends Component {
-  constructor(props) {
-    super(props);
+/**
+ * Displays a tab set that cam be used to break up a form into smaller chunks.
+ * @param {boolean} hideNav
+ * @param {JSX.Element} children
+ * @param {string?} activeTab
+ * @param {string?} className
+ * @param {string?} extraClass
+ * @param {string} id
+ * @param {function} activateTab
+ * @param {string?} defaultActiveKey
+ * @returns {JSX.Element}
+ * @constructor
+ */
+function Tabs({
+  hideNav, children, activeTab, className, extraClass, id, activateTab, defaultActiveKey
+}) {
+  const containerProps = { className: classnames([className, extraClass]), id };
+  const currentTab = activeTab || getDefaultActiveKey(defaultActiveKey, children);
+  const tabContext = useTabContext();
+  const nextTabContext = {
+    activeTab: currentTab,
+    isOnActiveTab: tabContext ? tabContext.isOnActiveTab : undefined
+  };
 
-    this.toggle = this.toggle.bind(this);
-    this.renderTab = this.renderTab.bind(this);
-  }
-
-  /**
-   * Returns props for the container component
-   *
-   * @returns {object}
-   */
-  getContainerProps() {
-    const {
-      className,
-      extraClass,
-      id,
-      } = this.props;
-
-    return {
-      className: classnames([className, extraClass]),
-      id,
-    };
-  }
-
-  /**
-   * Determines a default tab to be opened and validates the given default tab.
-   * Replaces the given default tab if it is invalid with a valid tab.
-   *
-   * @returns {string}
-   */
-  getDefaultActiveKey() {
-    let active = null;
-
-    if (typeof this.props.defaultActiveKey === 'string') {
-      const activeChild = React.Children.toArray(this.props.children)
-        .find((child) => child.props.name === this.props.defaultActiveKey);
-
-      if (activeChild) {
-        active = activeChild.props.name;
-      }
-    }
-
-    if (typeof active !== 'string') {
-      React.Children.forEach(this.props.children, (child) => {
-        if (typeof active !== 'string') {
-          active = child.props.name;
-        }
-      });
-    }
-
-    return active;
-  }
-
-  toggle(activeTab) {
-    if (this.props.activeTab !== activeTab) {
-      this.props.activateTab(activeTab);
-    }
-  }
-
-  /**
-   * Render an individual link for the tabset
-   *
-   * @param {object} child
-   * @returns {Component}
-   */
-  renderTab(child) {
-    if (child.props.title === null) {
-      return null;
-    }
-
-    const currentTab = this.props.activeTab || this.getDefaultActiveKey();
-
-    const classNames = classnames({
-      active: currentTab === child.props.name,
-      [child.props.tabClassName]: child.props.tabClassName,
-    });
-
-    return (
-      <NavItem>
-        <NavLink
-          onClick={() => (this.toggle(child.props.name))}
-          disabled={child.props.disabled}
-          className={classNames}
-        >
-          {child.props.title}
-        </NavLink>
-      </NavItem>
-    );
-  }
-
-  /**
-   * Builds the tabset navigation links, will hide the links if there is only one child
-   *
-   * @returns {Component}
-   */
-  renderNav() {
-    const tabs = React.Children
-      .map(this.props.children, this.renderTab);
-
-    if (tabs.length <= 1) {
-      return null;
-    }
-
-    return (
-      <Nav tabs role="tablist">
-        {tabs}
-      </Nav>
-    );
-  }
-
-  render() {
-    const { hideNav, children, activeTab } = this.props;
-
-    const containerProps = this.getContainerProps();
-    const nav = hideNav ? null : this.renderNav();
-
-    return (
-      <div {...containerProps}>
-        <div className="wrapper">
-          {nav}
-          <TabContent activeTab={activeTab || this.getDefaultActiveKey()}>
+  return (
+    <div {...containerProps}>
+      <div className="wrapper">
+        {!hideNav && <TabNav currentTab={currentTab} onToggle={activateTab}>{children}</TabNav>}
+        <TabContent activeTab={currentTab}>
+          <TabContext.Provider value={nextTabContext}>
             {children}
-          </TabContent>
-        </div>
+          </TabContext.Provider>
+        </TabContent>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 Tabs.propTypes = {
