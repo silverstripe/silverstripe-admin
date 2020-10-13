@@ -18,6 +18,9 @@ $.entwine('ss', function($){
       this._super();
     },
 
+    /** Works around issue with _super() breaking on missing methods */
+    onunmatch: function () { this._super() },
+
     /**
      * @func openTabFromURL
      * @param {string} hash
