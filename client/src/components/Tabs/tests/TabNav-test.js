@@ -7,10 +7,10 @@ import Adapter from 'enzyme-adapter-react-16/build/index';
 
 Enzyme.configure({ adapter: new Adapter() });
 
+const onToggle = jest.fn();
+
 describe('TabNav', () => {
   it('render', () => {
-    const onToggle = jest.fn();
-
     const wrapper = shallow(
       <TabNav currentTab="second" onToggle={onToggle}>
         <div name="first" title="Child One" />
@@ -36,7 +36,7 @@ describe('TabNav', () => {
   });
 
   it('no child', () => {
-    const wrapper = shallow(<TabNav />);
+    const wrapper = shallow(<TabNav onToggle={onToggle} />);
     expect(wrapper.find('Nav')).toHaveLength(0);
   });
 });

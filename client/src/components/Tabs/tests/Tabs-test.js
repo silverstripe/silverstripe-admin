@@ -7,6 +7,8 @@ import Adapter from 'enzyme-adapter-react-16/build/index';
 
 Enzyme.configure({ adapter: new Adapter() });
 
+const activateTab = jest.fn();
+
 describe('Tabs', () => {
   describe('render()', () => {
     it('Renders the navigation with hideNav: false', () => {
@@ -16,6 +18,7 @@ describe('Tabs', () => {
           className="hello"
           extraClass="world"
           hideNav={false}
+          activateTab={activateTab}
         >
           <div title="Child One" />
           <div title="Child Two" />
@@ -32,6 +35,7 @@ describe('Tabs', () => {
         <Tabs
           id={'2'}
           hideNav
+          activateTab={activateTab}
         >
           <div title="Child One" />
           <div title="Child Two" />

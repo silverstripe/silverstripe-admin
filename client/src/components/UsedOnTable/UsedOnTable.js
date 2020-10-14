@@ -11,7 +11,6 @@ class UsedOnTable extends PureComponent {
         <tr>
           <th className="used-on__col--index">#</th>
           <th className="used-on__col--title">{i18n._t('Admin.USED_ON', 'Used on')}</th>
-          <th className="used-on__col--type">{i18n._t('Admin.TYPE', 'Type')}</th>
         </tr>
       </thead>
     );
@@ -60,27 +59,30 @@ class UsedOnTable extends PureComponent {
   }
 
   renderRow(data, index) {
-    const {
-      id,
-      title,
-      type,
-      state,
-      link,
-    } = data;
-
-    const badge = (state)
-      ? <span className={classnames('badge', 'used-on__badge', `status-${state}`)}>{state}</span>
-      : null;
-
-    const titleLabel = (link)
-      ? <a className="used-on__edit-link" href={link}>{title} {badge}</a>
-      : <span>{title} {badge}</span>;
-
+    const { id, type } = data;
+    const rowData = [data].concat(data.ancestors).reverse();
+    const titleLinks = rowData.map((arr, i) => {
+      const { title, link } = arr;
+      const key = `${index}-${id}-${i}`;
+      const classes = ['used-on__title-item'];
+      if (link) {
+        return (
+          <li className={classnames(classes)} key={key}>
+            <a className="used-on__edit-link" href={link}>{title}</a>
+          </li>
+        );
+      }
+      classes.push('used-on__title-item--link-less');
+      return <li className={classnames(classes)} key={key}>{title}</li>;
+    });
+    const key = `${index}-${id}`;
     return (
-      <tr key={id}>
+      <tr key={key} className="used-on__row">
         <td className="used-on__col--index">{index + 1}</td>
-        <td className="used-on__col--title">{titleLabel}</td>
-        <td className="used-on__col--type">{type}</td>
+        <td className="used-on__col--title">
+          <ul className="used-on__title-links">{titleLinks}</ul>
+          <span className="used-on__type">{type}</span>
+        </td>
       </tr>
     );
   }
@@ -101,8 +103,11 @@ UsedOnTable.propTypes = {
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     title: PropTypes.string,
     type: PropTypes.string,
-    state: PropTypes.string,
     link: PropTypes.string,
+    ancestors: PropTypes.arrayOf(PropTypes.shape({
+      title: PropTypes.string,
+      link: PropTypes.string,
+    })).isRequired,
   })),
   error: PropTypes.string,
 };

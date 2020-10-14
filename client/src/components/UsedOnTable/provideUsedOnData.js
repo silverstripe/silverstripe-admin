@@ -2,26 +2,44 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loadUsedOn } from 'state/usedOn/usedOnActions';
+import { injectTabContext } from 'hooks/useTabContext';
 
 const provideUsedOnData = (UsedOnTable) => {
   class UsedOnDataProvider extends Component {
     componentDidMount() {
-      this.loadUsedOn();
+      this.haveFetchedData = false;
+      if (this.props.forceFetch) {
+        this.fetchDataFromEndpoint();
+      }
     }
 
     componentWillReceiveProps(nextProps) {
       if (nextProps.identifier !== this.props.identifier) {
-        this.loadUsedOn(nextProps);
+        this.fetchDataFromEndpoint(nextProps);
       }
     }
 
-    loadUsedOn(props = this.props) {
-      const {
-        method,
-        url,
-      } = (props.data.readUsageEndpoint || {});
+    componentDidUpdate() {
+      const tabContext = this.props.tabContext;
 
-      props.loadUsedOn(props.identifier, method, url);
+      // If component is not in a tab, then just fetch data straight away
+      if (!tabContext) {
+        this.fetchDataFromEndpoint();
+      }
+
+      // Only fetch data if the current tab is active
+      if (tabContext.isOnActiveTab) {
+        this.fetchDataFromEndpoint();
+      }
+    }
+
+    fetchDataFromEndpoint(props = this.props) {
+      const { method, url } = (props.data.readUsageEndpoint || {});
+      if (!this.haveFetchedData || this.props.forceFetch) {
+        // see client/src/state/usedOn/usedOnActions.js
+        props.loadUsedOn(props.identifier, method, url);
+      }
+      this.haveFetchedData = true;
     }
 
     render() {
@@ -44,6 +62,7 @@ const provideUsedOnData = (UsedOnTable) => {
       }),
     ]),
     usedOn: PropTypes.array,
+    forceFetch: PropTypes.bool,
   };
 
   const mapStateToProps = (state, props) => {
@@ -66,8 +85,12 @@ const provideUsedOnData = (UsedOnTable) => {
     };
   };
 
-  const connectedUsedOnDataProvider = connect(mapStateToProps, { loadUsedOn })(UsedOnDataProvider);
-  connectedUsedOnDataProvider.Component = UsedOnDataProvider;
+  const ComponentWithTabContext = injectTabContext(UsedOnDataProvider);
+  const connectedUsedOnDataProvider = connect(
+    mapStateToProps,
+    { loadUsedOn }
+  )(ComponentWithTabContext);
+  connectedUsedOnDataProvider.Component = ComponentWithTabContext;
 
   return connectedUsedOnDataProvider;
 };
