@@ -3,7 +3,6 @@
 
 namespace SilverStripe\Admin;
 
-
 use SilverStripe\ORM\DataExtension;
 
 /**
