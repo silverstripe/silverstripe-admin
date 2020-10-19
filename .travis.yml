@@ -70,6 +70,15 @@ before_script:
   - composer update $COMPOSER_ARG --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile
   - composer show
 
+  # Remove once everything is merged
+  - cd ../versioned
+  - git remote add -f uc https://github.com/unclecheese/silverstripe-versioned
+  - git checkout pulls/1/schemageddon
+  - cd ../../../
+  - composer dump-autoload -o
+    ########################################################
+
+
 # Install NPM dependencies
   - if [[ $NPM_TEST ]]; then nvm install && npm install -g yarn && yarn install --network-concurrency 1; fi
 
