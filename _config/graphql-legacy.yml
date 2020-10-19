@@ -7,8 +7,8 @@ SilverStripe\Admin\LeftAndMain:
 
 ---
 Name: admin-injector
-Only:
-  classexists: 'SilverStripe\GraphQL\Manager'
+Except:
+  classexists: 'SilverStripe\GraphQL\Schema\Schema'
 ---
 SilverStripe\Core\Injector\Injector:
   SilverStripe\GraphQL\Manager.admin:
