@@ -1008,8 +1008,14 @@ catch (e) {
 					if (funcs[i].selector.matches(el)) {
 						var ret, tmp_i = el.i, tmp_f = el.f;
 						el.i = i; el.f = one;
-						try { ret = funcs[i][funcprop].apply(namespace.$(el), args); }
-						finally { el.i = tmp_i; el.f = tmp_f; }
+						try {
+						  if (typeof funcs[i][funcprop] == 'function') {
+						    ret = funcs[i][funcprop].apply(namespace.$(el), args);
+              }
+						} finally {
+						  el.i = tmp_i;
+						  el.f = tmp_f;
+						}
 						return ret;
 					}
 				}
