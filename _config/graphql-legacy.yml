@@ -3,7 +3,7 @@ Name: admin-graphql-legacy-extension
 ---
 SilverStripe\Admin\LeftAndMain:
   extensions:
-    - SilverStripe\Admin\GraphQLLegacyExtension
+    - SilverStripe\Admin\GraphQL\GraphQLLegacyExtension
 
 ---
 Name: admin-injector
@@ -25,3 +25,13 @@ SilverStripe\Core\Injector\Injector:
       manager: '%$SilverStripe\GraphQL\Manager.admin'
 SilverStripe\Admin\LeftAndMain:
   graphql_legacy: true
+
+SilverStripe\GraphQL\Manager:
+  schemas:
+    admin:
+      fieldFormatter: [ 'SilverStripe\Core\Convert', 'upperCamelToLowerCamel' ]
+      fieldAccessor: 'SilverStripe\GraphQL\Util\CaseInsensitiveFieldAccessor'
+      types:
+        # Shim the schema for GraphQL 4 compat
+        EqComparator: SilverStripe\Admin\GraphQL\EqComparator
+        IDFilterType: SilverStripe\Admin\GraphQL\IDFilterType

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace SilverStripe\Admin;
+namespace SilverStripe\Admin\GraphQL;
 
 use SilverStripe\ORM\DataExtension;
 
