@@ -19,7 +19,7 @@ function TabNav({ currentTab, children, onToggle }) {
     />
   ));
 
-  return tabs ? <Nav tabs role="tablist">{tabs}</Nav> : null;
+  return tabs && tabs.length > 1 ? <Nav tabs role="tablist">{tabs}</Nav> : null;
 }
 
 TabNav.propTypes = {
