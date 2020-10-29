@@ -23,6 +23,8 @@
     "Admin.ARCHIVECONFIRMMESSAGE": "Are you sure you want to archive this record?",
     "Admin.EXPANDPANEL": "Expand panel",
     "Admin.COLLAPSEPANEL": "Collapse panel",
+    "Admin.USED_ON": "Used on",
+    "Admin.USED_ON_NUM": "#",
     "Admin.VALIDATOR_MESSAGE_REQUIRED": "{name} is required.",
     "Admin.VALIDATOR_MESSAGE_EQUALS": "{name} are not equal.",
     "Admin.VALIDATOR_MESSAGE_NUMERIC": "{name} is not a number.",
