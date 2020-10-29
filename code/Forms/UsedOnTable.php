@@ -5,6 +5,7 @@ namespace SilverStripe\Admin\Forms;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Forms\FormField;
+use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Versioned\RecursivePublishable;
 use SilverStripe\Versioned\Versioned;
@@ -16,6 +17,7 @@ use SilverStripe\Versioned\Versioned;
  */
 class UsedOnTable extends FormField
 {
+
     protected $schemaDataType = FormField::SCHEMA_DATA_TYPE_CUSTOM;
 
     /**
@@ -69,36 +71,60 @@ class UsedOnTable extends FormField
      */
     public function usage(HTTPRequest $request)
     {
-        $record = $this->getRecord();
-        $usage = $record->findOwners();
+        $usage = ArrayList::create();
 
-        $this->extend('updateUsage', $usage, $record);
+        /** @var DataObject $record */
+        $record = $this->getRecord() ?: DataObject::create();
+        if ($record->canView()) {
+            // Exclude classes from being queried and showing in the results via an extension hook
+            $excludedClasses = [];
+            $this->extend('updateUsageExcludedClasses', $excludedClasses);
 
-        $usageData = [];
-        /**
-         * @var string $userId
-         * @var DataObject $user
-         */
-        foreach ($usage as $userId => $user) {
-            $state = $this->getState($user);
-            $link = $user->hasMethod('CMSEditLink') ? $user->CMSEditLink() : null;
+            $usage = $record->findAllRelatedData($excludedClasses);
 
-            $usageData[] = [
-                'id' => $userId,
-                'title' => $user->getTitle(),
-                'type' => $user->singular_name(),
-                'state' => $state,
-                'link' => $link,
-            ];
+            // Legacy extension hook kept for backwards compatibility
+            // Use 'updateUsageExcludedClasses' extension hook instead which prevents database from being queried
+            //
+            // Example: public function updateUsage(ArrayList &$usage, DataObject &$record)
+            //     $dataObjects = $usage->exclude('ClassName', MyDataObject::class);
+            $this->extend('updateUsage', $usage, $record);
         }
 
-        $data = [
-            'usage' => $usageData,
-        ];
+        $usageData = [];
+        foreach ($usage as $dataObject) {
+            // Extension hook to update the DataObject for any general reason
+            // A common scenario is to substitute the $dataObject for $dataObject->Parent()
+            // To exclude a $dataObject from showing, set it to null in the extension
+            $this->extend('updateUsageDataObject', $dataObject);
+            if (!$dataObject) {
+                continue;
+            }
 
-        $response = new HTTPResponse(json_encode($data));
-        return $response
-            ->addHeader('Content-Type', 'application/json');
+            $tableRowData = [
+                'id' => $dataObject->ID,
+                'title' => $dataObject->getTitle() ?: _t(__CLASS__ . '.UNTITLED', 'Untitled'),
+                'type' => ucfirst($dataObject->i18n_singular_name()),
+                'link' => $dataObject->hasMethod('CMSEditLink') ? $dataObject->CMSEditLink() : null,
+                'ancestors' => []
+            ];
+
+            // Extension hook to show linked ancestor DataObjects in the same row on the used on table
+            // Example use case is an Elemental FileBlock on an ElementalArea (exclude) on a BlockPage (linked)
+            // Example outcome: $ancestorDataObjects => [ ParentDataObject (possibly excluded), GrandParentDataObject ]
+            $ancestorDataObjects = [];
+            $this->extend('updateUsageAncestorDataObjects', $ancestorDataObjects, $dataObject);
+            /** @var DataObject $ancestorDataObject */
+            foreach ($ancestorDataObjects as $ancestorDataObject) {
+                $tableRowData['ancestors'][] = [
+                    'title' => $ancestorDataObject->getTitle() ?: _t(__CLASS__ . '.UNTITLED', 'Untitled'),
+                    'link' => $ancestorDataObject->hasMethod('CMSEditLink') ? $ancestorDataObject->CMSEditLink() : null,
+                ];
+            }
+            $usageData[] = $tableRowData;
+        }
+        $response = HTTPResponse::create(json_encode(['usage' => $usageData]));
+        $response->addHeader('Content-Type', 'application/json');
+        return $response;
     }
 
     /**
@@ -155,6 +181,7 @@ class UsedOnTable extends FormField
 
     /**
      * Attributes to be given for this field type
+     *
      * @return array
      */
     public function getAttributes()

@@ -16,6 +16,7 @@ describe('Tabs', () => {
           className="hello"
           extraClass="world"
           hideNav={false}
+          activateTab={jest.fn()}
         >
           <div title="Child One" />
           <div title="Child Two" />
@@ -32,6 +33,7 @@ describe('Tabs', () => {
         <Tabs
           id={'2'}
           hideNav
+          activateTab={jest.fn()}
         >
           <div title="Child One" />
           <div title="Child Two" />
