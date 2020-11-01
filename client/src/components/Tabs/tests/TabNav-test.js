@@ -34,8 +34,17 @@ describe('TabNav', () => {
     expect(onToggle).toHaveBeenCalledWith('three');
   });
 
-  it('no child', () => {
+  it('hidden when no child is provided', () => {
     const wrapper = shallow(<TabNav onToggle={jest.fn()} />);
+    expect(wrapper.find('Nav')).toHaveLength(0);
+  });
+
+  it('hidden when only one child is provided', () => {
+    const wrapper = shallow(
+      <TabNav currentTab="second" onToggle={jest.fn()}>
+        <div name="first" title="Child One" />
+      </TabNav>
+    );
     expect(wrapper.find('Nav')).toHaveLength(0);
   });
 });
