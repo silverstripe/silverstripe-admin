@@ -3,7 +3,6 @@
 
 namespace SilverStripe\Admin\GraphQL;
 
-
 use GraphQL\Type\Definition\Type;
 use SilverStripe\GraphQL\TypeCreator;
 
