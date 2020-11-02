@@ -67,6 +67,11 @@ before_script:
   - if [[ $DB == SQLITE ]]; then composer require silverstripe/sqlite3:2.x-dev --no-update; fi
   - if [[ $BEHAT_TEST == cms ]]; then composer require silverstripe/recipe-cms:$RECIPE_VERSION --no-update; fi
 
+  ######## Remove once GraphQL 4 is merged #########
+  - composer require silverstripe/cms:"dev-pulls/4/schemageddon as 4.x-dev" silverstripe/asset-admin:"dev-pulls/1/schemageddon as 1.x-dev" silverstripe/versioned-admin:"dev-pulls/1/schemageddon as 1.x-dev" silverstripe/versioned:"dev-pulls/1/schemageddon as 1.x-dev" silverstripe/graphql:"4.x-dev as 3.x-dev" --no-update
+  - 'if [[ $BACKWARD_COMPAT ]]; then composer require silverstripe/graphql:"dev-pulls/3/schemageddon-compat as 3.x-dev" --no-update; fi'
+  ##################################################
+
   - composer update $COMPOSER_ARG --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile
   - composer show
 
