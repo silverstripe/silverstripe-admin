@@ -29,7 +29,7 @@ SilverStripe\Admin\LeftAndMain:
 SilverStripe\GraphQL\Manager:
   schemas:
     admin:
-      fieldFormatter: [ 'SilverStripe\Core\Convert', 'upperCamelToLowerCamel' ]
+      fieldFormatter: [ 'SilverStripe\Admin\GraphQL\FieldFormatter', 'format' ]
       fieldAccessor: 'SilverStripe\GraphQL\Util\CaseInsensitiveFieldAccessor'
       types:
         # Shim the schema for GraphQL 4 compat
