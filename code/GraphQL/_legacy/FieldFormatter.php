@@ -3,7 +3,6 @@
 
 namespace SilverStripe\Admin\GraphQL;
 
-
 use SilverStripe\Core\Convert;
 
 class FieldFormatter
