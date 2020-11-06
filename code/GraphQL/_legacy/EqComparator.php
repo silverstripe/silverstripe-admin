@@ -14,6 +14,8 @@ if (!class_exists(TypeCreator::class)) {
  * Class EqComparator
  * @package SilverStripe\Admin\GraphQL
  * This class shims the schema with GraphQL 4 compatable filtering
+ *
+ * @internal Use GraphQL v4 instead
  */
 class EqComparator extends TypeCreator
 {
