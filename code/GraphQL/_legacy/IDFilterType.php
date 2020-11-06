@@ -14,6 +14,8 @@ if (!class_exists(TypeCreator::class)) {
  * Class IDFilterType
  * @package SilverStripe\Admin\GraphQL
  * This class shims the schema with GraphQL 4 compatible filtering, e.g. readOne
+ *
+ * @internal Use GraphQL v4 instead
  */
 class IDFilterType extends TypeCreator
 {
