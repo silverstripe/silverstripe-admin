@@ -5,6 +5,9 @@ namespace SilverStripe\Admin\GraphQL;
 
 use SilverStripe\Core\Convert;
 
+/**
+ * @internal Use GraphQL v4 instead
+ */
 class FieldFormatter
 {
     /**
