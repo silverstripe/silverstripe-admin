@@ -1,0 +1,37 @@
+---
+Name: admin-graphql-legacy-extension
+---
+SilverStripe\Admin\LeftAndMain:
+  extensions:
+    - SilverStripe\Admin\GraphQL\GraphQLLegacyExtension
+
+---
+Name: admin-injector
+Except:
+  classexists: 'SilverStripe\GraphQL\Schema\Schema'
+---
+SilverStripe\Core\Injector\Injector:
+  SilverStripe\GraphQL\Manager.admin:
+    class: SilverStripe\GraphQL\Manager
+    constructor:
+      identifier: admin
+    properties:
+      Middlewares:
+        CSRFMiddleware: '%$SilverStripe\GraphQL\Middleware\QueryMiddleware.csrf'
+        HTTPMethodMiddleware: '%$SilverStripe\GraphQL\Middleware\QueryMiddleware.httpMethod'
+  SilverStripe\GraphQL\Controller.admin:
+    class: SilverStripe\GraphQL\Controller
+    constructor:
+      manager: '%$SilverStripe\GraphQL\Manager.admin'
+SilverStripe\Admin\LeftAndMain:
+  graphql_legacy: true
+
+SilverStripe\GraphQL\Manager:
+  schemas:
+    admin:
+      fieldFormatter: [ 'SilverStripe\Admin\GraphQL\FieldFormatter', 'format' ]
+      fieldAccessor: 'SilverStripe\GraphQL\Util\CaseInsensitiveFieldAccessor'
+      types:
+        # Shim the schema for GraphQL 4 compat
+        EqComparator: SilverStripe\Admin\GraphQL\EqComparator
+        IDFilterType: SilverStripe\Admin\GraphQL\IDFilterType

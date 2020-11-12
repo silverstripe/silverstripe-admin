@@ -50,6 +50,16 @@ matrix:
       env:
        - DB=MYSQL
        - BEHAT_TEST=cms
+    - php: 7.1
+      env:
+        - DB=MYSQL
+        - BEHAT_TEST=admin
+        - BACKWARD_COMPAT=1
+    - php: 7.2
+      env:
+        - DB=MYSQL
+        - BEHAT_TEST=cms
+        - BACKWARD_COMPAT=1
 
 before_script:
 # Init PHP
@@ -67,8 +77,15 @@ before_script:
   - if [[ $DB == SQLITE ]]; then composer require silverstripe/sqlite3:2.x-dev --no-update; fi
   - if [[ $BEHAT_TEST == cms ]]; then composer require silverstripe/recipe-cms:$RECIPE_VERSION --no-update; fi
 
+  ######## Remove once GraphQL 4 is merged #########
+  - composer require silverstripe/versioned:"dev-pulls/1/schemageddon as 1.x-dev" silverstripe/graphql:"4.x-dev as 3.x-dev" --no-update
+  - 'if [[ $BEHAT_TEST == cms ]]; then composer require silverstripe/cms:"dev-pulls/4/schemageddon as 4.x-dev" silverstripe/asset-admin:"dev-pulls/1/schemageddon as 1.x-dev" --no-update; fi'
+  ##################################################
+  - 'if [[ $BACKWARD_COMPAT ]]; then composer require silverstripe/graphql:"dev-pulls/3/schemageddon-compat as 3.x-dev" --no-update; fi'
+
   - composer update $COMPOSER_ARG --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile
   - composer show
+
 
 # Install NPM dependencies
   - if [[ $NPM_TEST ]]; then nvm install && npm install -g yarn && yarn install --network-concurrency 1; fi
@@ -88,7 +105,7 @@ before_script:
   - if [[ $BEHAT_TEST == cms ]]; then (vendor/bin/serve --bootstrap-file vendor/silverstripe/cms/tests/behat/serve-bootstrap.php &> artifacts/serve.log &); fi
 
 script:
-  - if [[ $PHPUNIT_TEST ]]; then vendor/bin/phpunit tests/php; fi
+  - if [[ $PHPUNIT_TEST ]]; then vendor/bin/phpunit tests/php '' flush=1; fi
   - if [[ $NPM_TEST ]]; then yarn run build; fi
   - if [[ $NPM_TEST ]]; then git diff-files --quiet -w --relative=client; fi
   - if [[ $NPM_TEST ]]; then git diff --name-status --relative=client; fi
