@@ -39,7 +39,7 @@
     },
     "autoload": {
         "psr-4": {
-            "SilverStripe\\Admin\\": ["code/", "code/GraphQL/_legacy"],
+            "SilverStripe\\Admin\\": ["code/", "_legacy/"],
             "SilverStripe\\Admin\\Tests\\": "tests/php/"
         }
     },
