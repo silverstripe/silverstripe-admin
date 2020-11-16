@@ -77,7 +77,7 @@ before_script:
   - if [[ $DB == SQLITE ]]; then composer require silverstripe/sqlite3:2.x-dev --no-update; fi
   - if [[ $BEHAT_TEST == cms ]]; then composer require silverstripe/recipe-cms:$RECIPE_VERSION --no-update; fi
 
-  - 'if [[ ! $BACKWARD_COMPAT ]]; then composer require silverstripe/graphql:4.x-dev --no-update; fi'
+  - 'if [[ $BACKWARD_COMPAT ]]; then composer require silverstripe/graphql:3.x-dev --no-update; fi'
 
   - composer update $COMPOSER_ARG --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile
   - composer show
