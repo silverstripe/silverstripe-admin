@@ -1256,10 +1256,6 @@ $.entwine('ss', function($) {
    */
   $('.cms .grid-field:not([cms-loading-ignore-url-params])').entwine({
     showDetailView: function(url) {
-      // Include any GET parameters from the current URL, as the view state might depend on it.
-      // For example, a list prefiltered through external search criteria might be passed to GridField.
-      var params = window.location.search.replace(/^\?/, '');
-      if(params) url = $.path.addSearchParams(url, params);
       $('.cms-container').loadPanel(url);
     }
   });
