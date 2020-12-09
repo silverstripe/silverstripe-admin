@@ -81,9 +81,7 @@ before_script:
 # Start behat services
   - if [[ $BEHAT_TEST ]]; then mkdir artifacts; fi
   - if [[ $BEHAT_TEST ]]; then cp composer.lock artifacts/; composer show -fjson > artifacts/composer-show.json; composer show > artifacts/composer-show.txt; fi
-  # Temporary fix until ubuntu ships chromedriver 85.0.4183.87
-  - if [[ $BEHAT_TEST ]]; then wget https://chromedriver.storage.googleapis.com/85.0.4183.87/chromedriver_linux64.zip --quiet; unzip chromedriver_linux64.zip; fi
-  - if [[ $BEHAT_TEST ]]; then (./chromedriver > artifacts/chromedriver.log 2>&1 &); fi
+  - if [[ $BEHAT_TEST ]]; then (chromedriver > artifacts/chromedriver.log 2>&1 &); fi
   - if [[ $BEHAT_TEST == admin ]]; then (vendor/bin/serve --bootstrap-file vendor/silverstripe/framework/tests/behat/serve-bootstrap.php &> artifacts/serve.log &); fi
   - if [[ $BEHAT_TEST == cms ]]; then (vendor/bin/serve --bootstrap-file vendor/silverstripe/cms/tests/behat/serve-bootstrap.php &> artifacts/serve.log &); fi
 
