@@ -28,6 +28,11 @@ jQuery.entwine('ss', ($) => {
 ((jquery) => {
   jquery.extend({
     noticeAdd(options) {
+      // If reducer is not available, log to the console
+      if(!Injector.reducer) {
+        console.log(options.type + ': ' + options.text);
+        return;
+      }
       // Manually dispatch a redux display event
       const { dispatch } = Injector.reducer.store;
       dispatch(display(options));
