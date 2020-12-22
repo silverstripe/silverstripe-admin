@@ -1,105 +1,45 @@
-language: php
+version: ~> 1.0
 
-dist: xenial
-
-services:
-  - mysql
-  - postgresql
-  - xvfb
-
-cache:
-  directories:
-    - $HOME/.composer/cache/files
-
-addons:
-  apt:
-    packages:
-      - tidy
-      - chromium-chromedriver
-      - chromium-browser
+import:
+  - silverstripe/silverstripe-travis-shared:config/provision/standard-jobs-fixed.yml
 
 env:
   global:
-    - COMPOSER_ROOT_VERSION=1.x-dev
-    - SS_BASE_URL="http://localhost:8080/"
-    - SS_ENVIRONMENT_TYPE="dev"
-    - RECIPE_VERSION=4.x-dev
+    - COMPOSER_ROOT_VERSION="1.7.x-dev"
+    - REQUIRE_RECIPE="4.7.x-dev"
 
-matrix:
-  fast_finish: true
+# Using a manual jobs matrix in addition to jobs-fixed because there are:
+# - two different behat suites
+# - a manual release of storybook
+jobs:
   include:
     - php: 7.1
-      env: DB=PGSQL PHPUNIT_TEST=1 COMPOSER_ARG=--prefer-lowest
-    - php: 7.2
-      env: DB=MYSQL PHPUNIT_TEST=1 PHPCS_TEST=1
-    - php: 7.3
-      env: DB=MYSQL PHPUNIT_TEST=1 PDO=1
-    - php: 7.4
-      env: DB=MYSQL PHPUNIT_TEST=1
-    - php: nightly
-      env: DB=MYSQL PHPUNIT_TEST=1 COMPOSER_ARG=--ignore-platform-reqs
-    - php: 7.3
       env:
+        - DB=MYSQL
+        - REQUIRE_INSTALLER="$REQUIRE_RECIPE"
         - NPM_TEST=1
         - RELEASE=1
-    - php: 7.1
-      env:
-       - DB=MYSQL
-       - BEHAT_TEST=admin
     - php: 7.2
       env:
-       - DB=MYSQL
-       - BEHAT_TEST=cms
+        - DB=MYSQL
+        - REQUIRE_INSTALLER="$REQUIRE_RECIPE"
+        - BEHAT_TEST=1
+        - BEHAT_SUITE="admin"
+    - php: 7.3
+      env:
+        - DB=MYSQL
+        - REQUIRE_INSTALLER="$REQUIRE_RECIPE"
+        - BEHAT_TEST=1
+        - BEHAT_SUITE="cms"
 
 before_script:
-# Init PHP
   - export CORE_RELEASE=$TRAVIS_BRANCH
-  - if [ "$COMPOSER_ARG" != "--ignore-platform-reqs"]; then printf "\n" | pecl install imagick; fi
-  - phpenv rehash
-  - phpenv config-rm xdebug.ini || true
-  - export PATH=~/.composer/vendor/bin:$PATH
-  - echo 'memory_limit = 2048M' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
-
-# Install composer
-  - composer validate
-  - composer require silverstripe/recipe-testing:^1 silverstripe/recipe-core:$RECIPE_VERSION silverstripe/versioned:1.x-dev --no-update
-  - if [[ $DB == PGSQL ]]; then composer require silverstripe/postgresql:2.x-dev --no-update; fi
-  - if [[ $DB == SQLITE ]]; then composer require silverstripe/sqlite3:2.x-dev --no-update; fi
-  - if [[ $BEHAT_TEST == cms ]]; then composer require silverstripe/recipe-cms:$RECIPE_VERSION --no-update; fi
-
-  - composer update $COMPOSER_ARG --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile
-  - composer show
-
-# Install NPM dependencies
-  - if [[ $NPM_TEST ]]; then nvm install && npm install -g yarn && yarn install --network-concurrency 1; fi
-
-# Remove preinstalled Chrome (google-chrome)
-# this would conflict with our chromium-browser installation
-# and its version is incompatible with chromium-chromedriver
-  - sudo apt-get remove -y --purge google-chrome-stable || true
-
-# Start behat services
-  - if [[ $BEHAT_TEST ]]; then mkdir artifacts; fi
-  - if [[ $BEHAT_TEST ]]; then cp composer.lock artifacts/; composer show -fjson > artifacts/composer-show.json; composer show > artifacts/composer-show.txt; fi
-  - if [[ $BEHAT_TEST ]]; then (chromedriver > artifacts/chromedriver.log 2>&1 &); fi
-  - if [[ $BEHAT_TEST == admin ]]; then (vendor/bin/serve --bootstrap-file vendor/silverstripe/framework/tests/behat/serve-bootstrap.php &> artifacts/serve.log &); fi
-  - if [[ $BEHAT_TEST == cms ]]; then (vendor/bin/serve --bootstrap-file vendor/silverstripe/cms/tests/behat/serve-bootstrap.php &> artifacts/serve.log &); fi
-
-script:
-  - if [[ $PHPUNIT_TEST ]]; then vendor/bin/phpunit tests/php; fi
-  - if [[ $NPM_TEST ]]; then yarn run build; fi
-  - if [[ $NPM_TEST ]]; then git diff-files --quiet -w --relative=client; fi
-  - if [[ $NPM_TEST ]]; then git diff --name-status --relative=client; fi
-  - if [[ $PHPCS_TEST ]]; then composer run-script lint; fi
-  - if [[ $BEHAT_TEST ]]; then vendor/bin/behat $BEHAT_TEST; fi
-
-after_failure:
-  - php ./vendor/silverstripe/framework/tests/behat/travis-upload-artifacts.php --if-env BEHAT_TEST,ARTIFACTS_BUCKET,ARTIFACTS_KEY,ARTIFACTS_SECRET --target-path $TRAVIS_REPO_SLUG/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID --artifacts-base-url https://s3.amazonaws.com/$ARTIFACTS_BUCKET/ --artifacts-path ./artifacts/
+  - if [ "$COMPOSER_INSTALL_ARG" != "--ignore-platform-reqs"]; then printf "\n" | pecl install imagick; fi
 
 before_deploy:
-# Use installer to fill in any possible dependencies
-  - composer require silverstripe/installer:$RECIPE_VERSION
-# Do the build
+  # Use installer to fill in any possible dependencies
+  - composer require silverstripe/installer:$REQUIRE_RECIPE
+  # Do the build
   - yarn static-pattern-lib
 
 deploy:
