@@ -3,13 +3,16 @@ $column-width: 225px;
 
 .popover-option-set {
   max-width: $column-width;
-  min-width: 280px;
   display: flex;
   flex-direction: column;
   border-radius: $border-radius; // Change to equal 4px
 
   @include media-breakpoint-up(sm) {
     max-width: $column-width * 2;
+  }
+
+  > .popover {
+    min-width: 280px;
   }
 
   &:focus,

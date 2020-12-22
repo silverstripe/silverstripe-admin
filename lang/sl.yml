@@ -58,7 +58,7 @@ sl:
     PreviewState: 'Kot predogled'
     PreviewView: Predogled
     Responsive: 'Prilagodljiva širina'
-    SplitView: 'Hkratno urejanje/predogled'
+    SplitView: 'Deljeni način'
     Tablet: 'Na tablici'
     ViewDeviceWidth: 'Izberite širino okna'
     Width: širina
