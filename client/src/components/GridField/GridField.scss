@@ -263,6 +263,7 @@ div.grid-field__sort-field + .form__fieldgroup-item {
 
     &:first-child,
     .cms-list &,
+    &.col-ClassName, // sass-lint:disable-line class-name-format
     &.col-Title, // sass-lint:disable-line class-name-format
     &.grid-field__col-compact,
     &.grid-field__cell--actions,
