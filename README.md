@@ -1,6 +1,6 @@
 # SilverStripe Admin Module
 
-[![Build Status](https://api.travis-ci.org/silverstripe/silverstripe-admin.svg?branch=master)](https://travis-ci.org/silverstripe/silverstripe-admin)
+[![Build Status](https://api.travis-ci.com/silverstripe/silverstripe-admin.svg?branch=1)](https://travis-ci.com/silverstripe/silverstripe-admin)
 [![SilverStripe supported module](https://img.shields.io/badge/silverstripe-supported-0071C4.svg)](https://www.silverstripe.org/software/addons/silverstripe-commercially-supported-module-list/)
 [![Latest Stable Version](https://poser.pugx.org/silverstripe/admin/version.svg)](http://www.silverstripe.org/stable-download/)
 [![Latest Unstable Version](https://poser.pugx.org/silverstripe/admin/v/unstable.svg)](https://packagist.org/packages/silverstripe/admin)
