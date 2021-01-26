@@ -159,11 +159,9 @@ describe('inject()', () => {
     });
 
     it('should see the newly created context in the registered component', () => {
-      const testContext = (props, currentContext) => {
+      const testContext = (props) => {
         expect(props.passthrough).toBe('abc');
-        expect(currentContext).toBe('def');
-
-        return `${currentContext}ghi`;
+        return 'defghi';
       };
       const injected = inject(components, null, testContext)(emptyComponent);
       const MyComponent = testInjector(injected);

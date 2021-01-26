@@ -49,20 +49,6 @@ describe('UsedOnTable', () => {
         expect(mockActions.loadUsedOn).toBeCalledWith('abc', 'get', 'http://www.bob.co.nz');
         expect(mockComponent).toBeCalled();
       });
-
-      it.skip('should try to load new data if identifier changes', () => {
-        // skipping test as it now leads to an error "Invalid hook call"
-        // after refactoring the Tabs components to use react hooks
-        const instance = new Provider(props);
-
-        expect(mockActions.loadUsedOn).not.toBeCalled();
-
-        instance.componentWillReceiveProps(props);
-        expect(mockActions.loadUsedOn).not.toBeCalled();
-
-        instance.componentWillReceiveProps({ ...props, identifier: 'def' });
-        expect(mockActions.loadUsedOn).toBeCalled();
-      });
     });
   });
 

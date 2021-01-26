@@ -15,7 +15,7 @@ const inject = (dependencies, mapDependenciesToProps, getContext = defaultContex
   (InjectingComponent) => {
     if (dependencies && !Array.isArray(dependencies)) {
       throw new Error(`
-      withInjector() passed an argument for dependencies that is ${typeof deps}. 
+      withInjector() passed an argument for dependencies that is ${typeof deps}.
       Must be an array of named dependencies.
     `);
     }
@@ -54,14 +54,12 @@ const inject = (dependencies, mapDependenciesToProps, getContext = defaultContex
         };
       }
 
-      componentWillReceiveProps(nextProps, nextContext) {
-        const newContext = getContext(nextProps, nextContext.injector.context);
-
-        if (newContext !== this.state.context) {
-          this.setState({
-            context: newContext,
-          });
+      static getDerivedStateFromProps(props, state) {
+        const newContext = getContext(props, state.context);
+        if (newContext !== state.context) {
+          return { context: newContext };
         }
+        return null;
       }
 
       render() {

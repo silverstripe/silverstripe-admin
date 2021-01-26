@@ -11,7 +11,7 @@ class FileSchemaHandler extends Component {
     this.setOverrides = this.setOverrides.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.setOverrides(this.props);
   }
 

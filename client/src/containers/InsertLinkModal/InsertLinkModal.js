@@ -16,8 +16,9 @@ class InsertLinkModal extends Component {
     }
   }
 
-  componentWillReceiveProps(props) {
-    if ((props.isOpen && !this.props.isOpen) || (!props.isOpen && this.props.isOpen)) {
+  componentDidUpdate(oldProps) {
+    const props = this.props;
+    if ((props.isOpen && !oldProps.isOpen) || (!props.isOpen && oldProps.isOpen)) {
       props.setOverrides(props.isOpen ? props : null);
     }
   }

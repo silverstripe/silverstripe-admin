@@ -22,7 +22,7 @@ const injectGraphql = (key, context) => (DataHandler) => {
       };
     }
 
-    componentWillMount() {
+    componentDidMount() {
       Injector.ready(() => {
         let error = true;
         let target = null;
