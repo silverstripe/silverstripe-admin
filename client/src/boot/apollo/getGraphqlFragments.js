@@ -20,15 +20,8 @@ const handleError = response => {
   return response;
 };
 
-const getGraphqlFragments = async (baseUrl, preferStatic = true) => {
-  const urls = [
-    `${baseUrl}assets/admin.types.graphql`,
-    `${baseUrl}admin/graphql/types`
-  ];
-  if (!preferStatic) {
-    urls.reverse();
-  }
-  const [primaryURL, fallbackURL] = urls;
+const getGraphqlFragments = async (baseUrl) => {
+  const typesUrl = `${baseUrl}assets/admin.types.graphql`;
 
   const fetchConfig = {
     method: 'GET',
@@ -48,13 +41,9 @@ const getGraphqlFragments = async (baseUrl, preferStatic = true) => {
 
   let response;
   try {
-    response = await fetchSchema(primaryURL);
+    response = await fetchSchema(typesUrl);
   } catch (e) {
-    try {
-      response = await fetchSchema(fallbackURL);
-    } catch (finalError) {
-      return Promise.reject(finalError);
-    }
+    return Promise.reject(e);
   }
 
   return Promise.resolve(response);
