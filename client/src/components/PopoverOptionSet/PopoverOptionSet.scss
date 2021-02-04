@@ -13,6 +13,7 @@ $column-width: 225px;
 
   > .popover {
     min-width: 280px;
+    overflow: hidden;
   }
 
   &:focus,

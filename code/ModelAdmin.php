@@ -416,7 +416,9 @@ abstract class ModelAdmin extends LeftAndMain
             $forms->push(new ArrayData(array(
                 'Title' => $options['title'],
                 'Tab' => $tab,
-                'ClassName' => $options['dataClass'],
+                // `getManagedModels` did not always return a `dataClass` attribute
+                // Legacy behaviour is for `ClassName` to map to `$tab`
+                'ClassName' => isset($options['dataClass']) ? $options['dataClass'] : $tab,
                 'Link' => $this->Link($this->sanitiseClassName($tab)),
                 'LinkOrCurrent' => ($tab == $this->modelTab) ? 'current' : 'link'
             )));

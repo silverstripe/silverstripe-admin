@@ -2,6 +2,8 @@
 
 namespace SilverStripe\Admin\Tests;
 
+use SilverStripe\Admin\Tests\ModelAdminTest\Contact;
+use SilverStripe\Admin\Tests\ModelAdminTest\Player;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\Session;
 use SilverStripe\Forms\GridField\GridField;
@@ -10,6 +12,7 @@ use SilverStripe\Forms\GridField\GridFieldImportButton;
 use SilverStripe\Forms\GridField\GridFieldPrintButton;
 use SilverStripe\Security\Permission;
 use SilverStripe\Dev\FunctionalTest;
+use SilverStripe\View\ArrayData;
 
 class ModelAdminTest extends FunctionalTest
 {
@@ -124,6 +127,88 @@ class ModelAdminTest extends FunctionalTest
         $this->assertNotEmpty(
             $config->getComponentByType(GridFieldImportButton::class),
             'The import button is still there'
+        );
+    }
+
+    public function testGetManagedModels()
+    {
+        $admin = new ModelAdminTest\MultiModelAdmin();
+
+        $models = $admin->getManagedModels();
+
+        $this->assertEquals(
+            [
+                'dataClass' => Contact::class,
+                'title' => 'Contacts'
+            ],
+            $models[Contact::class],
+            'Managed Model that are class name only get nomalised'
+        );
+
+        $this->assertEquals(
+            [
+                'dataClass' => Player::class,
+                'title' => 'Ice Hockey Players'
+            ],
+            $models['Player'],
+            'Managed Model with an explicit dataClass can have a custom URL key'
+        );
+
+        $this->assertEquals(
+            [
+                'dataClass' => Player::class,
+                'title' => 'Rugby Players'
+             ],
+            $models[Player::class],
+            'Managed Model without a dataClass provided default to using the class name for dataClass'
+        );
+    }
+
+    public function testGetManagedModelTabs()
+    {
+        $mock = $this->getMockBuilder(ModelAdminTest\MultiModelAdmin::class)
+            ->setMethods(['getManagedModels'])
+            ->getMock();
+
+        // `getManagedModelTabs` relies on `getManagedModels` whose output format has changed within the 4.x line.
+        // We need to mock `getManagedModels` so it returns both the legacy and updated format.
+        $mock->expects($this->once())
+            ->method('getManagedModels')
+            ->will($this->returnValue([
+                'Player' => [
+                    'dataClass' => Player::class,
+                    'title' => 'Ice Hockey Players'
+                ],
+                Player::class => [
+                    'title' => 'Rugby Players'
+                ]
+            ]));
+
+
+        $tabs = $mock->getManagedModelTabs()->toNestedArray();
+
+        $this->assertEquals(
+            [
+                'Title' => 'Ice Hockey Players',
+                'Tab' => 'Player',
+                'ClassName' => Player::class,
+                'Link' => 'ContactAdmin/Player/',
+                'LinkOrCurrent' => 'link',
+            ],
+            $tabs[0],
+            'Tab data for managed model array using the newer syntax with dataClass can be generated'
+        );
+
+        $this->assertEquals(
+            [
+                'Title' => 'Rugby Players',
+                'Tab' => 'SilverStripe\Admin\Tests\ModelAdminTest\Player',
+                'ClassName' => Player::class,
+                'Link' => 'ContactAdmin/SilverStripe-Admin-Tests-ModelAdminTest-Player/',
+                'LinkOrCurrent' => 'link',
+            ],
+            $tabs[1],
+            'Tab data for managed model array using the older syntax without dataClass can be generated'
         );
     }
 }
