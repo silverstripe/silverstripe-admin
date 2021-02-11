@@ -168,7 +168,7 @@ $.entwine('ss', function($){
         }
 
         // Find tab-pane's with decedent validation .alert's
-        const $invalidTabPanes = this.find('.tab-pane .alert.error').closest('.tab-pane');
+        const $invalidTabPanes = this.find('.tab-pane .alert-danger, .tab-pane .alert.error').closest('.tab-pane');
         if (!$invalidTabPanes.length) {
           // If we are at this point it's probably a failed DataObject::validate()
           // where there was a general (non-field) error added via ValidationResult::addError()
