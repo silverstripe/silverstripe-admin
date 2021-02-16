@@ -8,6 +8,15 @@ SilverStripe\Core\Injector\Injector:
     class: SilverStripe\GraphQL\Controller
     constructor:
       schema: admin
+  ## Add an event handler to transcribe the types for Apollo
+  SilverStripe\EventDispatcher\Dispatch\Dispatcher:
+    properties:
+      handlers:
+        graphqlTranscribe:
+          on: [ graphqlSchemaBuild.admin ]
+          handler: '%$SilverStripe\GraphQL\Schema\Services\SchemaTranscribeHandler'
+
+
 
 SilverStripe\Admin\LeftAndMain:
   graphql_legacy: false
