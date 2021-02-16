@@ -21,7 +21,7 @@ const handleError = response => {
 };
 
 const getGraphqlFragments = async (baseUrl) => {
-  const typesUrl = `${baseUrl}assets/admin.types.graphql`;
+  const typesUrl = `${baseUrl}admin.types.graphql`;
 
   const fetchConfig = {
     method: 'GET',
