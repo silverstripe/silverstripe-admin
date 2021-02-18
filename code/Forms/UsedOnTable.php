@@ -71,10 +71,21 @@ class UsedOnTable extends FormField
      */
     public function usage(HTTPRequest $request)
     {
-        $usage = ArrayList::create();
-
         /** @var DataObject $record */
         $record = $this->getRecord() ?: DataObject::create();
+        $usageData = $this->getUsageData($record);
+        $response = HTTPResponse::create(json_encode(['usage' => $usageData]));
+        $response->addHeader('Content-Type', 'application/json');
+        return $response;
+    }
+
+    /**
+     * @param DataObject $record
+     * @return array
+     */
+    public function getUsageData(DataObject $record): array
+    {
+        $usage = ArrayList::create();
         if ($record->canView()) {
             // Exclude classes from being queried and showing in the results via an extension hook
             $excludedClasses = [];
@@ -122,9 +133,7 @@ class UsedOnTable extends FormField
             }
             $usageData[] = $tableRowData;
         }
-        $response = HTTPResponse::create(json_encode(['usage' => $usageData]));
-        $response->addHeader('Content-Type', 'application/json');
-        return $response;
+        return $usageData;
     }
 
     /**
