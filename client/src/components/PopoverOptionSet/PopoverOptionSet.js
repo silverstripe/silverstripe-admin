@@ -205,10 +205,11 @@ class PopoverOptionSet extends Component {
         container={container}
         hideArrow
         isOpen={isOpen}
+        onKeyDown={this.handleKeyDown}
         placement={placement}
         target={target}
         toggle={this.handleToggle}
-        onKeyDown={this.handleKeyDown}
+        trigger="legacy"
       >
         {this.renderSearchBox()}
         {this.renderOptionButtons()}
