@@ -20,8 +20,23 @@ const handleError = response => {
   return response;
 };
 
-const getGraphqlFragments = async (baseUrl) => {
-  const typesUrl = `${baseUrl}admin.types.graphql`;
+const getGraphqlFragments = async (baseUrl, preferStatic = true) => {
+  // Backward compatibility hack. Remove when GraphQL 4 is in core
+  const isLegacy = !!document.body.getAttribute('data-graphql-legacy');
+
+  const urls = isLegacy
+    ? [
+      `${baseUrl}assets/types.graphql`,
+      `${baseUrl}graphql/types`,
+    ]
+    : [
+      `${baseUrl}admin.types.graphql`,
+    ];
+
+  if (!preferStatic) {
+    urls.reverse();
+  }
+  const [primaryURL, fallbackURL] = urls;
 
   const fetchConfig = {
     method: 'GET',
@@ -41,9 +56,13 @@ const getGraphqlFragments = async (baseUrl) => {
 
   let response;
   try {
-    response = await fetchSchema(typesUrl);
+    response = await fetchSchema(primaryURL);
   } catch (e) {
-    return Promise.reject(e);
+    try {
+      response = await fetchSchema(fallbackURL);
+    } catch (finalError) {
+      return Promise.reject(finalError);
+    }
   }
 
   return Promise.resolve(response);
