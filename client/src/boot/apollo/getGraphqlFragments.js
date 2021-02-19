@@ -26,11 +26,12 @@ const getGraphqlFragments = async (baseUrl, preferStatic = true) => {
 
   const urls = isLegacy
     ? [
-      `${baseUrl}assets/types.graphql`,
-      `${baseUrl}graphql/types`,
+      `${baseUrl}assets/admin.types.graphql`,
+      `${baseUrl}admin/graphql/types`
     ]
     : [
       `${baseUrl}admin.types.graphql`,
+      null,
     ];
 
   if (!preferStatic) {
@@ -58,6 +59,9 @@ const getGraphqlFragments = async (baseUrl, preferStatic = true) => {
   try {
     response = await fetchSchema(primaryURL);
   } catch (e) {
+    if (!fallbackURL) {
+      return Promise.reject(e);
+    }
     try {
       response = await fetchSchema(fallbackURL);
     } catch (finalError) {
