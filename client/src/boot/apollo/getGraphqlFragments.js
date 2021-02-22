@@ -23,21 +23,23 @@ const handleError = response => {
 const getGraphqlFragments = async (baseUrl, preferStatic = true) => {
   // Backward compatibility hack. Remove when GraphQL 4 is in core
   const isLegacy = !!document.body.getAttribute('data-graphql-legacy');
+  const legacyURLs = [
+    `${baseUrl}assets/admin.types.graphql`,
+    `${baseUrl}admin/graphql/types`
+  ];
 
-  const urls = isLegacy
-    ? [
-      `${baseUrl}assets/admin.types.graphql`,
-      `${baseUrl}admin/graphql/types`
-    ]
-    : [
-      `${baseUrl}admin.types.graphql`,
-      null,
-    ];
+  let primaryURL;
+  let fallbackURL;
 
-  if (!preferStatic) {
-    urls.reverse();
+  if (isLegacy) {
+    if (!preferStatic) {
+      legacyURLs.reverse();
+    }
+    [primaryURL, fallbackURL] = legacyURLs;
+  } else {
+    primaryURL = `${baseUrl}admin.types.graphql`;
+    fallbackURL = null;
   }
-  const [primaryURL, fallbackURL] = urls;
 
   const fetchConfig = {
     method: 'GET',
