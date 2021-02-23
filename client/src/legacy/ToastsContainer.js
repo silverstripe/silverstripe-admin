@@ -28,9 +28,11 @@ jQuery.entwine('ss', ($) => {
 ((jquery) => {
   jquery.extend({
     noticeAdd(options) {
-      // Manually dispatch a redux display event
-      const { dispatch } = Injector.reducer.store;
-      dispatch(display(options));
+      Injector.ready(() => {
+        // Manually dispatch a redux display event
+        const { dispatch } = Injector.reducer.store;
+        dispatch(display(options));
+      });
     }
   });
 })(jQuery);

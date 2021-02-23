@@ -40,7 +40,8 @@
     "autoload": {
         "psr-4": {
             "SilverStripe\\Admin\\": ["code/", "_legacy/"],
-            "SilverStripe\\Admin\\Tests\\": "tests/php/"
+            "SilverStripe\\Admin\\Tests\\": "tests/php/",
+            "SilverStripe\\Admin\\Tests\\Behat\\Context\\": "tests/behat/src/"
         }
     },
     "scripts": {

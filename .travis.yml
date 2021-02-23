@@ -5,8 +5,14 @@ import:
 
 env:
   global:
+<<<<<<< HEAD
     - COMPOSER_ROOT_VERSION="1.x-dev"
     - REQUIRE_RECIPE="4.x-dev"
+=======
+    - COMPOSER_ROOT_VERSION="1.7.x-dev"
+    - REQUIRE_RECIPE="4.7.x-dev"
+    - REQUIRE_FRAMEWORKTEST="0.4.0"
+>>>>>>> 1.7
 
 # Using a manual jobs matrix in addition to jobs-fixed because there are:
 # - two different behat suites

@@ -2,18 +2,17 @@ $button-height: 40px;
 $column-width: 225px;
 
 .popover-option-set {
-  max-width: $column-width;
   display: flex;
   flex-direction: column;
-  border-radius: $border-radius; // Change to equal 4px
-
-  @include media-breakpoint-up(sm) {
-    max-width: $column-width * 2;
-  }
+  border-radius: $border-radius;
 
   > .popover {
-    min-width: 280px;
     overflow: hidden;
+    width: calc(100% - 10px);
+
+    @include media-breakpoint-up(sm) {
+      max-width: $column-width * 2;
+    }
   }
 
   &:focus,
