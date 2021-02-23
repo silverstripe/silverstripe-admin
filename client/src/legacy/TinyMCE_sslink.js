@@ -131,14 +131,24 @@ jQuery.entwine('ss', ($) => {
       return Promise.resolve();
     },
 
-    buildAttributes(data) {
-      const anchor = data.Anchor && data.Anchor.length ? `#${data.Anchor}` : '';
-      const href = `${data.Link}${anchor}`;
+    /**
+     *
+     * @param {string|undefined} Anchor
+     * @param {string} Link
+     * @param {boolean} TargetBlank
+     * @param {string} Description
+     * @returns {{href: string, title: string, target: string}}
+     */
+    buildAttributes({ Anchor, Link, TargetBlank, Description }) {
+      let anchor = Anchor && Anchor.length ? `#${Anchor}` : '';
+      // Make sure, there's no more than one # character at the start of the anchor
+      anchor = anchor.replace(/^#+/, '#');
+      const href = `${Link}${anchor}`;
 
       return {
         href,
-        target: data.TargetBlank ? '_blank' : '',
-        title: data.Description,
+        target: TargetBlank ? '_blank' : '',
+        title: Description,
       };
     },
 
