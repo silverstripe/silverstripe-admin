@@ -100,6 +100,7 @@ require('../legacy/AddToCampaignForm');
 require('../legacy/SecurityAdmin');
 require('../legacy/ModelAdmin');
 require('../legacy/ToastsContainer');
+require('../legacy/BootstrapComponent');
 
 // Legacy form fields
 // Fields used by core legacy UIs, or available to users

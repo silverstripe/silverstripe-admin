@@ -1,6 +1,7 @@
 import { Field as ReduxFormField } from 'redux-form';
 import Injector from 'lib/Injector';
 import ActionMenu from 'components/ActionMenu/ActionMenu';
+import CmsSiteName from 'components/CmsSiteName/CmsSiteName';
 import Badge from 'components/Badge/Badge';
 import Button from 'components/Button/Button';
 import BackButton from 'components/Button/BackButton';
@@ -100,5 +101,6 @@ export default () => {
     NumberField,
     PopoverOptionSet,
     ToastsContainer,
+    CmsSiteName
   });
 };

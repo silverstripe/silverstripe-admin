@@ -2,7 +2,7 @@
 
 <div class="fill-height cms-menu cms-panel cms-panel-layout" id="cms-menu" data-layout-type="border" aria-expanded="false">
 	<div class="cms-menu__header">
-		<% include SilverStripe\\Admin\\LeftAndMain_MenuLogo %>
+        $SiteName
 		<% include SilverStripe\\Admin\\LeftAndMain_MenuStatus %>
 	</div>
 
