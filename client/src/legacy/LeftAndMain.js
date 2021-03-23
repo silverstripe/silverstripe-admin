@@ -1255,8 +1255,13 @@ $.entwine('ss', function($) {
    * attribute to the grid field.
    */
   $('.cms .grid-field:not([cms-loading-ignore-url-params])').entwine({
-    showDetailView: function(url) {
-      $('.cms-container').loadPanel(url);
+    showDetailView: function(url, e) {
+      if (e && (e.metaKey || e.ctrlKey || e.shiftKey)) {
+        var newtab = window.open(url, '_blank');
+        newtab.focus();
+      } else {
+        $('.cms-container').loadPanel(url);
+      }
     }
   });
 
