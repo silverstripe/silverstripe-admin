@@ -120,8 +120,13 @@ $.entwine('ss', function($) {
         }
       }, ajaxOpts));
     },
-    showDetailView: function(url) {
-      window.location.href = url;
+    showDetailView: function(url, e) {
+      if (e && (e.metaKey || e.ctrlKey || e.shiftKey)) {
+        var newtab = window.open(url, '_blank');
+        newtab.focus();
+      } else {
+        window.location.href = url;
+      }
     },
     getItems: function() {
       return this.find('.ss-gridfield-item');
@@ -275,7 +280,7 @@ $.entwine('ss', function($) {
 
       var formLink = this.find('.edit-link, .view-link');
       if(formLink.length) {
-        this.getGridField().showDetailView(formLink.prop('href'));
+        this.getGridField().showDetailView(formLink.prop('href'), e);
       }
     },
     onmouseover: function() {
@@ -529,15 +534,20 @@ $.entwine('ss', function($) {
    */
   $('.grid-field .action.no-ajax, .grid-field .no-ajax .action:button').entwine({
     onclick: function(e){
-      window.location.href = this.actionurl();
+      if (e && (e.metaKey || e.ctrlKey || e.shiftKey)) {
+        var newtab = window.open(this.actionurl(), '_blank');
+        newtab.focus();
+      } else {
+        window.location.href = this.actionurl();
+      }
       e.preventDefault();
       return false;
     }
   });
 
   $('.grid-field .action-detail').entwine({
-    onclick: function() {
-      this.getGridField().showDetailView($(this).prop('href'));
+    onclick: function(e) {
+      this.getGridField().showDetailView($(this).prop('href'), e);
       return false;
     }
   });
