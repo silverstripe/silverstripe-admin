@@ -5,9 +5,8 @@ import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
 import * as schemaActions from 'state/schema/SchemaActions';
-import { reset, initialize } from 'redux-form';
+import { reset, initialize, change } from 'redux-form';
 import { isDirty } from 'redux-form/lib/immutable';
-import { change } from 'redux-form/lib';
 import getIn from 'redux-form/lib/structure/plain/getIn';
 import Focusedzone from '../Focusedzone/Focusedzone';
 import getFormState from 'lib/getFormState';
@@ -72,16 +71,8 @@ class Search extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.setOverrides(this.props);
-  }
-
-  componentWillReceiveProps(props) {
-    if (props && (!hasFilters(props.filters) && hasFilters(this.props.filters))) {
-      this.clearFormData(props);
-    } else if (JSON.stringify(props.filters) !== JSON.stringify(this.props.filters)) {
-      this.setOverrides(props);
-    }
   }
 
   componentWillUnmount() {
@@ -228,7 +219,7 @@ class Search extends Component {
     const formSchemaUrl = (props && props.formSchemaUrl) || this.props.formSchemaUrl;
     if (formSchemaUrl) {
       const identifier = (props && props.identifier) || this.props.identifier;
-      this.props.actions.reduxForm.initialize(identifier, {}, Object.keys(this.props.formData));
+      this.props.actions.schema.setSchemaStateOverrides(formSchemaUrl, { fields: [] });
       this.props.actions.reduxForm.reset(identifier);
     }
   }
@@ -240,6 +231,17 @@ class Search extends Component {
   clearFormFilter(key) {
     const tag = this.props.tagData[key];
     const clearables = { [key]: undefined };
+
+    const { schemaName, filters } = this.props;
+    this.props.actions.reduxForm.change(schemaName, key, '');
+    this.setOverrides({
+      ...this.props,
+      filters: {
+        ...filters,
+        [key]: undefined
+      }
+    });
+
     if (Array.isArray(tag.linkedFields)) {
       tag.linkedFields.forEach(linkFieldkey => { clearables[linkFieldkey] = undefined; });
     }
@@ -271,6 +273,7 @@ class Search extends Component {
    * the display props. Otherwise, the internal state will be updated instead.
    */
   hide() {
+    this.clearSearchBox();
     if (this.props.onHide) {
       this.props.onHide();
     } else if (this.state.display !== DISPLAY.NONE) {
@@ -333,7 +336,7 @@ class Search extends Component {
    */
   doSearch(overrides = {}) {
     // Data to send to the remote service
-    const { formSchemaUrl, identifier, name, filterPrefix } = this.props;
+    const { name, filterPrefix } = this.props;
     const searchData = {};
     const fieldData = this.getData();
 
@@ -361,9 +364,6 @@ class Search extends Component {
     });
 
     const searchText = searchData[name] || '';
-    // Data to store in the redux state
-    const formData = Object.assign({}, this.getData(true), overrides);
-
     if (
       this.state.display !== DISPLAY.VISIBLE ||
       this.state.initialSearchText !== searchText ||
@@ -376,9 +376,6 @@ class Search extends Component {
       });
     }
 
-    this.props.actions.schema.setSchemaStateOverrides(formSchemaUrl, { fields: [] });
-    this.props.actions.reduxForm.initialize(identifier, formData);
-
     this.props.onSearch(searchData);
   }
 
@@ -386,16 +383,16 @@ class Search extends Component {
    * Clear the Search component and focus on the first filter field.
    */
   clearFilters() {
-      this.clearFormData();
-      this.focusFirstFormField();
+    this.clearFormData();
+    this.focusFirstFormField();
   }
 
   /**
    * Clear the Search component and focus on the main input field.
    */
   clearSearchBox() {
-      this.clearFormData();
-      this.focusInput();
+    this.clearFormData();
+    this.focusInput();
   }
 
   /**

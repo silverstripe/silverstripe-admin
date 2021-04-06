@@ -73,7 +73,7 @@ class TreeDropdownField extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(oldProps) {
     if (this.props.readOnly || this.props.disabled) {
       return;
     }
@@ -81,24 +81,24 @@ class TreeDropdownField extends Component {
     let reload = false;
     let visible = [];
 
-    if (this.props.search !== nextProps.search) {
+    if (this.props.search !== oldProps.search) {
       // invalidate the tree cache
       reload = true;
-      visible = nextProps.visible;
+      visible = this.props.visible;
     }
 
-    if (nextProps.data.urlTree !== this.props.data.urlTree) {
+    if (oldProps.data.urlTree !== this.props.data.urlTree) {
       // invalidate the tree cache, as url has changed
       reload = true;
     }
 
-    if (nextProps.data.cacheKey !== this.props.data.cacheKey) {
+    if (oldProps.data.cacheKey !== this.props.data.cacheKey) {
       // invalidate the tree cache, as paths have changed
       reload = true;
     }
 
     if (reload) {
-      this.loadTree(visible, nextProps.search, nextProps);
+      this.loadTree(visible, this.props.search, this.props);
     }
   }
 
@@ -699,7 +699,9 @@ class TreeDropdownField extends Component {
 
 // Hack! Temporary fix until we can do a proper upgrade of react-select to >= 2.0.
 // eslint-disable-next-line func-names
-Select.prototype.componentWillReceiveProps = function (nextProps) {
+Select.prototype.componentDidUpdate = function (oldProps, oldState) {
+  const nextProps = this.props;
+
   function handleRequired(value, multi) {
     if (!value) {
       return true;
@@ -713,13 +715,13 @@ Select.prototype.componentWillReceiveProps = function (nextProps) {
     this.setState({
       required: handleRequired(valueArray[0], nextProps.multi)
     });
-  } else if (this.props.required) {
+  } else if (oldProps.required) {
     // Used to be required but it's not any more
     this.setState({ required: false });
   }
   // Array comparison in react-select is broken.
-  const [current, next] = [this.props.value, nextProps.value].map(JSON.stringify);
-  if (this.state.inputValue && current !== next && nextProps.onSelectResetsInput) {
+  const [current, next] = [oldProps.value, nextProps.value].map(JSON.stringify);
+  if (oldState.inputValue && current !== next && nextProps.onSelectResetsInput) {
     this.setState({ inputValue: this.handleInputValueChange('') });
   }
 };

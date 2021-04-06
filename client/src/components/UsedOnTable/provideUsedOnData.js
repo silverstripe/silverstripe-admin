@@ -13,22 +13,20 @@ const provideUsedOnData = (UsedOnTable) => {
       }
     }
 
-    componentWillReceiveProps(nextProps) {
-      if (nextProps.identifier !== this.props.identifier) {
-        this.fetchDataFromEndpoint(nextProps);
-      }
-    }
-
-    componentDidUpdate() {
+    componentDidUpdate(oldProps) {
       const tabContext = this.props.tabContext;
 
-      // If component is not in a tab, then just fetch data straight away
-      if (!tabContext) {
-        this.fetchDataFromEndpoint();
-      }
+      // Fetch data if
+      // - identifier has changed
+      // - component is not in a tab
+      // - component is on the currently active tab
+      const doFetch =
+        oldProps.identifier !== this.props.identifier ||
+        !tabContext ||
+        tabContext.isOnActiveTab;
 
-      // Only fetch data if the current tab is active
-      if (tabContext.isOnActiveTab) {
+
+      if (doFetch) {
         this.fetchDataFromEndpoint();
       }
     }
