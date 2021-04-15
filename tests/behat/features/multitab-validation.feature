@@ -7,7 +7,8 @@ Feature: Multi-tab page validation icons
     Given a "multi tab page" "My MultiTab Page"
     And a "single tab page" "My SingleTab Page"
 
-  Scenario: I can see tab validation icons on mutli-tab pages
+    @sboyd
+  Scenario: I can see tab validation icons on multi-tab pages
     Given I am logged in with "ADMIN" permissions
     And I go to "/admin/pages"
     And I should see "My MultiTab Page" in the tree
@@ -17,21 +18,21 @@ Feature: Multi-tab page validation icons
     Then I should not see an invalid tab icon on the "Second" tab
     Then I should see an invalid tab icon on the "Third" tab
     Then I should see an invalid tab icon on the "Fourth" tab
-    When I click the "#tab-Root_Third" element
+    When I click on the "#tab-Root_Third" element
     And I fill in "Third tab first field" with "abc"
     When I press the "Save" button
     Then I can see the form validation error message
     Then I should not see an invalid tab icon on the "Second" tab
     Then I should not see an invalid tab icon on the "Third" tab
     Then I should see an invalid tab icon on the "Fourth" tab
-    When I click the "#tab-Root_Fourth" element
+    When I click on the "#tab-Root_Fourth" element
     And I fill in "Fourth tab first field" with "def"
     When I press the "Save" button
     Then I can not see the form validation error message
     Then I should not see an invalid tab icon on the "Second" tab
     Then I should not see an invalid tab icon on the "Third" tab
     Then I should not see an invalid tab icon on the "Fourth" tab
-    When I click the "#tab-Root_Second" element
+    When I click on the "#tab-Root_Second" element
     And I fill in "Second tab first field" with "wrong value"
     When I press the "Save" button
     Then I can see the form validation error message
