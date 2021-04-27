@@ -155,11 +155,14 @@ class TreeDropdownField extends Component {
       ));
 
     if (!this.state.opened && this.props.data.showSelectedPath) {
-      options = selectedOptions
+      options = [
+        ...selectedOptions
         .map(selected => ({
           ...selected,
           title: selected.titlePath || selected.title,
-        }));
+        })),
+        ...options,
+      ];
     } else if (selectedOptions.length) {
       options = [
         ...selectedOptions
