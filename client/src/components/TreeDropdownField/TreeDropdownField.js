@@ -699,9 +699,7 @@ class TreeDropdownField extends Component {
 
 // Hack! Temporary fix until we can do a proper upgrade of react-select to >= 2.0.
 // eslint-disable-next-line func-names
-Select.prototype.componentDidUpdate = function (oldProps, oldState) {
-  const nextProps = this.props;
-
+Select.prototype.componentWillReceiveProps = function (nextProps) {
   function handleRequired(value, multi) {
     if (!value) {
       return true;
@@ -715,13 +713,13 @@ Select.prototype.componentDidUpdate = function (oldProps, oldState) {
     this.setState({
       required: handleRequired(valueArray[0], nextProps.multi)
     });
-  } else if (oldProps.required) {
+  } else if (this.props.required) {
     // Used to be required but it's not any more
     this.setState({ required: false });
   }
   // Array comparison in react-select is broken.
-  const [current, next] = [oldProps.value, nextProps.value].map(JSON.stringify);
-  if (oldState.inputValue && current !== next && nextProps.onSelectResetsInput) {
+  const [current, next] = [this.props.value, nextProps.value].map(JSON.stringify);
+  if (this.state.inputValue && current !== next && nextProps.onSelectResetsInput) {
     this.setState({ inputValue: this.handleInputValueChange('') });
   }
 };
