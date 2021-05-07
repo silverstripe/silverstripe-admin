@@ -124,7 +124,6 @@ class TreeDropdownField extends Component {
     }
     // No more path means this is the complete tree
     let node = this.props.tree;
-
     // eslint-disable-next-line no-restricted-syntax
     for (const next of path) {
       if (!node.children) {
@@ -183,7 +182,7 @@ class TreeDropdownField extends Component {
   }
 
   getPath(id) {
-    const treePath = this.props.findTreePath(this.props.tree, id, this.props.data.treeBaseId);
+    const treePath = this.props.findTreePath(this.props.tree, id);
     const breadcrumbs = this.getBreadcrumbs(treePath);
 
     return breadcrumbs
@@ -206,7 +205,7 @@ class TreeDropdownField extends Component {
         let newPath = [];
         if (!this.props.data.multiple && this.props.value) {
           // Get path of current node
-          newPath = this.props.findTreePath(treeData, this.props.value, this.props.data.treeBaseId);
+          newPath = this.props.findTreePath(treeData, this.props.value);
           if (newPath) {
             // Revert one level to show parent
             newPath.pop();
@@ -440,9 +439,8 @@ class TreeDropdownField extends Component {
     if (this.hasSearch()) {
       return;
     }
-
     // Find parent path
-    let path = this.props.findTreePath(this.props.tree, id, this.props.data.treeBaseId);
+    let path = this.props.findTreePath(this.props.tree, id);
     if (!path) {
       // Edge case: Path hasn't been loaded yet,
       // so append to current path
@@ -755,7 +753,6 @@ TreeDropdownField.propTypes = {
     showSearch: PropTypes.bool,
     multiple: PropTypes.bool,
     showSelectedPath: PropTypes.bool,
-    treeBaseId: PropTypes.number
   }),
   onLoadingError: PropTypes.func,
   search: PropTypes.string,
