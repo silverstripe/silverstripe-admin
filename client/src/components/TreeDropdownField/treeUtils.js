@@ -14,6 +14,7 @@ export const findTreeByPath = (tree, path) => {
   if (path.length === 0) {
     return tree;
   }
+
   const subPath = path.slice(0);
   const nextID = subPath.shift();
   const subTree = tree.children.find((nextSubTree) => (nextSubTree.id === nextID));
@@ -60,9 +61,10 @@ const findTreeByID = (tree, id) => {
  *
  * @param {Object} tree - Tree to search
  * @param {*} id - id property of node to find path for
+ * @param {*} treeBaseId - tree root id, may be non-zero if a custom root node has been specified
  * @return {Array} - The path to this node, or null if not found
  */
-export const findTreePath = (tree, id) => {
+export const findTreePath = (tree, id, treeBaseId = 0) => {
   // root node
   if (!id) {
     return [];
@@ -85,7 +87,7 @@ export const findTreePath = (tree, id) => {
     // Node found in subtree, shift this id and return
     if (childPath !== null) {
       // Don't add root ID
-      if (tree.id) {
+      if (tree.id && (tree.id !== treeBaseId)) {
         childPath.unshift(tree.id);
       }
       return childPath;
