@@ -7,6 +7,7 @@ use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Convert;
 use SilverStripe\Dev\BulkLoader;
+use SilverStripe\Dev\CsvBulkLoader;
 use SilverStripe\Dev\Deprecation;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\FieldList;
@@ -103,14 +104,16 @@ abstract class ModelAdmin extends LeftAndMain
     /**
      * Change this variable if you don't want the Import from CSV form to appear.
      * This variable can be a boolean or an array.
-     * If array, you can list className you want the form to appear on. i.e. array('myClassOne','myClassTwo')
+     * If array, you can list {@link $managed_models} keys
+     * you want the form to appear on. i.e. array('myClassOne','myClassTwo')
      */
     public $showImportForm = true;
 
     /**
      * Change this variable if you don't want the gridfield search to appear.
      * This variable can be a boolean or an array.
-     * If array, you can list className you want the form to appear on. i.e. array('myClassOne','myClassTwo')
+     * If array, you can list {@link $managed_models} keys
+     * you want the form to appear on. i.e. array('myClassOne','myClassTwo')
      */
     public $showSearchForm = true;
 
@@ -119,8 +122,9 @@ abstract class ModelAdmin extends LeftAndMain
      * a subclass of {@link BulkLoader} (mostly CSV data).
      * By default {@link CsvBulkLoader} is used, assuming a standard mapping
      * of column names to {@link DataObject} properties/relations.
+     * Use {@link $managed_models} keys.
      *
-     * e.g. "BlogEntry" => "BlogEntryCsvBulkLoader"
+     * Example: "BlogEntry" => "BlogEntryCsvBulkLoader"
      *
      * @config
      * @var array
@@ -489,19 +493,19 @@ abstract class ModelAdmin extends LeftAndMain
      */
     public function getModelImporters()
     {
+        $importers = [];
         $importerClasses = $this->config()->get('model_importers');
 
-        // fallback to all defined models if not explicitly defined
-        if (is_null($importerClasses)) {
-            $models = $this->getManagedModels();
-            foreach ($models as $modelName => $options) {
-                $importerClasses[$modelName] = 'SilverStripe\\Dev\\CsvBulkLoader';
+        $models = $this->getManagedModels();
+        foreach ($models as $modelName => $modelOptions) {
+            if (array_key_exists($modelName, $importerClasses)) {
+                $importerClass = $importerClasses[$modelName];
+            } else {
+                // fallback to all defined models if not explicitly defined
+                $importerClass = CsvBulkLoader::class;
             }
-        }
 
-        $importers = array();
-        foreach ($importerClasses as $modelClass => $importerClass) {
-            $importers[$modelClass] = new $importerClass($modelClass);
+            $importers[$modelName] = new $importerClass($modelOptions['dataClass']);
         }
 
         return $importers;
@@ -601,14 +605,14 @@ abstract class ModelAdmin extends LeftAndMain
     public function import($data, $form, $request)
     {
         if (!$this->showImportForm || (is_array($this->showImportForm)
-                && !in_array($this->modelClass, $this->showImportForm))
+                && !in_array($this->modelTab, $this->showImportForm))
         ) {
             return false;
         }
 
         $importers = $this->getModelImporters();
         /** @var BulkLoader $loader */
-        $loader = $importers[$this->modelClass];
+        $loader = $importers[$this->modelTab];
 
         // File wasn't properly uploaded, show a reminder to the user
         if (empty($_FILES['_CsvFile']['tmp_name']) ||

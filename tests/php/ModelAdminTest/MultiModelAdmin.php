@@ -21,6 +21,13 @@ class MultiModelAdmin extends ModelAdmin implements TestOnly
         ]
     ];
 
+    private static $model_importers = [
+        // Infer Contact importer
+        // Contact::class,
+        'Player' => ModelAdminTestBulkLoader::class,
+        Player::class => ModelAdminTestBulkLoader::class,
+    ];
+
     public function Link($action = null)
     {
         if (!$action) {
