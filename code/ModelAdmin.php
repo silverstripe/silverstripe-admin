@@ -2,33 +2,34 @@
 
 namespace SilverStripe\Admin;
 
-use SilverStripe\Control\Controller;
-use SilverStripe\Control\HTTPRequest;
-use SilverStripe\Control\HTTPResponse;
+use SilverStripe\Forms\Form;
 use SilverStripe\Core\Convert;
+use SilverStripe\ORM\ArrayList;
 use SilverStripe\Dev\BulkLoader;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\View\ArrayData;
 use SilverStripe\Dev\Deprecation;
-use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\FileField;
-use SilverStripe\Forms\Form;
 use SilverStripe\Forms\FormAction;
+use SilverStripe\Dev\CsvBulkLoader;
+use SilverStripe\Forms\HiddenField;
+use SilverStripe\Security\Security;
+use SilverStripe\Control\Controller;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Control\HTTPResponse;
+use SilverStripe\ORM\ValidationResult;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldConfig;
-use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
+use SilverStripe\Forms\GridField\GridFieldPaginator;
 use SilverStripe\Forms\GridField\GridFieldDetailForm;
+use SilverStripe\Forms\GridField\GridFieldPrintButton;
 use SilverStripe\Forms\GridField\GridFieldExportButton;
 use SilverStripe\Forms\GridField\GridFieldFilterHeader;
 use SilverStripe\Forms\GridField\GridFieldImportButton;
-use SilverStripe\Forms\GridField\GridFieldPaginator;
-use SilverStripe\Forms\GridField\GridFieldPrintButton;
-use SilverStripe\Forms\HiddenField;
-use SilverStripe\Forms\LiteralField;
-use SilverStripe\ORM\ArrayList;
-use SilverStripe\ORM\DataObject;
-use SilverStripe\ORM\ValidationResult;
-use SilverStripe\Security\Security;
-use SilverStripe\View\ArrayData;
+use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
 
 /**
  * Generates a three-pane UI for editing model classes, tabular results and edit forms.
@@ -485,23 +486,25 @@ abstract class ModelAdmin extends LeftAndMain
      * with a default {@link CsvBulkLoader} class. In this case the column names of the first row
      * in the CSV file are assumed to have direct mappings to properties on the object.
      *
-     * @return array Map of model class names to importer instances
+     * @return array Map of model keys to importer instances (same keys as $managed_models)
      */
     public function getModelImporters()
     {
-        $importerClasses = $this->config()->get('model_importers');
+        $importers = [];
+        $importerSpec = $this->config()->get('model_importers');
+        $models = $this->getManagedModels();
 
-        // fallback to all defined models if not explicitly defined
-        if (is_null($importerClasses)) {
-            $models = $this->getManagedModels();
-            foreach ($models as $modelName => $options) {
-                $importerClasses[$modelName] = 'SilverStripe\\Dev\\CsvBulkLoader';
+        foreach ($models as $modelName => $options) {
+            $modelClass = $options['dataClass'];
+            if (isset($importerSpec[$modelName])) {
+                $importerClass = $importerSpec[$modelName];
+            } elseif (isset($importerSpec[$modelClass])) {
+                $importerClass = $importerSpec[$modelClass];
+            } else {
+                $importerClass = CsvBulkLoader::class;
             }
-        }
-
-        $importers = array();
-        foreach ($importerClasses as $modelClass => $importerClass) {
-            $importers[$modelClass] = new $importerClass($modelClass);
+            // Needs to be indexed by name to avoid collisions
+            $importers[$modelName] = new $importerClass($modelClass);
         }
 
         return $importers;
@@ -608,7 +611,7 @@ abstract class ModelAdmin extends LeftAndMain
 
         $importers = $this->getModelImporters();
         /** @var BulkLoader $loader */
-        $loader = $importers[$this->modelClass];
+        $loader = $importers[$this->modelTab];
 
         // File wasn't properly uploaded, show a reminder to the user
         if (empty($_FILES['_CsvFile']['tmp_name']) ||

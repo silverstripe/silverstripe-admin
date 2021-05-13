@@ -2,17 +2,19 @@
 
 namespace SilverStripe\Admin\Tests;
 
-use SilverStripe\Admin\Tests\ModelAdminTest\Contact;
-use SilverStripe\Admin\Tests\ModelAdminTest\Player;
-use SilverStripe\Control\HTTPRequest;
+use SilverStripe\View\ArrayData;
 use SilverStripe\Control\Session;
+use SilverStripe\Dev\CsvBulkLoader;
+use SilverStripe\Dev\FunctionalTest;
+use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Security\Permission;
 use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Admin\Tests\ModelAdminTest\Player;
+use SilverStripe\Admin\Tests\ModelAdminTest\Contact;
+use SilverStripe\Forms\GridField\GridFieldPrintButton;
 use SilverStripe\Forms\GridField\GridFieldExportButton;
 use SilverStripe\Forms\GridField\GridFieldImportButton;
-use SilverStripe\Forms\GridField\GridFieldPrintButton;
-use SilverStripe\Security\Permission;
-use SilverStripe\Dev\FunctionalTest;
-use SilverStripe\View\ArrayData;
+use SilverStripe\Admin\Tests\ModelAdminTest\ModelAdminTestBulkLoader;
 
 class ModelAdminTest extends FunctionalTest
 {
@@ -161,6 +163,45 @@ class ModelAdminTest extends FunctionalTest
              ],
             $models[Player::class],
             'Managed Model without a dataClass provided default to using the class name for dataClass'
+        );
+    }
+
+    public function testGetModelImporters()
+    {
+        $admin = new ModelAdminTest\MultiModelAdmin();
+        $importers = $admin->getModelImporters();
+
+        $this->assertArrayHasKey(
+            Contact::class,
+            $importers,
+            'Implicit models'
+        );
+        $this->assertInstanceOf(
+            CsvBulkLoader::class,
+            $importers[Contact::class],
+            'Implicit models create default bulk loaders'
+        );
+
+        $this->assertArrayHasKey(
+            'Player',
+            $importers,
+            'Explicit models by alias'
+        );
+        $this->assertInstanceOf(
+            ModelAdminTestBulkLoader::class,
+            $importers['Player'],
+            'Explicit models by alias allow custom bulk loaders'
+        );
+
+        $this->assertArrayHasKey(
+            Player::class,
+            $importers,
+            'Explicit models by class'
+        );
+        $this->assertInstanceOf(
+            ModelAdminTestBulkLoader::class,
+            $importers[Player::class],
+            'Explicit models by alias allow custom bulk loaders'
         );
     }
 
