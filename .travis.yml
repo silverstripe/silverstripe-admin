@@ -41,7 +41,7 @@ before_deploy:
   # Use installer to fill in any possible dependencies
   - composer require silverstripe/installer:$REQUIRE_RECIPE
   # Do the build
-  - yarn static-pattern-lib
+#  - yarn static-pattern-lib
 
 deploy:
 - provider: pages
