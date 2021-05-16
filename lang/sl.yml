@@ -18,6 +18,7 @@ sl:
   SilverStripe\Admin\Forms\UsedOnTable:
     ADDEDTODRAFT: Osnutek
     MODIFIEDONDRAFTSHORT: Spremenjeno
+    UNTITLED: 'Brez naslova'
   SilverStripe\Admin\GroupImportForm:
     Help1: '<p>Uvozite eno ali več skupin v formatu <em>CSV</em> (comma-separated values). <small><a href="#" class="toggle-advanced">Prikaži napredni način</a></small></p>'
     Help2: '<div class="advanced"><h4>Napredni način</h4><ul><li>Na voljo so stolpci: <em>{columns}</em></li><li>Podatke o skupinah z ujemajočimi se vrednostmi <em>Code</em> bomo posodobili s podatki iz datoteke za uvoz.</li><li>Za vzpostavitev hierarhije med skupinami lahko uporabite stolpec <em>ParentCode</em>.</li><li>Za dodelitev pravic lahko v stolpec <em>PermissionCode</em> vnesete ustrezne šifre. Obstoječih pravicami ob uvozu ne bomo odstranili.</li></ul></div>'

@@ -1,13 +1,23 @@
 ru:
-  SilverStripe\Admin\CMSBatchAction:
-    PUBLISHED_PAGES: 'Опубликовано %d страниц, %d ошибок'
-    PUBLISH_PAGES: Опубликовать
-    RESTORE: Восстановить
-    RESTORED_PAGES: 'Восстановлено %d страниц'
-  SilverStripe\Admin\SecurityAdmin:
-    GROUPNAME: 'Имя группы'
-    MEMBERS: Участники
-    NEWGROUP: 'Новая группа'
-    PERMISSIONS: 'Права доступа'
-    ROLES: Роли
-    ROLESDESCRIPTION: 'Роли представляют собой сочетания различных прав доступа, которые могут быть присвоены группам.<br />При необходимости они наследуются от групп более высокого уровня.'
+  SilverStripe\Admin\CMSProfileController:
+    CANTEDIT: 'У вас нет доступа чтобы сделать это'
+    MENUTITLE: 'Мой профиль'
+  SilverStripe\Admin\Forms\EditorEmailLinkFormFactory:
+    EMAIL: 'Адрес электронной почты'
+    LINKDESCR: 'Описание ссылки'
+    LINKTEXT: 'Текст ссылки'
+    SUBJECT: Тема
+  SilverStripe\Admin\Forms\EditorExternalLinkFormFactory:
+    ANCHORVALUE: Якорь
+    LINKDESCR: 'Описание ссылки'
+    LINKOPENNEWWIN: 'Открыть в новом окне/вкладке'
+    LINKTEXT: 'Текст ссылки'
+    URL: URL
+  SilverStripe\Admin\Forms\LinkFormFactory:
+    INSERT_LINK: 'Вставить ссылку'
+  SilverStripe\Admin\Forms\UsedOnTable:
+    ADDEDTODRAFT: Черновик
+    MODIFIEDONDRAFTSHORT: Изменено
+    UNTITLED: 'Без названия'
+  SilverStripe\Admin\GroupImportForm:
+    Help1: '<p>Импорт одну или больше групп в <em>CSV</em> форма (разделённые запятыми значения) <small><a href="#" class="toggle-advanced">Варианты использования</a></small></p>'
