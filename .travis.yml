@@ -5,7 +5,7 @@ import:
 
 env:
   global:
-    - REQUIRE_RECIPE="4.x-dev"
+    - REQUIRE_RECIPE="4.8.x-dev"
     - REQUIRE_FRAMEWORKTEST="0.4.0"
 
 # Using a manual jobs matrix in addition to jobs-fixed because there are:
