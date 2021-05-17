@@ -1,15 +1,100 @@
 eo:
-  SilverStripe\Admin\CMSBatchAction:
-    PUBLISHED_PAGES: 'Publikigis %d paĝojn, %d malsukcesojn'
-    PUBLISH_PAGES: Publikigi
-    RESTORE: Restaŭri
-    RESTORED_PAGES: 'Restaŭris %d paĝojn'
-    UNPUBLISHED_PAGES: 'Nepublikigitaj %d paĝoj'
-    UNPUBLISH_PAGES: Malpublikigi
+  SilverStripe\Admin\CMSProfileController:
+    CANTEDIT: 'Vi ne havas permeson fari tion'
+    MENUTITLE: 'Mia profilo'
+  SilverStripe\Admin\Forms\EditorEmailLinkFormFactory:
+    EMAIL: 'Retpoŝta adreso'
+    LINKDESCR: 'Liga priskribo'
+    LINKTEXT: 'Liga teksto'
+    SUBJECT: Temo
+  SilverStripe\Admin\Forms\EditorExternalLinkFormFactory:
+    ANCHORVALUE: Ankri
+    LINKDESCR: 'Liga priskribo'
+    LINKOPENNEWWIN: 'Malfermi en nova fenestro/langeto'
+    LINKTEXT: 'Liga teksto'
+    URL: URL
+  SilverStripe\Admin\Forms\LinkFormFactory:
+    INSERT_LINK: 'Enmeti ligilon'
+  SilverStripe\Admin\Forms\UsedOnTable:
+    ADDEDTODRAFT: Malneto
+    MODIFIEDONDRAFTSHORT: Ŝanĝita
+    UNTITLED: Sentitola
+  SilverStripe\Admin\GroupImportForm:
+    Help1: '<p>Importi unu aŭ pliajn grupojn en <em>CSV</em>-formato (perkome disigitaj valoroj). <small><a href="#" class="toggle-advanced">Vidigi altnivelan uzaĵon</a></small></p>'
+    Help2: '<div class="advanced"><h4>Altnivela uzado</h4><ul><li>Permesitaj kolumnoj: <em>{columns}</em></li><li>Ekzistantaj grupoj kongruiĝas laŭ ilia unika <em>Kod</em>-valoro, kaj ĝisdatiĝas per eventualaj valoroj el la importita dosiero</li><li>Grupaj hierarkioj estas kreblaj per kolumno <em>PatroKodo</em>.</li><li>Permesaj kodoj estas agordeblaj per la kolumno <em>PermesoKodo</em>. Ekzistantaj permesaj kodoj ne vakiĝos.</li></ul></div>'
+    ResultCreated: 'Kreis {count} grupojn'
+    ResultDeleted: 'Forigis {count} grupojn'
+    ResultUpdated: 'Ĝisdatigis {count} grupojn'
+  SilverStripe\Admin\LeftAndMain:
+    ACCESSALLINTERFACES: 'Aliro al ĉiuj CMS-sekcioj'
+    ACCESSALLINTERFACESHELP: 'Transpasas pli specifajn alirajn agordojn.'
+    BROWSER_WARNING_HEADING: 'Nesubtenata foliumilo'
+    BROWSER_WARNING_TEXT: 'Vi uzas foliumilon kiun ne subtenas SilverStripe.<br />Bonvolu instali iun el la jenaj ebloj.'
+    CollapsePanel: 'Maletendi panelon'
+    DELETED: Forigita.
+    DropdownBatchActionsDefault: 'Elekti agon...'
+    ExpandPanel: 'Etendi panelon'
+    HelpMenu: Helpmenuo
+    LOGOUT: Adiaŭi
+    MenuToggleAuto: Aŭtomate
+    MenuToggleStickyNav: 'Persista navigado'
+    NavigateUp: 'Navigi supren unu dosierujon'
+    PERMAGAIN: 'Vi malkonektiĝis el la sistemo. Se vi volas ree ensaluti, enigu salutnomon kaj pasvorton malsupre.'
+    PERMALREADY: 'Bedaŭrinde vi ne povas aliri tiun parton de la sistemo. Se vi volas ensaluti kiel alia uzanto, faru tion malsupre.'
+    PERMDEFAULT: 'Necesas ensaluti por aliri la administran sektoron; bonvolu enigi viajn ensalutilojn malsupre.'
+    PROFILE: '{name} profilo'
+    PreviewButton: Antaŭvido
+    REQUIREJS: 'La CMS postulas ke vi enŝaltu je JavaScript.'
+    SAVEDUP: Konservita.
+    SUBMIT_BUTTON_LABEL: Ek
+    ValidationError: 'Validiga eraro'
+    Version: Versio
+  SilverStripe\Admin\LeftAndMain_ViewModeSelector:
+    Auto: Aŭtomate
+    ChangeViewMode: 'Ŝanĝi vidan reĝimon'
+    Desktop: Labortablo
+    DualWindowView: 'Duopa fenestro'
+    EditView: 'Redakta reĝimo'
+    Mobile: Poŝtelefono
+    PreviewState: 'Antaŭvida stato'
+    PreviewView: 'Antaŭvida reĝimo'
+    Responsive: Adaptiĝema
+    SplitView: 'Dividita reĝimo'
+    Tablet: Tabulkomputilo
+    ViewDeviceWidth: 'Elekti antaŭvidan larĝon'
+    Width: larĝo
+  SilverStripe\Admin\MemberImportForm:
+    BtnImport: 'Importi el CSV'
+    FileFieldLabel: 'CSV -dosiero <small>(Permesita sufikso: *.csv)</small>'
+    Help1: '<p>Importi uzantojn en <em>CSV-formato</em> (perkome disigitaj valoroj). <small><a href="#" class="toggle-advanced">Vidigi altnivelan uzaĵon</a></small></p>'
+    Help2: '<div class="advanced"><h4>Altnivela uzado</h4><ul><li>Permesitaj kolumnoj: <em>{kolumnoj}</em></li><li>Ekzistantaj uzantoj kongruiĝas laŭ sia unika atributo <em>Kodo</em>, kaj ĝisdatiĝas per eventualaj novaj valoroj el la importita dosiero</li><li>Grupoj estas agordeblaj per la kolumno <em>Grupoj</em>. Grupoj estas identigeblaj laŭ ilia atributo <em>Kodo</em>, pluraj grupoj estas apartigeblaj per komo. Ekzistantaj grupaj membrecoj ne vakiĝos.</li></ul></div>'
+    ResultCreated: 'Kreis {count} membrojn'
+    ResultDeleted: 'Forigis {count} membrojn'
+    ResultNone: 'Neniuj ŝanĝoj'
+    ResultUpdated: 'Ĝisdatigis {count} membrojn'
+  SilverStripe\Admin\ModelAdmin:
+    DELETE: Forigi
+    DELETEDRECORDS: 'Forigis {count} rikordojn.'
+    EMPTYBEFOREIMPORT: 'Anstataŭigi datumojn'
+    IMPORT: 'Importi el CSV'
+    IMPORTEDRECORDS: 'Importis {count} rikordojn.'
+    IMPORTSPECFIELDS: 'Datumbazaj kolumnoj'
+    IMPORTSPECLINK: 'Vidigi specifon por {model}'
+    IMPORTSPECRELATIONS: Rilatoj
+    IMPORTSPECTITLE: 'Specifo por {model}'
+    NOCSVFILE: 'Bonvolu foliumi por CSV-dosiero importota'
+    NOIMPORT: 'Nenio importota'
+    Title: 'Datumaj modeloj'
+    UPDATEDRECORDS: 'Ĝisdatigis {count} rikordojn.'
   SilverStripe\Admin\SecurityAdmin:
-    GROUPNAME: 'Grupa Nomo'
-    MEMBERS: Membroj
-    NEWGROUP: 'Nova Grupo'
-    PERMISSIONS: Permesoj
-    ROLES: Roloj
-    ROLESDESCRIPTION: 'Ĉi tiu sekcio ebligas aldoni rolojn al ĉi tiu grupo. Roloj estas logikaj grupoj de permesoj, kiuj estas redakteblaj en la langeto Roloj'
+    ACCESS_HELP: 'Permesi vidi, aldoni, kaj redakti uzantojn, kaj ankaŭ agordi permesojn kaj rolojn al ili.'
+    APPLY_ROLES: 'Apliki rolojn al grupoj'
+    APPLY_ROLES_HELP: 'Kapablo redakti la rolojn agorditajn al grupo. Bezonas la permeson "Aliro al sekcio ''Uzantoj''".'
+    EDITPERMISSIONS: 'Administri permesojn por grupoj'
+    EDITPERMISSIONS_HELP: 'Kapablo redakti la permesojn kaj IP-adresojn por grupo. Bezonas la permeson "Aliro al sekcio ''Sekureco''".'
+    IMPORTGROUPS: 'Importi grupojn'
+    IMPORTUSERS: 'Importi uzantojn'
+    MENUTITLE: Sekureco
+    MemberListCaution: 'Averto: forigi membrojn el ĉi tiu listo forigos ilin ankaŭ el ĉiuj grupoj kaj la datumbazo.'
+    TABROLES: Roloj
+    Users: Uzantoj

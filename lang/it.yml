@@ -18,6 +18,7 @@ it:
   SilverStripe\Admin\Forms\UsedOnTable:
     ADDEDTODRAFT: Bozza
     MODIFIEDONDRAFTSHORT: Modificato
+    UNTITLED: 'Senza titolo'
   SilverStripe\Admin\GroupImportForm:
     Help1: '<p>Importa uno o più gruppi nel formato <em>CSV</em> (valori separati da virgola). <small><a href="#" class="toggle-advanced">Mostra utilizzo avanzato</a></small></p>'
     Help2: '<div class="advanced"><h4> Uso avanzato</h4><ul><li> Colonne consentite: <em>{columns}</em></li><li> I gruppi esistenti sono abbinati al loro valore di <em>Codice</em> unico e aggiornato con eventuali nuovi valori dal file importato</li><li> Le gerarchie di gruppo possono essere create utilizzando una colonna <em>ParentCode</em>.</li><li> I codici di autorizzazione possono essere assegnati dalla colonna <em>PermissionCode</em>. I codici di autorizzazione esistenti non vengono cancellati.</li></ul></div>'
@@ -29,8 +30,11 @@ it:
     ACCESSALLINTERFACESHELP: 'Annulla le impostazioni di accesso più specifiche.'
     BROWSER_WARNING_HEADING: 'Browser non supportato'
     BROWSER_WARNING_TEXT: 'Si sta utilizzando un browser Web che non è supportato da SilverStripe. <br/> Effettuare l''aggiornamento a una delle seguenti opzioni.'
+    CollapsePanel: 'Comprimi pannello'
     DELETED: Cancellato.
     DropdownBatchActionsDefault: 'Scegli un''azione...'
+    ExpandPanel: 'Espandi pannello'
+    HelpMenu: 'Menu aiuto'
     LOGOUT: Disconnetti
     MenuToggleAuto: Auto
     MenuToggleStickyNav: 'Sticky nav'
@@ -38,11 +42,13 @@ it:
     PERMAGAIN: 'Sei stato disconnesso dal CMS. Se si desidera accedere di nuovo, immettere un nome utente e una password di seguito.'
     PERMALREADY: 'Mi dispiace, ma non puoi accedere a questa parte del CMS. Se si desidera accedere come qualcun altro, farlo di seguito.'
     PERMDEFAULT: 'Devi essere registrato per accedere all''area di amministrazione; inserisci le tue credenziali di seguito.'
+    PROFILE: 'Profilo {name}'
     PreviewButton: Anteprima
     REQUIREJS: 'Il CMS richiede che JavaScript sia abilitato.'
     SAVEDUP: Salvato.
     SUBMIT_BUTTON_LABEL: Vai
     ValidationError: 'Errore di convalida'
+    Version: Versione
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
     Auto: Auto
     ChangeViewMode: 'Cambia la modalità di visualizzazione'
