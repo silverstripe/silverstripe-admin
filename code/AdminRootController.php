@@ -2,9 +2,12 @@
 
 namespace SilverStripe\Admin;
 
+use Exception;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\Director;
 use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Control\HTTPResponse;
+use SilverStripe\Control\HTTPResponse_Exception;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\View\TemplateGlobalProvider;
@@ -105,6 +108,22 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
 
     public function handleRequest(HTTPRequest $request)
     {
+        try {
+            return $this->resolve($request);
+        } catch (HTTPResponse_Exception $ex) {
+            // Fall back to methods defined on LeftAndMain
+            $controllerObj = Injector::inst()->create(ErrorAdmin::class);
+            return $controllerObj->handleRequest($request);
+        }
+    }
+
+    /**
+     * @param HTTPRequest $request
+     * @return HTTPResponse
+     * @throws HTTPResponse_Exception
+     */
+    private function resolve(HTTPRequest $request): HTTPResponse
+    {
         // If this is the final portion of the request (i.e. the URL is just /admin), direct to the default panel
         if ($request->allParsed()) {
             $segment = Config::forClass($this->config()->get('default_panel'))
@@ -124,9 +143,7 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
             }
         }
 
-        // Fall back to methods defined on LeftAndMain
-        $controllerObj = Injector::inst()->create(LeftAndMain::class);
-        return $controllerObj->handleRequest($request);
+        throw new HTTPResponse_Exception('', 400, '');
     }
 
     /**
