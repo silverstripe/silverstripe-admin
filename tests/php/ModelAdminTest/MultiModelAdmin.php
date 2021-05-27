@@ -14,20 +14,16 @@ class MultiModelAdmin extends ModelAdmin implements TestOnly
         Contact::class,
         'Player' => [
             'dataClass' => Player::class,
-            'title' => 'Ice Hockey Players'
+            'title' => 'Ice Hockey Players',
         ],
         Player::class => [
-            'title' => 'Rugby Players'
-        ]
+            'title' => 'Rugby Players',
+        ],
+        'cricket-players' => [
+            'dataClass' => Player::class,
+            'title' => 'Cricket Players',
+        ],
     ];
-
-    public function Link($action = null)
-    {
-        if (!$action) {
-            $action = $this->sanitiseClassName($this->modelClass);
-        }
-        return Controller::join_links('ContactAdmin', $action, '/');
-    }
 
     // The purpose of this method is to increase the visibility of ModelAdmin::getManagedModelTabs()
     // from protected to public

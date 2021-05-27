@@ -3,6 +3,7 @@
 namespace SilverStripe\Admin\Tests;
 
 use SilverStripe\Admin\Tests\ModelAdminTest\Contact;
+use SilverStripe\Admin\Tests\ModelAdminTest\MultiModelAdmin;
 use SilverStripe\Admin\Tests\ModelAdminTest\Player;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\Session;
@@ -35,6 +36,17 @@ class ModelAdminTest extends FunctionalTest
         $this->logInAs('admin');
         $this->assertTrue((bool)Permission::check("ADMIN"));
         $this->assertEquals(200, $this->get('ContactAdmin')->getStatusCode());
+    }
+
+    public function testMultiModelAdminOpensEachTab()
+    {
+        $admin = new MultiModelAdmin();
+        foreach ($admin->getManagedModelTabs()->toNestedArray() as $tab) {
+            $request = new HTTPRequest('GET', $tab['Link']);
+            $request->setRouteParams(['ModelClass' => substr($tab['Link'], strlen('admin/multi/'))]);
+            $admin->setRequest($request);
+            $admin->doInit();
+        }
     }
 
     public function testExportFieldsDefaultIsSummaryFields()
@@ -142,7 +154,7 @@ class ModelAdminTest extends FunctionalTest
                 'title' => 'Contacts'
             ],
             $models[Contact::class],
-            'Managed Model that are class name only get nomalised'
+            'Managed Model that are class name only get normalised'
         );
 
         $this->assertEquals(
@@ -161,6 +173,15 @@ class ModelAdminTest extends FunctionalTest
              ],
             $models[Player::class],
             'Managed Model without a dataClass provided default to using the class name for dataClass'
+        );
+
+        $this->assertEquals(
+            [
+                'dataClass' => Player::class,
+                'title' => 'Cricket Players',
+            ],
+            $models['cricket-players'],
+            'Managed Model with an arbitrary name can have a hyphen in the URL key'
         );
     }
 
@@ -181,7 +202,11 @@ class ModelAdminTest extends FunctionalTest
                 ],
                 Player::class => [
                     'title' => 'Rugby Players'
-                ]
+                ],
+                'cricket-players' => [
+                    'dataClass' => Player::class,
+                    'title' => 'Cricket Players',
+                ],
             ]));
 
 
@@ -209,6 +234,19 @@ class ModelAdminTest extends FunctionalTest
             ],
             $tabs[1],
             'Tab data for managed model array using the older syntax without dataClass can be generated'
+        );
+
+
+        $this->assertEquals(
+            [
+                'Title' => 'Cricket Players',
+                'Tab' => 'cricket-players',
+                'ClassName' => Player::class,
+                'Link' => 'ContactAdmin/cricket-players/',
+                'LinkOrCurrent' => 'link',
+            ],
+            $tabs[2],
+            'Tab data for managed model array using the newer syntax with dataClass and a hyphen can be generated'
         );
     }
 }
