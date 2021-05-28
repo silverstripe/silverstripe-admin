@@ -18,6 +18,7 @@ jobs:
         - DB=MYSQL
         - REQUIRE_INSTALLER="$REQUIRE_RECIPE"
         - NPM_TEST=1
+<<<<<<< HEAD
         - RELEASE=1
     - php: 7.3
       env:
@@ -34,6 +35,11 @@ jobs:
         - REQUIRE_GRAPHQL="^3@dev"
         - BEHAT_SUITE="cms"
     - php: 7.3
+=======
+        # TODO: move pattern-lib creation to a new process e.g. new repository and use github-pages
+        # - RELEASE=1
+    - php: 7.2
+>>>>>>> 1.7
       env:
         - DB=MYSQL
         - REQUIRE_INSTALLER="$REQUIRE_RECIPE"
