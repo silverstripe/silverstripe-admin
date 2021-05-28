@@ -145,20 +145,27 @@ abstract class ModelAdmin extends LeftAndMain
         parent::init();
 
         $models = $this->getManagedModels();
+        $this->modelTab = $this->getRequest()->param('ModelClass');
 
-        if ($this->getRequest()->param('ModelClass')) {
-            $this->modelTab = $this->unsanitiseClassName($this->getRequest()->param('ModelClass'));
-        } else {
+        // if we've hit the "landing" page
+        if ($this->modelTab === null) {
             reset($models);
             $this->modelTab = key($models);
         }
 
-        $this->modelClass = isset($models[$this->modelTab]['dataClass']) ? $models[$this->modelTab]['dataClass'] : $this->modelTab;
-
         // security check for valid models
         if (!array_key_exists($this->modelTab, $models)) {
-            throw new \RuntimeException('ModelAdmin::init(): Invalid Model class');
+            // if it fails to match the string exactly, try reverse-engineering a classname
+            $this->modelTab = $this->unsanitiseClassName($this->modelTab);
+
+            if (!array_key_exists($this->modelTab, $models)) {
+                throw new \RuntimeException(sprintf('ModelAdmin::init(): Invalid Model class %s', $this->modelTab));
+            }
         }
+
+        $this->modelClass = isset($models[$this->modelTab]['dataClass'])
+            ? $models[$this->modelTab]['dataClass']
+            : $this->modelTab;
     }
 
     /**
