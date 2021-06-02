@@ -1,44 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="storybook-version" content="3.4.12">
-    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
-    <title>Storybook</title>
-    <style>
-        /*
-          When resizing panels, the drag event breaks if the cursor
-          moves over the iframe. Add the 'dragging' class to the body
-          at drag start and remove it when the drag ends.
-         */
-        .dragging iframe {
-            pointer-events: none;
-        }
-
-        /* Styling the fuzzy search box placeholders */
-        .searchBox::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-            color: #ddd;
-            font-size: 16px;
-        }
-
-        .searchBox::-moz-placeholder { /* Firefox 19+ */
-            color: #ddd;
-            font-size: 16px;
-        }
-
-        .searchBox:focus{
-            border-color: #EEE !important;
-        }
-
-        .btn:hover{
-            background-color: #eee
-        }
-    </style>
-    
+    <title>The Pattern Library has moved!</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/fontawesome.min.css">
 
 </head>
-<body style="margin: 0;">
-    <div id="root"></div>
-<script type="text/javascript" src="static/manager.c0cb89a4513188699a7d.bundle.js"></script></body>
+<body>
+<div class="container">
+    <div class="jumbotron" style="margin-top: 2rem;">
+        <h1 class="display-4">The Pattern Library has moved!</h1>
+        <p class="lead">The Silverstripe CMS Pattern library is now hosted on its own repo. Update your bookmarks.</p>
+        <p class="lead">
+            <a id="gotoLink" class="btn btn-primary btn-lg" href="https://silverstripe.github.io/silverstripe-pattern-lib/" role="button">Go to the new Pattern Library</a>
+        </p>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        var queryString = window.location.search;
+        var link = $('#gotoLink');
+        var href = link.attr('href');
+        link.attr('href', href + queryString);
+    })
+</script>
+</body>
 </html>
