@@ -1,31 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
-class HeaderField extends Component {
-  /**
-   * Fetches the properties for the field
-   *
-   * @returns {object} properties
-   */
-  getInputProps() {
-    return {
-      className: `${this.props.className} ${this.props.extraClass}`,
-      id: this.props.id,
-    };
-  }
-
-  render() {
-    const Heading = `h${this.props.data.headingLevel || 3}`;
-
-    return (
-      <div className="field">
-        <Heading {...this.getInputProps()} >{this.props.data.title}</Heading>
-      </div>
-    );
-  }
+/**
+ * Renders a dataless field that inserts an header inside a form
+ * @returns {JSX.Element}
+ */
+function HeaderField({ className, extraClass, id, data: { headingLevel, title } }) {
+  const Heading = `h${headingLevel || 3}`;
+  return (
+    <div className="field">
+      <Heading className={classnames(className, extraClass)} id={id}>{title}</Heading>
+    </div>
+  );
 }
 
 HeaderField.propTypes = {
+  className: PropTypes.string,
   extraClass: PropTypes.string,
   id: PropTypes.string,
   data: PropTypes.oneOfType([
