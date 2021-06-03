@@ -6,20 +6,13 @@ import:
 env:
   global:
     - REQUIRE_RECIPE="4.8.x-dev"
-    - REQUIRE_FRAMEWORKTEST="0.4.0"
+    - REQUIRE_FRAMEWORKTEST="0.4.2"
 
 # Using a manual jobs matrix in addition to jobs-fixed because there are:
 # - two different behat suites
 # - a manual release of storybook
 jobs:
   include:
-    - php: 7.1
-      env:
-        - DB=MYSQL
-        - REQUIRE_INSTALLER="$REQUIRE_RECIPE"
-        - NPM_TEST=1
-<<<<<<< HEAD
-        - RELEASE=1
     - php: 7.3
       env:
         - DB=MYSQL
@@ -35,11 +28,6 @@ jobs:
         - REQUIRE_GRAPHQL="^3@dev"
         - BEHAT_SUITE="cms"
     - php: 7.3
-=======
-        # TODO: move pattern-lib creation to a new process e.g. new repository and use github-pages
-        # - RELEASE=1
-    - php: 7.2
->>>>>>> 1.7
       env:
         - DB=MYSQL
         - REQUIRE_INSTALLER="$REQUIRE_RECIPE"
@@ -53,24 +41,3 @@ jobs:
         - BEHAT_TEST=1
         - REQUIRE_GRAPHQL="^4@dev"
         - BEHAT_SUITE="cms"
-
-before_script:
-  - export CORE_RELEASE=$TRAVIS_BRANCH
-  - if [ "$COMPOSER_INSTALL_ARG" != "--ignore-platform-reqs"]; then printf "\n" | pecl install imagick; fi
-
-before_deploy:
-  # Use installer to fill in any possible dependencies
-  - composer require silverstripe/installer:$REQUIRE_RECIPE
-  # Do the build
-  - yarn static-pattern-lib
-
-deploy:
-- provider: pages
-  skip_cleanup: true
-  keep-history: false
-  github-token: $GITHUB_AUTO_PUBLISH_API_TOKEN
-  local-dir: storybook-static
-  on:
-    branch: 1
-    repo: silverstripe/silverstripe-admin
-    condition: -n $RELEASE
