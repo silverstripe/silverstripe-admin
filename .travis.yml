@@ -1,7 +1,7 @@
 version: ~> 1.0
 
 import:
-  - silverstripe/silverstripe-travis-shared:config/provision/standard-jobs-fixed.yml
+  - silverstripe/silverstripe-travis-shared:config/provision/standard-jobs-fixed-npm.yml
 
 env:
   global:
@@ -41,3 +41,5 @@ jobs:
         - BEHAT_TEST=1
         - REQUIRE_GRAPHQL="^4@dev"
         - BEHAT_SUITE="cms"
+    - env:
+        - NPM_TEST=1
