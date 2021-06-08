@@ -31,4 +31,16 @@ class MultiModelAdmin extends ModelAdmin implements TestOnly
     {
         return parent::getManagedModelTabs();
     }
+
+    /** Allow public access to protected $modelTab attribute */
+    public function getModelTab()
+    {
+        return $this->modelTab;
+    }
+
+    /** Allow public access to protected $modelClass attribute */
+    public function getModelClass()
+    {
+        return $this->modelClass;
+    }
 }

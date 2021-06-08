@@ -38,14 +38,33 @@ class ModelAdminTest extends FunctionalTest
         $this->assertEquals(200, $this->get('ContactAdmin')->getStatusCode());
     }
 
+
+
+
     public function testMultiModelAdminOpensEachTab()
     {
         $admin = new MultiModelAdmin();
+        $this->logInWithPermission();
         foreach ($admin->getManagedModelTabs()->toNestedArray() as $tab) {
             $request = new HTTPRequest('GET', $tab['Link']);
             $request->setRouteParams(['ModelClass' => substr($tab['Link'], strlen('admin/multi/'))]);
+            $request->setSession(new Session([]));
             $admin->setRequest($request);
             $admin->doInit();
+            $this->assertEquals(
+                $tab["Tab"],
+                $admin->getModelTab(),
+                sprintf('Accessing the %s link resolves to the %s tab', $tab['Link'], $tab["Tab"])
+            );
+            $this->assertEquals(
+                $tab["ClassName"],
+                $admin->getModelClass(),
+                sprintf(
+                    'Accessing the %s link sets the ModelAdmin class to %s',
+                    $tab['Link'],
+                    $tab["ClassName"]
+                )
+            );
         }
     }
 
