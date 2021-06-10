@@ -41,5 +41,3 @@ jobs:
         - BEHAT_TEST=1
         - REQUIRE_GRAPHQL="^4@dev"
         - BEHAT_SUITE="cms"
-    - env:
-        - NPM_TEST=1
