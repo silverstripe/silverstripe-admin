@@ -1,7 +1,7 @@
 version: ~> 1.0
 
 import:
-  - silverstripe/silverstripe-travis-shared:config/provision/standard-jobs-fixed.yml
+  - silverstripe/silverstripe-travis-shared:config/provision/standard-jobs-fixed-npm.yml
 
 env:
   global:
