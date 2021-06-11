@@ -25,7 +25,8 @@ const getGraphqlFragments = async (baseUrl, preferStatic = true) => {
   const isLegacy = !!document.body.getAttribute('data-graphql-legacy');
   const legacyURLs = [
     `${baseUrl}assets/admin.types.graphql`,
-    `${baseUrl}admin/graphql/types`
+    `${baseUrl}admin/graphql/types`,
+    `${baseUrl}admin.types.graphql`
   ];
 
   let primaryURL;
@@ -37,7 +38,7 @@ const getGraphqlFragments = async (baseUrl, preferStatic = true) => {
     }
     [primaryURL, fallbackURL] = legacyURLs;
   } else {
-    primaryURL = `${baseUrl}admin.types.graphql`;
+    primaryURL = `${baseUrl}/_graphql/admin.types.graphql`;
     fallbackURL = null;
   }
 
