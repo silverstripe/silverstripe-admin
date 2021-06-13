@@ -7,6 +7,7 @@ use SilverStripe\Admin\Tests\ModelAdminTest\MultiModelAdmin;
 use SilverStripe\Admin\Tests\ModelAdminTest\Player;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\Session;
+use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldExportButton;
 use SilverStripe\Forms\GridField\GridFieldImportButton;
@@ -49,6 +50,7 @@ class ModelAdminTest extends FunctionalTest
             $request = new HTTPRequest('GET', $tab['Link']);
             $request->setRouteParams(['ModelClass' => substr($tab['Link'], strlen('admin/multi/'))]);
             $request->setSession(new Session([]));
+            Injector::inst()->registerService($request, HTTPRequest::class);
             $admin->setRequest($request);
             $admin->doInit();
             $this->assertEquals(
