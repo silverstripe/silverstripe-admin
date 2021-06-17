@@ -18,6 +18,11 @@
   &:hover {
     background: $gray-200;
   }
+
+  .font-icon-right-open-big {
+    margin: 2px 0 0 -1px;
+    width: 24px;
+  }
 }
 
 .treedropdownfield__option-count-icon {
@@ -96,14 +101,19 @@
   }
 }
 
-.is-focused:not(.is-open)>.Select-control,
-.is-open>.Select-control,
-.Select-menu-outer {
+.Select-control {
+  border-color: $gray-200;
   box-shadow: none;
+}
+
+.Select.is-focused:not(.is-open) > .Select-control,
+.is-open > .Select-control {
   border-color: $brand-primary;
+  box-shadow: none;
 }
 
 .Select-menu-outer {
   border-top-color: #e6e6e6;
+  box-shadow: none;
 }
 // sass-lint:enable class-name-format
