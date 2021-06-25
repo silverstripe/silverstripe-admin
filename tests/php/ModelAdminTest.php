@@ -2,17 +2,19 @@
 
 namespace SilverStripe\Admin\Tests;
 
-use SilverStripe\Admin\Tests\ModelAdminTest\Contact;
-use SilverStripe\Admin\Tests\ModelAdminTest\Player;
-use SilverStripe\Control\HTTPRequest;
+use SilverStripe\View\ArrayData;
 use SilverStripe\Control\Session;
+use SilverStripe\Dev\CsvBulkLoader;
+use SilverStripe\Dev\FunctionalTest;
+use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Security\Permission;
 use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Admin\Tests\ModelAdminTest\Player;
+use SilverStripe\Admin\Tests\ModelAdminTest\Contact;
+use SilverStripe\Forms\GridField\GridFieldPrintButton;
 use SilverStripe\Forms\GridField\GridFieldExportButton;
 use SilverStripe\Forms\GridField\GridFieldImportButton;
-use SilverStripe\Forms\GridField\GridFieldPrintButton;
-use SilverStripe\Security\Permission;
-use SilverStripe\Dev\FunctionalTest;
-use SilverStripe\View\ArrayData;
+use SilverStripe\Admin\Tests\ModelAdminTest\ModelAdminTestBulkLoader;
 
 class ModelAdminTest extends FunctionalTest
 {
@@ -161,6 +163,46 @@ class ModelAdminTest extends FunctionalTest
              ],
             $models[Player::class],
             'Managed Model without a dataClass provided default to using the class name for dataClass'
+        );
+    }
+
+    public function testModelImporters()
+    {
+        $admin = new ModelAdminTest\MultiModelAdmin();
+
+        $importers = $admin->getModelImporters();
+
+        $this->assertArrayHasKey(
+            Contact::class,
+            $importers,
+            'Infers importer for non-listed models'
+        );
+        $this->assertInstanceOf(
+            CsvBulkLoader::class,
+            $importers[Contact::class],
+            'Sets default importer for non-listed models'
+        );
+
+        $this->assertArrayHasKey(
+            Player::class,
+            $importers,
+            'Discovers models referenced by class'
+        );
+        $this->assertInstanceOf(
+            ModelAdminTestBulkLoader::class,
+            $importers[Player::class],
+            'Sets explicitly defined importer for models referenced by class'
+        );
+
+        $this->assertArrayHasKey(
+            'Player',
+            $importers,
+            'Discovers models referenced by alias'
+        );
+        $this->assertInstanceOf(
+            ModelAdminTestBulkLoader::class,
+            $importers['Player'],
+            'Sets explicitly defined importer for models referenced by alias'
         );
     }
 

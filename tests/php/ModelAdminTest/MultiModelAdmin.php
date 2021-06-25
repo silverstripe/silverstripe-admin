@@ -2,9 +2,10 @@
 
 namespace SilverStripe\Admin\Tests\ModelAdminTest;
 
+use SilverStripe\Dev\TestOnly;
 use SilverStripe\Admin\ModelAdmin;
 use SilverStripe\Control\Controller;
-use SilverStripe\Dev\TestOnly;
+use SilverStripe\Admin\Tests\ModelAdminTest\ModelAdminTestBulkLoader;
 
 class MultiModelAdmin extends ModelAdmin implements TestOnly
 {
@@ -19,6 +20,13 @@ class MultiModelAdmin extends ModelAdmin implements TestOnly
         Player::class => [
             'title' => 'Rugby Players'
         ]
+    ];
+
+    private static $model_importers = [
+        // Infer Contact importer
+        // Contact::class,
+        'Player' => ModelAdminTestBulkLoader::class,
+        Player::class => ModelAdminTestBulkLoader::class,
     ];
 
     public function Link($action = null)
