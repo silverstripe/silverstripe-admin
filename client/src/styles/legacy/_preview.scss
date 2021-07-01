@@ -289,15 +289,6 @@
     top: 50%;
     left: 50%;
     width: 300px;
-
-    span {
-      @include icon-sprites(64x64);
-      @include sprite($sprites-64x64-preview);
-
-      height: 41px;
-      margin: 0 auto 20px;
-      width: 50px;
-    }
   }
 
   .panel {
