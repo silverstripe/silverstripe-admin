@@ -207,30 +207,9 @@ $.entwine('ss.preview', function($){
         this.setIsPreviewEnabled(true);
 
         // Initialise mode.
-        if ($.browser.msie && $.browser.version.slice(0,3)<=7) {
-          // We do not support the split mode in IE < 8.
-          this.changeMode('content');
-        } else {
-          this.changeMode(this.getDefaultMode(), false);
-        }
+        this.changeMode(this.getDefaultMode(), false);
       }
       return this;
-    },
-
-    /**
-     * Return a style element we can use in IE8 to fix fonts (see readystatechange binding in onadd below)
-     */
-    getOrAppendFontFixStyleElement: function() {
-      var style = $('#FontFixStyleElement');
-      if (!style.length) {
-        style = $(
-          '<style type="text/css" id="FontFixStyleElement" disabled="disabled">'+
-            ':before,:after{content:none !important}'+
-          '</style>'
-        ).appendTo('head');
-      }
-
-      return style;
     },
 
     /**
@@ -250,16 +229,6 @@ $.entwine('ss.preview', function($){
 
         $(this).removeClass('loading');
       });
-
-      // If there's any webfonts in the preview, IE8 will start glitching. This fixes that.
-      if ($.browser.msie && 8 === parseInt($.browser.version, 10)) {
-        iframe.bind('readystatechange', function(e) {
-          if(iframe[0].readyState == 'interactive') {
-            self.getOrAppendFontFixStyleElement().removeAttr('disabled');
-            setTimeout(function(){ self.getOrAppendFontFixStyleElement().attr('disabled', 'disabled'); }, 0);
-          }
-        });
-      }
 
       // Preview might not be available in all admin interfaces - block/disable when necessary
       this._unblock();
@@ -309,7 +278,6 @@ $.entwine('ss.preview', function($){
      */
     _block: function() {
       this.find('.preview-note').show();
-      this.find('.cms-preview-overlay').show();
       return this;
     },
 
@@ -318,7 +286,6 @@ $.entwine('ss.preview', function($){
      */
     _unblock: function() {
       this.find('.preview-note').hide();
-      this.find('.cms-preview-overlay').hide();
       return this;
     },
 
@@ -476,6 +443,7 @@ $.entwine('ss.preview', function($){
           this._unblock();
         }
         else {
+          this._loadUrl('about:blank');
           this._block();
         }
       }
