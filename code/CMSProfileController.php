@@ -17,7 +17,7 @@ class CMSProfileController extends LeftAndMain
 
     private static $menu_title = 'My Profile';
 
-    private static $required_permission_codes = false;
+    private static $required_permission_codes = "CMS_ACCESS";
 
     private static $tree_class = Member::class;
 
@@ -67,11 +67,13 @@ class CMSProfileController extends LeftAndMain
             return false;
         }
 
-        // Check they can access the CMS and that they are trying to edit themselves
-        if (Permission::checkMember($member, "CMS_ACCESS")
-            && $member->ID === Security::getCurrentUser()->ID
-        ) {
-            return true;
+        // Check they are trying to edit themselves
+        if ($member->ID === Security::getCurrentUser()->ID) {
+            // Check they can access via self::$required_permission_codes
+            $codes = $this->getRequiredPermissions();
+
+            // allow explicit TRUE || default to Permission::checkMember()
+            return $codes === true || Permission::checkMember($member, $codes);
         }
 
         return false;
