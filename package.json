@@ -61,7 +61,7 @@
     "jquery-sizes": "^0.33.0",
     "json-js": "^1.1.2",
     "lodash.debounce": "^4.0.8",
-    "merge": "^1.2.1",
+    "merge": "^2.1.1",
     "modernizr": "^3.5.0",
     "moment": "^2.22.2",
     "page.js": "^4.13.3",
