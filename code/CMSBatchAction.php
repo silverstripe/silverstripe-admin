@@ -6,6 +6,7 @@ use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\Controller;
 use SilverStripe\Core\Convert;
 use SilverStripe\Core\Injector\Injectable;
+use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\SS_List;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Versioned\Versioned;
@@ -178,10 +179,14 @@ abstract class CMSBatchAction
         return $applicableIDs;
     }
 
-
-    // if your batchaction has parameters, return a FieldList here
+    /**
+     * if your batchaction has parameters, return a FieldList here
+     * @deprecated 4.7.0:5.0.0
+     * @return FieldList|bool
+     */
     public function getParameterFields()
     {
+        Deprecation::notice('4.7.0');
         return false;
     }
 
