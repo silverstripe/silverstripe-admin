@@ -6,6 +6,7 @@ use BadMethodCallException;
 use InvalidArgumentException;
 use LogicException;
 use ReflectionClass;
+use SilverStripe\Admin\React\SiteName;
 use SilverStripe\CMS\Controllers\SilverStripeNavigator;
 use SilverStripe\Control\ContentNegotiator;
 use SilverStripe\Control\Controller;
@@ -1110,6 +1111,11 @@ class LeftAndMain extends Controller implements PermissionProvider
         return $this->renderWith($this->getTemplatesWithSuffix('_Menu'));
     }
 
+    public function SiteName()
+    {
+        return new SiteName();
+    }
+
     /**
      * @todo Wrap in CMSMenu instance accessor
      * @return ArrayData A single menu entry (see {@link MainMenu})
@@ -1658,11 +1664,11 @@ class LeftAndMain extends Controller implements PermissionProvider
         if (isset($this->urlParams['ID']) && is_numeric($this->urlParams['ID'])) {
             return $this->urlParams['ID'];
         }
-        
+
         if (is_numeric($this->getRequest()->param('ID'))) {
             return $this->getRequest()->param('ID');
         }
-        
+
         /** @deprecated */
         $session = $this->getRequest()->getSession();
         return $session->get($this->sessionNamespace() . ".currentPage") ?: null;
