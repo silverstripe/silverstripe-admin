@@ -45,7 +45,7 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
     /**
      * An array of changes to be made to the menu items, in the order that the changes should be
      * applied.  Each item is a map in one of the two forms:
-     *  - array('type' => 'add', 'item' => new CMSMenuItem(...) )
+     *  - array('type' => 'add', 'item' => CMSMenuItem::create(...) )
      *  - array('type' => 'remove', 'code' => 'codename' )
      */
     protected static $menu_item_changes = array();
@@ -105,7 +105,7 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
         // titles for existing menu entries
         $menuTitle = LeftAndMain::menu_title($controllerClass);
 
-        return new CMSMenuItem($menuTitle, $link, $controllerClass, $menuPriority);
+        return CMSMenuItem::create($menuTitle, $link, $controllerClass, $menuPriority);
     }
 
 
@@ -336,7 +336,7 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
         $attributes = null,
         $iconClass = null
     ) {
-        $item = new CMSMenuItem($menuTitle, $url, $controllerClass, $priority, $iconClass);
+        $item = CMSMenuItem::create($menuTitle, $url, $controllerClass, $priority, $iconClass);
 
         if ($attributes) {
             $item->setAttributes($attributes);
