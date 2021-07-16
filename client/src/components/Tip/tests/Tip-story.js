@@ -9,7 +9,7 @@ setAddon(JSXAddon);
 
 import notes from '../README.md';
 
-import Tip, { TIP_IMPORTANCE_LEVELS } from 'components/Tip/Tip';
+import Tip, { TIP_IMPORTANCE_LEVELS, TIP_TYPES } from 'components/Tip/Tip';
 import ValueTracker from 'stories/ValueTracker';
 import { Input, InputGroup, InputGroupAddon } from 'reactstrap';
 
@@ -25,6 +25,7 @@ const importanceLevels = Object.keys(TIP_IMPORTANCE_LEVELS)
     ...accumulator,
     [`TIP_IMPORTANCE_LEVELS.${key}`]: TIP_IMPORTANCE_LEVELS[key]
   }), {});
+
 
 storiesOf('Admin/Tip', module)
   .addDecorator(withKnobs)
@@ -44,8 +45,9 @@ storiesOf('Admin/Tip', module)
               fieldTitle={'Tip Field'}
               id={'tip-field'}
               content={text('Content', 'Example tip contents')}
-              icon={selectV2('Icon (examples)', ['lamp', 'attention', 'flag'], 'lamp')}
+              icon={selectV2('Icon (examples)', ['lamp', 'menu-help', 'attention', 'flag'], 'lamp')}
               importance={selectV2('Importance', importanceLevels, 'normal')}
+              type={selectV2('Type', TIP_TYPES, TIP_TYPES.BUTTON)}
             />
           </InputGroupAddon>
         </InputGroup>
