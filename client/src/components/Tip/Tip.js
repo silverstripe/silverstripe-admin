@@ -12,6 +12,11 @@ export const TIP_IMPORTANCE_LEVELS = {
   HIGH: 'high',
 };
 
+export const TIP_TYPES = {
+  BUTTON: 'button',
+  IMAGE: 'image',
+};
+
 /**
  * Unique attributes related to each `TIP_IMPORTANCE_LEVEL`.
  */
@@ -55,18 +60,35 @@ class Tip extends Component {
       fieldTitle
     });
 
+    let el;
+    let props = {
+      key: `${id}-tip-clickable`,
+      id: `${id}-tip`,
+      onClick: this.handleTipToggle,
+      'aria-label': label,
+      'aria-expanded': open
+    };
+    const className = `tip font-icon-${icon} text-${iconColor} ${this.props.extraClass || ''}`.trim();
+
+    if (this.props.type === TIP_TYPES.BUTTON) {
+      props = {
+        ...props,
+        color: 'outline-secondary',
+        className: `btn btn-outline-secondary btn--no-text btn--last ${className}`
+      };
+      el = <Button {...props} />;
+    } else if (this.props.type === TIP_TYPES.IMAGE) {
+      props = {
+        ...props,
+        role: 'button',
+        tabIndex: 0,
+        className
+      };
+      el = <i {...props} />;
+    }
+
     return [
-      (
-        <Button
-          key={`${id}-tip-button`}
-          color="outline-secondary"
-          id={`${id}-tip`}
-          onClick={this.handleTipToggle}
-          className={`btn--no-text btn--last font-icon-${icon} text-${iconColor}`}
-          aria-label={label}
-          aria-expanded={open}
-        />
-      ),
+      el,
       (
         <Popover
           key={`${id}-tip-popover`}
@@ -92,6 +114,8 @@ export const tipShape = {
 
 Tip.propTypes = {
   ...tipShape,
+  type: PropTypes.oneOf(Object.values(TIP_TYPES)),
+  extraClass: PropTypes.string,
   fieldTitle: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
 };
@@ -99,6 +123,7 @@ Tip.propTypes = {
 Tip.defaultProps = {
   importance: TIP_IMPORTANCE_LEVELS.NORMAL,
   icon: 'lamp',
+  type: TIP_TYPES.BUTTON
 };
 
 export default Tip;

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Tip, { TIP_IMPORTANCE_LEVELS } from '../Tip';
+import Tip, { TIP_IMPORTANCE_LEVELS, TIP_TYPES } from '../Tip';
 
 const baseProps = {
   content: 'Test content',
@@ -57,6 +57,18 @@ describe('Tip', () => {
       ReactDOM.render(<Tip {...baseProps} importance={TIP_IMPORTANCE_LEVELS.HIGH} />, container);
 
       expect(document.querySelectorAll('.btn.text-danger').length).toEqual(1);
+    });
+
+    it('should render a button by default', () => {
+      ReactDOM.render(<Tip {...baseProps} />, container);
+      expect(document.querySelectorAll('button.tip').length).toEqual(1);
+      expect(document.querySelectorAll('i.tip').length).toEqual(0);
+    });
+
+    it('should render an image if specified', () => {
+      ReactDOM.render(<Tip {...baseProps} type={TIP_TYPES.IMAGE} />, container);
+      expect(document.querySelectorAll('button.tip').length).toEqual(0);
+      expect(document.querySelectorAll('i.tip').length).toEqual(1);
     });
   });
 

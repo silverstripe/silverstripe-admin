@@ -150,6 +150,17 @@ fieldset {
       }
     }
   }
+
+  .title-tip {
+    cursor: pointer;
+    margin-left: 5px;
+
+    &::before {
+      position: relative;
+      font-size: 15px;
+      top: 2px;
+    }
+  }
 }
 
 form.small .field, .field.small {
