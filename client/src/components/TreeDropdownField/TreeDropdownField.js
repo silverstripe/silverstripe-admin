@@ -335,7 +335,10 @@ class TreeDropdownField extends Component {
       ) {
           return false;
       }
-      const title = option.title && option.title.toLocaleLowerCase();
+      const title =
+        typeof option.title === "string"
+          ? option.title.toLocaleLowerCase()
+          : "";
       // using this.props.search so that we do not get flash of filtered current content
       const search = this.props.search.toLocaleLowerCase();
 
