@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Tip, { TIP_IMPORTANCE_LEVELS } from '../Tip';
+import Tip, { TIP_IMPORTANCE_LEVELS, TIP_TYPES } from '../Tip';
 
 const baseProps = {
   content: 'Test content',
@@ -58,22 +58,19 @@ describe('Tip', () => {
 
       expect(document.querySelectorAll('.btn.text-danger').length).toEqual(1);
     });
-  });
 
-  describe('handleTipToggle()', () => {
-    it('should toggle the popover when the button is clicked', () => {
+    it('should render an input group tip by default', () => {
       ReactDOM.render(<Tip {...baseProps} />, container);
+      expect(document.querySelectorAll('.tip').length).toEqual(1);
+      expect(document.querySelectorAll('.tip--title').length).toEqual(0);
+      expect(document.querySelectorAll('.tip--input-group').length).toEqual(1);
+    });
 
-      const button = document.querySelector('.btn');
-      button.click();
-
-      const popover = document.querySelectorAll('.popover');
-
-      expect(popover.length).toEqual(1);
-      expect(popover[0].textContent).toContain('Test content');
-
-      button.click();
-      expect(document.querySelectorAll('.popover').length).toEqual(0);
+    it('should render a title tip if specified', () => {
+      ReactDOM.render(<Tip {...baseProps} type={TIP_TYPES.TITLE} />, container);
+      expect(document.querySelectorAll('.tip').length).toEqual(1);
+      expect(document.querySelectorAll('.tip--title').length).toEqual(1);
+      expect(document.querySelectorAll('.tip--input-group').length).toEqual(0);
     });
   });
 });

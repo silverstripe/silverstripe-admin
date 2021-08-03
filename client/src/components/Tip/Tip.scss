@@ -1,0 +1,42 @@
+.tip.tip--title {
+  padding: 0;
+  margin: -2px -2px 0 5px;
+  width: 18px;
+  float: right;
+
+  // this selector is used to get priority over .btn-secondary:not(:disabled)
+  &:not(:disabled) {
+    // tab to element with keyboard
+    &:focus-visible,
+    // click, click and hold, click and hold and move mouse off element
+    &:hover,
+    &:active,
+    &:focus,
+    &:hover:active,
+    &:hover:focus,
+    &:active:focus {
+      border-color: transparent;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    // click and hold and move mouse off element and release
+    &:focus,
+    &:active:focus {
+      color: $gray-600;
+    }
+
+    // mouse over, tab to element with keyboard
+    &:focus-visible,
+    &:hover,
+    &:hover:focus {
+      color: $link-color;
+    }
+
+    // click, click and hold
+    &:active,
+    &:hover:active {
+      color: $link-hover-color;
+    }
+  }
+}

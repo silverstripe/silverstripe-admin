@@ -1,11 +1,23 @@
-import React, { Component } from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Popover, PopoverBody } from 'reactstrap';
+import { UncontrolledPopover, PopoverBody } from 'reactstrap';
 import i18n from 'i18n';
+import Button from '../Button/Button';
+import classNames from 'classnames';
+
+/**
+ * List of values that can be passed in the `type` prop of the `<Tip />` component.
+ * @type {{TITLE: string, INPUT_GROUP: string}}
+ */
+export const TIP_TYPES = {
+  TITLE: 'title',
+  INPUT_GROUP: 'input-group',
+};
 
 /**
  * List of values that can be passed in the `importance` prop of the `<Tip />` component.
- * @type {{HIGH: string, NORMAL: string}}
+ * This is only applicable for the TEXT_FIELD type
+ * @type {{NORMAL: string, HIGH: string}}
  */
 export const TIP_IMPORTANCE_LEVELS = {
   NORMAL: 'normal',
@@ -18,67 +30,49 @@ export const TIP_IMPORTANCE_LEVELS = {
 const tipImportanceMap = {
   [TIP_IMPORTANCE_LEVELS.NORMAL]: {
     iconColor: 'muted',
-    type: i18n._t('Admin.NORMAL_TIP', 'Tip'),
+    description: i18n._t('Admin.NORMAL_TIP', 'Tip'),
   },
   [TIP_IMPORTANCE_LEVELS.HIGH]: {
     iconColor: 'danger',
-    type: i18n._t('Admin.IMPORTANT_TIP', 'Important tip'),
+    description: i18n._t('Admin.IMPORTANT_TIP', 'Important tip'),
   },
 };
 
 /**
- * UI element displaying a toggle-able "Tip". Designed to be used as an 'input group suffix'.
+ * UI element displaying a toggle-able "Tip".
+ * The LABEL type will show next to a form field title label
+ * The INPUT_GROUP type is designed to be used as an 'input group suffix'.
  */
-class Tip extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      open: false,
-    };
-
-    this.handleTipToggle = this.handleTipToggle.bind(this);
+function Tip(props) {
+  const { content, fieldTitle, icon, id, importance } = props;
+  const { iconColor, description } = tipImportanceMap[importance];
+  const label = i18n.inject(i18n._t('Admin.TIP_LABEL', '{description} for {fieldTitle}'), {
+    description,
+    fieldTitle
+  });
+  const classes = ['tip', props.extraClass];
+  if (props.type === TIP_TYPES.TITLE) {
+    classes.push('tip--title');
+  } else if (props.type === TIP_TYPES.INPUT_GROUP) {
+    classes.push('tip--input-group', 'btn--last', 'btn-outline-secondary', `text-${iconColor}`);
   }
+  const buttonId = `${id}-tip`;
+  const buttonProps = {
+    id: buttonId,
+    onClick: () => {},
+    className: classNames(classes),
+    noText: true,
+    icon
+  };
 
-  handleTipToggle() {
-    this.setState((state) => ({ open: !state.open }));
-  }
-
-  render() {
-    const { content, fieldTitle, icon, id, importance } = this.props;
-    const { open } = this.state;
-
-    const { iconColor, type } = tipImportanceMap[importance];
-
-    const label = i18n.inject(i18n._t('Admin.TIP_LABEL', '{type} for {fieldTitle}'), {
-      type,
-      fieldTitle
-    });
-
-    return [
-      (
-        <Button
-          key={`${id}-tip-button`}
-          color="outline-secondary"
-          id={`${id}-tip`}
-          onClick={this.handleTipToggle}
-          className={`btn--no-text btn--last font-icon-${icon} text-${iconColor}`}
-          aria-label={label}
-          aria-expanded={open}
-        />
-      ),
-      (
-        <Popover
-          key={`${id}-tip-popover`}
-          target={`${id}-tip`}
-          placement="top-end"
-          isOpen={open}
-        >
-          <PopoverBody aria-live="assertive" aria-relevant="additions">{content}</PopoverBody>
-        </Popover>
-      )
-    ];
-  }
+  return (
+    <Fragment>
+      <Button {...buttonProps}>{label}</Button>
+      <UncontrolledPopover trigger="legacy" placement="top-end" target={buttonId}>
+        <PopoverBody>{content}</PopoverBody>
+      </UncontrolledPopover>
+    </Fragment>
+  );
 }
 
 /**
@@ -87,11 +81,13 @@ class Tip extends Component {
 export const tipShape = {
   content: PropTypes.string.isRequired,
   importance: PropTypes.oneOf(Object.values(TIP_IMPORTANCE_LEVELS)),
+  type: PropTypes.oneOf(Object.values(TIP_TYPES)),
   icon: PropTypes.string,
 };
 
 Tip.propTypes = {
   ...tipShape,
+  extraClass: PropTypes.string,
   fieldTitle: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
 };
@@ -99,6 +95,7 @@ Tip.propTypes = {
 Tip.defaultProps = {
   importance: TIP_IMPORTANCE_LEVELS.NORMAL,
   icon: 'lamp',
+  type: TIP_TYPES.INPUT_GROUP
 };
 
 export default Tip;

@@ -1,10 +1,16 @@
 /* global jest, jasmine, describe, it, expect, beforeEach */
 
+import Adapter from 'enzyme-adapter-react-16';
+
 jest.mock('components/FormAlert/FormAlert');
 
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import fieldHolder from '../FieldHolder';
+import Enzyme, { mount } from 'enzyme';
+
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('FieldHolder', () => {
   const InnerField = () => <div>Field</div>;
@@ -262,6 +268,44 @@ describe('FieldHolder', () => {
       expect(field.props.children[0]).toBe(undefined);
       expect(field.props.children[1].type).toBe(InnerField);
       expect(field.props.children[2].props.children).toBe('My suffix');
+    });
+  });
+
+  describe('titleTips', () => {
+    // this is a workaround for enzyme testing reactstrap tips
+    // https://github.com/reactstrap/reactstrap/issues/738
+    // we do something similar in Tip.js
+    let div;
+    beforeEach(() => {
+      div = document.createElement('div');
+      div.id = 'FieldHolder-my-id-titleTip-tip';
+      document.body.appendChild(div);
+    });
+    afterEach(() => {
+      document.body.removeChild(div);
+    });
+
+    it('should render a titleTip if one is provided', () => {
+      const elProps = {
+        ...props,
+        id: 'my-id',
+        title: 'My title',
+        titleTip: {
+          content: 'My content',
+        }
+      };
+      const reactWrapper = mount(<Holder {...elProps} />);
+      expect(reactWrapper.find('button.tip.tip--title')).toHaveLength(1);
+    });
+
+    it('should not render a titleTip if one is not provided', () => {
+      const elProps = {
+        ...props,
+        id: 'my-id',
+        title: 'My title'
+      };
+      const reactWrapper = mount(<Holder {...elProps} />);
+      expect(reactWrapper.find('.tip')).toHaveLength(0);
     });
   });
 });
