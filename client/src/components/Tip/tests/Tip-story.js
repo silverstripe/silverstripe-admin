@@ -9,9 +9,9 @@ setAddon(JSXAddon);
 
 import notes from '../README.md';
 
-import Tip, { TIP_IMPORTANCE_LEVELS } from 'components/Tip/Tip';
+import Tip, { TIP_IMPORTANCE_LEVELS, TIP_TYPES } from 'components/Tip/Tip';
 import ValueTracker from 'stories/ValueTracker';
-import { Input, InputGroup, InputGroupAddon } from 'reactstrap';
+import { FormGroup, Input, InputGroup, InputGroupAddon } from 'reactstrap';
 
 const inputProps = {
   name: 'MyField',
@@ -26,6 +26,7 @@ const importanceLevels = Object.keys(TIP_IMPORTANCE_LEVELS)
     [`TIP_IMPORTANCE_LEVELS.${key}`]: TIP_IMPORTANCE_LEVELS[key]
   }), {});
 
+
 storiesOf('Admin/Tip', module)
   .addDecorator(withKnobs)
   .addDecorator((storyFn) => (
@@ -34,18 +35,39 @@ storiesOf('Admin/Tip', module)
     </div>
   ))
   .addWithJSX(
-    'Basic Example',
+    'Title tip',
+    withNotes(notes)(
+      () => (
+        <FormGroup>
+          {inputProps.title}
+          <Tip
+            id={`FieldHolder-${inputProps.id}-titleTip`}
+            content={text('Content', 'Example tip contents')}
+            icon="menu-help"
+            fieldTitle={inputProps.fieldTitle}
+            type={TIP_TYPES.TITLE}
+          />
+          <div className="form__field-holder">
+            <Input {...inputProps} />
+          </div>
+        </FormGroup>
+      )
+    )
+  )
+  .addWithJSX(
+    'Input group tip',
     withNotes(notes)(
       () => (
         <InputGroup>
           <Input {...inputProps} />
           <InputGroupAddon addonType="append">
             <Tip
-              fieldTitle={'Tip Field'}
-              id={'tip-field'}
+              id={'input-group-tip-field'}
               content={text('Content', 'Example tip contents')}
+              fieldTitle={inputProps.fieldTitle}
               icon={selectV2('Icon (examples)', ['lamp', 'attention', 'flag'], 'lamp')}
               importance={selectV2('Importance', importanceLevels, 'normal')}
+              type={TIP_TYPES.INPUT_GROUP}
             />
           </InputGroupAddon>
         </InputGroup>

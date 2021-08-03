@@ -3,6 +3,7 @@ import { FormGroup, InputGroup, InputGroupAddon, Label } from 'reactstrap';
 import castStringToElement from 'lib/castStringToElement';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import Tip, { tipShape, TIP_TYPES } from 'components/Tip/Tip';
 
 function fieldHolder(Field) {
   class FieldHolder extends Component {
@@ -44,23 +45,6 @@ function fieldHolder(Field) {
         }),
         id: this.props.holderId,
       };
-    }
-
-    /**
-     * Build description
-     *
-     * @returns {object}
-     */
-    renderDescription() {
-      if (this.props.description === null) {
-        return null;
-      }
-
-      return castStringToElement(
-        'div',
-        this.props.description,
-        { className: 'form__field-description' }
-      );
     }
 
     /**
@@ -160,6 +144,41 @@ function fieldHolder(Field) {
       );
     }
 
+    /**
+     * @returns {JSX.Element}
+     */
+    renderTitleTip() {
+      if (!this.props.id || !this.props.titleTip || !this.props.titleTip.content) {
+        return null;
+      }
+      return (
+        <Tip
+          id={`FieldHolder-${this.props.id}-titleTip`}
+          content={this.props.titleTip.content}
+          fieldTitle={this.props.title}
+          type={TIP_TYPES.TITLE}
+          icon="menu-help"
+        />
+      );
+    }
+
+    /**
+     * Build description
+     *
+     * @returns {JSX.Element}
+     */
+    renderDescription() {
+      if (this.props.description === null) {
+        return null;
+      }
+
+      return castStringToElement(
+        'div',
+        this.props.description,
+        { className: 'form__field-description' }
+      );
+    }
+
     render() {
       if (this.props.noHolder) {
         return this.renderField();
@@ -167,6 +186,7 @@ function fieldHolder(Field) {
       return (
         <FormGroup {...this.getHolderProps()}>
           {this.renderLeftTitle()}
+          {this.renderTitleTip()}
           <div className="form__field-holder">
             {this.renderField()}
             {this.renderMessage()}
@@ -200,6 +220,7 @@ function fieldHolder(Field) {
         suffix: PropTypes.string,
       }),
     ]),
+    titleTip: PropTypes.shape(tipShape)
   };
 
   FieldHolder.defaultProps = {
