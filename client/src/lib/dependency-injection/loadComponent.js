@@ -45,7 +45,7 @@ const loadComponent = (targetName, context = {}, overrideInjector) => {
       };
     }
 
-    componentWillMount() {
+    componentDidMount() {
       Injector.ready(() => {
         if (typeof targetName === 'string') {
           let error = true;

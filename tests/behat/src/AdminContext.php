@@ -59,16 +59,4 @@ class AdminContext implements Context
             assertTrue(strpos($element->getText(), $text) !== false, $message);
         }
     }
-
-    /**
-     * @When /^I click the "([^"]+)" element$/
-     * @param $selector
-     */
-    public function iClickTheElement($selector)
-    {
-        $page = $this->getMainContext()->getSession()->getPage();
-        $element = $page->find('css', $selector);
-        assertNotNull($element, sprintf('Element %s not found', $selector));
-        $element->click();
-    }
 }
