@@ -50,7 +50,7 @@ class SecurityAdminTest extends FunctionalTest
 
     public function testPermissionFieldRespectsHiddenPermissions()
     {
-        $this->session()->set('loggedInAs', $this->idFromFixture(Member::class, 'admin'));
+        $this->logInAs($this->idFromFixture(Member::class, 'admin'));
 
         $group = $this->objFromFixture(Group::class, 'admin');
 

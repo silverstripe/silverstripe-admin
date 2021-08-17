@@ -59,7 +59,7 @@ class LeftAndMainTest extends FunctionalTest
     public function testExtraCssAndJavascript()
     {
         $admin = $this->objFromFixture(Member::class, 'admin');
-        $this->session()->set('loggedInAs', $admin->ID);
+        $this->logInAs($admin);
         $response = $this->get('admin/security');
 
         $this->assertRegExp(
@@ -107,7 +107,7 @@ class LeftAndMainTest extends FunctionalTest
         $allcmssectionsuser = $this->objFromFixture(Member::class, 'allcmssectionsuser');
 
         // anonymous user
-        $this->session()->set('loggedInAs', null);
+        $this->logOut();
         $this->resetMenu();
         $menuItems = LeftAndMain::singleton()->MainMenu(false);
         $this->assertEquals(
@@ -157,7 +157,7 @@ class LeftAndMainTest extends FunctionalTest
             'Administrators can access Security Admin'
         );
 
-        $this->session()->set('loggedInAs', null);
+        $this->logOut();
     }
 
     /**

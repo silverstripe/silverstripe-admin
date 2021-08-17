@@ -5,6 +5,7 @@ namespace SilverStripe\Admin\Tests;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Dev\FunctionalTest;
 use SilverStripe\Security\Member;
+use SilverStripe\Security\Security;
 
 class CMSProfileControllerTest extends FunctionalTest
 {
@@ -17,7 +18,7 @@ class CMSProfileControllerTest extends FunctionalTest
     {
         $member = $this->objFromFixture(Member::class, 'user1');
         $anotherMember = $this->objFromFixture(Member::class, 'user2');
-        $this->session()->set('loggedInAs', $member->ID);
+        $this->logInAs($member);
 
         $response = $this->post('admin/myprofile/EditForm', array(
             'action_save' => 1,
@@ -38,7 +39,7 @@ class CMSProfileControllerTest extends FunctionalTest
     public function testMemberEditsOwnProfile()
     {
         $member = $this->objFromFixture(Member::class, 'user3');
-        $this->session()->set('loggedInAs', $member->ID);
+        $this->logInAs($member);
 
         $response = $this->post('admin/myprofile/EditForm', array(
             'action_save' => 1,
@@ -64,7 +65,7 @@ class CMSProfileControllerTest extends FunctionalTest
         ]);
 
         $member = $this->objFromFixture(Member::class, 'user1');
-        $this->session()->set('loggedInAs', $member->ID);
+        $this->logInAs($member);
 
         $response = $this->post('admin/myprofile/EditForm', array(
             'action_save' => 1,
