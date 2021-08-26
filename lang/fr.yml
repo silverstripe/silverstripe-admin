@@ -1,7 +1,7 @@
 fr:
   SilverStripe\Admin\CMSProfileController:
-    CANTEDIT: 'Vous n''avez pas les autorisations de faire cela'
-    MENUTITLE: 'Mon Profile'
+    CANTEDIT: 'Vous n''avez pas les autorisations pour faire cela'
+    MENUTITLE: 'Mon profil'
   SilverStripe\Admin\Forms\EditorEmailLinkFormFactory:
     EMAIL: 'Adresse email'
     LINKDESCR: 'Description du lien'
@@ -12,8 +12,13 @@ fr:
     LINKDESCR: 'Description du lien'
     LINKOPENNEWWIN: 'Ouvrir dans une nouvelle fenêtre/onglet'
     LINKTEXT: 'Texte du lien'
+    URL: URL
   SilverStripe\Admin\Forms\LinkFormFactory:
     INSERT_LINK: 'Ajouter un lien'
+  SilverStripe\Admin\Forms\UsedOnTable:
+    ADDEDTODRAFT: Brouillon
+    MODIFIEDONDRAFTSHORT: Modifié
+    UNTITLED: 'Sans titre'
   SilverStripe\Admin\GroupImportForm:
     Help1: '<p>Importer un ou plus de groupe en format <em>CSV</em> (valeurs séparées par une virgule). <small><a href="#" class="toggle-advanced">Montrer l''utilisation avancée</a></small></p>'
     Help2: '<div class="advanced"><h4>Usage avancée</h4><ul><li>Colonnes permises: <em>{columns}</em></li><li>Les groupes existants sont liés par leur propriété unique <em>Code</em> et mis à jour avec les nouvelles valeurs du fichier importé.</li><li>La hiérarchies des groupes peut-être créé en utilisant la colonne <em>ParentCode.</em></li><li>Les codes d''autorisations peuvent être assignés avec la colonne <em>PermissionCode</em>. Les codes d''autorisations ne seront pas effacés.</li></ul></div>'
@@ -24,26 +29,35 @@ fr:
     ACCESSALLINTERFACES: 'Accès à toutes les sections du CMS'
     BROWSER_WARNING_HEADING: 'Navigateur non pris en charge'
     BROWSER_WARNING_TEXT: 'Vous utilisez un navigateur qui n''est pas supporté par SilverStripe.<br />Veuillez en utiliser un avec les options suivantes.'
+    CollapsePanel: 'Fermer le panneau'
     DELETED: Effacé.
     DropdownBatchActionsDefault: 'Choisir une action...'
+    ExpandPanel: 'Ouvrir le panneau'
+    HelpMenu: 'Menu d''aide'
     LOGOUT: Déconnexion
+    MenuToggleAuto: Auto
     NavigateUp: 'Naviguer dans un dossier'
     PERMAGAIN: 'Vous avez été déconnecté du CMS. Si vous souhaitez vous reconnecter, entrez un nom d''utilisateur et un mot de passe ci-dessous.'
     PERMALREADY: 'Je suis désolé, mais vous ne pouvez pas accéder à cette partie du CMS. Si vous souhaitez vous connecter en tant que quelqu''un d''autre, faites-le ci-dessous.'
     PERMDEFAULT: 'Vous devez être connecté pour accéder à la zone d''''administration. Veuillez entrer vos identifiants ci-dessous.'
+    PROFILE: 'Profil de {name}'
     PreviewButton: Prévisualisation
     REQUIREJS: 'Le CMS nécessite que le JavaScript soit activé.'
     SAVEDUP: Sauvé.
     SUBMIT_BUTTON_LABEL: Aller
     ValidationError: 'Erreur de validation'
+    Version: Version
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
+    Auto: Auto
     ChangeViewMode: 'Changer le mode de visualisation'
     Desktop: Bureau
     DualWindowView: 'Fenêtre double'
     EditView: 'Mode édition'
+    Mobile: Portable
     PreviewState: 'État de prévisualisation'
     PreviewView: 'Mode prévisualisation'
     SplitView: 'Mode divisé'
+    Tablet: Tablette
     ViewDeviceWidth: 'Sélectionnez une largeur de prévisualisation'
     Width: largeur
   SilverStripe\Admin\MemberImportForm:
@@ -63,6 +77,7 @@ fr:
     IMPORTEDRECORDS: '{count} entrées importées.'
     IMPORTSPECFIELDS: 'Colonnes de la base de données'
     IMPORTSPECLINK: 'Montrer les spécification pour {model}'
+    IMPORTSPECRELATIONS: Relations
     IMPORTSPECTITLE: 'Spécification pour {model}'
     NOCSVFILE: 'Explorez pour importer un fichier CSV'
     NOIMPORT: 'Rien à importer'
@@ -72,7 +87,7 @@ fr:
     APPLY_ROLES: 'Appliquer des rôles à des groupes'
     APPLY_ROLES_HELP: 'Possibilité de modifier les rôles assignés à un groupe. Nécessite l''autorisation "Accès à la section ''Usagers''".'
     EDITPERMISSIONS: 'Gérer les autorisations pour les groupes'
-    EDITPERMISSIONS_HELP: 'Possibilité de modifier les permissions et les adresses IP d''un groupe. Nécessite la permission "Accès à la section ''''Sécurité''".'
+    EDITPERMISSIONS_HELP: 'Possibilité de modifier les permissions et les adresses IP d''un groupe. Nécessite la permission "Accès à la section ''Sécurité''".'
     IMPORTGROUPS: 'Importer des groupes'
     IMPORTUSERS: 'Importer des utilisateurs'
     MENUTITLE: Sécurité
