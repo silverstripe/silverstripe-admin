@@ -489,13 +489,12 @@ $.entwine('ss', function($) {
       // Save tab selections so we can restore them later
       this.saveTabState();
 
-
       // Standard Pjax behaviour is to replace the submitted form with new content.
       // The returned view isn't always decided upon when the request
       // is fired, so the server might decide to change it based on its own logic,
       // sending back different `X-Pjax` headers and content
       jQuery.ajax(jQuery.extend({
-        headers: {"X-Pjax" : "CurrentForm,Breadcrumbs"},
+        headers: {"X-Pjax" : "CurrentForm,Breadcrumbs,ValidationResult"},
         url: form.attr('action'),
         data: formData,
         type: 'POST',
