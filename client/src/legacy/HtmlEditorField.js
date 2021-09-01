@@ -253,6 +253,7 @@ ss.editorWrappers.tinyMCE = (function() {
      */
     insertLink: function(attrs, opts, linkText) {
       if (linkText) {
+        linkText = linkText.replaceAll('<', '&lt;').replaceAll('>', '&gt;');
         const linkEl = this.getInstance().dom.create('a', attrs, linkText);
         this.getInstance().selection.setNode(linkEl);
       } else {
