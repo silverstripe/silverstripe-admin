@@ -1,6 +1,10 @@
 ---
 Name: adminforms
 ---
+SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest:
+  extensions:
+    - SilverStripe\Admin\Forms\GridFieldDetailFormPreviewExtension
+
 SilverStripe\Forms\GridField\GridFieldPrintButton:
   extensions:
     - SilverStripe\Admin\Forms\GridFieldPrintButtonExtension
