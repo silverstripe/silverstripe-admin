@@ -54,6 +54,10 @@
 				<%t SilverStripe\Admin\LeftAndMain.PreviewButton 'Preview' %> &raquo;
 			</a>
 			<% end_if %>
+
+			<% if $hasExtraClass('cms-previewable') %>
+				<% include SilverStripe\\Admin\\LeftAndMain_ViewModeSelector SelectID="preview-mode-dropdown-in-content" %>
+			<% end_if %>
 		</div>
 		<% end_if %>
 	</div>
