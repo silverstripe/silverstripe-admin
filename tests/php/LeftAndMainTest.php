@@ -19,7 +19,7 @@ class LeftAndMainTest extends FunctionalTest
 
     protected $backupCombined;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -50,7 +50,7 @@ class LeftAndMainTest extends FunctionalTest
         CMSMenu::populate_menu();
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         Requirements::set_combined_files_enabled($this->backupCombined);
@@ -62,12 +62,12 @@ class LeftAndMainTest extends FunctionalTest
         $this->logInAs($admin);
         $response = $this->get('admin/security');
 
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '/tests\/php\/assets\/LeftAndMainTest.css/i',
             $response->getBody(),
             "body should contain custom css"
         );
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '/tests\/php\/assets\/LeftAndMainTest.js/i',
             $response->getBody(),
             "body should contain custom js"
@@ -95,9 +95,9 @@ class LeftAndMainTest extends FunctionalTest
         $this->assertInstanceOf(HTTPResponse::class, $response, "$link should return a response object");
         $this->assertEquals(200, $response->getStatusCode(), "$link should return 200 status code");
         // Check that a HTML page has been returned
-        $this->assertRegExp('/<html[^>]*>/i', $response->getBody(), "$link should contain <html> tag");
-        $this->assertRegExp('/<head[^>]*>/i', $response->getBody(), "$link should contain <head> tag");
-        $this->assertRegExp('/<body[^>]*>/i', $response->getBody(), "$link should contain <body> tag");
+        $this->assertMatchesRegularExpression('/<html[^>]*>/i', $response->getBody(), "$link should contain <html> tag");
+        $this->assertMatchesRegularExpression('/<head[^>]*>/i', $response->getBody(), "$link should contain <head> tag");
+        $this->assertMatchesRegularExpression('/<body[^>]*>/i', $response->getBody(), "$link should contain <body> tag");
     }
 
     public function testCanView()

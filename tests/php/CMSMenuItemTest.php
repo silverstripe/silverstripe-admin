@@ -45,6 +45,6 @@ class CMSMenuItemTest extends SapphireTest
         );
 
         $menuItem->setAttributes(['<html>' => '<html>']);
-        $this->assertNotContains('<html>', $menuItem->getAttributesHTML(), 'Html is escaped for both name and value');
+        $this->assertStringNotContainsString('<html>', $menuItem->getAttributesHTML(), 'Html is escaped for both name and value');
     }
 }
