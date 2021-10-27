@@ -3,6 +3,7 @@
 namespace SilverStripe\Admin\Tests\Behat\Context;
 
 use Behat\Behat\Context\Context;
+use PHPUnit\Framework\Assert;
 use SilverStripe\BehatExtension\Context\MainContextAwareTrait;
 
 class AdminContext implements Context
@@ -29,10 +30,10 @@ class AdminContext implements Context
             $element = $page->find('css', $selector);
             $hiddenElement = $page->find('css', $hiddenSelector);
             $message = "Tab validation icon for $id is visible when it should not be";
-            assertTrue(is_null($element) || $hiddenElement, $message);
+            Assert::assertTrue(is_null($element) || $hiddenElement, $message);
         } else {
             $element = $page->find('css', $selector);
-            assertNotNull($element, "Tab validation icon for $id was not found");
+            Assert::assertNotNull($element, "Tab validation icon for $id was not found");
         }
     }
 
@@ -48,15 +49,15 @@ class AdminContext implements Context
         $element = $page->find('css', $selector);
         if ($not) {
             if (is_null($element)) {
-                assertTrue(true);
+                Assert::assertTrue(true);
             } else {
                 $message = 'Form validation error message is present when it should not be';
-                assertFalse(strpos($element->getText(), $text), $message);
+                Assert::assertFalse(strpos($element->getText(), $text), $message);
             }
         } else {
             $message = sprintf('Element %s not found', $selector);
-            assertNotNull($element, $message);
-            assertTrue(strpos($element->getText(), $text) !== false, $message);
+            Assert::assertNotNull($element, $message);
+            Assert::assertTrue(strpos($element->getText(), $text) !== false, $message);
         }
     }
 }

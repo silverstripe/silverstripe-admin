@@ -134,12 +134,12 @@ class ModelAdminTest extends FunctionalTest
         $field = $form->Fields()->fieldByName('SilverStripe-Admin-Tests-ModelAdminTest-Player');
         $this->assertNotNull($field, 'A GridField has been found on the form.');
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             'OverridenModelAdmin',
             $field->extraClass(),
             'OverridenModelAdmin has added an extra class to the grid field'
         );
-        $this->assertContains(
+        $this->assertStringContainsString(
             'called',
             $field->getAttribute('ModelAdminExtension'),
             'ModelAdminExtension has added an attribute to the GridField'

@@ -27,7 +27,7 @@ class SecurityAdminTest extends FunctionalTest
     //  $lines = preg_split('/\n/', $this->content());
 
     //  $this->assertEquals(count($lines), 3, "Export with members has one content row");
-    //  $this->assertRegExp('/"","","admin@example.com"/', $lines[1], "Member values are correctly exported");
+    //  $this->assertMatchesRegularExpression('/"","","admin@example.com"/', $lines[1], "Member values are correctly exported");
     // }
 
     // TODO Fix export feature (moved from MemberTableField to GridFieldExportButton)
@@ -57,11 +57,11 @@ class SecurityAdminTest extends FunctionalTest
         Config::modify()->merge(Permission::class, 'hidden_permissions', array('CMS_ACCESS_ReportAdmin'));
         $response = $this->get(sprintf('admin/security/EditForm/field/Groups/item/%d/edit', $group->ID));
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             'CMS_ACCESS_SecurityAdmin',
             $response->getBody()
         );
-        $this->assertNotContains(
+        $this->assertStringNotContainsString(
             'CMS_ACCESS_ReportAdmin',
             $response->getBody()
         );
