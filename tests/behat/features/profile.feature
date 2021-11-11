@@ -42,6 +42,14 @@ Feature: Manage my own settings
     And I press the "Save" button
     Then I should see "The current password you have entered is not correct."
 
+  Scenario: I can't create poor quality passwords
+    Given I follow "Change Password"
+    And I fill in "Current Password" with "secret"
+    And I fill in "New Password" with "a"
+    And I fill in "Confirm Password" with "a"
+    And I press the "Save" button
+    Then I should see "Password is too short"
+
   Scenario: I can change my password
     Given I follow "Change Password"
     And I fill in "Current Password" with "secret"
