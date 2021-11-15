@@ -7,7 +7,6 @@ Feature: Multi-tab page validation icons
     Given a "multi tab page" "My MultiTab Page"
     And a "single tab page" "My SingleTab Page"
 
-    @sboyd
   Scenario: I can see tab validation icons on multi-tab pages
     Given I am logged in with "ADMIN" permissions
     And I go to "/admin/pages"

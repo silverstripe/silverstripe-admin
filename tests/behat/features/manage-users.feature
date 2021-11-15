@@ -131,3 +131,49 @@ Feature: Manage users
     And I press the "Delete" button, confirming the dialog
     Then I should see "admin@example.org"
     And I should not see "staffmember@example.org"
+
+  Scenario: User group
+
+    Given the "group" "BOB group"
+    And the "page" "My page" has the "Content" "<p>My content</p>"
+
+    # Login to create BOB member
+    When I go to "/Security/login"
+    And I press the "Log in as someone else" button
+    And I am logged in with "BOB" permissions
+
+    # BOB cannot view draft content
+    When I go to "/my-page?stage=Stage"
+    Then I should not see "My page"
+
+    # Log back in as ADMIN
+    When I go to "/Security/login"
+    And I press the "Log in as someone else" button
+    And I am logged in with "ADMIN" permissions
+
+    # Create a user group
+    And I go to "/admin/security"
+    And I click the "Groups" CMS tab
+    And I press the "Add Group" button
+    And I fill in "Group name" with "MyGroup"
+    And I press the "Create" button
+
+    # Assign various permissions to the group
+    And I click the "Permissions" CMS tab
+    And I check "View draft content"
+    And I press the "Save" button
+
+    # Users that belong to that group have permissions applied
+    And I click the "Members" CMS tab
+    And I fill in "Form_ItemEditForm_gridfield_relationsearch" with "BOB"
+    And I click on the ".ui-menu-item > a" element
+    And I click on the "#Form_ItemEditForm_action_gridfield_relationadd" element
+
+    # Log back in as BOB
+    Given I go to "/Security/login"
+    And I press the "Log in as someone else" button
+    And I am logged in with "BOB" permissions
+
+    # BOB can now view draft content
+    When I go to "/my-page?stage=Stage"
+    Then I should see "My page"
