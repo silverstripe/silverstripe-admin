@@ -142,6 +142,7 @@ tinymce.addI18n('de_AT',{
 "Insert date\/time": "Zeit\/Datum einf\u00fcgen",
 "Date\/time": "Zeit\/Datum",
 "Insert link": "Link einf\u00fcgen",
+"Edit link": "Link bearbeiten",
 "Insert\/edit link": "Link einf\u00fcgen\/bearbeiten",
 "Text to display": "Angezeigter Text",
 "Url": "Url",
