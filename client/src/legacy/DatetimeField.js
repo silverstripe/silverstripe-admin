@@ -1,3 +1,6 @@
+/* eslint-disable
+ import/extensions
+*/
 import jQuery from 'jquery';
 import i18n from 'i18n';
 import moment from 'moment';

@@ -1,9 +1,5 @@
 /* global jest, jasmine, describe, beforeEach, it, pit, expect, process */
-
-jest.dontMock('../ShortcodeSerialiser.js');
-
-// FYI: Changing this to an import statements broke jest's automocking
-const ShortcodeSerialiser = require('../ShortcodeSerialiser.js').default;
+import ShortcodeSerialiser from '../ShortcodeSerialiser';
 
 describe('ShortcodeSerialiser', () => {
   describe('match', () => {

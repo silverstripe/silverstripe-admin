@@ -1,9 +1,5 @@
 /* global jest, jasmine, describe, beforeEach, it, expect, process */
-
-jest.dontMock('../Router.js');
-
-// FYI: Changing this to an import statements broke jest's automocking
-const router = require('../Router.js').default;
+import router from '../Router';
 
 describe('Router', () => {
   // Mock base dir

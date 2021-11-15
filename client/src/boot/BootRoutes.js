@@ -1,5 +1,7 @@
 /* global window, document */
-
+/* eslint-disable
+ no-alert
+*/
 import $ from 'jquery';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -138,7 +140,6 @@ class BootRoutes {
           WARNING: Your changes have not been saved.\n\n
           Press OK to continue, or Cancel to stay on the current page.`
       );
-      // eslint-disable-next-line no-alert
       if (!this.shouldConfirmBeforeUnload() || window.confirm(msg)) {
         // eslint-disable-next-line no-param-reassign
         ctx.store = store;

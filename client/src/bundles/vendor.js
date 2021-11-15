@@ -1,7 +1,8 @@
 /* eslint-disable
  import/no-webpack-loader-syntax,
  import/no-extraneous-dependencies,
- import/no-unresolved
+ import/no-unresolved,
+ import/extensions
 */
 // TODO Enable require(*.css) includes once https://github.com/webpack/extract-text-webpack-plugin/issues/179
 // is resolved. Included in bundle.scss for now.
