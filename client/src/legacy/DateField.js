@@ -3,8 +3,6 @@ import i18n from 'i18n';
 import moment from 'moment';
 import modernizr from 'modernizr';
 
-require('../../../thirdparty/jquery-entwine/dist/jquery.entwine-dist.js');
-
 jQuery.entwine('ss', ($) => {
   $('input[type=date]').entwine({
     onadd() {
