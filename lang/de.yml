@@ -18,6 +18,7 @@ de:
   SilverStripe\Admin\Forms\UsedOnTable:
     ADDEDTODRAFT: Entwurf
     MODIFIEDONDRAFTSHORT: Bearbeitet
+    UNTITLED: 'ohne Titel'
   SilverStripe\Admin\GroupImportForm:
     Help1: '<p>Eine oder mehrere Gruppen im <em>CSV</em> Format importieren. <small><a href="#" class="toggle-advanced">Zeige fortgeschrittenen Modus</a></small></p>'
     Help2: '<div class="advanced"><h4>Fortgeschrittener Modus</h4><ul><li>Erlaubte Spalten: <em>{columns}</em></li><li>Existierende Gruppen werden anhand des eindeutigen <em>Code</em> zugeordnet, und mit den Werten der importierten Datei aktualisiert.</li><li>Gruppenhierarchien können mittels einer <em>ParentCode</em> Spalte definiert werden.</li><li>Berechtigungen können anhand der Spalte "<em>PermissionCode</em>" zugewiesen werden. Bereits zugewiesene Berechtigungen werden nicht entfernt.</li></ul></div>'

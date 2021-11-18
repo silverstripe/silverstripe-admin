@@ -15,7 +15,13 @@ nl:
     URL: URL
   SilverStripe\Admin\Forms\LinkFormFactory:
     INSERT_LINK: 'Voeg link toe'
+  SilverStripe\Admin\Forms\UsedOnTable:
+    ADDEDTODRAFT: Concept
+    MODIFIEDONDRAFTSHORT: Aangepast
+    UNTITLED: Naamloos
   SilverStripe\Admin\GroupImportForm:
+    Help1: '<p>Importeer 1 of meerdere groepen in <em>CSV</em>formaat (kommagescheiden waarden). <small><a href="#" class="toggle-advanced">Toon geavanceerde mogelijkheden</a></small></p>'
+    Help2: '<div class="advanced"><h4>Geavanceerd gebruik</h4><ul><li>Mogelijke kolommen: <em>{columns}</em></li><li>Bestaande groepen worden gekoppeld op basis van de unieke <em>Code</em> waarde, en bijgewerkt met nieuwe waarden uit het import-bestand</li><li>Groep hiërarchie kan aangegeven worden met de <em>ParentCode</em> kolom.</li><li>Permissiecodes kunnen toegekend worden met de <em>PermissionCode</em> kolom. Bestaande permissies worden niet gewist.</li></ul></div>'
     ResultCreated: '{count} groepen aangemaakt'
     ResultDeleted: '{count} groepen gewist'
     ResultUpdated: '{count} groepen geupdate'
@@ -23,19 +29,26 @@ nl:
     ACCESSALLINTERFACES: 'Toegang tot alle CMS sekties'
     ACCESSALLINTERFACESHELP: 'Overschrijft overige access instellingen.'
     BROWSER_WARNING_HEADING: 'Browser wordt niet ondersteund'
+    BROWSER_WARNING_TEXT: 'Deze webbrowser wordt niet ondersteund door het Silverstripe CMS.<br />Voor een update uit naar een van de volgende opties.'
+    CollapsePanel: Inklappen
     DELETED: Gewist.
     DropdownBatchActionsDefault: 'Kies een aktie...'
+    ExpandPanel: Uitklappen
+    HelpMenu: Helpmenu
     LOGOUT: Uitloggen
     MenuToggleAuto: Auto
+    MenuToggleStickyNav: 'Opengeklapt houden'
     NavigateUp: 'Navigeer een niveau omhoog'
     PERMAGAIN: 'U bent uitgelogd. Als je opnieuw in wil loggen, voer uw gebruikersnaam en wachtwoord hier onder opnieuw in.'
     PERMALREADY: 'U heeft geen rechten binnen dit gedeelte van het CMS. Indien u in wil loggen als iemand anders, dan kan dat hier onder.'
     PERMDEFAULT: 'U moet ingelogd zijn om het administratie gedeelte te kunnen benaderen; voer uw gegevens hier onder in.'
+    PROFILE: '{name} profiel'
     PreviewButton: Preview
     REQUIREJS: 'Het CMS heeft het nodig dat JavaScript is ingeschakeld.'
     SAVEDUP: Opgeslagen.
     SUBMIT_BUTTON_LABEL: Ga
     ValidationError: Validatiefout
+    Version: Versie
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
     Auto: Auto
     ChangeViewMode: 'Verander view modus'
@@ -52,6 +65,9 @@ nl:
     Width: breedte
   SilverStripe\Admin\MemberImportForm:
     BtnImport: 'Importeer vanuit CSV'
+    FileFieldLabel: 'CSV-bestand <small>(Toegestane extensie: *.csv)</small>'
+    Help1: '<p>Importeer gebruikers met <em>CSV opmaak</em> (kommagescheiden waarden). <small><a href="#" class="toggle-advanced">Toon geavanceerde mogelijkheden</a></small></p>'
+    Help2: '<div class="advanced"><h4>Geavanceerd gebruik</h4><ul><li>Mogelijke kolommen: <em>{columns}</em></li><li>Bestaande gebruikers worden gekoppeld op basis van de unieke <em>Code</em>, en bijgewerkt met nieuwe waarden vanuit het import-bestand.</li><li>Groepen kunnen aangegeven worden in de <em>Groups</em> kolom. Groepen kunnen aangegeven worden met de unieke <em>Code</em> eigenschap, meerdere groepen worden met een komma gescheiden. Bestaande groepen worden niet gewist.</li></ul></div>'
     ResultCreated: '{count} leden aangemaakt'
     ResultDeleted: '{count} leden verwijderd'
     ResultNone: 'Geen veranderingen'
@@ -66,14 +82,19 @@ nl:
     IMPORTSPECLINK: 'Laat Specificatie zien voor {model}'
     IMPORTSPECRELATIONS: Relaties
     IMPORTSPECTITLE: 'Specificatie voor {model}'
+    NOCSVFILE: 'Kies een CSV bestand'
     NOIMPORT: 'Niets om te importeren'
     Title: 'Data Modellen'
     UPDATEDRECORDS: '{count} records aangepast'
   SilverStripe\Admin\SecurityAdmin:
+    ACCESS_HELP: 'Beheer rechten voor het toevoegen en bewerken van gebruikers, alsook het  toekennen van permissies en rollen.'
     APPLY_ROLES: 'Toepassen rollen voor groepen'
+    APPLY_ROLES_HELP: 'Mogelijkheid om groeps-rollen te bewerken. Hiervoor is het vinkje bij "Toegang tot het ''Beveiliging'' gedeelte" ook nodig'
     EDITPERMISSIONS: 'Beheren toestemmingen voor groepen'
+    EDITPERMISSIONS_HELP: 'Mogelijkheid om permissies en IP-adressen voor groepen te bewerken. Hiervoor is het vinkje bij "Toegang tot het ''Beveiliging'' gedeelte" ook nodig'
     IMPORTGROUPS: 'Importeer groepen'
     IMPORTUSERS: 'Importeer gebruikers'
     MENUTITLE: Beveiliging
+    MemberListCaution: 'Let op: Gebruikers die hier verwijderd worden, worden uit alle groepen én uit de database verwijderd.'
     TABROLES: Rollen
     Users: Gebruikers
