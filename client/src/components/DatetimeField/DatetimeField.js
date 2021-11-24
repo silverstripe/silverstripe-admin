@@ -4,6 +4,7 @@ import moment from 'moment';
 import i18n from 'i18n';
 
 const localFormat = 'L LT';
+const dateOnlyLocalFormat = 'L';
 
 class DatetimeField extends DateField {
   getInputProps() {
@@ -54,8 +55,9 @@ class DatetimeField extends DateField {
     moment.locale(this.props.lang);
     let isoTime = '';
     if (localTime) {
-      // Input value can be in local format 'L' or ISO format
-      const timeObject = this.moment(localTime, [localFormat, moment.ISO_8601]);
+      // Input value can be in local format 'L', 'L LT' or ISO format
+      const formats = [localFormat, dateOnlyLocalFormat, moment.ISO_8601];
+      const timeObject = this.moment(localTime, formats);
       if (timeObject.isValid()) {
         isoTime = timeObject.format('YYYY-MM-DDTHH:mm:ss');
       }
