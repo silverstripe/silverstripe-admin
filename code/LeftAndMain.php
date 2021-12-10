@@ -1658,11 +1658,11 @@ class LeftAndMain extends Controller implements PermissionProvider
         if (isset($this->urlParams['ID']) && is_numeric($this->urlParams['ID'])) {
             return $this->urlParams['ID'];
         }
-        
+
         if (is_numeric($this->getRequest()->param('ID'))) {
             return $this->getRequest()->param('ID');
         }
-        
+
         /** @deprecated */
         $session = $this->getRequest()->getSession();
         return $session->get($this->sessionNamespace() . ".currentPage") ?: null;
@@ -1739,7 +1739,8 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * Return the version number of the CMS, ie. '4.2.1'
+     * Return the version number of the CMS in the 'major.minor' format, e.g. '4.2'
+     * Will handle 4.10.x-dev by removing .x-dev
      *
      * @return string
      */
@@ -1747,12 +1748,14 @@ class LeftAndMain extends Controller implements PermissionProvider
     {
         $moduleName = array_keys($this->getVersionProvider()->getModules())[0];
         $lockModules = $this->getVersionProvider()->getModuleVersionFromComposer([$moduleName]);
-
         if (!isset($lockModules[$moduleName])) {
             return '';
         }
-
-        return $lockModules[$moduleName];
+        $version = $lockModules[$moduleName];
+        if (preg_match('#^([0-9]+)\.([0-9]+)#', $version, $m)) {
+            return $m[1] . '.' . $m[2];
+        }
+        return $version;
     }
 
     /**
@@ -1838,7 +1841,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      * @config
      * @var string
      */
-    private static $application_name = 'SilverStripe';
+    private static $application_name = 'Silverstripe';
 
     /**
      * Get the application name.
