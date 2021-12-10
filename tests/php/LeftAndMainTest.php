@@ -12,6 +12,7 @@ use SilverStripe\Core\Manifest\ModuleLoader;
 use SilverStripe\Dev\FunctionalTest;
 use SilverStripe\Security\Member;
 use SilverStripe\View\Requirements;
+use SilverStripe\Core\Manifest\VersionedProvider;
 
 class LeftAndMainTest extends FunctionalTest
 {
@@ -179,5 +180,40 @@ class LeftAndMainTest extends FunctionalTest
 
         $this->assertEquals('SilverStripe', $silverstripeLink['Title']);
         $this->assertEquals('www.silverstripe.org', $silverstripeLink['URL']);
+    }
+
+    /**
+     * @dataProvider provideTestCMSVersionNumber
+     */
+    public function testCMSVersionNumber($frameworkVersion, $expected)
+    {
+        $versionProvider = $this
+            ->getMockBuilder(VersionProvider::class)
+            ->setMethods(['getModules', 'getModuleVersionFromComposer'])
+            ->getMock();
+        $data = ['silverstripe/framework' => $frameworkVersion];
+        $versionProvider->method('getModules')->willReturn($data);
+        $versionProvider->method('getModuleVersionFromComposer')->willReturn($data);
+        $leftAndMain = $this
+            ->getMockBuilder(LeftAndMain::class)
+            ->setMethods(['getVersionProvider'])
+            ->getMock();
+        $leftAndMain->method('getVersionProvider')->willReturn($versionProvider);
+        $this->assertSame($expected, $leftAndMain->CMSVersionNumber());
+    }
+
+    /**
+     * @return array
+     */
+    public function provideTestCMSVersionNumber()
+    {
+        return [
+            ['4.9.1', '4.9'],
+            ['4.10.5', '4.10'],
+            ['4.236.7', '4.236'],
+            ['4.9.x-dev', '4.9'],
+            ['4.10.x-dev', '4.10'],
+            ['myfork', 'myfork'],
+        ];
     }
 }
