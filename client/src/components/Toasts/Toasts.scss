@@ -46,6 +46,7 @@
   opacity: 1;
   transition: box-shadow $transition-speed-fast ease;
   width: 100%;
+  overflow: hidden;
 
   &:hover {
     box-shadow: $z-depth-2;
