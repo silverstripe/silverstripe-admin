@@ -1,0 +1,22 @@
+##
+## To get started
+## 1. Start the container by running:  docker-compose up -d
+## 2. Drop into a shell via:           docker-compose exec node ash
+## 3. Initialize "node_modules" via:   yarn
+##
+## Further development and builds can be performed via "npm run ..." (see scripts in package.json)
+##
+
+services:
+  node:
+    # Node version per "engines" in package.json
+    image: node:10-alpine
+    working_dir: /build
+
+    # Keeps container running so you can login directly (good for debugging or manual task running).
+    entrypoint: tail -f /dev/null
+    environment:
+      NODE_ENV: development
+
+    volumes:
+      - .:/build
