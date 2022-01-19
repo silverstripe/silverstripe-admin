@@ -1,4 +1,4 @@
-# SilverStripe Admin Module
+# Silverstripe Admin Module
 
 [![Build Status](https://api.travis-ci.com/silverstripe/silverstripe-admin.svg?branch=1)](https://travis-ci.com/silverstripe/silverstripe-admin)
 [![SilverStripe supported module](https://img.shields.io/badge/silverstripe-supported-0071C4.svg)](https://www.silverstripe.org/software/addons/silverstripe-commercially-supported-module-list/)
@@ -9,7 +9,7 @@
 
 ## Overview
 
-Provides a basic management UI for the [SilverStripe Framework](http://silverstripe.org).
+Provides a basic management UI for the [Silverstripe Framework](http://silverstripe.org).
 Allows authors to manage their profile as well as members with their group and permission assignments.
 Can be extended with the [silverstripe/cms](https://github.com/silverstripe/silverstripe-cms) module
 to provide content management abilities.
