@@ -473,3 +473,10 @@
     }
   }
 }
+
+// Avoid adding a lot of extra space between GridField actions and the preview mode selector.
+// The nested ID selector is necessary to grab specifically the preview mode selector inside
+// a GridFieldDetailForm, and not inside some other form or inside the preview panel.
+#Form_ItemEditForm #preview-mode-dropdown-in-content {
+  margin-left: 0;
+}
