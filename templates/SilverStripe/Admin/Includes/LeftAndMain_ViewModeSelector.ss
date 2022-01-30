@@ -1,4 +1,4 @@
-<span id="$SelectID" class="preview-mode-selector preview-selector field dropdown">
+<span id="$SelectID" class="preview-mode-selector preview-selector field dropdown $ExtraClass">
 	<select title="<%t SilverStripe\\Admin\\LeftAndMain_ViewModeSelector.ChangeViewMode 'Change view mode' %>" id="$SelectID-select" class="preview-dropdown dropdown form-group--no-label no-change-track" autocomplete="off" name="Action">
 
 		<option data-icon="font-icon-columns" class="font-icon-columns icon-view first" value="split"><%t SilverStripe\\Admin\\LeftAndMain_ViewModeSelector.SplitView 'Split mode' %></option>

@@ -56,8 +56,13 @@
 			<% end_if %>
 
 			<% if $hasExtraClass('cms-previewable') %>
-				<% include SilverStripe\\Admin\\LeftAndMain_ViewModeSelector SelectID="preview-mode-dropdown-in-content" %>
+				<% if $Actions.last.id == 'Form_ItemEditForm_RightGroup' %>
+					<% include SilverStripe\\Admin\\LeftAndMain_ViewModeSelector SelectID="preview-mode-dropdown-in-content", ExtraClass="ml-0" %>
+				<% else %>
+					<% include SilverStripe\\Admin\\LeftAndMain_ViewModeSelector SelectID="preview-mode-dropdown-in-content", ExtraClass="ml-auto" %>
+				<% end_if %>
 			<% end_if %>
+
 		</div>
 		<% end_if %>
 	</div>
