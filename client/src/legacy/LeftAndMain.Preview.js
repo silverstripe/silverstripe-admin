@@ -19,7 +19,7 @@ $.entwine('ss.preview', function($){
      * The order is significant - if the state is not available, preview will start searching the list
      * from the beginning.
      */
-    AllowedStates: ['StageLink', 'LiveLink','ArchiveLink'],
+    AllowedStates: ['StageLink', 'LiveLink', 'Unversioned', 'ArchiveLink'],
 
     /**
      * API
