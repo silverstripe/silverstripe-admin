@@ -5,6 +5,7 @@ namespace SilverStripe\Admin;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Convert;
+use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\GridField\GridField;
@@ -94,9 +95,9 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
     {
         // Build gridfield configs
         $memberListConfig = GridFieldConfig_RecordEditor::create()
-            ->addComponent(new GridFieldExportButton('buttons-before-left'));
+            ->addComponent(Injector::inst()->createWithArgs(GridFieldExportButton::class, ['buttons-before-left']));
         $groupListConfig = GridFieldConfig_RecordEditor::create()
-            ->addComponent(new GridFieldExportButton('buttons-before-left'));
+            ->addComponent(Injector::inst()->createWithArgs(GridFieldExportButton::class, ['buttons-before-left']));
 
         /** @var GridFieldDetailForm $detailForm */
         $detailForm = $memberListConfig->getComponentByType(GridFieldDetailForm::class);
@@ -105,7 +106,7 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
 
         /** @var GridFieldPageCount $groupPaginator */
         $groupListConfig->removeComponentsByType(GridFieldPageCount::class);
-        $groupListConfig->addComponent(new GridFieldPageCount('buttons-before-right'));
+        $groupListConfig->addComponent(Injector::inst()->createWithArgs(GridFieldPageCount::class, ['buttons-before-right']));
 
         // Add import capabilities. Limit to admin since the import logic can affect assigned permissions
         if (Permission::check('ADMIN')) {

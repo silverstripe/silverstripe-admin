@@ -6,6 +6,7 @@ use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Convert;
+use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\BulkLoader;
 use SilverStripe\Dev\Deprecation;
 use SilverStripe\Forms\CheckboxField;
@@ -245,17 +246,17 @@ abstract class ModelAdmin extends LeftAndMain
     {
         $config = GridFieldConfig_RecordEditor::create($this->config()->get('page_length'));
 
-        $exportButton = new GridFieldExportButton('buttons-before-left');
+        $exportButton = Injector::inst()->createWithArgs(GridFieldExportButton::class, ['buttons-before-left']);
         $exportButton->setExportColumns($this->getExportFields());
 
         $config
             ->addComponent($exportButton)
-            ->addComponents(new GridFieldPrintButton('buttons-before-left'));
+            ->addComponents(Injector::inst()->createWithArgs(GridFieldPrintButton::class, ['buttons-before-left']));
 
         // Remove default and add our own filter header with extension points
         // to retain API until deprecation in 5.0
         $config->removeComponentsByType(GridFieldFilterHeader::class);
-        $config->addComponent(new GridFieldFilterHeader(
+        $config->addComponent(Injector::inst()->createWithArgs(GridFieldFilterHeader::class, [
             false,
             function ($context) {
                 $this->extend('updateSearchContext', $context);
@@ -263,7 +264,7 @@ abstract class ModelAdmin extends LeftAndMain
             function ($form) {
                 $this->extend('updateSearchForm', $form);
             }
-        ));
+        ]));
 
         if (!$this->showSearchForm ||
             (is_array($this->showSearchForm) && !in_array($this->modelClass, $this->showSearchForm))
