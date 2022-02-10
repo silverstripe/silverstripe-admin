@@ -12,28 +12,28 @@ env:
 # - two different behat suites
 jobs:
   include:
-    - php: 7.3
+    - php: 7.4
       env:
         - DB=MYSQL
         - REQUIRE_INSTALLER="$REQUIRE_RECIPE"
         - BEHAT_TEST=1
         - REQUIRE_GRAPHQL="^3@dev"
         - BEHAT_SUITE="admin"
-    - php: 7.3
+    - php: 7.4
       env:
         - DB=MYSQL
         - REQUIRE_INSTALLER="$REQUIRE_RECIPE"
         - BEHAT_TEST=1
         - REQUIRE_GRAPHQL="^3@dev"
         - BEHAT_SUITE="cms"
-    - php: 7.3
+    - php: 7.4
       env:
         - DB=MYSQL
         - REQUIRE_INSTALLER="$REQUIRE_RECIPE"
         - BEHAT_TEST=1
         - REQUIRE_GRAPHQL="^4@dev"
         - BEHAT_SUITE="admin"
-    - php: 7.3
+    - php: 7.4
       env:
         - DB=MYSQL
         - REQUIRE_INSTALLER="$REQUIRE_RECIPE"
