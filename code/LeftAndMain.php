@@ -219,6 +219,8 @@ class LeftAndMain extends Controller implements PermissionProvider
      * LeftAndMain:
      *   extra_requirements_javascript:
      *     - mysite/javascript/myscript.js
+     *     mysite/javascript/anotherscript.js:
+     *       defer: true
      * </code>
      *
      * @config
@@ -709,9 +711,10 @@ class LeftAndMain extends Controller implements PermissionProvider
             foreach ($extraJs as $file => $config) {
                 if (is_numeric($file)) {
                     $file = $config;
+                    $config = array();
                 }
 
-                Requirements::javascript($file);
+                Requirements::javascript($file, $config);
             }
         }
 
@@ -723,8 +726,13 @@ class LeftAndMain extends Controller implements PermissionProvider
                     $file = $config;
                     $config = array();
                 }
+                $media = null;
+                if (isset($config['media'])) {
+                     $media = $config['media'];
+                     unset($config['media']);
+                }
 
-                Requirements::css($file, isset($config['media']) ? $config['media'] : null);
+                Requirements::css($file, $media, $config);
             }
         }
 
@@ -736,8 +744,13 @@ class LeftAndMain extends Controller implements PermissionProvider
                     $file = $config;
                     $config = array();
                 }
+                $media = null;
+                if (isset($config['media'])) {
+                     $media = $config['media'];
+                     unset($config['media']);
+                }
 
-                Requirements::themedCSS($file, isset($config['media']) ? $config['media'] : null);
+                Requirements::themedCSS($file, $media, $config);
             }
         }
 

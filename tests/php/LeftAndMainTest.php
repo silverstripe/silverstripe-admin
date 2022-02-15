@@ -33,10 +33,17 @@ class LeftAndMainTest extends FunctionalTest
 
         LeftAndMain::config()
             ->update('extra_requirements_css', array(
-                $assetsDir.'/LeftAndMainTest.css'
+                $assetsDir.'/LeftAndMainTest.css',
+                $assetsDir. '/LeftAndMainTestWithOptions.css' => [
+                    'media' => 'print',
+                    'crossorigin' => 'anonymous'
+                ],
             ))
             ->update('extra_requirements_javascript', array(
-                $assetsDir. '/LeftAndMainTest.js'
+                $assetsDir. '/LeftAndMainTest.js',
+                $assetsDir. '/LeftAndMainTestWithOptions.js' => [
+                    'crossorigin' => 'anonymous'
+                ],
             ));
 
         Requirements::set_combined_files_enabled(false);
@@ -63,15 +70,28 @@ class LeftAndMainTest extends FunctionalTest
         $this->logInAs($admin);
         $response = $this->get('admin/security');
 
+        // Check css
         $this->assertMatchesRegularExpression(
-            '/tests\/php\/assets\/LeftAndMainTest.css/i',
+            '/<link.*?href="[^"]*?tests\/php\/assets\/LeftAndMainTest\.css.*?>/i',
             $response->getBody(),
-            "body should contain custom css"
+            'body should contain custom css'
         );
         $this->assertMatchesRegularExpression(
-            '/tests\/php\/assets\/LeftAndMainTest.js/i',
+            '/<link.*?href="[^"]*?tests\/php\/assets\/LeftAndMainTestWithOptions\.css.*?(?=.*?crossorigin="anonymous")(?=.*media="print").*?>/i',
             $response->getBody(),
-            "body should contain custom js"
+            'body should contain custom css with options'
+        );
+
+        // Check js
+        $this->assertMatchesRegularExpression(
+            '/<script.*?src="[^"]*?tests\/php\/assets\/LeftAndMainTest\.js.*?>/i',
+            $response->getBody(),
+            'body should contain custom js'
+        );
+        $this->assertMatchesRegularExpression(
+            '/<script.*?src="[^"]*?tests\/php\/assets\/LeftAndMainTestWithOptions\.js.*?crossorigin="anonymous".*?>/i',
+            $response->getBody(),
+            'body should contain custom js with options'
         );
     }
 
