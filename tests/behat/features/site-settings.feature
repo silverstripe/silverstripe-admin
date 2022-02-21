@@ -4,9 +4,12 @@ Feature: Site settings
 
   Background:
     Given a "page" "Home"
+    And a "page" "MyPage"
     When I am logged in with "ADMIN" permissions
     And I go to "/admin/pages"
     And I follow "Home"
+    And I press the "Publish" button
+    And I follow "MyPage"
     And I press the "Publish" button
     
   Scenario: Change site visibility
@@ -36,5 +39,5 @@ Feature: Site settings
     When I go to "/admin/settings"
     And I fill in "Site title" with "My website"
     And I press the "Save" button
-    When I go to "/home"
+    When I go to "/mypage"
     Then the rendered HTML should contain "My website"
