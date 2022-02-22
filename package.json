@@ -107,6 +107,7 @@
     "enzyme-adapter-react-16": "^1.5.0",
     "fast-glob": "^3.0.1",
     "html-loader": "^0.5.1",
+    "is-plain-object": "^5.0.0",
     "jest-cli": "^23.6.0",
     "markdown-loader": "^5.1.0",
     "storybook-addon-jsx": "^5.4.0",
