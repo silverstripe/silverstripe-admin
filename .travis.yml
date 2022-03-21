@@ -6,7 +6,6 @@ import:
 env:
   global:
     - REQUIRE_RECIPE="4.10.x-dev"
-    - REQUIRE_FRAMEWORKTEST="0.4.2"
 
 # Using a manual jobs matrix in addition to jobs-fixed because there are:
 # - two different behat suites
@@ -26,14 +25,14 @@ jobs:
         - BEHAT_TEST=1
         - REQUIRE_GRAPHQL="^3@dev"
         - BEHAT_SUITE="cms"
-    - php: 7.3
+    - php: 7.4
       env:
         - DB=MYSQL
         - REQUIRE_INSTALLER="$REQUIRE_RECIPE"
         - BEHAT_TEST=1
         - REQUIRE_GRAPHQL="^4@dev"
         - BEHAT_SUITE="admin"
-    - php: 7.3
+    - php: 7.4
       env:
         - DB=MYSQL
         - REQUIRE_INSTALLER="$REQUIRE_RECIPE"
