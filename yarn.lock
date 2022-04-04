@@ -83,10 +83,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@silverstripe/eslint-config@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@silverstripe/eslint-config/-/eslint-config-0.0.5.tgz#ab94d58e6f328d4efbcc1910572fdff5d85fc4ec"
-  integrity sha512-3wpbmrK3trKpTaJhEZuh5mEKkP7fBtQ5D61nJ1BvoNUZ2CFM16pXgKHe9NQM+ct/sQxL1Ag7dANq3jjnn6OM+w==
+"@silverstripe/eslint-config@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@silverstripe/eslint-config/-/eslint-config-0.1.0.tgz#45fc8062be071ac50848fcd8bb517b4099d99f6d"
+  integrity sha512-fl6StID7nvJb82bs2tqxJpULhU7KmF6EZX8HtXyhnHFIvmEYY4V483lQFs8DQkMXrkgqJkTsmsFz7YpxJ/7mPw==
   dependencies:
     eslint "^4.6.1"
     eslint-config-airbnb "^15.1.0"
