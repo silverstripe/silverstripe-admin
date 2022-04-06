@@ -180,6 +180,17 @@ class BootRoutes {
       });
     });
 
+    // Hack: Initialise react event delegation prior to starting the page router.
+    // Without this, react event delegation isn't initialised until the first component
+    // with an event handler is rendered, which means the page router will intercept
+    // events that should be caught by react component event handlers.
+    // Note that this empty link is rendered into an element that doesn't exist in the DOM.
+    ReactDOM.render(
+      <a role="none" onClick={() => {}} />,
+      document.createElement('div')
+    );
+
+    // Start the page router
     pageRouter.start();
   }
 
