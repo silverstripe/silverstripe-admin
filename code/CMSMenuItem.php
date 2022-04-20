@@ -96,7 +96,7 @@ class CMSMenuItem
 
         // Remove empty or excluded values
         foreach ($attrs as $key => $value) {
-            if (($excludeKeys && in_array($key, $excludeKeys))
+            if (($excludeKeys && in_array($key, $excludeKeys ?? []))
                 || (!$value && $value !== 0 && $value !== '0')
             ) {
                 unset($attrs[$key]);

@@ -151,15 +151,15 @@ abstract class ModelAdmin extends LeftAndMain
         // if we've hit the "landing" page
         if ($this->modelTab === null) {
             reset($models);
-            $this->modelTab = key($models);
+            $this->modelTab = key($models ?? []);
         }
 
         // security check for valid models
-        if (!array_key_exists($this->modelTab, $models)) {
+        if (!array_key_exists($this->modelTab, $models ?? [])) {
             // if it fails to match the string exactly, try reverse-engineering a classname
             $this->modelTab = $this->unsanitiseClassName($this->modelTab);
 
-            if (!array_key_exists($this->modelTab, $models)) {
+            if (!array_key_exists($this->modelTab, $models ?? [])) {
                 throw new \RuntimeException(sprintf('ModelAdmin::init(): Invalid Model class %s', $this->modelTab));
             }
         }
@@ -267,7 +267,7 @@ abstract class ModelAdmin extends LeftAndMain
         ]));
 
         if (!$this->showSearchForm ||
-            (is_array($this->showSearchForm) && !in_array($this->modelClass, $this->showSearchForm))
+            (is_array($this->showSearchForm) && !in_array($this->modelClass, $this->showSearchForm ?? []))
         ) {
             $config->removeComponentsByType(GridFieldFilterHeader::class);
         }
@@ -358,7 +358,7 @@ abstract class ModelAdmin extends LeftAndMain
         Deprecation::notice('4.3', 'Will be removed in favor of GridFieldFilterHeader  in 5.0');
 
         if (!$this->showSearchForm
-            || (is_array($this->showSearchForm) && !in_array($this->modelClass, $this->showSearchForm))
+            || (is_array($this->showSearchForm) && !in_array($this->modelClass, $this->showSearchForm ?? []))
         ) {
             return false;
         }
@@ -443,7 +443,7 @@ abstract class ModelAdmin extends LeftAndMain
      */
     protected function sanitiseClassName($class)
     {
-        return str_replace('\\', '-', $class);
+        return str_replace('\\', '-', $class ?? '');
     }
 
     /**
@@ -454,7 +454,7 @@ abstract class ModelAdmin extends LeftAndMain
      */
     protected function unsanitiseClassName($class)
     {
-        return str_replace('-', '\\', $class);
+        return str_replace('-', '\\', $class ?? '');
     }
 
     /**
@@ -466,7 +466,7 @@ abstract class ModelAdmin extends LeftAndMain
         if (is_string($models)) {
             $models = array($models);
         }
-        if (!count($models)) {
+        if (!count($models ?? [])) {
             throw new \RuntimeException(
                 'ModelAdmin::getManagedModels():
 				You need to specify at least one DataObject subclass in private static $managed_models.
@@ -526,7 +526,7 @@ abstract class ModelAdmin extends LeftAndMain
         $modelName = $modelSNG->i18n_singular_name();
         // check if a import form should be generated
         if (!$this->showImportForm ||
-            (is_array($this->showImportForm) && !in_array($this->modelTab, $this->showImportForm))
+            (is_array($this->showImportForm) && !in_array($this->modelTab, $this->showImportForm ?? []))
         ) {
             return false;
         }
@@ -609,7 +609,7 @@ abstract class ModelAdmin extends LeftAndMain
     public function import($data, $form, $request)
     {
         if (!$this->showImportForm || (is_array($this->showImportForm)
-                && !in_array($this->modelClass, $this->showImportForm))
+                && !in_array($this->modelClass, $this->showImportForm ?? []))
         ) {
             return false;
         }
@@ -620,7 +620,7 @@ abstract class ModelAdmin extends LeftAndMain
 
         // File wasn't properly uploaded, show a reminder to the user
         if (empty($_FILES['_CsvFile']['tmp_name']) ||
-            file_get_contents($_FILES['_CsvFile']['tmp_name']) == ''
+            file_get_contents($_FILES['_CsvFile']['tmp_name'] ?? '') == ''
         ) {
             $form->sessionMessage(
                 _t('SilverStripe\\Admin\\ModelAdmin.NOCSVFILE', 'Please browse for a CSV file to import'),
@@ -688,7 +688,7 @@ abstract class ModelAdmin extends LeftAndMain
         $items[0]->Title = $models[$this->modelTab]['title'];
         $items[0]->Link = Controller::join_links(
             $this->Link($this->sanitiseClassName($this->modelTab)),
-            '?' . http_build_query($params)
+            '?' . http_build_query($params ?? [])
         );
 
         return $items;

@@ -190,7 +190,7 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
      */
     public static function get_menu_code($cmsClass)
     {
-        return Convert::raw2htmlname(str_replace('\\', '-', $cmsClass));
+        return Convert::raw2htmlname(str_replace('\\', '-', $cmsClass ?? ''));
     }
 
     /**
@@ -383,16 +383,16 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
         }
         /** @todo Make these actual abstract classes */
         $abstractClasses = [LeftAndMain::class, CMSMain::class];
-        $subClasses = array_values(ClassInfo::subclassesFor($root));
+        $subClasses = array_values(ClassInfo::subclassesFor($root) ?? []);
         foreach ($subClasses as $className) {
             if ($recursive && $className != $root) {
-                $subClasses = array_merge($subClasses, array_values(ClassInfo::subclassesFor($className)));
+                $subClasses = array_merge($subClasses, array_values(ClassInfo::subclassesFor($className) ?? []));
             }
         }
-        $subClasses = array_unique($subClasses);
+        $subClasses = array_unique($subClasses ?? []);
         foreach ($subClasses as $key => $className) {
             // Remove abstract classes and LeftAndMain
-            if (in_array($className, $abstractClasses) || ClassInfo::classImplements($className, TestOnly::class)) {
+            if (in_array($className, $abstractClasses ?? []) || ClassInfo::classImplements($className, TestOnly::class)) {
                 unset($subClasses[$key]);
             } else {
                 // Separate conditional to avoid autoloading the class
@@ -416,6 +416,7 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
     /**
      * IteratorAggregate Interface Method.  Iterates over the menu items.
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator(self::get_menu_items());

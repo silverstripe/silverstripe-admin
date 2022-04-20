@@ -104,7 +104,7 @@ class LeftAndMainTest extends FunctionalTest
         $this->resetMenu();
 
         $menuItems = LeftAndMain::singleton()->MainMenu(false);
-        $this->assertGreaterThan(0, count($menuItems));
+        $this->assertGreaterThan(0, count($menuItems ?? []));
 
         $adminUrl = AdminRootController::admin_url();
         $menuItem = $menuItems->find('Link', $adminUrl . 'security/');

@@ -59,10 +59,10 @@ abstract class CMSBatchAction
         foreach ($status as $k => $v) {
             switch ($k) {
                 case 'error':
-                    $errors += count($v);
+                    $errors += count($v ?? []);
                     break;
                 case 'success':
-                    $count += count($v);
+                    $count += count($v ?? []);
                     break;
             }
         }
@@ -72,7 +72,7 @@ abstract class CMSBatchAction
         if ($response) {
             $response->setStatusCode(
                 200,
-                sprintf($successMessage, $count, $errors)
+                sprintf($successMessage ?? '', $count, $errors)
             );
         }
 
@@ -106,7 +106,7 @@ abstract class CMSBatchAction
         foreach ($objs as $obj) {
             // Perform the action
             $id = $obj->ID;
-            if (!call_user_func_array(array($obj, $helperMethod), $arguments)) {
+            if (!call_user_func_array(array($obj, $helperMethod), $arguments ?? [])) {
                 $status['error'][$id] = $id;
             } else {
                 $status['success'][$id] = $id;
@@ -154,7 +154,7 @@ abstract class CMSBatchAction
         $draftPages = DataObject::get($managedClass)->byIDs($ids);
 
         // Filter out the live-only ids
-        $onlyOnLive = array_fill_keys($ids, true);
+        $onlyOnLive = array_fill_keys($ids ?? [], true);
         if ($checkStagePages) {
             foreach ($draftPages as $obj) {
                 unset($onlyOnLive[$obj->ID]);
@@ -163,7 +163,7 @@ abstract class CMSBatchAction
                 }
             }
         }
-        $onlyOnLive = array_keys($onlyOnLive);
+        $onlyOnLive = array_keys($onlyOnLive ?? []);
 
         if ($checkLivePages && $onlyOnLive && DataObject::has_extension($managedClass, Versioned::class)) {
             // Get the pages that only exist on live (deleted from stage)

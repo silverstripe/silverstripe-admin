@@ -20,8 +20,8 @@ class AdminContext implements Context
      */
     public function iShouldSeeAnInvalidTabIcon(string $not, string $tabLabel)
     {
-        $id = str_replace('Main Content', 'Main', $tabLabel);
-        $id = str_replace(' ', '_', $id);
+        $id = str_replace('Main Content', 'Main', $tabLabel ?? '');
+        $id = str_replace(' ', '_', $id ?? '');
         $id = "tab-Root_$id";
         $selector = "[aria-labelledby=$id] .font-icon-attention-1";
         $hiddenSelector = ".ss-tabset-tabshidden $selector";
@@ -52,12 +52,12 @@ class AdminContext implements Context
                 Assert::assertTrue(true);
             } else {
                 $message = 'Form validation error message is present when it should not be';
-                Assert::assertFalse(strpos($element->getText(), $text), $message);
+                Assert::assertFalse(strpos($element->getText() ?? '', $text ?? ''), $message);
             }
         } else {
             $message = sprintf('Element %s not found', $selector);
             Assert::assertNotNull($element, $message);
-            Assert::assertTrue(strpos($element->getText(), $text) !== false, $message);
+            Assert::assertTrue(strpos($element->getText() ?? '', $text ?? '') !== false, $message);
         }
     }
 }

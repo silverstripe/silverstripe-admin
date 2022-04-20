@@ -48,7 +48,7 @@ class ModelAdminTest extends FunctionalTest
         $this->logInWithPermission();
         foreach ($admin->getManagedModelTabs()->toNestedArray() as $tab) {
             $request = new HTTPRequest('GET', $tab['Link']);
-            $request->setRouteParams(['ModelClass' => substr($tab['Link'], strlen('admin/multi/'))]);
+            $request->setRouteParams(['ModelClass' => substr($tab['Link'] ?? '', strlen('admin/multi/'))]);
             $request->setSession(new Session([]));
             Injector::inst()->registerService($request, HTTPRequest::class);
             $admin->setRequest($request);

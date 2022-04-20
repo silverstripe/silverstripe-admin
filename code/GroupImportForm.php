@@ -36,7 +36,7 @@ class GroupImportForm extends Form
             $importer = new GroupCsvBulkLoader();
             $importSpec = $importer->getImportSpec();
 
-            $columns = implode(', ', array_keys($importSpec['fields']));
+            $columns = implode(', ', array_keys($importSpec['fields'] ?? []));
             $helpHtml .= _t(
                 __CLASS__ . '.Help2',
                 '<div class="advanced">'

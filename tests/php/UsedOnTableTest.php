@@ -65,7 +65,7 @@ class UsedOnTableTest extends SapphireTest
         $middleObj->OuterObjs()->add($outerObj);
 
         $usage = $this->getUsage($thingObj);
-        $this->assertSame(1, count($usage));
+        $this->assertSame(1, count($usage ?? []));
         $this->assertSame($outerObjTitle, $usage[0]['title']);
         $this->assertSame($innerObjTitle, $usage[0]['ancestors'][0]['title']);
     }
@@ -78,7 +78,7 @@ class UsedOnTableTest extends SapphireTest
         $usedOnTable->setRecord($record);
         $request = new HTTPRequest('GET', '/');
         $response = $usedOnTable->usage($request);
-        $json = json_decode($response->getBody(), true);
+        $json = json_decode($response->getBody() ?? '', true);
         return $json['usage'];
     }
 }
