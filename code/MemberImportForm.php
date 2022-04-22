@@ -37,7 +37,7 @@ class MemberImportForm extends Form
             $importer = new MemberCsvBulkLoader();
             $importSpec = $importer->getImportSpec();
 
-            $columns = implode(', ', array_keys($importSpec['fields']));
+            $columns = implode(', ', array_keys($importSpec['fields'] ?? []));
             $helpHtml .= _t(
                 __CLASS__ . '.Help2',
                 '<div class="advanced">'

@@ -280,11 +280,11 @@ class CMSBatchActionHandler extends RequestHandler
      */
     protected function cleanIDs($csvIDs)
     {
-        $ids = preg_split('/ *, */', trim($csvIDs));
+        $ids = preg_split('/ *, */', trim($csvIDs ?? ''));
         foreach ($ids as $k => $id) {
             $ids[$k] = (int)$id;
         }
-        return array_filter($ids);
+        return array_filter($ids ?? []);
     }
 
     /**
@@ -297,7 +297,7 @@ class CMSBatchActionHandler extends RequestHandler
     {
         $actions = static::registeredActions();
         $recordClass = $this->recordClass;
-        $actions = array_filter($actions, function ($action) use ($recordClass) {
+        $actions = array_filter($actions ?? [], function ($action) use ($recordClass) {
             return $action['recordClass'] === $recordClass;
         });
         return $actions;

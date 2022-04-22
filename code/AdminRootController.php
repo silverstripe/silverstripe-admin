@@ -29,7 +29,7 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
     public static function get_admin_route()
     {
         $rules = Director::config()->get('rules');
-        $adminRoute = array_search(__CLASS__, $rules);
+        $adminRoute = array_search(__CLASS__, $rules ?? []);
         return $adminRoute ?: static::config()->get('url_base');
     }
 
@@ -73,7 +73,7 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
 
             // Map over the array calling add_rule_for_controller on each
             $classes = CMSMenu::get_cms_classes(null, true, CMSMenu::URL_PRIORITY);
-            array_map(array(__CLASS__, 'add_rule_for_controller'), $classes);
+            array_map(array(__CLASS__, 'add_rule_for_controller'), $classes ?? []);
         }
         return self::$adminRules;
     }
@@ -92,7 +92,7 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
         if ($urlSegment) {
             // Make director rule
             if ($urlRule[0] == '/') {
-                $urlRule = substr($urlRule, 1);
+                $urlRule = substr($urlRule ?? '', 1);
             }
             $rule = $urlSegment . '//' . $urlRule;
 

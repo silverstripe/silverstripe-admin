@@ -341,7 +341,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             // Trim leading/trailing slash to make it easier to concatenate URL
             // and use in routing definitions.
             'name' => $name,
-            'url' => trim($this->Link(), '/'),
+            'url' => trim($this->Link() ?? '', '/'),
             'form' => [
                 'EditorExternalLink' => [
                     'schemaUrl' => $this->Link('methodSchema/Modals/EditorExternalLink'),
@@ -794,7 +794,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             $response->addHeader('X-Controller', static::class);
         }
         if (!$response->getHeader('X-Title')) {
-            $response->addHeader('X-Title', urlencode($title));
+            $response->addHeader('X-Title', urlencode($title ?? ''));
         }
 
         // Prevent clickjacking, see https://developer.mozilla.org/en-US/docs/HTTP/X-Frame-Options
@@ -926,7 +926,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         // Get default class title
         $title = static::config()->get('menu_title');
         if (!$title) {
-            $title = preg_replace('/Admin$/', '', $class);
+            $title = preg_replace('/Admin$/', '', $class ?? '');
         }
 
         // Check localisation
@@ -948,7 +948,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         $icon = Config::inst()->get($class, 'menu_icon');
         if (!empty($icon)) {
             $iconURL = ModuleResourceLoader::resourceURL($icon);
-            $class = strtolower(Convert::raw2htmlname(str_replace('\\', '-', $class)));
+            $class = strtolower(Convert::raw2htmlname(str_replace('\\', '-', $class ?? '')) ?? '');
             return ".icon.icon-16.icon-{$class} { background-image: url('{$iconURL}'); } ";
         }
         return '';
@@ -1053,7 +1053,7 @@ class LeftAndMain extends Controller implements PermissionProvider
 
                     if ($menuItem->controller && get_class($this) == $menuItem->controller) {
                         $linkingmode = "current";
-                    } elseif (strpos($this->Link(), $menuItem->url) !== false) {
+                    } elseif (strpos($this->Link() ?? '', $menuItem->url ?? '') !== false) {
                         if ($this->Link() == $menuItem->url) {
                             $linkingmode = "current";
 
@@ -1100,7 +1100,7 @@ class LeftAndMain extends Controller implements PermissionProvider
                         "AttributesHTML" => $menuItem->getAttributesHTML(),
                         "Title" => $title,
                         "Code" => $code,
-                        "Icon" => strtolower($code),
+                        "Icon" => strtolower($code ?? ''),
                         "IconClass" => $iconClass,
                         "HasCSSIcon" => $hasCSSIcon,
                         "Link" => $menuItem->url,
@@ -1287,7 +1287,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             $response = $this->getResponseNegotiator()->respond($request);
         }
 
-        $response->addHeader('X-Status', rawurlencode($message));
+        $response->addHeader('X-Status', rawurlencode($message ?? ''));
         return $response;
     }
 
@@ -1325,7 +1325,7 @@ class LeftAndMain extends Controller implements PermissionProvider
 
         $this->getResponse()->addHeader(
             'X-Status',
-            rawurlencode(_t(__CLASS__ . '.DELETED', 'Deleted.'))
+            rawurlencode(_t(__CLASS__ . '.DELETED', 'Deleted.') ?? '')
         );
         return $this->getResponseNegotiator()->respond(
             $this->getRequest(),
@@ -1765,7 +1765,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             return '';
         }
         $version = $lockModules[$moduleName];
-        if (preg_match('#^([0-9]+)\.([0-9]+)#', $version, $m)) {
+        if (preg_match('#^([0-9]+)\.([0-9]+)#', $version ?? '', $m)) {
             return $m[1] . '.' . $m[2];
         }
         return $version;
@@ -1821,7 +1821,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         }
 
         foreach ($helpLinks as $key => $value) {
-            $translationKey = str_replace(' ', '', $key);
+            $translationKey = str_replace(' ', '', $key ?? '');
 
             $formattedLinks[] = [
                 'Title' => _t(__CLASS__ . '.' . $translationKey, $key),

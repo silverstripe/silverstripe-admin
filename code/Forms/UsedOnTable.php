@@ -103,7 +103,7 @@ class UsedOnTable extends FormField
             $tableRowData = [
                 'id' => $dataObject->ID,
                 'title' => $dataObject->getTitle() ?: _t(__CLASS__ . '.UNTITLED', 'Untitled'),
-                'type' => ucfirst($dataObject->i18n_singular_name()),
+                'type' => ucfirst($dataObject->i18n_singular_name() ?? ''),
                 'link' => $dataObject->hasMethod('CMSEditLink') ? $dataObject->CMSEditLink() : null,
                 'ancestors' => []
             ];
