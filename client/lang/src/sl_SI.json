@@ -1,6 +1,6 @@
 {
-    "Admin.BATCH_ARCHIVE_PROMPT": "Izbrano \u0161tevilo strani: {num}\n\nSte prepri\u010dani, da \u017eelite arhivirati te strani?\n\nTe strani in vse ostale podstrani bodo odstranjene iz objave in premaknjene v arhiv.",
-    "Admin.BATCH_DELETELIVE_PROMPT": "Izbrali ste {num} strani.\n\nAli ste prepri\u010dani, da \u017eelite izbrisati te strani iz objave?",
+    "Admin.BATCH_ARCHIVE_PROMPT": "Izbrano število strani: {num}\n\nSte prepričani, da želite arhivirati te strani?\n\nTe strani in vse ostale podstrani bodo odstranjene iz objave in premaknjene v arhiv.",
+    "Admin.BATCH_DELETELIVE_PROMPT": "Izbrali ste {num} strani.\n\nAli ste prepričani, da želite izbrisati te strani iz objave?",
     "Admin.BATCH_DELETE_PROMPT": "You have {num} page(s) selected.\n\nDo you really want to delete?",
     "Admin.BATCH_PUBLISH_PROMPT": "You have {num} page(s) selected.\n\nDo you really want to publish?",
     "Admin.BATCH_RESTORE_PROMPT": "You have {num} page(s) selected.\n\nDo you really want to restore to stage?\n\nChildren of archived pages will be restored to the root level, unless those pages are also being restored.",
