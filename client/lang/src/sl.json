@@ -9,7 +9,7 @@
     "Admin.FormatExample": "Primer: {format}",
     "Admin.NO_SIZE": "ni podatka",
     "Admin.CLOSE": "Zapri",
-    "Admin.CONFIRMUNSAVED": "Res \u017eelite zapusitit stran?\n\nOPOZORILO: spremembe niso bile shranjene\n\nKliknite OK za nadaljevanje ali Prekli\u010di, da ostanete na trenutni strani.",
+    "Admin.CONFIRMUNSAVED": "Res želite zapusitit stran?\n\nOPOZORILO: spremembe niso bile shranjene\n\nKliknite OK za nadaljevanje ali Prekliči, da ostanete na trenutni strani.",
     "Admin.CONFIRMUNSAVEDSHORT": "OPOZORILO: spremembe niso bile shranjene.",
     "Admin.VALIDATIONERROR": "Napaka pri preverjanju",
     "Admin.VALIDATION_ERRORS_IN_TAB": "V zavihku so napačni podatki.",

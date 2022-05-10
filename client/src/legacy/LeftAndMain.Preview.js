@@ -15,6 +15,11 @@ $.entwine('ss.preview', function($){
   $('.cms-preview').entwine({
 
     /**
+     * Whether the preview panel has been initialised after the edit form was added.
+     */
+    AlreadyInitialised: false,
+
+    /**
      * List of SilverStripeNavigator states (SilverStripeNavigatorItem classes) to search for.
      * The order is significant - if the state is not available, preview will start searching the list
      * from the beginning.
@@ -300,6 +305,7 @@ $.entwine('ss.preview', function($){
       } else {
         mode = this.loadState('mode');
         size = this.loadState('size');
+        let save = true;
 
         this._moveNavigator();
         if(!mode || mode != 'content') {
@@ -308,11 +314,21 @@ $.entwine('ss.preview', function($){
         }
         this.redraw();
 
+        // If the DataObject has no preview URL, collapse the preview panel by default.
+        // Don't save the state - when the user navigates to a DataObject that has a preview URL their saved
+        // mode will kick in.
+        const currentPreviewURL = this.find('iframe').attr('src');
+        if (!this.getPendingURL() && (!currentPreviewURL || currentPreviewURL === 'about:blank')) {
+          mode = 'content';
+          save = false;
+        }
+
         // now check the cookie to see if we have any preview settings that have been
         // retained for this page from the last visit
-        if(mode) this.changeMode(mode);
+        if(mode) this.changeMode(mode, save);
         if(size) this.changeSize(size);
       }
+      this.setAlreadyInitialised(true);
       return this;
     },
 
@@ -542,6 +558,7 @@ $.entwine('ss.preview', function($){
   $('.cms-edit-form').entwine({
     onadd: function() {
       this._super();
+      $('.cms-preview').setAlreadyInitialised(false)
       $('.cms-preview')._initialiseFromContent();
     }
   });

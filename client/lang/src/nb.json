@@ -9,7 +9,7 @@
     "Admin.FormatExample": "Example: {format}",
     "Admin.NO_SIZE": "N\/A",
     "Admin.CLOSE": "Close",
-    "Admin.CONFIRMUNSAVED": "Er du sikker p\u00e5 at du vil forlate denne siden?\n\nADVARSEL: Endringene din har ikke blitt lagret.\n\nTrykk OK for \u00e5 fortsette eller Avbryt for \u00e5 holde deg p\u00e5 samme side.",
+    "Admin.CONFIRMUNSAVED": "Er du sikker på at du vil forlate denne siden?\n\nADVARSEL: Endringene din har ikke blitt lagret.\n\nTrykk OK for å fortsette eller Avbryt for å holde deg på samme side.",
     "Admin.CONFIRMUNSAVEDSHORT": "ADVARSEL: Endringene dine har ikke blitt lagret.",
     "Admin.VALIDATIONERROR": "Valideringsfeil",
     "Admin.VALIDATION_ERRORS_IN_TAB": "This tab contains validation errors.",
