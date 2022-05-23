@@ -57,8 +57,8 @@ $.entwine('ss', function($){
     },
 
     /**
-     * @func lazyLoadGridFields
-     * @desc Find all the lazy loadable gridfield in the panel and trigger their reload.
+     * @func triggerLazyLoad
+     * @desc Find all the lazy loadable gridfield and nodes in the panel and trigger their reload.
      * @param {Object} panel
      */
     triggerLazyLoad: function(panel) {
