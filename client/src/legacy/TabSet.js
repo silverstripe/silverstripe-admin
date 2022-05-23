@@ -17,6 +17,16 @@ $.entwine('ss', function($){
 
       this._super();
     },
+    
+    onadd: function() {
+      this.on("tabsactivate", (function (event, {newPanel}) {
+        this.triggerLazyLoad(newPanel);
+      }).bind(this));
+      this.on("tabscreate", (function(event, {panel}) {
+        this.triggerLazyLoad(panel);
+      }).bind(this));
+      this._super();
+    },
 
     /**
      * @func openTabFromURL
@@ -46,22 +56,35 @@ $.entwine('ss', function($){
       });
     },
 
+    /**
+     * @func lazyLoadGridFields
+     * @desc Find all the lazy loadable gridfield in the panel and trigger their reload.
+     * @param {Object} panel
+     */
+    triggerLazyLoad: function(panel) {
+      panel.find('.grid-field--lazy-loadable, .lazy-loadable').each((i, el) => {
+        const $el = e(el);
+        // Avoid triggering all lazy loadable scripts when using nested tabs
+        if ($el.closest('.ss-tabset, .cms-tabset').is(this)) {
+          // Trigger dedicated entwine function (see GridField.js)
+          if(typeof $el.lazyload === 'function') {
+            $el.lazyload();
+          }
+          // Also dispatch a native event for scripts not using entwine
+          el.dispatchEvent(new Event("lazyload"), { once: true });
+        }
+      });
+    },
+    
   }),
 
-    /**
+  /**
    * Lightweight wrapper around jQuery UI tabs for generic tab set-up
    */
   $('.ss-tabset').entwine({
     IgnoreTabState: false,
 
     onadd: function() {
-      this.on("tabsactivate", (function (event, {newPanel}) {
-        this.lazyLoadGridFields(newPanel);
-      }).bind(this));
-      this.on("tabscreate", (function(event, {panel}) {
-        this.lazyLoadGridFields(panel);
-      }).bind(this));
-
       // Can't name redraw() as it clashes with other CMS entwine classes
       this.redrawTabs();
       this._super();
@@ -96,22 +119,7 @@ $.entwine('ss', function($){
         $(this).attr('href', document.location.href.replace(/#.*/, '') + matches[0]);
       });
     },
-
-    /**
-     * @func lazyLoadGridFields
-     * @desc Find all the lazy loadable gridfield in the panel and trigger their reload.
-     * @param {Object} panel
-     */
-    lazyLoadGridFields: function(panel) {
-      panel.find('.grid-field--lazy-loadable').each((i, el) => {
-        const gridfield = $(el);
-        // Avoid triggering all gridfields when using nested tabs
-        if (gridfield.closest('.ss-tabset, .cms-tabset').is(this)) {
-          $(el).lazyload();
-        }
-      });
-    }
-
+    
   });
 
   // adding bootstrap theme classes to corresponding jQueryUI elements
