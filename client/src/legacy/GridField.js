@@ -21,7 +21,7 @@ $.entwine('ss', function($) {
       }
 
       if (this.is('.grid-field--lazy-loadable') && (
-        (this.closest'.ss-tabset, .cms-tabset').length === 0) || (this.data('gridfield-lazy-load-state') === 'force') )
+        (this.closest('.ss-tabset, .cms-tabset').length === 0) || (this.data('gridfield-lazy-load-state') === 'force') )
       ) {
         // If our GridField is not inside a tabset for an immidiate reload
         this.data('gridfield-lazy-load-state', 'ready');
