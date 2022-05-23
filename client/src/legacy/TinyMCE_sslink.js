@@ -54,8 +54,8 @@ const plugin = {
 
     editor.on('preinit', () => {
       setupTinyMceInlineToolbar(editor, [
-        { type: 'button', onClick: openLinkDialog, text: 'Edit link' },
-        { type: 'button', onClick: () => this.handleRemoveLinkClick(editor), text: 'Remove link' },
+        { type: 'button', onClick: openLinkDialog, text: i18n._t('Admin.EDIT_LINK', 'Edit link') },
+        { type: 'button', onClick: () => this.handleRemoveLinkClick(editor), text: i18n._t('Admin.REMOVE_LINK', 'Remove link') },
       ], ['a[href]']);
     });
   },
