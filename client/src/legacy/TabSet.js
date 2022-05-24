@@ -8,7 +8,11 @@ require('../../../thirdparty/jquery-entwine/dist/jquery.entwine-dist.js');
 // require('../../../thirdparty/jquery-ui-themes/smoothness/jquery-ui.css');
 
 $.entwine('ss', function($){
+ /**
+   * Lightweight wrapper around jQuery UI tabs for generic tab set-up
+   */
   $('.ss-tabset, .cms-tabset').entwine({
+    IgnoreTabState: false,
     onmatch: function () {
       var hash = window.location.hash;
       if (hash !== '') {
@@ -20,72 +24,14 @@ $.entwine('ss', function($){
     
     onadd: function() {
       this.on("tabsactivate", (function (event, {newPanel}) {
+        this.lazyLoadGridFields(newPanel);
         this.triggerLazyLoad(newPanel);
       }).bind(this));
       this.on("tabscreate", (function(event, {panel}) {
+        this.lazyLoadGridFields(panel);
         this.triggerLazyLoad(panel);
       }).bind(this));
-      this._super();
-    },
 
-    /**
-     * @func openTabFromURL
-     * @param {string} hash
-     * @desc Allows linking to a specific tab.
-     */
-    openTabFromURL: function (hash) {
-      var $trigger;
-
-      // Make sure the hash relates to a valid tab.
-      $.each(this.find('.ui-tabs-anchor'), function () {
-        // The hash in in the button's href and there is exactly one tab with that id.
-        if (this.href.indexOf(hash) !== -1 && $(hash).length === 1) {
-          $trigger = $(this);
-          return false; // break the loop
-        }
-      });
-
-      // If there's no tab, it means the hash is invalid, so do nothing.
-      if ($trigger === void 0) {
-        return;
-      }
-
-      // Switch to the correct tab when the page is loaded
-      $(() => {
-        $trigger.click();
-      });
-    },
-
-    /**
-     * @func triggerLazyLoad
-     * @desc Find all the lazy loadable gridfield and nodes in the panel and trigger their reload.
-     * @param {Object} panel
-     */
-    triggerLazyLoad: function(panel) {
-      panel.find('.grid-field--lazy-loadable, .lazy-loadable').each((i, el) => {
-        const $el = $(el);
-        // Avoid triggering all lazy loadable scripts when using nested tabs
-        if ($el.closest('.ss-tabset, .cms-tabset').is(this)) {
-          // Trigger dedicated entwine function (see GridField.js)
-          if(typeof $el.lazyload === 'function') {
-            $el.lazyload();
-          }
-          // Also dispatch a native event for scripts not using entwine
-          // It should be listened to only once
-          el.dispatchEvent(new Event("lazyload"));
-        }
-      });
-    },
-    
-  }),
-
-  /**
-   * Lightweight wrapper around jQuery UI tabs for generic tab set-up
-   */
-  $('.ss-tabset').entwine({
-    IgnoreTabState: false,
-
-    onadd: function() {
       // Can't name redraw() as it clashes with other CMS entwine classes
       this.redrawTabs();
       this._super();
@@ -121,7 +67,65 @@ $.entwine('ss', function($){
       });
     },
     
-  });
+    /**
+     * @func triggerLazyLoad
+     * @desc Triggers a "lazyload" event on all lazy-loadable nodes
+     * @param {Object} panel
+     */
+    triggerLazyLoad: function(panel) {
+      panel.find('.lazy-loadable').each((i, el) => {
+        const el = $(el);
+        if (gridfield.closest('.ss-tabset, .cms-tabset').is(this)) {
+          // This should be listened only once
+          el.dispatchEvent(new Event("lazyload"));
+        }
+      });
+    },
+    
+    /**
+     * @func lazyLoadGridFields
+     * @desc Find all the lazy loadable gridfield in the panel and trigger their reload.
+     * @param {Object} panel
+     */
+    lazyLoadGridFields: function(panel) {
+      panel.find('.grid-field--lazy-loadable').each((i, el) => {
+        const gridfield = $(el);
+        // Avoid triggering all gridfields when using nested tabs
+        if (gridfield.closest('.ss-tabset, .cms-tabset').is(this)) {
+          $(el).lazyload();
+        }
+      });
+    }
+
+    /**
+     * @func openTabFromURL
+     * @param {string} hash
+     * @desc Allows linking to a specific tab.
+     */
+    openTabFromURL: function (hash) {
+      var $trigger;
+
+      // Make sure the hash relates to a valid tab.
+      $.each(this.find('.ui-tabs-anchor'), function () {
+        // The hash in in the button's href and there is exactly one tab with that id.
+        if (this.href.indexOf(hash) !== -1 && $(hash).length === 1) {
+          $trigger = $(this);
+          return false; // break the loop
+        }
+      });
+
+      // If there's no tab, it means the hash is invalid, so do nothing.
+      if ($trigger === void 0) {
+        return;
+      }
+
+      // Switch to the correct tab when the page is loaded
+      $(() => {
+        $trigger.click();
+      });
+    },
+
+  }),
 
   // adding bootstrap theme classes to corresponding jQueryUI elements
   $('.ui-tabs-active .ui-tabs-anchor').entwine({
