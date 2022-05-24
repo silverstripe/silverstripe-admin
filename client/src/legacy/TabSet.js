@@ -75,7 +75,7 @@ $.entwine('ss', function($){
     triggerLazyLoad: function(panel) {
       panel.find('.lazy-loadable').each((i, el) => {
         const el = $(el);
-        if (gridfield.closest('.ss-tabset, .cms-tabset').is(this)) {
+        if (el.closest('.ss-tabset, .cms-tabset').is(this)) {
           // This should be listened only once
           el.dispatchEvent(new Event("lazyload"));
         }
