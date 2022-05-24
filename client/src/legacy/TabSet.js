@@ -77,7 +77,7 @@ $.entwine('ss', function($){
         const el = $(el);
         if (el.closest('.ss-tabset, .cms-tabset').is(this)) {
           // This should be listened only once
-          el.dispatchEvent(new Event("lazyload"));
+          el.dispatchEvent(new Event('lazyload'));
         }
       });
     },
