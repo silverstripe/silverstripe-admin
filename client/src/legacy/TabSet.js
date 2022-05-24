@@ -63,7 +63,7 @@ $.entwine('ss', function($){
      */
     triggerLazyLoad: function(panel) {
       panel.find('.grid-field--lazy-loadable, .lazy-loadable').each((i, el) => {
-        const $el = e(el);
+        const $el = $(el);
         // Avoid triggering all lazy loadable scripts when using nested tabs
         if ($el.closest('.ss-tabset, .cms-tabset').is(this)) {
           // Trigger dedicated entwine function (see GridField.js)
@@ -71,7 +71,8 @@ $.entwine('ss', function($){
             $el.lazyload();
           }
           // Also dispatch a native event for scripts not using entwine
-          el.dispatchEvent(new Event("lazyload"), { once: true });
+          // It should be listened to only once
+          el.dispatchEvent(new Event("lazyload"));
         }
       });
     },
