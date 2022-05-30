@@ -95,7 +95,7 @@ $.entwine('ss', function($){
           $(el).lazyload();
         }
       });
-    }
+    },
 
     /**
      * @func openTabFromURL
