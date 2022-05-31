@@ -27,7 +27,6 @@ $.entwine('ss', function($){
         this.triggerLazyLoad(newPanel);
       }).bind(this));
       this.on("tabscreate", (function(event, {panel}) {
-        this.lazyLoadGridFields(panel);
         this.triggerLazyLoad(panel);
       }).bind(this));
 
