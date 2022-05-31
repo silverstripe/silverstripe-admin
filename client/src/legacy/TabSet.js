@@ -73,6 +73,7 @@ $.entwine('ss', function($){
      * @param {Object} panel
      */
     triggerLazyLoad: function(panel) {
+      this.lazyLoadGridFields(newPanel);
       panel.find('.lazy-loadable').each((i, el) => {
         const $el = $(el);
         if ($el.closest('.ss-tabset, .cms-tabset').is(this)) {
