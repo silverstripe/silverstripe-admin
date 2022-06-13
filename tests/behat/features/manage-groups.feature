@@ -25,6 +25,13 @@ Feature: Manage groups
     And I press the "Save" button
     Then I should not see "Validation Error"
 
+  Scenario: Group cannot have a blank name
+    When I click the "Groups" CMS tab
+    And I press the "Add Group" button
+    And I fill in "Group name" with ""
+    And I press the "Create" button
+    Then I should see "Validation Error"
+
   Scenario: Members of a group without permissions cannot view draft content
     Given I go to "/Security/login"
     And I press the "Log in as someone else" button
