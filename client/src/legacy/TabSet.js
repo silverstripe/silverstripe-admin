@@ -40,7 +40,7 @@ $.entwine('ss', function($){
      * @param {Object} panel
      * @param {string} selector
      */
-    triggerLazyLoad: function (panel, selector = ".lazy-loadable") {
+    triggerLazyLoad: function (panel, selector = '.lazy-loadable') {
         panel.find(selector).each((idx, el) => {
             var $el = $(el);
             var lazyEvent = el.dataset.lazyEvent || 'lazyload';
