@@ -20,7 +20,7 @@ $.entwine('ss', function($){
     
     onadd: function () {
         this.on(
-            "tabsactivate",
+            'tabsactivate',
             function (event, { newPanel }) {
                 this.triggerLazyLoad(newPanel);
             }.bind(this)
