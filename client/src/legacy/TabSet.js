@@ -43,8 +43,8 @@ $.entwine('ss', function($){
     triggerLazyLoad: function (panel, selector = ".lazy-loadable") {
         panel.find(selector).each((idx, el) => {
             var $el = $(el);
-            var lazyEvent = el.dataset.lazyEvent || "lazyload";
-            if ($el.closest(".ss-tabset, .cms-tabset").is(this)) {
+            var lazyEvent = el.dataset.lazyEvent || 'lazyload';
+            if ($el.closest('.ss-tabset, .cms-tabset').is(this)) {
                 // This should be listened only once
                 el.dispatchEvent(new Event(lazyEvent));
             }
