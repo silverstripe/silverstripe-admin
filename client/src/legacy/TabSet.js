@@ -26,7 +26,7 @@ $.entwine('ss', function($){
             }.bind(this)
         );
         this.on(
-            "tabscreate",
+            'tabscreate',
             function (event, { panel }) {
                 this.triggerLazyLoad(panel);
             }.bind(this)
