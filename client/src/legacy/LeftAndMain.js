@@ -572,25 +572,12 @@ $.entwine('ss', function($) {
       this.setStateChangeCount(this.getStateChangeCount() + 1);
 
       if (!this.checkCanNavigate()) {
-        var lastState = this.getLastState();
-
-        // Suppress panel loading while resetting state
-        this.setPauseState(true);
-
-        // Restore best last state
-        if (lastState && lastState.path) {
-          window.ss.router.show(lastState.path);
-        } else {
-          window.ss.router.back();
-        }
-
-        this.setPauseState(false);
+        // If the user can't navigate away, restore the last known good state
+        this.reverseStateChange();
 
         // Abort loading of this panel
         return;
       }
-
-      this.setLastState(historyState);
 
       // If any of the requested Pjax fragments don't exist in the current view,
       // fetch the "Content" view instead, which is the "outermost" fragment
@@ -628,7 +615,17 @@ $.entwine('ss', function($) {
         headers: headers,
         url: historyState.path || document.URL
       })
+      .fail((xhr, status, error) => {
+        // Ignoring aborts: The server request failed, so prevent a mixed UI state by rolling back to previously
+        // succesfully loaded URL (consistent with currently loaded content).
+        if (xhr.readyState !== 0) {
+          this.reverseStateChange();
+        }
+      })
       .done((data, status, xhr) => {
+        // Request succeeded, so retain this state for future calls to this.reverseStateChange().
+        this.setLastState(historyState);
+
         var els = self.handleAjaxResponse(data, status, xhr, historyState);
         self.trigger('afterstatechange', {data: data, status: status, xhr: xhr, element: els, state: historyState});
       })
@@ -641,6 +638,36 @@ $.entwine('ss', function($) {
       this.setStateChangeXHR(promise);
 
       return promise;
+    },
+
+    /**
+     * Reverts the window.history state back to the last known good state. See this.handleStateChange().
+     */
+    reverseStateChange: function() {
+      // Get last known good state
+      var lastState = this.getLastState();
+
+      // Suppress panel loading while resetting state
+      this.setPauseState(true);
+
+      // Decrement state change counter
+      this.setStateChangeCount(this.getStateChangeCount() - 1);
+
+      // Restore best last state
+      if (lastState && lastState.path) {
+        window.ss.router.show(lastState.path);
+
+        // Can unpause state now since it's synchronous.
+        this.setPauseState(false);
+
+      } else {
+        window.ss.router.back();
+
+        // Hack: Need to use setTimeout() since, unfortunately .back() above *also* uses setTimeout().
+        setTimeout(() => {
+          this.setPauseState(false);
+        });
+      }
     },
 
     /**
