@@ -310,3 +310,7 @@ div.grid-field__sort-field + .form__fieldgroup-item {
     color: $state-modified;
   }
 }
+
+fieldset.ss-gridfield {
+  margin-bottom: $table-cell-padding-sm;
+}
