@@ -1320,6 +1320,25 @@ html, body {
   }
 }
 
+// Tree batch action parameter fields
+#BatchActionParameters {
+  .form__field-description {
+    margin-bottom: 0;
+  }
+
+  .field {
+    height: auto;
+  }
+
+  .field:last-child {
+    margin-bottom: 0;
+  }
+
+  .form__field-holder--no-label {
+    padding-right: 0;
+  }
+}
+
 /** --------------------------------------------
  * Member Profile
  * -------------------------------------------- */
