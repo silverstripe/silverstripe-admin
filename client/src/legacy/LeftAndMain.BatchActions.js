@@ -374,9 +374,9 @@ $.entwine('ss.tree', function($){
     onchange: function(e) {
       var form = $(e.target.form),
         btn = form.find(':submit'),
-        selected = $(e.target).val()
+        selected = $(e.target).val(),
         actionUrlParts = selected.split("/"),
-        actionName = actionUrlParts[urlParts.length - 1];
+        actionName = actionUrlParts[actionUrlParts.length - 1];
 
       // Refresh selected / enabled nodes
       $('#Form_BatchActionsForm').refreshSelected();
