@@ -6,6 +6,7 @@ use BadMethodCallException;
 use InvalidArgumentException;
 use LogicException;
 use ReflectionClass;
+use SilverStripe\CMS\Controllers\CMSMain;
 use SilverStripe\CMS\Controllers\SilverStripeNavigator;
 use SilverStripe\Control\ContentNegotiator;
 use SilverStripe\Control\Controller;
