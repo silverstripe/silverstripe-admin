@@ -375,24 +375,24 @@ $.entwine('ss.tree', function($){
       var form = $(e.target.form),
         btn = form.find(':submit'),
         selected = $(e.target).val(),
-        actionUrlParts = selected.split("/"),
+        actionUrlParts = selected.split('/'),
         actionName = actionUrlParts[actionUrlParts.length - 1];
 
       // Refresh selected / enabled nodes
       $('#Form_BatchActionsForm').refreshSelected();
 
       // Hide / display action parameter fields
-      var parameterFields = $("#BatchActionParameters_" + actionName);
+      var parameterFields = $('#BatchActionParameters_' + actionName);
       if (parameterFields.length) {
         parameterFields.siblings().hide();
         parameterFields.show();
-        $("#BatchActionParameters").slideDown();
+        $('#BatchActionParameters').slideDown();
       } else {
-        $("#BatchActionParameters").slideUp();
+        $('#BatchActionParameters').slideUp();
       }
 
       // TODO Should work by triggering change() along, but doesn't - entwine event bubbling?
-      this.trigger("chosen:updated");
+      this.trigger('chosen:updated');
 
       this._super(e);
     }
