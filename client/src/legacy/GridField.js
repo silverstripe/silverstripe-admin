@@ -19,6 +19,10 @@ $.entwine('ss', function($) {
         this.fixColumns();
         this.injectSearchButton(false);
       }
+      
+      if (this.hasFilters()) {
+        this.injectSearchButton(true);
+      };
 
       if (this.is('.grid-field--lazy-loadable') && (
         (this.closest('.ss-tabset, .cms-tabset').length === 0) || (this.data('gridfield-lazy-load-state') === 'force') )
@@ -142,6 +146,16 @@ $.entwine('ss', function($) {
       return JSON.parse(this.find(':input[name="' + this.data('name') + '[GridState]"]').val());
     },
 
+    /**
+     * @returns {Boolean}
+     */
+    hasFilters: function() {
+      if (this.getState().GridFieldFilterHeader) {
+        return true;
+      }
+      return false;
+    },
+
     needsColumnFix: function() {
       return (
         this.find('.grid-field__filter-header, .grid-field__search-holder').length &&
@@ -179,6 +193,19 @@ $.entwine('ss', function($) {
       }
       if (hasLegacyFilterHeader) {
         this.find('.sortable-header th:last').html(content);
+      }
+    },
+
+    keepStateInHistory: function() {
+      const newURLSceme = $(this).find('.gridfield-actionmenu__container').data('schema');
+      if (newURLSceme && newURLSceme.length > 0) {
+        newURLSceme.filter( e => {
+          if (e.type === 'link') {
+            const searchParam = e.url.includes('?') ? '?' + e.url.split('?')[1] : '';
+            const historyState = $.extend({}, {path: window.location.pathname + searchParam}, this.getState());
+            history.replaceState(historyState, '', window.location.pathname + searchParam);
+          }
+        })
       }
     }
   });
@@ -370,17 +397,6 @@ $.entwine('ss', function($) {
         triggerChange = false;
       }
 
-      const successCallback = function(data, status, response) {
-        const messageText = response.getResponseHeader('X-Message-Text');
-        const messageType = response.getResponseHeader('X-Message-Type');
-        if (messageText && messageType) {
-          var formEditError = $("#Form_EditForm_error");
-          formEditError.addClass(messageType);
-          formEditError.html(messageText);
-          formEditError.show();
-        }
-      };
-
       var data = [
         {
           name: this.attr('name'),
@@ -398,10 +414,21 @@ $.entwine('ss', function($) {
         });
       }
 
-      this.getGridField().reload(
-        { data },
-        successCallback
-      );
+      const gridField =  $(this).getGridField();
+      const successCallback = function(data, status, response) {
+        gridField.keepStateInHistory();
+
+        const messageText = response.getResponseHeader('X-Message-Text');
+        const messageType = response.getResponseHeader('X-Message-Type');
+        if (messageText && messageType) {
+          var formEditError = $("#Form_EditForm_error");
+          formEditError.addClass(messageType);
+          formEditError.html(messageText);
+          formEditError.show();
+        }
+      };
+
+      gridField.reload({ data }, successCallback );
 
       e.preventDefault();
     },
@@ -646,7 +673,12 @@ $.entwine('ss', function($) {
         }
       }
 
-      this.getGridField().reload({ data: ajaxData });
+      const gridField =  $(this).getGridField();
+      const successCallback = function() {
+        gridField.keepStateInHistory();
+      };
+
+      gridField.reload({ data: ajaxData }, successCallback);
     },
 
     refresh() {
@@ -729,9 +761,13 @@ $.entwine('ss', function($) {
           });
         }
 
-        this.getGridField().reload({
-          data: ajaxData
-        });
+        const gridField =  $(this).getGridField();
+        const successCallback = function() {
+          gridField.keepStateInHistory();
+        };  
+
+        gridField.reload({ data: ajaxData }, successCallback);
+
         return false;
       }else{
         filterbtn.addClass('hover-alike');
@@ -783,7 +819,12 @@ $.entwine('ss', function($) {
 
         var gridfield = $(this).getGridField();
         gridfield.setState('GridFieldPaginator', {currentPage: newpage});
-        gridfield.reload();
+
+        const successCallback = function() {
+          gridfield.keepStateInHistory();
+        };
+
+        gridfield.reload({}, successCallback);
 
         return false;
       }
