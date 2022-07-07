@@ -6,7 +6,6 @@ use BadMethodCallException;
 use InvalidArgumentException;
 use LogicException;
 use ReflectionClass;
-use SilverStripe\CMS\Controllers\CMSMain;
 use SilverStripe\CMS\Controllers\SilverStripeNavigator;
 use SilverStripe\Control\ContentNegotiator;
 use SilverStripe\Control\Controller;
@@ -1585,7 +1584,6 @@ class LeftAndMain extends Controller implements PermissionProvider
             $actionsMap[$action->Link] = $action->Title;
         }
 
-        $cmsMain = singleton(CMSMain::class);
         $form = new Form(
             $this,
             'BatchActionsForm',
@@ -1600,8 +1598,7 @@ class LeftAndMain extends Controller implements PermissionProvider
                     ->setAttribute(
                         'data-placeholder',
                         _t(__CLASS__ . '.DropdownBatchActionsDefault', 'Choose an action...')
-                    ),
-                $cmsMain->BatchActionParameters()
+                    )
             ),
             new FieldList(
                 FormAction::create('submit', _t(__CLASS__ . '.SUBMIT_BUTTON_LABEL', "Go"))
