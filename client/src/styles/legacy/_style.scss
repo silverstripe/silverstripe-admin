@@ -1318,24 +1318,24 @@ html, body {
     border-bottom-left-radius: 0;
     width: calc(#{$grid-gutter-width} + 1px); // gutters + 1px border
   }
-}
 
-// Tree batch action parameter fields
-#BatchActionParameters {
-  .form__field-description {
-    margin-bottom: 0;
-  }
+  // Action parameter fields
+  .action-parameters {
+    .form__field-description {
+      margin-bottom: 0;
+    }
 
-  .field {
-    height: auto;
-  }
+    .field {
+      height: auto;
+    }
 
-  .field:last-child {
-    margin-bottom: 0;
-  }
+    .field:last-child {
+      margin-bottom: 0;
+    }
 
-  .form__field-holder--no-label {
-    padding-right: 0;
+    .form__field-holder--no-label {
+      padding-right: 0;
+    }
   }
 }
 
