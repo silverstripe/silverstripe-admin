@@ -381,9 +381,23 @@ $.entwine('ss.tree', function($){
       // Refresh selected / enabled nodes
       $('#Form_BatchActionsForm').refreshSelected();
 
-      // Hide / display action parameter fields
+      // Process action parameter fields
       var parameterFields = $('#BatchActionParameters_' + actionName);
       if (parameterFields.length) {
+        // Reset fields to default values before displaying them 
+        parameterFields.find(':input').each(function () {
+          var input = $(this)[0];
+          if (input.tagName === 'SELECT') {
+            input.selectedIndex = -1;
+            $(this).trigger('chosen:updated');
+          } else if (input.type === 'checkbox') {
+            input.checked = input.defaultChecked;
+          } else {
+            input.value = input.defaultValue;
+          }
+        });
+
+        // Hide / display action parameter fields
         parameterFields.siblings().hide();
         parameterFields.show();
         $('#BatchActionParameters').slideDown();
