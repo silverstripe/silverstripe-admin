@@ -1318,6 +1318,25 @@ html, body {
     border-bottom-left-radius: 0;
     width: calc(#{$grid-gutter-width} + 1px); // gutters + 1px border
   }
+
+  // Action parameter fields
+  .action-parameters {
+    .form__field-description {
+      margin-bottom: 0;
+    }
+
+    .field {
+      height: auto;
+    }
+
+    .field:last-child {
+      margin-bottom: 0;
+    }
+
+    .form__field-holder--no-label {
+      padding-right: 0;
+    }
+  }
 }
 
 /** --------------------------------------------
