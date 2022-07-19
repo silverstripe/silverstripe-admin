@@ -19,6 +19,10 @@ $.entwine('ss', function($) {
         this.fixColumns();
         this.injectSearchButton(false);
       }
+      
+      if (this.hasFilters()) {
+        this.injectSearchButton(true);
+      };
 
       if (this.is('.grid-field--lazy-loadable') && (
         (this.closest('.ss-tabset, .cms-tabset').length === 0) || (this.data('gridfield-lazy-load-state') === 'force') )
@@ -142,6 +146,16 @@ $.entwine('ss', function($) {
       return JSON.parse(this.find(':input[name="' + this.data('name') + '[GridState]"]').val());
     },
 
+    /**
+     * @returns {Boolean}
+     */
+    hasFilters: function() {
+      if (this.getState().GridFieldFilterHeader) {
+        return true;
+      }
+      return false;
+    },
+
     needsColumnFix: function() {
       return (
         this.find('.grid-field__filter-header, .grid-field__search-holder').length &&
@@ -180,6 +194,44 @@ $.entwine('ss', function($) {
       if (hasLegacyFilterHeader) {
         this.find('.sortable-header th:last').html(content);
       }
+    },
+
+    keepStateInHistory: function() {
+      const newSchema = $(this).find('.gridfield-actionmenu__container').data('schema');
+      if (newSchema && newSchema.length > 0) {
+        newSchema.filter( e => {
+          if (e.type === 'link') {
+            const reqString = this.buildURLString(e.url)
+            const searchParam =  reqString ? '?' + reqString.join('&') : '';
+            window.ss.router.replace(window.location.pathname + searchParam, undefined, undefined, false);
+          }
+        })
+      }
+    },
+
+    /**
+     * A params string can have duplicate keys.
+     * Function buildURLString splits string to "key => value" array
+     * and replaces values for existing keys with the new value
+     * and returns string with unique keys only
+     * 
+     * @param {string} url 
+     * @returns string 
+     */
+    buildURLString: function(url) {
+      const link = [window.location.origin, url].join('/');
+      const params = [window.location.search, (new URL(link)).searchParams.toString()].join('&').substring(1);
+      const newrequest = [];
+      const reqString = [];
+      params.split('&').forEach(param => {
+        const newVal = param.split('=');
+        newrequest[newVal[0]] = newVal[1] ? newVal[1] : '';
+      });
+      Object.keys(newrequest).forEach(param => {
+        reqString.push([param, newrequest[param]].join('='));
+      });
+
+      return reqString;
     }
   });
 
@@ -370,17 +422,6 @@ $.entwine('ss', function($) {
         triggerChange = false;
       }
 
-      const successCallback = function(data, status, response) {
-        const messageText = response.getResponseHeader('X-Message-Text');
-        const messageType = response.getResponseHeader('X-Message-Type');
-        if (messageText && messageType) {
-          var formEditError = $("#Form_EditForm_error");
-          formEditError.addClass(messageType);
-          formEditError.html(messageText);
-          formEditError.show();
-        }
-      };
-
       var data = [
         {
           name: this.attr('name'),
@@ -398,10 +439,21 @@ $.entwine('ss', function($) {
         });
       }
 
-      this.getGridField().reload(
-        { data },
-        successCallback
-      );
+      const gridField =  $(this).getGridField();
+      const successCallback = function(data, status, response) {
+        gridField.keepStateInHistory();
+
+        const messageText = response.getResponseHeader('X-Message-Text');
+        const messageType = response.getResponseHeader('X-Message-Type');
+        if (messageText && messageType) {
+          var formEditError = $("#Form_EditForm_error");
+          formEditError.addClass(messageType);
+          formEditError.html(messageText);
+          formEditError.show();
+        }
+      };
+
+      gridField.reload({ data }, successCallback );
 
       e.preventDefault();
     },
@@ -619,7 +671,12 @@ $.entwine('ss', function($) {
         });
       }
 
-      this.getGridField().reload({ data: ajaxData });
+      const gridField =  $(this).getGridField();
+      const successCallback = function() {
+        gridField.keepStateInHistory();
+      };
+
+      gridField.reload({ data: ajaxData }, successCallback);
     },
 
     search(data) {
@@ -646,7 +703,12 @@ $.entwine('ss', function($) {
         }
       }
 
-      this.getGridField().reload({ data: ajaxData });
+      const gridField =  $(this).getGridField();
+      const successCallback = function() {
+        gridField.keepStateInHistory();
+      };
+
+      gridField.reload({ data: ajaxData }, successCallback);
     },
 
     refresh() {
@@ -729,9 +791,13 @@ $.entwine('ss', function($) {
           });
         }
 
-        this.getGridField().reload({
-          data: ajaxData
-        });
+        const gridField =  $(this).getGridField();
+        const successCallback = function() {
+          gridField.keepStateInHistory();
+        };  
+
+        gridField.reload({ data: ajaxData }, successCallback);
+
         return false;
       }else{
         filterbtn.addClass('hover-alike');
@@ -783,7 +849,12 @@ $.entwine('ss', function($) {
 
         var gridfield = $(this).getGridField();
         gridfield.setState('GridFieldPaginator', {currentPage: newpage});
-        gridfield.reload();
+
+        const successCallback = function() {
+          gridfield.keepStateInHistory();
+        };
+
+        gridfield.reload({}, successCallback);
 
         return false;
       }
