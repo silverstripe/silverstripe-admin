@@ -176,6 +176,11 @@ class LeftAndMain extends Controller implements PermissionProvider
     protected $pageID = null;
 
     /**
+     * Set by {@link LeftAndMainErrorExtension} if an http error occurs
+     */
+    private string $httpErrorMessage;
+
+    /**
      * Assign themes to use for cms
      *
      * @config
@@ -771,6 +776,32 @@ class LeftAndMain extends Controller implements PermissionProvider
 
         // Set default reading mode to suppress ?stage=Stage querystring params in CMS
         Versioned::set_default_reading_mode(Versioned::get_reading_mode());
+    }
+
+    public function afterHandleRequest()
+    {
+        if ($this->response->isError()) {
+            $this->init();
+            $errorCode = $this->response->getStatusCode();
+            $errorType = $this->response->getStatusDescription();
+            $defaultMessage = _t(
+                self::class . '.ErrorMessage',
+                'Sorry, it seems there was a {errorcode} error.',
+                ['errorcode' => $errorCode]
+            );
+            $this->response = HTTPResponse::create($this->render([
+                'Title' => $this->getApplicationName() . ' - ' . $errorType,
+                'Content' => $this->renderWith($this->getTemplatesWithSuffix('_Error'), [
+                    'ErrorCode' => $errorCode,
+                    'ErrorType' => $errorType,
+                    'Message' => DBField::create_field(
+                        'HTMLFragment',
+                        _t(self::class . '.ErrorMessage' . $errorCode, $defaultMessage)
+                    ),
+                ]),
+            ]), $errorCode, $errorType);
+        }
+        parent::afterHandleRequest();
     }
 
     public function handleRequest(HTTPRequest $request)
@@ -1997,5 +2028,24 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function getVersionProvider()
     {
         return $this->versionProvider;
+    }
+
+    /**
+     * Get the HTTP error message if one has occurred during HandleRequest.
+     */
+    public function getHttpErrorMessage(): string
+    {
+        return $this->httpErrorMessage;
+    }
+
+    /**
+     * Set the HTTP error message when one occurs during HandleRequest.
+     * Called by {@link LeftAndMainErrorExtension}
+     * @internal
+     */
+    public function setHttpErrorMessage(string $message): self
+    {
+        $this->httpErrorMessage = $message;
+        return $this;
     }
 }

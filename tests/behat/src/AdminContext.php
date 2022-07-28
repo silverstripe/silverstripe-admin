@@ -38,6 +38,24 @@ class AdminContext implements Context
     }
 
     /**
+     * @Then /^I should (not |)see the admin menu/
+     * @param string $not
+     * @param string $tabLabel
+     */
+    public function iShouldSeeTheAdminMenu(string $not)
+    {
+        $selector = '#cms-menu';
+        $page = $this->getMainContext()->getSession()->getPage();
+        if ($not) {
+            $element = $page->find('css', $selector);
+            Assert::assertNull($element, 'The admin menu is visible when it should not be');
+        } else {
+            $element = $page->find('css', $selector);
+            Assert::assertNotNull($element, 'The admin menu was not found');
+        }
+    }
+
+    /**
      * @When /^I can (not |)see the form validation error message$/
      * @param $not
      */

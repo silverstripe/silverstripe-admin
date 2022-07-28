@@ -16,3 +16,7 @@ SilverStripe\Forms\Form:
 SilverStripe\Forms\FormField:
   extensions:
   - SilverStripe\Forms\FormMessageBootstrapExtension
+
+SilverStripe\Control\RequestHandler:
+  extensions:
+    - SilverStripe\Admin\AdminErrorExtension
