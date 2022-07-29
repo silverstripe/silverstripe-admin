@@ -780,7 +780,7 @@ class LeftAndMain extends Controller implements PermissionProvider
 
     public function afterHandleRequest()
     {
-        if ($this->response->isError()) {
+        if ($this->response->isError() && !$this->request->isAjax()) {
             $this->init();
             $errorCode = $this->response->getStatusCode();
             $errorType = $this->response->getStatusDescription();
@@ -2035,7 +2035,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     public function getHttpErrorMessage(): string
     {
-        return $this->httpErrorMessage;
+        return $this->httpErrorMessage ?? '';
     }
 
     /**
