@@ -780,7 +780,10 @@ class LeftAndMain extends Controller implements PermissionProvider
 
     public function afterHandleRequest()
     {
-        if ($this->response->isError() && !$this->request->isAjax()) {
+        if ($this->response->isError()
+            && !$this->request->isAjax()
+            && $this->response->getHeader('Content-Type') !== 'application/json'
+        ) {
             $this->init();
             $errorCode = $this->response->getStatusCode();
             $errorType = $this->response->getStatusDescription();
