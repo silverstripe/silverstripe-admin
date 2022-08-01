@@ -9,7 +9,7 @@ Feature: Search in GridField
     And the "Employee" "Bill" with "Company"="1"
     And the "Employee" "Ford" with "Company"="1"
     And the "Company" "ExxonMobil" with "Category"="Oil"
-    And the "Company" "Vitol" with "Category"="Other" 
+    And the "Company" "Vitol" with "Category"="Other"
     And I am logged in with "ADMIN" permissions
     And I go to "/admin/test"
 
@@ -17,8 +17,8 @@ Feature: Search in GridField
     When I press the "Open search and filter" button
       And I press the "Advanced" button
     Then I should see a "#Form_CompaniesSearchForm_Search_Name.no-change-track" element
-      And I fill in "SearchBox__Name" with "Walmart"
-      And I press the "Enter" key in the "SearchBox__Name" field
+      And I fill in "Search__Name" with "Walmart"
+      And I press the "Enter" key in the "Search__Name" field
     Then I should see "Walmart" in the "#Form_EditForm" element
       But I should not see "ExxonMobil" in the ".col-Name" element
       And I should not see "Vitol" in the ".col-Name" element

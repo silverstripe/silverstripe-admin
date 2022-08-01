@@ -38,8 +38,9 @@ Feature: Manage users
   Scenario: I can search for an existing user by name
     When I click the "Users" CMS tab
     And I press the "Open search and filter" button
-    And I fill in "SearchBox__FirstName" with "ADMIN"
-    And I press the "Enter" key in the "SearchBox__FirstName" field
+    And I press the "Advanced" button
+    And I fill in "Search__FirstName" with "ADMIN"
+    And I press the "Enter" key in the "Search__FirstName" field
     Then I should see "admin@example.org" in the "#Root_Users" element
     But I should not see "staffmember@example.org" in the "#Root_Users" element
     # Required to avoid "unsaved changes" browser dialog
