@@ -266,7 +266,6 @@ class SearchBox extends Component {
     const { expanded, onToggleFilter, formId } = this.props;
     const classes = classNames(
         'btn--icon',
-        'btn--no-text',
         'font-icon-caret-down-two',
         'search-box__filter-trigger',
         { collapsed: !expanded }
@@ -278,7 +277,7 @@ class SearchBox extends Component {
       onClick={onToggleFilter}
       className={classes}
       title={i18n._t('Admin.ADVANCED', 'Advanced')}
-    />);
+    >Search options</Button>);
   }
 
   /**
