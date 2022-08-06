@@ -95,6 +95,10 @@ en:
     NOIMPORT: 'Nothing to import'
     Title: 'Data Models'
     UPDATEDRECORDS: 'Updated {count} records.'
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem:
+    WONT_BE_SHOWN: 'Note: this message will not be shown to your visitors'
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
+    PREVIEW': 'Preview'
   SilverStripe\Admin\SecurityAdmin:
     ACCESS_HELP: 'Allow viewing, adding and editing users, as well as assigning permissions and roles to them.'
     APPLY_ROLES: 'Apply roles to groups'

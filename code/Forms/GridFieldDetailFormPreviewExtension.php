@@ -3,7 +3,7 @@
 namespace SilverStripe\Admin\Forms;
 
 use SilverStripe\Admin\LeftAndMain;
-use SilverStripe\CMS\Controllers\SilverStripeNavigator;
+use SilverStripe\Admin\Navigator\SilverStripeNavigator;
 use SilverStripe\Core\Extension;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\LiteralField;
