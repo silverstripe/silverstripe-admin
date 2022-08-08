@@ -27,9 +27,6 @@
         "phpunit/phpunit": "^8 || ^9"
     },
     "extra": {
-        "branch-alias": {
-            "dev-master": "2.x-dev"
-        },
         "expose": [
             "client/dist",
             "client/lang",
