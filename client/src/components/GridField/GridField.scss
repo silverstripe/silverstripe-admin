@@ -310,3 +310,8 @@ div.grid-field__sort-field + .form__fieldgroup-item {
     color: $state-modified;
   }
 }
+
+.grid-field__warning-message {
+  color: $color-error;
+  font-style: italic;
+}
