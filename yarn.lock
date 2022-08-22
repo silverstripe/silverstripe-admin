@@ -3077,7 +3077,7 @@ colormin@^1.0.5:
 colors@1.1.2, colors@^1.1.2, colors@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/colors/-/colors-1.1.2.tgz#168a4701756b6a7f51a12ce0c97bfa28c084ed63"
-  integrity sha1-FopHAXVran9RoSzgyXv6KMCE7WM=
+  integrity sha512-ENwblkFQpqqia6b++zLD/KUWafYlVY/UNnAp7oz7LY7E924wmpye416wBOmvv/HMWzl8gL1kJlfvId/1Dg176w==
 
 columnify@~1.5.4:
   version "1.5.4"
