@@ -618,7 +618,7 @@ $.entwine('ss', function($) {
       .fail((xhr, status, error) => {
         // Ignoring aborts: The server request failed, so prevent a mixed UI state by rolling back to previously
         // succesfully loaded URL (consistent with currently loaded content).
-        if (xhr.readyState !== 0) {
+        if (xhr.readyState !== 0 && xhr.getResponseHeader('X-Reauthenticate') !== '1') {
           this.reverseStateChange();
         }
       })
