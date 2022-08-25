@@ -10,16 +10,16 @@ class PlayerAdmin extends ModelAdmin implements TestOnly
 {
     private static $url_segment = 'playeradmin';
 
-    private static $managed_models = array(
+    private static $managed_models = [
         Player::class
-    );
+    ];
 
     public function getExportFields()
     {
-        return array(
+        return [
             'Name' => 'Name',
             'Position' => 'Position'
-        );
+        ];
     }
 
     public function Link($action = null)

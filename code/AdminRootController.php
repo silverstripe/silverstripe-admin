@@ -69,11 +69,11 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
     public static function rules()
     {
         if (self::$adminRules === null) {
-            self::$adminRules = array();
+            self::$adminRules = [];
 
             // Map over the array calling add_rule_for_controller on each
             $classes = CMSMenu::get_cms_classes(null, true, CMSMenu::URL_PRIORITY);
-            array_map(array(__CLASS__, 'add_rule_for_controller'), $classes ?? []);
+            array_map([__CLASS__, 'add_rule_for_controller'], $classes ?? []);
         }
         return self::$adminRules;
     }
@@ -135,8 +135,8 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
      */
     public static function get_template_global_variables()
     {
-        return array(
+        return [
             'adminURL' => 'admin_url'
-        );
+        ];
     }
 }
