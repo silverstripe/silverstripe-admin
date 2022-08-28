@@ -90,10 +90,10 @@ class ModelAdminTest extends FunctionalTest
         $request->setSession(new Session([]));
         $admin->setRequest($request);
         $admin->doInit();
-        $this->assertEquals($admin->getExportFields(), array(
+        $this->assertEquals($admin->getExportFields(), [
             'Name' => 'Name',
             'Position' => 'Position'
-        ));
+        ]);
     }
 
     public function testGetGridField()

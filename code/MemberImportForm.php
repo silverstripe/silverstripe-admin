@@ -50,7 +50,7 @@ class MemberImportForm extends Form
                 . 'multiple groups can be separated by comma. Existing group memberships are not cleared.</li>'
                 . '</ul>'
                 . '</div>',
-                array('columns' => $columns)
+                ['columns' => $columns]
             );
 
             $fields = new FieldList(
@@ -63,7 +63,7 @@ class MemberImportForm extends Form
                     ))
                 )
             );
-            $fileField->getValidator()->setAllowedExtensions(array('csv'));
+            $fileField->getValidator()->setAllowedExtensions(['csv']);
         }
 
         if (!$actions) {
@@ -92,33 +92,33 @@ class MemberImportForm extends Form
 
         // optionally set group relation
         if ($this->group) {
-            $loader->setGroups(array($this->group));
+            $loader->setGroups([$this->group]);
         }
 
         // load file
         $result = $loader->load($data['CsvFile']['tmp_name']);
 
         // result message
-        $msgArr = array();
+        $msgArr = [];
         if ($result->CreatedCount()) {
             $msgArr[] = _t(
                 __CLASS__ . '.ResultCreated',
                 'Created {count} members',
-                array('count' => $result->CreatedCount())
+                ['count' => $result->CreatedCount()]
             );
         }
         if ($result->UpdatedCount()) {
             $msgArr[] = _t(
                 __CLASS__ . '.ResultUpdated',
                 'Updated {count} members',
-                array('count' => $result->UpdatedCount())
+                ['count' => $result->UpdatedCount()]
             );
         }
         if ($result->DeletedCount()) {
             $msgArr[] = _t(
                 __CLASS__ . '.ResultDeleted',
                 'Deleted {count} members',
-                array('count' => $result->DeletedCount())
+                ['count' => $result->DeletedCount()]
             );
         }
         $msg = ($msgArr) ? implode(',', $msgArr) : _t(__CLASS__ . '.ResultNone', 'No changes');

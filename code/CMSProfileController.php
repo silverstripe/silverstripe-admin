@@ -111,6 +111,6 @@ class CMSProfileController extends LeftAndMain
     public function Breadcrumbs($unlinked = false)
     {
         $items = parent::Breadcrumbs($unlinked);
-        return new ArrayList(array($items[0]));
+        return new ArrayList([$items[0]]);
     }
 }

@@ -25,7 +25,7 @@ class CMSBatchActionHandler extends RequestHandler
 {
 
     /** @config */
-    private static $batch_actions = array();
+    private static $batch_actions = [];
 
     /**
      * List of registered actions
@@ -34,17 +34,17 @@ class CMSBatchActionHandler extends RequestHandler
      */
     private static $registered_actions = null;
 
-    private static $url_handlers = array(
+    private static $url_handlers = [
         '$BatchAction/applicablepages' => 'handleApplicablePages',
         '$BatchAction/confirmation' => 'handleConfirmation',
         '$BatchAction' => 'handleBatchAction',
-    );
+    ];
 
-    private static $allowed_actions = array(
+    private static $allowed_actions = [
         'handleBatchAction',
         'handleApplicablePages',
         'handleConfirmation',
-    );
+    ];
 
     /**
      * @var Controller
@@ -178,7 +178,7 @@ class CMSBatchActionHandler extends RequestHandler
         if ($ids) {
             $applicableIDs = $actionHandler->applicablePages($ids);
         } else {
-            $applicableIDs = array();
+            $applicableIDs = [];
         }
 
         $response = new HTTPResponse(json_encode($applicableIDs));
@@ -206,7 +206,7 @@ class CMSBatchActionHandler extends RequestHandler
         if ($actionHandler->hasMethod('confirmationDialog')) {
             $response = new HTTPResponse(json_encode($actionHandler->confirmationDialog($ids)));
         } else {
-            $response = new HTTPResponse(json_encode(array('alert' => false)));
+            $response = new HTTPResponse(json_encode(['alert' => false]));
         }
 
         $response->addHeader("Content-type", "application/json");
@@ -246,10 +246,10 @@ class CMSBatchActionHandler extends RequestHandler
         foreach ($actions as $urlSegment => $action) {
             $actionObj = $this->buildAction($action['class']);
             if ($actionObj->canView()) {
-                $actionDef = new ArrayData(array(
+                $actionDef = new ArrayData([
                     "Link" => Controller::join_links($this->Link(), $urlSegment),
                     "Title" => $actionObj->getActionTitle(),
-                ));
+                ]);
                 $actionList->push($actionDef);
             }
         }

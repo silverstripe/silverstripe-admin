@@ -49,7 +49,7 @@ class CMSMenuItem
      *
      * @var string
      */
-    protected $attributes = array();
+    protected $attributes = [];
 
     /**
      * @var string
@@ -105,7 +105,7 @@ class CMSMenuItem
         }
 
         // Create markkup
-        $parts = array();
+        $parts = [];
 
         foreach ($attrs as $name => $value) {
             if ($value === true) {

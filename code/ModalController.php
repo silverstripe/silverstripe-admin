@@ -13,10 +13,10 @@ use SilverStripe\Forms\Form;
  */
 class ModalController extends RequestHandler
 {
-    private static $allowed_actions = array(
+    private static $allowed_actions = [
         'EditorExternalLink',
         'EditorEmailLink',
-    );
+    ];
 
     public function Link($action = null)
     {

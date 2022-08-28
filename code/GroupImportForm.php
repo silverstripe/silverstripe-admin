@@ -50,7 +50,7 @@ class GroupImportForm extends Form
                 . 'cleared.</li>'
                 . '</ul>'
                 . '</div>',
-                array('columns' => $columns)
+                ['columns' => $columns]
             );
 
             $fields = new FieldList(
@@ -63,7 +63,7 @@ class GroupImportForm extends Form
                     ))
                 )
             );
-            $fileField->getValidator()->setAllowedExtensions(array('csv'));
+            $fileField->getValidator()->setAllowedExtensions(['csv']);
         }
 
         if (!$actions) {
@@ -90,26 +90,26 @@ class GroupImportForm extends Form
         $result = $loader->load($data['CsvFile']['tmp_name']);
 
         // result message
-        $msgArr = array();
+        $msgArr = [];
         if ($result->CreatedCount()) {
             $msgArr[] = _t(
                 __CLASS__ . '.ResultCreated',
                 'Created {count} groups',
-                array('count' => $result->CreatedCount())
+                ['count' => $result->CreatedCount()]
             );
         }
         if ($result->UpdatedCount()) {
             $msgArr[] = _t(
                 __CLASS__ . '.ResultUpdated',
                 'Updated {count} groups',
-                array('count' => $result->UpdatedCount())
+                ['count' => $result->UpdatedCount()]
             );
         }
         if ($result->DeletedCount()) {
             $msgArr[] = _t(
                 __CLASS__ . '.ResultDeleted',
                 'Deleted {count} groups',
-                array('count' => $result->DeletedCount())
+                ['count' => $result->DeletedCount()]
             );
         }
         $msg = ($msgArr) ? implode(',', $msgArr) : _t('SilverStripe\\Admin\\MemberImportForm.ResultNone', 'No changes');

@@ -32,19 +32,19 @@ class LeftAndMainTest extends FunctionalTest
         $assetsDir = File::join_paths($base->getRelativePath(), 'tests/php/assets');
 
         LeftAndMain::config()
-            ->update('extra_requirements_css', array(
+            ->update('extra_requirements_css', [
                 $assetsDir.'/LeftAndMainTest.css',
                 $assetsDir. '/LeftAndMainTestWithOptions.css' => [
                     'media' => 'print',
                     'crossorigin' => 'anonymous'
                 ],
-            ))
-            ->update('extra_requirements_javascript', array(
+            ])
+            ->update('extra_requirements_javascript', [
                 $assetsDir. '/LeftAndMainTest.js',
                 $assetsDir. '/LeftAndMainTestWithOptions.js' => [
                     'crossorigin' => 'anonymous'
                 ],
-            ));
+            ]);
 
         Requirements::set_combined_files_enabled(false);
     }
@@ -133,7 +133,7 @@ class LeftAndMainTest extends FunctionalTest
         $menuItems = LeftAndMain::singleton()->MainMenu(false);
         $this->assertEquals(
             $menuItems->column('Code'),
-            array(),
+            [],
             'Without valid login, members cant access any menu entries'
         );
 
@@ -145,10 +145,10 @@ class LeftAndMainTest extends FunctionalTest
         sort($menuItems);
 
         $this->assertEquals(
-            array(
+            [
                 'SilverStripe-Admin-CMSProfileController',
                 'SilverStripe-Admin-SecurityAdmin'
-            ),
+            ],
             $menuItems,
             'Groups with limited access can only access the interfaces they have permissions for'
         );
