@@ -7,7 +7,7 @@ import $ from 'jquery';
 $(document).ready(function() {
   // Support both bootstrap / legacy selectors
 	$('ul.SelectionGroup input.selector, ul.selection-group input.selector')
-    .live('click', function() {
+    .on('click', function() {
       var li = $(this).closest('li');
       li.addClass('selected');
 

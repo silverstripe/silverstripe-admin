@@ -58,6 +58,7 @@
     "graphql-fragments": "^0.1.0",
     "graphql-tag": "^2.10.0",
     "isomorphic-fetch": "^2.2.1",
+    "jquery": "^1",
     "jquery-sizes": "^0.33.0",
     "json-js": "^1.1.2",
     "lodash.debounce": "^4.0.8",

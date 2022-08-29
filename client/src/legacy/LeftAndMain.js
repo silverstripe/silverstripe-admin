@@ -221,17 +221,18 @@ $.entwine('ss', function($) {
      */
     onadd: function() {
       // Browser detection
-      if($.browser.msie && parseInt($.browser.version, 10) < 8) {
-        $('.ss-loading-screen').append(
-          '<p class="ss-loading-incompat-warning"><span class="notice">' +
-          'Your browser is not compatible with the CMS interface. Please use Internet Explorer 8+, Google Chrome or Mozilla Firefox.' +
-          '</span></p>'
-        ).css('z-index', $('.ss-loading-screen').css('z-index')+1);
-        $('.loading-animation').remove();
+      // We'll need to replace this with some other library's implementation
+      // if($.browser.msie && parseInt($.browser.version, 10) < 8) {
+      //   $('.ss-loading-screen').append(
+      //     '<p class="ss-loading-incompat-warning"><span class="notice">' +
+      //     'Your browser is not compatible with the CMS interface. Please use Internet Explorer 8+, Google Chrome or Mozilla Firefox.' +
+      //     '</span></p>'
+      //   ).css('z-index', $('.ss-loading-screen').css('z-index')+1);
+      //   $('.loading-animation').remove();
 
-        this._super();
-        return;
-      }
+      //   this._super();
+      //   return;
+      // }
 
       // Initialize layouts
       this.redraw();
