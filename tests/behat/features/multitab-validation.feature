@@ -6,9 +6,10 @@ Feature: Multi-tab page validation icons
   Background:
     Given a "multi tab page" "My MultiTab Page"
     And a "single tab page" "My SingleTab Page"
+    And the "group" "EDITOR" has permissions "Access to 'Pages' section"
 
   Scenario: I can see tab validation icons on multi-tab pages
-    Given I am logged in with "ADMIN" permissions
+    Given I am logged in as a member of "EDITOR" group
     And I go to "/admin/pages"
     And I should see "My MultiTab Page" in the tree
     And I click on "My MultiTab Page" in the tree
@@ -46,7 +47,7 @@ Feature: Multi-tab page validation icons
     Then I should not see an invalid tab icon on the "Fourth" tab
 
   Scenario: Tab validation icons dont appear on pages with a single tab
-    Given I am logged in with "ADMIN" permissions
+    Given I am logged in as a member of "EDITOR" group
     And I go to "/admin/pages"
     And I should see "My SingleTab Page" in the tree
     And I click on "My SingleTab Page" in the tree

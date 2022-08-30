@@ -5,8 +5,10 @@ Feature: Manage groups
   So that I can control access to the CMS
 
   Background:
-    Given a "group" "BOB group"
-    And a "group" "Jane group" with permissions "View draft content"
+    Given a "group" "BOB"
+    And a "group" "Jane" with permissions "View draft content"
+    And the "group" "GROUPS_EDITOR" has permissions "CMS_ACCESS_SecurityAdmin" and "EDIT_PERMISSIONS"
+    And the "group" "MEMEBERS_EDITOR" has permissions "CMS_ACCESS_SecurityAdmin" and "APPLY_ROLES"
     And the "page" "My page"
     And I am logged in with "ADMIN" permissions
     And I go to "/admin/security"
@@ -31,17 +33,58 @@ Feature: Manage groups
     And I fill in "Group name" with ""
     And I press the "Create" button
     Then I should see "Validation Error"
+  
+  Scenario: Members of a group with permissions 
+    Given I go to "/Security/login"
+    And I press the "Log in as someone else" button
+    And I am logged in as a member of "BOB" group
+    When I go to "/my-page?stage=Stage"
+    Then I should not see "My page"
+  
+  Scenario: Members of a group with permissions can edit Group data
+    Given I go to "/Security/login"
+    And I press the "Log in as someone else" button
+    And I am logged in as a member of "GROUPS_EDITOR" group
+    And I go to "/admin/security"
+    When I click the "Groups" CMS tab
+    And I click "GROUPS_EDITOR" in the "#Root_Groups" element
+    And I fill in "Group name" with "GROUPS_EDITOR_NEW"
+    And I press the "Save" button
+    And I should see "Saved Group "
+    And I click "Groups" in the ".breadcrumbs-wrapper" element
+    And I click the "Groups" CMS tab
+    And I should see "GROUPS_EDITOR_NEW"
+
+  Scenario: Members of a group with permissions can edit Members data
+    Given I go to "/Security/login"
+    And I press the "Log in as someone else" button
+    And I am logged in as a member of "GROUPS_EDITOR" group
+    And I go to "/admin/security"
+    When I click the "Users" CMS tab
+    And I click "GROUPS_EDITOR" in the "#Root_Users" element
+    And I fill in "First Name" with "General Editor"
+    And I press the "Save" button
+    And I should see "Saved Member "
+    And I click "Security" in the ".breadcrumbs-wrapper" element
+    And I should see "General Editor"
+ 
+  Scenario: Members of a group with permissions cannot view draft content
+    Given I go to "/Security/login"
+    And I press the "Log in as someone else" button
+    And I am logged in as a member of "BOB" group
+    When I go to "/my-page?stage=Stage"
+    Then I should not see "My page"
 
   Scenario: Members of a group without permissions cannot view draft content
     Given I go to "/Security/login"
     And I press the "Log in as someone else" button
-    And I am logged in with "BOB" permissions
+    And I am logged in as a member of "BOB" group
     When I go to "/my-page?stage=Stage"
     Then I should not see "My page"
 
   Scenario: Members of a group with relevant permissions can view draft content
     Given I go to "/Security/login"
     And I press the "Log in as someone else" button
-    And I am logged in with "Jane" permissions
+    And I am logged in as a member of "Jane" group
     When I go to "/my-page?stage=Stage"
     Then I should see "My page"
