@@ -20,7 +20,7 @@ class CMSProfileControllerTest extends FunctionalTest
         $anotherMember = $this->objFromFixture(Member::class, 'user2');
         $this->logInAs($member);
 
-        $response = $this->post('admin/myprofile/EditForm', array(
+        $response = $this->post('admin/myprofile/EditForm', [
             'action_save' => 1,
             'ID' => $anotherMember->ID,
             'FirstName' => 'JoeEdited',
@@ -29,7 +29,7 @@ class CMSProfileControllerTest extends FunctionalTest
             'Locale' => $member->Locale,
             'Password[_Password]' => 'password',
             'Password[_ConfirmPassword]' => 'password',
-        ));
+        ]);
 
         $anotherMember = $this->objFromFixture(Member::class, 'user2');
 
@@ -41,7 +41,7 @@ class CMSProfileControllerTest extends FunctionalTest
         $member = $this->objFromFixture(Member::class, 'user3');
         $this->logInAs($member);
 
-        $response = $this->post('admin/myprofile/EditForm', array(
+        $response = $this->post('admin/myprofile/EditForm', [
             'action_save' => 1,
             'ID' => $member->ID,
             'FirstName' => 'JoeEdited',
@@ -50,7 +50,7 @@ class CMSProfileControllerTest extends FunctionalTest
             'Locale' => $member->Locale,
             'Password[_Password]' => 'password',
             'Password[_ConfirmPassword]' => 'password',
-        ));
+        ]);
 
         $member = $this->objFromFixture(Member::class, 'user3');
 
@@ -67,7 +67,7 @@ class CMSProfileControllerTest extends FunctionalTest
         $member = $this->objFromFixture(Member::class, 'user1');
         $this->logInAs($member);
 
-        $response = $this->post('admin/myprofile/EditForm', array(
+        $response = $this->post('admin/myprofile/EditForm', [
             'action_save' => 1,
             'ID' => $member->ID,
             'FirstName' => 'JoeEdited',
@@ -76,7 +76,7 @@ class CMSProfileControllerTest extends FunctionalTest
             'Locale' => $member->Locale,
             'Password[_Password]' => 'password',
             'Password[_ConfirmPassword]' => 'password',
-        ));
+        ]);
 
         $member = $this->objFromFixture(Member::class, 'user1');
 

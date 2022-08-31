@@ -82,14 +82,14 @@ abstract class ModelAdmin extends LeftAndMain
      */
     private static $menu_icon_class = 'font-icon-database';
 
-    private static $allowed_actions = array(
+    private static $allowed_actions = [
         'ImportForm',
         'SearchForm'
-    );
+    ];
 
-    private static $url_handlers = array(
+    private static $url_handlers = [
         '$ModelClass/$Action' => 'handleAction'
-    );
+    ];
 
     /**
      * @var string The {@link \SilverStripe\ORM\DataObject} sub-class being managed during this object's lifetime.
@@ -421,7 +421,7 @@ abstract class ModelAdmin extends LeftAndMain
         $forms = new ArrayList();
 
         foreach ($models as $tab => $options) {
-            $forms->push(new ArrayData(array(
+            $forms->push(new ArrayData([
                 'Title' => $options['title'],
                 'Tab' => $tab,
                 // `getManagedModels` did not always return a `dataClass` attribute
@@ -429,7 +429,7 @@ abstract class ModelAdmin extends LeftAndMain
                 'ClassName' => isset($options['dataClass']) ? $options['dataClass'] : $tab,
                 'Link' => $this->Link($this->sanitiseClassName($tab)),
                 'LinkOrCurrent' => ($tab == $this->modelTab) ? 'current' : 'link'
-            )));
+            ]));
         }
 
         return $forms;
@@ -464,7 +464,7 @@ abstract class ModelAdmin extends LeftAndMain
     {
         $models = $this->config()->get('managed_models');
         if (is_string($models)) {
-            $models = array($models);
+            $models = [$models];
         }
         if (!count($models ?? [])) {
             throw new \RuntimeException(
@@ -507,7 +507,7 @@ abstract class ModelAdmin extends LeftAndMain
             }
         }
 
-        $importers = array();
+        $importers = [];
         foreach ($importerClasses as $modelClass => $importerClass) {
             $importers[$modelClass] = new $importerClass($modelClass);
         }
@@ -552,18 +552,18 @@ abstract class ModelAdmin extends LeftAndMain
         $spec = $importer->getImportSpec();
         $specFields = new ArrayList();
         foreach ($spec['fields'] as $name => $desc) {
-            $specFields->push(new ArrayData(array('Name' => $name, 'Description' => $desc)));
+            $specFields->push(new ArrayData(['Name' => $name, 'Description' => $desc]));
         }
         $specRelations = new ArrayList();
         foreach ($spec['relations'] as $name => $desc) {
-            $specRelations->push(new ArrayData(array('Name' => $name, 'Description' => $desc)));
+            $specRelations->push(new ArrayData(['Name' => $name, 'Description' => $desc]));
         }
-        $specHTML = $this->customise(array(
+        $specHTML = $this->customise([
             'ClassName' => $this->sanitiseClassName($this->modelClass),
             'ModelName' => Convert::raw2att($modelName),
             'Fields' => $specFields,
             'Relations' => $specRelations,
-        ))->renderWith($this->getTemplatesWithSuffix('_ImportSpec'));
+        ])->renderWith($this->getTemplatesWithSuffix('_ImportSpec'));
 
         $fields->push(new LiteralField("SpecFor{$modelName}", $specHTML));
         $fields->push(
@@ -642,21 +642,21 @@ abstract class ModelAdmin extends LeftAndMain
                 $message .= _t(
                     'SilverStripe\\Admin\\ModelAdmin.IMPORTEDRECORDS',
                     "Imported {count} records.",
-                    array('count' => $results->CreatedCount())
+                    ['count' => $results->CreatedCount()]
                 );
             }
             if ($results && $results->UpdatedCount()) {
                 $message .= _t(
                     'SilverStripe\\Admin\\ModelAdmin.UPDATEDRECORDS',
                     "Updated {count} records.",
-                    array('count' => $results->UpdatedCount())
+                    ['count' => $results->UpdatedCount()]
                 );
             }
             if ($results->DeletedCount()) {
                 $message .= _t(
                     'SilverStripe\\Admin\\ModelAdmin.DELETEDRECORDS',
                     "Deleted {count} records.",
-                    array('count' => $results->DeletedCount())
+                    ['count' => $results->DeletedCount()]
                 );
             }
             if (!$results->CreatedCount() && !$results->UpdatedCount()) {

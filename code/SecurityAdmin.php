@@ -47,7 +47,7 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
 
     private static $menu_icon_class = 'font-icon-torsos-all';
 
-    private static $allowed_actions = array(
+    private static $allowed_actions = [
         'EditForm',
         'MemberImportForm',
         'memberimport',
@@ -56,7 +56,7 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
         'groups',
         'users',
         'roles'
-    );
+    ];
 
     /**
      * Shortcut action for setting the correct active tab.
@@ -140,15 +140,15 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
         );
         /** @var GridFieldDataColumns $columns */
         $columns = $groupList->getConfig()->getComponentByType(GridFieldDataColumns::class);
-        $columns->setDisplayFields(array(
+        $columns->setDisplayFields([
             'Breadcrumbs' => Group::singleton()->fieldLabel('Title')
-        ));
-        $columns->setFieldFormatting(array(
+        ]);
+        $columns->setFieldFormatting([
             'Breadcrumbs' => function ($val, $item) {
                 /** @var Group $item */
                 return Convert::raw2xml($item->getBreadcrumbs(' > '));
             }
-        ));
+        ]);
 
         $fields = FieldList::create(
             TabSet::create(
@@ -216,10 +216,10 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
         Requirements::javascript('silverstripe/admin: client/dist/js/MemberImportForm.js');
         Requirements::css('silverstripe/admin: client/dist/styles/bundle.css');
 
-        return $this->renderWith('BlankPage', array(
+        return $this->renderWith('BlankPage', [
             'Form' => $this->MemberImportForm()->forTemplate(),
             'Content' => ' '
-        ));
+        ]);
     }
 
     /**
@@ -248,10 +248,10 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
         Requirements::javascript('silverstripe/admin: client/dist/js/MemberImportForm.js');
         Requirements::css('silverstripe/admin: client/dist/styles/bundle.css');
 
-        return $this->renderWith('BlankPage', array(
+        return $this->renderWith('BlankPage', [
             'Content' => ' ',
             'Form' => $this->GroupImportForm()->forTemplate()
-        ));
+        ]);
     }
 
     /**
@@ -291,20 +291,20 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
             // admin/security/EditForm/field/Groups/item/2/ItemEditForm/field/Members/item/1/edit
             $firstCrumb = $crumbs->shift();
             if ($params['FieldName'] == 'Groups') {
-                $crumbs->unshift(new ArrayData(array(
+                $crumbs->unshift(new ArrayData([
                     'Title' => Group::singleton()->i18n_plural_name(),
                     'Link' => $this->Link('groups')
-                )));
+                ]));
             } elseif ($params['FieldName'] == 'Users') {
-                $crumbs->unshift(new ArrayData(array(
+                $crumbs->unshift(new ArrayData([
                     'Title' => _t(__CLASS__ . '.Users', 'Users'),
                     'Link' => $this->Link('users')
-                )));
+                ]));
             } elseif ($params['FieldName'] == 'Roles') {
-                $crumbs->unshift(new ArrayData(array(
+                $crumbs->unshift(new ArrayData([
                     'Title' => _t(__CLASS__ . '.TABROLES', 'Roles'),
                     'Link' => $this->Link('roles')
-                )));
+                ]));
             }
             $crumbs->unshift($firstCrumb);
         }
@@ -315,7 +315,7 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
     public function providePermissions()
     {
         $title = $this->menu_title();
-        return array(
+        return [
             "CMS_ACCESS_SecurityAdmin" => [
                 'name' => _t(
                     'SilverStripe\\CMS\\Controllers\\CMSMain.ACCESS',
@@ -326,9 +326,9 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
                 'help' => _t(
                     __CLASS__ . '.ACCESS_HELP',
                     'Allow viewing, adding and editing users, as well as assigning permissions and roles to them.'
-                )
+                ),
             ],
-            'EDIT_PERMISSIONS' => array(
+            'EDIT_PERMISSIONS' => [
                 'name' => _t(__CLASS__ . '.EDITPERMISSIONS', 'Manage permissions for groups'),
                 'category' => _t(
                     'SilverStripe\\Security\\Permission.PERMISSIONS_CATEGORY',
@@ -339,9 +339,9 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
                     'Ability to edit Permissions and IP Addresses for a group.'
                     . ' Requires the "Access to \'Security\' section" permission.'
                 ),
-                'sort' => 0
-            ),
-            'APPLY_ROLES' => array(
+                'sort' => 0,
+            ],
+            'APPLY_ROLES' => [
                 'name' => _t(__CLASS__ . '.APPLY_ROLES', 'Apply roles to groups'),
                 'category' => _t(
                     'SilverStripe\\Security\\Permission.PERMISSIONS_CATEGORY',
@@ -352,8 +352,8 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
                     'Ability to edit the roles assigned to a group.'
                     . ' Requires the "Access to \'Users\' section" permission.'
                 ),
-                'sort' => 0
-            )
-        );
+                'sort' => 0,
+            ],
+        ];
     }
 }

@@ -231,7 +231,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      * @config
      * @var array
      */
-    private static $extra_requirements_javascript = array();
+    private static $extra_requirements_javascript = [];
 
     /**
      * YAML configuration example:
@@ -245,13 +245,13 @@ class LeftAndMain extends Controller implements PermissionProvider
      * @config
      * @var array See {@link extra_requirements_javascript}
      */
-    private static $extra_requirements_css = array();
+    private static $extra_requirements_css = [];
 
     /**
      * @config
      * @var array See {@link extra_requirements_javascript}
      */
-    private static $extra_requirements_themedCss = array();
+    private static $extra_requirements_themedCss = [];
 
     /**
      * If true, call a keepalive ping every 5 minutes from the CMS interface,
@@ -642,7 +642,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             }
 
             // if no alternate menu items have matched, return a permission error
-            $messageSet = array(
+            $messageSet = [
                 'default' => _t(
                     __CLASS__ . '.PERMDEFAULT',
                     "You must be logged in to access the administration area; please enter your credentials below."
@@ -657,7 +657,7 @@ class LeftAndMain extends Controller implements PermissionProvider
                     "You have been logged out of the CMS.  If you would like to log in again, enter a username and"
                     . " password below."
                 ),
-            );
+            ];
 
             Security::permissionFailure($this, $messageSet);
             return;
@@ -716,7 +716,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             foreach ($extraJs as $file => $config) {
                 if (is_numeric($file)) {
                     $file = $config;
-                    $config = array();
+                    $config = [];
                 }
 
                 Requirements::javascript($file, $config);
@@ -729,7 +729,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             foreach ($extraCss as $file => $config) {
                 if (is_numeric($file)) {
                     $file = $config;
-                    $config = array();
+                    $config = [];
                 }
                 $media = null;
                 if (isset($config['media'])) {
@@ -747,7 +747,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             foreach ($extraThemedCss as $file => $config) {
                 if (is_numeric($file)) {
                     $file = $config;
-                    $config = array();
+                    $config = [];
                 }
                 $media = null;
                 if (isset($config['media'])) {
@@ -1024,7 +1024,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     {
         if (!$this->responseNegotiator) {
             $this->responseNegotiator = new PjaxResponseNegotiator(
-                array(
+                [
                     'CurrentForm' => function () {
                         return $this->getEditForm()->forTemplate();
                     },
@@ -1040,7 +1040,7 @@ class LeftAndMain extends Controller implements PermissionProvider
                     'default' => function () {
                         return $this->renderWith($this->getViewer('show'));
                     }
-                ),
+                ],
                 $this->getResponse()
             );
         }
@@ -1129,7 +1129,7 @@ class LeftAndMain extends Controller implements PermissionProvider
                         $iconClass = $menuItem->iconClass;
                     }
 
-                    $menu->push(new ArrayData(array(
+                    $menu->push(new ArrayData([
                         "MenuItem" => $menuItem,
                         "AttributesHTML" => $menuItem->getAttributesHTML(),
                         "Title" => $title,
@@ -1139,7 +1139,7 @@ class LeftAndMain extends Controller implements PermissionProvider
                         "HasCSSIcon" => $hasCSSIcon,
                         "Link" => $menuItem->url,
                         "LinkingMode" => $linkingmode
-                    )));
+                    ]));
                 }
             }
             if ($menuIconStyling) {
@@ -1230,12 +1230,12 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     public function Breadcrumbs($unlinked = false)
     {
-        $items = new ArrayList(array(
-            new ArrayData(array(
+        $items = new ArrayList([
+            new ArrayData([
                 'Title' => $this->menu_title(),
                 'Link' => ($unlinked) ? false : $this->Link()
-            ))
-        ));
+            ])
+        ]);
 
         return $items;
     }
@@ -1272,7 +1272,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             throw new InvalidArgumentException(sprintf('Invalid filter class passed: %s', $filterClass));
         }
 
-        return $this->searchFilterCache = Injector::inst()->createWithArgs($filterClass, array($params));
+        return $this->searchFilterCache = Injector::inst()->createWithArgs($filterClass, [$params]);
     }
 
     /**
@@ -1363,7 +1363,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         );
         return $this->getResponseNegotiator()->respond(
             $this->getRequest(),
-            array('currentform' => array($this, 'EmptyForm'))
+            ['currentform' => [$this, 'EmptyForm']]
         );
     }
 
@@ -1482,11 +1482,11 @@ class LeftAndMain extends Controller implements PermissionProvider
             if ($request->isAjax() && $negotiator) {
                 $result = $form->forTemplate();
 
-                return $negotiator->respond($request, array(
+                return $negotiator->respond($request, [
                     'CurrentForm' => function () use ($result) {
                         return $result;
                     }
-                ));
+                ]);
             }
             return null;
         });
@@ -1658,9 +1658,9 @@ class LeftAndMain extends Controller implements PermissionProvider
 
         Requirements::clear();
         Requirements::css('silverstripe/admin: dist/css/LeftAndMain_printable.css');
-        return array(
+        return [
             "PrintForm" => $form
-        );
+        ];
     }
 
     /**
@@ -1965,14 +1965,14 @@ class LeftAndMain extends Controller implements PermissionProvider
 
     public function providePermissions()
     {
-        $perms = array(
-            "CMS_ACCESS_LeftAndMain" => array(
+        $perms = [
+            "CMS_ACCESS_LeftAndMain" => [
                 'name' => _t(__CLASS__ . '.ACCESSALLINTERFACES', 'Access to all CMS sections'),
                 'category' => _t('SilverStripe\\Security\\Permission.CMS_ACCESS_CATEGORY', 'CMS Access'),
                 'help' => _t(__CLASS__ . '.ACCESSALLINTERFACESHELP', 'Overrules more specific access settings.'),
                 'sort' => -100
-            )
-        );
+            ]
+        ];
 
         // Add any custom ModelAdmin subclasses. Can't put this on ModelAdmin itself
         // since its marked abstract, and needs to be singleton instanciated.
@@ -1997,15 +1997,15 @@ class LeftAndMain extends Controller implements PermissionProvider
                 $code = reset($code);
             }
             $title = LeftAndMain::menu_title($class);
-            $perms[$code] = array(
+            $perms[$code] = [
                 'name' => _t(
                     'SilverStripe\\CMS\\Controllers\\CMSMain.ACCESS',
                     "Access to '{title}' section",
                     "Item in permission selection identifying the admin section. Example: Access to 'Files & Images'",
-                    array('title' => $title)
+                    ['title' => $title]
                 ),
                 'category' => _t('SilverStripe\\Security\\Permission.CMS_ACCESS_CATEGORY', 'CMS Access')
-            );
+            ];
         }
 
         return $perms;
