@@ -6,6 +6,7 @@ use BadMethodCallException;
 use InvalidArgumentException;
 use LogicException;
 use ReflectionClass;
+use SilverStripe\Admin\React\SiteName;
 use SilverStripe\CMS\Controllers\SilverStripeNavigator;
 use SilverStripe\Control\ContentNegotiator;
 use SilverStripe\Control\Controller;
@@ -1155,6 +1156,11 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function Menu()
     {
         return $this->renderWith($this->getTemplatesWithSuffix('_Menu'));
+    }
+
+    public function SiteName()
+    {
+        return new SiteName();
     }
 
     /**
