@@ -23,7 +23,7 @@
 				<% if $FieldList %>
 					<div class="selection-group selection-group__item__fieldlist" id="$ID">
 						<% loop $FieldList %>
-							$Fieldholder
+							$FieldHolder
 						<% end_loop %>
 					</div>
 				<% end_if %>
