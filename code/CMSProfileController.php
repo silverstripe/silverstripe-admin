@@ -2,6 +2,7 @@
 
 namespace SilverStripe\Admin;
 
+use SilverStripe\CMS\Controllers\CMSMain;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Forms\HiddenField;
 use SilverStripe\Forms\FormAction;
@@ -12,7 +13,6 @@ use SilverStripe\Security\Security;
 
 class CMSProfileController extends LeftAndMain
 {
-
     private static $url_segment = 'myprofile';
 
     private static $menu_title = 'My Profile';
@@ -34,7 +34,7 @@ class CMSProfileController extends LeftAndMain
         $form->Fields()->removeByName('LastVisited');
         $form->Fields()->push(new HiddenField('ID', null, Security::getCurrentUser()->ID));
         $form->Actions()->push(
-            FormAction::create('save', _t('SilverStripe\\CMS\\Controllers\\CMSMain.SAVE', 'Save'))
+            FormAction::create('save', _t(CMSMain::class . '.SAVE', 'Save'))
                 ->addExtraClass('btn-primary font-icon-save')
                 ->setUseButtonTag(true)
         );
