@@ -749,12 +749,8 @@ Sizzle is good for finding elements for a selector, but not so good for telling 
 
 (function($){	
 	
-	/**
-	 * Add focusin and focusout support to bind and live for browers other than IE. Designed to be usable in a delegated fashion (like $.live)
-	 * Copyright (c) 2007 Jörn Zaefferer
-	 */
 	if ($.support.focusinBubbles === undefined)  {
-		$.support.focusinBubbles = !!($.browser.msie);
+		$.support.focusinBubbles = true;
 	}
 
 	if (!$.support.focusinBubbles && !$.event.special.focusin) {
@@ -815,7 +811,9 @@ catch (e) {
 	/* Create a subclass of the jQuery object. This was introduced in jQuery 1.5, but removed again in 1.9 */
 	var sub = function() {
 		function jQuerySub( selector, context ) {
-			return new jQuerySub.fn.init( selector, context );
+			var jSub = new jQuerySub.fn.init( selector, context );
+      jSub.selector = selector
+      return jSub;
 		}
 
 		jQuery.extend( true, jQuerySub, $ );
@@ -1111,7 +1109,7 @@ catch (e) {
 		 * 
 		 */
 		entwine: function(spacename) {
-			var i = 0;
+      var i = 0;
 			/* Don't actually work out selector until we try and define something on it - we might be opening a namespace on an function-traveresed object
 			   which have non-standard selectors like .parents(.foo).slice(0,1) */
 			var selector = null;  
@@ -1131,17 +1129,21 @@ catch (e) {
 				var res = arguments[i++];
 				
 				// If it's a function, call it - either it's a using block or it's a namespaced entwine definition
-				if ($.isFunction(res)) {
+				if (typeof res === 'function') {
 					if (res.length != 1) $.entwine.warn('Function block inside entwine definition does not take $ argument properly', $.entwine.WARN_LEVEL_IMPORTANT);
 					res = res.call(namespace.$(this), namespace.$);
 				}
 				
 				// If we have a entwine definition hash, inject it into namespace
 				if (res) {
-					if (selector === null) selector = this.selector ? $.selector(this.selector) : false;
+          if (selector === null) {
+            selector = this.selector ? $.selector(this.selector) : false;
+          }
 					
 					if (selector) namespace.add(selector, res);
-					else $.entwine.warn('Entwine block given to entwine call without selector. Make sure you call $(selector).entwine when defining blocks', $.entwine.WARN_LEVEL_IMPORTANT);
+					else {
+            $.entwine.warn('Entwine block given to entwine call without selector. Make sure you call $(selector).entwine when defining blocks', $.entwine.WARN_LEVEL_IMPORTANT);
+          }
 				}
 			}
 		
@@ -1470,7 +1472,7 @@ catch (e) {
 		$.support.changeBubbles = true;
 
 		var el = document.createElement("div");
-		eventName = "onchange";
+		var eventName = "onchange";
 
 		if (el.attachEvent) {
 			var isSupported = (eventName in el);

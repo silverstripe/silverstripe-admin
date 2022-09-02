@@ -4,10 +4,9 @@ import $ from 'jquery';
 // require('../styles/legacy/SelectionGroup.scss');
 
 
-$(document).ready(function() {
+$(function() {
   // Support both bootstrap / legacy selectors
-	$('ul.SelectionGroup input.selector, ul.selection-group input.selector')
-    .live('click', function() {
+	$('ul.SelectionGroup, ul.selection-group').on('click', 'input.selector', function() {
       var li = $(this).closest('li');
       li.addClass('selected');
 

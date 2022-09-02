@@ -162,7 +162,7 @@
 
 			// Register our own success handler (assumes no handlers are already registered)
 			// 'success' is an alias for 'done', which is executed by the built-in deferred instance in $.ajax()
-			jqXHR.success(function(success, statusText, jXHR) {
+			jqXHR.done(function(success, statusText, jXHR) {
 				$.processOnDemandHeaders(success, statusText, jXHR).done(function() {
 					dfd.resolveWith(s.context || this, [success, statusText, jXHR]);
 				});
@@ -170,7 +170,7 @@
 
 			// Reroute all external success hanlders through our own deferred.
 			// Not overloading fail() as no event can cause the original request to fail.
-			jqXHR.success = function(callback) {
+			jqXHR.done = function(callback) {
 				dfd.done(callback);
 			}
 		}
