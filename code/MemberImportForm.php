@@ -58,7 +58,7 @@ class MemberImportForm extends Form
                 $fileField = new FileField(
                     'CsvFile',
                     DBField::create_field('HTMLFragment', _t(
-                        'SilverStripe\\Admin\\MemberImportForm.FileFieldLabel',
+                        __CLASS__ . '.FileFieldLabel',
                         'CSV File <small>(Allowed extensions: *.csv)</small>'
                     ))
                 )
@@ -67,7 +67,7 @@ class MemberImportForm extends Form
         }
 
         if (!$actions) {
-            $action = new FormAction('doImport', _t('SilverStripe\\Admin\\MemberImportForm.BtnImport', 'Import from CSV'));
+            $action = new FormAction('doImport', _t(__CLASS__ . '.BtnImport', 'Import from CSV'));
             $action->addExtraClass('btn btn-outline-secondary font-icon-upload');
             $actions = new FieldList($action);
         }

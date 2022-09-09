@@ -292,7 +292,7 @@ abstract class ModelAdmin extends LeftAndMain
             $config->addComponent(
                 GridFieldImportButton::create('buttons-before-left')
                     ->setImportForm($this->ImportForm())
-                    ->setModalTitle(_t('SilverStripe\\Admin\\ModelAdmin.IMPORT', 'Import from CSV'))
+                    ->setModalTitle(_t(__CLASS__ . '.IMPORT', 'Import from CSV'))
             );
         }
 
@@ -569,13 +569,13 @@ abstract class ModelAdmin extends LeftAndMain
         $fields->push(
             new CheckboxField(
                 'EmptyBeforeImport',
-                _t('SilverStripe\\Admin\\ModelAdmin.EMPTYBEFOREIMPORT', 'Replace data'),
+                _t(__CLASS__ . '.EMPTYBEFOREIMPORT', 'Replace data'),
                 false
             )
         );
 
         $actions = new FieldList(
-            FormAction::create('import', _t('SilverStripe\\Admin\\ModelAdmin.IMPORT', 'Import from CSV'))
+            FormAction::create('import', _t(__CLASS__ . '.IMPORT', 'Import from CSV'))
                 ->addExtraClass('btn btn-outline-secondary font-icon-upload')
         );
 
@@ -623,7 +623,7 @@ abstract class ModelAdmin extends LeftAndMain
             file_get_contents($_FILES['_CsvFile']['tmp_name'] ?? '') == ''
         ) {
             $form->sessionMessage(
-                _t('SilverStripe\\Admin\\ModelAdmin.NOCSVFILE', 'Please browse for a CSV file to import'),
+                _t(__CLASS__ . '.NOCSVFILE', 'Please browse for a CSV file to import'),
                 ValidationResult::TYPE_ERROR
             );
             $this->redirectBack();
@@ -640,30 +640,30 @@ abstract class ModelAdmin extends LeftAndMain
         if ($results) {
             if ($results->CreatedCount()) {
                 $message .= _t(
-                    'SilverStripe\\Admin\\ModelAdmin.IMPORTEDRECORDS',
+                    __CLASS__ . '.IMPORTEDRECORDS',
                     "Imported {count} records.",
                     ['count' => $results->CreatedCount()]
                 );
             }
             if ($results && $results->UpdatedCount()) {
                 $message .= _t(
-                    'SilverStripe\\Admin\\ModelAdmin.UPDATEDRECORDS',
+                    __CLASS__ . '.UPDATEDRECORDS',
                     "Updated {count} records.",
                     ['count' => $results->UpdatedCount()]
                 );
             }
             if ($results->DeletedCount()) {
                 $message .= _t(
-                    'SilverStripe\\Admin\\ModelAdmin.DELETEDRECORDS',
+                    __CLASS__ . '.DELETEDRECORDS',
                     "Deleted {count} records.",
                     ['count' => $results->DeletedCount()]
                 );
             }
             if (!$results->CreatedCount() && !$results->UpdatedCount()) {
-                $message .= _t('SilverStripe\\Admin\\ModelAdmin.NOIMPORT', "Nothing to import");
+                $message .= _t(__CLASS__ . '.NOIMPORT', "Nothing to import");
             }
         } else {
-            $message .= _t('SilverStripe\\Admin\\ModelAdmin.NOIMPORT', "Nothing to import");
+            $message .= _t(__CLASS__ . '.NOIMPORT', "Nothing to import");
         }
 
         $form->sessionMessage($message, 'good');

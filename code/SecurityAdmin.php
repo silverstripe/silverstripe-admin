@@ -2,6 +2,7 @@
 
 namespace SilverStripe\Admin;
 
+use SilverStripe\CMS\Controllers\CMSMain;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Convert;
@@ -318,11 +319,11 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
         return [
             "CMS_ACCESS_SecurityAdmin" => [
                 'name' => _t(
-                    'SilverStripe\\CMS\\Controllers\\CMSMain.ACCESS',
+                    CMSMain::class . '.ACCESS',
                     "Access to '{title}' section",
                     ['title' => $title]
                 ),
-                'category' => _t('SilverStripe\\Security\\Permission.CMS_ACCESS_CATEGORY', 'CMS Access'),
+                'category' => _t(Permission::class . '.CMS_ACCESS_CATEGORY', 'CMS Access'),
                 'help' => _t(
                     __CLASS__ . '.ACCESS_HELP',
                     'Allow viewing, adding and editing users, as well as assigning permissions and roles to them.'
@@ -331,7 +332,7 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
             'EDIT_PERMISSIONS' => [
                 'name' => _t(__CLASS__ . '.EDITPERMISSIONS', 'Manage permissions for groups'),
                 'category' => _t(
-                    'SilverStripe\\Security\\Permission.PERMISSIONS_CATEGORY',
+                    Permission::class . '.PERMISSIONS_CATEGORY',
                     'Roles and access permissions'
                 ),
                 'help' => _t(
@@ -344,7 +345,7 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
             'APPLY_ROLES' => [
                 'name' => _t(__CLASS__ . '.APPLY_ROLES', 'Apply roles to groups'),
                 'category' => _t(
-                    'SilverStripe\\Security\\Permission.PERMISSIONS_CATEGORY',
+                    Permission::class . '.PERMISSIONS_CATEGORY',
                     'Roles and access permissions'
                 ),
                 'help' => _t(
