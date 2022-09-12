@@ -25,7 +25,7 @@ class PlayerAdmin extends ModelAdmin implements TestOnly
     public function Link($action = null)
     {
         if (!$action) {
-            $action = $this->sanitiseClassName($this->modelClass);
+            $action = static::sanitiseClassName($this->modelClass);
         }
         return Controller::join_links('PlayerAdmin', $action, '/');
     }

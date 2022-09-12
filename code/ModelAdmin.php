@@ -147,7 +147,7 @@ abstract class ModelAdmin extends LeftAndMain
     {
         parent::init();
 
-        $models = $this->getManagedModels();
+        $models = static::getManagedModels();
         $this->modelTab = $this->getRequest()->param('ModelClass');
 
         // if we've hit the "landing" page
@@ -157,11 +157,11 @@ abstract class ModelAdmin extends LeftAndMain
         }
 
         // security check for valid models
-        if (!$this->isManagedModel($this->modelTab)) {
+        if (!static::isManagedModel($this->modelTab)) {
             // if it fails to match the string exactly, try reverse-engineering a classname
-            $this->modelTab = $this->unsanitiseClassName($this->modelTab);
+            $this->modelTab = static::unsanitiseClassName($this->modelTab);
 
-            if (!$this->isManagedModel($this->modelTab)) {
+            if (!static::isManagedModel($this->modelTab)) {
                 throw new \RuntimeException(sprintf('ModelAdmin::init(): Invalid Model class %s', $this->modelTab));
             }
         }
@@ -180,7 +180,7 @@ abstract class ModelAdmin extends LeftAndMain
     public function Link($action = null)
     {
         if (!$action) {
-            $action = $this->sanitiseClassName($this->modelTab);
+            $action = static::sanitiseClassName($this->modelTab);
         }
         return parent::Link($action);
     }
@@ -195,10 +195,10 @@ abstract class ModelAdmin extends LeftAndMain
      */
     public function getLinkForModelClass(string $modelClass): string
     {
-        if (!$this->isManagedModel($modelClass)) {
+        if (!static::isManagedModel($modelClass)) {
             throw new InvalidArgumentException("$modelClass isn't managed by this ModelAdmin.");
         }
-        return $this->getLinkForModelTab($this->getModelTabForModelClass($modelClass));
+        return $this->getLinkForModelTab(static::getModelTabForModelClass($modelClass));
     }
 
     /**
@@ -216,10 +216,10 @@ abstract class ModelAdmin extends LeftAndMain
     public function getLinkForModelTab(string $modelTab): string
     {
         // Don't use isManagedModel here because a subclass of a managed model may not have its own tab.
-        if (!array_key_exists($modelTab, $this->getManagedModels())) {
+        if (!array_key_exists($modelTab, static::getManagedModels())) {
             throw new InvalidArgumentException("$modelTab isn't a tab on this ModelAdmin.");
         }
-        return $this->Link($this->sanitiseClassName($modelTab));
+        return $this->Link(static::sanitiseClassName($modelTab));
     }
 
     /**
@@ -229,14 +229,14 @@ abstract class ModelAdmin extends LeftAndMain
      */
     public function getEditLinkForManagedDataObject(DataObject $obj): string
     {
-        $modelTab = $this->getModelTabForModelClass($obj->ClassName);
+        $modelTab = static::getModelTabForModelClass($obj->ClassName);
         if ($modelTab === null) {
             throw new InvalidArgumentException("$obj->ClassName isn't managed by this ModelAdmin");
         }
         $link = static::join_links(
             $this->getLinkForModelClass($obj->ClassName),
             'EditForm/field/',
-            $this->sanitiseClassName($modelTab),
+            static::sanitiseClassName($modelTab),
             'item',
             $obj->ID
         );
@@ -284,7 +284,7 @@ abstract class ModelAdmin extends LeftAndMain
     protected function getGridField(): GridField
     {
         $field = GridField::create(
-            $this->sanitiseClassName($this->modelTab),
+            static::sanitiseClassName($this->modelTab),
             false,
             $this->getList(),
             $this->getGridFieldConfig()
@@ -382,7 +382,7 @@ abstract class ModelAdmin extends LeftAndMain
         Deprecation::notice('4.3', 'Will be removed in favor of GridFieldFilterHeader in 5.0');
 
         $gridField = $this->getEditForm()->fields()
-            ->fieldByName($this->sanitiseClassName($this->modelClass));
+            ->fieldByName(static::sanitiseClassName($this->modelClass));
 
         $filterHeader = $gridField->getConfig()
             ->getComponentByType(GridFieldFilterHeader::class);
@@ -425,7 +425,7 @@ abstract class ModelAdmin extends LeftAndMain
         }
 
         $gridField = $this->getEditForm()->fields()
-        ->fieldByName($this->sanitiseClassName($this->modelClass));
+        ->fieldByName(static::sanitiseClassName($this->modelClass));
 
         $filterHeader = $gridField->getConfig()
             ->getComponentByType(GridFieldFilterHeader::class);
@@ -479,7 +479,7 @@ abstract class ModelAdmin extends LeftAndMain
      */
     protected function getManagedModelTabs()
     {
-        $models = $this->getManagedModels();
+        $models = static::getManagedModels();
         $forms = new ArrayList();
 
         foreach ($models as $tab => $options) {
@@ -503,7 +503,7 @@ abstract class ModelAdmin extends LeftAndMain
      * @param string $class
      * @return string
      */
-    protected function sanitiseClassName($class)
+    public static function sanitiseClassName($class)
     {
         return str_replace('\\', '-', $class ?? '');
     }
@@ -514,7 +514,7 @@ abstract class ModelAdmin extends LeftAndMain
      * @param string $class
      * @return string
      */
-    protected function unsanitiseClassName($class)
+    public static function unsanitiseClassName($class)
     {
         return str_replace('-', '\\', $class ?? '');
     }
@@ -522,9 +522,9 @@ abstract class ModelAdmin extends LeftAndMain
     /**
      * @return array Map of class name to an array of 'title' (see {@link $managed_models})
      */
-    public function getManagedModels()
+    public static function getManagedModels()
     {
-        $models = $this->config()->get('managed_models');
+        $models = static::config()->get('managed_models');
         if (is_string($models)) {
             $models = [$models];
         }
@@ -559,12 +559,12 @@ abstract class ModelAdmin extends LeftAndMain
      *
      * @throws InvalidArgumentException if $modelClass isn't a DataObject subclass
      */
-    protected function getModelTabForModelClass(string $modelClass): ?string
+    protected static function getModelTabForModelClass(string $modelClass): ?string
     {
         if (!is_subclass_of($modelClass, DataObject::class)) {
             throw new InvalidArgumentException('$modelClass must be a subclass of DataObject.');
         }
-        $managed = $this->getManagedModels();
+        $managed = static::getManagedModels();
         // Check the superclasses as well as the specifically passed-in class
         $classes = array_reverse(ClassInfo::ancestry($modelClass));
         foreach ($classes as $class) {
@@ -580,12 +580,12 @@ abstract class ModelAdmin extends LeftAndMain
     /**
      * Check whether a model is managed by this ModelAdmin class
      */
-    public function isManagedModel(string $modelClassOrModelTab): bool
+    public static function isManagedModel(string $modelClassOrModelTab): bool
     {
         if (is_subclass_of($modelClassOrModelTab, DataObject::class)) {
-            return $this->getModelTabForModelClass($modelClassOrModelTab) !== null;
+            return static::getModelTabForModelClass($modelClassOrModelTab) !== null;
         }
-        return array_key_exists($modelClassOrModelTab, $this->getManagedModels());
+        return array_key_exists($modelClassOrModelTab, static::getManagedModels());
     }
 
     /**
@@ -596,13 +596,13 @@ abstract class ModelAdmin extends LeftAndMain
      *
      * @return array Map of model class names to importer instances
      */
-    public function getModelImporters()
+    public static function getModelImporters()
     {
-        $importerClasses = $this->config()->get('model_importers');
+        $importerClasses = static::config()->get('model_importers');
 
         // fallback to all defined models if not explicitly defined
         if (is_null($importerClasses)) {
-            $models = $this->getManagedModels();
+            $models = static::getManagedModels();
             foreach ($models as $modelName => $options) {
                 $importerClasses[$modelName] = 'SilverStripe\\Dev\\CsvBulkLoader';
             }
@@ -632,7 +632,7 @@ abstract class ModelAdmin extends LeftAndMain
             return false;
         }
 
-        $importers = $this->getModelImporters();
+        $importers = static::getModelImporters();
         if (!$importers || !isset($importers[$this->modelTab])) {
             return false;
         }
@@ -660,7 +660,7 @@ abstract class ModelAdmin extends LeftAndMain
             $specRelations->push(new ArrayData(['Name' => $name, 'Description' => $desc]));
         }
         $specHTML = $this->customise([
-            'ClassName' => $this->sanitiseClassName($this->modelClass),
+            'ClassName' => static::sanitiseClassName($this->modelClass),
             'ModelName' => Convert::raw2att($modelName),
             'Fields' => $specFields,
             'Relations' => $specRelations,
@@ -715,7 +715,7 @@ abstract class ModelAdmin extends LeftAndMain
             return false;
         }
 
-        $importers = $this->getModelImporters();
+        $importers = static::getModelImporters();
         /** @var BulkLoader $loader */
         $loader = $importers[$this->modelClass];
 
@@ -780,7 +780,7 @@ abstract class ModelAdmin extends LeftAndMain
         $items = parent::Breadcrumbs($unlinked);
 
         // Show the class name rather than ModelAdmin title as root node
-        $models = $this->getManagedModels();
+        $models = static::getManagedModels();
         $params = $this->getRequest()->getVars();
         if (isset($params['url'])) {
             unset($params['url']);

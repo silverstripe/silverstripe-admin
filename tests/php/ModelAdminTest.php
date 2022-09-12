@@ -166,9 +166,7 @@ class ModelAdminTest extends FunctionalTest
 
     public function testGetManagedModels()
     {
-        $admin = new ModelAdminTest\MultiModelAdmin();
-
-        $models = $admin->getManagedModels();
+        $models = ModelAdminTest\MultiModelAdmin::getManagedModels();
 
         $this->assertEquals(
             [
@@ -209,30 +207,8 @@ class ModelAdminTest extends FunctionalTest
 
     public function testGetManagedModelTabs()
     {
-        $mock = $this->getMockBuilder(ModelAdminTest\MultiModelAdmin::class)
-            ->setMethods(['getManagedModels'])
-            ->getMock();
-
-        // `getManagedModelTabs` relies on `getManagedModels` whose output format has changed within the 4.x line.
-        // We need to mock `getManagedModels` so it returns both the legacy and updated format.
-        $mock->expects($this->atLeastOnce())
-            ->method('getManagedModels')
-            ->will($this->returnValue([
-                'Player' => [
-                    'dataClass' => Player::class,
-                    'title' => 'Ice Hockey Players'
-                ],
-                Player::class => [
-                    'title' => 'Rugby Players'
-                ],
-                'cricket-players' => [
-                    'dataClass' => Player::class,
-                    'title' => 'Cricket Players',
-                ],
-            ]));
-
-
-        $tabs = $mock->getManagedModelTabs()->toNestedArray();
+        $admin = new ModelAdminTest\MultiModelAdmin();
+        $tabs = $admin->getManagedModelTabs()->toNestedArray();
 
         $this->assertEquals(
             [
@@ -275,11 +251,11 @@ class ModelAdminTest extends FunctionalTest
     {
         $admin = new ModelAdminTest\MultiModelAdmin();
         $this->assertEquals(
-            'admin/multi/' . $this->sanitiseClassName(Contact::class),
+            'admin/multi/' . ModelAdminTest\MultiModelAdmin::sanitiseClassName(Contact::class),
             $admin->getLinkForModelClass(Contact::class)
         );
         $this->assertEquals(
-            'admin/multi/' . $this->sanitiseClassName(Contact::class),
+            'admin/multi/' . ModelAdminTest\MultiModelAdmin::sanitiseClassName(Contact::class),
             $admin->getLinkForModelClass(ContactSubclass::class)
         );
         $this->assertEquals(
@@ -299,7 +275,7 @@ class ModelAdminTest extends FunctionalTest
     {
         $admin = new ModelAdminTest\MultiModelAdmin();
         $this->assertEquals(
-            'admin/multi/' . $this->sanitiseClassName(Contact::class),
+            'admin/multi/' . ModelAdminTest\MultiModelAdmin::sanitiseClassName(Contact::class),
             $admin->getLinkForModelTab(Contact::class)
         );
         $this->assertEquals(
@@ -307,7 +283,7 @@ class ModelAdminTest extends FunctionalTest
             $admin->getLinkForModelTab('Player')
         );
         $this->assertEquals(
-            'admin/multi/' . $this->sanitiseClassName(Player::class),
+            'admin/multi/' . ModelAdminTest\MultiModelAdmin::sanitiseClassName(Player::class),
             $admin->getLinkForModelTab(Player::class)
         );
         $this->assertEquals(
@@ -327,7 +303,7 @@ class ModelAdminTest extends FunctionalTest
     {
         $admin = new ModelAdminTest\MultiModelAdmin();
         $contact = $this->objFromFixture(Contact::class, 'sam');
-        $sanitisedContact = $this->sanitiseClassName(Contact::class);
+        $sanitisedContact = ModelAdminTest\MultiModelAdmin::sanitiseClassName(Contact::class);
         $this->assertEquals(
             "admin/multi/$sanitisedContact/EditForm/field/$sanitisedContact/item/$contact->ID",
             $admin->getEditLinkForManagedDataObject($contact)
@@ -369,16 +345,10 @@ class ModelAdminTest extends FunctionalTest
 
     public function testIsManagedModel()
     {
-        $admin = new ModelAdminTest\MultiModelAdmin();
-        $this->assertTrue($admin->isManagedModel(Contact::class));
-        $this->assertTrue($admin->isManagedModel(ContactSubclass::class));
-        $this->assertTrue($admin->isManagedModel(Player::class));
-        $this->assertTrue($admin->isManagedModel('cricket-players'));
-        $this->assertFalse($admin->isManagedModel('not-managed'));
-    }
-
-    private function sanitiseClassName(string $className): string
-    {
-        return str_replace('\\', '-', $className);
+        $this->assertTrue(ModelAdminTest\MultiModelAdmin::isManagedModel(Contact::class));
+        $this->assertTrue(ModelAdminTest\MultiModelAdmin::isManagedModel(ContactSubclass::class));
+        $this->assertTrue(ModelAdminTest\MultiModelAdmin::isManagedModel(Player::class));
+        $this->assertTrue(ModelAdminTest\MultiModelAdmin::isManagedModel('cricket-players'));
+        $this->assertFalse(ModelAdminTest\MultiModelAdmin::isManagedModel('not-managed'));
     }
 }

@@ -62,7 +62,7 @@ class SecurityAdmin extends ModelAdmin implements PermissionProvider
 
     private static $menu_icon_class = 'font-icon-torsos-all';
 
-    public function getManagedModels()
+    public static function getManagedModels()
     {
         $models = parent::getManagedModels();
         // Ensure tab titles can be localised
