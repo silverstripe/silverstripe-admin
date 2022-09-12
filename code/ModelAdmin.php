@@ -2,9 +2,11 @@
 
 namespace SilverStripe\Admin;
 
+use InvalidArgumentException;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
+use SilverStripe\Core\ClassInfo;
 use SilverStripe\Core\Convert;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\BulkLoader;
@@ -155,11 +157,11 @@ abstract class ModelAdmin extends LeftAndMain
         }
 
         // security check for valid models
-        if (!array_key_exists($this->modelTab, $models ?? [])) {
+        if (!$this->isManagedModel($this->modelTab)) {
             // if it fails to match the string exactly, try reverse-engineering a classname
             $this->modelTab = $this->unsanitiseClassName($this->modelTab);
 
-            if (!array_key_exists($this->modelTab, $models ?? [])) {
+            if (!$this->isManagedModel($this->modelTab)) {
                 throw new \RuntimeException(sprintf('ModelAdmin::init(): Invalid Model class %s', $this->modelTab));
             }
         }
@@ -184,6 +186,65 @@ abstract class ModelAdmin extends LeftAndMain
     }
 
     /**
+     * Get the link for the tab of a DataObject subclass managed by this ModelAdmin.
+     *
+     * Note that if the modelClass is managed on multiple tabs and you want a link for a
+     * specific tab you should use {@link getLinkForModelTab} instead.
+     *
+     * @throws InvalidArgumentException if $modelClass is not managed by this ModelAdmin.
+     */
+    public function getLinkForModelClass(string $modelClass): string
+    {
+        if (!$this->isManagedModel($modelClass)) {
+            throw new InvalidArgumentException("$modelClass isn't managed by this ModelAdmin.");
+        }
+        return $this->getLinkForModelTab($this->getModelTabForModelClass($modelClass));
+    }
+
+    /**
+     * Get the link for a specific tab on this ModelAdmin.
+     *
+     * If you do not have multiple tabs for a given class you should use {@link getLinkForModelClass}
+     * instead.
+     *
+     * @param string $modelTab This is either the custom url segment for the tab or, if that
+     * was not not defined, it is the fully qualified class name of the managed model.
+     * In the latter case, you should prefer to use {@link getLinkForModelClass}.
+     *
+     * @throws InvalidArgumentException if $modelTab is not a tab on this ModelAdmin.
+     */
+    public function getLinkForModelTab(string $modelTab): string
+    {
+        // Don't use isManagedModel here because a subclass of a managed model may not have its own tab.
+        if (!array_key_exists($modelTab, $this->getManagedModels())) {
+            throw new InvalidArgumentException("$modelTab isn't a tab on this ModelAdmin.");
+        }
+        return $this->Link($this->sanitiseClassName($modelTab));
+    }
+
+    /**
+     * Get the link for editing an object inside this ModelAdmin.
+     *
+     * @throws InvalidArgumentException if $obj is not managed by this ModelAdmin.
+     */
+    public function getEditLinkForManagedDataObject(DataObject $obj): string
+    {
+        $modelTab = $this->getModelTabForModelClass($obj->ClassName);
+        if ($modelTab === null) {
+            throw new InvalidArgumentException("$obj->ClassName isn't managed by this ModelAdmin");
+        }
+        $link = static::join_links(
+            $this->getLinkForModelClass($obj->ClassName),
+            'EditForm/field/',
+            $this->sanitiseClassName($modelTab),
+            'item',
+            $obj->ID
+        );
+        $this->extend('updateEditLinkForDataObject', $link, $obj);
+        return $link;
+    }
+
+    /**
      * Produces an edit form that includes a default {@link \SilverStripe\Forms\GridField\GridField} for the currently
      * active {@link \SilverStripe\ORM\DataObject}. The GridField will show data from the currently active `modelClass`
      * only (see {@link self::init()}).
@@ -202,7 +263,7 @@ abstract class ModelAdmin extends LeftAndMain
         )->setHTMLID('Form_EditForm');
         $form->addExtraClass('cms-edit-form cms-panel-padded center flexbox-area-grow');
         $form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
-        $editFormAction = Controller::join_links($this->Link($this->sanitiseClassName($this->modelTab)), 'EditForm');
+        $editFormAction = Controller::join_links($this->getLinkForModelTab($this->modelTab), 'EditForm');
         $form->setFormAction($editFormAction);
         $form->setAttribute('data-pjax-fragment', 'CurrentForm');
 
@@ -374,7 +435,6 @@ abstract class ModelAdmin extends LeftAndMain
         return $form;
     }
 
-
     /**
      * You can override how ModelAdmin returns DataObjects by either overloading this method, or defining an extension
      * to ModelAdmin that implements the `updateList` method (and takes a {@link \SilverStripe\ORM\DataList} as the
@@ -389,6 +449,8 @@ abstract class ModelAdmin extends LeftAndMain
      *     return $list->filter('Archived', false);
      * }
      * </code>
+     *
+     * Note: If you override this method you may also need to override getEditLinkForManagedDataObject()
      *
      * @return \SilverStripe\ORM\DataList
      */
@@ -427,7 +489,7 @@ abstract class ModelAdmin extends LeftAndMain
                 // `getManagedModels` did not always return a `dataClass` attribute
                 // Legacy behaviour is for `ClassName` to map to `$tab`
                 'ClassName' => isset($options['dataClass']) ? $options['dataClass'] : $tab,
-                'Link' => $this->Link($this->sanitiseClassName($tab)),
+                'Link' => $this->getLinkForModelTab($tab),
                 'LinkOrCurrent' => ($tab == $this->modelTab) ? 'current' : 'link'
             ]));
         }
@@ -485,6 +547,45 @@ abstract class ModelAdmin extends LeftAndMain
         }
 
         return $models;
+    }
+
+    /**
+     * Get the model tab name for a given model class
+     *
+     * If there are multiple tabs for a given model class, the first one defined will
+     * be returned.
+     * If you want a specific tab to be returned for a given model class you should
+     * override this method.
+     *
+     * @throws InvalidArgumentException if $modelClass isn't a DataObject subclass
+     */
+    protected function getModelTabForModelClass(string $modelClass): ?string
+    {
+        if (!is_subclass_of($modelClass, DataObject::class)) {
+            throw new InvalidArgumentException('$modelClass must be a subclass of DataObject.');
+        }
+        $managed = $this->getManagedModels();
+        // Check the superclasses as well as the specifically passed-in class
+        $classes = array_reverse(ClassInfo::ancestry($modelClass));
+        foreach ($classes as $class) {
+            foreach ($managed as $tab => $spec) {
+                if ($spec['dataClass'] === $class) {
+                    return $tab;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Check whether a model is managed by this ModelAdmin class
+     */
+    public function isManagedModel(string $modelClassOrModelTab): bool
+    {
+        if (is_subclass_of($modelClassOrModelTab, DataObject::class)) {
+            return $this->getModelTabForModelClass($modelClassOrModelTab) !== null;
+        }
+        return array_key_exists($modelClassOrModelTab, $this->getManagedModels());
     }
 
     /**
@@ -586,7 +687,7 @@ abstract class ModelAdmin extends LeftAndMain
             $actions
         );
         $form->setFormAction(
-            Controller::join_links($this->Link($this->sanitiseClassName($this->modelTab)), 'ImportForm')
+            Controller::join_links($this->getLinkForModelTab($this->modelTab), 'ImportForm')
         );
 
         $this->extend('updateImportForm', $form);
@@ -687,7 +788,7 @@ abstract class ModelAdmin extends LeftAndMain
 
         $items[0]->Title = $models[$this->modelTab]['title'];
         $items[0]->Link = Controller::join_links(
-            $this->Link($this->sanitiseClassName($this->modelTab)),
+            $this->getLinkForModelTab($this->modelTab),
             '?' . http_build_query($params ?? [])
         );
 
