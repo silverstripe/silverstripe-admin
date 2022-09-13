@@ -323,20 +323,20 @@ class ModelAdminTest extends FunctionalTest
         $admin->getLinkForModelTab(ContactSubclass::class);
     }
 
-    public function testGetEditLinkForManagedDataObject()
+    public function testGetCMSEditLinkForManagedDataObject()
     {
         $admin = new ModelAdminTest\MultiModelAdmin();
         $contact = $this->objFromFixture(Contact::class, 'sam');
         $sanitisedContact = $this->sanitiseClassName(Contact::class);
         $this->assertEquals(
             "admin/multi/$sanitisedContact/EditForm/field/$sanitisedContact/item/$contact->ID",
-            $admin->getEditLinkForManagedDataObject($contact)
+            $admin->getCMSEditLinkForManagedDataObject($contact)
         );
 
         $contact2 = $this->objFromFixture(ContactSubclass::class, 'danie');
         $this->assertEquals(
             "admin/multi/$sanitisedContact/EditForm/field/$sanitisedContact/item/$contact2->ID",
-            $admin->getEditLinkForManagedDataObject($contact2)
+            $admin->getCMSEditLinkForManagedDataObject($contact2)
         );
 
         // Note: It uses the first tab that has this class - we're using
@@ -344,7 +344,7 @@ class ModelAdminTest extends FunctionalTest
         $player = $this->objFromFixture(Player::class, 'amy');
         $this->assertEquals(
             "admin/multi/Player/EditForm/field/Player/item/$player->ID",
-            $admin->getEditLinkForManagedDataObject($player)
+            $admin->getCMSEditLinkForManagedDataObject($player)
         );
     }
 

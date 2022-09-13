@@ -227,7 +227,7 @@ abstract class ModelAdmin extends LeftAndMain
      *
      * @throws InvalidArgumentException if $obj is not managed by this ModelAdmin.
      */
-    public function getEditLinkForManagedDataObject(DataObject $obj): string
+    public function getCMSEditLinkForManagedDataObject(DataObject $obj): string
     {
         $modelTab = $this->getModelTabForModelClass($obj->ClassName);
         if ($modelTab === null) {
@@ -450,7 +450,7 @@ abstract class ModelAdmin extends LeftAndMain
      * }
      * </code>
      *
-     * Note: If you override this method you may also need to override getEditLinkForManagedDataObject()
+     * Note: If you override this method you may also need to override getCMSEditLinkForManagedDataObject()
      *
      * @return \SilverStripe\ORM\DataList
      */
