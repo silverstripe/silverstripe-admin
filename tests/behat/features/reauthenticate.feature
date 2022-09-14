@@ -5,25 +5,26 @@ Feature: Reauthenticate
   So that I can avoid losing unsaved work
 
   Background:
-    And I am logged in with "ADMIN" permissions
-    And I go to "/admin/security"
-    And I am not in an iframe
-    And I click the "Users" CMS tab
-    And my session expires
+    Given the "group" "EDITOR" has permissions "Access to 'Pages' section"
+      And I am logged in as a member of "EDITOR" group
+      And I go to "/admin/pages"
+      And I am not in an iframe
+      And I wait for 3 seconds
+      And my session expires
 
   Scenario: Reauthenticate with correct login
-    When I press the "Add Member" button
+    When I press the "Add new" button
       And I switch to the "login-dialog-iframe" iframe
     Then I should see a "Let me back in" button
     When I fill in "Password" with "Secret!123"
       And I press the "Let me back in" button
       And I am not in an iframe
-      And I go to "/admin/security"
-    When I press the "Add Member" button
-    Then I should see "Create" in the "#Form_ItemEditForm_action_doSave" element
+      And I go to "/admin/pages"
+    When I press the "Add new" button
+    Then I should see "Create" in the "#Form_AddForm_action_doAdd" element
 
   Scenario: Reauthenticate with wrong login
-    When I press the "Add Member" button
+    When I press the "Add new" button
       And I switch to the "login-dialog-iframe" iframe
     Then I should see a "Let me back in" button
     When I fill in "Password" with "wrong password"
@@ -32,6 +33,6 @@ Feature: Reauthenticate
     When I fill in "Password" with "Secret!123"
       And I press the "Let me back in" button
       And I am not in an iframe
-      And I go to "/admin/security"
-    When I press the "Add Member" button
-    Then I should see "Create" in the "#Form_ItemEditForm_action_doSave" element
+      And I go to "/admin/pages"
+    When I press the "Add new" button
+    Then I should see "Create" in the "#Form_AddForm_action_doAdd" element
