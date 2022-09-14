@@ -1442,7 +1442,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         }
 
         // Added in-line to the form, but plucked into different view by frontend scripts.
-        if ($record instanceof CMSPreviewable) {
+        if ($record instanceof CMSPreviewable || $record->has_extension(CMSPreviewable::class)) {
             /** @skipUpgrade */
             $navField = new LiteralField('SilverStripeNavigator', $this->getSilverStripeNavigator());
             $navField->setAllowHTML(true);
@@ -1497,7 +1497,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         });
 
         // Announce the capability so the frontend can decide whether to allow preview or not.
-        if ($record instanceof CMSPreviewable) {
+        if ($record instanceof CMSPreviewable || $record->has_extension(CMSPreviewable::class)) {
             $form->addExtraClass('cms-previewable');
         }
         $form->addExtraClass('fill-height');
@@ -1676,7 +1676,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function getSilverStripeNavigator()
     {
         $page = $this->currentPage();
-        if ($page instanceof CMSPreviewable) {
+        if ($page instanceof CMSPreviewable || $page->has_extension(CMSPreviewable::class)) {
             $navigator = new SilverStripeNavigator($page);
             return $navigator->renderWith($this->getTemplatesWithSuffix('_SilverStripeNavigator'));
         }

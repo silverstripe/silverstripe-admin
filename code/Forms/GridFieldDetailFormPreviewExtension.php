@@ -17,7 +17,7 @@ class GridFieldDetailFormPreviewExtension extends Extension
     {
         $record = $this->owner->getRecord();
         // See LeftAndMain::getEditForm()
-        if ($record instanceof CMSPreviewable) {
+        if ($record instanceof CMSPreviewable || $record->has_extension(CMSPreviewable::class)) {
             // Mark as previewable.
             $form->addExtraClass('cms-previewable');
             // Add preview controls.
