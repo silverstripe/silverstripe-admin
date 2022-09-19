@@ -11,7 +11,7 @@ import { loadComponent } from 'lib/Injector';
 TinyMCEActionRegistrar.addAction('sslink', {
   text: i18n._t('Admin.LINKLABEL_EXTERNALURL', 'Link to external URL'),
   // eslint-disable-next-line no-console
-  onclick: (editor) => editor.execCommand('sslinkexternal'),
+  onAction: (editor) => editor.execCommand('sslinkexternal'),
   priority: 70,
 }, editorIdentifier);
 

@@ -36,6 +36,17 @@ class TinyMCEActionRegistrar {
     const name = createIdentifier(configId, menu);
     const actions = this.getActions(menu, configId, true);
 
+    /* eslint-disable no-param-reassign */
+    action.type = 'menuitem';
+    // To reduce upgrade pain from tinymce4 to tinymce6 (cms4 to cms5) we've added this
+    // as this would mean any custom plugins using this class to register commands won't
+    // need to update the syntax for doing so
+    if (action.hasOwnProperty('onclick')) {
+      action.onAction = action.onclick;
+      delete action.onclick;
+    }
+    /* eslint-enable no-param-reassign */
+
     // If the action is not already registered either globally or within this config
     if (!actions.find((registeredAction) => action.text === registeredAction.text)) {
       this.actions[name] = [

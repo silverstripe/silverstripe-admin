@@ -15,7 +15,6 @@ $module = ModuleLoader::inst()->getManifest()->getModule('silverstripe/admin');
 $editorConfig = TinyMCEConfig::get('cms');
 $editorConfig
     ->enablePlugins([
-        'contextmenu' => null,
         'image' => null,
         'anchor' => null,
         'sslink' => $module->getResource('client/dist/js/TinyMCE_sslink.js'),
@@ -25,9 +24,8 @@ $editorConfig
     ->setOptions([
         'friendly_name' => 'Default CMS',
         'priority' => '50',
-        'skin' => 'silverstripe',
         'body_class' => 'typography',
-        'contextmenu' => "sslink anchor ssmedia ssembed inserttable | cell row column deletetable",
+        'contextmenu' => "searchreplace | sslink anchor ssmedia ssembed inserttable | cell row column deletetable",
         'use_native_selects' => false,
         'valid_elements' => "@[id|class|style|title],a[id|rel|rev|dir|tabindex|accesskey|type|name|href|target|title"
             . "|class],-strong/-b[class],-em/-i[class],-strike[class],-u[class],#p[id|dir|class|align|style],-ol[class],"
