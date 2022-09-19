@@ -92,7 +92,7 @@ class CMSProfileController extends LeftAndMain
 
         $response = parent::save($data, $form);
 
-        if ($origLocale != $data['Locale']) {
+        if (isset($data['Locale']) && $origLocale != $data['Locale']) {
             $response->addHeader('X-Reload', true);
             $response->addHeader('X-ControllerURL', $this->Link());
         }
