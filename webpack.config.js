@@ -22,7 +22,6 @@ const config = [
       vendor: `${PATHS.SRC}/bundles/vendor.js`,
       // legacy scripts
       'LeftAndMain.Ping': `${PATHS.LEGACY_SRC}/LeftAndMain.Ping.js`,
-      MemberImportForm: `${PATHS.LEGACY_SRC}/MemberImportForm.js`,
       // For IE version 10 and below. These browsers doesn't handle large
       // resource files so need to break browser detection and warning code into
       // its own file

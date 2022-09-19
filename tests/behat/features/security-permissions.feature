@@ -9,9 +9,7 @@ Feature: Manage Security Permissions for Groups
     And a "member" "ADMIN" belonging to "ADMIN group" with "Email"="admin@example.org"
     And the "group" "ADMIN group" has permissions "Full administrative rights"
     And I am logged in with "ADMIN" permissions
-    And I go to "/admin/security"
-    And I click the "Groups" CMS tab
-    And I click on "test group" in the "Groups" table
+    And I go to "/admin/security/groups/EditForm/field/groups/item/1/edit"
     And I click the "Permissions" CMS tab
 
   Scenario: I can see sub-permissions being properly set and restored when using "Access to all CMS sections"

@@ -14,14 +14,6 @@ Feature: Not found
     Then I should see "Not Found"
     And I should see "Sorry, it seems you were trying to access a section or object that doesn't exist."
     And I should see the admin menu
-    Given I go to "/admin/security/EditForm/nothing"
-    Then I should see "Not Found"
-    And I should see "Sorry, it seems you were trying to access a section or object that doesn't exist."
-    And I should see the admin menu
-    Given I go to "/admin/security/EditForm/field/Members/nothing"
-    Then I should see "Not Found"
-    And I should see "Sorry, it seems you were trying to access a section or object that doesn't exist."
-    And I should see the admin menu
     Given I go to "/admin/settings/nothing"
     Then I should see "Not Found"
     And I should see "Sorry, it seems you were trying to access a section or object that doesn't exist."
@@ -32,7 +24,7 @@ Feature: Not found
     Then I should not see "Not Found"
     And I should not see "Sorry, it seems you were trying to access a section or object that doesn't exist."
     And I should see the admin menu
-    Given I go to "/admin/security/EditForm/field/Members/item/new"
+    Given I go to "/admin/security/groups/EditForm/field/groups/item/new"
     Then I should not see "Not Found"
     And I should not see "Sorry, it seems you were trying to access a section or object that doesn't exist."
     And I should see the admin menu
