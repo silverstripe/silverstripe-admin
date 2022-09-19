@@ -4,7 +4,7 @@ import debounce from 'lodash.debounce';
 
 // Copyright (c) 2009, SilverStripe Ltd.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
 //     * Redistributions of source code must retain the above copyright
@@ -15,7 +15,7 @@ import debounce from 'lodash.debounce';
 //     * Neither the name of the <organization> nor the
 //       names of its contributors may be used to endorse or promote products
 //       derived from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY SilverStripe Ltd. ''AS IS'' AND ANY
 // EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -29,9 +29,20 @@ import debounce from 'lodash.debounce';
 
 /**
  * @class Tracks onchange events on all form fields.
- * 
+ *
+ * Setup:
+ * 	jQuery('<my-form>).changetracker();
+ *
+ * Finding out if the form has changed:
+ * 	jQuery('<my-form>).is('.changed');
+ *
+ * Options:
+ * fieldSelector: jQuery selector string for tracked fields (Default: ':input:not(:submit),:select:not(:submit)')
+ * ignoreFieldSelector: jQuery selector string for specifically excluded fields
+ * changedCssClass: CSS class attribute which is appended to all changed fields and the form itself
+ *
  * @todo Implement form reset handling
- *  
+ *
  * @name jQuery.changetracker
  * @author Ingo Schommer, SilverStripe Ltd.
  * @license BSD License
@@ -61,7 +72,7 @@ import debounce from 'lodash.debounce';
 
       // Flag indicating this form was dirtied by an external component
       self.data('dirty', false);
-            
+
       // Get value from field for purposes of change tracking
       var fieldValue = function($field) {
         // Get radio
@@ -69,7 +80,7 @@ import debounce from 'lodash.debounce';
           var checkedItems = self.find(':input[name=' + $field.attr('name') + ']:checked');
           return checkedItems.length ? checkedItems.val() : 0;
         }
-        
+
         if($field.is(':checkbox')) {
           return $field.is(':checked') ? 1 : 0;
         }
@@ -112,7 +123,7 @@ import debounce from 'lodash.debounce';
         });
         return JSON.stringify(value);
       };
-      
+
       // Check global serialized state
       var initialState = formValue();
 
@@ -168,10 +179,10 @@ import debounce from 'lodash.debounce';
       self.on('click.changetracker', options.fieldSelector , onchange);
       self.on('keyup.changetracker', options.fieldSelector , onchange);
       self.on('change.changetracker', options.fieldSelector , onchange);
-      
+
       // Bind observer to subtree
       self.on('change.changetracker', ondetect);
-      
+
       // Set initial state
       this.getFields().each(function() {
         var origVal = fieldValue($(this));
@@ -238,8 +249,8 @@ import debounce from 'lodash.debounce';
       // Defer until other init scripts are run
       // E.g. PermissionCheckboxSetField.js
       var self = this;
-      setTimeout(function () { 
-        self.initialize(); 
+      setTimeout(function () {
+        self.initialize();
       }, 0);
       return this;
     }
