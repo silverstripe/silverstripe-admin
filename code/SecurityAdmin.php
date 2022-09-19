@@ -3,314 +3,135 @@
 namespace SilverStripe\Admin;
 
 use SilverStripe\CMS\Controllers\CMSMain;
-use SilverStripe\Control\HTTPRequest;
-use SilverStripe\Control\HTTPResponse;
-use SilverStripe\Core\Convert;
-use SilverStripe\Core\Injector\Injector;
-use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\Form;
-use SilverStripe\Forms\GridField\GridField;
-use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
-use SilverStripe\Forms\GridField\GridFieldDataColumns;
-use SilverStripe\Forms\GridField\GridFieldDetailForm;
-use SilverStripe\Forms\GridField\GridFieldExportButton;
+use SilverStripe\Forms\GridField\GridFieldConfig;
 use SilverStripe\Forms\GridField\GridFieldImportButton;
-use SilverStripe\Forms\GridField\GridFieldPageCount;
-use SilverStripe\Forms\HiddenField;
 use SilverStripe\Forms\LiteralField;
-use SilverStripe\Forms\Tab;
-use SilverStripe\Forms\TabSet;
 use SilverStripe\Security\Group;
+use SilverStripe\Security\GroupCsvBulkLoader;
 use SilverStripe\Security\Member;
+use SilverStripe\Security\MemberCsvBulkLoader;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\PermissionProvider;
 use SilverStripe\Security\PermissionRole;
-use SilverStripe\View\ArrayData;
 use SilverStripe\View\Requirements;
 
 /**
  * Security section of the CMS
  */
-class SecurityAdmin extends LeftAndMain implements PermissionProvider
+class SecurityAdmin extends ModelAdmin implements PermissionProvider
 {
+    private static $managed_models = [
+        'users' => [
+            'title' => 'Users',
+            'dataClass' => Member::class
+        ],
+        'groups' => [
+            'title' => 'Groups',
+            'dataClass' => Group::class
+        ],
+        'roles' => [
+            'title' => 'Roles',
+            'dataClass' => PermissionRole::class
+        ],
+    ];
+
+    /**
+     * We have to add both the model tab reference and the class name as keys for the importers because ModelAdmin
+     * currently checks for $importers[$modelClass] in some places and $importers[$this->modelTab] in others.
+     * This is a bug that we should fix in CMS 5
+     */
+    private static $model_importers = [
+        'users' => MemberCsvBulkLoader::class,
+        Member::class => MemberCsvBulkLoader::class,
+        'groups' => GroupCsvBulkLoader::class,
+        Group::class => GroupCsvBulkLoader::class,
+    ];
+
+    private static $allowed_actions = [
+        'ImportForm',
+    ];
 
     private static $url_segment = 'security';
 
-    private static $url_rule = '/$Action/$ID/$OtherID';
-
     private static $menu_title = 'Security';
 
-    private static $tree_class = Group::class;
-
-    private static $subitem_class = Member::class;
+    private static $menu_priority = 0;
 
     private static $required_permission_codes = 'CMS_ACCESS_SecurityAdmin';
 
     private static $menu_icon_class = 'font-icon-torsos-all';
 
-    private static $allowed_actions = [
-        'EditForm',
-        'MemberImportForm',
-        'memberimport',
-        'GroupImportForm',
-        'groupimport',
-        'groups',
-        'users',
-        'roles'
-    ];
-
-    /**
-     * Shortcut action for setting the correct active tab.
-     *
-     * @param HTTPRequest $request
-     * @return HTTPResponse
-     */
-    public function users($request)
+    public function getManagedModels()
     {
-        return $this->index($request);
-    }
-
-    /**
-     * Shortcut action for setting the correct active tab.
-     *
-     * @param HTTPRequest $request
-     * @return HTTPResponse
-     */
-    public function groups($request)
-    {
-        return $this->index($request);
-    }
-
-    /**
-     * Shortcut action for setting the correct active tab.
-     *
-     * @param HTTPRequest $request
-     * @return HTTPResponse
-     */
-    public function roles($request)
-    {
-        return $this->index($request);
-    }
-
-    public function getEditForm($id = null, $fields = null)
-    {
-        // Build gridfield configs
-        $memberListConfig = GridFieldConfig_RecordEditor::create()
-            ->addComponent(Injector::inst()->createWithArgs(GridFieldExportButton::class, ['buttons-before-left']));
-        $groupListConfig = GridFieldConfig_RecordEditor::create()
-            ->addComponent(Injector::inst()->createWithArgs(GridFieldExportButton::class, ['buttons-before-left']));
-
-        /** @var GridFieldDetailForm $detailForm */
-        $detailForm = $memberListConfig->getComponentByType(GridFieldDetailForm::class);
-        $memberValidator = Member::singleton()->getValidator();
-        $detailForm->setValidator($memberValidator);
-
-        /** @var GridFieldPageCount $groupPaginator */
-        $groupListConfig->removeComponentsByType(GridFieldPageCount::class);
-        $groupListConfig->addComponent(Injector::inst()->createWithArgs(GridFieldPageCount::class, ['buttons-before-right']));
-
-        // Add import capabilities. Limit to admin since the import logic can affect assigned permissions
-        if (Permission::check('ADMIN')) {
-            // @todo when grid field is converted to react use the react component
-            $memberListConfig->addComponent(
-                GridFieldImportButton::create('buttons-before-left')
-                    ->setImportIframe($this->Link('memberimport'))
-                    ->setModalTitle(_t(__CLASS__ . '.IMPORTUSERS', 'Import users'))
-            );
-            $groupListConfig->addComponent(
-                GridFieldImportButton::create('buttons-before-left')
-                    ->setImportIframe($this->Link('groupimport'))
-                    ->setModalTitle(_t(__CLASS__ . '.IMPORTGROUPS', 'Import groups'))
-            );
-        }
-
-        // Build gridfield
-        $memberList = GridField::create(
-            'Members',
-            false,
-            Member::get(),
-            $memberListConfig
-        )->addExtraClass("members_grid");
-
-        // Build group fields
-        $groupList = GridField::create(
-            'Groups',
-            false,
-            Group::get(),
-            $groupListConfig
-        );
-        /** @var GridFieldDataColumns $columns */
-        $columns = $groupList->getConfig()->getComponentByType(GridFieldDataColumns::class);
-        $columns->setDisplayFields([
-            'Breadcrumbs' => Group::singleton()->fieldLabel('Title')
-        ]);
-        $columns->setFieldFormatting([
-            'Breadcrumbs' => function ($val, $item) {
-                /** @var Group $item */
-                return Convert::raw2xml($item->getBreadcrumbs(' > '));
+        $models = parent::getManagedModels();
+        // Ensure tab titles can be localised
+        foreach ($models as $key => $spec) {
+            switch ($spec['dataClass']) {
+                case Member::class:
+                    $spec['title'] = _t(__CLASS__ . '.Users', 'Users');
+                    break;
+                case Group::class:
+                case PermissionRole::class:
+                    $spec['title'] = singleton($spec['dataClass'])->i18n_plural_name();
             }
-        ]);
-
-        $fields = FieldList::create(
-            TabSet::create(
-                'Root',
-                Tab::create(
-                    'Users',
-                    _t(__CLASS__ . '.Users', 'Users'),
-                    LiteralField::create(
-                        'MembersCautionText',
-                        sprintf(
-                            '<div class="alert alert-warning" role="alert">%s</div>',
-                            _t(
-                                __CLASS__ . '.MemberListCaution',
-                                'Caution: Removing members from this list will remove them from all groups and the database'
-                            )
-                        )
-                    ),
-                    $memberList
-                ),
-                Tab::create(
-                    'Groups',
-                    Group::singleton()->i18n_plural_name(),
-                    $groupList
-                )
-            )->setTemplate('SilverStripe\\Forms\\CMSTabSet'),
-            // necessary for tree node selection in LeftAndMain.EditForm.js
-            new HiddenField('ID', false, 0)
-        );
-
-        // Add roles editing interface
-        $rolesTab = null;
-        if (Permission::check('APPLY_ROLES')) {
-            $rolesField = GridField::create(
-                'Roles',
-                false,
-                PermissionRole::get(),
-                GridFieldConfig_RecordEditor::create()
-            );
-
-            $rolesTab = $fields->findOrMakeTab('Root.Roles', _t(__CLASS__ . '.TABROLES', 'Roles'));
-            $rolesTab->push($rolesField);
         }
+        return $models;
+    }
 
-        // Build replacement form
-        $form = Form::create(
-            $this,
-            'EditForm',
-            $fields,
-            new FieldList()
-        )->setHTMLID('Form_EditForm');
-        $form->addExtraClass('cms-edit-form fill-height');
-        $form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
-        $form->addExtraClass('ss-tabset cms-tabset ' . $this->BaseCSSClasses());
-        $form->setAttribute('data-pjax-fragment', 'CurrentForm');
-
-        $this->extend('updateEditForm', $form);
-
+    /**
+     * @return Form|false
+     */
+    public function ImportForm()
+    {
+        $form = parent::ImportForm();
+        if (!$form) {
+            return $form;
+        }
+        $form->Fields()->removeByName('EmptyBeforeImport');
+        $extraInfo = match ($this->modelClass) {
+            Member::class => _t(
+                __CLASS__ . '.ImportFormHelpMember',
+                implode('', [
+                    '<p>Groups can be assigned by the <em>Groups</em> column. Groups are identified by their ',
+                    '<em>Code</em> property, multiple groups can be separated by comma. ',
+                    'Existing group memberships are not cleared.</p>'
+                ]),
+            ),
+            Group::class => _t(
+                __CLASS__ . '.ImportFormHelpGroup',
+                implode('', [
+                    '<ul><li>Existing groups are matched by their unique <em>Code</em> value, ',
+                    'and updated with any new values from the imported file</li>',
+                    '<li>Group hierarchies can be created by using a <em>ParentCode</em> column.</li>',
+                    '<li>Permission codes can be assigned by the <em>PermissionCode</em> column. ',
+                    'Existing permission codes are not cleared.</li></ul>',
+                ]),
+            ),
+            default => ''
+        };
+        if ($extraInfo) {
+            $form->Fields()->insertBefore('_CsvFile', LiteralField::create('ExtraInfo', $extraInfo));
+        }
         return $form;
     }
 
-    public function memberimport()
+    protected function getGridFieldConfig(): GridFieldConfig
     {
-        Requirements::clear();
-        Requirements::javascript('silverstripe/admin: client/dist/js/vendor.js');
-        Requirements::javascript('silverstripe/admin: client/dist/js/MemberImportForm.js');
-        Requirements::css('silverstripe/admin: client/dist/styles/bundle.css');
-
-        return $this->renderWith('BlankPage', [
-            'Form' => $this->MemberImportForm()->forTemplate(),
-            'Content' => ' '
-        ]);
-    }
-
-    /**
-     * @see SecurityAdmin_MemberImportForm
-     *
-     * @return Form
-     */
-    public function MemberImportForm()
-    {
-        if (!Permission::check('ADMIN')) {
-            return null;
+        $config = parent::getGridFieldConfig();
+        // Limit import to admin since the import logic can affect assigned permissions
+        if (!Permission::check('ADMIN') || $this->modelClass == PermissionRole::class) {
+            $config->removeComponentsByType(GridFieldImportButton::class);
+            return $config;
         }
-
-        /** @var Group $group */
-        $group = $this->currentPage();
-        $form = new MemberImportForm($this, __FUNCTION__);
-        $form->setGroup($group);
-
-        return $form;
-    }
-
-    public function groupimport()
-    {
-        Requirements::clear();
-        Requirements::javascript('silverstripe/admin: client/dist/js/vendor.js');
-        Requirements::javascript('silverstripe/admin: client/dist/js/MemberImportForm.js');
-        Requirements::css('silverstripe/admin: client/dist/styles/bundle.css');
-
-        return $this->renderWith('BlankPage', [
-            'Content' => ' ',
-            'Form' => $this->GroupImportForm()->forTemplate()
-        ]);
-    }
-
-    /**
-     * @see SecurityAdmin_MemberImportForm
-     *
-     * @skipUpgrade
-     * @return Form
-     */
-    public function GroupImportForm()
-    {
-        if (!Permission::check('ADMIN')) {
-            return null;
-        }
-
-        return new GroupImportForm($this, __FUNCTION__);
-    }
-
-    /**
-     * Disable GridFieldDetailForm backlinks for this view, as its
-     */
-    public function Backlink()
-    {
-        return false;
-    }
-
-    public function Breadcrumbs($unlinked = false)
-    {
-        $crumbs = parent::Breadcrumbs($unlinked);
-
-        // Name root breadcrumb based on which record is edited,
-        // which can only be determined by looking for the fieldname of the GridField.
-        // Note: Titles should be same titles as tabs in RootForm().
-        $params = $this->getRequest()->allParams();
-        if (isset($params['FieldName'])) {
-            // TODO FieldName param gets overwritten by nested GridFields,
-            // so shows "Members" rather than "Groups" for the following URL:
-            // admin/security/EditForm/field/Groups/item/2/ItemEditForm/field/Members/item/1/edit
-            $firstCrumb = $crumbs->shift();
-            if ($params['FieldName'] == 'Groups') {
-                $crumbs->unshift(new ArrayData([
-                    'Title' => Group::singleton()->i18n_plural_name(),
-                    'Link' => $this->Link('groups')
-                ]));
-            } elseif ($params['FieldName'] == 'Users') {
-                $crumbs->unshift(new ArrayData([
-                    'Title' => _t(__CLASS__ . '.Users', 'Users'),
-                    'Link' => $this->Link('users')
-                ]));
-            } elseif ($params['FieldName'] == 'Roles') {
-                $crumbs->unshift(new ArrayData([
-                    'Title' => _t(__CLASS__ . '.TABROLES', 'Roles'),
-                    'Link' => $this->Link('roles')
-                ]));
-            }
-            $crumbs->unshift($firstCrumb);
-        }
-
-        return $crumbs;
+        /** @var GridFieldImportButton $importButton */
+        $importButton = $config->getComponentByType(GridFieldImportButton::class);
+        $modalTitle = match ($this->modelClass) {
+            Member::class => _t(__CLASS__ . '.IMPORTUSERS', 'Import users'),
+            Group::class => _t(__CLASS__ . '.IMPORTGROUPS', 'Import groups'),
+        };
+        $importButton->setModalTitle($modalTitle);
+        return $config;
     }
 
     public function providePermissions()
