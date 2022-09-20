@@ -6,6 +6,16 @@ SilverStripe\Admin\Tests\ModelAdminTest\Contact:
     Name: ingo
     Phone: 04 987 6543
 
+SilverStripe\Admin\Tests\ModelAdminTest\ContactSubclass:
+  danie:
+    Name: Danie
+    Phone: n/a
+    Address: 101 some street
+
+SilverStripe\Admin\Tests\ModelAdminTest\Player:
+  amy:
+    Name: Amy
+
 SilverStripe\Security\Member:
   admin:
     FirstName: admin

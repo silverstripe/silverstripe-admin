@@ -2,7 +2,10 @@
 
 namespace SilverStripe\Admin\Tests;
 
+use InvalidArgumentException;
+use ReflectionMethod;
 use SilverStripe\Admin\Tests\ModelAdminTest\Contact;
+use SilverStripe\Admin\Tests\ModelAdminTest\ContactSubclass;
 use SilverStripe\Admin\Tests\ModelAdminTest\MultiModelAdmin;
 use SilverStripe\Admin\Tests\ModelAdminTest\Player;
 use SilverStripe\Control\HTTPRequest;
@@ -22,6 +25,7 @@ class ModelAdminTest extends FunctionalTest
 
     protected static $extra_dataobjects = [
         ModelAdminTest\Contact::class,
+        ModelAdminTest\ContactSubclass::class,
         ModelAdminTest\Player::class,
         ModelAdminTest\OverridenModelAdmin::class
     ];
@@ -38,9 +42,6 @@ class ModelAdminTest extends FunctionalTest
         $this->assertTrue((bool)Permission::check("ADMIN"));
         $this->assertEquals(200, $this->get('ContactAdmin')->getStatusCode());
     }
-
-
-
 
     public function testMultiModelAdminOpensEachTab()
     {
@@ -214,7 +215,7 @@ class ModelAdminTest extends FunctionalTest
 
         // `getManagedModelTabs` relies on `getManagedModels` whose output format has changed within the 4.x line.
         // We need to mock `getManagedModels` so it returns both the legacy and updated format.
-        $mock->expects($this->once())
+        $mock->expects($this->atLeastOnce())
             ->method('getManagedModels')
             ->will($this->returnValue([
                 'Player' => [
@@ -257,7 +258,6 @@ class ModelAdminTest extends FunctionalTest
             'Tab data for managed model array using the older syntax without dataClass can be generated'
         );
 
-
         $this->assertEquals(
             [
                 'Title' => 'Cricket Players',
@@ -269,5 +269,116 @@ class ModelAdminTest extends FunctionalTest
             $tabs[2],
             'Tab data for managed model array using the newer syntax with dataClass and a hyphen can be generated'
         );
+    }
+
+    public function testGetLinkForModelClass()
+    {
+        $admin = new ModelAdminTest\MultiModelAdmin();
+        $this->assertEquals(
+            'admin/multi/' . $this->sanitiseClassName(Contact::class),
+            $admin->getLinkForModelClass(Contact::class)
+        );
+        $this->assertEquals(
+            'admin/multi/' . $this->sanitiseClassName(Contact::class),
+            $admin->getLinkForModelClass(ContactSubclass::class)
+        );
+        $this->assertEquals(
+            'admin/multi/Player',
+            $admin->getLinkForModelClass(Player::class)
+        );
+    }
+
+    public function testLinkForInvalidModelClass()
+    {
+        $admin = new ModelAdminTest\MultiModelAdmin();
+        $this->expectException(InvalidArgumentException::class);
+        $admin->getLinkForModelClass('cricket-players');
+    }
+
+    public function testGetLinkForModelTab()
+    {
+        $admin = new ModelAdminTest\MultiModelAdmin();
+        $this->assertEquals(
+            'admin/multi/' . $this->sanitiseClassName(Contact::class),
+            $admin->getLinkForModelTab(Contact::class)
+        );
+        $this->assertEquals(
+            'admin/multi/Player',
+            $admin->getLinkForModelTab('Player')
+        );
+        $this->assertEquals(
+            'admin/multi/' . $this->sanitiseClassName(Player::class),
+            $admin->getLinkForModelTab(Player::class)
+        );
+        $this->assertEquals(
+            'admin/multi/cricket-players',
+            $admin->getLinkForModelTab('cricket-players')
+        );
+    }
+
+    public function testLinkForInvalidModelTab()
+    {
+        $admin = new ModelAdminTest\MultiModelAdmin();
+        $this->expectException(InvalidArgumentException::class);
+        $admin->getLinkForModelTab(ContactSubclass::class);
+    }
+
+    public function testGetEditLinkForManagedDataObject()
+    {
+        $admin = new ModelAdminTest\MultiModelAdmin();
+        $contact = $this->objFromFixture(Contact::class, 'sam');
+        $sanitisedContact = $this->sanitiseClassName(Contact::class);
+        $this->assertEquals(
+            "admin/multi/$sanitisedContact/EditForm/field/$sanitisedContact/item/$contact->ID",
+            $admin->getEditLinkForManagedDataObject($contact)
+        );
+
+        $contact2 = $this->objFromFixture(ContactSubclass::class, 'danie');
+        $this->assertEquals(
+            "admin/multi/$sanitisedContact/EditForm/field/$sanitisedContact/item/$contact2->ID",
+            $admin->getEditLinkForManagedDataObject($contact2)
+        );
+
+        // Note: It uses the first tab that has this class - we're using
+        // this to test that it correctly uses the tab name "Player"
+        $player = $this->objFromFixture(Player::class, 'amy');
+        $this->assertEquals(
+            "admin/multi/Player/EditForm/field/Player/item/$player->ID",
+            $admin->getEditLinkForManagedDataObject($player)
+        );
+    }
+
+    public function testGetModelTabForModelClass()
+    {
+        $admin = new ModelAdminTest\MultiModelAdmin();
+        $reflectionMethod = new ReflectionMethod($admin, 'getModelTabForModelClass');
+        $reflectionMethod->setAccessible(true);
+        $this->assertSame(Contact::class, $reflectionMethod->invoke($admin, Contact::class));
+        $this->assertSame(Contact::class, $reflectionMethod->invoke($admin, ContactSubclass::class));
+        $this->assertSame('Player', $reflectionMethod->invoke($admin, Player::class));
+    }
+
+    public function testGetModelTabForInvalidModelClass()
+    {
+        $admin = new ModelAdminTest\MultiModelAdmin();
+        $reflectionMethod = new ReflectionMethod($admin, 'getModelTabForModelClass');
+        $reflectionMethod->setAccessible(true);
+        $this->expectException(InvalidArgumentException::class);
+        $reflectionMethod->invoke($admin, 'cricket-players');
+    }
+
+    public function testIsManagedModel()
+    {
+        $admin = new ModelAdminTest\MultiModelAdmin();
+        $this->assertTrue($admin->isManagedModel(Contact::class));
+        $this->assertTrue($admin->isManagedModel(ContactSubclass::class));
+        $this->assertTrue($admin->isManagedModel(Player::class));
+        $this->assertTrue($admin->isManagedModel('cricket-players'));
+        $this->assertFalse($admin->isManagedModel('not-managed'));
+    }
+
+    private function sanitiseClassName(string $className): string
+    {
+        return str_replace('\\', '-', $className);
     }
 }
