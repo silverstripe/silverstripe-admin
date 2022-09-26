@@ -1373,7 +1373,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      * Retrieves an edit form, either for display, or to process submitted data.
      * Also used in the template rendered through {@link Right()} in the $EditForm placeholder.
      *
-     * This is a "pseudo-abstract" methoed, usually connected to a {@link getEditForm()}
+     * This is a "pseudo-abstract" method, usually connected to a {@link getEditForm()}
      * method in an entwine subclass. This method can accept a record identifier,
      * selected either in custom logic, or through {@link currentPageID()}.
      * The form usually construct itself from {@link DataObject->getCMSFields()}
