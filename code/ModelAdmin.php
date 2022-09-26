@@ -538,11 +538,16 @@ abstract class ModelAdmin extends LeftAndMain
 
         // Normalize models to have their model class in array key
         foreach ($models as $k => $v) {
+            // No custom tab url segment
             if (is_numeric($k)) {
                 $models[$v] = ['dataClass' => $v, 'title' => singleton($v)->i18n_plural_name()];
                 unset($models[$k]);
+            // Custom title but no custom tab url segment
             } elseif (is_array($v) && !isset($v['dataClass'])) {
                 $models[$k]['dataClass'] = $k;
+            // Custom tab url segment but no custom title
+            } elseif (is_a($v, DataObject::class, true)) {
+                $models[$k] = ['dataClass' => $v, 'title' => singleton($v)->i18n_plural_name()];
             }
         }
 
