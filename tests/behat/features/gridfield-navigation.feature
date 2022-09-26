@@ -18,7 +18,8 @@ Feature: Search in GridField
       And the "Company" "Cisco" with "Category"="Other"
       And the "Company" "Bouygues" with "Category"="Other" 
       And the "Company" "Insurance" with "Category"="Other"
-      And I am logged in with "ADMIN" permissions
+      And the "group" "EDITOR" has permissions "Access to 'Pages' section" and "Access to 'GridField Test Navigation' section" and "TEST_DATAOBJECT_EDIT"
+      And I am logged in as a member of "EDITOR" group
 
   Scenario: I can navigate back through the GridField items by using the "previous record" button
     When I go to "/admin/gridfield-test-navigation"

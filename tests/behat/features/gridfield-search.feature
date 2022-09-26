@@ -7,7 +7,8 @@ Feature: Search in GridField
     Given the "Company" "Walmart" with "Category"="Retail"
     And the "Company" "ExxonMobil" with "Category"="Oil"
     And the "Company" "Vitol" with "Category"="Other" 
-    And I am logged in with "ADMIN" permissions
+    And the "group" "EDITOR" has permissions "Access to 'Pages' section" and "Access to 'Test ModelAdmin' section" and "TEST_DATAOBJECT_EDIT"
+    And I am logged in as a member of "EDITOR" group
     And I go to "/admin/test"
 
   Scenario: I can search and go to item
