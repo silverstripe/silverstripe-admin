@@ -33,21 +33,21 @@ Feature: Manage groups
     And I fill in "Group name" with ""
     And I press the "Create" button
     Then I should see "Validation Error"
-  
-  Scenario: Members of a group with permissions 
+
+  Scenario: Members of a group with permissions
     Given I go to "/Security/login"
     And I press the "Log in as someone else" button
     And I am logged in as a member of "BOB" group
     When I go to "/my-page?stage=Stage"
     Then I should not see "My page"
-  
+
   Scenario: Members of a group with permissions can edit Group data
     Given I go to "/Security/login"
     And I press the "Log in as someone else" button
     And I am logged in as a member of "GROUPS_EDITOR" group
     And I go to "/admin/security"
     When I click the "Groups" CMS tab
-    And I click "GROUPS_EDITOR" in the "#Root_Groups" element
+    And I click "GROUPS_EDITOR" in the "#Form_EditForm_groups" element
     And I fill in "Group name" with "GROUPS_EDITOR_NEW"
     And I press the "Save" button
     And I should see "Saved Group "
@@ -61,13 +61,13 @@ Feature: Manage groups
     And I am logged in as a member of "GROUPS_EDITOR" group
     And I go to "/admin/security"
     When I click the "Users" CMS tab
-    And I click "GROUPS_EDITOR" in the "#Root_Users" element
+    And I click "GROUPS_EDITOR" in the "#Form_EditForm_users" element
     And I fill in "First Name" with "General Editor"
     And I press the "Save" button
     And I should see "Saved Member "
-    And I click "Security" in the ".breadcrumbs-wrapper" element
+    And I click "Users" in the ".breadcrumbs-wrapper" element
     And I should see "General Editor"
- 
+
   Scenario: Members of a group with permissions cannot view draft content
     Given I go to "/Security/login"
     And I press the "Log in as someone else" button
