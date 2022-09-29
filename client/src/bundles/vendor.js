@@ -56,6 +56,5 @@ require('jquery-sizes/lib/jquery.sizes.js');
 require('../../../thirdparty/jstree/jquery.jstree.js');
 // require('../../../thirdparty/stree/themes/apple/style.css');
 require('../../../thirdparty/jquery-hoverIntent/jquery.hoverIntent.js');
-require('../../../thirdparty/jquery-changetracker/lib/jquery.changetracker.js');
 
 require('chosen-js');

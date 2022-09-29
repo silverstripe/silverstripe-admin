@@ -53,7 +53,11 @@ const config = [
         {
           from: `${PATHS.MODULES}/popper.js/dist/umd/popper.min.js`,
           to: `${PATHS.THIRDPARTY}/popper/popper.min.js`
-        }
+        },
+        {
+          from: `${PATHS.MODULES}/tinymce`,
+          to: `${PATHS.DIST}/tinymce`
+        },
       ]),
     ],
     watchOptions: {

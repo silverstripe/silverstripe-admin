@@ -2,7 +2,6 @@
 import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
 import ReactDOM from 'react-dom';
 import jQuery from 'jquery';
-import { setupTinyMceInlineToolbar } from 'components/TinymceInlineToolbar/TinymceInlineToolbar';
 import { createHTMLSanitiser } from 'lib/ShortcodeSerialiser';
 import i18n from 'i18n';
 
@@ -19,30 +18,33 @@ const plugin = {
       i18n._t('Admin.INSERT_LINK_WITH_SHORTCUT', 'Insert link {shortcut}'),
       { shortcut: `[${metaKey}+K]` }
     );
-    const actions = TinyMCEActionRegistrar.getSortedActions('sslink', editor.settings.editorIdentifier, true)
+    const actions = TinyMCEActionRegistrar.getSortedActions('sslink', editor.getParam('editorIdentifier'), true)
       .map(action => Object.assign(
         {},
         action,
-        { onclick: () => action.onclick(editor) }
+        { onAction: () => action.onAction(editor) }
       ));
 
-    editor.addButton('sslink', {
+    // Button in main toolbar
+    editor.ui.registry.addMenuButton('sslink', {
       icon: 'link',
-      title: titleWithShortcut,
-      type: 'menubutton',
-      menu: actions,
+      tooltip: titleWithShortcut,
+      fetch: (callback) => callback(actions),
     });
 
-    editor.addMenuItem('sslink', {
+    // Right click context menu item
+    editor.ui.registry.addNestedMenuItem('sslink', {
       icon: 'link',
       text: title,
-      menu: actions,
+      getSubmenuItems: () => actions,
     });
 
+    // Keyboard shortcut
     editor.addShortcut('Meta+k', 'Open link menu', () => {
       jQuery(`[aria-label^=\"${title}\"] > button`, editor.container).first().click();
     });
 
+    // Callback for opening the edit link dialog form
     function openLinkDialog() {
       const node = tinymce.activeEditor.selection.getNode();
       const href = node.getAttribute('href');
@@ -52,12 +54,31 @@ const plugin = {
       }
     }
 
-    editor.on('preinit', () => {
-      setupTinyMceInlineToolbar(editor, [
-        { type: 'button', onClick: openLinkDialog, text: i18n._t('Admin.EDIT_LINK', 'Edit link') },
-        { type: 'button', onClick: () => this.handleRemoveLinkClick(editor), text: i18n._t('Admin.REMOVE_LINK', 'Remove link') },
-      ], ['a[href]']);
+    // Context menu when a link is selected
+    editor.ui.registry.addButton('sslink-edit', {
+      text: i18n._t('Admin.EDIT_LINK', 'Edit link'),
+      onAction: openLinkDialog,
     });
+    editor.ui.registry.addButton('sslink-remove', {
+      text: i18n._t('Admin.REMOVE_LINK', 'Remove link'),
+      onAction: () => this.handleRemoveLinkClick(editor),
+    });
+    editor.ui.registry.addContextToolbar('sslink', {
+      predicate: (node) => editor.dom.is(node, 'a[href]'),
+      position: 'node',
+      scope: 'node',
+      items: 'sslink-edit sslink-remove',
+    });
+
+    // getMetadata method on a returned object is used by the "help" plugin
+    return {
+      getMetadata() {
+        return {
+          name: 'Silverstripe Link',
+          url: 'https://docs.silverstripe.org/en/4/developer_guides/forms/field_types/htmleditorfield',
+        };
+      }
+    };
   },
 
   /**

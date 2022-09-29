@@ -683,6 +683,10 @@ class LeftAndMain extends Controller implements PermissionProvider
         // file because insufficient information exists when that is being processed
         $htmlEditorConfig = HTMLEditorConfig::get_active();
         $htmlEditorConfig->setOption('language', TinyMCEConfig::get_tinymce_lang());
+        $langUrl = TinyMCEConfig::get_tinymce_lang_url();
+        if ($langUrl) {
+            $htmlEditorConfig->setOption('language_url', $langUrl);
+        }
 
         Requirements::customScript("
             window.ss = window.ss || {};
