@@ -22,10 +22,6 @@ const config = [
       vendor: `${PATHS.SRC}/bundles/vendor.js`,
       // legacy scripts
       'LeftAndMain.Ping': `${PATHS.LEGACY_SRC}/LeftAndMain.Ping.js`,
-      // For IE version 10 and below. These browsers doesn't handle large
-      // resource files so need to break browser detection and warning code into
-      // its own file
-      browserWarning: `${PATHS.SRC}/lib/browserWarning.js`,
     },
     output: {
       path: PATHS.DIST,
@@ -37,24 +33,19 @@ const config = [
     module: moduleJS(ENV, PATHS),
     plugins: [
       ...pluginJS(ENV, PATHS),
-      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-      // Most vendor libs are loaded directly into the 'vendor' bundle (through require()
-      // calls in vendor.js). This ensures that any further require() calls in other
-      // bundles aren't duplicating libs.
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
-        minChunks: module => module.context && module.context.indexOf('/node_modules/') > -1,
+      new webpack.IgnorePlugin({ resourceRegExp: /^\.\/locale$/, contextRegExp: /moment$/ }),
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: `${PATHS.MODULES}/moment/locale`,
+            to: `${PATHS.DIST}/moment-locales`
+          },
+          {
+            from: `${PATHS.MODULES}/popper.js/dist/umd/popper.min.js`,
+            to: `${PATHS.THIRDPARTY}/popper/popper.min.js`
+          }
+        ]
       }),
-      new CopyWebpackPlugin([
-        {
-          from: `${PATHS.MODULES}/moment/locale`,
-          to: `${PATHS.DIST}/moment-locales`
-        },
-        {
-          from: `${PATHS.MODULES}/popper.js/dist/umd/popper.min.js`,
-          to: `${PATHS.THIRDPARTY}/popper/popper.min.js`
-        }
-      ]),
     ],
     watchOptions: {
       poll: true
@@ -97,35 +88,40 @@ const config = [
     module: moduleJS(ENV, PATHS),
     plugins: pluginJS(ENV, PATHS),
   },
-  {
-    name: 'css',
-    entry: {
-      bundle: `${PATHS.SRC}/styles/bundle.scss`,
-      editor: `${PATHS.SRC}/styles/editor.scss`,
-      GridField_print: `${PATHS.SRC}/styles/legacy/GridField_print.scss`,
-      // For IE version 10 and below. These browsers doesn't handle large
-      // resource files so need to break browser detection and warning code into
-      // its own file
-      'browser-warning': `${PATHS.SRC}/styles/browser-warning.scss`,
-    },
-    output: {
-      path: PATHS.DIST,
-      filename: 'styles/[name].css',
-    },
-    devtool: (ENV !== 'production') ? 'source-map' : '',
-    module: moduleCSS(ENV, PATHS),
-    plugins: [
-      ...pluginCSS(ENV, PATHS),
-      new CopyWebpackPlugin([
-        {
-          context: `${PATHS.SRC}/images`,
-          from: 'chosen-sprite*.png',
-          to: `${PATHS.DIST}/images`
-        }
-      ]),
-    ],
-  },
+  // {
+  //   name: 'css',
+  //   entry: {
+  //     bundle: `${PATHS.SRC}/styles/bundle.scss`,
+  //     editor: `${PATHS.SRC}/styles/editor.scss`,
+  //     GridField_print: `${PATHS.SRC}/styles/legacy/GridField_print.scss`,
+  //     // For IE version 10 and below. These browsers doesn't handle large
+  //     // resource files so need to break browser detection and warning code into
+  //     // its own file
+  //     'browser-warning': `${PATHS.SRC}/styles/browser-warning.scss`,
+  //   },
+  //   output: {
+  //     path: PATHS.DIST,
+  //     filename: 'styles/[name].css',
+  //   },
+  //   devtool: (ENV !== 'production') ? 'source-map' : '',
+  //   module: moduleCSS(ENV, PATHS),
+  //   plugins: [
+  //     ...pluginCSS(ENV, PATHS),
+  //     new CopyWebpackPlugin({
+  //       patterns: [
+  //         {
+  //           context: `${PATHS.SRC}/images`,
+  //           from: 'chosen-sprite*.png',
+  //           to: `${PATHS.DIST}/images`
+  //         }
+  //       ]
+  //     }),
+  //   ],
+  // }
 ];
+
+// console.log(JSON.stringify(config[0], null, 2));
+// process.exit();
 
 // Use WEBPACK_CHILD=js or WEBPACK_CHILD=css env var to run a single config
 module.exports = (process.env.WEBPACK_CHILD)
