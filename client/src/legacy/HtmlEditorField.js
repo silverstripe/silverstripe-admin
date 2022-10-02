@@ -185,6 +185,15 @@ ss.editorWrappers.tinyMCE = (function() {
       return this.getInstance().getContent();
     },
 
+    getSelection: function() {
+      const instance = this.getInstance();
+      let selection = instance.selection.getContent({ format: 'text' });
+      if (!selection) {
+        selection = instance.selection.getSel().toString();
+      }
+      return selection || '';
+    },
+
     /**
      * DOM tree of the edited content
      *
