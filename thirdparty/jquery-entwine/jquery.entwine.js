@@ -1,5 +1,29 @@
 /* jQuery.Entwine - Copyright 2009-2011 Hamish Friedlander and SilverStripe. Version . */
 
+/** Utility function to monkey-patch a jQuery method */
+var monkey = function( /* method, method, ...., patch */){
+  var methods = jQuery.makeArray(arguments);
+  var patch = methods.pop();
+
+  jQuery.each(methods, function(i, method){
+    var old = jQuery.fn[method];
+
+    jQuery.fn[method] = function() {
+      var self = this, args = jQuery.makeArray(arguments);
+
+      // Call the original function
+      var rv = old.apply(self, args);
+      // Add the function name and result to the argument array in case we need to modify it
+      args.push(method);
+      args.push(rv);
+      // Call the patch
+      patch.apply(self, args);
+      // Return the end result
+      return rv;
+    }
+  });
+}
+
 /* vendor/jquery.selector/jquery.class.js */
 
 /**
@@ -42,6 +66,9 @@ var Base;
 
 	Base.addMethods = function(props) {
 		for (var name in props) {
+			if (!props.hasOwnProperty(name)) {
+				continue;
+			}
 			if (typeof props[name] == 'function') this.addMethod(name, props[name]);
 			else this.prototype[name] = props[name];
 		}
@@ -57,7 +84,7 @@ var Base;
  
 	// Create a new Class that inherits from this class
 	Base.extend = function(props) {
-  	
+		
 		// The dummy class constructor
 		var Kls = function() {
 			if (arguments[0] === marker) return;
@@ -69,7 +96,7 @@ var Base;
 				var ret = new Kls(marker); if (ret.init) ret.init.apply(ret, arguments); return ret;
 			}
 		};
-   
+	 
 		// Add the common class variables and methods
 		Kls.constructor = Kls;
 		Kls.extend = Base.extend;
@@ -138,6 +165,9 @@ var Base;
 	/* Replace placeholders with actual regex, and mark all as case insensitive */
 	var token = /[A-Z][A-Z0-9]+/;
 	for (var k in rx) {
+		if (!rx.hasOwnProperty(k)) {
+			continue;
+		}
 		var m, src = rx[k].source;
 		while (m = src.match(token)) src = src.replace(m[0], tokens[m[0]].source);
 		rx[k] = new RegExp(src, 'gi');
@@ -281,7 +311,6 @@ var Base;
 	$.selector.SelectorsGroup = SelectorsGroup;
 	
 })(jQuery);
-;
 
 
 /* vendor/jquery.selector/jquery.selector.specifity.js */
@@ -328,7 +357,6 @@ var Base;
 	
 	
 })(jQuery);
-;
 
 
 /* vendor/jquery.selector/jquery.selector.matches.js */
@@ -679,8 +707,6 @@ Sizzle is good for finding elements for a selector, but not so good for telling 
 	
 })(jQuery);
 
-;
-
 
 /* src/jquery.selector.affectedby.js */
 
@@ -742,80 +768,149 @@ Sizzle is good for finding elements for a selector, but not so good for telling 
 
 
 })(jQuery);
-;
 
 
-/* src/jquery.focusinout.js */
+/* src/jquery.entwine.monkeypatch-selectors.js */
 
-(function($){	
-	
-	/**
-	 * Add focusin and focusout support to bind and live for browers other than IE. Designed to be usable in a delegated fashion (like $.live)
-	 * Copyright (c) 2007 Jörn Zaefferer
-	 */
-	if ($.support.focusinBubbles === undefined)  {
-		$.support.focusinBubbles = !!($.browser.msie);
-	}
+(function($) {
 
-	if (!$.support.focusinBubbles && !$.event.special.focusin) {
-		// Emulate focusin and focusout by binding focus and blur in capturing mode
-		$.each({focus: 'focusin', blur: 'focusout'}, function(original, fix){
-			$.event.special[fix] = {
-				setup: function(){
-					if (!this.addEventListener) return false;
-					this.addEventListener(original, $.event.special[fix].handler, true);
-				},
-				teardown: function(){
-					if (!this.removeEventListener) return false;
-					this.removeEventListener(original, $.event.special[fix].handler, true);
-				},
-				handler: function(e){
-					arguments[0] = $.event.fix(e);
-					arguments[0].type = fix;
-					return $.event.handle.apply(this, arguments);
+	/*
+		Monkey patch jQuery.fn.init to set the selector and context properties (removed in jQuery 3.0)
+		This is necessary to avoid Entwine complaining about a missing selector - it's a copy of what
+		used to happen in jQuery.fn.init() before the property was removed in jQuery 3.0 (https://api.jquery.com/selector/)
+		Note: We can't use the monkey function here because we have to set the prototype of the intermediate
+		function to avoid errors.
+	*/
+	function setSelectorAndContext(obj, selector, context) {
+		const rquickExpr = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]+))$/;
+		let match;
+
+		// Handle $(""), $(null), or $(undefined)
+		if ( !selector ) {
+			return;
+		}
+
+		// Handle $(DOMElement)
+		if ( selector.nodeType ) {
+			obj.context = selector;
+			return;
+		}
+
+		// HANDLE: $(function)
+		if ( typeof selector === 'function' ) {
+			return;
+		}
+
+		// The body element only exists once, optimize finding it
+		if ( selector === "body" && !context && document.body ) {
+			obj.selector = selector;
+			return;
+		}
+
+		// Handle HTML strings
+		if ( typeof selector === "string" ) {
+			// Are we dealing with HTML string or an ID?
+			if ( selector.charAt(0) === "<" && selector.charAt( selector.length - 1 ) === ">" && selector.length >= 3 ) {
+				// Assume that strings that start and end with <> are HTML and skip the regex check
+				match = [ null, selector, null ];
+
+			} else {
+				match = rquickExpr.exec( selector );
+			}
+
+			// Verify a match, and that no context was specified for #id
+			if ( match && (match[1] || !context) ) {
+
+				if ( match[1] ) {
+					// HANDLE: $(html) -> $(array)
+					// If the selector was raw HTML, we don't set the properties
+					return;
+
+				} else {
+					// HANDLE: $("#id")
+					obj.context = document;
+					obj.selector = selector;
+					return;
 				}
-			};
-		});
+
+			// HANDLE: $(expr, $(...)) or $(expr, context)
+			} else {
+				obj.selector = selector;
+				return;
+			}
+		}
+
+		if ( selector.selector !== undefined ) {
+			obj.selector = selector.selector;
+			obj.context = selector.context;
+		}
 	}
-		
-	(function(){
-		//IE has some trouble with focusout with select and keyboard navigation
-		var activeFocus = null;
-	
-		$(document)
-			.bind('focusin', function(e){
-				var target = e.realTarget || e.target;
-				if (activeFocus && activeFocus !== target) {
-					e.type = 'focusout';
-					$(activeFocus).trigger(e);
-					e.type = 'focusin';
-					e.target = target;
-				}
-				activeFocus = target;
-			})
-			.bind('focusout', function(e){
-				activeFocus = null;
-			});
-	})();
-	
-})(jQuery);;
+	const _init = $.fn.init;
+	const init = $.fn.init = function(selector, context, rootjQuery) {
+		const obj = _init.call(this, selector, context, rootjQuery);
+		setSelectorAndContext(obj, selector, context);
+		return obj;
+	}
+	init.prototype = $.fn;
+
+	/*
+		The following functions all call pushStack. They used to pass the selector into that function,
+		but when the selector property was removed in jQuery 3.0 (https://api.jquery.com/selector/)
+		the selector stopped being passed in. Now each of these functions needs to be monkey patched
+		to set the correct context and selector.
+	*/
+
+	// These all either have no selector, or it is the first argument
+	monkey('find', 'filter', 'not', 'closest', function() {
+		const args = $.makeArray(arguments);
+		const obj = args.pop();
+		const name = args.pop();
+		const selector = args.length ? args[0] : '';
+
+		// Set the context and selector the same way $.pushStack used to
+		obj.context = this.context;
+		if ( name === "find" ) {
+			obj.selector = this.selector + ( this.selector ? " " : "" ) + selector;
+		} else {
+			obj.selector = this.selector + "." + name + "(" + selector + ")";
+		}
+	});
+
+	// These have multiple arguments which combine to form the selector
+	monkey('parent', 'parents', 'parentsUntil', 'next', 'prev', 'nextAll', 'prevAll', 'prevUntil', 'siblings', 'children', 'contents', function() {
+		const args = $.makeArray(arguments);
+		const obj = args.pop();
+		const name = args.pop();
+		const selector = args.slice().join(',');
+
+		// Set the context and selector the same way $.pushStack used to
+		obj.context = this.context;
+		obj.selector = this.selector + "." + name + "(" + selector + ")";
+	});
+
+	// The selector for these is determined by the init function
+	monkey('appendTo', 'prependTo', 'insertBefore', 'insertAfter', 'replaceAll', function() {
+		const args = $.makeArray(arguments);
+		const obj = args.pop();
+		const name = args.pop();
+		const selector = $(args[0]).selector;
+
+		// Set the context and selector the same way $.pushStack used to
+		obj.context = this.context;
+		obj.selector = this.selector + "." + name + "(" + selector + ")";
+	});
+})(jQuery);
 
 
 /* src/jquery.entwine.js */
-
-try {
-	console.log;
-}
-catch (e) {
-	window.console = undefined;
-}
 
 (function($) {
 
 	/* Create a subclass of the jQuery object. This was introduced in jQuery 1.5, but removed again in 1.9 */
 	var sub = function() {
 		function jQuerySub( selector, context ) {
-			return new jQuerySub.fn.init( selector, context );
+			const jSub = new jQuerySub.fn.init(selector, context);
+			return jSub;
 		}
 
 		jQuery.extend( true, jQuerySub, $ );
@@ -857,8 +952,8 @@ catch (e) {
 			// Remove proxy functions
 			for (var k in $.fn) { if ($.fn[k].isentwinemethod) delete $.fn[k]; }
 			// Remove bound events - TODO: Make this pluggable, so this code can be moved to jquery.entwine.events.js
-			$(document).unbind('.entwine');
-			$(window).unbind('.entwine');
+			$(document).off('.entwine');
+			$(window).off('.entwine');
 			// Remove namespaces, and start over again
 			for (var k in namespaces) delete namespaces[k];
 			for (var k in $.entwine.capture_bindings) delete $.entwine.capture_bindings[k];
@@ -911,10 +1006,10 @@ catch (e) {
 		var as = a.specifity, bs = b.specifity;
 		
 		return (a.important - b.important) ||
-		       (as[0] - bs[0]) ||
-		       (as[1] - bs[1]) ||
-		       (as[2] - bs[2]) ||
-		       (a.rulecount - b.rulecount) ;
+			(as[0] - bs[0]) ||
+			(as[1] - bs[1]) ||
+			(as[2] - bs[2]) ||
+			(a.rulecount - b.rulecount);
 	};
 
 	$.entwine.RuleList = function() {
@@ -979,13 +1074,23 @@ catch (e) {
 					// Inject jQuery object method overrides
 					if (builder = handler.namespaceMethodOverrides) {
 						var overrides = builder(this);
-						for (var k in overrides) this.injectee[k] = overrides[k];
+						for (var k in overrides) {
+							if (!overrides.hasOwnProperty(k)) {
+								continue;
+							}
+							this.injectee[k] = overrides[k];
+						}
 					}
 					
 					// Inject $.entwine function overrides
 					if (builder = handler.namespaceStaticOverrides) {
 						var overrides = builder(this);
-						for (var k in overrides) this.$.entwine[k] = overrides[k];
+						for (var k in overrides) {
+							if (!overrides.hasOwnProperty(k)) {
+								continue;
+							}
+							this.$.entwine[k] = overrides[k];
+						}
 					}
 				}
 			}
@@ -1008,8 +1113,14 @@ catch (e) {
 					if (funcs[i].selector.matches(el)) {
 						var ret, tmp_i = el.i, tmp_f = el.f;
 						el.i = i; el.f = one;
-						try { ret = funcs[i][funcprop].apply(namespace.$(el), args); }
-						finally { el.i = tmp_i; el.f = tmp_f; }
+						try {
+							if (typeof funcs[i][funcprop] == 'function') {
+								ret = funcs[i][funcprop].apply(namespace.$(el), args);
+							}
+						} finally {
+							el.i = tmp_i;
+							el.f = tmp_f;
+						}
 						return ret;
 					}
 				}
@@ -1058,10 +1169,13 @@ catch (e) {
 		add: function(selector, data) {
 			// For every item in the hash, try ever method handler, until one returns true
 			for (var k in data) {
+				if (!data.hasOwnProperty(k)) {
+					continue;
+				}
 				var v = data[k];
 				
 				for (var i = 0; i < handlers.length; i++) {
-					if (handlers[i].bind && handlers[i].bind.call(this, selector, k, v)) break;
+					if (handlers[i].on && handlers[i].on.call(this, selector, k, v)) break;
 				}
 			}
 		},
@@ -1091,8 +1205,8 @@ catch (e) {
 	$.entwine.Namespace.addHandler({
 		order: 50,
 		
-		bind: function(selector, k, v){
-			if ($.isFunction(v)) {
+		on: function(selector, k, v){
+			if (typeof v === 'function') {
 				this.bind_proxy(selector, k, v);
 				return true;
 			}
@@ -1107,7 +1221,7 @@ catch (e) {
 		entwine: function(spacename) {
 			var i = 0;
 			/* Don't actually work out selector until we try and define something on it - we might be opening a namespace on an function-traveresed object
-			   which have non-standard selectors like .parents(.foo).slice(0,1) */
+				 which have non-standard selectors like .parents(.foo).slice(0,1) */
 			var selector = null;  
 		
 			/* By default we operator on the base namespace */
@@ -1125,7 +1239,7 @@ catch (e) {
 				var res = arguments[i++];
 				
 				// If it's a function, call it - either it's a using block or it's a namespaced entwine definition
-				if ($.isFunction(res)) {
+				if (typeof res === 'function') {
 					if (res.length != 1) $.entwine.warn('Function block inside entwine definition does not take $ argument properly', $.entwine.WARN_LEVEL_IMPORTANT);
 					res = res.call(namespace.$(this), namespace.$);
 				}
@@ -1157,147 +1271,116 @@ catch (e) {
 	});
 	
 })(jQuery);
-;
 
 
 /* src/domevents/jquery.entwine.domevents.addrem.js */
 
 (function($){
 
-	// Gets all the child elements of a particular elements, stores it in an array
-	function getElements(store, original) {
-		var node, i = store.length, next = original.firstChild;
+	/** Recursively gets all the descendent elements of a particular element and stores it in an array */
+	function addNodeChildrenToList(ancestor, list) {
+		var node, i = list.length, next = ancestor.firstChild;
 
 		while ((node = next)) {
-			if (node.nodeType === 1) store[i++] = node;
+			if (node.nodeType === 1) list[i++] = node;
 			next = node.firstChild || node.nextSibling;
-			while (!next && (node = node.parentNode) && node !== original) next = node.nextSibling;
+			while (!next && (node = node.parentNode) && node !== ancestor) next = node.nextSibling;
 		}
 	}
 
-	// This might be faster? Or slower? @todo: benchmark.
-	function getElementsAlt(store, node) {
-		if (node.getElementsByTagName) {
-			var els = node.getElementsByTagName('*'), len = els.length, i = 0, j = store.length;
-			for(; i < len; i++, j++) {
-				store[j] = els[i];
-			}
+	/** Handles a list of added or removed nodes from a mutation observer */
+	function handleMutation(list, eventName) {
+		if (list.length === 0) {
+			return;
 		}
-		else if (node.childNodes) {
-			var els = node.childNodes, len = els.length, i = 0;
-			for(; i < len; i++) {
-				getElements(store, els[i]);
+		// Get all mutated elements.
+		const mutated = [];
+		for (let node of list) {
+			if (node.nodeName === '#text') {
+				continue;
 			}
+			mutated.push(node);
+			addNodeChildrenToList(node, mutated);
 		}
+
+		if (mutated.length === 0) {
+			return;
+		}
+
+		// Tell entwine the elements have been added/removed.
+		var event = $.Event(eventName);
+		event.targets = mutated;
+		$(document).triggerHandler(event);
 	}
 
-	var dontTrigger = false;
+	/** Observe elements being added or removed and notify entwine */
+	const mutationCallback = (mutationList, observer) => {
+		for (const mutation of mutationList) {
+			// Only handle adding events here - removed events need to be handled synchronously.
+			handleMutation(mutation.addedNodes, 'EntwineElementsAdded');
+		}
+	};
+	const observer = new MutationObserver(mutationCallback);
+	observer.observe(document, { childList: true, subtree: true });
 
-	var patchDomManipCallback = function(original) {
-		var patched = function(elem){
-			var added = [];
+	/**
+	 * This block of logic handles jQuery remove events synchronously.
+	 * This allows entwine deconstructors (onremove events) to work.
+	 * Without it, all onremove events would be called only AFTER the node is removed
+	 * because mutation observers work asynchronously.
+	 */
+	{
+		// If this is true, we've changed something to call cleanData so that we can catch the elements, but we don't
+		// want to call the underlying original $.cleanData
+		var supressActualClean = false;
 
-			if (!dontTrigger) {
-				if (elem.nodeType == 1) added[added.length] = elem;
-				getElements(added, elem);
+		// Monkey patch $.cleanData to catch element removal
+		var _cleanData = $.cleanData;
+		$.cleanData = function( elems ) {
+			// By default we can assume all elements passed are legitimately being removeed
+			var removed = elems;
+
+			// Except if we're supressing actual clean - we might be being called by jQuery "being careful" about detaching nodes
+			// before attaching them. So we need to check to make sure these nodes currently are in a document
+			if (supressActualClean) {
+				var i = 0, len = elems.length, removed = [], ri = 0;
+				for(; i < len; i++) {
+					var node = elems[i], current = node;
+					while (current = current.parentNode) {
+						if (current.nodeType == 9) { removed[ri++] = node; break; }
+					}
+				}
 			}
 
-			var rv = original.apply(this, arguments);
-
-			if (!dontTrigger && added.length) {
-				var event = $.Event('EntwineElementsAdded');
-				event.targets = added;
+			if (removed.length) {
+				var event = $.Event('EntwineElementsRemoved');
+				event.targets = removed;
 				$(document).triggerHandler(event);
 			}
 
+			if (!supressActualClean) _cleanData.apply(this, arguments);
+		}
+
+		// Monkey patch $.fn.remove to catch when we're just detaching (keepdata == 1) -
+		// this doesn't call cleanData but still needs to trigger the event
+		var _remove = $.prototype.remove;
+		$.prototype.remove = function(selector, keepdata) {
+			supressActualClean = keepdata;
+			var rv = _remove.call(this, selector);
+			supressActualClean = false;
 			return rv;
 		}
-		patched.patched = true;
-
-		return patched;
 	}
 
-	var version = $.prototype.jquery.split('.');
-	var callbackIdx = (version[0] > 1 || version[1] >= 10 ? 1 : 2);
-
-	// Monkey patch $.fn.domManip to catch all regular jQuery add element calls
-	var _domManip = $.prototype.domManip;
-	$.prototype.domManip = function() {
-		if (!arguments[callbackIdx].patched) arguments[callbackIdx] = patchDomManipCallback(arguments[callbackIdx]);
-		return _domManip.apply(this, arguments);
-	}
-
-	// Monkey patch $.fn.html to catch when jQuery sets innerHTML directly
-	var _html = $.prototype.html;
-	$.prototype.html = function(value) {
-		if (value === undefined) return _html.apply(this, arguments);
-
-		dontTrigger = true;
-		var res = _html.apply(this, arguments);
-		dontTrigger = false;
-
+	/** On DOM ready, notify entwine about all the elements that are present */
+	$(function addNodesOnReady(){
 		var added = [];
-
-		var i = 0, length = this.length;
-		for (; i < length; i++ ) getElements(added, this[i]);
-
-		var event = $.Event('EntwineElementsAdded');
-		event.targets = added;
-		$(document).triggerHandler(event);
-
-		return res;
-	}
-
-	// If this is true, we've changed something to call cleanData so that we can catch the elements, but we don't
-	// want to call the underlying original $.cleanData
-	var supressActualClean = false;
-
-	// Monkey patch $.cleanData to catch element removal
-	var _cleanData = $.cleanData;
-	$.cleanData = function( elems ) {
-		// By default we can assume all elements passed are legitimately being removeed
-		var removed = elems;
-
-		// Except if we're supressing actual clean - we might be being called by jQuery "being careful" about detaching nodes
-		// before attaching them. So we need to check to make sure these nodes currently are in a document
-		if (supressActualClean) {
-			var i = 0, len = elems.length, removed = [], ri = 0;
-			for(; i < len; i++) {
-				var node = elems[i], current = node;
-				while (current = current.parentNode) {
-					if (current.nodeType == 9) { removed[ri++] = node; break; }
-				}
-			}
-		}
-
-		if (removed.length) {
-			var event = $.Event('EntwineElementsRemoved');
-			event.targets = removed;
-			$(document).triggerHandler(event);
-		}
-
-		if (!supressActualClean) _cleanData.apply(this, arguments);
-	}
-
-	// Monkey patch $.fn.remove to catch when we're just detaching (keepdata == 1) -
-	// this doesn't call cleanData but still needs to trigger event
-	var _remove = $.prototype.remove;
-	$.prototype.remove = function(selector, keepdata) {
-		supressActualClean = keepdata;
-		var rv = _remove.call(this, selector);
-		supressActualClean = false;
-		return rv;
-	}
-
-	// And on DOM ready, trigger adding once
-	$(function(){
-		var added = []; getElements(added, document);
+		addNodeChildrenToList(document, added);
 
 		var event = $.Event('EntwineElementsAdded');
 		event.targets = added;
 		$(document).triggerHandler(event);
 	});
-
 
 })(jQuery);;
 
@@ -1305,24 +1388,6 @@ catch (e) {
 /* src/domevents/jquery.entwine.domevents.maybechanged.js */
 
 (function($){
-
-	/** Utility function to monkey-patch a jQuery method */
-	var monkey = function( /* method, method, ...., patch */){
-		var methods = $.makeArray(arguments);
-		var patch = methods.pop();
-
-		$.each(methods, function(i, method){
-			var old = $.fn[method];
-
-			$.fn[method] = function() {
-				var self = this, args = $.makeArray(arguments);
-
-				var rv = old.apply(self, args);
-				patch.apply(self, args);
-				return rv;
-			}
-		});
-	}
 
 	/** What to call to run a function 'soon'. Normally setTimeout, but for syncronous mode we override so soon === now */
 	var runSoon = window.setTimeout;
@@ -1400,13 +1465,13 @@ catch (e) {
 
 	// Element add events trigger maybechanged events
 
-	$(document).bind('EntwineElementsAdded', function(e){ changes.addSubtree(e.targets); });
+	$(document).on('EntwineElementsAdded', function(e){ changes.addSubtree(e.targets); });
 
 	// Element remove events trigger maybechanged events, but we have to wait until after the nodes are actually removed
 	// (EntwineElementsRemoved fires _just before_ the elements are removed so the data still exists), especially in syncronous mode
 
 	var removed = null;
-	$(document).bind('EntwineElementsRemoved', function(e){ removed = e.targets; });
+	$(document).on('EntwineElementsRemoved', function(e){ removed = e.targets; });
 
 	monkey('remove', 'html', 'empty', function(){
 		var subtree = removed; removed = null;
@@ -1425,7 +1490,14 @@ catch (e) {
 
 	monkey('attr', function(a, b){
 		if (b !== undefined && typeof a == 'string') changes.addAttr(a, this);
-		else if (typeof a != 'string') { for (var k in a) changes.addAttr(k, this); }
+		else if (typeof a != 'string') {
+			for (var k in a) {
+				if (!a.hasOwnProperty(k)) {
+					continue;
+				}
+				changes.addAttr(k, this);
+			}
+		}
 	});
 
 	// Add some usefull accessors to $.entwine
@@ -1457,26 +1529,7 @@ catch (e) {
 
 /* src/jquery.entwine.events.js */
 
-(function($) {	
-
-	/** Taken from jQuery 1.5.2 for backwards compatibility */
-	if ($.support.changeBubbles == undefined) {
-		$.support.changeBubbles = true;
-
-		var el = document.createElement("div");
-		eventName = "onchange";
-
-		if (el.attachEvent) {
-			var isSupported = (eventName in el);
-			if (!isSupported) {
-				el.setAttribute(eventName, "return;");
-				isSupported = typeof el[eventName] === "function";
-			}
-
-			$.support.changeBubbles = isSupported;
-		}
-	}
-
+(function($) {
 	/* Return true if node b is the same as, or is a descendant of, node a */
 	if (document.compareDocumentPosition) {
 		var is_or_contains = function(a, b) {
@@ -1654,12 +1707,6 @@ catch (e) {
 						proxies[name] = this.build_mouseenterleave_proxy(name);
 						event = 'mouseout';
 						break;
-					case 'onchange':
-						if (!$.support.changeBubbles) {
-							proxies[name] = this.build_change_proxy(name);
-							event = 'click keydown focusin focusout beforeactivate beforedeactivate';
-						}
-						break;
 					case 'onsubmit':
 						event = 'delegatedSubmit';
 						break;
@@ -1671,7 +1718,7 @@ catch (e) {
 				// If none of the special handlers created a proxy, use the generic proxy
 				if (!proxies[name]) proxies[name] = this.build_event_proxy(name);
 
-				$(document).bind(event.replace(/(\s+|$)/g, '.entwine$1'), proxies[name]);
+				$(document).on(event.replace(/(\s+|$)/g, '.entwine$1'), proxies[name]);
 			}
 		}
 	});
@@ -1679,9 +1726,9 @@ catch (e) {
 	$.entwine.Namespace.addHandler({
 		order: 40,
 		
-		bind: function(selector, k, v){
+		on: function(selector, k, v){
 			var match, event;
-			if ($.isFunction(v) && (match = k.match(/^on(.*)/))) {
+			if (typeof v === 'function' && (match = k.match(/^on(.*)/))) {
 				event = match[1];
 				this.bind_event(selector, k, v, event);
 				return true;
@@ -1697,11 +1744,11 @@ catch (e) {
 		return $(document).trigger(delegationEvent, data); 
 	};
 
-	$(document).bind('EntwineElementsAdded', function(e){
+	$(document).on('EntwineElementsAdded', function(e){
 		var forms = $(e.targets).filter('form');
 		if (!forms.length) return;
 
-		forms.bind('submit.entwine_delegate_submit', delegate_submit);
+		forms.on('submit.entwine_delegate_submit', delegate_submit);
 	});
 
 })(jQuery);
@@ -1732,11 +1779,17 @@ catch (e) {
 			var namespace, capturelists, forevent, capturelist, rule, handler, sel;
 
 			for (var k in $.entwine.namespaces) {
+				if (!$.entwine.namespaces.hasOwnProperty(k)) {
+					continue;
+				}
 				namespace = $.entwine.namespaces[k];
 				capturelists = namespace.captures;
 
 				if (capturelists && (forevent = capturelists[event])) {
 					for (var k in forevent) {
+						if (!forevent.hasOwnProperty(k)) {
+							continue;
+						}
 						var capturelist = forevent[k];
 						var triggered = namespace.$([]);
 
@@ -1748,6 +1801,7 @@ catch (e) {
 							sel = rule.selector.selector;
 
 							var matching = namespace.$(sel).not(triggered);
+
 							matching[handler].apply(matching, arguments);
 
 							triggered = triggered.add(matching);
@@ -1796,7 +1850,7 @@ catch (e) {
 	$.entwine.Namespace.addHandler({
 		order: 10,
 
-		bind: function(selector, k, v) {
+		on: function(selector, k, v) {
 			var match;
 			if ($.isPlainObject(v) && (match = k.match(/^from\s*(.*)/))) {
 				var from = match[1];
@@ -1808,6 +1862,10 @@ catch (e) {
 				else proxyGen = property_proxy;
 
 				for (var onevent in v) {
+					if (!v.hasOwnProperty(onevent)) {
+						continue;
+					}
+
 					var handler = v[onevent];
 					match = onevent.match(/^on(.*)/);
 					var event = match[1];
@@ -1818,7 +1876,7 @@ catch (e) {
 						var namespaced = event.replace(/(\s+|$)/g, '.entwine$1');
 						bindings[event] = event_proxy(event);
 
-						$(proxyGen == window_proxy ? window : document).bind(namespaced, bindings[event]);
+						$(proxyGen == window_proxy ? window : document).on(namespaced, bindings[event]);
 					}
 				}
 
@@ -1828,7 +1886,6 @@ catch (e) {
 	});
 
 })(jQuery);
-;
 
 
 /* src/jquery.entwine.ctors.js */
@@ -1878,8 +1935,8 @@ catch (e) {
 	$.entwine.Namespace.addHandler({
 		order: 30,
 		
-		bind: function(selector, k, v) {
-			if ($.isFunction(v) && (k == 'onmatch' || k == 'onunmatch')) {
+		on: function(selector, k, v) {
+			if (typeof v === 'function' && (k == 'onmatch' || k == 'onunmatch')) {
 				// When we add new matchers we need to trigger a full global recalc once, regardless of the DOM changes that triggered the event
 				this.matchersDirty = true;
 
@@ -1899,11 +1956,14 @@ catch (e) {
 	 *   $('#foo').addClass('tabs'); $('#foo').tabFunctionBar();
 	 * won't work.
 	 */
-	$(document).bind('EntwineSubtreeMaybeChanged', function(e, changes){
+	$(document).on('EntwineSubtreeMaybeChanged', function(e, changes){
 		// var start = (new Date).getTime();
 
 		// For every namespace
 		for (var k in $.entwine.namespaces) {
+			if (!$.entwine.namespaces.hasOwnProperty(k)) {
+				continue;
+			}
 			var namespace = $.entwine.namespaces[k];
 
 			// That has constructors or destructors
@@ -1940,7 +2000,7 @@ catch (e) {
 
 					/*
 						Rule.cache might be stale or fresh. It'll be stale if
-					   - some more specific selector now has some of rule.cache in it
+						- some more specific selector now has some of rule.cache in it
 						- some change has happened that means new elements match this selector now
 						- some change has happened that means elements no longer match this selector
 
@@ -2075,7 +2135,6 @@ catch (e) {
 	
 
 })(jQuery);
-;
 
 
 /* src/jquery.entwine.addrem.js */
@@ -2116,34 +2175,36 @@ catch (e) {
 	$.entwine.Namespace.addHandler({
 		order: 30,
 
-		bind: function(selector, k, v) {
-			if ($.isFunction(v) && (k == 'onadd' || k == 'onremove')) {
+		on: function(selector, k, v) {
+			if (typeof v === 'function' && (k == 'onadd' || k == 'onremove')) {
 				this.bind_addrem_proxy(selector, k, v);
 				return true;
 			}
 		}
 	});
 
-	$(document).bind('EntwineElementsAdded', function(e){
+	$(document).on('EntwineElementsAdded', function(e){
 		// For every namespace
 		for (var k in $.entwine.namespaces) {
+			if (!$.entwine.namespaces.hasOwnProperty(k)) {
+				continue;
+			}
 			var namespace = $.entwine.namespaces[k];
 			if (namespace.injectee.onadd) namespace.injectee.onadd.call(e.targets);
 		}
 	});
 
-	$(document).bind('EntwineElementsRemoved', function(e){
+	$(document).on('EntwineElementsRemoved', function(e){
 		for (var k in $.entwine.namespaces) {
+			if (!$.entwine.namespaces.hasOwnProperty(k)) {
+				continue;
+			}
 			var namespace = $.entwine.namespaces[k];
 			if (namespace.injectee.onremove) namespace.injectee.onremove.call(e.targets);
 		}
 	});
 
-
-
-
 })(jQuery);
-;
 
 
 /* src/jquery.entwine.properties.js */
@@ -2200,7 +2261,7 @@ catch (e) {
 	$.entwine.Namespace.addHandler({
 		order: 60,
 		
-		bind: function(selector, k, v) {
+		on: function(selector, k, v) {
 			if (k.charAt(0) != k.charAt(0).toUpperCase()) $.entwine.warn('Entwine property '+k+' does not start with a capital letter', $.entwine.WARN_LEVEL_BESTPRACTISE);
 
 			// Create the getters and setters
@@ -2233,7 +2294,6 @@ catch (e) {
 	});
 	
 })(jQuery);
-;
 
 
 /* src/jquery.entwine.legacy.js */
@@ -2248,7 +2308,7 @@ catch (e) {
 	// Use addHandler to hack in the namespace.$.concrete equivilent to the namespace.$.entwine namespace-injection
 	$.entwine.Namespace.addHandler({
 		order: 100,
-		bind: function(selector, k, v) { return false; },
+		on: function(selector, k, v) { return false; },
 	
 		namespaceMethodOverrides: function(namespace){
 			namespace.$.concrete = namespace.$.entwine;
@@ -2259,5 +2319,3 @@ catch (e) {
 	});
 
 })(jQuery);
-;
-

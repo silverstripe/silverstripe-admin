@@ -57,14 +57,16 @@ $.entwine('ss', function($){
       ignoreFieldSelector: '.no-change-track, .ss-upload :input, .cms-navigator :input'
     },
 
-
     /**
-     * Variable: ValidationErrorShown
      * Boolean for tracking whether a validation error has been already been shown. Used because tabs can
-     * sometimes be inadvertently initialised multiple times, but we don't want duplicate messages
-     * (Boolean)
+     * sometimes be inadvertently initialised multiple times, but we don't want duplicate messages.
      */
-    ValidationErrorShown: false,
+    getValidationErrorShown: function() {
+      return Boolean(this.data('_validationErrorShown'));
+    },
+    setValidationErrorShown: function(value) {
+      this.data('_validationErrorShown', value);
+    },
 
     /**
      * Constructor: onmatch
@@ -95,9 +97,6 @@ $.entwine('ss', function($){
           el.remove();
         }
       }
-
-      // Reset error display
-      this.setValidationErrorShown(false);
 
       // TODO
       // // Rewrite # links
@@ -340,7 +339,7 @@ $.entwine('ss', function($){
       }
     },
     /*
-     * Restore fields after tabs are restored
+     * Restore fields after each tab's state is restored
      */
     'from .cms-container': {
       ontabstaterestored: function(e){

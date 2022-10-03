@@ -220,7 +220,6 @@
     padding-top: 17px;
   }
 
-  .child-flyout-indicator,
   .toggle-children-icon {
     background-image: none;
     border-color: darken(#ccdce6, 25%);
@@ -240,12 +239,6 @@
 
   .opened .toggle-children-icon {
     margin-top: 1px;
-  }
-
-  @include media-breakpoint-up(md) {
-    &.collapsed .child-flyout-indicator {
-      margin-top: -29px;
-    }
   }
 }
 
@@ -493,7 +486,7 @@
 
     }
 
-    &.current { //need to apply current stlye to flyout also (at least line height)
+    &.current { //need to apply current stlye to children also (at least line height)
 
       &>a {
         background-color: $base-menu;
@@ -574,88 +567,11 @@
         }
       }
     }
-
-    // Style applied to the menu flyout only when the collapsed setting
-    .collapsed-flyout {
-      left: 59px;
-      margin-top: -52px;
-      position: fixed;
-      width: 160px;
-      z-index: 1;
-      display: none;
-
-      .icon {
-        display: none;
-      }
-
-      li {
-        a {
-          background: $base-menu-bg;
-          box-shadow: none;
-          padding: 10px 0;
-          height: 40px;
-          line-height: 18px;
-
-          &:hover,
-          &:active {
-            background: lighten($base-menu, 3%);
-          }
-        }
-
-        &.children a {
-          font-size: 13px;
-          height: 18px;
-          cursor: default;
-        }
-
-        &.current {
-          a {
-            background-color: $base-menu;
-          }
-
-          &.children a {
-            background-color: $base-menu-bg;
-          }
-        }
-      }
-    }
   }
 
   &.collapsed {
-
     .toggle-children {
       display: none;
-    }
-
-    .opened {
-      ul.collapsed-flyout {
-        border-radius: 0 2px 2px 0 ;
-        border: 1px solid #d2d5d8;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-
-        li.clone a {
-          padding: 15px 0 15px 70px;
-          margin-left: -60px;
-          margin-right: 0;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-
-          span.text {
-            margin-left: -10px;
-          }
-        }
-
-        li a span.text {
-          display: block;
-          margin-left: 0;
-        }
-      }
-
-      .child-flyout-indicator {
-        position: fixed;
-        left: 196px;
-        transform: rotate(45deg);
-        margin-top: -33px;
-      }
     }
   }
 }

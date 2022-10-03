@@ -29,11 +29,10 @@ $.entwine('ss', function($){
   $('.cms-panel.cms-menu').entwine({
 
     togglePanel: function(doExpand, silent, doSaveState) {
-      //apply or unapply the flyout formatting, should only apply to cms-menu__list when the current collapsed panal is the cms menu.
+      //apply or unapply the child formatting, should only apply to cms-menu__list when the current collapsed panal is the cms menu.
       $('.cms-menu__list').children('li').each(function(){
         if (doExpand) { //expand
           $(this).children('ul').each(function() {
-            $(this).removeClass('collapsed-flyout');
             if ($(this).data('collapse')) {
               $(this).removeData('collapse');
               $(this).addClass('collapse');
@@ -41,7 +40,6 @@ $.entwine('ss', function($){
           });
         } else {  //collapse
           $(this).children('ul').each(function() {
-            $(this).addClass('collapsed-flyout');
             $(this).hasClass('collapse');
             $(this).removeClass('collapse');
             $(this).data('collapse', true);
@@ -49,30 +47,9 @@ $.entwine('ss', function($){
         }
       });
 
-      this.toggleFlyoutState(doExpand);
-
       this._super(doExpand, silent, doSaveState);
     },
-    toggleFlyoutState: function(bool) {
-      if (bool) { //expand
-        //show the flyout
-        $('.collapsed').find('li').show();
 
-        //hide all the flyout-indicator
-        $('.cms-menu__list').find('.child-flyout-indicator').hide();
-      } else {  //collapse
-        //hide the flyout only if it is not the current section
-        $('.collapsed-flyout').find('li').each(function() {
-          //if (!$(this).hasClass('current'))
-          $(this).hide();
-        });
-
-        //show all the flyout-indicators
-        var par = $('.cms-menu__list ul.collapsed-flyout').parent();
-        if (par.children('.child-flyout-indicator').length === 0) par.append('<span class="child-flyout-indicator"></span>').fadeIn();
-        par.children('.child-flyout-indicator').fadeIn();
-      }
-    },
     siteTreePresent: function () {
       return $('#cms-content-tools-CMSMain').length > 0;
     },
@@ -230,65 +207,9 @@ $.entwine('ss', function($){
       var currentID = $('.cms-content input[name=ID]').val();
       if(currentID) {
         this.find('li').each(function() {
-          if($.isFunction($(this).setRecordID)) $(this).setRecordID(currentID);
+          if(typeof $(this).setRecordID === 'function') $(this).setRecordID(currentID);
         });
       }
-    }
-  });
-
-  /** Toggle the flyout panel to appear/disappear when mouse over */
-  $('.cms-menu__list li').entwine({
-    toggleFlyout: function(bool) {
-      var fly = $(this);
-
-      if (fly.children('ul').first().hasClass('collapsed-flyout')) {
-        if (bool) { //expand
-          // create the clone of the list item to be displayed
-          // over the existing one
-          if (
-            !fly.children('ul')
-              .first()
-              .children('li')
-              .first()
-              .hasClass('clone')
-          ) {
-
-            var li = fly.clone();
-            li.addClass('clone').css({
-
-            });
-
-            li.children('ul').first().remove();
-
-            li.find('span').not('.text').remove();
-
-            li.find('a').first().unbind('click');
-
-            fly.children('ul').prepend(li);
-          }
-
-          $('.collapsed-flyout').show();
-          fly.addClass('opened');
-          fly.children('ul').find('li').fadeIn('fast');
-        } else {  //collapse
-          if(li) {
-            li.remove();
-          }
-          $('.collapsed-flyout').hide();
-          fly.removeClass('opened');
-          fly.find('toggle-children').removeClass('opened');
-          fly.children('ul').find('li').hide();
-        }
-      }
-    }
-  });
-  //slight delay to prevent flyout closing from "sloppy mouse movement"
-  $('.cms-menu__list li').hoverIntent(function(){$(this).toggleFlyout(true);},function(){$(this).toggleFlyout(false);});
-
-  $('.cms-menu__list .toggle').entwine({
-    onclick: function(e) {
-      e.preventDefault();
-      $(this).toogleFlyout(true);
     }
   });
 

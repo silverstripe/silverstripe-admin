@@ -30,7 +30,7 @@ $.entwine('ss.tree', function($){
           newParentNode = data.rslt.np,
           newParentID = $(newParentNode).data('id') || 0,
           nodeID = $(movedNode).data('id'),
-          siblingIDs = $.map($(movedNode).siblings().andSelf(), function (el) {
+          siblingIDs = $.map($(movedNode).siblings().addBack(), function (el) {
             return $(el).data('id');
           });
 
@@ -98,7 +98,7 @@ $.entwine('ss.tree', function($){
       var self = this;
         this
           .jstree(this.getTreeConfig())
-          .bind('loaded.jstree', function(e, data) {
+          .on('loaded.jstree', function(e, data) {
             self.setIsLoaded(true);
 
             // Add ajax settings after init period to avoid unnecessary initial ajax load
@@ -121,7 +121,7 @@ $.entwine('ss.tree', function($){
             // Only show checkboxes with .multiple class
             data.inst.hide_checkboxes();
           })
-          .bind('before.jstree', function(e, data) {
+          .on('before.jstree', function(e, data) {
             if(data.func == 'start_drag') {
               // Don't allow drag'n'drop if multi-select is enabled'
               if(!self.hasClass('draggable') || self.hasClass('multiselect')) {
@@ -142,9 +142,11 @@ $.entwine('ss.tree', function($){
               }
             }
           })
-          .bind('move_node.jstree', moveNodeCallback)
+          .on('move_node.jstree', moveNodeCallback)
           // Make some jstree events delegatable
-          .bind('select_node.jstree check_node.jstree uncheck_node.jstree', function(e, data) {
+          .on('select_node.jstree check_node.jstree uncheck_node.jstree', function(e, data) {
+            // Clear out namespace before triggering so entwine handlers are called
+            e.namespace = '';
             $(document).triggerHandler(e, data);
           });
     },

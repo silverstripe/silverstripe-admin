@@ -1,6 +1,8 @@
 jsTree pre1.0
 http://jstree.com/
 
+NOTE: This copy of jstree has been modified to support jQuery 3
+
 Copyright (c) 2011 Ivan Bozhanov (vakata.com)
 
 Dual licensed under the MIT and GPL licenses:

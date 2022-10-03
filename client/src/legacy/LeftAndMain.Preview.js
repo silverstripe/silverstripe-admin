@@ -225,7 +225,7 @@ $.entwine('ss.preview', function($){
 
       // Create layout and controls
       iframe.addClass('center');
-      iframe.bind('load', function() {
+      iframe.on('load', function() {
         self._adjustIframeForPreview();
 
         // Load edit view for new page, but only if the preview is activated at the moment.
@@ -714,8 +714,6 @@ $.entwine('ss.preview', function($){
       }
     }
   });
-
-
 
   /**
    * Rotate preview to landscape

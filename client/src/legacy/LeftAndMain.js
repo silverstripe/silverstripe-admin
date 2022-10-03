@@ -47,7 +47,17 @@ window.ss.debounce = function (func, wait, immediate) {
   };
 };
 
-$(window).bind('resize.leftandmain', function(e) {
+/**
+ * The URL to use for saving and loading tab state
+ */
+window.ss.tabStateUrl = function() {
+  return window.location.href
+    .replace(/\?.*/, '')
+    .replace(/#.*/, '')
+    .replace($('base').attr('href'), '');
+},
+
+$(window).on('resize.leftandmain', function(e) {
   $('.cms-container').trigger('windowresize');
 });
 
@@ -148,7 +158,7 @@ $.entwine('ss', function($) {
     $(window).trigger('ajaxComplete');
   }, 1000, true);
 
-  $(window).bind('resize', positionLoadingSpinner).trigger('resize');
+  $(window).on('resize', positionLoadingSpinner).trigger('resize');
 
   // global ajax handlers
   $(document).ajaxComplete(function(e, xhr, settings) {
@@ -220,26 +230,13 @@ $.entwine('ss', function($) {
      * Constructor: onmatch
      */
     onadd: function() {
-      // Browser detection
-      if($.browser.msie && parseInt($.browser.version, 10) < 8) {
-        $('.ss-loading-screen').append(
-          '<p class="ss-loading-incompat-warning"><span class="notice">' +
-          'Your browser is not compatible with the CMS interface. Please use Internet Explorer 8+, Google Chrome or Mozilla Firefox.' +
-          '</span></p>'
-        ).css('z-index', $('.ss-loading-screen').css('z-index')+1);
-        $('.loading-animation').remove();
-
-        this._super();
-        return;
-      }
-
       // Initialize layouts
       this.redraw();
 
       // Remove loading screen
       $('.ss-loading-screen').hide();
       $('body').removeClass('loading');
-      $(window).unbind('resize', positionLoadingSpinner);
+      $(window).off('resize', positionLoadingSpinner);
       this.restoreTabState();
       this._super();
     },
@@ -613,7 +610,7 @@ $.entwine('ss', function($) {
 
       let promise = $.ajax({
         headers: headers,
-        url: historyState.path || document.URL
+        url: historyState.path || document.URL,
       })
       .fail((xhr, status, error) => {
         // Ignoring aborts: The server request failed, so prevent a mixed UI state by rolling back to previously
@@ -752,13 +749,13 @@ $.entwine('ss', function($) {
      *   (Object) state The original history state which the request was initiated with
      */
     handleAjaxResponse: function(data, status, xhr, state) {
-      var self = this, url, selectedTabs, guessFragment, fragment, $data;
+      let guessFragment, fragment, $data;
 
       // Support a full reload
       if(xhr.getResponseHeader('X-Reload') && xhr.getResponseHeader('X-ControllerURL')) {
-        var baseUrl = $('base').attr('href'),
-          rawURL = xhr.getResponseHeader('X-ControllerURL'),
-          url = $.path.isAbsoluteUrl(rawURL) ? rawURL : $.path.makeUrlAbsolute(rawURL, baseUrl);
+        const baseUrl = $('base').attr('href');
+        const rawURL = xhr.getResponseHeader('X-ControllerURL');
+        const url = $.path.isAbsoluteUrl(rawURL) ? rawURL : $.path.makeUrlAbsolute(rawURL, baseUrl);
 
         document.location.href = url;
         return;
@@ -772,17 +769,15 @@ $.entwine('ss', function($) {
       var title = xhr.getResponseHeader('X-Title');
       if(title) document.title = decodeURIComponent(title.replace(/\+/g, ' '));
 
-      var newFragments = {}, newContentEls;
+      let newFragments = {};
+      let newContentEls;
       // If content type is application/json (ignoring charset and other parameters)
       if(xhr.getResponseHeader('Content-Type').match(/^((text)|(application))\/json[ \t]*;?/i)) {
         newFragments = data;
       } else {
 
         // Fall back to replacing the content fragment if HTML is returned
-        fragment = document.createDocumentFragment();
-
-        jQuery.clean( [ data ], document, fragment, [] );
-        $data = $(jQuery.merge( [], fragment.childNodes ));
+        $data = $($.parseHTML(data, document, false));
 
         // Try and guess the fragment if none is provided
         // TODO: data-pjax-fragment might actually give us the fragment. For now we just check most common case
@@ -890,7 +885,7 @@ $.entwine('ss', function($) {
     saveTabState: function() {
       if(typeof(window.sessionStorage)=="undefined" || window.sessionStorage === null) return;
 
-      var selectedTabs = [], url = this._tabStateUrl();
+      var selectedTabs = [], url = window.ss.tabStateUrl();
       this.find('.cms-tabset,.ss-tabset').each(function(i, el) {
         var id = $(el).attr('id');
         if(!id) return; // we need a unique reference
@@ -928,46 +923,14 @@ $.entwine('ss', function($) {
      *   Used to mark a specific tab as active regardless of the previously saved options.
      */
     restoreTabState: function(overrideStates) {
-      var self = this, url = this._tabStateUrl(),
-        hasSessionStorage = (typeof(window.sessionStorage)!=="undefined" && window.sessionStorage),
-        sessionData = hasSessionStorage ? window.sessionStorage.getItem('tabs-' + url) : null,
-        sessionStates = sessionData ? JSON.parse(sessionData) : false;
+      const tabsets = this.find('.cms-tabset, .ss-tabset');
 
-      var tabset = this.find('.cms-tabset, .ss-tabset');
-
-      if (tabset.length) {
-        tabset.each(function() {
-          var index, tab,
-            tabset = $(this),
-            tabsetId = tabset.attr('id'),
-            forcedTab = tabset.children('ul').children('li.ss-tabs-force-active');
-
-          if(!tabset.data('tabs')){
-            return; // don't act on uninit'ed controls
-          }
-
-          // The tabs may have changed, notify the widget that it should update its internal state.
-          tabset.tabs('refresh');
-
-          // Make sure the intended tab is selected. Only force the tab on the correct tabset though
-          if(forcedTab.length) {
-            index = forcedTab.first().index();
-          } else if(overrideStates && overrideStates[tabsetId]) {
-            tab = tabset.find(overrideStates[tabsetId].tabSelector);
-            if(tab.length){
-              index = tab.index();
-            }
-          } else if(sessionStates) {
-            $.each(sessionStates, function(i, state) {
-              if(tabsetId == state.id) {
-                index = state.selected;
-              }
-            });
-          }
-          if(index !== null){
-            tabset.tabs('option', 'active', index);
-            self.trigger('tabstaterestored');
-          }
+      if (tabsets.length) {
+        tabsets.each(function() {
+          const tabset = $(this);
+          const tabsetId = tabset.attr('id');
+          const overrideState = (overrideStates && overrideStates[tabsetId]) ? overrideStates[tabsetId] : null;
+          tabset.restoreState(overrideState);
         });
       } else {
           $('#Form_AddForm_action_doAdd').focus();
@@ -997,14 +960,7 @@ $.entwine('ss', function($) {
      * Remove tab state for the current URL.
      */
     clearCurrentTabState: function() {
-      this.clearTabState(this._tabStateUrl());
-    },
-
-    _tabStateUrl: function() {
-      return window.location.href
-        .replace(/\?.*/, '')
-        .replace(/#.*/, '')
-        .replace($('base').attr('href'), '');
+      this.clearTabState(window.ss.tabStateUrl());
     },
 
     showLoginDialog: function() {
