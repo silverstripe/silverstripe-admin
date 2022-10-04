@@ -7,7 +7,7 @@ use InvalidArgumentException;
 use LogicException;
 use ReflectionClass;
 use SilverStripe\CMS\Controllers\CMSMain;
-use SilverStripe\CMS\Controllers\SilverStripeNavigator;
+use SilverStripe\Admin\Navigator\SilverStripeNavigator;
 use SilverStripe\Control\ContentNegotiator;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\Director;
