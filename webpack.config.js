@@ -54,8 +54,13 @@ const config = [
           from: `${PATHS.MODULES}/popper.js/dist/umd/popper.min.js`,
           to: `${PATHS.THIRDPARTY}/popper/popper.min.js`
         },
+        // Copy npm and custom tinymce content into the same dist directory
         {
           from: `${PATHS.MODULES}/tinymce`,
+          to: `${PATHS.DIST}/tinymce`
+        },
+        {
+          from: `${PATHS.SRC}/tinymce`,
           to: `${PATHS.DIST}/tinymce`
         },
       ]),

@@ -24,6 +24,7 @@ $editorConfig
     ->setOptions([
         'friendly_name' => 'Default CMS',
         'priority' => '50',
+        'skin' => 'silverstripe',
         'body_class' => 'typography',
         'contextmenu' => "searchreplace | sslink anchor ssmedia ssembed inserttable | cell row column deletetable",
         'use_native_selects' => false,
