@@ -1444,7 +1444,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         // Added in-line to the form, but plucked into different view by frontend scripts.
         if ($record instanceof CMSPreviewable || $record->has_extension(CMSPreviewable::class)) {
             /** @skipUpgrade */
-            $navField = new LiteralField('SilverStripeNavigator', $this->getSilverStripeNavigator());
+            $navField = new LiteralField('SilverStripeNavigator', $this->getSilverStripeNavigator($record));
             $navField->setAllowHTML(true);
             $fields->push($navField);
         }
@@ -1673,11 +1673,13 @@ class LeftAndMain extends Controller implements PermissionProvider
      *
      * @return DBHTMLText
      */
-    public function getSilverStripeNavigator()
+    public function getSilverStripeNavigator(?DataObject $record = null)
     {
-        $page = $this->currentPage();
-        if ($page instanceof CMSPreviewable || $page->has_extension(CMSPreviewable::class)) {
-            $navigator = new SilverStripeNavigator($page);
+        if (!$record) {
+            $record = $this->currentPage();
+        }
+        if ($record && (($record instanceof CMSPreviewable) || $record->has_extension(CMSPreviewable::class))) {
+            $navigator = new SilverStripeNavigator($record);
             return $navigator->renderWith($this->getTemplatesWithSuffix('_SilverStripeNavigator'));
         }
         return null;
