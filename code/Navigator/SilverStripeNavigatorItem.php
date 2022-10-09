@@ -2,6 +2,7 @@
 
 namespace SilverStripe\Admin\Navigator;
 
+use InvalidArgumentException;
 use SilverStripe\ORM\CMSPreviewable;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Versioned\Versioned;
@@ -26,8 +27,11 @@ abstract class SilverStripeNavigatorItem extends ViewableData
     /**
      * @param DataObject|CMSPreviewable $record
      */
-    public function __construct(CMSPreviewable $record)
+    public function __construct(DataObject $record)
     {
+        if (!($record instanceof CMSPreviewable) && !$record->has_extension(CMSPreviewable::class)) {
+            throw new InvalidArgumentException('$record must implement or have an extension that implements CMSPreviewable.');
+        }
         parent::__construct();
         $this->record = $record;
     }
