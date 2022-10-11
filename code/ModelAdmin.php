@@ -574,6 +574,9 @@ abstract class ModelAdmin extends LeftAndMain
         $classes = array_reverse(ClassInfo::ancestry($modelClass));
         foreach ($classes as $class) {
             foreach ($managed as $tab => $spec) {
+                if (!isset($spec['dataClass'])) {
+                    $spec['dataClass'] = $tab;
+                }
                 if ($spec['dataClass'] === $class) {
                     return $tab;
                 }
