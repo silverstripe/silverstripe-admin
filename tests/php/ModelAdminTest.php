@@ -367,6 +367,26 @@ class ModelAdminTest extends FunctionalTest
         $reflectionMethod->invoke($admin, 'cricket-players');
     }
 
+    public function testGetModelTabForModelClassNoSpec()
+    {
+        /** @var ModelAdmin $mock */
+        $mock = $this->getMockBuilder(ModelAdminTest\MultiModelAdmin::class)->getMock();
+
+        // `ModelTabForModelClass` relies on `getManagedModels` whose output format has changed within the 4.x line.
+        // We need to mock `getManagedModels` to test the legacy format.
+        $mock->expects($this->atLeastOnce())
+            ->method('getManagedModels')
+            ->will($this->returnValue([
+                Player::class => [
+                    'title' => 'Rugby Players'
+                ],
+            ]));
+
+        $reflectionMethod = new ReflectionMethod($mock, 'getModelTabForModelClass');
+        $reflectionMethod->setAccessible(true);
+        $this->assertSame(Player::class, $reflectionMethod->invoke($mock, Player::class));
+    }
+
     public function testIsManagedModel()
     {
         $admin = new ModelAdminTest\MultiModelAdmin();
