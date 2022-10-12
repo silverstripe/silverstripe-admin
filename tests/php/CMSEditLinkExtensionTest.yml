@@ -1,0 +1,33 @@
+SilverStripe\Admin\Tests\CMSEditLinkExtensionTest\BasicNestedObject:
+  one:
+    Name: 'some name'
+
+SilverStripe\Admin\Tests\CMSEditLinkExtensionTest\PolymorphicNestedObject:
+  one:
+    Name: 'some name'
+
+SilverStripe\Admin\Tests\CMSEditLinkExtensionTest\NestedObject:
+  one:
+    Name: 'some name'
+  redHerringOne:
+    Name: 'This exists so there is a record in an edge-case relation'
+  redHerringTwo:
+    Name: 'This exists so there is a record in an edge-case relation'
+
+SilverStripe\Admin\Tests\CMSEditLinkExtensionTest\ManagedDataObject:
+  redHerringOne:
+    Name: 'This exists so we know it doesnt just grab the first record'
+  root:
+    Name: 'this is the record we care about'
+    Nested:
+      - '=>SilverStripe\Admin\Tests\CMSEditLinkExtensionTest\NestedObject.one'
+    ArbitraryRelation:
+      - '=>SilverStripe\Admin\Tests\CMSEditLinkExtensionTest\NestedObject.redHerringOne'
+    AnotherArbitraryRelation:
+      - '=>SilverStripe\Admin\Tests\CMSEditLinkExtensionTest\NestedObject.redHerringTwo'
+    BasicNested:
+      - '=>SilverStripe\Admin\Tests\CMSEditLinkExtensionTest\BasicNestedObject.one'
+    Polymorphic:
+      - '=>SilverStripe\Admin\Tests\CMSEditLinkExtensionTest\PolymorphicNestedObject.one'
+  redHerringTwo:
+    Name: 'This exists so we know it doesnt just grab the last record'

@@ -323,20 +323,20 @@ class ModelAdminTest extends FunctionalTest
         $admin->getLinkForModelTab(ContactSubclass::class);
     }
 
-    public function testGetEditLinkForManagedDataObject()
+    public function testGetCMSEditLinkForManagedDataObject()
     {
         $admin = new ModelAdminTest\MultiModelAdmin();
         $contact = $this->objFromFixture(Contact::class, 'sam');
         $sanitisedContact = $this->sanitiseClassName(Contact::class);
         $this->assertEquals(
             "admin/multi/$sanitisedContact/EditForm/field/$sanitisedContact/item/$contact->ID",
-            $admin->getEditLinkForManagedDataObject($contact)
+            $admin->getCMSEditLinkForManagedDataObject($contact)
         );
 
         $contact2 = $this->objFromFixture(ContactSubclass::class, 'danie');
         $this->assertEquals(
             "admin/multi/$sanitisedContact/EditForm/field/$sanitisedContact/item/$contact2->ID",
-            $admin->getEditLinkForManagedDataObject($contact2)
+            $admin->getCMSEditLinkForManagedDataObject($contact2)
         );
 
         // Note: It uses the first tab that has this class - we're using
@@ -344,7 +344,7 @@ class ModelAdminTest extends FunctionalTest
         $player = $this->objFromFixture(Player::class, 'amy');
         $this->assertEquals(
             "admin/multi/Player/EditForm/field/Player/item/$player->ID",
-            $admin->getEditLinkForManagedDataObject($player)
+            $admin->getCMSEditLinkForManagedDataObject($player)
         );
     }
 
@@ -365,6 +365,26 @@ class ModelAdminTest extends FunctionalTest
         $reflectionMethod->setAccessible(true);
         $this->expectException(InvalidArgumentException::class);
         $reflectionMethod->invoke($admin, 'cricket-players');
+    }
+
+    public function testGetModelTabForModelClassNoSpec()
+    {
+        /** @var ModelAdmin $mock */
+        $mock = $this->getMockBuilder(ModelAdminTest\MultiModelAdmin::class)->getMock();
+
+        // `ModelTabForModelClass` relies on `getManagedModels` whose output format has changed within the 4.x line.
+        // We need to mock `getManagedModels` to test the legacy format.
+        $mock->expects($this->atLeastOnce())
+            ->method('getManagedModels')
+            ->will($this->returnValue([
+                Player::class => [
+                    'title' => 'Rugby Players'
+                ],
+            ]));
+
+        $reflectionMethod = new ReflectionMethod($mock, 'getModelTabForModelClass');
+        $reflectionMethod->setAccessible(true);
+        $this->assertSame(Player::class, $reflectionMethod->invoke($mock, Player::class));
     }
 
     public function testIsManagedModel()
