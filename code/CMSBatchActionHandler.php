@@ -125,11 +125,8 @@ class CMSBatchActionHandler extends RequestHandler
 
     /**
      * Invoke a batch action
-     *
-     * @param HTTPRequest $request
-     * @return HTTPResponse
      */
-    public function handleBatchAction($request)
+    public function handleBatchAction(HTTPRequest $request): HTTPResponse
     {
         // This method can't be called without ajax.
         if (!$request->isAjax()) {
@@ -160,11 +157,8 @@ class CMSBatchActionHandler extends RequestHandler
 
     /**
      * Respond with the list of applicable pages for a given filter
-     *
-     * @param HTTPRequest $request
-     * @return HTTPResponse
      */
-    public function handleApplicablePages($request)
+    public function handleApplicablePages(HTTPRequest $request): HTTPResponse
     {
         // Find the action handler
         $action = $request->param('BatchAction');
@@ -188,11 +182,8 @@ class CMSBatchActionHandler extends RequestHandler
 
     /**
      * Check if this action has a confirmation step
-     *
-     * @param HTTPRequest $request
-     * @return HTTPResponse
      */
-    public function handleConfirmation($request)
+    public function handleConfirmation(HTTPRequest $request): HTTPResponse
     {
         // Find the action handler
         $action = $request->param('BatchAction');

@@ -387,31 +387,23 @@ class LeftAndMain extends Controller implements PermissionProvider
 
     /**
      * Gets a JSON schema representing the current edit form.
-     *
-     * WARNING: Experimental API.
-     *
-     * @param HTTPRequest $request
-     * @return HTTPResponse
      */
-    public function schema($request)
+    public function schema(HTTPRequest $request): HTTPResponse
     {
         $formName = $request->param('FormName');
         $itemID = $request->param('ItemID');
 
         if (!$formName) {
             $this->jsonError(400, 'Missing request params');
-            return null;
         }
 
         $formMethod = "get{$formName}";
         if (!$this->hasMethod($formMethod)) {
             $this->jsonError(404, 'Form not found');
-            return null;
         }
 
         if (!$this->hasAction($formName)) {
             $this->jsonError(401, 'Form not accessible');
-            return null;
         }
 
         if ($itemID) {
@@ -461,11 +453,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         throw new HTTPResponse_Exception($response);
     }
 
-    /**
-     * @param HTTPRequest $request
-     * @return HTTPResponse
-     */
-    public function methodSchema($request)
+    public function methodSchema(HTTPRequest $request): HTTPResponse
     {
         $method = $request->param('Method');
         $formName = $request->param('FormName');
@@ -473,26 +461,21 @@ class LeftAndMain extends Controller implements PermissionProvider
 
         if (!$formName || !$method) {
             $this->jsonError(400, 'Missing request params');
-            return null;
         }
 
         if (!$this->hasMethod($method)) {
             $this->jsonError(404, 'Method not found');
-            return null;
         }
         if (!$this->hasAction($method)) {
             $this->jsonError(401, 'Method not accessible');
-            return null;
         }
 
         $methodItem = $this->{$method}();
         if (!$methodItem->hasMethod($formName)) {
             $this->jsonError(404, 'Form not found');
-            return null;
         }
         if (!$methodItem->hasAction($formName)) {
             $this->jsonError(401, 'Form not accessible');
-            return null;
         }
 
         $form = $methodItem->{$formName}($itemID);
@@ -520,9 +503,8 @@ class LeftAndMain extends Controller implements PermissionProvider
      * @param Form $form Required for 'state' or 'schema' response
      * @param ValidationResult $errors Required for 'error' response
      * @param array $extraData Any extra data to be merged with the schema response
-     * @return HTTPResponse
      */
-    protected function getSchemaResponse($schemaID, $form = null, ValidationResult $errors = null, $extraData = [])
+    protected function getSchemaResponse($schemaID, $form = null, ValidationResult $errors = null, $extraData = []): HTTPResponse
     {
         $parts = $this->getRequest()->getHeader(static::SCHEMA_HEADER);
         $data = $this
@@ -812,7 +794,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         parent::afterHandleRequest();
     }
 
-    public function handleRequest(HTTPRequest $request)
+    public function handleRequest(HTTPRequest $request): HTTPResponse
     {
         try {
             $response = parent::handleRequest($request);
@@ -851,12 +833,8 @@ class LeftAndMain extends Controller implements PermissionProvider
      * In isolation, that's not a problem - but combined with history.pushState()
      * it means we would request the same redirection URL twice if we want to update the URL as well.
      * See LeftAndMain.js for the required jQuery ajaxComplete handlers.
-     *
-     * @param string $url
-     * @param int $code
-     * @return HTTPResponse|string
      */
-    public function redirect($url, $code = 302)
+    public function redirect(string $url, int $code = 302): HTTPResponse
     {
         if ($this->getRequest()->isAjax()) {
             $response = $this->getResponse();
@@ -874,17 +852,14 @@ class LeftAndMain extends Controller implements PermissionProvider
             }
             $newResponse->setIsFinished(true);
             $this->setResponse($newResponse);
-            return ''; // Actual response will be re-requested by client
+            // Actual response will be re-requested by client
+            return $newResponse;
         } else {
             return parent::redirect($url, $code);
         }
     }
 
-    /**
-     * @param HTTPRequest $request
-     * @return HTTPResponse
-     */
-    public function index($request)
+    public function index(HTTPRequest $request): HTTPResponse
     {
         return $this->getResponseNegotiator()->respond($request);
     }
@@ -1007,11 +982,9 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * @param HTTPRequest $request
-     * @return HTTPResponse
      * @throws HTTPResponse_Exception
      */
-    public function show($request)
+    public function show(HTTPRequest $request): HTTPResponse
     {
         // TODO Necessary for TableListField URLs to work properly
         if ($request->param('ID')) {
@@ -1020,12 +993,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         return $this->getResponseNegotiator()->respond($request);
     }
 
-    /**
-     * Caution: Volatile API.
-     *
-     * @return PjaxResponseNegotiator
-     */
-    public function getResponseNegotiator()
+    public function getResponseNegotiator(): PjaxResponseNegotiator
     {
         if (!$this->responseNegotiator) {
             $this->responseNegotiator = new PjaxResponseNegotiator(
@@ -1281,13 +1249,9 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * Save  handler
-     *
-     * @param array $data
-     * @param Form $form
-     * @return HTTPResponse
+     * Save handler
      */
-    public function save($data, $form)
+    public function save(array $data, Form $form): HTTPResponse
     {
         $request = $this->getRequest();
         $className = $this->config()->get('tree_class');
@@ -1347,7 +1311,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         return $object;
     }
 
-    public function delete($data, $form)
+    public function delete(array $data, Form $form): HTTPResponse
     {
         $className = $this->config()->get('tree_class');
 

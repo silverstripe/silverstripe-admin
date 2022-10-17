@@ -4,6 +4,7 @@ namespace SilverStripe\Admin;
 
 use SilverStripe\CMS\Controllers\CMSMain;
 use SilverStripe\Control\HTTPResponse;
+use SilverStripe\Forms\Form;
 use SilverStripe\Forms\HiddenField;
 use SilverStripe\Forms\FormAction;
 use SilverStripe\ORM\ArrayList;
@@ -77,11 +78,11 @@ class CMSProfileController extends LeftAndMain
         return false;
     }
 
-    public function save($data, $form)
+    public function save(array $data, Form $form): HTTPResponse
     {
         $member = Member::get()->byID($data['ID']);
         if (!$member) {
-            return $this->httpError(404);
+            $this->httpError(404);
         }
         $origLocale = $member->Locale;
 

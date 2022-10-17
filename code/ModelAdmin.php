@@ -701,18 +701,13 @@ abstract class ModelAdmin extends LeftAndMain
      * Redirects back with a success/failure message.
      *
      * @todo Figure out ajax submission of files via jQuery.form plugin
-     *
-     * @param array $data
-     * @param Form $form
-     * @param HTTPRequest $request
-     * @return bool|HTTPResponse
      */
-    public function import($data, $form, $request)
+    public function import(array $data, Form $form): HTTPResponse
     {
         if (!$this->showImportForm || (is_array($this->showImportForm)
                 && !in_array($this->modelClass, $this->showImportForm ?? []))
         ) {
-            return false;
+            return $this->redirectBack();
         }
 
         $importers = $this->getModelImporters();
@@ -727,8 +722,7 @@ abstract class ModelAdmin extends LeftAndMain
                 _t(__CLASS__ . '.NOCSVFILE', 'Please browse for a CSV file to import'),
                 ValidationResult::TYPE_ERROR
             );
-            $this->redirectBack();
-            return false;
+            return $this->redirectBack();
         }
 
         if (!empty($data['EmptyBeforeImport']) && $data['EmptyBeforeImport']) { //clear database before import

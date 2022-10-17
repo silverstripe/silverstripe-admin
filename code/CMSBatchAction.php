@@ -4,6 +4,7 @@ namespace SilverStripe\Admin;
 
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\Controller;
+use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Convert;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\ORM\SS_List;
@@ -38,7 +39,7 @@ abstract class CMSBatchAction
      * @param SS_List $objs
      * @return string
      */
-    abstract public function run(SS_List $objs);
+    abstract public function run(SS_List $objs): HTTPResponse;
 
     /**
      * Helper method for responding to a back action request
@@ -49,9 +50,8 @@ abstract class CMSBatchAction
      * key => value pairs, the key can be any string: "error" indicates errors, anything
      * else indicates a type of success. The value is an array. We don't care what's in it,
      * we just use count($value) to find the number of items that succeeded or failed
-     * @return string
      */
-    public function response($successMessage, $status)
+    public function response($successMessage, $status): HTTPResponse
     {
         $count = 0;
         $errors = 0;
@@ -67,16 +67,9 @@ abstract class CMSBatchAction
             }
         }
 
-        $response = Controller::curr()->getResponse();
-
-        if ($response) {
-            $response->setStatusCode(
-                200,
-                sprintf($successMessage ?? '', $count, $errors)
-            );
-        }
-
-        return json_encode($status);
+        return HTTPResponse::create()
+            ->setStatusCode(200, sprintf($successMessage ?? '', $count, $errors))
+            ->setBody(json_encode($status));
     }
 
     /**
@@ -88,7 +81,7 @@ abstract class CMSBatchAction
      * @param string $helperMethod The method to call on each of those objects.
      * @param string $successMessage
      * @param array $arguments
-     * @return string JSON encoded map in the following format:
+     * @return HTTPResponse with a body set to JSON encoded map in the following format:
      *  {
      *     'modified': {
      *       3: {'TreeTitle': 'Page3'},
@@ -99,7 +92,7 @@ abstract class CMSBatchAction
      *     }
      *  }
      */
-    public function batchaction(SS_List $objs, $helperMethod, $successMessage, $arguments = [])
+    public function batchaction(SS_List $objs, $helperMethod, $successMessage, $arguments = []): HTTPResponse
     {
         $status = ['modified' => [], 'error' => [], 'deleted' => [], 'success' => []];
 
