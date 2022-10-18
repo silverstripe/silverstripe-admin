@@ -933,11 +933,11 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * @deprecated 5.0
+     * @deprecated 4.12.0 Use menu_title() instead
      */
     public static function menu_title_for_class($class)
     {
-        Deprecation::notice('5.0', 'Use menu_title() instead');
+        Deprecation::notice('4.12.0', 'Use menu_title() instead');
         return static::menu_title($class, false);
     }
 
