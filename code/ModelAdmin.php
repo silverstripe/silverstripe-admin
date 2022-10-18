@@ -379,7 +379,7 @@ abstract class ModelAdmin extends LeftAndMain
      */
     public function getSearchContext()
     {
-        Deprecation::notice('4.3', 'Will be removed in favor of GridFieldFilterHeader in 5.0');
+        Deprecation::notice('4.3', 'Use GridFieldFilterHeader instead');
 
         $gridField = $this->getEditForm()->fields()
             ->fieldByName($this->sanitiseClassName($this->modelClass));
@@ -401,7 +401,7 @@ abstract class ModelAdmin extends LeftAndMain
      */
     public function SearchSummary()
     {
-        Deprecation::notice('4.3', 'Will be removed in favor of GridFieldFilterHeader in 5.0');
+        Deprecation::notice('4.3', 'Use GridFieldFilterHeader instead');
 
         $context = $this->getSearchContext();
 
@@ -416,7 +416,7 @@ abstract class ModelAdmin extends LeftAndMain
      */
     public function SearchForm()
     {
-        Deprecation::notice('4.3', 'Will be removed in favor of GridFieldFilterHeader  in 5.0');
+        Deprecation::notice('4.3', 'Use GridFieldFilterHeader instead');
 
         if (!$this->showSearchForm
             || (is_array($this->showSearchForm) && !in_array($this->modelClass, $this->showSearchForm ?? []))
