@@ -19,7 +19,7 @@ $.entwine('ss', function($) {
         this.fixColumns();
         this.injectSearchButton(false);
       }
-      
+
       if (this.hasFilters()) {
         this.injectSearchButton(true);
       };
@@ -143,7 +143,11 @@ $.entwine('ss', function($) {
      * @return {Object}
      */
     getState: function() {
-      return JSON.parse(this.find(':input[name="' + this.data('name') + '[GridState]"]').val());
+      const rawState = this.find(':input[name="' + this.data('name') + '[GridState]"]').val();
+      if (!rawState) {
+        return {};
+      }
+      return JSON.parse(rawState);
     },
 
     /**
