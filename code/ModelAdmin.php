@@ -374,12 +374,12 @@ abstract class ModelAdmin extends LeftAndMain
     }
 
     /**
-     * @deprecated 4.3.0 Use GridFieldFilterHeader instead
+     * @deprecated 1.3.0 Use GridFieldFilterHeader instead
      * @return \SilverStripe\ORM\Search\SearchContext
      */
     public function getSearchContext()
     {
-        Deprecation::notice('4.3.0', 'Use GridFieldFilterHeader instead');
+        Deprecation::notice('1.3.0', 'Use GridFieldFilterHeader instead');
 
         $gridField = $this->getEditForm()->fields()
             ->fieldByName($this->sanitiseClassName($this->modelClass));
@@ -396,12 +396,12 @@ abstract class ModelAdmin extends LeftAndMain
     /**
      * Gets a list of fields that have been searched
      *
-     * @deprecated 4.3.0 Use GridFieldFilterHeader instead
+     * @deprecated 1.3.0 Use GridFieldFilterHeader instead
      * @return ArrayList
      */
     public function SearchSummary()
     {
-        Deprecation::notice('4.3.0', 'Use GridFieldFilterHeader instead');
+        Deprecation::notice('1.3.0', 'Use GridFieldFilterHeader instead');
 
         $context = $this->getSearchContext();
 
@@ -411,12 +411,12 @@ abstract class ModelAdmin extends LeftAndMain
     /**
      * Returns the search form
      *
-     * @deprecated 4.3.0 Use GridFieldFilterHeader instead
+     * @deprecated 1.3.0 Use GridFieldFilterHeader instead
      * @return Form|bool
      */
     public function SearchForm()
     {
-        Deprecation::notice('4.3.0', 'Use GridFieldFilterHeader instead');
+        Deprecation::notice('1.3.0', 'Use GridFieldFilterHeader instead');
 
         if (!$this->showSearchForm
             || (is_array($this->showSearchForm) && !in_array($this->modelClass, $this->showSearchForm ?? []))
