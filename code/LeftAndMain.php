@@ -128,7 +128,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     private static $tree_class = null;
 
     /**
-     * @deprecated 5.0 use $help_links instead
+     * @deprecated 1.12.0 Use $help_links instead
      *
      * @config
      * @var string
@@ -933,11 +933,11 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * @deprecated 5.0
+     * @deprecated 1.12.0 Use menu_title() instead
      */
     public static function menu_title_for_class($class)
     {
-        Deprecation::notice('5.0', 'Use menu_title() instead');
+        Deprecation::notice('1.12.0', 'Use menu_title() instead');
         return static::menu_title($class, false);
     }
 
