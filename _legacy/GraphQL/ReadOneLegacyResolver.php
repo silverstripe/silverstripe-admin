@@ -18,7 +18,7 @@ if (!class_exists(ReadOne::class)) {
 /**
  * Shim to make readOne work like GraphQL 4
  *
- * @deprecated 1.8.0 Use _graphql directory functionality instead
+ * @deprecated 1.8.0 Use the latest version of graphql instead
  */
 class ReadOneLegacyResolver implements OperationResolver
 {
@@ -29,7 +29,7 @@ class ReadOneLegacyResolver implements OperationResolver
 
     public function __construct(DataObject $dataObject)
     {
-        Deprecation::notice('1.8.0', 'Use _graphql directory functionality instead', Deprecation::SCOPE_CLASS);
+        Deprecation::notice('1.8.0', 'Use the latest version of graphql instead', Deprecation::SCOPE_CLASS);
         $this->dataObject = $dataObject;
     }
 
