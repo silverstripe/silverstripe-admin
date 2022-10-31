@@ -37,5 +37,5 @@ $sprites-32x32-2x-dialog-close-over: -0px -506px 60px 60px;
 }
 
 @mixin icon-sprites($dimension) {
-  background-image: url('../images/sprites/sprite-sprites-#{$dimension}.png');
+  background-image: url('../../images/sprites/sprite-sprites-#{$dimension}.png');
 }

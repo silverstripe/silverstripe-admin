@@ -99,7 +99,7 @@ html, body {
     font-size: $h4-font-size;
     font-weight: bold;
     margin: 0;
-    margin-bottom: $spacer / 2;
+    margin-bottom: calc($spacer / 2);
 
     * {
       vertical-align: middle;
@@ -126,7 +126,7 @@ html, body {
 
   // Reset to default styles
   .ss-ui-button {
-    line-height: $spacer / 1.5;
+    line-height: calc($spacer / 1.5);
 
     .ui-button-text {
       line-height: 1.4;
@@ -280,10 +280,6 @@ html, body {
       display: block;
       padding: 10px 0;
       font-size: 1.2em;
-    }
-    .sep + {
-      padding-top: 8px;
-      padding-bottom: 8px;
     }
   }
 
@@ -514,7 +510,7 @@ html, body {
 
   .ui-tabs-nav {
     float: right;
-    margin: ($spacer / 2) 0 $panel-padding-y 0;
+    margin: calc($spacer / 2) 0 $panel-padding-y 0;
     padding: 0;
     border-bottom: 0;
 
@@ -550,7 +546,7 @@ html, body {
       }
 
       & + li {
-        margin-left: $spacer / 2;
+        margin-left: calc($spacer / 2);
       }
     }
 
@@ -583,7 +579,7 @@ html, body {
         padding: 0; // Avoid double padding with parent
 
         .ui-tabs-panel {
-          padding: ($spacer / 2) 0 0 0;
+          padding: calc($spacer / 2) 0 0 0;
         }
       }
 
@@ -678,7 +674,7 @@ html, body {
     margin: 0 0 -1px;
 
     & + li {
-      margin-left: $spacer / 2;
+      margin-left: calc($spacer / 2);
     }
   }
 
@@ -1106,7 +1102,7 @@ html, body {
 
   .cms-tree-view-modes {
     float: right;
-    padding-top: ($spacer / 2) - 3;
+    padding-top: calc($spacer / 2) - 3;
 
     * {
       display: inline-block;
@@ -1158,7 +1154,7 @@ html, body {
 
   .cms-panel-header {
     clear: both;
-    margin: 10px 0 (($spacer / 2) - 1);
+    margin: 10px 0 calc($spacer / 2)-1;
     padding-bottom: 2px;
     line-height: $spacer * 1.5;
     border-bottom: 1px solid $border-color;
@@ -1222,7 +1218,7 @@ html, body {
   td,
   th {
     border-bottom: 1px solid $border-color;
-    padding: (($spacer / 2) - 1) 2px;
+    padding: calc($spacer / 2)-1 2px;
     font-size: 11px;
     vertical-align: top;
 
@@ -1405,7 +1401,7 @@ form.member-profile-form {
         text-indent: -9999em;
         display: inline-block;
         width: 20px;
-        background: url(../images/question.png) no-repeat 0px 0px;
+        background: url(../../images/question.png) no-repeat 0px 0px;
       }
     }
 
@@ -1510,7 +1506,7 @@ form.member-profile-form {
 
     h2, h3 {
       border-bottom: 0;
-      margin-left: $spacer / 2;
+      margin-left: calc($spacer / 2);
       transform-origin: bottom, right;
       transform: rotate(270deg);
     }
@@ -1587,18 +1583,18 @@ form.member-profile-form {
   background: $body-bg;
   background-clip: content-box;
   border: 1px solid #666 !important;
-  border-radius: $spacer / 2;
+  border-radius: calc($spacer / 2);
   overflow: visible;
   padding: 0;
   box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, .3);
 
   // Titlebar for pop-up dialog.
   .ui-dialog-titlebar.ui-widget-header {
-    font-size: $font-size-root +1;
+    font-size: $font-size-root (+1);
     padding: 0;
     border: 0;
-    background: transparent url(../images/textures/cms_content_header.png) repeat;
-    box-shadow: $shadow-level-4 0 0 ($spacer / 4) inset;
+    background: transparent url(../../images/textures/cms_content_header.png) repeat;
+    box-shadow: $shadow-level-4 0 0 calc($spacer / 4) inset;
 
     .ui-dialog-title {
       position: absolute;
@@ -1606,11 +1602,11 @@ form.member-profile-form {
   }
 
   .ui-dialog-content {
-    border-radius: $spacer / 2;
+    border-radius: calc($spacer / 2);
     overflow: auto; // TODO Replace with proper $.layout grid
 
     &.loading {
-      background-image: url("../images/spinner.gif");
+      background-image: url("../../images/spinner.gif");
       background-position: 50% 50%;
       background-repeat: no-repeat;
     }
@@ -1618,12 +1614,12 @@ form.member-profile-form {
 
   .cms-dialog-content {
     background: $body-bg;
-    padding-bottom: $spacer / 2;
+    padding-bottom: calc($spacer / 2);
     padding-top: 0;
 
     .btn-toolbar {
       overflow: auto;
-      padding-bottom: $spacer / 2;
+      padding-bottom: calc($spacer / 2);
       float: right;
     }
 
@@ -1652,7 +1648,7 @@ form.member-profile-form {
   }
 
   &.loading {
-    background-image: url("../images/spinner.gif");
+    background-image: url("../../images/spinner.gif");
     background-position: 50% 50%;
     background-repeat: no-repeat;
   }
@@ -1721,8 +1717,8 @@ body.cms-dialog {
 
   // Preview might not always be available
   .cms-file-info-preview img {
-    max-width: ($spacer / 2) * 22; // Same as ".field label"
-    max-height: ($spacer / 2) * 16; // Fitting typical info displayed (~5 rows)
+    max-width: calc(($spacer / 2) * 22); // Same as ".field label"
+    max-height: calc(($spacer / 2) * 16); // Fitting typical info displayed (~5 rows)
     margin-bottom: $spacer;
   }
 }

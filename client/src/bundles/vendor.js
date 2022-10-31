@@ -13,37 +13,36 @@ require('json-js');
 // jQuery plugins require that the jQuery object is exposed as a global
 // webpack.ProvidePlugin is used to ensure that jQuery and $ are provided to all includes
 require('script-loader!../../../thirdparty/jquery/jquery.js');
-require('expose-loader?jQuery!jquery');
+// require('expose-loader?exposes=jQuery!jquery|');
 
 // Expose the libraries as globals for other modules to access
 // Note that these are order-dependent - earlier items should not depend on later ones
-require('expose-loader?PropTypes!prop-types');
-require('expose-loader?classnames!classnames');
-require('expose-loader?DeepFreezeStrict!deep-freeze-strict');
-require('expose-loader?React!react');
-require('expose-loader?ReactDom!react-dom');
-require('expose-loader?ReactRouterDom!react-router-dom');
-require('expose-loader?Reactstrap!reactstrap');
-require('expose-loader?IsomorphicFetch!isomorphic-fetch');
-require('expose-loader?Redux!redux');
-require('expose-loader?ReactRedux!react-redux');
-require('expose-loader?ReduxThunk!redux-thunk');
-require('expose-loader?ReduxForm!redux-form');
-require('expose-loader?ReactSelect!react-select');
-require('expose-loader?ReactDND!react-dnd');
-require('expose-loader?ReactDNDHtml5Backend!react-dnd-html5-backend');
-require('expose-loader?Page!page.js');
-require('expose-loader?validator!validator');
-require('expose-loader?ApolloClient!apollo-client');
-require('expose-loader?ReactApollo!react-apollo');
-require('expose-loader?GraphQLTag!graphql-tag');
-require('expose-loader?GraphQLFragments!graphql-fragments');
-require('expose-loader?NodeUrl!url');
-require('expose-loader?qs!qs');
-require('expose-loader?modernizr!modernizr');
-require('expose-loader?history!history');
-require('expose-loader?moment!moment');
-require('expose-loader?merge!merge');
+require('expose-loader?exposes=PropTypes!prop-types');
+require('expose-loader?exposes=classnames!classnames');
+require('expose-loader?exposes=DeepFreezeStrict!deep-freeze-strict');
+require('expose-loader?exposes=React!react');
+require('expose-loader?exposes=ReactDom!react-dom');
+require('expose-loader?exposes=ReactRouterDom!react-router-dom');
+require('expose-loader?exposes=Reactstrap!reactstrap');
+require('expose-loader?exposes=IsomorphicFetch!isomorphic-fetch');
+require('expose-loader?exposes=Redux!redux');
+require('expose-loader?exposes=ReactRedux!react-redux');
+require('expose-loader?exposes=ReduxThunk!redux-thunk');
+require('expose-loader?exposes=ReduxForm!redux-form');
+require('expose-loader?exposes=ReactSelect!react-select');
+require('expose-loader?exposes=ReactDND!react-dnd');
+require('expose-loader?exposes=ReactDNDHtml5Backend!react-dnd-html5-backend');
+require('expose-loader?exposes=Page!page.js');
+require('expose-loader?exposes=validator!validator');
+require('expose-loader?exposes=ApolloClient!apollo-client');
+require('expose-loader?exposes=ReactApollo!react-apollo');
+require('expose-loader?exposes=GraphQLTag!graphql-tag');
+require('expose-loader?exposes=GraphQLFragments!graphql-fragments');
+require('expose-loader?exposes=NodeUrl!url');
+require('expose-loader?exposes=qs!qs');
+require('expose-loader?exposes=modernizr!modernizr');
+require('expose-loader?exposes=moment!moment');
+require('expose-loader?exposes=merge!merge');
 
 require('../../../thirdparty/jquery-ondemand/jquery.ondemand.js');
 require('../../../thirdparty/jquery-ui/jquery-ui.js');

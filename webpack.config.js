@@ -88,36 +88,37 @@ const config = [
     module: moduleJS(ENV, PATHS),
     plugins: pluginJS(ENV, PATHS),
   },
-  // {
-  //   name: 'css',
-  //   entry: {
-  //     bundle: `${PATHS.SRC}/styles/bundle.scss`,
-  //     editor: `${PATHS.SRC}/styles/editor.scss`,
-  //     GridField_print: `${PATHS.SRC}/styles/legacy/GridField_print.scss`,
-  //     // For IE version 10 and below. These browsers doesn't handle large
-  //     // resource files so need to break browser detection and warning code into
-  //     // its own file
-  //     'browser-warning': `${PATHS.SRC}/styles/browser-warning.scss`,
-  //   },
-  //   output: {
-  //     path: PATHS.DIST,
-  //     filename: 'styles/[name].css',
-  //   },
-  //   devtool: (ENV !== 'production') ? 'source-map' : '',
-  //   module: moduleCSS(ENV, PATHS),
-  //   plugins: [
-  //     ...pluginCSS(ENV, PATHS),
-  //     new CopyWebpackPlugin({
-  //       patterns: [
-  //         {
-  //           context: `${PATHS.SRC}/images`,
-  //           from: 'chosen-sprite*.png',
-  //           to: `${PATHS.DIST}/images`
-  //         }
-  //       ]
-  //     }),
-  //   ],
-  // }
+  {
+    name: 'css',
+    entry: {
+      bundle: `${PATHS.SRC}/styles/bundle.scss`,
+      editor: `${PATHS.SRC}/styles/editor.scss`,
+      GridField_print: `${PATHS.SRC}/styles/legacy/GridField_print.scss`,
+      // For IE version 10 and below. These browsers doesn't handle large
+      // resource files so need to break browser detection and warning code into
+      // its own file
+      'browser-warning': `${PATHS.SRC}/styles/browser-warning.scss`,
+    },
+    output: {
+      path: PATHS.DIST,
+      filename: 'styles/[name].[chunkhash].css',
+      chunkFilename: 'styles/[name].chunk.[chunkhash].css',
+    },
+    devtool: (ENV !== 'production') ? 'source-map' : '',
+    module: moduleCSS(ENV, PATHS),
+    plugins: [
+      ...pluginCSS(ENV, PATHS),
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            context: `${PATHS.SRC}/images`,
+            from: 'chosen-sprite*.png',
+            to: `${PATHS.DIST}/images`
+          }
+        ]
+      }),
+    ],
+  }
 ];
 
 // console.log(JSON.stringify(config[0], null, 2));

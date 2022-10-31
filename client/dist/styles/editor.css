@@ -1,25 +1,12 @@
-/******/ (() => { // webpackBootstrap
-/******/ 	var __webpack_modules__ = ({
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].use[4]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].use[5]!./client/src/styles/editor.scss ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************/
+body.mce-content-body a.ss-broken {
+  background-color: #d40404;
+  border: 1px #bb0404 solid;
+  color: #fff;
+  padding: 1px;
+  text-decoration: underline;
+}
 
-/***/ "./client/src/styles/editor.scss":
-/*!***************************************!*\
-  !*** ./client/src/styles/editor.scss ***!
-  \***************************************/
-/***/ (() => {
-
-throw new Error("Module parse failed: Unexpected token (2:16)\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\n| // Editor variables\n> $state-danger-bg: #d40404;\n| $state-danger-border: darken($state-danger-bg, 5%);\n| $text-color: #fff;");
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module doesn't tell about it's top-level declarations so it can't be inlined
-/******/ 	var __webpack_exports__ = {};
-/******/ 	__webpack_modules__["./client/src/styles/editor.scss"]();
-/******/ 	
-/******/ })()
-;
 /*# sourceMappingURL=editor.css.map*/

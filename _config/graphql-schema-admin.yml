@@ -1,7 +1,5 @@
 ---
 Name: 'graphql-schema-admin'
-Only:
-  classexists: 'SilverStripe\GraphQL\Schema\Schema'
 ---
 SilverStripe\Core\Injector\Injector:
   SilverStripe\GraphQL\Controller.admin:

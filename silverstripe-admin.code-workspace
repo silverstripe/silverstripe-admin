@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../webpack-config"
+		},
+		{
+			"path": "../recipe-admin-5x-dev"
+		}
+	],
+	"settings": {}
+}

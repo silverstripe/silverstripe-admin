@@ -1,25 +1,76 @@
-/******/ (() => { // webpackBootstrap
-/******/ 	var __webpack_modules__ = ({
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].use[4]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].use[5]!./client/src/styles/browser-warning.scss ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.browser-warning-wrapper {
+  display: none;
+}
 
-/***/ "./client/src/styles/browser-warning.scss":
-/*!************************************************!*\
-  !*** ./client/src/styles/browser-warning.scss ***!
-  \************************************************/
-/***/ (() => {
+.browser-warning-wrapper--incompatible {
+  display: block;
+}
 
-throw new Error("Module parse failed: Unexpected character '@' (6:0)\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\n| \n| // Variables\n> @import \"variables\";\n| @import \"~bootstrap/scss/mixins\";\n| ");
+.browser-warning {
+  position: fixed;
+  color: #fff;
+  background: #005a93;
+  height: 100%;
+  width: 100%;
+  z-index: 100000;
+  top: 0;
+  left: 0;
+  overflow: auto;
+}
 
-/***/ })
+.browser-warning__content {
+  text-align: center;
+  padding: 30px 30px;
+}
+.browser-warning__content a {
+  color: #fff;
+  text-decoration: underline;
+}
+.browser-warning__content .ss-logo {
+  text-indent: -9999em;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  background-image: url(../7944631ab43451089a54.png);
+  background-image: none, url(../b1cb7fc128c233248db3.svg);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+@media (min-width: 768px) {
+  .browser-warning__content {
+    margin: 100px 0;
+  }
+}
 
-/******/ 	});
-/************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module doesn't tell about it's top-level declarations so it can't be inlined
-/******/ 	var __webpack_exports__ = {};
-/******/ 	__webpack_modules__["./client/src/styles/browser-warning.scss"]();
-/******/ 	
-/******/ })()
-;
+.browser-warning__list {
+  padding: 0;
+  margin-top: 70px;
+  list-style: none;
+}
+.browser-warning__list > li {
+  display: inline-block;
+  min-width: 130px;
+  margin: 0 15px;
+  padding-top: 75px;
+  background-size: 60px 60px;
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  margin-bottom: 30px;
+}
+.browser-warning__list > li[data-browser=ie] {
+  background-image: url(../367bdcd454b4a668e98b.png);
+  background-image: none, url(../e2e92bee0c34a3eeb36d.svg);
+}
+.browser-warning__list > li[data-browser=firefox] {
+  background-image: url(../f61141022535b415e48b.png);
+  background-image: none, url(../ad279de405db0a898e7b.svg);
+}
+.browser-warning__list > li[data-browser=chrome] {
+  background-image: url(../211c2377cc5525724220.png);
+  background-image: none, url(../6d28b1b7051c672aa892.svg);
+}
+
 /*# sourceMappingURL=browser-warning.css.map*/

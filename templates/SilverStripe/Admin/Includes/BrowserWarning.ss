@@ -19,16 +19,3 @@
         </div>
     </div>
 </div>
-
-<% require javascript('silverstripe/admin: client/dist/js/browserWarning.js') %>
-
-<!--[if lte IE 8]>
-<script>
-(function () {
-  var warning = document.getElementById('browser-warning-wrapper');
-  if (warning) {
-  	warning.className = warning.className + ' browser-warning-wrapper--incompatible';
-  }
-})();
-</script>
-<![endif]-->

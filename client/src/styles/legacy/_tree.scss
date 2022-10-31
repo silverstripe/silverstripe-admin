@@ -489,7 +489,7 @@
     }
     ins {
       background-color: transparent;
-      background-image: url(../images/sitetree_ss_default_icons.png);
+      background-image: url(../../images/sitetree_ss_default_icons.png);
 
       &.font-icon-drag-handle {
         background: none;
@@ -576,7 +576,7 @@
 
   // Applied to trees when displaying filter / search results.
   &.filtered-list {
-    margin-top: $spacer / 2;
+    margin-top: calc($spacer / 2);
 
     li:not(.filtered-item) > a {
       color: $text-muted;
@@ -743,7 +743,7 @@ a .jstree-pageicon {
 
   &.jstree-loading {
     li#record-0 > .jstree-icon {
-      background: url(../images/throbber.gif) top left no-repeat;
+      background: url(../../images/throbber.gif) top left no-repeat;
     }
   }
 
@@ -754,7 +754,7 @@ a .jstree-pageicon {
       background-image: none !important;
     }
     .jstree-pageicon {
-      background: url(../images/throbber.gif) top left no-repeat;
+      background: url(../../images/throbber.gif) top left no-repeat;
     }
   }
 }

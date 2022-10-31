@@ -5,7 +5,7 @@
 
   // Spacing between items
   .nav-item + .nav-item {
-    margin-left: $spacer / 2;
+    margin-left: calc($spacer / 2);
   }
 
   .nav-link {

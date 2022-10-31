@@ -206,9 +206,9 @@ $border: 1px solid darken(#D9D9D9, 15%);
             border: none;
           }
           &.loading {
-            background: transparent url("../images/network-save.gif") no-repeat ($spacer / 2) center;
+            background: transparent url("../../images/network-save.gif") no-repeat calc($spacer / 2) center;
             .ui-button-text {
-              padding-left: $spacer /* icon */ + ($spacer/4);
+              padding-left: $spacer /* icon */ + calc($spacer/4);
             }
           }
         }
