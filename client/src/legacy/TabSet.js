@@ -2,13 +2,17 @@ import $ from 'jquery';
 
 require('../../../thirdparty/jquery-ui/jquery-ui.js');
 require('../../../thirdparty/jquery-cookie/jquery.cookie.js');
-require('../../../thirdparty/jquery-entwine/dist/jquery.entwine-dist.js');
+require('../../../thirdparty/jquery-entwine/jquery.entwine.js');
 
 // TODO Enable once https://github.com/webpack/extract-text-webpack-plugin/issues/179 is resolved. Included in bundle.scss for now.
 // require('../../../thirdparty/jquery-ui-themes/smoothness/jquery-ui.css');
 
 $.entwine('ss', function($){
   $('.ss-tabset, .cms-tabset').entwine({
+
+    DeferRestoreState: false,
+    DefferredStateOverride: null,
+
     onmatch: function () {
       var hash = window.location.hash;
       if (hash !== '') {
@@ -34,6 +38,46 @@ $.entwine('ss', function($){
             }.bind(this)
         );
         this._super();
+    },
+
+    restoreState: function (overrideState) {
+      const hasSessionStorage = (typeof(window.sessionStorage)!=="undefined" && window.sessionStorage);
+      const sessionData = hasSessionStorage ? window.sessionStorage.getItem('tabs-' + window.ss.tabStateUrl()) : null;
+      const sessionStates = sessionData ? JSON.parse(sessionData) : false;
+
+      let index, tab;
+      const tabsetId = this.attr('id');
+      const forcedTab = this.children('ul').children('li.ss-tabs-force-active');
+
+      if (!this.data('tabs')) {
+        // Defer until tabs have been initialised in redrawTabs()
+        this.setDeferRestoreState(true);
+        this.setDefferredStateOverride(overrideState);
+        return;
+      }
+
+      // The tabs may have changed, notify the widget that it should update its internal state.
+      this.tabs('refresh');
+
+      // Make sure the intended tab is selected. Only force the tab on the correct tabset though
+      if (forcedTab.length) {
+        index = forcedTab.first().index();
+      } else if (overrideState) {
+        tab = this.find(overrideState.tabSelector);
+        if(tab.length){
+          index = tab.index();
+        }
+      } else if (sessionStates) {
+        $.each(sessionStates, function(i, state) {
+          if(tabsetId == state.id) {
+            index = state.selected;
+          }
+        });
+      }
+      if (index !== null && index !== undefined) {
+        this.tabs('option', 'active', index);
+        this.parents('.cms-container').trigger('tabstaterestored');
+      }
     },
 
     /**
@@ -94,7 +138,16 @@ $.entwine('ss', function($){
       $(() => {
         $trigger.click();
       });
-    }
+    },
+
+    redrawTabs: function () {
+      this._super();
+      if (this.getDeferRestoreState()) {
+        this.restoreState(this.getDefferredStateOverride());
+        this.setDeferRestoreState(false);
+        this.setDefferredStateOverride(null);
+      }
+    },
 
   }),
 
@@ -120,7 +173,7 @@ $.entwine('ss', function($){
       // alter how the tabs are rendered
       if ($(this).hasClass('ss-tabset')) {
         this.rewriteHashlinks();
-        this.tabs()
+        this.tabs();
       } else {
         this._super();
       }

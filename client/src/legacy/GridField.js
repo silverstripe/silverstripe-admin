@@ -7,7 +7,7 @@ import { schemaMerge } from 'lib/schemaFieldValues';
 import { loadComponent } from 'lib/Injector';
 
 require('../../../thirdparty/jquery-ui/jquery-ui.js');
-require('../../../thirdparty/jquery-entwine/dist/jquery.entwine-dist.js');
+require('../../../thirdparty/jquery-entwine/jquery.entwine.js');
 
 // TODO Enable once https://github.com/webpack/extract-text-webpack-plugin/issues/179 is resolved. Included in bundle.scss for now.
 // require('../styles/legacy/GridField.scss');
@@ -218,9 +218,9 @@ $.entwine('ss', function($) {
      * Function buildURLString splits string to "key => value" array
      * and replaces values for existing keys with the new value
      * and returns string with unique keys only
-     * 
-     * @param {string} url 
-     * @returns string 
+     *
+     * @param {string} url
+     * @returns string
      */
     buildURLString: function(url) {
       const link = [window.location.origin, url].join('/');
@@ -566,7 +566,7 @@ $.entwine('ss', function($) {
     onmatch: function(){
       this._super();
 
-      this.hide().bind('load', function() {
+      this.hide().on('load', function() {
         this.focus();
         var ifWin = this.contentWindow || this;
         ifWin.print();
@@ -798,7 +798,7 @@ $.entwine('ss', function($) {
         const gridField =  $(this).getGridField();
         const successCallback = function() {
           gridField.keepStateInHistory();
-        };  
+        };
 
         gridField.reload({ data: ajaxData }, successCallback);
 

@@ -81,6 +81,7 @@ require('expose-loader?formatWrittenNumber!lib/formatWrittenNumber');
 require('expose-loader?withDragDropContext!lib/withDragDropContext');
 
 // Legacy CMS
+require('../legacy/jquery.changetracker');
 require('../legacy/sspath');
 require('../legacy/ssui.core');
 require('../legacy/LeftAndMain');

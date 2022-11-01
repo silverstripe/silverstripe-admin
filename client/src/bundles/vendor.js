@@ -12,7 +12,7 @@ require('json-js');
 
 // jQuery plugins require that the jQuery object is exposed as a global
 // webpack.ProvidePlugin is used to ensure that jQuery and $ are provided to all includes
-require('script-loader!../../../thirdparty/jquery/jquery.js');
+require('script-loader!jquery');
 require('expose-loader?jQuery!jquery');
 
 // Expose the libraries as globals for other modules to access
@@ -46,16 +46,12 @@ require('expose-loader?moment!moment');
 require('expose-loader?merge!merge');
 
 require('../../../thirdparty/jquery-ondemand/jquery.ondemand.js');
-require('../../../thirdparty/jquery-ui/jquery-ui.js');
-// require('../../../thirdparty/jquery-ui-themes/smoothness/jquery-ui.css');
-require('../../../thirdparty/jquery-entwine/dist/jquery.entwine-dist.js');
+require('../../../thirdparty/jquery-ui/jquery-ui.js'); // there is related css in styles/bundle.scss
+require('../../../thirdparty/jquery-entwine/jquery.entwine.js');
 require('../../../thirdparty/jquery-cookie/jquery.cookie.js');
 require('../../../thirdparty/jquery-query/jquery.query.js');
-require('../../../thirdparty/jquery-form/jquery.form.js');
+require('jquery-form');
 require('jquery-sizes/lib/jquery.sizes.js');
-require('../../../thirdparty/jstree/jquery.jstree.js');
-// require('../../../thirdparty/stree/themes/apple/style.css');
-require('../../../thirdparty/jquery-hoverIntent/jquery.hoverIntent.js');
-require('../../../thirdparty/jquery-changetracker/lib/jquery.changetracker.js');
+require('../../../thirdparty/jstree/jquery.jstree.js'); // there is related css in styles/bundle.scss
 
 require('chosen-js');
