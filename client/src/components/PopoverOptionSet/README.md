@@ -27,9 +27,9 @@ const { isOpen } = state;
 
 // Example code - setting state should not be done in render
 const toggle = () => {
-  this.setState({
-    isOpen: !this.state.isOpen,
-  });
+  // Force setting state to the end of the execution queue to clear a potential race condition
+  // with entwine click handlers
+  window.setTimeout(() => this.setState({ isOpen: !this.state.isOpen }), 0);
 };
 
 return (

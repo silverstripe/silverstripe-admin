@@ -49,9 +49,11 @@ class ViewModeToggle extends Component {
   }
 
   toggle() {
-    this.setState(prevState => ({
+    // Force setting state to the end of the execution queue to clear a potential race condition
+    // with entwine click handlers
+    window.setTimeout(() => this.setState(prevState => ({
       dropdownOpen: !prevState.dropdownOpen
-    }));
+    })), 0);
   }
 
   /**

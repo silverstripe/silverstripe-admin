@@ -2,7 +2,7 @@
 import i18n from 'i18n';
 import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import jQuery from 'jquery';
 import { createInsertLinkModal } from 'containers/InsertLinkModal/InsertLinkModal';
 import { loadComponent } from 'lib/Injector';
@@ -50,6 +50,8 @@ jQuery.entwine('ss', ($) => {
    * Assumes that $('.insert-link__dialog-wrapper').entwine({}); is defined for shared functions
    */
   $(`#${modalId}`).entwine({
+    ReactRoot: null,
+
     renderModal(isOpen) {
       const handleHide = () => this.close();
       const handleInsert = (...args) => this.handleInsert(...args);
@@ -61,7 +63,12 @@ jQuery.entwine('ss', ($) => {
       const requireLinkText = tagName !== 'A' && selectionContent.trim() === '';
 
       // create/update the react component
-      ReactDOM.render(
+      let root = this.getReactRoot();
+      if (!root) {
+        root = createRoot(this[0]);
+        this.setReactRoot(root);
+      }
+      root.render(
         <InsertLinkExternalModal
           isOpen={isOpen}
           onInsert={handleInsert}
@@ -72,8 +79,7 @@ jQuery.entwine('ss', ($) => {
           fileAttributes={attrs}
           identifier="Admin.InsertLinkExternalModal"
           requireLinkText={requireLinkText}
-        />,
-        this[0]
+        />
       );
     },
 

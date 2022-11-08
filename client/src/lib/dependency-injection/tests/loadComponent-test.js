@@ -46,7 +46,7 @@ jest.mock('../provideInjector', () => function mockInjector(Injected) {
 });
 
 jest.mock('../Container', () => ({ ready: (callback) => { callback(); } }));
-jest.mock('react-apollo', () => ({
+jest.mock('@apollo/client', () => ({
   ApolloProvider: ({ children }) => <div>{children}</div>,
 }));
 

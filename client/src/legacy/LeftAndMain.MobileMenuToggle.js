@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import MobileMenuToggleContainer from 'components/MobileMenuToggle/MobileMenuToggleContainer';
 import { closeMobileMenu } from 'state/mobileMenu/MobileMenuActions';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 $.entwine('ss', function($){
 
@@ -10,10 +10,8 @@ $.entwine('ss', function($){
     onmatch: function() {
       const menuToggleWrapper = $('.cms-mobile-menu-toggle-wrapper');
       if (menuToggleWrapper.length > 0) {
-        ReactDOM.render(
-          <MobileMenuToggleContainer store={window.ss.store} controls="cms-menu" />,
-          menuToggleWrapper[0]
-        );
+          const root = createRoot(menuToggleWrapper[0]);
+          root.render(<MobileMenuToggleContainer store={window.ss.store} controls="cms-menu" />);
       }
 
       const store = window.ss.store;

@@ -6,21 +6,6 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
 class GridFieldActions extends PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      dropdownOpen: false
-    };
-  }
-
-  toggle() {
-    this.setState({
-      dropdownOpen: !this.state.dropdownOpen
-    });
-  }
-
   renderMultipleActions(schema) {
     const groupedActions = schema.reduce((groups, action) => {
       const groupsList = groups;

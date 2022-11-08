@@ -2,6 +2,7 @@
 import jQuery from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { schemaMerge } from 'lib/schemaFieldValues';
 import { loadComponent } from 'lib/Injector';
 
@@ -9,6 +10,7 @@ jQuery.entwine('ss', ($) => {
   $('.js-injector-boot .used-on__polyfill-holder').entwine({
     Timer: null,
     Component: null,
+    ReactRoot: null,
 
     onmatch() {
       this._super();
@@ -26,10 +28,10 @@ jQuery.entwine('ss', ($) => {
 
     onunmatch() {
       this._super();
-      // solves errors given by ReactDOM "no matched root found" error.
-      const container = this[0];
-      if (container) {
-        ReactDOM.unmountComponentAtNode(container);
+      const root = this.getReactRoot();
+      if (root) {
+        root.unmount();
+        this.setReactRoot(null);
       }
     },
 
@@ -39,10 +41,12 @@ jQuery.entwine('ss', ($) => {
       const UsedOnTable = this.getComponent();
 
       // TODO: rework entwine so that react has control of holder
-      ReactDOM.render(
-        <UsedOnTable {...props} />,
-        this[0]
-      );
+      let root = this.getReactRoot();
+      if (!root) {
+        root = createRoot(this[0]);
+      }
+      root.render(<UsedOnTable {...props} />);
+      this.setReactRoot(root);
     },
 
     getAttributes() {

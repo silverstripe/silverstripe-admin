@@ -41,9 +41,9 @@ class PopoverField extends Component {
   toggle() {
     const { toggleCallback } = this.props;
 
-    this.setState({
-      isOpen: !this.state.isOpen
-    }, toggleCallback);
+    // Force setting state to the end of the execution queue to clear a potential race condition
+    // with entwine click handlers
+    window.setTimeout(() => this.setState({ isOpen: !this.state.isOpen }, toggleCallback), 0);
   }
 
   render() {

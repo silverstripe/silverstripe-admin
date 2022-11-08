@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-require('../../../thirdparty/jquery-ui/jquery-ui.js');
+import '../../../thirdparty/jquery-ui/jquery-ui.js';
 
 /**
  * Extends jQueryUI dialog with iframe abilities (and related resizing logic),

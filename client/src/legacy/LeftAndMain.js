@@ -4,13 +4,14 @@
 import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import IframeDialog from 'components/IframeDialog/IframeDialog';
 import Search from 'components/Search/Search';
 import Loading from 'components/Loading/Loading';
 import { schemaMerge } from 'lib/schemaFieldValues';
 import { loadComponent } from 'lib/Injector';
 
-require('../legacy/ssui.core.js');
+import '../legacy/ssui.core.js';
 
 $.noConflict();
 
@@ -1001,7 +1002,11 @@ $.entwine('ss', function($) {
         BackURL: window.location.href,
       });
 
-      ReactDOM.render(
+      let root = this.getReactRoot();
+      if (!root) {
+        root = createRoot(this[0]);
+      }
+      root.render(
         <IframeDialog
           title={i18n._t('Admin.CMS_LOGIN_TITLE', 'Login')}
           className="login-dialog"
@@ -1010,8 +1015,7 @@ $.entwine('ss', function($) {
           iframeClassName="login-dialog__body__iframe"
           isOpen={isOpen}
           url={url}
-        />,
-        this[0]
+        />
       );
     },
 
@@ -1037,20 +1041,24 @@ $.entwine('ss', function($) {
    * like the breadcrumbs showing unnecessary loading status.
    */
   $('form.loading,.cms-content.loading,.cms-content-fields.loading,.cms-content-view.loading,.ss-gridfield-item.loading').entwine({
+    ReactRoot: null,
     onmatch: function() {
       this._super();
       const container = $('<div class="cms-loading-container"/>');
       this.append(container);
-      ReactDOM.render(
-        <Loading />,
-        container[0]
-      );
+      const root = createRoot(container[0]);
+      root.render(<Loading />);
+      this.setReactRoot(root);
     },
     onunmatch: function() {
       this._super();
       const container = this.find('.cms-loading-container');
       if (container && container.length) {
-        ReactDOM.unmountComponentAtNode(container[0]);
+        const root = this.getReactRoot();
+        if (root) {
+          root.unmount();
+          this.setReactRoot(null);
+        }
         container.remove();
       }
     }
@@ -1403,6 +1411,7 @@ $.entwine('ss', function($) {
 
   $('.js-injector-boot .search-holder').entwine({
     Component: null,
+    ReactRoot: null,
 
     onmatch() {
       this._super();
@@ -1422,10 +1431,10 @@ $.entwine('ss', function($) {
 
     onunmatch() {
       this._super();
-      // solves errors given by ReactDOM "no matched root found" error.
-      const container = this[0];
-      if (container) {
-        ReactDOM.unmountComponentAtNode(container);
+      const root = this.getReactRoot();
+      if (root) {
+        root.unmount();
+        this.setReactRoot(null);
       }
     },
 
@@ -1479,7 +1488,11 @@ $.entwine('ss', function($) {
       const handleSearch = (data) => this.search(data);
       const narrowView = this.closest('.cms-content-tools').attr('id') === 'cms-content-tools-CMSMain';
 
-      ReactDOM.render(
+      let root = this.getReactRoot();
+      if (!root) {
+        root = createRoot(this[0]);
+      }
+      root.render(
         <Search
           id="Search"
           identifier="Search"
@@ -1492,9 +1505,9 @@ $.entwine('ss', function($) {
             left: !narrowView
           }}
           {...props}
-        />,
-        this[0]
+        />
       );
+      this.setReactRoot(root);
     },
   });
 });

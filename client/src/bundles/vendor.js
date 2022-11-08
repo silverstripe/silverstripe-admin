@@ -1,57 +1,50 @@
 /* eslint-disable
  import/no-webpack-loader-syntax,
- import/no-extraneous-dependencies,
  import/no-unresolved,
  import/extensions
 */
-// TODO Enable require(*.css) includes once https://github.com/webpack/extract-text-webpack-plugin/issues/179
+// TODO Enable import *.css) includes once https://github.com/webpack/extract-text-webpack-plugin/issues/179
 // is resolved. Included in bundle.scss for now.
 
-require('babel-polyfill');
-require('json-js');
-
-// jQuery plugins require that the jQuery object is exposed as a global
-// webpack.ProvidePlugin is used to ensure that jQuery and $ are provided to all includes
-require('script-loader!jquery');
-require('expose-loader?jQuery!jquery');
+import 'core-js/stable';
 
 // Expose the libraries as globals for other modules to access
 // Note that these are order-dependent - earlier items should not depend on later ones
-require('expose-loader?PropTypes!prop-types');
-require('expose-loader?classnames!classnames');
-require('expose-loader?DeepFreezeStrict!deep-freeze-strict');
-require('expose-loader?React!react');
-require('expose-loader?ReactDom!react-dom');
-require('expose-loader?ReactRouterDom!react-router-dom');
-require('expose-loader?Reactstrap!reactstrap');
-require('expose-loader?IsomorphicFetch!isomorphic-fetch');
-require('expose-loader?Redux!redux');
-require('expose-loader?ReactRedux!react-redux');
-require('expose-loader?ReduxThunk!redux-thunk');
-require('expose-loader?ReduxForm!redux-form');
-require('expose-loader?ReactSelect!react-select');
-require('expose-loader?ReactDND!react-dnd');
-require('expose-loader?ReactDNDHtml5Backend!react-dnd-html5-backend');
-require('expose-loader?Page!page.js');
-require('expose-loader?validator!validator');
-require('expose-loader?ApolloClient!apollo-client');
-require('expose-loader?ReactApollo!react-apollo');
-require('expose-loader?GraphQLTag!graphql-tag');
-require('expose-loader?GraphQLFragments!graphql-fragments');
-require('expose-loader?NodeUrl!url');
-require('expose-loader?qs!qs');
-require('expose-loader?modernizr!modernizr');
-require('expose-loader?history!history');
-require('expose-loader?moment!moment');
-require('expose-loader?merge!merge');
+import 'expose-loader?exposes=$,jQuery!jquery';
+import 'expose-loader?exposes=PropTypes!prop-types';
+import 'expose-loader?exposes=classnames!classnames';
+import 'expose-loader?exposes=DeepFreezeStrict!deep-freeze-strict';
+import 'expose-loader?exposes=React!react';
+import 'expose-loader?exposes=ReactDom!react-dom';
+import 'expose-loader?exposes=ReactRouterDom!react-router-dom';
+import 'expose-loader?exposes=Reactstrap!reactstrap';
+import 'expose-loader?exposes=IsomorphicFetch!isomorphic-fetch';
+import 'expose-loader?exposes=Redux!redux';
+import 'expose-loader?exposes=ReactRedux!react-redux';
+import 'expose-loader?exposes=ReduxThunk!redux-thunk';
+import 'expose-loader?exposes=ReduxForm!redux-form';
+import 'expose-loader?exposes=qs!qs';
+import 'expose-loader?exposes=ReactSelect!react-select';
+import 'expose-loader?exposes=ReactDND!react-dnd';
+import 'expose-loader?exposes=ReactDNDHtml5Backend!react-dnd-html5-backend';
+import 'expose-loader?exposes=Page!page.js';
+import 'expose-loader?exposes=validator!validator';
+// @apollo/client can't be exposed - see https://github.com/webpack-contrib/expose-loader/issues/188
+// import 'expose-loader?exposes=ApolloClient!@apollo/client';
+import 'expose-loader?exposes=GraphQLTag!graphql-tag';
+import 'expose-loader?exposes=GraphQLFragments!graphql-fragments';
+import 'expose-loader?exposes=NodeUrl!url';
+import 'expose-loader?exposes=modernizr!modernizr';
+import 'expose-loader?exposes=moment!moment';
+import 'expose-loader?exposes=merge!merge';
 
-require('../../../thirdparty/jquery-ondemand/jquery.ondemand.js');
-require('../../../thirdparty/jquery-ui/jquery-ui.js'); // there is related css in styles/bundle.scss
-require('../../../thirdparty/jquery-entwine/jquery.entwine.js');
-require('../../../thirdparty/jquery-cookie/jquery.cookie.js');
-require('../../../thirdparty/jquery-query/jquery.query.js');
-require('jquery-form');
-require('jquery-sizes/lib/jquery.sizes.js');
-require('../../../thirdparty/jstree/jquery.jstree.js'); // there is related css in styles/bundle.scss
+import '../../../thirdparty/jquery-ondemand/jquery.ondemand.js';
+import '../../../thirdparty/jquery-ui/jquery-ui.js'; // there is related css in styles/bundle.scss
+import '../../../thirdparty/jquery-entwine/jquery.entwine.js';
+import '../../../thirdparty/jquery-cookie/jquery.cookie.js';
+import '../../../thirdparty/jquery-query/jquery.query.js';
+import 'jquery-form';
+import 'jquery-sizes/lib/jquery.sizes.js';
+import '../../../thirdparty/jstree/jquery.jstree.js'; // there is related css in styles/bundle.scss
 
-require('chosen-js');
+import 'chosen-js';

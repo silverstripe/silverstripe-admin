@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import createCache from '@emotion/cache';
+import styled from '@emotion/styled';
+import { CacheProvider } from '@emotion/react';
+import i18n from 'i18n';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import fetch from 'isomorphic-fetch';
-import Select from 'react-select';
+import Select, { components as selectComponents } from 'react-select';
 import * as treeDropdownFieldActions from 'state/treeDropdownField/TreeDropdownFieldActions';
-import TreeDropdownFieldMenu from 'components/TreeDropdownField/TreeDropdownFieldMenu';
 import TreeDropdownFieldNode from 'components/TreeDropdownField/TreeDropdownFieldNode';
 import url from 'url';
 import { Input } from 'reactstrap';
@@ -20,14 +23,29 @@ const MULTI_EMPTY_VALUE = 'unchanged';
 
 const SINGLE_EMPTY_VALUE = 0;
 
+// This ensures that Emotion's styles are inserted before ours so we can override the default react-select styling
+function EmotionCacheProvider({ children }) {
+  const cache = React.useMemo(
+    () => createCache({
+        key: 'react-select',
+        insertionPoint: document.querySelector('title'),
+      }),
+    []
+  );
+
+  return <CacheProvider value={cache}>{children}</CacheProvider>;
+}
+
 class TreeDropdownField extends Component {
   constructor(props) {
     super(props);
 
-    // Renderers
+    // Renderers and custom component constructors
     this.render = this.render.bind(this);
-    this.renderMenu = this.renderMenu.bind(this);
+    this.renderInput = this.renderInput.bind(this);
+    this.renderMenuList = this.renderMenuList.bind(this);
     this.renderOption = this.renderOption.bind(this);
+    this.formatOptionLabel = this.formatOptionLabel.bind(this);
 
     // Getters
     this.getBreadcrumbs = this.getBreadcrumbs.bind(this);
@@ -47,7 +65,8 @@ class TreeDropdownField extends Component {
     // Helpers
     this.callFetch = this.callFetch.bind(this);
     this.lazyLoad = this.lazyLoad.bind(this);
-    this.filterOptions = this.filterOptions.bind(this);
+    this.filterOption = this.filterOption.bind(this);
+    this.noOptionsMessage = this.noOptionsMessage.bind(this);
 
     this.state = {
       opened: false,
@@ -321,35 +340,30 @@ class TreeDropdownField extends Component {
   }
 
   /**
-   * A filter for the list of options so determine what is shown and what isn't
-   *
-   * @param {Object[]} options
-   * @return {Object[]}
+   * A filter for the list of options to determine what is shown and what isn't
    */
-  filterOptions(options) {
+  filterOption(option, input = '') {
     const parent = this.getVisibleTree();
+    if ((option.value === SINGLE_EMPTY_VALUE || option.value === '') &&
+      (!this.props.data.hasEmptyDefault || this.props.visible.length || this.hasSearch())
+    ) {
+        return false;
+    }
+    const title = option.label && option.label.toLocaleLowerCase();
+    // using this.props.search so that we do not get flash of filtered current content
+    // const search = this.props.search.toLocaleLowerCase();
+    const search = input.toLocaleLowerCase();
 
-    return options.filter((option) => {
-      if ((option.id === SINGLE_EMPTY_VALUE || option.id === '') &&
-        (!this.props.data.hasEmptyDefault || this.props.visible.length || this.hasSearch())
-      ) {
-          return false;
-      }
-      const title = option.title && option.title.toLocaleLowerCase();
-      // using this.props.search so that we do not get flash of filtered current content
-      const search = this.props.search.toLocaleLowerCase();
-
-      // need to do some checks for the selected options, so that they do not show unnecessarily
-      return (search)
-        // only show option if matches search filter
-        ? title && title.includes(search)
-        // only show option if it belongs in the current visible tree
-        : (
-          !parent ||
-          !option.id ||
-          parent.children.find((child) => child.id === option.id)
-        );
-    });
+    // need to do some checks for the selected options, so that they do not show unnecessarily
+    return (search)
+      // only show option if matches search filter
+      ? title && title.includes(search)
+      // only show option if it belongs in the current visible tree
+      : (
+        !parent ||
+        !option.value ||
+        parent.children.find((child) => child.id === option.value)
+      );
   }
 
   handleOpen() {
@@ -433,13 +447,13 @@ class TreeDropdownField extends Component {
    * @param {*} id - Id to add to end of path
    */
   handleNavigate(event, id) {
-    event.stopPropagation();
-    event.nativeEvent.stopImmediatePropagation();
-    event.preventDefault();
-
     if (this.hasSearch()) {
       return;
     }
+
+    event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
+    event.preventDefault();
 
     // Find parent path
     let path = this.props.findTreePath(this.props.tree, id, this.props.data.treeBaseId);
@@ -456,7 +470,8 @@ class TreeDropdownField extends Component {
   }
 
   /**
-   * Extra keyboard accessibility
+   * Extra keyboard accessibility.
+   * Falls back on handling provided by react-select
    *
    * @param {Event} event
    */
@@ -467,12 +482,14 @@ class TreeDropdownField extends Component {
       if (event.keyCode === 27) {
         this.handleSearchReset(event);
       }
+      // let react-select handle it
       return;
     }
 
     // Only handle keys when an item is focused
-    const focused = this.selectField.getFocusedOption();
+    const focused = this.selectField.state.focusedOption;
     if (!focused) {
+      // let react-select handle it
       return;
     }
 
@@ -486,6 +503,7 @@ class TreeDropdownField extends Component {
         }
         break;
       default:
+        // let react-select handle it
         break;
     }
   }
@@ -496,12 +514,13 @@ class TreeDropdownField extends Component {
    * @param {Event} event - Click event
    */
   handleBack(event) {
-    event.stopPropagation();
-    event.preventDefault();
-
     if (this.hasSearch()) {
       return;
     }
+
+    event.stopPropagation();
+    event.preventDefault();
+
     // Find id in existing path, otherwise adding it to the end
     let path = this.props.visible;
 
@@ -515,45 +534,85 @@ class TreeDropdownField extends Component {
   }
 
   /**
-   * Render menu.
-   * Replaces react-select/defaultMenuRenderer.js. See this file
-   * for details on renderMenuOptions
+   * Render the input field.
+   * This essentially just sets the specific ID we want to use into the default input component.
+   */
+  renderInput({ children, ...props }) {
+    props.id = this.props.id;
+    return <selectComponents.Input {...props}>{children}</selectComponents.Input>;
+  }
+
+  /**
+   * Render the breadcrumbs.
+   * This sits above the options in nested trees, as a way to navigate back
+   */
+  renderBreadcrumbs(breadcrumbs, { cx, getStyles, getClassNames, ...props }) {
+    if (breadcrumbs.length === 0) {
+      return null;
+    }
+
+    // Join titles with ' / '
+    breadcrumbs = breadcrumbs.map((item) => item.title).join(' / ');
+    const icon = (this.hasSearch()) ? 'font-icon-search' : 'font-icon-left-open-big';
+
+    // This allows us to get the correct css and class names that a normal react-select option uses.
+    const className = cx(
+      {
+        option: true,
+        breadcrumbs: true,
+      },
+      getClassNames('option', {})
+    );
+    const StyledDiv = styled.div(getStyles('option', props));
+
+    return (
+      <StyledDiv
+        className={className}
+        onClick={this.handleBack}
+        role="button"
+        tabIndex={0}
+      >
+        <button type="button" className="treedropdownfield__breadcrumbs-button">
+          <span className={`icon ${icon}`} />
+        </button>
+        <span className="treedropdownfield__breadcrumbs-crumbs flexbox-area-grow">
+          {breadcrumbs}
+        </span>
+      </StyledDiv>
+    );
+  }
+
+  /**
+   * Render menulist.
+   * Replaces the default MenuList component
    *
    * @param {Object} renderMenuOptions - Options passed from Select.js
    */
-  renderMenu(renderMenuOptions) {
-    // Build root node
-    const visibleTree = this.getVisibleTree() || {};
-    const loading = this.props.loading.indexOf(visibleTree.id || 0) > -1;
-    const failed = this.props.failed.indexOf(visibleTree.id || 0) > -1;
+  renderMenuList({ children, ...props }) {
     const breadcrumbs = this.getBreadcrumbs();
 
     return (
-      <TreeDropdownFieldMenu
-        loading={loading}
-        failed={failed}
-        tree={visibleTree}
-        breadcrumbs={breadcrumbs}
-        renderMenuOptions={renderMenuOptions}
-        onBack={this.handleBack}
-        search={this.hasSearch()}
-        value={this.props.value}
-      />
+      <selectComponents.MenuList {...props}>
+        {this.renderBreadcrumbs(breadcrumbs, props)}
+        {children}
+      </selectComponents.MenuList>
     );
   }
 
   /**
    * Renders an option in a menu level.
-   * Replaces Select.js getOptionLabel() method
-   *
-   * @param {Object} tree - Tree being rendered
+   * Replaces the default Option component
    */
-  renderOption(tree) {
+  renderOption({ children, ...props }) {
     let button = null;
+    const tree = props.data;
+
+    // button for dropping into nested trees
     if (tree.count && !this.hasSearch()) {
       const handleNavigate = (event) => this.handleNavigate(event, tree.id);
       button = (
         <button
+          type="button"
           className="treedropdownfield__option-button fill-width"
           onClick={handleNavigate}
           onMouseDown={handleNavigate}
@@ -564,13 +623,7 @@ class TreeDropdownField extends Component {
       );
     }
 
-    const Highlight = ({ children }) => (
-      <span className="treedropdownfield__option-title--highlighted">{children}</span>
-    );
-    const title = (this.props.search.length)
-      ? mapHighlight(tree.title, this.props.search, Highlight)
-      : tree.title;
-
+    // search breadcrumbs for each nested search result
     let subtitle = null;
     if (this.hasSearch()) {
       subtitle = tree.contextString;
@@ -581,15 +634,13 @@ class TreeDropdownField extends Component {
     }
 
     return (
-      <div className="treedropdownfield__option fill-width">
-        <div className="treedropdownfield__option-title-box flexbox-area-grow fill-height">
-          <span className="treedropdownfield__option-title">{title}</span>
-          { subtitle &&
-          <span className="treedropdownfield__option-context">{subtitle}</span>
-          }
-        </div>
+      <selectComponents.Option {...props}>
+        <span className="treedropdownfield__option-title-box flexbox-area-grow fill-height">
+          <span className="treedropdownfield__option-title">{children}</span>
+          { subtitle && <span className="treedropdownfield__option-context">{subtitle}</span> }
+        </span>
         {button}
-      </div>
+      </selectComponents.Option>
     );
   }
 
@@ -641,92 +692,103 @@ class TreeDropdownField extends Component {
     );
   }
 
+  formatOptionLabel(option, { context, inputValue }) {
+    const { title } = option;
+
+    const Highlight = ({ children }) => (
+      <span className="treedropdownfield__option-title--highlighted">{children}</span>
+    );
+    return this.props.search.length
+      ? mapHighlight(title ? title : '', this.props.search, Highlight)
+      : title;
+  }
+
+  noOptionsMessage({ inputValue }) {
+    const visibleTree = this.getVisibleTree() || {};
+
+    // Only show failed message for the currently visible tree or root
+    if (this.props.failed.indexOf(visibleTree.id || 0) >= 0) {
+      return i18n._t('Admin.TREEDROPDOWN_FAILED', 'Failed to load');
+    }
+    // If there was a search or this is the root level, say "no options"
+    if (inputValue || !visibleTree.id) {
+      return i18n._t('Admin.TREEDROPDOWN_NO_OPTIONS', 'No options');
+    }
+    // If this is inside a tree and there was no search, say "no children"
+    return i18n._t('Admin.TREEDROPDOWN_NO_CHILDREN', 'No children');
+  }
+
   render() {
     if (this.props.readOnly || this.props.disabled) {
       return this.renderReadOnly();
     }
 
-    const inputProps = {
-      id: this.props.id,
-    };
     const className = this.props.extraClass
       ? `treedropdownfield ${this.props.extraClass}`
       : 'treedropdownfield';
     const options = this.getDropdownOptions();
-    let value = this.props.value;
 
-    // Multiple select should be coerced to array
-    if (this.props.data.multiple) {
-      value = this.props.value
-        ? this.props.selectedValues.filter(item => value.includes(item.id))
-        : [];
+    // The value passed in is an array of all selected option objects
+    // i.e. an id and title key must be present for each selected option
+    const rawValue = Array.isArray(this.props.value) ? this.props.value : [this.props.value];
+    let value = this.props.selectedValues.filter(item => rawValue.includes(item.id));
+
+    if (!value.length && this.props.data.hasEmptyDefault) {
+      value = options[0];
     }
 
-    const resetValue = (this.props.data.hasEmptyDefault && !this.props.visible.length)
-      ? ''
-      : null;
     const showSearch = (typeof this.props.data.showSearch !== 'undefined')
       ? this.props.data.showSearch
       : false;
 
+    const components = {
+      Input: this.renderInput,
+      MenuList: this.renderMenuList,
+      Option: this.renderOption,
+    };
+
+    const visibleTree = this.getVisibleTree() || {};
+    // Only show loading message for the currently visible tree or root
+    const isLoading = this.props.loading.indexOf(visibleTree.id || 0) >= 0;
+
     return (
-      <Select
-        searchable={showSearch}
-        multi={this.props.data.multiple}
-        className={className}
-        name={this.props.name}
-        options={options}
-        inputProps={inputProps}
-        menuRenderer={this.renderMenu}
-        filterOptions={this.filterOptions}
-        optionRenderer={this.renderOption}
-        onChange={this.handleChange}
-        onOpen={this.handleOpen}
-        onClose={this.handleClose}
-        onBlurResetsInput
-        onInputKeyDown={this.handleKeyDown}
-        onInputChange={this.handleSearchChange}
-        isLoading={Boolean(this.props.loading.length)}
-        value={value}
-        resetValue={resetValue}
-        joinValues
-        ref={(select) => { this.selectField = select; }}
-        placeholder={this.props.data.emptyString}
-        labelKey="title"
-        valueKey="id"
-      />
+      <EmotionCacheProvider>
+        <Select
+          isSearchable={showSearch}
+          isMulti={this.props.data.multiple}
+          isClearable
+          className={className}
+          name={this.props.name}
+          options={options}
+          delimiter=","
+          components={components}
+          formatOptionLabel={this.formatOptionLabel}
+          filterOption={this.filterOption}
+          onChange={this.handleChange}
+          onMenuOpen={this.handleOpen}
+          onMenuClose={this.handleClose}
+          onKeyDown={this.handleKeyDown}
+          onInputChange={this.handleSearchChange}
+          isLoading={isLoading}
+          loadingMessage={() => i18n._t('Admin.TREEDROPDOWN_LOADING', 'Loading...')}
+          noOptionsMessage={this.noOptionsMessage}
+          value={value}
+          ref={(select) => { this.selectField = select; }}
+          placeholder={this.props.data.emptyString}
+          getOptionLabel={({ title }) => title}
+          getOptionValue={({ id }) => id}
+          classNamePrefix="treedropdownfield"
+          classNames={{
+            option: () => 'fill-width',
+          }}
+        />
+      </EmotionCacheProvider>
     );
   }
 }
 
-// Hack! Temporary fix until we can do a proper upgrade of react-select to >= 2.0.
-// eslint-disable-next-line func-names
-Select.prototype.componentWillReceiveProps = function (nextProps) {
-  function handleRequired(value, multi) {
-    if (!value) {
-      return true;
-    }
-    return multi ? value.length === 0 : Object.keys(value).length === 0;
-  }
-
-  const valueArray = this.getValueArray(nextProps.value, nextProps);
-
-  if (nextProps.required) {
-    this.setState({
-      required: handleRequired(valueArray[0], nextProps.multi)
-    });
-  } else if (this.props.required) {
-    // Used to be required but it's not any more
-    this.setState({ required: false });
-  }
-  // Array comparison in react-select is broken.
-  const [current, next] = [this.props.value, nextProps.value].map(JSON.stringify);
-  if (this.state.inputValue && current !== next && nextProps.onSelectResetsInput) {
-    this.setState({ inputValue: this.handleInputValueChange('') });
-  }
-};
-
 TreeDropdownField.propTypes = {
+  className: PropTypes.string,
   extraClass: PropTypes.string,
   id: PropTypes.string,
   name: PropTypes.string.isRequired,

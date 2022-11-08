@@ -3,8 +3,8 @@
  */
 import $ from 'jquery';
 
-require('./LeftAndMain.js');
-require('./PermissionCheckboxSetField.js');
+import './LeftAndMain.js';
+import './PermissionCheckboxSetField.js';
 
 var refreshAfterImport = function(e) {
   // Check for a message <div>, an indication that the form has been submitted.

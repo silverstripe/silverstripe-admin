@@ -3,7 +3,7 @@
  */
 import $ from 'jquery';
 
-require('./LeftAndMain.js');
+import './LeftAndMain.js';
 
 $.entwine('ss', function($){
   $('.cms-content-tools #Form_SearchForm').entwine({

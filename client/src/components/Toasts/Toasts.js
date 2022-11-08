@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Toast, { toastPropType } from './Toast';
+import Toast from './Toast';
 
 /**
  * Time in milliseconds to wait before we action the pause/resume calls.
@@ -44,7 +44,7 @@ const Toasts = ({ toasts, onDismiss, onPause, onResume }) => {
 };
 
 Toasts.propTypes = {
-  toasts: PropTypes.arrayOf(PropTypes.shape(toastPropType)).isRequired,
+  toasts: PropTypes.arrayOf(PropTypes.shape(Toast.propTypes)).isRequired,
   onDismiss: PropTypes.func.isRequired,
   onPause: PropTypes.func.isRequired,
   onResume: PropTypes.func.isRequired,

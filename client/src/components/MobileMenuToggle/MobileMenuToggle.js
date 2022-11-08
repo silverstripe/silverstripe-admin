@@ -24,6 +24,7 @@ class MobileMenuToggle extends Component {
 
     return (
       <button
+        type="button"
         className={classes}
         href="#toggle-mobile-menu"
         onClick={this.handleClick}

@@ -392,7 +392,7 @@ const schemaPropType = PropTypes.shape({
   state: PropTypes.shape({
     fields: PropTypes.array,
   }),
-  loading: PropTypes.boolean,
+  loading: PropTypes.bool,
   stateOverride: PropTypes.shape({
     fields: PropTypes.array,
   }),
