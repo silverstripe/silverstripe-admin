@@ -1,142 +1,82 @@
-const Path = require('path');
 const webpack = require('webpack');
-const webpackConfig = require('@silverstripe/webpack-config');
+const { JavascriptWebpackConfig, CssWebpackConfig } = require('@silverstripe/webpack-config');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const {
-  resolveJS,
-  externalJS,
-  moduleJS,
-  pluginJS,
-  moduleCSS,
-  pluginCSS,
-} = webpackConfig;
-
-const ENV = process.env.NODE_ENV;
 const PATHS = require('./webpack-vars');
 
 const config = [
-  {
-    name: 'js',
-    entry: {
-      bundle: `${PATHS.SRC}/bundles/bundle.js`,
+  // Main JS bundles
+  new JavascriptWebpackConfig('js', PATHS, 'silverstripe/admin')
+    .setEntry({
       vendor: `${PATHS.SRC}/bundles/vendor.js`,
-      // legacy scripts
+      bundle: `${PATHS.SRC}/bundles/bundle.js`,
       'LeftAndMain.Ping': `${PATHS.LEGACY_SRC}/LeftAndMain.Ping.js`,
-      // For IE version 10 and below. These browsers doesn't handle large
-      // resource files so need to break browser detection and warning code into
-      // its own file
-      browserWarning: `${PATHS.SRC}/lib/browserWarning.js`,
-    },
-    output: {
-      path: PATHS.DIST,
-      filename: 'js/[name].js',
-    },
-    devtool: (ENV !== 'production') ? 'source-map' : '',
-    resolve: resolveJS(ENV, PATHS),
-    externals: externalJS(ENV, PATHS),
-    module: moduleJS(ENV, PATHS),
-    plugins: [
-      ...pluginJS(ENV, PATHS),
-      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-      // Most vendor libs are loaded directly into the 'vendor' bundle (through require()
-      // calls in vendor.js). This ensures that any further require() calls in other
-      // bundles aren't duplicating libs.
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
-        minChunks: module => module.context && module.context.indexOf('/node_modules/') > -1,
-      }),
-      new CopyWebpackPlugin([
-        {
-          from: `${PATHS.MODULES}/moment/locale`,
-          to: `${PATHS.DIST}/moment-locales`
-        },
-        {
-          from: `${PATHS.MODULES}/popper.js/dist/umd/popper.min.js`,
-          to: `${PATHS.THIRDPARTY}/popper/popper.min.js`
-        },
-        // Copy npm and custom tinymce content into the same dist directory
-        {
-          from: `${PATHS.MODULES}/tinymce`,
-          to: `${PATHS.DIST}/tinymce`
-        },
-        {
-          from: `${PATHS.SRC}/tinymce`,
-          to: `${PATHS.DIST}/tinymce`
-        },
-      ]),
-    ],
-    watchOptions: {
-      poll: true
-    }
-  },
-  {
-    name: 'tinymce',
-    entry: {
+    })
+    .splitVendor()
+    .mergeConfig({
+      plugins: [
+        new webpack.IgnorePlugin({ resourceRegExp: /^\.\/locale$/, contextRegExp: /moment$/ }),
+        new CopyWebpackPlugin({
+          patterns: [
+            {
+              from: `${PATHS.MODULES}/moment/locale`,
+              to: `${PATHS.DIST}/moment-locales`
+            },
+            {
+              from: `${PATHS.MODULES}/@popperjs/core/dist/umd/popper.min.js`,
+              to: `${PATHS.THIRDPARTY}/popper/popper.min.js`
+            },
+            {
+              context: `${PATHS.SRC}/images`,
+              from: 'chosen-sprite*.png',
+              to: `${PATHS.DIST}/images/`
+            },
+            // Copy npm and custom tinymce content into the same dist directory
+            {
+              from: `${PATHS.MODULES}/tinymce`,
+              to: `${PATHS.DIST}/tinymce`
+            },
+            {
+              from: `${PATHS.SRC}/tinymce`,
+              to: `${PATHS.DIST}/tinymce`
+            },
+          ]
+        }),
+      ],
+      watchOptions: {
+        poll: true
+      }
+    })
+    .getConfig(),
+  // TinyMCE
+  new JavascriptWebpackConfig('tinymce', PATHS, 'silverstripe/admin')
+    .setEntry({
       TinyMCE_sslink: `${PATHS.LEGACY_SRC}/TinyMCE_sslink.js`,
       'TinyMCE_sslink-external': `${PATHS.LEGACY_SRC}/TinyMCE_sslink-external.js`,
       'TinyMCE_sslink-email': `${PATHS.LEGACY_SRC}/TinyMCE_sslink-email.js`,
-    },
-    output: {
-      path: PATHS.DIST,
-      filename: 'js/[name].js',
-    },
-    devtool: (ENV !== 'production') ? 'source-map' : '',
-    resolve: resolveJS(ENV, PATHS),
-    externals: externalJS(ENV, PATHS),
-    module: moduleJS(ENV, PATHS),
-    plugins: [
-      ...pluginJS(ENV, PATHS),
-    ],
-    watchOptions: {
-      poll: true
-    }
-  },
-  {
-    name: 'i18n',
-    entry: {
-      'i18n': `${PATHS.SRC}/i18n.js`
-    },
-    output: {
-      path: PATHS.DIST,
-      filename: 'js/[name].js',
-    },
-    devtool: (ENV !== 'production') ? 'source-map' : '',
-    resolve: resolveJS(ENV, PATHS),
-    externals: externalJS(ENV, PATHS),
-    module: moduleJS(ENV, PATHS),
-    plugins: pluginJS(ENV, PATHS),
-  },
-  {
-    name: 'css',
-    entry: {
+    })
+    .mergeConfig({
+      watchOptions: {
+        poll: true
+      }
+    })
+    .getConfig(),
+  // i18n
+  new JavascriptWebpackConfig('i18n', PATHS, 'silverstripe/admin')
+    .setEntry({
+      i18n: `${PATHS.SRC}/i18n.js`
+    })
+    .getConfig(),
+  // sass to css
+  new CssWebpackConfig('css', PATHS)
+    .setEntry({
       bundle: `${PATHS.SRC}/styles/bundle.scss`,
       editor: `${PATHS.SRC}/styles/editor.scss`,
       GridField_print: `${PATHS.SRC}/styles/legacy/GridField_print.scss`,
-      // For IE version 10 and below. These browsers doesn't handle large
-      // resource files so need to break browser detection and warning code into
-      // its own file
-      'browser-warning': `${PATHS.SRC}/styles/browser-warning.scss`,
-    },
-    output: {
-      path: PATHS.DIST,
-      filename: 'styles/[name].css',
-    },
-    devtool: (ENV !== 'production') ? 'source-map' : '',
-    module: moduleCSS(ENV, PATHS),
-    plugins: [
-      ...pluginCSS(ENV, PATHS),
-      new CopyWebpackPlugin([
-        {
-          context: `${PATHS.SRC}/images`,
-          from: 'chosen-sprite*.png',
-          to: `${PATHS.DIST}/images`
-        }
-      ]),
-    ],
-  },
+    })
+    .getConfig(),
 ];
 
 // Use WEBPACK_CHILD=js or WEBPACK_CHILD=css env var to run a single config
 module.exports = (process.env.WEBPACK_CHILD)
   ? config.find((entry) => entry.name === process.env.WEBPACK_CHILD)
-  : module.exports = config;
+  : config;

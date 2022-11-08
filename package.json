@@ -1,6 +1,6 @@
 {
   "name": "silverstripe-admin",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "SilverStripe admin interface",
   "directories": {
     "test": "tests"
@@ -9,10 +9,10 @@
     "webpack": "./node_modules/webpack/webpack.js"
   },
   "engines": {
-    "node": "^10.x"
+    "node": "^18.x"
   },
   "scripts": {
-    "build": "yarn && yarn lint && yarn test && NODE_ENV=production webpack -p --bail --progress",
+    "build": "yarn && yarn lint && yarn test && rm -rf client/dist/* && NODE_ENV=production webpack --mode production --bail --progress",
     "dev": "NODE_ENV=development webpack --progress",
     "watch": "NODE_ENV=development webpack --watch --progress",
     "css": "WEBPACK_CHILD=css npm run build",
@@ -38,90 +38,76 @@
   },
   "homepage": "https://github.com/silverstripe/silverstripe-admin",
   "dependencies": {
-    "apollo-cache-inmemory": "^1.2.1",
-    "apollo-client": "^2.3.1",
-    "apollo-link": "^1.2.2",
-    "apollo-link-batch-http": "^1.2.1",
-    "apollo-link-error": "^1.0.9",
-    "apollo-link-http": "^1.5.4",
-    "apollo-link-state": "^0.4.1",
-    "babel-polyfill": "^6.26.0",
-    "bootstrap": "^4.3.1",
-    "chosen-js": "^1.8.3",
-    "classnames": "^2.2.5",
-    "deep-equal": "^1.0.1",
+    "@apollo/client": "^3.7.1",
+    "@popperjs/core": "^2.11.6",
+    "bootstrap": "^4.6.2",
+    "chosen-js": "^1.8.7",
+    "classnames": "^2.3.2",
+    "core-js": "^3.26.0",
+    "deep-equal": "^2.0.5",
     "deep-freeze-strict": "^1.1.1",
-    "detect-browser": "^1.12.0",
-    "es6-promise": "^3.1.2",
+    "detect-browser": "^5.3.0",
+    "es6-promise": "^4.2.8",
     "events-polyfill": "^2.1.2",
-    "graphql": "^14.0.0",
+    "graphql": "^16.6.0",
     "graphql-fragments": "^0.1.0",
-    "graphql-tag": "^2.10.0",
-    "isomorphic-fetch": "^2.2.1",
+    "graphql-tag": "^2.12.6",
+    "isomorphic-fetch": "^3.0.0",
     "jquery": "^3.6.1",
     "jquery-form": "^4.3.0",
     "jquery-sizes": "^0.33.0",
-    "json-js": "^1.1.2",
     "lodash.debounce": "^4.0.8",
-    "merge": "^1.2.1",
-    "modernizr": "^3.5.0",
-    "moment": "^2.22.2",
+    "merge": "^2.1.1",
+    "modernizr": "^3.12.0",
+    "moment": "^2.29.4",
     "page.js": "^4.13.3",
-    "popper.js": "^1.16.1",
-    "prop-types": "^15.6.2",
-    "qs": "^6.1.0",
-    "react": "^16.6.1",
-    "react-apollo": "^2.1.0",
+    "prop-types": "^15.8.1",
+    "qs": "^6.11.0",
+    "react": "^18.2.0",
     "react-dnd": "^5.0.0",
     "react-dnd-html5-backend": "^5.0.1",
-    "react-dom": "^16.6.1",
+    "react-dom": "^18.2.0",
     "react-load-script": "^0.0.6",
-    "react-redux": "^5.0.7",
-    "react-router": "^4.4.0-beta.6",
-    "react-router-config": "^4.4.0-beta.6",
-    "react-router-dom": "^4.4.0-beta.6",
-    "react-select": "^1.3",
-    "reactstrap": "^8.5.1",
-    "redux": "^4.0.0",
-    "redux-form": "^7.4.2",
-    "redux-thunk": "^2.1.0",
-    "resize-observer-polyfill": "^1.5.0",
-    "tinymce": "^6",
-    "toposort": "^1.0.3",
+    "react-redux": "^8.0.4",
+    "react-router": "^6.4.2",
+    "react-router-dom": "^6.4.2",
+    "react-select": "^5.5.8",
+    "reactstrap": "^8.9.0",
+    "redux": "^4.2.0",
+    "redux-form": "^8.3.8",
+    "redux-thunk": "^2.4.1",
+    "remove-files-webpack-plugin": "^1.5.0",
+    "resize-observer-polyfill": "^1.5.1",
+    "tinymce": "^6.2.0",
+    "toposort": "^2.0.2",
     "url": "^0.11.0",
-    "uuid": "^8.2.0",
-    "validator": "^6.1.0",
-    "webpack-sources": "^1.1.0"
+    "uuid": "^9.0.0",
+    "validator": "^13.7.0",
+    "webpack-sources": "^3.2.3"
   },
   "devDependencies": {
-    "@silverstripe/eslint-config": "^0.1.0",
-    "@silverstripe/webpack-config": "^1.7.0",
-    "@storybook/addon-actions": "^3.4.10",
-    "@storybook/addon-knobs": "^3.4.10",
-    "@storybook/addon-notes": "^3.4.10",
-    "@storybook/addon-options": "^3.4.10",
-    "@storybook/addons": "^3.4.10",
-    "@storybook/react": "^3.4.10",
-    "babel-jest": "^23.6.0",
-    "babel-runtime": "^6.26.0",
-    "chalk": "^2.4.2",
-    "copy-webpack-plugin": "^4.2.0",
-    "enzyme": "^3.6.0",
-    "enzyme-adapter-react-16": "^1.5.0",
-    "expose-loader": "^0.7.3",
-    "fast-glob": "^3.0.1",
-    "html-loader": "^0.5.1",
+    "@babel/runtime": "^7.20.0",
+    "@silverstripe/eslint-config": "^1.0.0-alpha1",
+    "@silverstripe/webpack-config": "^2.0.0-alpha1",
+    "babel-jest": "^29.2.2",
+    "chalk": "^5.1.2",
+    "copy-webpack-plugin": "^11.0.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "fast-glob": "^3.2.12",
+    "html-loader": "^4.2.0",
     "is-plain-object": "^5.0.0",
-    "jest-cli": "^23.6.0",
-    "markdown-loader": "^5.1.0",
-    "sass-loader": "^6.0.5",
-    "storybook-addon-jsx": "^5.4.0",
-    "webpack": "^3.12.0"
+    "jest-cli": "^29.2.2",
+    "markdown-loader": "^8.0.0",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^5.0.0"
   },
   "resolutions": {
-    "colors": "1.1.2",
-    "eslint": "^4.6.1"
+    "colors": "1.4.0"
   },
+  "browserslist": [
+    "defaults"
+  ],
   "jest": {
     "roots": [
       "client/src"
@@ -140,11 +126,8 @@
   },
   "babel": {
     "presets": [
-      "env",
-      "react"
-    ],
-    "plugins": [
-      "transform-object-rest-spread"
+      "@babel/preset-env",
+      "@babel/preset-react"
     ]
   }
 }
