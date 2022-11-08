@@ -1849,11 +1849,12 @@ class LeftAndMain extends Controller implements PermissionProvider
         $helpLinks = $this->config()->get('help_links');
         $formattedLinks = [];
 
-        $helpLink = $this->config()->get('help_link');
-        if ($helpLink) {
-            Deprecation::notice('5.0', 'Use $help_links instead of $help_link');
-            $helpLinks['CMS User help'] = $helpLink;
-        }
+        Deprecation::withNoReplacement(function () use ($helpLinks) {
+            $helpLink = $this->config()->get('help_link');
+            if ($helpLink) {
+                $helpLinks['CMS User help'] = $helpLink;
+            }
+        });
 
         foreach ($helpLinks as $key => $value) {
             $translationKey = str_replace(' ', '', $key ?? '');
