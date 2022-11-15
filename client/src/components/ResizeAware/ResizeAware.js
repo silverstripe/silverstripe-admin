@@ -105,7 +105,7 @@ export default class ResizeAware extends Component {
 }
 
 ResizeAware.propTypes = {
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  component: PropTypes.oneOfType([PropTypes.string, PropTypes.elementType]),
   onResize: PropTypes.func
 };
 

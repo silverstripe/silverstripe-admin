@@ -58,7 +58,7 @@ class FileSchemaHandler extends Component {
 
 FileSchemaHandler.propTypes = {
   fileAttributes: PropTypes.object,
-  Component: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+  Component: PropTypes.elementType,
   schemaUrl: PropTypes.string,
   actions: PropTypes.object,
 };

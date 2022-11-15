@@ -446,7 +446,7 @@ FormBuilderLoader.propTypes = Object.assign({}, basePropTypes, {
   submitting: PropTypes.bool,
   onFetchingSchema: PropTypes.func,
   onReduxFormInit: PropTypes.func,
-  loadingComponent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]).isRequired,
+  loadingComponent: PropTypes.elementType.isRequired,
 });
 
 FormBuilderLoader.defaultProps = {

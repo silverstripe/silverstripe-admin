@@ -156,7 +156,7 @@ Preview.propTypes = {
   itemId: PropTypes.number,
   onBack: PropTypes.func,
   moreActions: PropTypes.arrayOf(PropTypes.element),
-  ViewModeComponent: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  ViewModeComponent: PropTypes.elementType,
 };
 
 Preview.defaultProps = {
