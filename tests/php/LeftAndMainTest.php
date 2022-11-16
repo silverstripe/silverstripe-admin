@@ -13,6 +13,7 @@ use SilverStripe\Dev\FunctionalTest;
 use SilverStripe\Security\Member;
 use SilverStripe\View\Requirements;
 use SilverStripe\Core\Manifest\VersionedProvider;
+use SilverStripe\Dev\Deprecation;
 
 class LeftAndMainTest extends FunctionalTest
 {
@@ -32,14 +33,14 @@ class LeftAndMainTest extends FunctionalTest
         $assetsDir = File::join_paths($base->getRelativePath(), 'tests/php/assets');
 
         LeftAndMain::config()
-            ->update('extra_requirements_css', [
+            ->merge('extra_requirements_css', [
                 $assetsDir.'/LeftAndMainTest.css',
                 $assetsDir. '/LeftAndMainTestWithOptions.css' => [
                     'media' => 'print',
                     'crossorigin' => 'anonymous'
                 ],
             ])
-            ->update('extra_requirements_javascript', [
+            ->merge('extra_requirements_javascript', [
                 $assetsDir. '/LeftAndMainTest.js',
                 $assetsDir. '/LeftAndMainTestWithOptions.js' => [
                     'crossorigin' => 'anonymous'
@@ -186,12 +187,13 @@ class LeftAndMainTest extends FunctionalTest
      */
     public function testGetHelpLinks()
     {
-        Config::modify()
+        Deprecation::withNoReplacement(function () {
             // Remove any deprecated help_link definitions
-            ->remove(LeftAndMain::class, 'help_link')
-            ->set(LeftAndMain::class, 'help_links', [
-                'SilverStripe' => 'www.silverstripe.org',
-            ]);
+            Config::modify()->remove(LeftAndMain::class, 'help_link');
+        });
+        Config::modify()->set(LeftAndMain::class, 'help_links', [
+            'SilverStripe' => 'www.silverstripe.org',
+        ]);
 
         $helpLinks = LeftAndMain::singleton()->getHelpLinks();
         $this->assertCount(1, $helpLinks, 'Unexpected number of help links found');
