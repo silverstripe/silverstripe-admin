@@ -28,11 +28,12 @@ $('#MemberImportFormIframe, #GroupImportFormIframe').entwine({
   onadd: function() {
     this._super();
     // TODO entwine can't seem to bind to iframe load events
-    $(this).bind('load', refreshAfterImport);
+    $(this).on('load', refreshAfterImport);
   }
 });
 
-$.entwine('ss', function($){
+$.entwine('ss', function($) {
+
   /**
    * Class: #Permissions .checkbox[value=ADMIN]
    *

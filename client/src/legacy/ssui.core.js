@@ -40,7 +40,7 @@ $.widget("ssui.ssdialog", $.ui.dialog, {
 
     // Create iframe
     var iframe = $('<iframe marginWidth="0" marginHeight="0" frameBorder="0" scrolling="auto"></iframe>');
-    iframe.bind('load', function(e) {
+    iframe.on('load', function(e) {
       if($(this).attr('src') == 'about:blank') return;
 
       iframe.addClass('loaded').show(); // more reliable than 'src' attr check (in IE)
@@ -67,13 +67,13 @@ $.widget("ssui.ssdialog", $.ui.dialog, {
     }
 
     // Resize events
-    $(window).bind('resize.ssdialog', function() {self._resizeIframe();});
+    $(window).on('resize.ssdialog', function() {self._resizeIframe();});
   },
   close: function() {
     $.ui.dialog.prototype.close.call(this);
 
-    this.uiDialog.unbind('resize.ssdialog');
-    $(window).unbind('resize.ssdialog');
+    this.uiDialog.off('resize.ssdialog');
+    $(window).off('resize.ssdialog');
   },
   _resizeIframe: function() {
     var opts = {}, newWidth, newHeight, iframe = this.element.children('iframe');;
@@ -189,7 +189,7 @@ $.widget("ssui.titlebar", {
 
   destroy: function() {
     this.element
-      .unbind('.dialog')
+      .off('.dialog')
       .removeData('dialog')
       .removeClass('ui-dialog-content ui-widget-content')
       .hide().appendTo('body');

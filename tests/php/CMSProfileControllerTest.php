@@ -60,7 +60,7 @@ class CMSProfileControllerTest extends FunctionalTest
     public function testExtendedPermissionsStopEditingOwnProfile()
     {
         $existingExtensions = Member::config()->get('extensions', Config::EXCLUDE_EXTRA_SOURCES);
-        Member::config()->update('extensions', [
+        Member::config()->merge('extensions', [
             CMSProfileControllerTest\TestExtension::class
         ]);
 
@@ -88,6 +88,6 @@ class CMSProfileControllerTest extends FunctionalTest
 
         Member::config()
             ->remove('extensions')
-            ->update('extensions', $existingExtensions);
+            ->merge('extensions', $existingExtensions);
     }
 }

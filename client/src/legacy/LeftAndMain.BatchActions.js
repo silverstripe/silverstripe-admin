@@ -45,7 +45,7 @@ $.entwine('ss.tree', function($){
       var self = this;
 
       self.getTree()
-      .bind('load_node.jstree', function (e, data) {
+      .on('load_node.jstree', function (e, data) {
         self.refreshSelected();
       });
     },
@@ -54,7 +54,7 @@ $.entwine('ss.tree', function($){
       var self = this;
 
       self.getTree()
-        .unbind('load_node.jstree');
+        .off('load_node.jstree');
     },
 
     /**
@@ -372,37 +372,42 @@ $.entwine('ss.tree', function($){
    */
   $('#Form_BatchActionsForm select[name=Action]').entwine({
     onchange: function(e) {
-      var form = $(e.target.form),
-        btn = form.find(':submit'),
-        selected = $(e.target).val(),
-        actionUrlParts = selected.split('/'),
-        actionName = actionUrlParts[actionUrlParts.length - 1];
+      const form = $(e.target.form);
+      const btn = form.find(':submit');
+      const selected = $(e.target).val();
 
-      // Refresh selected / enabled nodes
-      $('#Form_BatchActionsForm').refreshSelected();
+      // When resetting the field after a successful action, there won't be a valid "selected" option.
+      if (selected) {
 
-      // Process action parameter fields
-      var parameterFields = $('#BatchActionParameters_' + actionName);
-      if (parameterFields.length) {
-        // Reset fields to default values before displaying them 
-        parameterFields.find(':input').each(function () {
-          var input = $(this)[0];
-          if (input.tagName === 'SELECT') {
-            input.selectedIndex = -1;
-            $(this).trigger('chosen:updated');
-          } else if (input.type === 'checkbox') {
-            input.checked = input.defaultChecked;
-          } else {
-            input.value = input.defaultValue;
-          }
-        });
+        const actionUrlParts = selected.split('/');
+        const actionName = actionUrlParts[actionUrlParts.length - 1];
 
-        // Hide / display action parameter fields
-        parameterFields.siblings().hide();
-        parameterFields.show();
-        $('#BatchActionParameters').slideDown();
-      } else {
-        $('#BatchActionParameters').slideUp();
+        // Refresh selected / enabled nodes
+        $('#Form_BatchActionsForm').refreshSelected();
+
+        // Process action parameter fields
+        var parameterFields = $('#BatchActionParameters_' + actionName);
+        if (parameterFields.length) {
+          // Reset fields to default values before displaying them
+          parameterFields.find(':input').each(function () {
+            var input = $(this)[0];
+            if (input.tagName === 'SELECT') {
+              input.selectedIndex = -1;
+              $(this).trigger('chosen:updated');
+            } else if (input.type === 'checkbox') {
+              input.checked = input.defaultChecked;
+            } else {
+              input.value = input.defaultValue;
+            }
+          });
+
+          // Hide / display action parameter fields
+          parameterFields.siblings().hide();
+          parameterFields.show();
+          $('#BatchActionParameters').slideDown();
+        } else {
+          $('#BatchActionParameters').slideUp();
+        }
       }
 
       // TODO Should work by triggering change() along, but doesn't - entwine event bubbling?
