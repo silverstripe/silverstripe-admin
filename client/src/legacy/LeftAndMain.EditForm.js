@@ -89,7 +89,7 @@ $.entwine('ss', function($){
       // in order to avoid changing the menu state if the action is cancelled by the user
       // $('.cms-menu')
 
-      // Optionally get the form attributes from embedded fields, see Form->formHtmlContent()
+      // Optionally get the form attributes from embedded fields
       for(var overrideAttr in {'action':true,'method':true,'enctype':true,'name':true}) {
         var el = this.find(':input[name='+ '_form_' + overrideAttr + ']');
         if(el) {

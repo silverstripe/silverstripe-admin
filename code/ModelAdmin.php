@@ -10,7 +10,6 @@ use SilverStripe\Core\ClassInfo;
 use SilverStripe\Core\Convert;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\BulkLoader;
-use SilverStripe\Dev\Deprecation;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\FileField;
@@ -371,68 +370,6 @@ abstract class ModelAdmin extends LeftAndMain
     public function getExportFields()
     {
         return singleton($this->modelClass)->summaryFields();
-    }
-
-    /**
-     * @deprecated 1.3.0 Use GridFieldFilterHeader instead
-     * @return \SilverStripe\ORM\Search\SearchContext
-     */
-    public function getSearchContext()
-    {
-        Deprecation::notice('1.3.0', 'Use GridFieldFilterHeader instead');
-
-        $gridField = $this->getEditForm()->fields()
-            ->fieldByName($this->sanitiseClassName($this->modelClass));
-
-        $filterHeader = $gridField->getConfig()
-            ->getComponentByType(GridFieldFilterHeader::class);
-
-        $context = $filterHeader
-            ->getSearchContext($gridField);
-
-        return $context;
-    }
-
-    /**
-     * Gets a list of fields that have been searched
-     *
-     * @deprecated 1.3.0 Use GridFieldFilterHeader instead
-     * @return ArrayList
-     */
-    public function SearchSummary()
-    {
-        Deprecation::notice('1.3.0', 'Use GridFieldFilterHeader instead');
-
-        $context = $this->getSearchContext();
-
-        return $context->getSummary();
-    }
-
-    /**
-     * Returns the search form
-     *
-     * @deprecated 1.3.0 Use GridFieldFilterHeader instead
-     * @return Form|bool
-     */
-    public function SearchForm()
-    {
-        Deprecation::notice('1.3.0', 'Use GridFieldFilterHeader instead');
-
-        if (!$this->showSearchForm
-            || (is_array($this->showSearchForm) && !in_array($this->modelClass, $this->showSearchForm ?? []))
-        ) {
-            return false;
-        }
-
-        $gridField = $this->getEditForm()->fields()
-        ->fieldByName($this->sanitiseClassName($this->modelClass));
-
-        $filterHeader = $gridField->getConfig()
-            ->getComponentByType(GridFieldFilterHeader::class);
-
-        $form = $filterHeader->getSearchForm($gridField);
-
-        return $form;
     }
 
     /**
