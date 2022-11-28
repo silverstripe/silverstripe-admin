@@ -403,7 +403,9 @@ abstract class ModelAdmin extends LeftAndMain
     {
         Deprecation::notice('1.3.0', 'Use GridFieldFilterHeader instead');
 
-        $context = $this->getSearchContext();
+        $context = Deprecation::withNoReplacement(function () {
+            return $this->getSearchContext();
+        });
 
         return $context->getSummary();
     }
