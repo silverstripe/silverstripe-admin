@@ -22,7 +22,6 @@ use SilverStripe\Core\Convert;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Core\Manifest\ModuleResourceLoader;
 use SilverStripe\Core\Manifest\VersionProvider;
-use SilverStripe\Dev\Deprecation;
 use SilverStripe\Dev\TestOnly;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
@@ -126,14 +125,6 @@ class LeftAndMain extends Controller implements PermissionProvider
      * @var string
      */
     private static $tree_class = null;
-
-    /**
-     * @deprecated 1.12.0 Use $help_links instead
-     *
-     * @config
-     * @var string
-     */
-    private static $help_link = '';
 
     /**
      * @var array
@@ -690,7 +681,7 @@ class LeftAndMain extends Controller implements PermissionProvider
 
         Requirements::css('silverstripe/admin: client/dist/styles/bundle.css');
         Requirements::add_i18n_javascript('silverstripe/admin:client/lang');
-        Requirements::add_i18n_javascript('silverstripe/admin:client/dist/moment-locales', false, false, true);
+        Requirements::add_i18n_javascript('silverstripe/admin:client/dist/moment-locales', false);
 
         if (LeftAndMain::config()->uninherited('session_keepalive_ping')) {
             Requirements::javascript('silverstripe/admin: client/dist/js/LeftAndMain.Ping.js');
@@ -909,15 +900,6 @@ class LeftAndMain extends Controller implements PermissionProvider
         );
         $this->extend('updateLink', $link);
         return $link;
-    }
-
-    /**
-     * @deprecated 1.12.0 Use menu_title() instead
-     */
-    public static function menu_title_for_class($class)
-    {
-        Deprecation::notice('1.12.0', 'Use menu_title() instead');
-        return static::menu_title($class, false);
     }
 
     /**
@@ -1680,7 +1662,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         if (is_numeric($this->getRequest()->param('ID'))) {
             return $this->getRequest()->param('ID');
         }
-
+        
         /** @deprecated */
         $session = $this->getRequest()->getSession();
         return $session->get($this->sessionNamespace() . ".currentPage") ?: null;
@@ -1818,13 +1800,6 @@ class LeftAndMain extends Controller implements PermissionProvider
     {
         $helpLinks = $this->config()->get('help_links');
         $formattedLinks = [];
-
-        Deprecation::withNoReplacement(function () use ($helpLinks) {
-            $helpLink = $this->config()->get('help_link');
-            if ($helpLink) {
-                $helpLinks['CMS User help'] = $helpLink;
-            }
-        });
 
         foreach ($helpLinks as $key => $value) {
             $translationKey = str_replace(' ', '', $key ?? '');

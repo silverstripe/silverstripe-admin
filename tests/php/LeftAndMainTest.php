@@ -13,7 +13,6 @@ use SilverStripe\Dev\FunctionalTest;
 use SilverStripe\Security\Member;
 use SilverStripe\View\Requirements;
 use SilverStripe\Core\Manifest\VersionedProvider;
-use SilverStripe\Dev\Deprecation;
 
 class LeftAndMainTest extends FunctionalTest
 {
@@ -187,10 +186,6 @@ class LeftAndMainTest extends FunctionalTest
      */
     public function testGetHelpLinks()
     {
-        Deprecation::withNoReplacement(function () {
-            // Remove any deprecated help_link definitions
-            Config::modify()->remove(LeftAndMain::class, 'help_link');
-        });
         Config::modify()->set(LeftAndMain::class, 'help_links', [
             'SilverStripe' => 'www.silverstripe.org',
         ]);
