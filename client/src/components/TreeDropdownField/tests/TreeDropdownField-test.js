@@ -1,6 +1,5 @@
 /* global jest, describe, beforeEach, it, expect, setTimeout, document */
 
-jest.mock('components/TreeDropdownField/TreeDropdownFieldMenu');
 jest.mock('isomorphic-fetch', () =>
   () => Promise.resolve({
     json: () => ({}),
@@ -11,6 +10,10 @@ import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import { Component as TreeDropdownField, MULTI_EMPTY_VALUE, SINGLE_EMPTY_VALUE } from '../TreeDropdownField';
 import mockTree from './mockTree';
+
+function buildTestFilter(component, input) {
+  return (option) => component.filterOption(option, input);
+}
 
 describe('TreeDropdownField', () => {
   let props = null;
@@ -147,11 +150,7 @@ describe('TreeDropdownField', () => {
     it('should set search after a delay', () => {
       jest.useFakeTimers();
       field.handleSearchChange('searching');
-
-      expect(setTimeout).toBeCalled();
-
-      const callback = setTimeout.mock.calls[0][0];
-      callback();
+      jest.runAllTimers();
 
       expect(props.actions.treeDropdownField.setSearch).toBeCalledWith(props.id, 'searching');
     });
@@ -411,7 +410,7 @@ describe('TreeDropdownField', () => {
     });
 
     it('should call handleBack', () => {
-      field.selectField.getFocusedOption = () => ({});
+      field.selectField.state.focusedOption = {};
 
       const event = document.createEvent('Event');
       event.keyCode = 37;
@@ -422,7 +421,7 @@ describe('TreeDropdownField', () => {
     });
 
     it('should call handleNavigate', () => {
-      field.selectField.getFocusedOption = () => ({ id: 9, count: 2 });
+      field.selectField.state.focusedOption = { id: 9, count: 2 };
 
       const event = document.createEvent('Event');
       event.keyCode = 39;
@@ -618,14 +617,14 @@ describe('TreeDropdownField', () => {
     });
   });
 
-  describe('filterOptions()', () => {
+  describe('filterOption()', () => {
     let options = null;
 
     beforeEach(() => {
       options = [
-        { id: 57 },
-        { id: 68, title: 'sixty eight' },
-        { id: 5, title: 'five' },
+        { value: 57 },
+        { value: 68, label: 'sixty eight' },
+        { value: 5, label: 'five' },
       ];
     });
 
@@ -635,7 +634,7 @@ describe('TreeDropdownField', () => {
       );
       field.getVisibleTree = () => null;
 
-      const newOptions = field.filterOptions(options);
+      const newOptions = options.filter(buildTestFilter(field, ''));
 
       expect(newOptions).toEqual(options);
     });
@@ -646,9 +645,9 @@ describe('TreeDropdownField', () => {
       );
       field.getVisibleTree = () => props.tree;
 
-      const newOptions = field.filterOptions(options);
+      const newOptions = options.filter(buildTestFilter(field, ''));
 
-      expect(newOptions).toEqual([{ id: 5, title: 'five' }]);
+      expect(newOptions).toEqual([{ value: 5, label: 'five' }]);
     });
 
     it('should filter titles that do not contain "i"', () => {
@@ -658,9 +657,9 @@ describe('TreeDropdownField', () => {
       );
       field.getVisibleTree = () => null;
 
-      const newOptions = field.filterOptions(options);
+      const newOptions = options.filter(buildTestFilter(field, props.search));
 
-      expect(newOptions).toEqual(options.filter(item => item.id !== 57));
+      expect(newOptions).toEqual(options.filter(item => item.value !== 57));
     });
   });
 

@@ -156,7 +156,7 @@ describe('Backend', () => {
           'Content-Type': 'application/x-www-form-urlencoded',
         });
 
-      return promise
+      promise
         .catch((e) => expect(e).toBeFalsy())
         .then(done());
     });
@@ -180,7 +180,7 @@ describe('Backend', () => {
           }
         );
 
-      return promise
+      promise
         .catch((e) => expect(e).toBeFalsy())
         .then(done());
     });
@@ -209,7 +209,7 @@ describe('Backend', () => {
           }
         );
 
-      return promise
+      promise
         .catch((e) => expect(e).toBeFalsy())
         .then(done());
     });
@@ -240,7 +240,7 @@ describe('Backend', () => {
           }
         );
 
-      return promise
+      promise
         .catch((e) => expect(e).toBeFalsy())
         .then(done());
     });
@@ -267,7 +267,7 @@ describe('Backend', () => {
           'Content-Type': 'application/x-www-form-urlencoded',
         });
 
-      return promise
+      promise
         .catch((e) => expect(e).toBeFalsy())
         .then(done());
     });
@@ -299,7 +299,7 @@ describe('Backend', () => {
           }
         );
 
-      return promise
+      promise
         .catch((e) => expect(e).toBeFalsy())
         .then(done());
     });

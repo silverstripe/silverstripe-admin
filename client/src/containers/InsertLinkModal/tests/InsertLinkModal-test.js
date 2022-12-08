@@ -2,11 +2,23 @@
 
 jest.mock('components/FormBuilderModal/FormBuilderModal');
 
-import React from 'react';
+import React, { Component } from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { InsertLinkModal, createInsertLinkModal } from '../InsertLinkModal';
+
+// This is needed because the latest redux uses functional components, which don't get
+// returned as instances by ReactTestUtils.renderIntoDocument()
+class ReduxProvider extends Component {
+  render() {
+    return (
+      <Provider {...this.props}>
+        {this.props.children}
+      </Provider>
+    );
+  }
+}
 
 describe('InsertLinkModal', () => {
   let modal = null;
@@ -47,9 +59,9 @@ describe('InsertLinkModal', () => {
 
       // prep with store, so that `connect()` can call the proper state objects
       const app = ReactTestUtils.renderIntoDocument(
-        <Provider store={store}>
+        <ReduxProvider store={store}>
           <LinkModalComponent {...props} />
-        </Provider>
+        </ReduxProvider>
       );
       modal = ReactTestUtils.findRenderedComponentWithType(app, InsertLinkModal);
 
