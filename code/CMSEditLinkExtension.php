@@ -85,7 +85,7 @@ class CMSEditLinkExtension extends Extension
         } else {
             $relativeLink = $owner->getCMSEditLinkForManagedDataObject($this->owner);
         }
-        return Director::absoluteURL($relativeLink);
+        return Director::absoluteURL((string) $relativeLink);
     }
 
     private function getCMSEditLinkForRelation(array $componentConfig, DataObject $obj, string $reciprocalRelation, FieldList $fields): string
