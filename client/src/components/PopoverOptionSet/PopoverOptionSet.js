@@ -235,14 +235,14 @@ PopoverOptionSet.propTypes = {
   // Default search handler assumes button content to be plain text and performs
   // a simple string.contains check.
   onSearch: PropTypes.func,
-  container: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  container: PropTypes.oneOfType([PropTypes.string, PropTypes.elementType]),
   isOpen: PropTypes.bool.isRequired,
   placement: PropTypes.string,
-  target: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]).isRequired,
+  target: PropTypes.oneOfType([PropTypes.string, PropTypes.elementType]).isRequired,
   toggle: PropTypes.func.isRequired,
   searchPlaceholder: PropTypes.string,
   disableSearch: PropTypes.bool,
-  ButtonComponent: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  ButtonComponent: PropTypes.elementType,
   // Various classNames that can be configured:
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
   searchClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),

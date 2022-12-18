@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 // TODO Enable once https://github.com/webpack/extract-text-webpack-plugin/issues/179 is resolved. Included in bundle.scss for now.
-// require('../styles/legacy/SelectionGroup.scss');
+// import '../styles/legacy/SelectionGroup.scss';
 
 
 $(document).ready(function() {

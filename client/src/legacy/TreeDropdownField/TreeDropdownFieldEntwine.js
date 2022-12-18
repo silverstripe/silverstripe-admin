@@ -2,6 +2,7 @@
 import jQuery from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { schemaMerge } from 'lib/schemaFieldValues';
 import { MULTI_EMPTY_VALUE } from 'components/TreeDropdownField/TreeDropdownField';
 import { loadComponent } from 'lib/Injector';
@@ -11,6 +12,7 @@ jQuery.entwine('ss', ($) => {
     Value: null,
     Timer: null,
     Component: null,
+    ReactRoot: null,
 
     onmatch() {
       this._super();
@@ -42,10 +44,10 @@ jQuery.entwine('ss', ($) => {
 
     onunmatch() {
       this._super();
-      // solves errors given by ReactDOM "no matched root found" error.
-      const container = this[0];
-      if (container) {
-        ReactDOM.unmountComponentAtNode(container);
+      const root = this.getReactRoot();
+      if (root) {
+        root.unmount();
+        this.setReactRoot(null);
       }
     },
 
@@ -67,15 +69,19 @@ jQuery.entwine('ss', ($) => {
       const TreeDropdownField = this.getComponent();
 
       // TODO: rework entwine so that react has control of holder
-      ReactDOM.render(
+      let root = this.getReactRoot();
+      if (!root) {
+        root = createRoot(this[0]);
+      }
+      root.render(
         <TreeDropdownField
           {...props}
           onChange={onChange}
           value={this.getValue()}
           noHolder
-        />,
-        this[0]
+        />
       );
+      this.setReactRoot(root);
     },
 
     getAttributes() {

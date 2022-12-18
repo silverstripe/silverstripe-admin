@@ -1,11 +1,11 @@
 /* global window */
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from '@apollo/client';
+import NotFoundComponent from 'components/NotFoundComponent/NotFoundComponent';
 import provideInjector from './provideInjector';
 import withInjector from './withInjector';
 import Injector from './Container';
-import NotFoundComponent from 'components/NotFoundComponent/NotFoundComponent';
 import contextType from './injectorContext';
 
 /**

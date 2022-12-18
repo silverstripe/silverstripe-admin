@@ -4,18 +4,18 @@
 */
 import $ from 'jquery';
 import React from 'react';
-import { Provider } from 'react-redux';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Prompt } from 'react-router-dom';
-import { renderRoutes } from 'react-router-config';
+import { Provider as ReduxProvider } from 'react-redux';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import Config from 'lib/Config';
 import pageRouter from 'lib/Router';
 import reactRouteRegister from 'lib/ReactRouteRegister';
 import App from 'containers/App/App';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from '@apollo/client';
 import i18n from 'i18n';
 import { isDirty } from 'redux-form';
 import getFormState from 'lib/getFormState';
+import { Routes, Route } from 'react-router';
 
 /**
  * Bootstraps routes
@@ -106,23 +106,22 @@ class BootRoutes {
    * Initialise routing to use react-route powered routing
    */
   initReactRouter() {
-    reactRouteRegister.updateRootRoute({
-      component: App,
-    });
+    reactRouteRegister.updateRootRoute({ component: App });
+    const rootRoute = reactRouteRegister.getRootRoute();
+    const routes = reactRouteRegister.getChildRoutes().map((route) => (
+      <Route key={route.path} path={route.path} element={<route.component />} />
+    ));
 
-    ReactDOM.render(
+    ReactDOM.createRoot(document.getElementsByClassName('cms-content')[0]).render(
       <ApolloProvider client={this.client}>
-        <Provider store={this.store}>
-          <Router
-            basename={Config.get('baseUrl')}
-            getUserConfirmation={this.handleBeforeRoute}
-          >
-            <Prompt message={i18n._t('Admin.CONFIRMUNSAVEDSHORT', 'WARNING: Your changes have not been saved.')} />
-            {renderRoutes([reactRouteRegister.getRootRoute()])}
-          </Router>
-        </Provider>
-      </ApolloProvider>,
-      document.getElementsByClassName('cms-content')[0]
+        <ReduxProvider store={this.store}>
+          <BrowserRouter basename={`${Config.get('baseUrl')}${Config.get('adminUrl')}`}>
+            <Routes>
+              <Route path={rootRoute.path} element={<rootRoute.component />}>{routes}</Route>
+            </Routes>
+          </BrowserRouter>
+        </ReduxProvider>
+      </ApolloProvider>
     );
   }
 
@@ -185,10 +184,8 @@ class BootRoutes {
     // with an event handler is rendered, which means the page router will intercept
     // events that should be caught by react component event handlers.
     // Note that this empty link is rendered into an element that doesn't exist in the DOM.
-    ReactDOM.render(
-      <a role="none" onClick={() => {}} />,
-      document.createElement('div')
-    );
+    const root = ReactDOM.createRoot(document.createElement('div'));
+    root.render(<a role="none" onClick={() => {}} />);
 
     // Start the page router
     pageRouter.start();

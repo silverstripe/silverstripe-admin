@@ -6,7 +6,7 @@ import i18n from 'i18n';
 import moment from 'moment';
 import modernizr from 'modernizr';
 
-require('../../../thirdparty/jquery-entwine/jquery.entwine.js');
+import '../../../thirdparty/jquery-entwine/jquery.entwine.js';
 
 jQuery.entwine('ss', ($) => {
   $('input[type=datetime-local]').entwine({

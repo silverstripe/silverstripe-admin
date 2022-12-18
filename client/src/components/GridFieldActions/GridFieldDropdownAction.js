@@ -13,6 +13,7 @@ class GridFieldDropdownAction extends PureComponent {
 
     switch (type) {
       case 'submit':
+      case 'button':
         elementType = 'button';
         url = undefined;
         break;

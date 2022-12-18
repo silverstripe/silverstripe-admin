@@ -31,7 +31,7 @@ describe('ReactRouteRegister', () => {
       expect(reactRouteRegister.getRootRoute())
         .toEqual({
           path: '/',
-          routes: jasmine.any(Function),
+          routes: expect.any(Function),
         });
 
       // Add nested routes
@@ -124,7 +124,7 @@ describe('ReactRouteRegister', () => {
         .toEqual({
           path: '/',
           component: MyApp,
-          routes: jasmine.any(Function),
+          routes: expect.any(Function),
         });
     });
   });

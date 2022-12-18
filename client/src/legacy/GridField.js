@@ -2,15 +2,16 @@ import $ from 'jquery';
 import i18n from 'i18n';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import Search from 'components/Search/Search.js';
 import { schemaMerge } from 'lib/schemaFieldValues';
 import { loadComponent } from 'lib/Injector';
 
-require('../../../thirdparty/jquery-ui/jquery-ui.js');
-require('../../../thirdparty/jquery-entwine/jquery.entwine.js');
+import '../../../thirdparty/jquery-ui/jquery-ui.js';
+import '../../../thirdparty/jquery-entwine/jquery.entwine.js';
 
 // TODO Enable once https://github.com/webpack/extract-text-webpack-plugin/issues/179 is resolved. Included in bundle.scss for now.
-// require('../styles/legacy/GridField.scss');
+// import '../styles/legacy/GridField.scss';
 
 $.entwine('ss', function($) {
   $('.grid-field').entwine({
@@ -249,6 +250,7 @@ $.entwine('ss', function($) {
     Timer: null,
     Component: null,
     Actions: null,
+    ReactRoot: null,
 
     onmatch() {
       this._super();
@@ -275,10 +277,10 @@ $.entwine('ss', function($) {
 
     onunmatch() {
       this._super();
-      // solves errors given by ReactDOM "no matched root found" error.
-      const container = this[0];
-      if (container) {
-        ReactDOM.unmountComponentAtNode(container);
+      const root = this.getReactRoot();
+      if (root) {
+        root.unmount();
+        this.setReactRoot(null);
       }
 
       const actions = this.getActions();
@@ -296,10 +298,14 @@ $.entwine('ss', function($) {
       const GridFieldActions = this.getComponent();
 
       // TODO: rework entwine so that react has control of holder
-      ReactDOM.render(
-        <GridFieldActions schema={schema} />,
-        this[0]
+      let root = this.getReactRoot();
+      if (!root) {
+        root = createRoot(this[0]);
+      }
+      root.render(
+        <GridFieldActions schema={schema} />
       );
+      this.setReactRoot(root);
     },
   })
 
@@ -631,6 +637,7 @@ $.entwine('ss', function($) {
 
   $('.js-injector-boot .grid-field .grid-field__search-holder').entwine({
     Component: null,
+    ReactRoot: null,
 
     onmatch() {
       this._super();
@@ -651,10 +658,10 @@ $.entwine('ss', function($) {
 
     onunmatch() {
       this._super();
-      // solves errors given by ReactDOM "no matched root found" error.
-      const container = this[0];
-      if (container) {
-        ReactDOM.unmountComponentAtNode(container);
+      const root = this.getReactRoot();
+      if (root) {
+        root.unmount();
+        this.setReactRoot(null);
       }
     },
 
@@ -722,7 +729,11 @@ $.entwine('ss', function($) {
       const handleSearch = (data) => this.search(data);
       const idName = String(props.gridfield).replace(/\-/g, '.');
 
-      ReactDOM.render(
+      let root = this.getReactRoot();
+      if (!root) {
+        root = createRoot(this[0]);
+      }
+      root.render(
         <Search
           id={`${props.gridfield}Search`}
           display="VISIBLE"
@@ -731,9 +742,9 @@ $.entwine('ss', function($) {
           onHide={handleHide}
           onSearch={handleSearch}
           {...props}
-        />,
-        this[0]
+        />
       );
+      this.setReactRoot(root);
     },
   });
 

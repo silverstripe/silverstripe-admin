@@ -185,7 +185,8 @@ describe('DatetimeField without html5 date time field support', () => {
 
     it('should use iso format of date value in the input field', () => {
       expect(inputField.type).toBe('datetime-local');
-      expect(inputField.value).toBe('2017-01-05T02:23');
+      // Note that the inclusion of seconds or milliseconds is unnecessary but acceptable
+      expect(inputField.value).toMatch(/^2017-01-05T02:23(:22|:22.000)?$/);
     });
 
     it('should pass iso format as entered in the input field', () => {

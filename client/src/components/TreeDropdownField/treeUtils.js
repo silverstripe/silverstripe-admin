@@ -35,7 +35,7 @@ export const findTreeByPath = (tree, path) => {
  * @param {*} id - id property of node to find path for
  * @return {Object} - The tree if found, or null if not found.
  */
-const findTreeByID = (tree, id) => {
+export const findTreeByID = (tree, id) => {
   // No valid tree
   if (!id || !tree || !tree.children || Object.keys(tree).length === 0) {
     return null;

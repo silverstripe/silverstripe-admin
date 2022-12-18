@@ -1,11 +1,11 @@
 import $ from 'jquery';
 
-require('../../../thirdparty/jquery-ui/jquery-ui.js');
-require('../../../thirdparty/jquery-cookie/jquery.cookie.js');
-require('../../../thirdparty/jquery-entwine/jquery.entwine.js');
+import '../../../thirdparty/jquery-ui/jquery-ui.js';
+import '../../../thirdparty/jquery-cookie/jquery.cookie.js';
+import '../../../thirdparty/jquery-entwine/jquery.entwine.js';
 
 // TODO Enable once https://github.com/webpack/extract-text-webpack-plugin/issues/179 is resolved. Included in bundle.scss for now.
-// require('../../../thirdparty/jquery-ui-themes/smoothness/jquery-ui.css');
+// import '../../../thirdparty/jquery-ui-themes/smoothness/jquery-ui.css';
 
 $.entwine('ss', function($){
   $('.ss-tabset, .cms-tabset').entwine({

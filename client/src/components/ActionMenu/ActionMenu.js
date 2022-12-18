@@ -20,9 +20,9 @@ class ActionMenu extends PureComponent {
       toggleCallback(event);
     }
 
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
+    // Force setting state to the end of the execution queue to clear a potential race condition
+    // with entwine click handlers
+    window.setTimeout(() => this.setState({ isOpen: !this.state.isOpen }), 0);
   }
 
   render() {

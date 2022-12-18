@@ -1,11 +1,8 @@
-/* global window */
-import ApolloClient from 'apollo-client';
-import { withClientState } from 'apollo-link-state';
-import { from } from 'apollo-link';
+import { ApolloClient, from } from '@apollo/client';
+import Config from 'lib/Config';
 import getGraphqlFragments from './getGraphqlFragments';
 import buildNetworkComponents from './buildNetworkComponents';
 import buildCache from './buildCache';
-import Config from 'lib/Config';
 
 const buildClient = async (baseUrl) => {
     const graphQLConfig = Config.getSection('SilverStripe\\Admin\\LeftAndMain').graphql;
@@ -19,11 +16,7 @@ const buildClient = async (baseUrl) => {
     }
     const cache = buildCache(fragmentData);
     const components = buildNetworkComponents(baseUrl);
-    const stateLink = withClientState({
-      cache,
-      resolvers: {}
-    });
-    const link = from([stateLink, ...components]);
+    const link = from(components);
     return new ApolloClient({ cache, link });
 };
 

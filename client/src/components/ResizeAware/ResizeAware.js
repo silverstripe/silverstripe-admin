@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
  *
  * Adapted from https://github.com/FezVrasta/react-resize-aware created by Federico Zivolo.
  */
-export default class ResizeAware extends Component {
+class ResizeAware extends Component {
   constructor(props) {
     super(props);
 
@@ -105,10 +105,12 @@ export default class ResizeAware extends Component {
 }
 
 ResizeAware.propTypes = {
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  component: PropTypes.oneOfType([PropTypes.string, PropTypes.elementType]),
   onResize: PropTypes.func
 };
 
 ResizeAware.defaultProps = {
   component: 'div'
 };
+
+export default ResizeAware;

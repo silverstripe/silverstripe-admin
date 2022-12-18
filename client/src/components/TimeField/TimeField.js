@@ -56,7 +56,7 @@ TimeField.propTypes = {
   lang: PropTypes.string,
   modernizr: PropTypes.object,
   data: PropTypes.shape({
-    html5: PropTypes.boolean,
+    html5: PropTypes.bool,
   }),
 };
 

@@ -27,9 +27,9 @@ const { isOpen } = state;
 
 // Example code - setting state should not be done in render
 const toggle = () => {
-  this.setState({
-    isOpen: !this.state.isOpen,
-  });
+  // Force setting state to the end of the execution queue to clear a potential race condition
+  // with entwine click handlers
+  window.setTimeout(() => this.setState({ isOpen: !this.state.isOpen }), 0);
 };
 
 return (
@@ -73,7 +73,7 @@ buttons: PropTypes.arrayOf(PropTypes.shape({
 onSearch: PropTypes.func,
 
 // The container to render the popover within. See the ReactStrap documentation for popovers
-container: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+container: PropTypes.oneOfType([PropTypes.string, PropTypes.elementType]),
 
 // Whether the popover is open. See the ReactStrap documentation for popovers
 // A component that controls this prop with state is available (see below)
@@ -84,7 +84,7 @@ placement: PropTypes.string,
 
 // The ID of the DOMElement used to toggle this popoever. See the ReactStrap documentation for popover
 // A component that provides this prop is available (see below)
-target: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]).isRequired,
+target: PropTypes.oneOfType([PropTypes.string, PropTypes.elementType]).isRequired,
 
 // A function that toggles this visibility of the popover. See the ReactStrap documentation for popover
 // This is NOT required for Reactstrap but IS required for this component as accessibility helpers are provided to close
@@ -98,7 +98,7 @@ searchPlaceholder: PropTypes.string,
 disableSearch: PropTypes.bool,
 
 // The component to use for each button - defaults to a Reactstrap button component
-ButtonComponent: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+ButtonComponent: PropTypes.elementType,
 
 // Various classNames that can be configured
 // NOTE that styles are applied to the defaults for these props. If you are not intending to add your own styles then 

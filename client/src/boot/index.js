@@ -1,5 +1,4 @@
 /* global window */
-import BootRoutes from './BootRoutes';
 import Injector from 'lib/Injector';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
@@ -10,6 +9,7 @@ import registerComponents from 'boot/registerComponents';
 import registerReducers from 'boot/registerReducers';
 import applyDevtools from 'boot/applyDevtools';
 import applyTransforms from 'boot/applyTransforms';
+import BootRoutes from './BootRoutes';
 
 window.ss = window.ss || {};
 

@@ -1,4 +1,33 @@
-@import "~react-select/dist/react-select.css";
+.treedropdownfield__control {
+  border-color: $gray-200;
+  box-shadow: none;
+}
+
+.treedropdownfield__control--is-focused {
+  border-color: $brand-primary;
+  box-shadow: none;
+}
+
+.treedropdownfield__breadcrumbs {
+  color: $white;
+  background: $gray-700;
+  border-bottom: 1px solid #e6e6e6; // Select.js border color
+  font-weight: $headings-font-weight;
+
+  &:hover,
+  &:focus {
+    background: $gray-600;
+  }
+}
+
+.treedropdownfield__breadcrumbs-button {
+  color: $white;
+  border: 0;
+  background: none;
+  width: 30px;
+  padding: 0 10px 0 0;
+  line-height: 0.8;
+}
 
 .treedropdownfield__option+.treedropdownfield__option {
   border-top: 1px solid $border-color-light;
@@ -30,64 +59,17 @@
   line-height: 0.8;
 }
 
-.treedropdownfield__menu-loading {
-  padding: 2px 0 0 8px;
-}
-
-// breadcrumbs
-.treedropdownfield__breadcrumbs {
-  color: $white;
-  background: $gray-700;
-  border-bottom: 1px solid #e6e6e6; // Select.js border color
-  font-weight: $headings-font-weight;
-
-  &:hover {
-    background: $gray-600;
-  }
-}
-
-.treedropdownfield__breadcrumbs-button {
-  color: $white;
-  border: 0;
-  background: none;
-  width: 30px;
-  padding: 0 10px 0 0;
-  line-height: 0.8;
-}
-
 .treedropdownfield__option-context {
   color: $gray-600;
   font-size: $font-size-sm;
 }
 
-.treedropdownfield__option--selected {
-  background: $gray-300;
-}
-
-.treedropdownfield__option-title--highlighted {
-  font-weight: bold;
-}
-
-// sass-lint:disable class-name-format
-.Select--multi .Select-value {
-  color: $body-color;
-  background-color: $white;
-  border-color: $input-focus-border-color;
-  border-radius: $border-radius;
-
-  &-icon {
-    font-size: $font-size-lg;
-    padding: 0 5px 2px;
-    border-color: $input-focus-border-color;
-  }
-}
-
-.Select-option.is-focused {
+.treedropdownfield__option--is-focused {
   background-color: $list-group-hover-bg;
 }
 
-.Select-option.is-selected {
-  background-color: $link-color;
+.treedropdownfield__option--is-selected {
+  background: $link-color;
   color: $white;
 
   .treedropdownfield__option-button {
@@ -101,19 +83,44 @@
   }
 }
 
-.Select-control {
-  border-color: $gray-200;
-  box-shadow: none;
+.treedropdownfield__option-title--highlighted {
+  font-weight: bold;
 }
 
-.Select.is-focused:not(.is-open) > .Select-control,
-.is-open > .Select-control {
-  border-color: $brand-primary;
-  box-shadow: none;
+.treedropdownfield__indicator {
+  cursor: pointer;
 }
 
-.Select-menu-outer {
-  border-top-color: #e6e6e6;
-  box-shadow: none;
+.treedropdownfield__clear-indicator {
+  &:hover,
+  &:focus {
+    color: $brand-danger;
+  }
 }
-// sass-lint:enable class-name-format
+
+.treedropdownfield__dropdown-indicator {
+  &:hover,
+  &:focus {
+    color: $body-color-dark;
+  }
+}
+
+.treedropdownfield__multi-value {
+  color: $body-color;
+  background-color: $white;
+  border: 1px solid $input-focus-border-color;
+  border-radius: $border-radius;
+}
+
+.treedropdownfield__multi-value__remove {
+  font-size: $font-size-lg;
+  padding: 0 5px 2px;
+  border-left: 1px solid $input-focus-border-color;
+  border-radius: 0;
+
+  &:focus,
+  &:hover {
+    background-color: rgba(0,113,230,.08);
+    color: #0071e6;
+  }
+}

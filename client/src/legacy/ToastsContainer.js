@@ -1,7 +1,7 @@
 /* global window */
 import jQuery from 'jquery';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import Injector, { loadComponent } from 'lib/Injector';
 import { display } from 'state/toasts/ToastsActions';
 
@@ -15,7 +15,8 @@ jQuery.entwine('ss', ($) => {
     onmatch() {
       const container = $('<div class="toasts-container"></div>');
       this.append(container);
-      ReactDOM.render(<ToastsContainer />, container[0]);
+      const root = createRoot(container[0]);
+      root.render(<ToastsContainer />);
     },
   });
 });

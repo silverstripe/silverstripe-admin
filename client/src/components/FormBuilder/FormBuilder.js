@@ -392,7 +392,7 @@ const schemaPropType = PropTypes.shape({
   state: PropTypes.shape({
     fields: PropTypes.array,
   }),
-  loading: PropTypes.boolean,
+  loading: PropTypes.bool,
   stateOverride: PropTypes.shape({
     fields: PropTypes.array,
   }),
@@ -412,8 +412,8 @@ const basePropTypes = {
   validate: PropTypes.func,
   values: PropTypes.object,
   submitting: PropTypes.bool,
-  baseFormComponent: PropTypes.func.isRequired,
-  baseFieldComponent: PropTypes.func.isRequired,
+  baseFormComponent: PropTypes.elementType.isRequired,
+  baseFieldComponent: PropTypes.elementType.isRequired,
   getCustomFields: PropTypes.func,
   responseRequestedSchema: PropTypes.arrayOf(PropTypes.oneOf([
     'schema', 'state', 'errors', 'auto',

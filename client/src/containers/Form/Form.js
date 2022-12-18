@@ -15,7 +15,7 @@ const InjectableForm = (props) => {
 };
 
 InjectableForm.propTypes = {
-  formComponent: PropTypes.func.isRequired,
+  formComponent: PropTypes.elementType.isRequired,
 };
 
 const InjectedForm = inject(

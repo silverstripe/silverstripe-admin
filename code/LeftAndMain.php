@@ -329,6 +329,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     {
         // Allows the section name to be overridden in config
         $name = $this->config()->get('section_name');
+        $url = trim($this->Link() ?? '', '/');
 
         if (!$name) {
             $name = static::class;
@@ -338,7 +339,8 @@ class LeftAndMain extends Controller implements PermissionProvider
             // Trim leading/trailing slash to make it easier to concatenate URL
             // and use in routing definitions.
             'name' => $name,
-            'url' => trim($this->Link() ?? '', '/'),
+            'url' => $url,
+            'reactRoutePath' => preg_replace('/^' . preg_quote(AdminRootController::admin_url(), '/') . '/', '', $url),
             'form' => [
                 'EditorExternalLink' => [
                     'schemaUrl' => $this->Link('methodSchema/Modals/EditorExternalLink'),

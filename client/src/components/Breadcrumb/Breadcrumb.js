@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import FileStatusIcon from 'components/FileStatusIcon/FileStatusIcon';
+import Link from 'components/Link/Link';
 
 class Breadcrumb extends Component {
   /**
@@ -22,13 +23,13 @@ class Breadcrumb extends Component {
 
     return this.props.crumbs.slice(0, -1).map((crumb) => (
       <li key={crumb.text} className="breadcrumb__item">
-        <a
+        <Link
           className="breadcrumb__item-title"
           href={crumb.href}
           onClick={crumb.onClick}
         >
           {crumb.text}
-        </a>
+        </Link>
       </li>
     ));
   }

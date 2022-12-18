@@ -3,6 +3,7 @@ import i18n from 'i18n';
 import jQuery from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { loadComponent } from 'lib/Injector';
 
 const FormBuilderModal = loadComponent('FormBuilderModal');
@@ -44,6 +45,7 @@ jQuery.entwine('ss', ($) => {
    * The "add to campaign" dialog is used in a similar fashion in AssetAdmin.
    */
   $('#add-to-campaign__dialog-wrapper').entwine({
+    ReactRoot: null,
 
     onunmatch() {
       // solves errors given by ReactDOM "no matched root found" error.
@@ -69,7 +71,11 @@ jQuery.entwine('ss', ($) => {
       const modalSchemaUrl = `${sectionConfig.form.AddToCampaignForm.schemaUrl}/${id}`;
       const title = i18n._t('Admin.ADD_TO_CAMPAIGN', 'Add to campaign');
 
-      ReactDOM.render(
+      let root = this.getReactRoot();
+      if (!root) {
+        root = createRoot(this[0]);
+      }
+      root.render(
         <FormBuilderModal
           title={title}
           isOpen={isOpen}
@@ -81,13 +87,17 @@ jQuery.entwine('ss', ($) => {
           responseClassBad="modal__response modal__response--error"
           responseClassGood="modal__response modal__response--good"
           identifier="Admin.AddToCampaign"
-        />,
-        this[0]
+        />
       );
+      this.setReactRoot(root);
     },
 
     _clearModal() {
-      ReactDOM.unmountComponentAtNode(this[0]);
+      const root = this.getReactRoot();
+      if (root) {
+        root.unmount();
+        this.setReactRoot(null);
+      }
       // this.empty();
     },
 
