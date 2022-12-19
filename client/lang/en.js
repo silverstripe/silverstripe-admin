@@ -24,6 +24,8 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.VALIDATION_ERRORS_IN_TAB_SCREEN_READER": "(Has validation errors)",
     "Admin.NONE": "None",
     "Admin.EDIT": "Edit",
+    "Admin.EDIT_LINK": "Edit link",
+    "Admin.REMOVE_LINK": "Remove link",
     "Admin.ANY": "Any",
     "Admin.ERRORINTRANSACTION": "An error occured while fetching data from the server\n Please try again later.",
     "Admin.DELETECONFIRMMESSAGE": "Are you sure you want to delete this record?",

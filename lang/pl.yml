@@ -23,6 +23,7 @@ pl:
     ResultCreated: 'Utworzono {count} grup'
     ResultDeleted: 'Usunięto {count} grup'
     ResultUpdated: 'Zmieniono {count} grup'
+    Help2: '<div class="advanced"><h4>Zaawansowane opcje</h4><ul><li>Dozwolone kolumny: <em>{columns}</em></li><li>Istniejące grupy są dopasowywane na podstawie ich unikatowej wartości <em>Code</em> i aktualizowane o wszelkie nowe wartości z importowanego pliku</li><li>Hierarchie grup można tworzyć za pomocą kolumny <em>ParentCode</em> column.</li><li>Kody uprawnień można przypisywać za pomocą kolumny <em>PermissionCode</em> column. Istniejące kody uprawnień nie są usuwane</li></ul></div>'
   SilverStripe\Admin\LeftAndMain:
     ACCESSALLINTERFACES: 'Dostęp do wszystkich sekcji CMS'
     ACCESSALLINTERFACESHELP: 'Zastępuje bardziej szczegółowe ustawienia dostępu.'
@@ -47,6 +48,7 @@ pl:
     SUBMIT_BUTTON_LABEL: Idź
     ValidationError: 'Wykryto niepoprawne dane'
     Version: Wersja
+    NO_PREVIEW: 'Brak podglądu'
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
     Auto: Auto
     ChangeViewMode: 'Zmień tryb widoku'

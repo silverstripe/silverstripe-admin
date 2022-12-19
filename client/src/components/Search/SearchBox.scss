@@ -102,6 +102,12 @@ $search-box-height: 53px;
   &.collapsed::before {
     transform: rotate(0deg) translateY(0);
   }
+
+  &.search-box--no-label {
+    margin-right: 9px;
+    margin-top: 13px;
+    padding-right: 5px;
+  }
 }
 
 .search-box__hideable .search-form {

@@ -29,6 +29,7 @@ class SearchBox extends Component {
     this.getComponentWidth = this.getComponentWidth.bind(this);
     this.calculateSpaceForTags = this.calculateSpaceForTags.bind(this);
     this.calculateInputLeftPadding = this.calculateInputLeftPadding.bind(this);
+    this.calculateInputRightPadding = this.calculateInputRightPadding.bind(this);
     this.onTagListResize = this.onTagListResize.bind(this);
     this.focusOnLastTag = this.focusOnLastTag.bind(this);
     this.focusOnInput = this.focusOnInput.bind(this);
@@ -88,6 +89,12 @@ class SearchBox extends Component {
     // Account for if the search icon is hidden in compact mode
     const existingPadding = this.state.width > 576 ? 55 : 20;
     return this.state.tagWidth + existingPadding;
+  }
+
+  calculateInputRightPadding() {
+    // Right padding is used to set the alignedment of the "x" that shows in chrome
+    // when you type in the search box
+    return this.state.width < 576 ? 121 : 264;
   }
 
   /**
@@ -191,7 +198,10 @@ class SearchBox extends Component {
    */
   renderInput() {
     const { id, searchText, onChange, placeholder, name, borders } = this.props;
-    const style = { paddingLeft: `${this.calculateInputLeftPadding()}px` };
+    const style = {
+      paddingLeft: `${this.calculateInputLeftPadding()}px`,
+      paddingRight: `${this.calculateInputRightPadding()}px`
+    };
 
     const mergedBorders = Object.assign({}, SearchBox.defaultProps.borders, borders);
     const classe = 'search-box__content-field';
@@ -268,8 +278,10 @@ class SearchBox extends Component {
         'btn--icon',
         'font-icon-caret-down-two',
         'search-box__filter-trigger',
+        this.state.width < 576 ? 'search-box--no-label' : '',
         { collapsed: !expanded }
     );
+    const spanClass = this.state.width < 576 ? 'sr-only' : '';
     return (<Button
       aria-expanded={expanded}
       aria-controls={formId}
@@ -277,7 +289,9 @@ class SearchBox extends Component {
       onClick={onToggleFilter}
       className={classes}
       title={i18n._t('Admin.ADVANCED', 'Advanced')}
-    >Search options</Button>);
+    >
+      <span className={spanClass}>Search options</span>
+    </Button>);
   }
 
   /**
