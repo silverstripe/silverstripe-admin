@@ -2,7 +2,8 @@
  import/no-webpack-loader-syntax,
  import/no-extraneous-dependencies,
  import/no-unresolved,
- import/extensions
+ import/extensions,
+ global-require
 */
 // TODO Enable require(*.css) includes once https://github.com/webpack/extract-text-webpack-plugin/issues/179
 // is resolved. Included in bundle.scss for now.

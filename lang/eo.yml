@@ -49,6 +49,7 @@ eo:
     SUBMIT_BUTTON_LABEL: Ek
     ValidationError: 'Validiga eraro'
     Version: Versio
+    NO_PREVIEW: 'Neniu antaŭvido disponeblas'
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
     Auto: Aŭtomate
     ChangeViewMode: 'Ŝanĝi vidan reĝimon'
