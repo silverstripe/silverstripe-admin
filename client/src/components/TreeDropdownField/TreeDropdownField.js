@@ -733,6 +733,13 @@ class TreeDropdownField extends Component {
     const rawValue = Array.isArray(this.props.value) ? this.props.value : [this.props.value];
     let value = this.props.selectedValues.filter(item => rawValue.includes(item.id));
 
+    // If there weren't any "selected" values (e.g. setting the value programatically)
+    // make sure the value is valid
+    if (!value.length) {
+      value = options.filter(item => rawValue.includes(item.id));
+    }
+
+    // Fall back to the empty default value if there is one
     if (!value.length && this.props.data.hasEmptyDefault) {
       value = options[0];
     }
