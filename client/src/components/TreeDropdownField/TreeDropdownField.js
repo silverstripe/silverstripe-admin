@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import createCache from '@emotion/cache';
 import styled from '@emotion/styled';
-import { CacheProvider } from '@emotion/react';
+import EmotionCssCacheProvider from 'containers/EmotionCssCacheProvider/EmotionCssCacheProvider';
 import i18n from 'i18n';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import fetch from 'isomorphic-fetch';
@@ -22,19 +21,6 @@ const SEARCH_DELAY = 500; // ms
 const MULTI_EMPTY_VALUE = 'unchanged';
 
 const SINGLE_EMPTY_VALUE = 0;
-
-// This ensures that Emotion's styles are inserted before ours so we can override the default react-select styling
-function EmotionCacheProvider({ children }) {
-  const cache = React.useMemo(
-    () => createCache({
-        key: 'react-select',
-        insertionPoint: document.querySelector('title'),
-      }),
-    []
-  );
-
-  return <CacheProvider value={cache}>{children}</CacheProvider>;
-}
 
 class TreeDropdownField extends Component {
   constructor(props) {
@@ -759,7 +745,7 @@ class TreeDropdownField extends Component {
     const isLoading = this.props.loading.indexOf(visibleTree.id || 0) >= 0;
 
     return (
-      <EmotionCacheProvider>
+      <EmotionCssCacheProvider>
         <Select
           isSearchable={showSearch}
           isMulti={this.props.data.multiple}
@@ -789,7 +775,7 @@ class TreeDropdownField extends Component {
             option: () => 'fill-width',
           }}
         />
-      </EmotionCacheProvider>
+      </EmotionCssCacheProvider>
     );
   }
 }
