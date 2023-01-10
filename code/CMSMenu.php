@@ -15,6 +15,7 @@ use IteratorAggregate;
 use ReflectionClass;
 use ArrayIterator;
 use SilverStripe\Security\Security;
+use Traversable;
 
 /**
  * The object manages the main CMS menu. See {@link LeftAndMain::init()} for
@@ -416,8 +417,7 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
     /**
      * IteratorAggregate Interface Method.  Iterates over the menu items.
      */
-    #[\ReturnTypeWillChange]
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator(self::get_menu_items());
     }
