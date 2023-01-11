@@ -16,10 +16,15 @@
 }
 
 .ui-widget-content,
-.ui-widget {
+.ui-widget,
+.ui-widget.ui-widget-content {
   color: $body-color;
   font-size: 1em;
   border: 0;
+
+  a {
+    color: $link-color;
+  }
 }
 
 .ui-widget-header {
@@ -63,6 +68,10 @@
   .ui-accordion-header {
     border-color: $btn-secondary-border;
     margin-bottom: 0;
+
+    a {
+      color: $gray-700;
+    }
   }
   .ui-accordion-content {
     border: 1px solid $btn-secondary-border;
@@ -82,4 +91,10 @@
     background-repeat: no-repeat !important;
     background-size: auto !important;
   }
+}
+
+.ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+  float: none;
+  padding: $nav-link-padding;
+  cursor: pointer;
 }
