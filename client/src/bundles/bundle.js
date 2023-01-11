@@ -68,6 +68,7 @@ import 'expose-loader?exposes=ViewModeStates!state/viewMode/ViewModeStates';
 import 'expose-loader?exposes=ViewModeActions!state/viewMode/ViewModeActions';
 import 'expose-loader?exposes=ViewModeToggle!components/ViewModeToggle/ViewModeToggle';
 import 'expose-loader?exposes=Focusedzone!components/Focusedzone/Focusedzone';
+import 'expose-loader?exposes=EmotionCssCacheProvider!containers/EmotionCssCacheProvider/EmotionCssCacheProvider';
 import 'expose-loader?exposes=Config!lib/Config';
 import 'expose-loader?exposes=DataFormat!lib/DataFormat';
 import 'expose-loader?exposes=ReactRouteRegister!lib/ReactRouteRegister';
