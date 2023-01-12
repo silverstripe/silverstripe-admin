@@ -18,7 +18,7 @@ $.entwine('ss', function($){
 			});
 		},
 		onremove: function() {
-			if (this.data('accordion')) this.accordion('destroy');
+			if (this.data('uiAccordion')) this.accordion('destroy');
 			this._super();
 		},
 
