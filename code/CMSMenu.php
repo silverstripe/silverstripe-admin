@@ -98,7 +98,7 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
             return null;
         }
 
-        $link = Controller::join_links($urlBase, $urlSegment) . '/';
+        $link = Controller::join_links($urlBase, $urlSegment);
 
         // doesn't work if called outside of a controller context (e.g. in _config.php)
         // as the locale won't be detected properly. Use {@link LeftAndMain->MainMenu()} to update

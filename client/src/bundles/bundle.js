@@ -78,6 +78,7 @@ import 'expose-loader?exposes=ShortcodeSerialiser!lib/ShortcodeSerialiser';
 import 'expose-loader?exposes=formatWrittenNumber!lib/formatWrittenNumber';
 import 'expose-loader?exposes=withDragDropContext!lib/withDragDropContext';
 import 'expose-loader?exposes=withRouter!lib/withRouter';
+import 'expose-loader?exposes=ssUrlLib!lib/urls';
 
 // Legacy CMS
 import '../legacy/jquery.changetracker';
