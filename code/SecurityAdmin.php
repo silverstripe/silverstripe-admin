@@ -42,6 +42,10 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
 
     private static $tree_class = Group::class;
 
+    /**
+     * @deprecated 1.13.0 Do not use this options.
+     * @config
+     */
     private static $subitem_class = Member::class;
 
     private static $required_permission_codes = 'CMS_ACCESS_SecurityAdmin';
