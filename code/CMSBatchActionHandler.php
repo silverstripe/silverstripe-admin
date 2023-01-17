@@ -16,7 +16,6 @@ use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\SecurityToken;
 use SilverStripe\View\ArrayData;
 use InvalidArgumentException;
-use Translatable;
 
 /**
  * Special request handler for admin/batchaction
@@ -309,11 +308,6 @@ class CMSBatchActionHandler extends RequestHandler
 
         $recordClass = $this->recordClass;
 
-        // Bypass translatable filter
-        if (class_exists('Translatable') && $recordClass::has_extension('Translatable')) {
-            Translatable::disable_locale_filter();
-        }
-
         // Bypass versioned filter
         if ($recordClass::has_extension(Versioned::class)) {
             // Workaround for get_including_deleted not supporting byIDs filter very well
@@ -321,10 +315,6 @@ class CMSBatchActionHandler extends RequestHandler
             $pages = Versioned::get_including_deleted($recordClass)->byIDs($ids);
         } else {
             $pages = DataObject::get($recordClass)->byIDs($ids);
-        }
-
-        if (class_exists('Translatable') && $recordClass::has_extension('Translatable')) {
-            Translatable::enable_locale_filter();
         }
 
         return $pages;
