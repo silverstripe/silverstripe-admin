@@ -49,6 +49,7 @@ nl:
     SUBMIT_BUTTON_LABEL: Ga
     ValidationError: Validatiefout
     Version: Versie
+    NO_PREVIEW: 'Geen voorbeeld beschikbaar'
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
     Auto: Auto
     ChangeViewMode: 'Verander view modus'

@@ -58,6 +58,8 @@ class SecurityAdmin extends ModelAdmin implements PermissionProvider
 
     private static $menu_priority = 0;
 
+    private static $tree_class = Group::class;
+
     private static $required_permission_codes = 'CMS_ACCESS_SecurityAdmin';
 
     private static $menu_icon_class = 'font-icon-torsos-all';

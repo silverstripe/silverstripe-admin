@@ -3,8 +3,3 @@
 .chosen-container-multi .chosen-choices {
   padding: 4px 5px;
 }
-
-// Avoid chosen dropdowns overflowing when not active
-.chosen-container:not(.chosen-container-active) {
-  overflow: hidden;
-}

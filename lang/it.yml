@@ -49,6 +49,7 @@ it:
     SUBMIT_BUTTON_LABEL: Vai
     ValidationError: 'Errore di convalida'
     Version: Versione
+    NO_PREVIEW: 'Anteprima non disponibile'
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
     Auto: Auto
     ChangeViewMode: 'Cambia la modalità di visualizzazione'
