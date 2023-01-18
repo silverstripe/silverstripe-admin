@@ -166,9 +166,14 @@ $.entwine('ss', function($) {
     var origUrl = document.URL,
       url = xhr.getResponseHeader('X-ControllerURL'),
       destUrl = settings.url,
-      msg = xhr.getResponseHeader('X-Status') !== null ? xhr.getResponseHeader('X-Status') : xhr.statusText, // Handle custom status message headers
+      msg = xhr.getResponseHeader('X-Status'),
       msgType = (xhr.status < 200 || xhr.status > 399) ? 'error' : 'success',
       ignoredMessages = ['OK', 'success', 'HTTP/2.0 200'];
+
+    // For statuses that aren't success or redirect, show the status text if a custom message hasn't already been set
+    if (!msg && msgType !== 'success') {
+      msg = xhr.statusText;
+    }
 
     // Only redirect if controller url differs to the requested or current one
     if (url !== null && (!isSameUrl(origUrl, url) || !isSameUrl(destUrl, url))) {
