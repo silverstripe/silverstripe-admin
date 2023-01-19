@@ -7,15 +7,17 @@ import { CacheProvider } from '@emotion/react';
  * the default react-select styling
  */
 function EmotionCssCacheProvider({ children }) {
-  const cache = React.useMemo(
-    () => createCache({
-        key: 'react-select',
-        insertionPoint: document.querySelector('title'),
-      }),
-    []
-  );
+  if (!window.ssReactSelectCache) {
+    window.ssReactSelectCache = React.useMemo(
+      () => createCache({
+          key: 'react-select',
+          insertionPoint: document.querySelector('title'),
+        }),
+      []
+    );
+  }
 
-  return <CacheProvider value={cache}>{children}</CacheProvider>;
+  return <CacheProvider value={window.ssReactSelectCache}>{children}</CacheProvider>;
 }
 
 export default EmotionCssCacheProvider;
