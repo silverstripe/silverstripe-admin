@@ -21,7 +21,6 @@ class UsedOnTable extends FormField
     protected $schemaDataType = FormField::SCHEMA_DATA_TYPE_CUSTOM;
 
     /**
-     * @skipUpgrade
      * @var string
      */
     protected $schemaComponent = 'UsedOnTable';
