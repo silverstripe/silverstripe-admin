@@ -5,6 +5,7 @@
  */
 import page from 'page.js';
 import url from 'url';
+import escapeRegExp from 'lodash.escaperegexp';
 
 /**
  * Add leading slash to base-relative urls, as required by Page.js
@@ -27,8 +28,9 @@ function resolveURLToBase(path) {
     return absolutePath;
   }
 
-  // Remove base url from absolute path, save for trailing `/` which Page.js requires
-  return absolutePath.substring(absoluteBase.length - 1);
+  // Remove base url from absolute path, save for leading `/` which Page.js requires
+  const regex = new RegExp(`^${escapeRegExp(absoluteBase)}/?`);
+  return absolutePath.replace(regex, '/');
 }
 
 /**

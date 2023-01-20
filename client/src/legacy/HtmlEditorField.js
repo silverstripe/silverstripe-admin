@@ -8,6 +8,7 @@
 
 import jQuery from 'jquery';
 import 'events-polyfill';
+import escapeRegExp from 'lodash.escaperegexp';
 
 var ss = typeof window.ss !== 'undefined' ? window.ss : {};
 
@@ -289,7 +290,7 @@ ss.editorWrappers.tinyMCE = (function() {
       if(cb) href = eval(cb + "(href, node, true);");
 
       // Turn into relative, if set in TinyMCE config
-      if(cu && href.match(new RegExp('^' + tinyMCE.settings['document_base_url'] + '(.*)$'))) {
+      if(cu && href.match(new RegExp('^' + escapeRegExp(tinyMCE.settings['document_base_url']) + '(.*)$'))) {
         href = RegExp.$1;
       }
 

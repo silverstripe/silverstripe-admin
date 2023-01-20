@@ -897,7 +897,6 @@ class LeftAndMain extends Controller implements PermissionProvider
         $link = Controller::join_links(
             AdminRootController::admin_url(),
             $segment,
-            '/', // trailing slash needed if $action is null!
             "$action"
         );
         $this->extend('updateLink', $link);
@@ -1664,7 +1663,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         if (is_numeric($this->getRequest()->param('ID'))) {
             return $this->getRequest()->param('ID');
         }
-        
+
         /** @deprecated */
         $session = $this->getRequest()->getSession();
         return $session->get($this->sessionNamespace() . ".currentPage") ?: null;

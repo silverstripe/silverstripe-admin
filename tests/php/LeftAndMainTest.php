@@ -6,6 +6,7 @@ use SilverStripe\Admin\AdminRootController;
 use SilverStripe\Admin\CMSMenu;
 use SilverStripe\Admin\LeftAndMain;
 use SilverStripe\Assets\File;
+use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Manifest\ModuleLoader;
@@ -107,7 +108,7 @@ class LeftAndMainTest extends FunctionalTest
         $this->assertGreaterThan(0, count($menuItems ?? []));
 
         $adminUrl = AdminRootController::admin_url();
-        $menuItem = $menuItems->find('Link', $adminUrl . 'security/');
+        $menuItem = $menuItems->find('Link', Controller::join_links($adminUrl, 'security/'));
         $this->assertNotEmpty($menuItem, 'Security not found in the menu items list');
 
         $link = $menuItem->Link;

@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import { joinUrlPaths } from 'lib/urls';
 
 const parseResponse = result => {
   const fragmentData = result.data;
@@ -25,13 +26,13 @@ const getGraphqlFragments = async (baseUrl, preferStatic = true) => {
   const isLegacy = !!document.body.getAttribute('data-graphql-legacy');
 
   const urls = [
-    `${baseUrl}_graphql/admin.types.graphql`,
-    `${baseUrl}admin.types.graphql`,
+    joinUrlPaths(baseUrl, '_graphql/admin.types.graphql'),
+    joinUrlPaths(baseUrl, 'admin.types.graphql'),
   ];
 
   const legacyURLs = [
-    `${baseUrl}admin/graphql/types`,
-    `${baseUrl}assets/admin.types.graphql`,
+    joinUrlPaths(baseUrl, 'admin/graphql/types'),
+    joinUrlPaths(baseUrl, 'assets/admin.types.graphql'),
   ];
 
   let primaryURL;
@@ -51,7 +52,7 @@ const getGraphqlFragments = async (baseUrl, preferStatic = true) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    uri: `${baseUrl}`,
+    uri: baseUrl,
     credentials: 'same-origin',
   };
 

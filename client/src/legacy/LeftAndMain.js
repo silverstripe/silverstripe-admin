@@ -10,6 +10,7 @@ import Search from 'components/Search/Search';
 import Loading from 'components/Loading/Loading';
 import { schemaMerge } from 'lib/schemaFieldValues';
 import { loadComponent } from 'lib/Injector';
+import escapeRegExp from 'lodash.escaperegexp';
 
 import '../legacy/ssui.core.js';
 
@@ -55,7 +56,7 @@ window.ss.tabStateUrl = function() {
   return window.location.href
     .replace(/\?.*/, '')
     .replace(/#.*/, '')
-    .replace($('base').attr('href'), '');
+    .replace(new RegExp(`^${escapeRegExp($('base').attr('href'))}/?`), '');
 },
 
 $(window).on('resize.leftandmain', function(e) {

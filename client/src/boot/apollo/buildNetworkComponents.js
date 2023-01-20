@@ -1,10 +1,11 @@
 import { ApolloLink, HttpLink } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import Config from 'lib/Config';
+import { joinUrlPaths } from 'lib/urls';
 
 const buildNetworkComponents = (baseUrl) => {
   const httpLink = new HttpLink({
-    uri: `${baseUrl}admin/graphql`,
+    uri: joinUrlPaths(baseUrl, 'admin/graphql'),
     fetchOptions: {
       credentials: 'same-origin',
       headers: {

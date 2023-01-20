@@ -16,6 +16,7 @@ import i18n from 'i18n';
 import { isDirty } from 'redux-form';
 import getFormState from 'lib/getFormState';
 import { Routes, Route } from 'react-router';
+import { joinUrlPaths } from 'lib/urls';
 
 /**
  * Bootstraps routes
@@ -115,7 +116,7 @@ class BootRoutes {
     ReactDOM.createRoot(document.getElementsByClassName('cms-content')[0]).render(
       <ApolloProvider client={this.client}>
         <ReduxProvider store={this.store}>
-          <BrowserRouter basename={`${Config.get('baseUrl')}${Config.get('adminUrl')}`}>
+          <BrowserRouter basename={joinUrlPaths(Config.get('baseUrl'), Config.get('adminUrl'))}>
             <Routes>
               <Route path={rootRoute.path} element={<rootRoute.component />}>{routes}</Route>
             </Routes>
