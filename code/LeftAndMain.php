@@ -1390,7 +1390,6 @@ class LeftAndMain extends Controller implements PermissionProvider
 
         // Added in-line to the form, but plucked into different view by frontend scripts.
         if ($record instanceof CMSPreviewable || $record->has_extension(CMSPreviewable::class)) {
-            /** @skipUpgrade */
             $navField = new LiteralField('SilverStripeNavigator', $this->getSilverStripeNavigator($record));
             $navField->setAllowHTML(true);
             $fields->push($navField);
