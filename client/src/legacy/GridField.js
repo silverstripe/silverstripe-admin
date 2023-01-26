@@ -1,7 +1,6 @@
 import $ from 'jquery';
 import i18n from 'i18n';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import Search from 'components/Search/Search.js';
 import { schemaMerge } from 'lib/schemaFieldValues';
