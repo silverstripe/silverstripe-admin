@@ -3,7 +3,6 @@
  */
 import $ from 'jquery';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import IframeDialog from 'components/IframeDialog/IframeDialog';
 import Search from 'components/Search/Search';
