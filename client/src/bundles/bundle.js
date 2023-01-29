@@ -43,6 +43,7 @@ import 'expose-loader?exposes=HiddenField!components/HiddenField/HiddenField';
 import 'expose-loader?exposes=ListGroup!components/ListGroup/ListGroup';
 import 'expose-loader?exposes=ListGroupItem!components/ListGroup/ListGroupItem';
 import 'expose-loader?exposes=Loading!components/Loading/Loading';
+import 'expose-loader?exposes=CircularLoading!components/Loading/CircularLoading';
 import 'expose-loader?exposes=TextField!components/TextField/TextField';
 import 'expose-loader?exposes=LiteralField!components/LiteralField/LiteralField';
 import 'expose-loader?exposes=Toolbar!components/Toolbar/Toolbar';

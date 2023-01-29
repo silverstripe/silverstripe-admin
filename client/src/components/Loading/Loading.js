@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 /**
- * Renders a SilverStripe loading animation
+ * Renders a Silverstripe loading animation styled after the Silverstripe logo
  */
 class Loading extends PureComponent {
   render() {
