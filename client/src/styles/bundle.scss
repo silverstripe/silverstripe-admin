@@ -72,6 +72,9 @@
 @import "../components/PopoverOptionSet/PopoverOptionSet";
 @import "../components/FileStatusIcon/FileStatusIcon";
 
+// Containers (other than whole sections)
+@import "../containers/SudoMode/SudoMode";
+
 // Layout and sections
 @import "layout";
 @import "../containers/App/App";

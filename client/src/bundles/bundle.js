@@ -28,6 +28,7 @@ import 'expose-loader?exposes=FormBuilderLoader!containers/FormBuilderLoader/For
 import 'expose-loader?exposes=FormBuilderModal!components/FormBuilderModal/FormBuilderModal';
 import 'expose-loader?exposes=FileSchemaModalHandler!containers/InsertLinkModal/fileSchemaModalHandler';
 import 'expose-loader?exposes=InsertLinkModal!containers/InsertLinkModal/InsertLinkModal';
+import 'expose-loader?exposes=SudoMode!containers/SudoMode/SudoMode';
 import 'expose-loader?exposes=RecordsActions!state/records/RecordsActions';
 import 'expose-loader?exposes=GridField!components/GridField/GridField';
 import 'expose-loader?exposes=GridFieldCell!components/GridField/GridFieldCell';
