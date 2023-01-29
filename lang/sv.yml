@@ -13,3 +13,6 @@ sv:
     PERMISSIONS: Tillstånd
     ROLES: Roller
     ROLESDESCRIPTION: 'Roller är fördefinierade uppsättningar av tillstånd, och kan tilldelas grupper. <br/> De ärvs från föräldragrupper om det krävs.'
+  SilverStripe\Admin\SudoModeController:
+    INVALID: 'Fel lösenord'
+    TIMEOUT: 'Sessionen avbröts, vänligen ladda om och försök igen'
