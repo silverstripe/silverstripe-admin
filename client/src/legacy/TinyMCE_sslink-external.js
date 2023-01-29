@@ -1,4 +1,4 @@
-/* global tinymce, editorIdentifier, window */
+/* global tinymce, window */
 import i18n from 'i18n';
 import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
 import React from 'react';
@@ -6,6 +6,8 @@ import { createRoot } from 'react-dom/client';
 import jQuery from 'jquery';
 import { createInsertLinkModal } from 'containers/InsertLinkModal/InsertLinkModal';
 import { loadComponent } from 'lib/Injector';
+
+let editorIdentifier;
 
 // Link to external url
 TinyMCEActionRegistrar.addAction('sslink', {
@@ -106,6 +108,9 @@ jQuery.entwine('ss', ($) => {
 });
 
 // Adds the plugin class to the list of available TinyMCE plugins
-tinymce.PluginManager.add('sslinkexternal', (editor) => plugin.init(editor));
+tinymce.PluginManager.add('sslinkexternal', (editor) => {
+  editorIdentifier = editor.getParam('editorIdentifier');
+  plugin.init(editor);
+});
 
 export default plugin;
