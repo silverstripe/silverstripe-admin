@@ -889,12 +889,12 @@ $.entwine('ss', function($) {
       this.find('.cms-tabset,.ss-tabset').each(function(i, el) {
         var id = $(el).attr('id');
         if(!id) return; // we need a unique reference
-        if(!$(el).data('tabs')) return; // don't act on uninit'ed controls
+        if(!$(el).data('uiTabs')) return; // don't act on uninit'ed controls
 
         // Allow opt-out via data element or entwine property.
         if($(el).data('ignoreTabState') || $(el).getIgnoreTabState()) return;
 
-        selectedTabs.push({id:id, selected:$(el).tabs('option', 'selected')});
+        selectedTabs.push({id:id, selected:$(el).tabs('option', 'active')});
       });
 
       if(selectedTabs) {
@@ -1318,7 +1318,7 @@ $.entwine('ss', function($) {
       this._super();
     },
     onremove: function() {
-      if (this.data('tabs')) this.tabs('destroy');
+      if (this.data('uiTabs')) this.tabs('destroy');
       this._super();
     },
     redrawTabs: function() {
@@ -1326,7 +1326,7 @@ $.entwine('ss', function($) {
 
       var id = this.attr('id'), activeTab = this.find('ul:first .ui-tabs-active');
 
-      if(!this.data('tabs')) this.tabs({
+      if(!this.data('uiTabs')) this.tabs({
         active: (activeTab.index() != -1) ? activeTab.index() : 0,
         beforeLoad: function(e, ui) {
           // Disable automatic ajax loading of tabs without matching DOM elements,
