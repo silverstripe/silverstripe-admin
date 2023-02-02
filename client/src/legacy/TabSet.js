@@ -49,7 +49,7 @@ $.entwine('ss', function($){
       const tabsetId = this.attr('id');
       const forcedTab = this.children('ul').children('li.ss-tabs-force-active');
 
-      if (!this.data('tabs')) {
+      if (!this.data('uiTabs')) {
         // Defer until tabs have been initialised in redrawTabs()
         this.setDeferRestoreState(true);
         this.setDefferredStateOverride(overrideState);
@@ -164,7 +164,7 @@ $.entwine('ss', function($){
     },
 
     onremove: function() {
-      if(this.data('tabs')) this.tabs('destroy');
+      if(this.data('uiTabs')) this.tabs('destroy');
       this._super();
     },
 

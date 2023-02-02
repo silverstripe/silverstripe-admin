@@ -538,6 +538,7 @@ button.loading {
     padding-top: $spacer * .75;
     padding-bottom: $spacer * .75;
     border-radius: $border-radius-sm;
+    padding-left: $spacer * 1.75;
 
     &.ui-state-default {
       background: $body-bg-dark;
@@ -549,7 +550,11 @@ button.loading {
     }
 
     .ui-accordion-header-icon {
+      position: absolute;
+      left: .5em;
+      top: 50%;
       margin-top: -9px;
+      background-image: url("../../../../thirdparty/jquery-ui-themes/smoothness/images/ui-icons_444444_256x240.png");
     }
   }
 
