@@ -98,3 +98,6 @@ de:
     MemberListCaution: 'Achtung: Benutzer von dieser Liste zu entfernen, wird diese von allen Gruppen entfernen und aus der Datenbank löschen.'
     TABROLES: Rollen
     Users: Benutzer
+  SilverStripe\Admin\SudoModeController:
+    INVALID: 'Passwort falsch'
+    TIMEOUT: 'Sitzung wurde geschlossen, bitte aktualisieren und nochmals versuchen.'

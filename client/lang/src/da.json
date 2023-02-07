@@ -29,5 +29,10 @@
     "Admin.VALIDATOR_MESSAGE_DATE": "{name} er ikke et korrekt dato format.",
     "Admin.VALIDATOR_MESSAGE_ALPHANUMERIC": "{name} er ikke en alfanumeriskværdi.",
     "Admin.VALIDATOR_MESSAGE_ALPHA": "{name} er ikke kun bogstaver.",
-    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} er ikke en gyldig værdi."
+    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} er ikke en gyldig værdi.",
+    "Admin.VERIFY_ITS_YOU": "Bekræft først at det er dig.",
+    "Admin.WHATS_THIS": "Hvad er dette?",
+    "Admin.VERIFY_TO_CONTINUE": "Bekræft for at forsætte",
+    "Admin.ENTER_PASSWORD": "Indtast dit kodeord",
+    "Admin.VERIFY": "Bekræft"
 }

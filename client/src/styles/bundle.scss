@@ -48,6 +48,7 @@
 @import "../components/IframeDialog/IframeDialog";
 @import "../components/Label/Label";
 @import "../components/ListGroup/ListGroup";
+@import "../components/Loading/CircularLoading";
 @import "../components/Menu/Menu";
 @import "../components/MobileMenuToggle/MobileMenuToggle";
 @import "../components/Modal/Modal";
@@ -70,6 +71,9 @@
 @import "../components/ViewModeToggle/ViewModeToggle";
 @import "../components/PopoverOptionSet/PopoverOptionSet";
 @import "../components/FileStatusIcon/FileStatusIcon";
+
+// Containers (other than whole sections)
+@import "../containers/SudoMode/SudoMode";
 
 // Layout and sections
 @import "layout";

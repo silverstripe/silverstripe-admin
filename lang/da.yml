@@ -89,3 +89,6 @@ da:
     MemberListCaution: 'Advarsel: Fjerner du brugere fra denne liste, fjernes de fra alle grupper og fra databasen'
     TABROLES: Roller
     Users: Brugere
+  SilverStripe\Admin\SudoModeController:
+    INVALID: 'Forkert kodeord'
+    TIMEOUT: 'Sessionen er udløbet, opdater venligts og forsøg igen.'

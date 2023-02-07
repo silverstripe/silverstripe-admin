@@ -99,3 +99,6 @@ nl:
     MemberListCaution: 'Let op: Gebruikers die hier verwijderd worden, worden uit alle groepen én uit de database verwijderd.'
     TABROLES: Rollen
     Users: Gebruikers
+  SilverStripe\Admin\SudoModeController:
+    INVALID: 'Incorrect wachtwoord'
+    TIMEOUT: 'Sessie is verlopen, ververs en probeer het opnieuw.'
