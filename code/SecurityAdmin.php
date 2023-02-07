@@ -7,6 +7,7 @@ use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Convert;
 use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Dev\Deprecation;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\GridField\GridField;
@@ -30,6 +31,8 @@ use SilverStripe\View\Requirements;
 
 /**
  * Security section of the CMS
+ *
+ * Note: In CMS 5 SecurityAdmin will extend ModelAdmin instead of LeftAndMain
  */
 class SecurityAdmin extends LeftAndMain implements PermissionProvider
 {
@@ -43,7 +46,7 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
     private static $tree_class = Group::class;
 
     /**
-     * @deprecated 1.13.0 Do not use this options.
+     * @deprecated 1.13.0 Will be removed without equivalent functionality to replace it
      * @config
      */
     private static $subitem_class = Member::class;
@@ -68,9 +71,13 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
      *
      * @param HTTPRequest $request
      * @return HTTPResponse
+     * @deprecated 1.13.0 Will be removed without equivalent functionality to replace it
      */
     public function users($request)
     {
+        Deprecation::withNoReplacement(function () {
+            Deprecation::notice('1.13.0', 'Will be removed without equivalent functionality to replace it.');
+        });
         return $this->index($request);
     }
 
@@ -79,9 +86,13 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
      *
      * @param HTTPRequest $request
      * @return HTTPResponse
+     * @deprecated 1.13.0 Will be removed without equivalent functionality to replace it
      */
     public function groups($request)
     {
+        Deprecation::withNoReplacement(function () {
+            Deprecation::notice('1.13.0', 'Will be removed without equivalent functionality to replace it.');
+        });
         return $this->index($request);
     }
 
@@ -90,9 +101,13 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
      *
      * @param HTTPRequest $request
      * @return HTTPResponse
+     * @deprecated 1.13.0 Will be removed without equivalent functionality to replace it
      */
     public function roles($request)
     {
+        Deprecation::withNoReplacement(function () {
+            Deprecation::notice('1.13.0', 'Will be removed without equivalent functionality to replace it.');
+        });
         return $this->index($request);
     }
 
@@ -214,8 +229,14 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
         return $form;
     }
 
+    /**
+     * @deprecated 1.13.0 Will be removed without equivalent functionality to replace it
+     */
     public function memberimport()
     {
+        Deprecation::withNoReplacement(function () {
+            Deprecation::notice('1.13.0', 'Will be removed without equivalent functionality to replace it.');
+        });
         Requirements::clear();
         Requirements::javascript('silverstripe/admin: client/dist/js/vendor.js');
         Requirements::javascript('silverstripe/admin: client/dist/js/MemberImportForm.js');
@@ -231,9 +252,13 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
      * @see SecurityAdmin_MemberImportForm
      *
      * @return Form
+     * @deprecated 1.13.0 Will be removed without equivalent functionality to replace it
      */
     public function MemberImportForm()
     {
+        Deprecation::withNoReplacement(function () {
+            Deprecation::notice('1.13.0', 'Will be removed without equivalent functionality to replace it.');
+        });
         if (!Permission::check('ADMIN')) {
             return null;
         }
@@ -246,8 +271,14 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
         return $form;
     }
 
+    /**
+     * @deprecated 1.13.0 Will be removed without equivalent functionality to replace it
+     */
     public function groupimport()
     {
+        Deprecation::withNoReplacement(function () {
+            Deprecation::notice('1.13.0', 'Will be removed without equivalent functionality to replace it.');
+        });
         Requirements::clear();
         Requirements::javascript('silverstripe/admin: client/dist/js/vendor.js');
         Requirements::javascript('silverstripe/admin: client/dist/js/MemberImportForm.js');
@@ -264,9 +295,13 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
      *
      * @skipUpgrade
      * @return Form
+     * @deprecated 1.13.0 Will be removed without equivalent functionality to replace it
      */
     public function GroupImportForm()
     {
+        Deprecation::withNoReplacement(function () {
+            Deprecation::notice('1.13.0', 'Will be removed without equivalent functionality to replace it.');
+        });
         if (!Permission::check('ADMIN')) {
             return null;
         }
@@ -276,9 +311,13 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
 
     /**
      * Disable GridFieldDetailForm backlinks for this view, as its
+     * @deprecated 1.13.0 Will be removed without equivalent functionality to replace it
      */
     public function Backlink()
     {
+        Deprecation::withNoReplacement(function () {
+            Deprecation::notice('1.13.0', 'Will be removed without equivalent functionality to replace it.');
+        });
         return false;
     }
 

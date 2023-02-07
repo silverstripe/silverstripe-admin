@@ -12,14 +12,15 @@ use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\RequiredFields;
 use SilverStripe\Forms\Form;
 use SilverStripe\View\Requirements;
+use SilverStripe\Dev\Deprecation;
 
 /**
  * Imports {@link Member} records by CSV upload, as defined in
  * {@link MemberCsvBulkLoader}.
+ * @deprecated 1.13.0 Will be removed without equivalent functionality to replace it
  */
 class MemberImportForm extends Form
 {
-
     /**
      * @var Group Optional group relation
      */
@@ -27,6 +28,9 @@ class MemberImportForm extends Form
 
     public function __construct($controller, $name, $fields = null, $actions = null, $validator = null)
     {
+        Deprecation::withNoReplacement(function () {
+            Deprecation::notice('1.13.0', 'Will be removed without equivalent functionality to replace it', Deprecation::SCOPE_CLASS);
+        });
         if (!$fields) {
             $helpHtml = _t(
                 __CLASS__ . '.Help1',
