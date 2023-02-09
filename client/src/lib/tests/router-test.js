@@ -1,4 +1,4 @@
-/* global jest, jasmine, describe, beforeEach, it, expect, process */
+/* global jest, describe, beforeEach, it, expect, process */
 import router from '../Router';
 
 describe('Router', () => {

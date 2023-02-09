@@ -1,4 +1,4 @@
-/* global jest, jasmine, describe, beforeEach, it, pit, expect, process */
+/* global jest, describe, beforeEach, it, pit, expect, process */
 import
   buildFormContainer,
   { SCHEMA_MIDDLEWARE_SERVICE, VALIDATION_MIDDLEWARE_SERVICE }

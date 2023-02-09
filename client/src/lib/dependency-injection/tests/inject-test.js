@@ -1,4 +1,4 @@
-/* global jest, jasmine, describe, beforeEach, it, pit, expect, process */
+/* global jest, describe, beforeEach, it, pit, expect, process */
 
 import React, { Component } from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
