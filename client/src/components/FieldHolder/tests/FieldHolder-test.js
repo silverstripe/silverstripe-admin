@@ -1,4 +1,4 @@
-/* global jest, jasmine, describe, it, expect, beforeEach */
+/* global jest, describe, it, expect, beforeEach */
 
 import Adapter from 'enzyme-adapter-react-16';
 

@@ -1,4 +1,4 @@
-/* global jest, jasmine, describe, beforeEach, it, pit, expect, process */
+/* global jest, describe, beforeEach, it, pit, expect, process */
 /* eslint-disable react/no-multi-comp */
 
 import React from 'react';

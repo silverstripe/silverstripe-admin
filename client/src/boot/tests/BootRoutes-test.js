@@ -1,4 +1,4 @@
-/* global jest, jasmine, describe, afterEach, it, expect, window */
+/* global jest, describe, afterEach, it, expect, window */
 
 jest.unmock('../BootRoutes.js');
 jest.unmock('lib/Config');
