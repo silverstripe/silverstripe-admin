@@ -451,9 +451,9 @@ $.entwine('ss', function($) {
 
         $(button).append($(
           '<div class="btn__loading-icon">'+
-            '<span class="btn__circle btn__circle--1" />'+
-            '<span class="btn__circle btn__circle--2" />'+
-            '<span class="btn__circle btn__circle--3" />'+
+            '<span class="btn__circle btn__circle--1"></span>'+
+            '<span class="btn__circle btn__circle--2"></span>'+
+            '<span class="btn__circle btn__circle--3"></span>'+
           '</div>'));
 
         $(button).css($(button).outerWidth() + 'px');
