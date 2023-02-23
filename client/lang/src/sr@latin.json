@@ -7,7 +7,7 @@
     "Admin.BATCH_UNPUBLISH_PROMPT": "You have {num} page(s) selected.\n\nDo you really want to unpublish",
     "Admin.SELECTONEPAGE": "Please select at least one page",
     "Admin.FormatExample": "Example: {format}",
-    "Admin.NO_SIZE": "N\/A",
+    "Admin.NO_SIZE": "N/A",
     "Admin.CLOSE": "Close",
     "Admin.CONFIRMUNSAVED": "Da li ste sigurni da želite da odete sa ove stranice?\n\nUPOZORENjE: Vaše izmene još nisu sačuvane.\n\nPritisnite U redu za nastavak ili Odustani da bi ste ostali na ovoj stranici.",
     "Admin.CONFIRMUNSAVEDSHORT": "UPOZORENjE: Vaše izmene nisu sačuvane.",

@@ -7,7 +7,7 @@
     "Admin.BATCH_UNPUBLISH_PROMPT": "You have {num} page(s) selected.\n\nDo you really want to unpublish",
     "Admin.SELECTONEPAGE": "Please select at least one page",
     "Admin.FormatExample": "Example: {format}",
-    "Admin.NO_SIZE": "N\/A",
+    "Admin.NO_SIZE": "N/A",
     "Admin.CLOSE": "Close",
     "Admin.CONFIRMUNSAVED": "このページから移動しても良いですか?\n\n警告: あなたの変更は保存されていません．\n\n続行するにはOKを押してください．キャンセルをクリックするとこのページにとどまります．",
     "Admin.CONFIRMUNSAVEDSHORT": "警告: あなたの変更は保存されていません．",

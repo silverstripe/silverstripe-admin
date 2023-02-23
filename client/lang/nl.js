@@ -36,6 +36,11 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.VALIDATOR_MESSAGE_DATE": "{name} is niet in het juiste datum formaat.",
     "Admin.VALIDATOR_MESSAGE_ALPHANUMERIC": "{name} is geen alpha numerieke waarde.",
     "Admin.VALIDATOR_MESSAGE_ALPHA": "{name} bestaat niet alleen uit letters.",
-    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} is geen geldige waarde."
+    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} is geen geldige waarde.",
+    "Admin.VERIFY_ITS_YOU": "Verifieer dat dit je eerste is.",
+    "Admin.WHATS_THIS": "Wat is dit?",
+    "Admin.VERIFY_TO_CONTINUE": "Bevestig om door te gaan",
+    "Admin.ENTER_PASSWORD": "Voer wachtwoord in",
+    "Admin.VERIFY": "Bevestig"
 });
 }

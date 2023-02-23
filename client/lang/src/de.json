@@ -7,7 +7,7 @@
     "Admin.BATCH_UNPUBLISH_PROMPT": "Sie haben {num} Seite(n) ausgewählt.\n\nWollen Sie wirklich die Veröffentlichung zurücknehmen?",
     "Admin.SELECTONEPAGE": "Bitte mindestens eine Seite auswählen",
     "Admin.FormatExample": "Example: {format}",
-    "Admin.NO_SIZE": "N\/A",
+    "Admin.NO_SIZE": "N/A",
     "Admin.CLOSE": "Close",
     "Admin.CONFIRMUNSAVED": "Sind Sie sicher, dass Sie die Seite verlassen möchten?\n\nWARNUNG: Ihre Änderungen werden nicht gespeichert.\n\nDrücken Sie \"OK\" um fortzufahren, oder \"Abbrechen\" um auf dieser Seite zu bleiben.",
     "Admin.CONFIRMUNSAVEDSHORT": "WARNUNG: Ihre Änderungen wurden nicht gespeichert.",

@@ -7,7 +7,7 @@
     "Admin.BATCH_UNPUBLISH_PROMPT": "Aveti {num} pagina(i) selectate.\n\nDoriti sa le nenublicati",
     "Admin.SELECTONEPAGE": "Vă rugăm să selectaţi cel puțin o pagină.",
     "Admin.FormatExample": "Example: {format}",
-    "Admin.NO_SIZE": "N\/A",
+    "Admin.NO_SIZE": "N/A",
     "Admin.CLOSE": "Close",
     "Admin.CONFIRMUNSAVED": "Sunteți sigur că doriți să părăsiți pagina?\n\nAVERTISMENT: Modificările nu au fost salvate.\n\nApăsați OK pentru a continua, sau Anulați pentru a rămâne pe pagina curentă.",
     "Admin.CONFIRMUNSAVEDSHORT": "AVERTISMENT: Modificările nu au fost salvate.",

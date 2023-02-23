@@ -36,6 +36,11 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.VALIDATOR_MESSAGE_DATE": "{name} ne estas ĝusta data formato.",
     "Admin.VALIDATOR_MESSAGE_ALPHANUMERIC": "{name} ne estas litercifera valoro.",
     "Admin.VALIDATOR_MESSAGE_ALPHA": "{name} ne estas nur literoj.",
-    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} ne estas valida valoro."
+    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} ne estas valida valoro.",
+    "Admin.VERIFY_ITS_YOU": "Unue aŭtentigi vin.",
+    "Admin.WHATS_THIS": "Kio estas tio?",
+    "Admin.VERIFY_TO_CONTINUE": "Aŭtentigi por daŭrigi",
+    "Admin.ENTER_PASSWORD": "Enigu vian pasvorton",
+    "Admin.VERIFY": "Aŭtentigi"
 });
 }

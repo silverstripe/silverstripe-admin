@@ -32,11 +32,11 @@ da:
     MenuToggleAuto: Auto
     MenuToggleStickyNav: 'Fikseret nav.'
     NavigateUp: 'Navigér en mappe op'
-    PERMAGAIN: 'Du er blevet logget ud af CMS''et. Hvis du ønsker at logge ind igen så indtast et brugernavn og kodeord herunder.'
-    PERMALREADY: 'Beklager, men du kan ikke tilgå denne del af CMS''et. Hvis du vil logge ind med en anden bruger, kan du gøre dette herunder.'
+    PERMAGAIN: "Du er blevet logget ud af CMS'et. Hvis du ønsker at logge ind igen så indtast et brugernavn og kodeord herunder."
+    PERMALREADY: "Beklager, men du kan ikke tilgå denne del af CMS'et. Hvis du vil logge ind med en anden bruger, kan du gøre dette herunder."
     PERMDEFAULT: 'Du skal være logget ind for at kunne tilgå administrationen; indtast venligst dine login oplysninger herunder.'
     PreviewButton: Preview
-    REQUIREJS: 'CMS''et kræver at du har JavaScript akttiveret.'
+    REQUIREJS: "CMS'et kræver at du har JavaScript akttiveret."
     SAVEDUP: Gemt.
     SUBMIT_BUTTON_LABEL: Go
     ValidationError: Valideringsfejl

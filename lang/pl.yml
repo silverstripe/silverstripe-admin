@@ -28,7 +28,7 @@ pl:
     ACCESSALLINTERFACES: 'Dostęp do wszystkich sekcji CMS'
     ACCESSALLINTERFACESHELP: 'Zastępuje bardziej szczegółowe ustawienia dostępu.'
     BROWSER_WARNING_HEADING: 'Nieobsługiwane przeglądarki'
-    BROWSER_WARNING_TEXT: 'Twoja przeglądarka nie obsłuży poprawnie CMS''a.<br />Uaktualnij ją, a najlepiej zmień na jedną z proponowanych opcji.'
+    BROWSER_WARNING_TEXT: "Twoja przeglądarka nie obsłuży poprawnie CMS'a.<br />Uaktualnij ją, a najlepiej zmień na jedną z proponowanych opcji."
     CollapsePanel: 'Zwiń panel'
     DELETED: Usunięto.
     DropdownBatchActionsDefault: 'Wybierz akcję...'

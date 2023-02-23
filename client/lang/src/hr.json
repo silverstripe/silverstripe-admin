@@ -7,7 +7,7 @@
     "Admin.BATCH_UNPUBLISH_PROMPT": "Označili ste {num} stranicu(a).\n\nJeste li sigurni da želite odjaviti?",
     "Admin.SELECTONEPAGE": "Molimo odaberite bar jednu stranicu",
     "Admin.FormatExample": "Example: {format}",
-    "Admin.NO_SIZE": "N\/A",
+    "Admin.NO_SIZE": "N/A",
     "Admin.CLOSE": "Close",
     "Admin.CONFIRMUNSAVED": "Jeste li sigurni da želite otići s ove stranice?\n\nUPOZORENJE: Vaše promjene nisu spremljene.\n\nPritisnike OK za nastavka, ili Odustani za ostati na trenutnoj stranici.",
     "Admin.CONFIRMUNSAVEDSHORT": "UPOZORENJE: Vaše promjene nisu spremljene.",

@@ -7,7 +7,7 @@
     "Admin.BATCH_UNPUBLISH_PROMPT": "Du har valgt {num} side(r).\n\nØnsker du at fjerne udgivelsen af disse sider?",
     "Admin.SELECTONEPAGE": "Vælg venligst mindst en side",
     "Admin.FormatExample": "Eksempel: {format}",
-    "Admin.NO_SIZE": "N\/A",
+    "Admin.NO_SIZE": "N/A",
     "Admin.CLOSE": "Luk",
     "Admin.CONFIRMUNSAVED": "Er du sikker på du vil navigere væk fra denne side?\n\nAdvarsel: Dine ændringer er ikke gemt.\n\nKlik på OK for at fortsætte uden at gemme ændringerne, eller klik på Caancel for at blive på den nuværende side.",
     "Admin.CONFIRMUNSAVEDSHORT": "Advarsel: Dine ændringer er ikke gemt.",

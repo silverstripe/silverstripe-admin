@@ -7,7 +7,7 @@
     "Admin.BATCH_UNPUBLISH_PROMPT": "Вы выбрали {num} страниц(у)\n\nВы уверены что хотите отменить их публикацию?",
     "Admin.SELECTONEPAGE": "Пожалуйста, выберите хотя бы одну страницу.",
     "Admin.FormatExample": "Example: {format}",
-    "Admin.NO_SIZE": "N\/A",
+    "Admin.NO_SIZE": "N/A",
     "Admin.CLOSE": "Close",
     "Admin.CONFIRMUNSAVED": "Вы действительно хотите покинуть эту страницу?\n\nВНИМАНИЕ: Ваши изменения не были сохранены.\n\nНажмите ОК, чтобы продолжить или Отмена, чтобы остаться на текущей странице.",
     "Admin.CONFIRMUNSAVEDSHORT": "ВНИМАНИЕ: Ваши изменения не были сохранены",

@@ -7,7 +7,7 @@
     "Admin.BATCH_UNPUBLISH_PROMPT": "Vous avez sélectionné {num} page(s).\n\nÊtes-vous sûr de vouloir les dépublier?",
     "Admin.SELECTONEPAGE": "Sélectionner au moins un page",
     "Admin.FormatExample": "Exemple: {format}",
-    "Admin.NO_SIZE": "N\/A",
+    "Admin.NO_SIZE": "N/A",
     "Admin.CLOSE": "Fermer",
     "Admin.CONFIRMUNSAVED": "Êtes-vous sûr de vouloir quitter cette page ?\n\nATTENTION: Vos changements n'ont pas été sauvegardés.\n\nCliquez sur OK pour continuer, ou sur Annuler pour rester sur la page actuelle.",
     "Admin.CONFIRMUNSAVEDSHORT": "ATTENTION: Vos changements n'ont pas été sauvegardés.",

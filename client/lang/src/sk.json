@@ -7,7 +7,7 @@
     "Admin.BATCH_UNPUBLISH_PROMPT": "Máte vybratých {num} stránok.\n\nSkutočne ich chcete nezverejniť?",
     "Admin.SELECTONEPAGE": "Prosím, vyberte najmenej 1 stránku",
     "Admin.FormatExample": "Example: {format}",
-    "Admin.NO_SIZE": "N\/A",
+    "Admin.NO_SIZE": "N/A",
     "Admin.CLOSE": "Close",
     "Admin.CONFIRMUNSAVED": "Určite chcete opustiť navigáciu z tejto stránky?\n\nUPOZORNENIE: Vaše zmeny neboli uložené.\n\nStlačte OK pre pokračovať, alebo Cancel, ostanete na teto stránke.",
     "Admin.CONFIRMUNSAVEDSHORT": "UPOZORNENIE: Vaše zmeny neboli uložené.",
