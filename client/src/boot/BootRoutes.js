@@ -6,7 +6,7 @@ import $ from 'jquery';
 import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom';
 import Config from 'lib/Config';
 import pageRouter from 'lib/Router';
 import reactRouteRegister from 'lib/ReactRouteRegister';
@@ -15,8 +15,9 @@ import { ApolloProvider } from '@apollo/client';
 import i18n from 'i18n';
 import { isDirty } from 'redux-form';
 import getFormState from 'lib/getFormState';
-import { Routes, Route } from 'react-router';
+import { Route } from 'react-router';
 import { joinUrlPaths } from 'lib/urls';
+import NavigationBlocker from '../components/NavigationBlocker/NavigationBlocker';
 
 /**
  * Bootstraps routes
@@ -35,8 +36,7 @@ class BootRoutes {
     const base = Config.get('absoluteBaseUrl');
     pageRouter.setAbsoluteBase(base);
 
-    this.handleBeforeRoute = this.handleBeforeRoute.bind(this);
-    this.handleBeforeUnload = this.handleBeforeUnload.bind(this);
+    this.shouldConfirmBeforeUnload = this.shouldConfirmBeforeUnload.bind(this);
   }
 
   setStore(store) {
@@ -109,18 +109,30 @@ class BootRoutes {
   initReactRouter() {
     reactRouteRegister.updateRootRoute({ component: App });
     const rootRoute = reactRouteRegister.getRootRoute();
-    const routes = reactRouteRegister.getChildRoutes().map((route) => (
-      <Route key={route.path} path={route.path} element={<route.component />} />
-    ));
+    const router = createBrowserRouter(
+      createRoutesFromElements(
+          <Route
+            path={rootRoute.path}
+            element={
+              <rootRoute.component>
+                <NavigationBlocker shouldBlockFn={this.shouldConfirmBeforeUnload} blockMessage={this.getUnsavedChangesMessage()} />
+              </rootRoute.component>
+            }
+          >
+            {reactRouteRegister.getChildRoutes().map(
+              (route) => (
+                <Route key={route.path} path={route.path} element={<route.component />} />
+              )
+            )}
+          </Route>
+      ),
+      { basename: joinUrlPaths(Config.get('baseUrl'), Config.get('adminUrl')) }
+    );
 
     ReactDOM.createRoot(document.getElementsByClassName('cms-content')[0]).render(
       <ApolloProvider client={this.client}>
         <ReduxProvider store={this.store}>
-          <BrowserRouter basename={joinUrlPaths(Config.get('baseUrl'), Config.get('adminUrl'))}>
-            <Routes>
-              <Route path={rootRoute.path} element={<rootRoute.component />}>{routes}</Route>
-            </Routes>
-          </BrowserRouter>
+          <RouterProvider router={router} />
         </ReduxProvider>
       </ApolloProvider>
     );
@@ -134,12 +146,7 @@ class BootRoutes {
     const store = this.store;
 
     pageRouter('*', (ctx, next) => {
-      const msg = i18n._t(
-          'Admin.CONFIRMUNSAVED',
-          `Are you sure you want to navigate away from this page?\n\n
-          WARNING: Your changes have not been saved.\n\n
-          Press OK to continue, or Cancel to stay on the current page.`
-      );
+      const msg = this.getUnsavedChangesMessage();
       if (!this.shouldConfirmBeforeUnload() || window.confirm(msg)) {
         // eslint-disable-next-line no-param-reassign
         ctx.store = store;
@@ -218,22 +225,10 @@ class BootRoutes {
     return changedForms.length > 0;
   }
 
-  handleBeforeUnload(content, callback) {
-    if (this.shouldConfirmBeforeUnload()) {
-      return callback(confirm(i18n._t('Admin.CONFIRMUNSAVEDSHORT', 'WARNING: Your changes have not been saved.')));
-    }
-
-    return callback(true);
-  }
-
-  handleBeforeRoute(content, callback) {
-    if (this.shouldConfirmBeforeUnload()) {
-      return callback(confirm(i18n._t('Admin.CONFIRMUNSAVED', `Are you sure you want to navigate away
-          from this page?\n\nWARNING: Your changes have not been saved.\n\n
-          Press OK to continue, or Cancel to stay on the current page.`)));
-    }
-
-    return callback(true);
+  getUnsavedChangesMessage() {
+    return i18n._t('Admin.CONFIRMUNSAVED', `Are you sure you want to navigate away
+    from this page?\n\nWARNING: Your changes have not been saved.\n\n
+    Press OK to continue, or Cancel to stay on the current page.`);
   }
 }
 
