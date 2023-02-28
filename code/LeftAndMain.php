@@ -182,15 +182,14 @@ class LeftAndMain extends Controller implements PermissionProvider
     private string $httpErrorMessage;
 
     /**
-     * Assign themes to use for cms
+     * Themes to use within the CMS
+     *
+     * Default themes are assigned in _config/themes.yml
      *
      * @config
      * @var array
      */
-    private static $admin_themes = [
-        'silverstripe/admin:cms-forms',
-        SSViewer::DEFAULT_THEME,
-    ];
+    private static $admin_themes = [];
 
     /**
      * Codes which are required from the current user to view this controller.
