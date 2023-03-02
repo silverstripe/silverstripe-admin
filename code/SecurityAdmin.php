@@ -18,6 +18,8 @@ use SilverStripe\View\Requirements;
 
 /**
  * Security section of the CMS
+ *
+ * Note: In CMS 5 SecurityAdmin will extend ModelAdmin instead of LeftAndMain
  */
 class SecurityAdmin extends ModelAdmin implements PermissionProvider
 {
