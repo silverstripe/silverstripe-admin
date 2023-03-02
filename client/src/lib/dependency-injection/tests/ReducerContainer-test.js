@@ -1,4 +1,4 @@
-/* global jest, jasmine, describe, beforeEach, it, pit, expect, process */
+/* global jest, describe, beforeEach, it, pit, expect, process */
 
 jest.mock('../MiddlewareRegistry', () => jest.fn().mockImplementation(() => ({ add: () => {} })));
 import buildReducerContainer from '../buildReducerContainer';

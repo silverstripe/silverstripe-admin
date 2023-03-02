@@ -1,4 +1,4 @@
-/* global jest, jasmine, describe, it, expect, beforeEach */
+/* global jest, describe, it, expect, beforeEach */
 
 // FormBuilderLoader mock was not mocking properly
 // manually override with a stateless null component

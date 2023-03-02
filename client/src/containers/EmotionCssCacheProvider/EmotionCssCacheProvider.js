@@ -8,13 +8,10 @@ import { CacheProvider } from '@emotion/react';
  */
 function EmotionCssCacheProvider({ children }) {
   if (!window.ssReactSelectCache) {
-    window.ssReactSelectCache = React.useMemo(
-      () => createCache({
-          key: 'react-select',
-          insertionPoint: document.querySelector('title'),
-        }),
-      []
-    );
+    window.ssReactSelectCache = createCache({
+      key: 'react-select',
+      insertionPoint: document.querySelector('title'),
+    });
   }
 
   return <CacheProvider value={window.ssReactSelectCache}>{children}</CacheProvider>;

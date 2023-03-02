@@ -169,7 +169,7 @@ $.entwine('ss', function($) {
       destUrl = settings.url,
       msg = xhr.getResponseHeader('X-Status') !== null ? xhr.getResponseHeader('X-Status') : xhr.statusText, // Handle custom status message headers
       msgType = (xhr.status < 200 || xhr.status > 399) ? 'error' : 'success',
-      ignoredMessages = ['OK', 'success', 'HTTP/2.0 200'];
+      ignoredMessages = ['OK', 'success', 'load', 'HTTP/2.0 200'];
 
     // Only redirect if controller url differs to the requested or current one
     if (url !== null && (!isSameUrl(origUrl, url) || !isSameUrl(destUrl, url))) {
@@ -452,9 +452,9 @@ $.entwine('ss', function($) {
 
         $(button).append($(
           '<div class="btn__loading-icon">'+
-            '<span class="btn__circle btn__circle--1" />'+
-            '<span class="btn__circle btn__circle--2" />'+
-            '<span class="btn__circle btn__circle--3" />'+
+            '<span class="btn__circle btn__circle--1"></span>'+
+            '<span class="btn__circle btn__circle--2"></span>'+
+            '<span class="btn__circle btn__circle--3"></span>'+
           '</div>'));
 
         $(button).css($(button).outerWidth() + 'px');

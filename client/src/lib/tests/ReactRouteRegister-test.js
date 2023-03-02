@@ -1,4 +1,4 @@
-/* global jest, jasmine, describe, afterEach, it, expect */
+/* global jest, describe, afterEach, it, expect */
 
 jest.unmock('deep-freeze-strict');
 jest.unmock('../ReactRouteRegister.js');

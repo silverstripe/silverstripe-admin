@@ -1,4 +1,4 @@
-/* global jest, jasmine, describe, beforeEach, it, pit, expect, process */
+/* global jest, describe, beforeEach, it, pit, expect, process */
 import buildInjectorContainer from '../buildInjectorContainer';
 import buildApolloGraphqlScaffoldingContainer from '../buildApolloGraphqlScaffoldingContainer';
 import * as graphqlTemplates from '../graphql/templates';

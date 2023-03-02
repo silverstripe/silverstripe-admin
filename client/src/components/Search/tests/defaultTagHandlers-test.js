@@ -1,4 +1,4 @@
-/* global jest, jasmine, describe, it, expect, beforeEach */
+/* global jest, describe, it, expect, beforeEach */
 import defaultTagHandlers from '../utilities/defaultTagHandlers';
 
 const formSchema = {
