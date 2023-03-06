@@ -7,7 +7,7 @@
     "Admin.BATCH_UNPUBLISH_PROMPT": "Sie haben {num} Seite(n) ausgewählt.\n\nWollen Sie wirklich die Veröffentlichung zurücknehmen?",
     "Admin.SELECTONEPAGE": "Bitte mindestens eine Seite auswählen",
     "Admin.FormatExample": "Example: {format}",
-    "Admin.NO_SIZE": "N\/A",
+    "Admin.NO_SIZE": "N/A",
     "Admin.CLOSE": "Close",
     "Admin.CONFIRMUNSAVED": "Sind Sie sicher, dass Sie die Seite verlassen möchten?\n\nWARNUNG: Ihre Änderungen werden nicht gespeichert.\n\nDrücken Sie \"OK\" um fortzufahren, oder \"Abbrechen\" um auf dieser Seite zu bleiben.",
     "Admin.CONFIRMUNSAVEDSHORT": "WARNUNG: Ihre Änderungen wurden nicht gespeichert.",
@@ -29,5 +29,7 @@
     "Admin.VALIDATOR_MESSAGE_DATE": "{name} ist kein gültiges Datumsformat.",
     "Admin.VALIDATOR_MESSAGE_ALPHANUMERIC": "{name} ist kein alphanumerischer Wert.",
     "Admin.VALIDATOR_MESSAGE_ALPHA": "{name} ist nicht nur Buchstaben.",
-    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} ist kein gültiger Wert."
+    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} ist kein gültiger Wert.",
+    "Admin.EDIT_LINK": "Edit link",
+    "Admin.REMOVE_LINK": "Remove link"
 }

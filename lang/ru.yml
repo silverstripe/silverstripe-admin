@@ -21,3 +21,6 @@ ru:
     UNTITLED: 'Без названия'
   SilverStripe\Admin\GroupImportForm:
     Help1: '<p>Импорт одну или больше групп в <em>CSV</em> форма (разделённые запятыми значения) <small><a href="#" class="toggle-advanced">Варианты использования</a></small></p>'
+  SilverStripe\Admin\LeftAndMain:
+    CollapsePanel: 'Collapse panel'
+    ExpandPanel: 'Expand panel'

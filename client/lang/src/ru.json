@@ -7,7 +7,7 @@
     "Admin.BATCH_UNPUBLISH_PROMPT": "Вы выбрали {num} страниц(у)\n\nВы уверены что хотите отменить их публикацию?",
     "Admin.SELECTONEPAGE": "Пожалуйста, выберите хотя бы одну страницу.",
     "Admin.FormatExample": "Example: {format}",
-    "Admin.NO_SIZE": "N\/A",
+    "Admin.NO_SIZE": "N/A",
     "Admin.CLOSE": "Close",
     "Admin.CONFIRMUNSAVED": "Вы действительно хотите покинуть эту страницу?\n\nВНИМАНИЕ: Ваши изменения не были сохранены.\n\nНажмите ОК, чтобы продолжить или Отмена, чтобы остаться на текущей странице.",
     "Admin.CONFIRMUNSAVEDSHORT": "ВНИМАНИЕ: Ваши изменения не были сохранены",
@@ -29,5 +29,7 @@
     "Admin.VALIDATOR_MESSAGE_DATE": "{name} is not a proper date format.",
     "Admin.VALIDATOR_MESSAGE_ALPHANUMERIC": "{name} is not an alphanumeric value.",
     "Admin.VALIDATOR_MESSAGE_ALPHA": "{name} is not only letters.",
-    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} is not a valid value."
+    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} is not a valid value.",
+    "Admin.EDIT_LINK": "Edit link",
+    "Admin.REMOVE_LINK": "Remove link"
 }
