@@ -29,5 +29,7 @@
     "Admin.VALIDATOR_MESSAGE_DATE": "{name} ni pravilna oblika datuma.",
     "Admin.VALIDATOR_MESSAGE_ALPHANUMERIC": "{name} ni alfanumerična vrednost.",
     "Admin.VALIDATOR_MESSAGE_ALPHA": "{name} niso samo črke.",
-    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} ni veljavna vrednost."
+    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} ni veljavna vrednost.",
+    "Admin.EDIT_LINK": "Edit link",
+    "Admin.REMOVE_LINK": "Remove link"
 }

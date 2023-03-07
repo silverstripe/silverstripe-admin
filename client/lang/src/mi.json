@@ -7,7 +7,7 @@
     "Admin.BATCH_UNPUBLISH_PROMPT": "You have {num} page(s) selected.\n\nDo you really want to unpublish",
     "Admin.SELECTONEPAGE": "Please select at least one page",
     "Admin.FormatExample": "Example: {format}",
-    "Admin.NO_SIZE": "N\/A",
+    "Admin.NO_SIZE": "N/A",
     "Admin.CLOSE": "Close",
     "Admin.CONFIRMUNSAVED": "Kei te hiahia whakatere atu i tēnei whārangi?\n\nWHAKATŪPATO: Kāore anō ō huringa kia tiakina.\n\nPēhi AE kia haere tonu, Whakakore rānei kia noho i te whārangi onāianei.",
     "Admin.CONFIRMUNSAVEDSHORT": "WHAKATŪPATO: Kāore anō ō huringa kia tiakina.",
@@ -29,5 +29,7 @@
     "Admin.VALIDATOR_MESSAGE_DATE": "{name} is not a proper date format.",
     "Admin.VALIDATOR_MESSAGE_ALPHANUMERIC": "{name} is not an alphanumeric value.",
     "Admin.VALIDATOR_MESSAGE_ALPHA": "{name} is not only letters.",
-    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} is not a valid value."
+    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} is not a valid value.",
+    "Admin.EDIT_LINK": "Edit link",
+    "Admin.REMOVE_LINK": "Remove link"
 }

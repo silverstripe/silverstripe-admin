@@ -7,7 +7,7 @@
     "Admin.BATCH_UNPUBLISH_PROMPT": "Je hebt {num} pagina(s) geselecteerd.\n\nWeet je zeker dat je de publicatie wilt intrekken?",
     "Admin.SELECTONEPAGE": "Selecteer minstens 1 pagina.",
     "Admin.FormatExample": "Voorbeeld: {format}",
-    "Admin.NO_SIZE": "N\/A",
+    "Admin.NO_SIZE": "N/A",
     "Admin.CLOSE": "Sluiten",
     "Admin.CONFIRMUNSAVED": "Weet u zeker dat u deze pagina wilt verlaten?\nWAARSCHUWING: Uw veranderingen zijn niet opgeslagen.\n\nKies OK om te verlaten, of Cancel om op de huidige pagina te blijven.",
     "Admin.CONFIRMUNSAVEDSHORT": "WAARSCHUWING: Uw veranderingen zijn niet opgeslagen",
@@ -29,5 +29,7 @@
     "Admin.VALIDATOR_MESSAGE_DATE": "{name} is niet in het juiste datum formaat.",
     "Admin.VALIDATOR_MESSAGE_ALPHANUMERIC": "{name} is geen alpha numerieke waarde.",
     "Admin.VALIDATOR_MESSAGE_ALPHA": "{name} bestaat niet alleen uit letters.",
-    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} is geen geldige waarde."
+    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} is geen geldige waarde.",
+    "Admin.EDIT_LINK": "Bewerk link",
+    "Admin.REMOVE_LINK": "Verwijder link"
 }

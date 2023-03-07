@@ -50,6 +50,12 @@ eo:
     ValidationError: 'Validiga eraro'
     Version: Versio
     NO_PREVIEW: 'Neniu antaŭvido disponeblas'
+    ErrorDetail: 'Detaloj pri eraro: {detail}'
+    ErrorMessage: 'Bedaŭrinde, ŝajnas ke okazis eraro {errorcode}.'
+    ErrorMessage403: 'Bedaŭrinde, ŝajnas ke la provita ago estas malpermesita.'
+    ErrorMessage404: 'Bedaŭrinde, ŝajnas ke vi provis aliri sekcion aŭ objekton kiu ne ekzistas.'
+    ErrorMessage500: 'Bedaŭrinde, ŝajnas ke okazis interna servila eraro.'
+    ErrorMessage503: 'Bedaŭrinde, ŝajnas ke la la servo estas dumtempe ne disponebla.'
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
     Auto: Aŭtomate
     ChangeViewMode: 'Ŝanĝi vidan reĝimon'
@@ -99,3 +105,5 @@ eo:
     MemberListCaution: 'Averto: forigi membrojn el ĉi tiu listo forigos ilin ankaŭ el ĉiuj grupoj kaj la datumbazo.'
     TABROLES: Roloj
     Users: Uzantoj
+  LeftAndMain:
+    'php.Access to ''{title}'' section': 'Elemento en permesa elekto identigas la administran sekcion. Ekzemple: Aliro al ''Dosieroj kaj bildoj'''
