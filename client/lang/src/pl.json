@@ -29,5 +29,7 @@
     "Admin.VALIDATOR_MESSAGE_DATE": "{name} nie jest prawidłowym formatem daty,",
     "Admin.VALIDATOR_MESSAGE_ALPHANUMERIC": "{name} nie jest wartością alfanumeryczną.",
     "Admin.VALIDATOR_MESSAGE_ALPHA": "Pole {name} wymaga jedynie liter.",
-    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} nie jest prawidłową wartością."
+    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} nie jest prawidłową wartością.",
+    "Admin.EDIT_LINK": "Edit link",
+    "Admin.REMOVE_LINK": "Remove link"
 }
