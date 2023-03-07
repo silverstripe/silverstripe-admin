@@ -40,6 +40,11 @@ da:
     SAVEDUP: Gemt.
     SUBMIT_BUTTON_LABEL: Go
     ValidationError: Valideringsfejl
+    CollapsePanel: 'Minimer panel'
+    ExpandPanel: 'Udvid panel'
+    HelpMenu: 'Hjælpe menu'
+    PROFILE: '{name} profil'
+    Version: Version
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
     Auto: Auto
     ChangeViewMode: 'Skift visningstilstand'
@@ -89,6 +94,12 @@ da:
     MemberListCaution: 'Advarsel: Fjerner du brugere fra denne liste, fjernes de fra alle grupper og fra databasen'
     TABROLES: Roller
     Users: Brugere
+<<<<<<< HEAD
   SilverStripe\Admin\SudoModeController:
     INVALID: 'Forkert kodeord'
     TIMEOUT: 'Sessionen er udløbet, opdater venligts og forsøg igen.'
+=======
+  SilverStripe\Admin\Forms\UsedOnTable:
+    ADDEDTODRAFT: Kladde
+    MODIFIEDONDRAFTSHORT: Ændret
+>>>>>>> 1

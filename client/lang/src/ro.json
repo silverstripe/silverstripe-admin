@@ -7,7 +7,7 @@
     "Admin.BATCH_UNPUBLISH_PROMPT": "Aveti {num} pagina(i) selectate.\n\nDoriti sa le nenublicati",
     "Admin.SELECTONEPAGE": "Vă rugăm să selectaţi cel puțin o pagină.",
     "Admin.FormatExample": "Example: {format}",
-    "Admin.NO_SIZE": "N\/A",
+    "Admin.NO_SIZE": "N/A",
     "Admin.CLOSE": "Close",
     "Admin.CONFIRMUNSAVED": "Sunteți sigur că doriți să părăsiți pagina?\n\nAVERTISMENT: Modificările nu au fost salvate.\n\nApăsați OK pentru a continua, sau Anulați pentru a rămâne pe pagina curentă.",
     "Admin.CONFIRMUNSAVEDSHORT": "AVERTISMENT: Modificările nu au fost salvate.",
@@ -29,5 +29,7 @@
     "Admin.VALIDATOR_MESSAGE_DATE": "{name} is not a proper date format.",
     "Admin.VALIDATOR_MESSAGE_ALPHANUMERIC": "{name} is not an alphanumeric value.",
     "Admin.VALIDATOR_MESSAGE_ALPHA": "{name} is not only letters.",
-    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} is not a valid value."
+    "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} is not a valid value.",
+    "Admin.EDIT_LINK": "Edit link",
+    "Admin.REMOVE_LINK": "Remove link"
 }

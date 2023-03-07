@@ -50,6 +50,12 @@ nl:
     ValidationError: Validatiefout
     Version: Versie
     NO_PREVIEW: 'Geen voorbeeld beschikbaar'
+    ErrorDetail: 'Foutdetails: {detail}'
+    ErrorMessage: 'Excuses, er was een {errorcode} fout.'
+    ErrorMessage403: 'Excuses, de actie die je probeerde uit te voeren is niet toegestaan.'
+    ErrorMessage404: 'Excuses, het onderdeel wat je probeert te openen bestaat niet.'
+    ErrorMessage500: 'Excuses, er was een fout op de server.'
+    ErrorMessage503: 'Excuses, de server is tijdelijk niet beschikbaar.'
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
     Auto: Auto
     ChangeViewMode: 'Verander view modus'
