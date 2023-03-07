@@ -5,7 +5,7 @@
 import $ from 'jquery';
 import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom';
 import Config from 'lib/Config';
 import pageRouter from 'lib/Router';
@@ -129,7 +129,7 @@ class BootRoutes {
       { basename: joinUrlPaths(Config.get('baseUrl'), Config.get('adminUrl')) }
     );
 
-    ReactDOM.createRoot(document.getElementsByClassName('cms-content')[0]).render(
+    createRoot(document.getElementsByClassName('cms-content')[0]).render(
       <ApolloProvider client={this.client}>
         <ReduxProvider store={this.store}>
           <RouterProvider router={router} />
@@ -192,7 +192,7 @@ class BootRoutes {
     // with an event handler is rendered, which means the page router will intercept
     // events that should be caught by react component event handlers.
     // Note that this empty link is rendered into an element that doesn't exist in the DOM.
-    const root = ReactDOM.createRoot(document.createElement('div'));
+    const root = createRoot(document.createElement('div'));
     root.render(<a role="none" onClick={() => {}} />);
 
     // Start the page router
