@@ -54,11 +54,11 @@
 
     .pull-xs-right > * {
       float: right;
-      margin-left: $spacer / 2;
+      margin-left: $spacer-div-two;
     }
 
     .pull-xs-left > * {
-      margin-right: $spacer / 2;
+      margin-right: $spacer-div-two;
       float: left;
     }
 
@@ -125,7 +125,7 @@
 
           .list-children-link {
             margin-top: -$table-cell-padding;
-            margin-right: -$table-cell-padding / 2;
+            margin-right: -(calc($table-cell-padding/ 2));
             margin-bottom: -$table-cell-padding;
             margin-left: -$grid-gutter-width-half;
             padding-top: $table-cell-padding;

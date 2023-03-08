@@ -30,7 +30,7 @@
 
 // Fixes search date range inputs overflow
 .search-form .fieldgroup .field.date {
-  max-width: calc(50% - #{$spacer / 4});
+  max-width: calc(50% - #{$spacer-div-four});
 }
 
 .search-form__wrapper {

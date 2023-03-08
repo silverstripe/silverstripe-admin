@@ -2,6 +2,7 @@
   $child-left-right: 30%;
   $child-top-bottom: 50%;
   $child-height: 2px;
+  $margin-top: -(calc($child-height / 2));
 
   display: block;
   width: $toolbar-total-height - 1;
@@ -19,7 +20,7 @@
     background: lighten($brand-secondary, 80%);
     border-radius: 5px;
     transition: 0.1s all;
-    margin-top: -($child-height / 2);
+    margin-top: $margin-top;
 
     &:nth-child(2),
     &:nth-child(3) {
@@ -36,7 +37,7 @@
 
       &:first-child {
         top: $child-top-bottom;
-        margin-top: -($child-height / 2);
+        margin-top: $margin-top;
         opacity: 0;
       }
 
@@ -52,7 +53,7 @@
 
       &:last-child {
         top: $child-top-bottom;
-        margin-top: -($child-height / 2);
+        margin-top: $margin-top;
         opacity: 0;
       }
     }

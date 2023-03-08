@@ -1,14 +1,14 @@
 // Accordion based off Bootstrap collapse
 
 .accordion__block {
-  margin-top: $spacer / 2;
+  margin-top: $spacer-div-two;
 }
 
 .accordion__title {
   margin-bottom: 0;
-  margin-left: -$grid-gutter-width / 2;
-  margin-right: -$grid-gutter-width / 2;
-  padding: $spacer * .75 $grid-gutter-width / 2;
+  margin-left: -($panel-padding);
+  margin-right: -($panel-padding);
+  padding: calc($spacer * .75) $panel-padding;
   position: relative;
   display: block;
   font-size: $font-size-sm;
@@ -20,7 +20,7 @@
   border-bottom: 1px solid $border-color;
 
   &::before {
-    padding: $spacer * .75 $grid-gutter-width / 2;
+    padding: calc($spacer * .75) $panel-padding;
     position: absolute;
     right: 0;
     top: 0;

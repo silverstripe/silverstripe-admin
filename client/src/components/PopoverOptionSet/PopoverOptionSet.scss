@@ -1,6 +1,8 @@
 $button-height: 40px;
 $column-width: 225px;
 
+$divided-panel-padding-x: calc($panel-padding-x / 2);
+
 .popover-option-set {
   display: flex;
   flex-direction: column;
@@ -32,7 +34,7 @@ $column-width: 225px;
     overflow-y: auto;
 
     :nth-child(odd) {
-      margin-right: $panel-padding-x / 2;
+      margin-right: $divided-panel-padding-x;
     }
 
     :nth-child(even) {
@@ -48,13 +50,13 @@ $column-width: 225px;
       vertical-align: middle;
       width: 100%;
       margin: 0;
-      padding: $panel-padding-x / 2;
+      padding: $divided-panel-padding-x;
     }
   }
 
   &__button {
     width: 100%;
-    padding: $panel-padding-x / 2;
+    padding: $divided-panel-padding-x;
     text-align: left;
     margin-bottom: 4px;
     border: 0;
@@ -71,7 +73,7 @@ $column-width: 225px;
   // Adds necessary specificity to override default font-size and margins
   & &__button::before {
     font-size: 2.1rem;
-    margin-right: $panel-padding-x / 2;
+    margin-right: $divided-panel-padding-x;
   }
 
   &__search {

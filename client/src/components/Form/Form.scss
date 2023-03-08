@@ -184,7 +184,7 @@ input.radio {
 // Nested as only as a fix for date fields within the filter panel
 .form__fieldgroup > .form__fieldgroup-item {
   display: inline-block;
-  margin-right: $spacer / 2;
+  margin-right: $spacer-div-two;
   margin-top: 8px;
   min-width: 166px;
   vertical-align: bottom; // Align fields with no labels
@@ -328,7 +328,7 @@ input.radio {
     .form-group.checkbox .form__field-holder {
       // Based off of make-col-offset() mixin but adding the panel padding-x to offset
       // the checkbox width
-      $_field-margin-left: percentage(2 / $grid-columns);
+      $_field-margin-left: percentage(calc(2 / $grid-columns));
       margin-left: calc(#{$_field-margin-left} + #{$panel-padding-x});
     }
 
