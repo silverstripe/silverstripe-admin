@@ -22,6 +22,10 @@ const MULTI_EMPTY_VALUE = 'unchanged';
 
 const SINGLE_EMPTY_VALUE = 0;
 
+const Highlight = ({ children }) => (
+  <span className="treedropdownfield__option-title--highlighted">{children}</span>
+);
+
 class TreeDropdownField extends Component {
   constructor(props) {
     super(props);
@@ -681,9 +685,6 @@ class TreeDropdownField extends Component {
   formatOptionLabel(option, { context, inputValue }) {
     const { title } = option;
 
-    const Highlight = ({ children }) => (
-      <span className="treedropdownfield__option-title--highlighted">{children}</span>
-    );
     return this.props.search.length
       ? mapHighlight(title ? title : '', this.props.search, Highlight)
       : title;
