@@ -421,7 +421,7 @@ $.entwine('ss', function($){
 
         //Reopen toggle fields
         if(toggleComposite.length > 0){
-          toggleComposite.accordion('activate', toggleComposite.find('.ui-accordion-header'));
+          toggleComposite.accordion('option', 'active', toggleComposite.find('.ui-accordion-header'));
         }
 
         //Calculate position for scroll

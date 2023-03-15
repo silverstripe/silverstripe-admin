@@ -19,8 +19,8 @@
         }
     ],
     "require": {
-        "silverstripe/framework": "^4.10",
-        "silverstripe/versioned": "^1@dev",
+        "silverstripe/framework": "4.13.x-dev",
+        "silverstripe/versioned": "1.13.x-dev",
         "silverstripe/vendor-plugin": "^1.0",
         "php": "^7.4 || ^8.0"
     },
@@ -40,7 +40,10 @@
     },
     "autoload": {
         "psr-4": {
-            "SilverStripe\\Admin\\": ["code/", "_legacy/"],
+            "SilverStripe\\Admin\\": [
+                "code/",
+                "_legacy/"
+            ],
             "SilverStripe\\Admin\\Tests\\": "tests/php/",
             "SilverStripe\\Admin\\Tests\\Behat\\Context\\": "tests/behat/src/"
         }
