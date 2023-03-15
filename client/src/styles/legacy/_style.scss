@@ -99,7 +99,7 @@ html, body {
     font-size: $h4-font-size;
     font-weight: bold;
     margin: 0;
-    margin-bottom: $spacer-div-two;
+    margin-bottom: map_get($spacers, 2);
 
     * {
       vertical-align: middle;
@@ -514,7 +514,7 @@ html, body {
 
   .ui-tabs-nav {
     float: right;
-    margin: $spacer-div-two 0 $panel-padding-y 0;
+    margin: map_get($spacers, 2) 0 $panel-padding-y 0;
     padding: 0;
     border-bottom: 0;
 
@@ -550,7 +550,7 @@ html, body {
       }
 
       & + li {
-        margin-left: $spacer-div-two;
+        margin-left: map_get($spacers, 2);
       }
     }
 
@@ -583,7 +583,7 @@ html, body {
         padding: 0; // Avoid double padding with parent
 
         .ui-tabs-panel {
-          padding: $spacer-div-two 0 0 0;
+          padding: map_get($spacers, 2) 0 0 0;
         }
       }
 
@@ -678,7 +678,7 @@ html, body {
     margin: 0 0 -1px;
 
     & + li {
-      margin-left: $spacer-div-two;
+      margin-left: map_get($spacers, 2);
     }
   }
 
@@ -1106,7 +1106,7 @@ html, body {
 
   .cms-tree-view-modes {
     float: right;
-    padding-top: $spacer-div-two - 3;
+    padding-top: (map_get($spacers, 2) - 3);
 
     * {
       display: inline-block;
@@ -1158,7 +1158,7 @@ html, body {
 
   .cms-panel-header {
     clear: both;
-    margin: 10px 0 ($spacer-div-two - 1);
+    margin: 10px 0 (map_get($spacers, 2) - 1);
     padding-bottom: 2px;
     line-height: $spacer * 1.5;
     border-bottom: 1px solid $border-color;
@@ -1222,7 +1222,7 @@ html, body {
   td,
   th {
     border-bottom: 1px solid $border-color;
-    padding: ($spacer-div-two - 1) 2px;
+    padding: (map_get($spacers, 2) - 1) 2px;
     font-size: 11px;
     vertical-align: top;
 
@@ -1510,7 +1510,7 @@ form.member-profile-form {
 
     h2, h3 {
       border-bottom: 0;
-      margin-left: $spacer-div-two;
+      margin-left: map_get($spacers, 2);
       transform-origin: bottom, right;
       transform: rotate(270deg);
     }
@@ -1587,7 +1587,7 @@ form.member-profile-form {
   background: $body-bg;
   background-clip: content-box;
   border: 1px solid #666 !important;
-  border-radius: $spacer-div-two;
+  border-radius: map_get($spacers, 2);
   overflow: visible;
   padding: 0;
   box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, .3);
@@ -1598,7 +1598,7 @@ form.member-profile-form {
     padding: 0;
     border: 0;
     background: transparent url('../../images/textures/cms_content_header.png') repeat;
-    box-shadow: $shadow-level-4 0 0 $spacer-div-four inset;
+    box-shadow: $shadow-level-4 0 0 map_get($spacers, 1) inset;
 
     .ui-dialog-title {
       position: absolute;
@@ -1606,7 +1606,7 @@ form.member-profile-form {
   }
 
   .ui-dialog-content {
-    border-radius: $spacer-div-two;
+    border-radius: map_get($spacers, 2);
     overflow: auto; // TODO Replace with proper $.layout grid
 
     &.loading {
@@ -1618,12 +1618,12 @@ form.member-profile-form {
 
   .cms-dialog-content {
     background: $body-bg;
-    padding-bottom: $spacer-div-two;
+    padding-bottom: map_get($spacers, 2);
     padding-top: 0;
 
     .btn-toolbar {
       overflow: auto;
-      padding-bottom: $spacer-div-two;
+      padding-bottom: map_get($spacers, 2);
       float: right;
     }
 
@@ -1721,8 +1721,8 @@ body.cms-dialog {
 
   // Preview might not always be available
   .cms-file-info-preview img {
-    max-width: calc($spacer-div-two * 22); // Same as ".field label"
-    max-height: calc($spacer-div-two * 16); // Fitting typical info displayed (~5 rows)
+    max-width: calc(map_get($spacers, 2) * 22); // Same as ".field label"
+    max-height: calc(map_get($spacers, 2) * 16); // Fitting typical info displayed (~5 rows)
     margin-bottom: $spacer;
   }
 }

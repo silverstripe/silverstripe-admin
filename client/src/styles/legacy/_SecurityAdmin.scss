@@ -77,8 +77,8 @@ green tick icon as a background this is created using gulp-sprity generated clas
   .cms-content-fields {
     overflow-y:auto;
     .aligned-right-label { //align the label with the parent group field in add new group
-      margin-left: calc($spacer-div-two * 23);
-      padding: calc($spacer-div-two) 0;
+      margin-left: calc(map_get($spacers, 2) * 23);
+      padding: map_get($spacers, 2) 0;
     }
   }
 }

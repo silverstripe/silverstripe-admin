@@ -175,11 +175,3 @@
   content: "#";
   color: $brand-danger;
 }
-
-// Fix for IE11 showing the split view preview iframe above the modal
-// We need to use this unorthodox selector for the js reactstrap created
-// <div tabindex="-1" style="position: relative; z-index: 1050;">
-.insert-link__dialog-wrapper + div[tabindex="-1"][style*="z-index: 1050"],
-#insert-embed-react__dialog-wrapper + div[tabindex="-1"][style*="z-index: 1050"] {// sass-lint:disable-line no-ids
-  position: absolute !important;// sass-lint:disable-line no-important
-}

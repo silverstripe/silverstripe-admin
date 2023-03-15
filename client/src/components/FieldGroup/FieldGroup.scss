@@ -3,7 +3,7 @@
   > .form-group {
     margin-top: 0;
     display: inline-block;
-    margin-right: $spacer-div-two;
+    margin-right: map_get($spacers, 2);
     vertical-align: bottom; // Align fields with no labels
   }
 

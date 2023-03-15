@@ -143,6 +143,7 @@ $spacers: (
   3: $spacer,
   4: ($spacer * 1.5),
   5: ($spacer * 3),
+  xl: $spacer * 2.5, // 40px - custom
   lg: $spacer * 1.5, // 24px - custom
   sm: $spacer * .75, // 12px - custom
   xs: $spacer * .625 // 10px - custom
@@ -220,7 +221,7 @@ $container-max-widths: (
 // Set the number of columns and specify the width of the gutters.
 
 //$grid-columns: 12 !default;
-$grid-gutter-width: $spacer * 2.5; // 40px
+$grid-gutter-width: map_get($spacers, xl); // 40px
 
 // Components
 //
@@ -553,7 +554,7 @@ $dropdown-item-padding-x:        1.3rem !default;
 // Navs
 
 $nav-link-padding-y:            $spacer; // .5rem !default;
-$nav-link-padding-x:            #{calc($spacer / 4)}; // 1rem !default;
+$nav-link-padding-x:            map_get($spacers, 1); // 1rem !default;
 //$nav-link-disabled-color:       $gray-600 !default;
 
 $nav-tabs-border-color: $border-color;
@@ -680,7 +681,7 @@ $popover-bg:                        $white; // SS custom
 
 $popover-header-bg:                 $popover-bg; // SS custom
 //$popover-header-color:              $headings-color !default;
-$popover-header-padding-y:          $spacer * .75; // SS custom: 12px
+$popover-header-padding-y:          map_get($spacers, sm); // SS custom: 12px
 $popover-header-padding-x:          $spacer; // SS custom: 16px
 
 //$popover-body-color:                $body-color !default;
@@ -733,7 +734,7 @@ $modal-footer-border-color: #e5e5e5;
 //$modal-footer-border-width:   $modal-header-border-width !default;
 $modal-header-padding: map_get($spacers, xs) #{calc($grid-gutter-width / 2)};
 
-$modal-xl: calc(100% - #{calc($spacer * 4)});
+$modal-xl: calc(100% - map_get($spacers, xs));
 $modal-lg: 900px;
 $modal-md: 600px;
 //$modal-sm:                    300px !default;

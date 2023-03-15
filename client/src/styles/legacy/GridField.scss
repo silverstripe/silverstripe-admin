@@ -54,11 +54,11 @@
 
     .pull-xs-right > * {
       float: right;
-      margin-left: $spacer-div-two;
+      margin-left: map_get($spacers, 2);
     }
 
     .pull-xs-left > * {
-      margin-right: $spacer-div-two;
+      margin-right: map_get($spacers, 2);
       float: left;
     }
 

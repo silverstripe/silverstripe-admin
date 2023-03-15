@@ -1,6 +1,6 @@
 .back-button {
-  padding-left: $spacer-div-four;
-  padding-right: $spacer-div-four;
+  padding-left: map_get($spacers, 1);
+  padding-right: map_get($spacers, 1);
   min-width: 24px; // Safari fix
   color: $text-muted; // TEMP: Needed for anchor buttons to override legacy styles
   margin-left: -$spacer-xs;

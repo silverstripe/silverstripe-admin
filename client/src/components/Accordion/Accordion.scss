@@ -1,7 +1,7 @@
 // Accordion based off Bootstrap collapse
 
 .accordion__block {
-  margin-top: $spacer-div-two;
+  margin-top: map_get($spacers, 2);
 }
 
 .accordion__title {
