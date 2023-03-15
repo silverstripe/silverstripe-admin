@@ -4,7 +4,6 @@ import buildApolloGraphqlScaffoldingContainer from '../buildApolloGraphqlScaffol
 import * as graphqlTemplates from '../graphql/templates';
 import { GLOBAL_CONTEXT } from '../MiddlewareRegistry';
 
-
 describe('Dynamic graphql injection', () => {
   let Injector;
 
@@ -99,6 +98,50 @@ describe('Dynamic graphql injection', () => {
     expect(compiledQuery).toMatch(/\s*query\s+ReadDinos\s+{\s+readDinos\s+{\s+Spikes Tail Plates\s+}\s+}\s*$/);
   });
 
+  it('Allows customisation of READ queries which have params', () => {
+    const { READ } = graphqlTemplates;
+    const query = {
+      apolloConfig: {
+        props() {
+          return {
+            foo: 'bar',
+          };
+        }
+      },
+      templateName: READ,
+      pluralName: 'Dinos',
+      pagination: false,
+      params: {
+        filter: 'DinoFilterFields'
+      },
+      fields: [
+        'Spikes',
+        'Tail'
+      ],
+    };
+
+    Injector.test.register('MyTestReadQuery', query);
+    Injector.transform(
+      'test-transform',
+      (updater) => {
+        updater.test('MyTestReadQuery', (manager) => {
+          manager.addField('Plates');
+          manager.transformApolloConfig('props', () => (previous) => ({
+              ...previous,
+              qux: 'baz'
+            }));
+        });
+      }
+    );
+    Injector.load();
+
+    const AST = fetchManager('MyTestReadQuery').getGraphqlAST();
+
+    expect(AST.kind).toBe('Document');
+    const compiledQuery = AST.loc.source.body;
+    expect(compiledQuery).toMatch(/\s*query\s+ReadDinos\(\$filter: DinoFilterFields\)\s+{\s+readDinos\(filter: \$filter\)\s+{\s+Spikes Tail Plates\s+}\s+}\s*$/);
+  });
+
   it('Allows customisation of READ ONE queries', () => {
     const { READ_ONE } = graphqlTemplates;
     const query = {
@@ -130,6 +173,42 @@ describe('Dynamic graphql injection', () => {
     expect(AST.kind).toBe('Document');
     const compiledQuery = AST.loc.source.body;
     expect(compiledQuery).toMatch(/\s*query\s+ReadOneDino\(\s*\$ID: ID!\s*\)\s+{\s+readOneDino\(\s*ID: \$ID\s*\)\s+{\s+Spikes Tail Plates\s+}\s+}\s*$/);
+  });
+
+  it('Allows customisation of READ ONE queries with GraphQL v4 schema overrides', () => {
+    const { READ_ONE } = graphqlTemplates;
+    const query = {
+      apolloConfig: {
+      },
+      templateName: READ_ONE,
+      singularName: 'Dino',
+      pagination: false,
+      params: {
+        // Declare that the "id" param is lowercase
+        id: 'ID!'
+      },
+      fields: [
+        'Spikes',
+        'Tail'
+      ],
+    };
+
+    Injector.test.register('MyTestReadOneQuery', query);
+    Injector.transform(
+      'test-transform',
+      (updater) => {
+        updater.test('MyTestReadOneQuery', (manager) => {
+          manager.addField('Plates');
+        });
+      }
+    );
+    Injector.load();
+
+    const AST = fetchManager('MyTestReadOneQuery').getGraphqlAST();
+
+    expect(AST.kind).toBe('Document');
+    const compiledQuery = AST.loc.source.body;
+    expect(compiledQuery).toMatch(/\s*query\s+ReadOneDino\(\s*\$id: ID!\s*\)\s+{\s+readOneDino\(\s*id: \$id\s*\)\s+{\s+Spikes Tail Plates\s+}\s+}\s*$/);
   });
 
   it('Allows customisation of UPDATE queries', () => {
@@ -164,6 +243,40 @@ describe('Dynamic graphql injection', () => {
     expect(compiledQuery).toMatch(/\s*mutation\s+UpdateDino\(\s*\$Input:\s*DinoUpdateInputType!\s*\)\s+{\s+updateDino\(\s*Input:\s*\$Input\s*\)\s+{\s+Teeth Plates\s+}\s+}\s*$/);
   });
 
+  it('Allows customisation of UPDATE queries with GraphQL 4 schema overrides', () => {
+    const { UPDATE } = graphqlTemplates;
+    const query = {
+      apolloConfig: {
+      },
+      templateName: UPDATE,
+      singularName: 'Dino',
+      pagination: false,
+      params: {
+        input: 'UpdateDinoInput!',
+      },
+      fields: [
+        'Teeth',
+      ],
+    };
+
+    Injector.test.register('MyTestUpdateQuery', query);
+    Injector.transform(
+      'test-transform',
+      (updater) => {
+        updater.test('MyTestUpdateQuery', (manager) => {
+          manager.addField('Plates');
+        });
+      }
+    );
+    Injector.load();
+
+    const AST = fetchManager('MyTestUpdateQuery').getGraphqlAST();
+
+    expect(AST.kind).toBe('Document');
+    const compiledQuery = AST.loc.source.body;
+    expect(compiledQuery).toMatch(/\s*mutation\s+UpdateDino\(\s*\$input:\s*UpdateDinoInput!\s*\)\s+{\s+updateDino\(\s*input:\s*\$input\s*\)\s+{\s+Teeth Plates\s+}\s+}\s*$/);
+  });
+
   it('Allows customisation of DELETE queries', () => {
     const { DELETE } = graphqlTemplates;
     const query = {
@@ -193,6 +306,40 @@ describe('Dynamic graphql injection', () => {
     expect(AST.kind).toBe('Document');
     const compiledQuery = AST.loc.source.body;
     expect(compiledQuery).toMatch(/\s*mutation\s+DeleteDino\(\s*\$IDs:\s*\[ID]!\s*\)\s+{\s+deleteDino\(\s*IDs:\s*\$IDs\s*\)\s+}\s*$/);
+  });
+
+  it('Allows customisation of DELETE queries with GraphQL 4 schema overrides', () => {
+    const { DELETE } = graphqlTemplates;
+    const query = {
+      apolloConfig: {
+      },
+      templateName: DELETE,
+      singularName: 'Dino',
+      pagination: false,
+      params: {
+        // Declare that the "ids" param is lowercase
+        ids: '[ID]!'
+      },
+      fields: [
+      ],
+    };
+
+    Injector.test.register('MyTestDeleteQuery', query);
+    Injector.transform(
+      'test-transform',
+      (updater) => {
+        updater.test('MyTestDeleteQuery', (manager) => {
+          manager.addField('ID');
+        });
+      }
+    );
+    Injector.load();
+
+    const AST = fetchManager('MyTestDeleteQuery').getGraphqlAST();
+
+    expect(AST.kind).toBe('Document');
+    const compiledQuery = AST.loc.source.body;
+    expect(compiledQuery).toMatch(/\s*mutation\s+DeleteDino\(\s*\$ids:\s*\[ID]!\s*\)\s+{\s+deleteDino\(\s*ids:\s*\$ids\s*\)\s+}\s*$/);
   });
 
   it('Allows customisation of CREATE queries', () => {
@@ -225,6 +372,40 @@ describe('Dynamic graphql injection', () => {
     expect(AST.kind).toBe('Document');
     const compiledQuery = AST.loc.source.body;
     expect(compiledQuery).toMatch(/\s*mutation\s+CreateDino\(\s*\$Input:\s*DinoCreateInputType!\s*\)\s+{\s+createDino\(\s*Input:\s*\$Input\s*\)\s+{\s+Club Claws\s+}\s+}\s*$/);
+  });
+
+  it('Allows customisation of CREATE queries with GraphQL 4 schema overrides', () => {
+    const { CREATE } = graphqlTemplates;
+    const query = {
+      apolloConfig: {
+      },
+      templateName: CREATE,
+      singularName: 'Dino',
+      pagination: false,
+      params: {
+        input: 'CreateDinoInput!',
+      },
+      fields: [
+        'Club',
+      ],
+    };
+
+    Injector.test.register('MyTestCreateQuery', query);
+    Injector.transform(
+      'test-transform',
+      (updater) => {
+        updater.test('MyTestCreateQuery', (manager) => {
+          manager.addField('Claws');
+        });
+      }
+    );
+    Injector.load();
+
+    const AST = fetchManager('MyTestCreateQuery').getGraphqlAST();
+
+    expect(AST.kind).toBe('Document');
+    const compiledQuery = AST.loc.source.body;
+    expect(compiledQuery).toMatch(/\s*mutation\s+CreateDino\(\s*\$input:\s*CreateDinoInput!\s*\)\s+{\s+createDino\(\s*input:\s*\$input\s*\)\s+{\s+Club Claws\s+}\s+}\s*$/);
   });
 });
 
