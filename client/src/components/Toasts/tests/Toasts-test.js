@@ -9,8 +9,8 @@ import Adapter from 'enzyme-adapter-react-16/build/index';
 Enzyme.configure({ adapter: new Adapter() });
 jest.useFakeTimers();
 
-const toastOne = { id: 'one', text: 'Let us toast your success', type: 'success', dismissed: false };
-const toastTwo = { id: 'two', text: 'You have failed me for the last time', type: 'error', dismissed: false };
+const toastOne = { id: 'one', text: 'Let us toast your success', type: 'success', dismissed: false, onDismiss: jest.fn() };
+const toastTwo = { id: 'two', text: 'You have failed me for the last time', type: 'error', dismissed: false, onDismiss: jest.fn() };
 
 const getHandlers = () => ({
   onDismiss: jest.fn(),
@@ -48,7 +48,7 @@ describe('Toasts', () => {
       expect(toasts).toHaveLength(1);
 
       const toast = toasts.first();
-      const { id, ...toastMinusId } = toastOne;
+      const { id, onDismiss, ...toastMinusId } = toastOne;
       expect(toast.props()).toMatchObject(toastMinusId);
 
       toast.prop('onDismiss')();
@@ -70,7 +70,7 @@ describe('Toasts', () => {
       expect(toasts).toHaveLength(2);
 
       const toast = toasts.last();
-      const { id, ...toastMinusId } = toastTwo;
+      const { id, onDismiss, ...toastMinusId } = toastTwo;
       expect(toast.props()).toMatchObject(toastMinusId);
 
       toast.prop('onDismiss')();

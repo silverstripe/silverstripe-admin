@@ -36,7 +36,7 @@ const Toasts = ({ toasts, onDismiss, onPause, onResume }) => {
     <div className="toasts" aria-live="polite" aria-atomic="true" {...handlers}>
       <div className="toasts__wrapper">
         {toasts.map(({ id, ...toast }) =>
-          <Toast key={id} onDismiss={() => onDismiss(id)} {...toast} />
+          <Toast key={id} {...toast} onDismiss={() => onDismiss(id)}/>
         )}
       </div>
     </div>

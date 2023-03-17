@@ -55,7 +55,7 @@
 }
 
 .treedropdownfield__option-count-icon {
-  padding: 0 ($spacer / 2);
+  padding: 0 map_get($spacers, 2);
   line-height: 0.8;
 }
 

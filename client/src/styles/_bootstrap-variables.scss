@@ -86,19 +86,19 @@ $teal:     #20c997 !default; // bootstrap default
 $cyan:     #29abe2 !default; // custom
 
 $colors: (
-  blue: $blue,
-  indigo: $indigo,
-  purple: $purple,
-  pink: $pink,
-  red: $red,
-  orange: $orange,
-  yellow: $yellow,
-  green: $green,
-  teal: $teal,
-  cyan: $cyan,
-  white: $white,
-  gray: $gray-600,
-  gray-dark: $gray-800,
+  "blue": $blue,
+  "indigo": $indigo,
+  "purple": $purple,
+  "pink": $pink,
+  "red": $red,
+  "orange": $orange,
+  "yellow": $yellow,
+  "green": $green,
+  "teal": $teal,
+  "cyan": $cyan,
+  "white": $white,
+  "gray": $gray-600,
+  "gray-dark": $gray-800,
 );
 
 $theme-colors: (
@@ -143,6 +143,7 @@ $spacers: (
   3: $spacer,
   4: ($spacer * 1.5),
   5: ($spacer * 3),
+  xl: $spacer * 2.5, // 40px - custom
   lg: $spacer * 1.5, // 24px - custom
   sm: $spacer * .75, // 12px - custom
   xs: $spacer * .625 // 10px - custom
@@ -220,13 +221,13 @@ $container-max-widths: (
 // Set the number of columns and specify the width of the gutters.
 
 //$grid-columns: 12 !default;
-$grid-gutter-width: $spacer * 2.5; // 40px
+$grid-gutter-width: map_get($spacers, xl); // 40px
 
 // Components
 //
 // Define common padding and border radius sizes and more.
 
-$line-height-lg: (4 / 3);
+$line-height-lg: calc(4 / 3);
 $line-height-sm: 1.5;
 
 $border-width: 1px !default;
@@ -553,7 +554,7 @@ $dropdown-item-padding-x:        1.3rem !default;
 // Navs
 
 $nav-link-padding-y:            $spacer; // .5rem !default;
-$nav-link-padding-x:            #{$spacer / 4}; // 1rem !default;
+$nav-link-padding-x:            map_get($spacers, 1); // 1rem !default;
 //$nav-link-disabled-color:       $gray-600 !default;
 
 $nav-tabs-border-color: $border-color;
@@ -680,7 +681,7 @@ $popover-bg:                        $white; // SS custom
 
 $popover-header-bg:                 $popover-bg; // SS custom
 //$popover-header-color:              $headings-color !default;
-$popover-header-padding-y:          $spacer * .75; // SS custom: 12px
+$popover-header-padding-y:          map_get($spacers, sm); // SS custom: 12px
 $popover-header-padding-x:          $spacer; // SS custom: 16px
 
 //$popover-body-color:                $body-color !default;
@@ -731,9 +732,9 @@ $modal-header-border-color: #e5e5e5;
 $modal-footer-border-color: #e5e5e5;
 //$modal-header-border-width:   $modal-content-border-width !default;
 //$modal-footer-border-width:   $modal-header-border-width !default;
-$modal-header-padding: map_get($spacers, xs) #{$grid-gutter-width / 2};
+$modal-header-padding: map_get($spacers, xs) #{calc($grid-gutter-width / 2)};
 
-$modal-xl: calc(100% - #{$spacer * 4});
+$modal-xl: calc(100% - map_get($spacers, xs));
 $modal-lg: 900px;
 $modal-md: 600px;
 //$modal-sm:                    300px !default;

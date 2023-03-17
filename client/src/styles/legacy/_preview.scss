@@ -420,7 +420,7 @@
       }
 
       .preview-device-inner {
-        transform-origin: $mobile-width / 2;
+        transform-origin: calc($mobile-width / 2);
         height: $mobile-width;
         width: $mobile-height;
       }
@@ -450,7 +450,7 @@
       }
 
       .preview-device-inner {
-        transform-origin: $tablet-width / 2;
+        transform-origin: calc($tablet-width / 2);
         height: $tablet-width;
         width: $tablet-height;
       }
@@ -459,7 +459,7 @@
 
   &.desktop {
     .preview__device {
-      min-width: calc(#{$desktop-width} + #{$spacer} * 4);
+      min-width: calc(#{$desktop-width} + calc(#{$spacer} * 4));
 
       &::after {
         content: '#{$desktop-width} x #{$desktop-height}';
