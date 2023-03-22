@@ -1382,17 +1382,18 @@ Sizzle is good for finding elements for a selector, but not so good for telling 
 		$(document).triggerHandler(event);
 	});
 
-})(jQuery);;
+})(jQuery);
 
 
 /* src/domevents/jquery.entwine.domevents.maybechanged.js */
 
 (function($){
 
-	/** What to call to run a function 'soon'. Normally setTimeout, but for syncronous mode we override so soon === now */
-	var runSoon = window.setTimeout;
+  // Helper to run a function "soon". In "synchronous" mode this is overridden so soon === now, but by default this uses
+  // setTimeout wrapped in $() (shorthand for $(document).ready()) to ensure it never runs before DOMContentLoaded
+  var runSoon = (fn, delay) => $(_ => window.setTimeout(fn, delay));
 	
-	/** The timer handle for the asyncronous matching call */
+	/** The timer handle for the asynchronous matching call */
 	var ChangeDetails = Base.extend({
 
 		init: function() {
