@@ -31,14 +31,9 @@ const injectGraphql = (key, context) => (DataHandler) => {
           const apolloHOC = graphqlContainer.getApolloHOC();
           target = apolloHOC(DataHandler);
           error = false;
-        } catch (e) {
+        } finally {
           this.setState({ target, error });
-
-          // re-throw the error, as we do not want to silence it in the console
-          throw e;
         }
-
-        this.setState({ target, error });
       });
     }
 
