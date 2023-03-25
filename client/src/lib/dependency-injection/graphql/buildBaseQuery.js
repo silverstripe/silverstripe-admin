@@ -12,7 +12,7 @@ const getQueryType = ({ queryType }) => queryType;
 
 const buildReadQuery = (tag = defaultTag) => (
   tag`${getQueryType} ${getOperationName}${getVariables} {
-    ${getQueryName}(${getParams}) {
+    ${getQueryName}${getParams} {
       ${getFields}
     }
   }

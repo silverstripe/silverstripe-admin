@@ -1,9 +1,9 @@
 import { defaultTag } from './tags';
-import { getSingularName } from './helpers';
+import { getSingularName, getIdOnlyVariables, getIdOnlyParams } from './helpers';
 
 const buildDeleteMutation = (tag = defaultTag) => (
-  tag`mutation Delete${getSingularName}($IDs:[ID]!) {
-    delete${getSingularName}(IDs: $IDs)
+  tag`mutation Delete${getSingularName}${getIdOnlyVariables} {
+    delete${getSingularName}${getIdOnlyParams}
   }`
 );
 

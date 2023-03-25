@@ -1,9 +1,9 @@
 import { defaultTag } from './tags';
-import { getSingularName, getFields, getFragments } from './helpers';
+import { getSingularName, getIdOnlyVariables, getFields, getFragments, getIdOnlyParams } from './helpers';
 
 const buildReadOneQuery = (tag = defaultTag) => (
-  tag`query ReadOne${getSingularName}($ID: ID!)  {
-    readOne${getSingularName}(ID: $ID) {
+  tag`query ReadOne${getSingularName}${getIdOnlyVariables}  {
+    readOne${getSingularName}${getIdOnlyParams} {
       ${getFields}
     }
   }
