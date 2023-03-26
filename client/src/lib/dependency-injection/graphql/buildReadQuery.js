@@ -1,9 +1,9 @@
 import { defaultTag } from './tags';
-import { getPluralName, getVariables, getRootParams, getFields, getFragments } from './helpers';
+import { getPluralName, getVariables, getParams, getFields, getFragments } from './helpers';
 
 const buildReadQuery = (tag = defaultTag) => (
   tag`query Read${getPluralName}${getVariables} {
-    read${getPluralName}${getRootParams} {
+    read${getPluralName}${getParams} {
       ${getFields}
     }
   }
