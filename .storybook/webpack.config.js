@@ -6,7 +6,7 @@ const {
   pluginJS,
   moduleCSS,
 } = webpackConfig;
-const { collectStoryRoots, getDefaultRoot } = require('./lib/storyTeller');
+const { collectStoryRoots, getDefaultRoot } = require('./lib/storyTeller.mjs');
 
 const ENV = 'development';
 const PATHS = require('../webpack-vars');
