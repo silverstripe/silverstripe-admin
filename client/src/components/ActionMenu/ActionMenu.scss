@@ -5,6 +5,16 @@
     }
   }
 
+  a {
+    &.dropdown-item {
+      color: $dropdown-color;
+
+      &:active {
+        color: $white;
+      }
+    }
+  }
+
   .dropdown-item[class*="font-icon-"]::before {
     position: relative;
     margin-right: $btn-icon-spacing;
