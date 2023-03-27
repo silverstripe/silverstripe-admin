@@ -30,15 +30,9 @@
     "Admin.VALIDATOR_MESSAGE_ALPHANUMERIC": "{name} ni alfanumerična vrednost.",
     "Admin.VALIDATOR_MESSAGE_ALPHA": "{name} niso samo črke.",
     "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} ni veljavna vrednost.",
-<<<<<<< HEAD
     "Admin.VERIFY_ITS_YOU": "Najprej potrdite, da ste to res vi.",
     "Admin.WHATS_THIS": "Kaj je to?",
     "Admin.VERIFY_TO_CONTINUE": "Za nadaljevanje potrdite",
     "Admin.ENTER_PASSWORD": "Vnesite vaše geslo",
     "Admin.VERIFY": "Preveri"
 }
-=======
-    "Admin.EDIT_LINK": "Edit link",
-    "Admin.REMOVE_LINK": "Remove link"
-}
->>>>>>> 1
