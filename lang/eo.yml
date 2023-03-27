@@ -105,11 +105,8 @@ eo:
     MemberListCaution: 'Averto: forigi membrojn el ĉi tiu listo forigos ilin ankaŭ el ĉiuj grupoj kaj la datumbazo.'
     TABROLES: Roloj
     Users: Uzantoj
-<<<<<<< HEAD
   SilverStripe\Admin\SudoModeController:
     INVALID: 'Nevalida pasvorto'
     TIMEOUT: 'Seanco eltempiĝis. Bonvolu refreŝigi kaj reprovi.'
-=======
   LeftAndMain:
     'php.Access to ''{title}'' section': 'Elemento en permesa elekto identigas la administran sekcion. Ekzemple: Aliro al ''Dosieroj kaj bildoj'''
->>>>>>> 1

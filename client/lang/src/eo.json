@@ -30,15 +30,11 @@
     "Admin.VALIDATOR_MESSAGE_ALPHANUMERIC": "{name} ne estas litercifera valoro.",
     "Admin.VALIDATOR_MESSAGE_ALPHA": "{name} ne estas nur literoj.",
     "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} ne estas valida valoro.",
-<<<<<<< HEAD
     "Admin.VERIFY_ITS_YOU": "Unue aŭtentigi vin.",
     "Admin.WHATS_THIS": "Kio estas tio?",
     "Admin.VERIFY_TO_CONTINUE": "Aŭtentigi por daŭrigi",
     "Admin.ENTER_PASSWORD": "Enigu vian pasvorton",
-    "Admin.VERIFY": "Aŭtentigi"
-}
-=======
+    "Admin.VERIFY": "Aŭtentigi",
     "Admin.EDIT_LINK": "Redakti ligilon",
     "Admin.REMOVE_LINK": "Forigi ligilon"
 }
->>>>>>> 1
