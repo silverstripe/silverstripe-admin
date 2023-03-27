@@ -96,12 +96,13 @@ function getInputVariable({ templateName, singularName, params }) {
   if (inputKey) {
     return `$${inputKey}: ${params[inputKey]}`;
   }
-  // Graphql v3 fallbacks
+
+  // fallback to default GraphQL schema scaffolding
   switch (templateName) {
     case CREATE:
-      return `$Input: ${getSingularName({ singularName })}CreateInputType!`;
+      return `$input: Create${getSingularName({ singularName })}Input!`;
     case UPDATE:
-      return `$Input: ${getSingularName({ singularName })}UpdateInputType!`;
+      return `$input: Update${getSingularName({ singularName })}Input!`;
     default:
       throw new Error('Template is not a mutation - no input variable is required.');
   }
@@ -130,8 +131,8 @@ export function getMutationParams(obj) {
   const { templateName, params } = obj;
   let inputKey = getMatchingParamKey('input', params);
   if (!inputKey) {
-    // Graphql v3 fallback
-    inputKey = 'Input';
+    // fallback to default GraphQL schema scaffolding
+    inputKey = 'input';
   }
   const inputParam = `${inputKey}: $${inputKey}`;
 
@@ -152,21 +153,21 @@ export function getIdOnlyVariables({ templateName, params }) {
   let key;
   switch (templateName) {
     case DELETE:
-      // Let developer declare casing (e.g. "Ids" or "ids")
+      // Let developer declare casing (e.g. "IDs" or "Ids")
       key = getMatchingParamKey('ids', params);
       if (key) {
         return `($${key}: ${params[key]})`;
       }
-      // Graphql v3 fallback
-      return '($IDs:[ID]!)';
+      // fallback to default GraphQL schema scaffolding
+      return '($ids:[ID]!)';
     case READ_ONE:
-      // Let developer declare casing (e.g. "Id" or "id")
+      // Let developer declare casing (e.g. "ID" or "Id")
       key = getMatchingParamKey('id', params);
       if (key) {
         return `($${key}: ${params[key]})`;
       }
-      // Graphql v3 fallback
-      return '($ID: ID!)';
+      // fallback to default GraphQL schema scaffolding
+      return '($id: ID!)';
     default:
       throw new Error('Unexpected template type.');
   }
@@ -176,21 +177,21 @@ export function getIdOnlyParams({ templateName, params }) {
   let key;
   switch (templateName) {
     case DELETE:
-      // Let developer declare casing (e.g. "Ids" or "ids")
+      // Let developer declare casing (e.g. "IDs" or "Ids")
       key = getMatchingParamKey('ids', params);
       if (key) {
         return `(${key}: $${key})`;
       }
       // Graphql v3 fallback
-      return '(IDs: $IDs)';
+      return '(ids: $ids)';
     case READ_ONE:
-      // Let developer declare casing (e.g. "Id" or "id")
+      // Let developer declare casing (e.g. "ID" or "Id")
       key = getMatchingParamKey('id', params);
       if (key) {
         return `(${key}: $${key})`;
       }
       // Graphql v3 fallback
-      return '(ID: $ID)';
+      return '(id: $id)';
     default:
       throw new Error('Unexpected template type.');
   }

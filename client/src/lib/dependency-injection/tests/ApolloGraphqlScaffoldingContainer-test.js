@@ -172,10 +172,10 @@ describe('Dynamic graphql injection', () => {
 
     expect(AST.kind).toBe('Document');
     const compiledQuery = AST.loc.source.body;
-    expect(compiledQuery).toMatch(/\s*query\s+ReadOneDino\(\s*\$ID: ID!\s*\)\s+{\s+readOneDino\(\s*ID: \$ID\s*\)\s+{\s+Spikes Tail Plates\s+}\s+}\s*$/);
+    expect(compiledQuery).toMatch(/\s*query\s+ReadOneDino\(\s*\$id: ID!\s*\)\s+{\s+readOneDino\(\s*id: \$id\s*\)\s+{\s+Spikes Tail Plates\s+}\s+}\s*$/);
   });
 
-  it('Allows customisation of READ ONE queries with GraphQL v4 schema overrides', () => {
+  it('Allows customisation of READ ONE queries with GraphQL schema overrides', () => {
     const { READ_ONE } = graphqlTemplates;
     const query = {
       apolloConfig: {
@@ -184,8 +184,8 @@ describe('Dynamic graphql injection', () => {
       singularName: 'Dino',
       pagination: false,
       params: {
-        // Declare that the "id" param is lowercase
-        id: 'ID!'
+        // Declare that the "id" param is uppercase
+        ID: 'ID!'
       },
       fields: [
         'Spikes',
@@ -208,7 +208,7 @@ describe('Dynamic graphql injection', () => {
 
     expect(AST.kind).toBe('Document');
     const compiledQuery = AST.loc.source.body;
-    expect(compiledQuery).toMatch(/\s*query\s+ReadOneDino\(\s*\$id: ID!\s*\)\s+{\s+readOneDino\(\s*id: \$id\s*\)\s+{\s+Spikes Tail Plates\s+}\s+}\s*$/);
+    expect(compiledQuery).toMatch(/\s*query\s+ReadOneDino\(\s*\$ID: ID!\s*\)\s+{\s+readOneDino\(\s*ID: \$ID\s*\)\s+{\s+Spikes Tail Plates\s+}\s+}\s*$/);
   });
 
   it('Allows customisation of UPDATE queries', () => {
@@ -240,10 +240,10 @@ describe('Dynamic graphql injection', () => {
 
     expect(AST.kind).toBe('Document');
     const compiledQuery = AST.loc.source.body;
-    expect(compiledQuery).toMatch(/\s*mutation\s+UpdateDino\(\s*\$Input:\s*DinoUpdateInputType!\s*\)\s+{\s+updateDino\(\s*Input:\s*\$Input\s*\)\s+{\s+Teeth Plates\s+}\s+}\s*$/);
+    expect(compiledQuery).toMatch(/\s*mutation\s+UpdateDino\(\s*\$input:\s*UpdateDinoInput!\s*\)\s+{\s+updateDino\(\s*input:\s*\$input\s*\)\s+{\s+Teeth Plates\s+}\s+}\s*$/);
   });
 
-  it('Allows customisation of UPDATE queries with GraphQL 4 schema overrides', () => {
+  it('Allows customisation of UPDATE queries with GraphQL schema overrides', () => {
     const { UPDATE } = graphqlTemplates;
     const query = {
       apolloConfig: {
@@ -252,7 +252,7 @@ describe('Dynamic graphql injection', () => {
       singularName: 'Dino',
       pagination: false,
       params: {
-        input: 'UpdateDinoInput!',
+        input: 'UpdateDinoCustomInput!',
       },
       fields: [
         'Teeth',
@@ -274,7 +274,7 @@ describe('Dynamic graphql injection', () => {
 
     expect(AST.kind).toBe('Document');
     const compiledQuery = AST.loc.source.body;
-    expect(compiledQuery).toMatch(/\s*mutation\s+UpdateDino\(\s*\$input:\s*UpdateDinoInput!\s*\)\s+{\s+updateDino\(\s*input:\s*\$input\s*\)\s+{\s+Teeth Plates\s+}\s+}\s*$/);
+    expect(compiledQuery).toMatch(/\s*mutation\s+UpdateDino\(\s*\$input:\s*UpdateDinoCustomInput!\s*\)\s+{\s+updateDino\(\s*input:\s*\$input\s*\)\s+{\s+Teeth Plates\s+}\s+}\s*$/);
   });
 
   it('Allows customisation of DELETE queries', () => {
@@ -295,7 +295,7 @@ describe('Dynamic graphql injection', () => {
       'test-transform',
       (updater) => {
         updater.test('MyTestDeleteQuery', (manager) => {
-          manager.addField('ID');
+          manager.addField('id');
         });
       }
     );
@@ -305,10 +305,10 @@ describe('Dynamic graphql injection', () => {
 
     expect(AST.kind).toBe('Document');
     const compiledQuery = AST.loc.source.body;
-    expect(compiledQuery).toMatch(/\s*mutation\s+DeleteDino\(\s*\$IDs:\s*\[ID]!\s*\)\s+{\s+deleteDino\(\s*IDs:\s*\$IDs\s*\)\s+}\s*$/);
+    expect(compiledQuery).toMatch(/\s*mutation\s+DeleteDino\(\s*\$ids:\s*\[ID]!\s*\)\s+{\s+deleteDino\(\s*ids:\s*\$ids\s*\)\s+}\s*$/);
   });
 
-  it('Allows customisation of DELETE queries with GraphQL 4 schema overrides', () => {
+  it('Allows customisation of DELETE queries with GraphQL schema overrides', () => {
     const { DELETE } = graphqlTemplates;
     const query = {
       apolloConfig: {
@@ -317,8 +317,8 @@ describe('Dynamic graphql injection', () => {
       singularName: 'Dino',
       pagination: false,
       params: {
-        // Declare that the "ids" param is lowercase
-        ids: '[ID]!'
+        // Declare that the "ids" param is uppercase
+        IDS: '[ID]!'
       },
       fields: [
       ],
@@ -339,7 +339,7 @@ describe('Dynamic graphql injection', () => {
 
     expect(AST.kind).toBe('Document');
     const compiledQuery = AST.loc.source.body;
-    expect(compiledQuery).toMatch(/\s*mutation\s+DeleteDino\(\s*\$ids:\s*\[ID]!\s*\)\s+{\s+deleteDino\(\s*ids:\s*\$ids\s*\)\s+}\s*$/);
+    expect(compiledQuery).toMatch(/\s*mutation\s+DeleteDino\(\s*\$IDS:\s*\[ID]!\s*\)\s+{\s+deleteDino\(\s*IDS:\s*\$IDS\s*\)\s+}\s*$/);
   });
 
   it('Allows customisation of CREATE queries', () => {
@@ -371,10 +371,10 @@ describe('Dynamic graphql injection', () => {
 
     expect(AST.kind).toBe('Document');
     const compiledQuery = AST.loc.source.body;
-    expect(compiledQuery).toMatch(/\s*mutation\s+CreateDino\(\s*\$Input:\s*DinoCreateInputType!\s*\)\s+{\s+createDino\(\s*Input:\s*\$Input\s*\)\s+{\s+Club Claws\s+}\s+}\s*$/);
+    expect(compiledQuery).toMatch(/\s*mutation\s+CreateDino\(\s*\$input:\s*CreateDinoInput!\s*\)\s+{\s+createDino\(\s*input:\s*\$input\s*\)\s+{\s+Club Claws\s+}\s+}\s*$/);
   });
 
-  it('Allows customisation of CREATE queries with GraphQL 4 schema overrides', () => {
+  it('Allows customisation of CREATE queries with GraphQL schema overrides', () => {
     const { CREATE } = graphqlTemplates;
     const query = {
       apolloConfig: {
@@ -383,7 +383,7 @@ describe('Dynamic graphql injection', () => {
       singularName: 'Dino',
       pagination: false,
       params: {
-        input: 'CreateDinoInput!',
+        input: 'CreateDinoCustomInput!',
       },
       fields: [
         'Club',
@@ -405,7 +405,7 @@ describe('Dynamic graphql injection', () => {
 
     expect(AST.kind).toBe('Document');
     const compiledQuery = AST.loc.source.body;
-    expect(compiledQuery).toMatch(/\s*mutation\s+CreateDino\(\s*\$input:\s*CreateDinoInput!\s*\)\s+{\s+createDino\(\s*input:\s*\$input\s*\)\s+{\s+Club Claws\s+}\s+}\s*$/);
+    expect(compiledQuery).toMatch(/\s*mutation\s+CreateDino\(\s*\$input:\s*CreateDinoCustomInput!\s*\)\s+{\s+createDino\(\s*input:\s*\$input\s*\)\s+{\s+Club Claws\s+}\s+}\s*$/);
   });
 });
 
