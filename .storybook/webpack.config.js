@@ -6,7 +6,8 @@ const {
   pluginJS,
   moduleCSS,
 } = webpackConfig;
-const { collectStoryRoots, getDefaultRoot } = require('./lib/storyTeller.mjs');
+
+const { collectStoryRoots, getDefaultRoot } = require('./lib/storyTeller.js');
 
 const ENV = 'development';
 const PATHS = require('../webpack-vars');
@@ -14,6 +15,7 @@ const PATHS = require('../webpack-vars');
 // See https://storybook.js.org/configurations/custom-webpack-config/#full-control-mode
 module.exports = (config) => {
   const resolve = resolveJS(ENV, PATHS);
+
   config.resolve = Object.assign({},
     resolve,
     {
@@ -54,10 +56,18 @@ module.exports = (config) => {
     }
   ];
 
-  config.plugins = [
-    ...config.plugins,
-    ...pluginJS(ENV),
-  ];
+  // config.plugins = [
+  //   ...config.plugins,
+  //   ...pluginJS(ENV),
+  // ];
+
+  delete config.resolve.fullySpecified;
+  delete config.module.rules[1].type;
+  delete config.module.rules[1].generator;
+  delete config.module.rules[6].type;
+  delete config.module.rules[6].generator;
+  delete config.module.rules[7].type;
+  delete config.module.rules[7].generator;
 
   return config;
 };
