@@ -143,6 +143,10 @@ $spacers: (
   3: $spacer,
   4: ($spacer * 1.5),
   5: ($spacer * 3),
+  // Note: Do not use map_get($spacers, xl/lg/sm/xs) within this file only
+  // This will cause a build failure in different modules such as silversripe/login-forms
+  // which include their own node_modules/bootstrap/scss/_variables.scss that includes the default $spacers
+  // 0,1,2,3,4,5 but not the custom ones xl,lg,sm,xs below
   xl: $spacer * 2.5, // 40px - custom
   lg: $spacer * 1.5, // 24px - custom
   sm: $spacer * .75, // 12px - custom
@@ -221,7 +225,7 @@ $container-max-widths: (
 // Set the number of columns and specify the width of the gutters.
 
 //$grid-columns: 12 !default;
-$grid-gutter-width: map_get($spacers, xl); // 40px
+$grid-gutter-width: $spacer * 2.5; // 40px
 
 // Components
 //
@@ -321,8 +325,8 @@ $text-muted: $gray-600;
 // Customizes the `.table` component with basic values, each used across all table variations.
 
 $table-cell-padding: $spacer;
-$table-cell-padding-sm: map_get($spacers, sm);
-$table-cell-padding-lg: map_get($spacers, lg);
+$table-cell-padding-sm: $spacer * .75;
+$table-cell-padding-lg: $spacer * 1.5;
 
 //$table-bg:                      transparent !default;
 $table-accent-bg: $white;
@@ -681,7 +685,7 @@ $popover-bg:                        $white; // SS custom
 
 $popover-header-bg:                 $popover-bg; // SS custom
 //$popover-header-color:              $headings-color !default;
-$popover-header-padding-y:          map_get($spacers, sm); // SS custom: 12px
+$popover-header-padding-y:          $spacer * .75; // SS custom: 12px
 $popover-header-padding-x:          $spacer; // SS custom: 16px
 
 //$popover-body-color:                $body-color !default;
@@ -732,9 +736,9 @@ $modal-header-border-color: #e5e5e5;
 $modal-footer-border-color: #e5e5e5;
 //$modal-header-border-width:   $modal-content-border-width !default;
 //$modal-footer-border-width:   $modal-header-border-width !default;
-$modal-header-padding: map_get($spacers, xs) #{calc($grid-gutter-width / 2)};
+$modal-header-padding: calc($spacer * .625) calc($grid-gutter-width / 2);
 
-$modal-xl: calc(100% - map_get($spacers, xs));
+$modal-xl: calc(100% - calc($spacer * .625));
 $modal-lg: 900px;
 $modal-md: 600px;
 //$modal-sm:                    300px !default;
