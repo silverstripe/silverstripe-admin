@@ -1391,7 +1391,7 @@ Sizzle is good for finding elements for a selector, but not so good for telling 
 
   // Helper to run a function "soon". In "synchronous" mode this is overridden so soon === now, but by default this uses
   // setTimeout wrapped in $() (shorthand for $(document).ready()) to ensure it never runs before DOMContentLoaded
-  var runSoon = (fn, delay) => $(_ => window.setTimeout(fn, delay));
+  var runSoon = (fn, delay) => window.setTimeout(_ => $(fn), delay);
 	
 	/** The timer handle for the asynchronous matching call */
 	var ChangeDetails = Base.extend({
