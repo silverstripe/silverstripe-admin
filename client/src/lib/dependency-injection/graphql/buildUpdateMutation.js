@@ -3,11 +3,11 @@ import { getSingularName, getVariables, getParams, getFields, getFragments } fro
 
 const buildUpdateMutation = (tag = defaultTag) => (
   tag`mutation Update${getSingularName}(
-    $Input:${getSingularName}UpdateInputType!
+    $input:${getSingularName}UpdateInputType!
     ${getVariables}
   ) {
     update${getSingularName}(
-      Input: $Input
+      input: $input
       ${getParams}
     ) {
       ${getFields}

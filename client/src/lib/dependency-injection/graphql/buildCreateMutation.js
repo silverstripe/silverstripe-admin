@@ -3,10 +3,10 @@ import { getSingularName, getFields, getFragments } from './helpers';
 
 const buildCreateMutation = (tag = defaultTag) => (
   tag`mutation Create${getSingularName}(
-    $Input:${getSingularName}CreateInputType!
+    $input:${getSingularName}CreateInputType!
   ) {
     create${getSingularName}(
-      Input: $Input
+      input: $input
     ) {
       ${getFields}
     }

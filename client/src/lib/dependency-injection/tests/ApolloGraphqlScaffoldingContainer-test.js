@@ -161,7 +161,7 @@ describe('Dynamic graphql injection', () => {
 
     expect(AST.kind).toBe('Document');
     const compiledQuery = AST.loc.source.body;
-    expect(compiledQuery).toMatch(/\s*mutation\s+UpdateDino\(\s*\$Input:\s*DinoUpdateInputType!\s*\)\s+{\s+updateDino\(\s*Input:\s*\$Input\s*\)\s+{\s+Teeth Plates\s+}\s+}\s*$/);
+    expect(compiledQuery).toMatch(/\s*mutation\s+UpdateDino\(\s*\$input:\s*DinoUpdateInputType!\s*\)\s+{\s+updateDino\(\s*input:\s*\$input\s*\)\s+{\s+Teeth Plates\s+}\s+}\s*$/);
   });
 
   it('Allows customisation of DELETE queries', () => {
@@ -224,7 +224,7 @@ describe('Dynamic graphql injection', () => {
 
     expect(AST.kind).toBe('Document');
     const compiledQuery = AST.loc.source.body;
-    expect(compiledQuery).toMatch(/\s*mutation\s+CreateDino\(\s*\$Input:\s*DinoCreateInputType!\s*\)\s+{\s+createDino\(\s*Input:\s*\$Input\s*\)\s+{\s+Club Claws\s+}\s+}\s*$/);
+    expect(compiledQuery).toMatch(/\s*mutation\s+CreateDino\(\s*\$input:\s*DinoCreateInputType!\s*\)\s+{\s+createDino\(\s*input:\s*\$input\s*\)\s+{\s+Club Claws\s+}\s+}\s*$/);
   });
 });
 
