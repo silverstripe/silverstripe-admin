@@ -1,12 +1,12 @@
 import { defaultTag } from './tags';
-import { getSingularName, getFields, getFragments } from './helpers';
+import { getSingularName, getCreateMutationType, getFields, getFragments } from './helpers';
 
 const buildCreateMutation = (tag = defaultTag) => (
   tag`mutation Create${getSingularName}(
-    $Input:${getSingularName}CreateInputType!
+    $input:${getCreateMutationType}!
   ) {
     create${getSingularName}(
-      Input: $Input
+      input: $input
     ) {
       ${getFields}
     }

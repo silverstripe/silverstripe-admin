@@ -161,7 +161,42 @@ describe('Dynamic graphql injection', () => {
 
     expect(AST.kind).toBe('Document');
     const compiledQuery = AST.loc.source.body;
-    expect(compiledQuery).toMatch(/\s*mutation\s+UpdateDino\(\s*\$Input:\s*DinoUpdateInputType!\s*\)\s+{\s+updateDino\(\s*Input:\s*\$Input\s*\)\s+{\s+Teeth Plates\s+}\s+}\s*$/);
+    expect(compiledQuery).toMatch(/\s*mutation\s+UpdateDino\(\s*\$input:\s*UpdateDinoInput!\s*\)\s+{\s+updateDino\(\s*input:\s*\$input\s*\)\s+{\s+Teeth Plates\s+}\s+}\s*$/);
+  });
+
+  it('Allows customisation of graphql3 UPDATE queries', () => {
+    document.body.setAttribute('data-graphql-legacy', 1);
+
+    const { UPDATE } = graphqlTemplates;
+    const query = {
+      apolloConfig: {
+      },
+      templateName: UPDATE,
+      singularName: 'Dino',
+      pagination: false,
+      params: {},
+      fields: [
+        'Teeth',
+      ],
+    };
+
+    Injector.test.register('MyTestUpdateQuery', query);
+    Injector.transform(
+      'test-transform',
+      (updater) => {
+        updater.test('MyTestUpdateQuery', (manager) => {
+          manager.addField('Plates');
+        });
+      }
+    );
+    Injector.load();
+
+    const AST = fetchManager('MyTestUpdateQuery').getGraphqlAST();
+
+    expect(AST.kind).toBe('Document');
+    const compiledQuery = AST.loc.source.body;
+    expect(compiledQuery).toMatch(/\s*mutation\s+UpdateDino\(\s*\$input:\s*DinoUpdateInputType!\s*\)\s+{\s+updateDino\(\s*input:\s*\$input\s*\)\s+{\s+Teeth Plates\s+}\s+}\s*$/);
+    document.body.removeAttribute('data-graphql-legacy');
   });
 
   it('Allows customisation of DELETE queries', () => {
@@ -224,7 +259,42 @@ describe('Dynamic graphql injection', () => {
 
     expect(AST.kind).toBe('Document');
     const compiledQuery = AST.loc.source.body;
-    expect(compiledQuery).toMatch(/\s*mutation\s+CreateDino\(\s*\$Input:\s*DinoCreateInputType!\s*\)\s+{\s+createDino\(\s*Input:\s*\$Input\s*\)\s+{\s+Club Claws\s+}\s+}\s*$/);
+    expect(compiledQuery).toMatch(/\s*mutation\s+CreateDino\(\s*\$input:\s*CreateDinoInput!\s*\)\s+{\s+createDino\(\s*input:\s*\$input\s*\)\s+{\s+Club Claws\s+}\s+}\s*$/);
+  });
+
+  it('Allows customisation of graphql3 CREATE queries', () => {
+    document.body.setAttribute('data-graphql-legacy', 1);
+
+    const { CREATE } = graphqlTemplates;
+    const query = {
+      apolloConfig: {
+      },
+      templateName: CREATE,
+      singularName: 'Dino',
+      pagination: false,
+      params: {},
+      fields: [
+        'Club',
+      ],
+    };
+
+    Injector.test.register('MyTestCreateQuery', query);
+    Injector.transform(
+      'test-transform',
+      (updater) => {
+        updater.test('MyTestCreateQuery', (manager) => {
+          manager.addField('Claws');
+        });
+      }
+    );
+    Injector.load();
+
+    const AST = fetchManager('MyTestCreateQuery').getGraphqlAST();
+
+    expect(AST.kind).toBe('Document');
+    const compiledQuery = AST.loc.source.body;
+    expect(compiledQuery).toMatch(/\s*mutation\s+CreateDino\(\s*\$input:\s*DinoCreateInputType!\s*\)\s+{\s+createDino\(\s*input:\s*\$input\s*\)\s+{\s+Club Claws\s+}\s+}\s*$/);
+    document.body.removeAttribute('data-graphql-legacy');
   });
 });
 
