@@ -1,13 +1,13 @@
 import { defaultTag } from './tags';
-import { getSingularName, getVariables, getParams, getFields, getFragments } from './helpers';
+import { getSingularName, getUpdateMutationType, getVariables, getParams, getFields, getFragments } from './helpers';
 
 const buildUpdateMutation = (tag = defaultTag) => (
   tag`mutation Update${getSingularName}(
-    $Input:${getSingularName}UpdateInputType!
+    $input:${getUpdateMutationType}!
     ${getVariables}
   ) {
     update${getSingularName}(
-      Input: $Input
+      input: $input
       ${getParams}
     ) {
       ${getFields}
