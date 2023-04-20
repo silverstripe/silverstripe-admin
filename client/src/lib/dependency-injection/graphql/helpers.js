@@ -77,14 +77,6 @@ export const getFragments = ({ availableFragments, fragments = [] }) => (
     ), '')
 );
 
-function isLegacy() {
-  return !!document.body.getAttribute('data-graphql-legacy');
-}
+export const getCreateMutationType = ({ singularName }) => `Create${singularName}Input`;
 
-export const getCreateMutationType = ({ singularName }) => (
-  isLegacy() ? `${singularName}CreateInputType` : `Create${singularName}Input`
-);
-
-export const getUpdateMutationType = ({ singularName }) => (
-  isLegacy() ? `${singularName}UpdateInputType` : `Update${singularName}Input`
-);
+export const getUpdateMutationType = ({ singularName }) => `Update${singularName}Input`;
