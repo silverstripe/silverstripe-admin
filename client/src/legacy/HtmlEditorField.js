@@ -82,6 +82,9 @@ ss.editorWrappers.tinyMCE = (function() {
         ed.on('change', function() {
           self.save();
         });
+        ed.on('PreInit', function() {
+          ed.schema.getSpecialElements()['iframe'] = /<\/iframe[^>]*>/gi;
+        });
       };
       return config;
     },
