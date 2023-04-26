@@ -1,388 +1,482 @@
 (function () {
+var textpattern = (function (domGlobals) {
+    'use strict';
 
-var defs = {}; // id -> {dependencies, definition, instance (possibly undefined)}
+    var Cell = function (initial) {
+      var value = initial;
+      var get = function () {
+        return value;
+      };
+      var set = function (v) {
+        value = v;
+      };
+      var clone = function () {
+        return Cell(get());
+      };
+      return {
+        get: get,
+        set: set,
+        clone: clone
+      };
+    };
 
-// Used when there is no 'main' module.
-// The name is probably (hopefully) unique so minification removes for releases.
-var register_3795 = function (id) {
-  var module = dem(id);
-  var fragments = id.split('.');
-  var target = Function('return this;')();
-  for (var i = 0; i < fragments.length - 1; ++i) {
-    if (target[fragments[i]] === undefined)
-      target[fragments[i]] = {};
-    target = target[fragments[i]];
-  }
-  target[fragments[fragments.length - 1]] = module;
-};
+    var global = tinymce.util.Tools.resolve('tinymce.PluginManager');
 
-var instantiate = function (id) {
-  var actual = defs[id];
-  var dependencies = actual.deps;
-  var definition = actual.defn;
-  var len = dependencies.length;
-  var instances = new Array(len);
-  for (var i = 0; i < len; ++i)
-    instances[i] = dem(dependencies[i]);
-  var defResult = definition.apply(null, instances);
-  if (defResult === undefined)
-     throw 'module [' + id + '] returned undefined';
-  actual.instance = defResult;
-};
-
-var def = function (id, dependencies, definition) {
-  if (typeof id !== 'string')
-    throw 'module id must be a string';
-  else if (dependencies === undefined)
-    throw 'no dependencies for ' + id;
-  else if (definition === undefined)
-    throw 'no definition function for ' + id;
-  defs[id] = {
-    deps: dependencies,
-    defn: definition,
-    instance: undefined
-  };
-};
-
-var dem = function (id) {
-  var actual = defs[id];
-  if (actual === undefined)
-    throw 'module [' + id + '] was undefined';
-  else if (actual.instance === undefined)
-    instantiate(id);
-  return actual.instance;
-};
-
-var req = function (ids, callback) {
-  var len = ids.length;
-  var instances = new Array(len);
-  for (var i = 0; i < len; ++i)
-    instances.push(dem(ids[i]));
-  callback.apply(null, callback);
-};
-
-var ephox = {};
-
-ephox.bolt = {
-  module: {
-    api: {
-      define: def,
-      require: req,
-      demand: dem
+    function __spreadArrays() {
+      for (var s = 0, i = 0, il = arguments.length; i < il; i++)
+        s += arguments[i].length;
+      for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+          r[k] = a[j];
+      return r;
     }
-  }
-};
 
-var define = def;
-var require = req;
-var demand = dem;
-// this helps with minificiation when using a lot of global references
-var defineGlobal = function (id, ref) {
-  define(id, [], function () { return ref; });
-};
-/*jsc
-["tinymce.plugins.textpattern.Plugin","tinymce.core.PluginManager","tinymce.core.util.Delay","tinymce.core.util.VK","tinymce.plugins.textpattern.core.Formatter","tinymce.plugins.textpattern.core.KeyHandler","tinymce.plugins.textpattern.core.Settings","global!tinymce.util.Tools.resolve","tinymce.core.dom.TreeWalker","tinymce.core.util.Tools","tinymce.plugins.textpattern.core.Patterns"]
-jsc*/
-defineGlobal("global!tinymce.util.Tools.resolve", tinymce.util.Tools.resolve);
-/**
- * ResolveGlobal.js
- *
- * Released under LGPL License.
- * Copyright (c) 1999-2017 Ephox Corp. All rights reserved
- *
- * License: http://www.tinymce.com/license
- * Contributing: http://www.tinymce.com/contributing
- */
+    var noop = function () {
+    };
+    var constant = function (value) {
+      return function () {
+        return value;
+      };
+    };
+    var never = constant(false);
+    var always = constant(true);
 
-define(
-  'tinymce.core.PluginManager',
-  [
-    'global!tinymce.util.Tools.resolve'
-  ],
-  function (resolve) {
-    return resolve('tinymce.PluginManager');
-  }
-);
+    var none = function () {
+      return NONE;
+    };
+    var NONE = function () {
+      var eq = function (o) {
+        return o.isNone();
+      };
+      var call = function (thunk) {
+        return thunk();
+      };
+      var id = function (n) {
+        return n;
+      };
+      var me = {
+        fold: function (n, s) {
+          return n();
+        },
+        is: never,
+        isSome: never,
+        isNone: always,
+        getOr: id,
+        getOrThunk: call,
+        getOrDie: function (msg) {
+          throw new Error(msg || 'error: getOrDie called on none.');
+        },
+        getOrNull: constant(null),
+        getOrUndefined: constant(undefined),
+        or: id,
+        orThunk: call,
+        map: none,
+        each: noop,
+        bind: none,
+        exists: never,
+        forall: always,
+        filter: none,
+        equals: eq,
+        equals_: eq,
+        toArray: function () {
+          return [];
+        },
+        toString: constant('none()')
+      };
+      if (Object.freeze) {
+        Object.freeze(me);
+      }
+      return me;
+    }();
+    var some = function (a) {
+      var constant_a = constant(a);
+      var self = function () {
+        return me;
+      };
+      var bind = function (f) {
+        return f(a);
+      };
+      var me = {
+        fold: function (n, s) {
+          return s(a);
+        },
+        is: function (v) {
+          return a === v;
+        },
+        isSome: always,
+        isNone: never,
+        getOr: constant_a,
+        getOrThunk: constant_a,
+        getOrDie: constant_a,
+        getOrNull: constant_a,
+        getOrUndefined: constant_a,
+        or: self,
+        orThunk: self,
+        map: function (f) {
+          return some(f(a));
+        },
+        each: function (f) {
+          f(a);
+        },
+        bind: bind,
+        exists: bind,
+        forall: bind,
+        filter: function (f) {
+          return f(a) ? me : NONE;
+        },
+        toArray: function () {
+          return [a];
+        },
+        toString: function () {
+          return 'some(' + a + ')';
+        },
+        equals: function (o) {
+          return o.is(a);
+        },
+        equals_: function (o, elementEq) {
+          return o.fold(never, function (b) {
+            return elementEq(a, b);
+          });
+        }
+      };
+      return me;
+    };
+    var from = function (value) {
+      return value === null || value === undefined ? NONE : some(value);
+    };
+    var Option = {
+      some: some,
+      none: none,
+      from: from
+    };
 
-/**
- * ResolveGlobal.js
- *
- * Released under LGPL License.
- * Copyright (c) 1999-2017 Ephox Corp. All rights reserved
- *
- * License: http://www.tinymce.com/license
- * Contributing: http://www.tinymce.com/contributing
- */
+    var typeOf = function (x) {
+      if (x === null) {
+        return 'null';
+      }
+      var t = typeof x;
+      if (t === 'object' && (Array.prototype.isPrototypeOf(x) || x.constructor && x.constructor.name === 'Array')) {
+        return 'array';
+      }
+      if (t === 'object' && (String.prototype.isPrototypeOf(x) || x.constructor && x.constructor.name === 'String')) {
+        return 'string';
+      }
+      return t;
+    };
+    var isType = function (type) {
+      return function (value) {
+        return typeOf(value) === type;
+      };
+    };
+    var isFunction = isType('function');
 
-define(
-  'tinymce.core.util.Delay',
-  [
-    'global!tinymce.util.Tools.resolve'
-  ],
-  function (resolve) {
-    return resolve('tinymce.util.Delay');
-  }
-);
+    var nativeSlice = Array.prototype.slice;
+    var filter = function (xs, pred) {
+      var r = [];
+      for (var i = 0, len = xs.length; i < len; i++) {
+        var x = xs[i];
+        if (pred(x, i)) {
+          r.push(x);
+        }
+      }
+      return r;
+    };
+    var sort = function (xs, comparator) {
+      var copy = nativeSlice.call(xs, 0);
+      copy.sort(comparator);
+      return copy;
+    };
+    var from$1 = isFunction(Array.from) ? Array.from : function (x) {
+      return nativeSlice.call(x);
+    };
 
-/**
- * ResolveGlobal.js
- *
- * Released under LGPL License.
- * Copyright (c) 1999-2017 Ephox Corp. All rights reserved
- *
- * License: http://www.tinymce.com/license
- * Contributing: http://www.tinymce.com/contributing
- */
+    var hasOwnProperty = Object.hasOwnProperty;
+    var get = function (obj, key) {
+      return has(obj, key) ? Option.from(obj[key]) : Option.none();
+    };
+    var has = function (obj, key) {
+      return hasOwnProperty.call(obj, key);
+    };
 
-define(
-  'tinymce.core.util.VK',
-  [
-    'global!tinymce.util.Tools.resolve'
-  ],
-  function (resolve) {
-    return resolve('tinymce.util.VK');
-  }
-);
-
-/**
- * ResolveGlobal.js
- *
- * Released under LGPL License.
- * Copyright (c) 1999-2017 Ephox Corp. All rights reserved
- *
- * License: http://www.tinymce.com/license
- * Contributing: http://www.tinymce.com/contributing
- */
-
-define(
-  'tinymce.core.dom.TreeWalker',
-  [
-    'global!tinymce.util.Tools.resolve'
-  ],
-  function (resolve) {
-    return resolve('tinymce.dom.TreeWalker');
-  }
-);
-
-/**
- * ResolveGlobal.js
- *
- * Released under LGPL License.
- * Copyright (c) 1999-2017 Ephox Corp. All rights reserved
- *
- * License: http://www.tinymce.com/license
- * Contributing: http://www.tinymce.com/contributing
- */
-
-define(
-  'tinymce.core.util.Tools',
-  [
-    'global!tinymce.util.Tools.resolve'
-  ],
-  function (resolve) {
-    return resolve('tinymce.util.Tools');
-  }
-);
-
-define(
-  'tinymce.plugins.textpattern.core.Patterns',
-  [
-  ],
-  function () {
-    // Returns a sorted patterns list, ordered descending by start length
+    var isInlinePattern = function (pattern) {
+      return has(pattern, 'start') && has(pattern, 'end');
+    };
+    var isBlockPattern = function (pattern) {
+      return !has(pattern, 'end') && !has(pattern, 'replacement');
+    };
+    var isReplacementPattern = function (pattern) {
+      return has(pattern, 'replacement');
+    };
     var sortPatterns = function (patterns) {
-      return patterns.sort(function (a, b) {
-        if (a.start.length > b.start.length) {
-          return -1;
+      return sort(patterns, function (a, b) {
+        if (a.start.length === b.start.length) {
+          return 0;
         }
-
-        if (a.start.length < b.start.length) {
-          return 1;
-        }
-
-        return 0;
+        return a.start.length > b.start.length ? -1 : 1;
       });
     };
-
-    // Finds a matching pattern to the specified text
-    var findPattern = function (patterns, text) {
-      for (var i = 0; i < patterns.length; i++) {
-        if (text.indexOf(patterns[i].start) !== 0) {
-          continue;
-        }
-
-        if (patterns[i].end && text.lastIndexOf(patterns[i].end) !== (text.length - patterns[i].end.length)) {
-          continue;
-        }
-
-        return patterns[i];
-      }
+    var createPatternSet = function (patterns) {
+      return {
+        inlinePatterns: sortPatterns(filter(patterns, isInlinePattern)),
+        blockPatterns: sortPatterns(filter(patterns, isBlockPattern)),
+        replacementPatterns: filter(patterns, isReplacementPattern)
+      };
     };
 
+    var get$1 = function (patternsState) {
+      var setPatterns = function (newPatterns) {
+        patternsState.set(createPatternSet(newPatterns));
+      };
+      var getPatterns = function () {
+        return __spreadArrays(patternsState.get().inlinePatterns, patternsState.get().blockPatterns, patternsState.get().replacementPatterns);
+      };
+      return {
+        setPatterns: setPatterns,
+        getPatterns: getPatterns
+      };
+    };
+    var Api = { get: get$1 };
+
+    var defaultPatterns = [
+      {
+        start: '*',
+        end: '*',
+        format: 'italic'
+      },
+      {
+        start: '**',
+        end: '**',
+        format: 'bold'
+      },
+      {
+        start: '***',
+        end: '***',
+        format: [
+          'bold',
+          'italic'
+        ]
+      },
+      {
+        start: '#',
+        format: 'h1'
+      },
+      {
+        start: '##',
+        format: 'h2'
+      },
+      {
+        start: '###',
+        format: 'h3'
+      },
+      {
+        start: '####',
+        format: 'h4'
+      },
+      {
+        start: '#####',
+        format: 'h5'
+      },
+      {
+        start: '######',
+        format: 'h6'
+      },
+      {
+        start: '1. ',
+        cmd: 'InsertOrderedList'
+      },
+      {
+        start: '* ',
+        cmd: 'InsertUnorderedList'
+      },
+      {
+        start: '- ',
+        cmd: 'InsertUnorderedList'
+      }
+    ];
+    var getPatternSet = function (editorSettings) {
+      var patterns = get(editorSettings, 'textpattern_patterns').getOr(defaultPatterns);
+      return createPatternSet(patterns);
+    };
+
+    var global$1 = tinymce.util.Tools.resolve('tinymce.util.Delay');
+
+    var global$2 = tinymce.util.Tools.resolve('tinymce.util.VK');
+
+    var global$3 = tinymce.util.Tools.resolve('tinymce.dom.TreeWalker');
+
+    var global$4 = tinymce.util.Tools.resolve('tinymce.util.Tools');
+
+    var findPattern = function (patterns, text) {
+      for (var i = 0; i < patterns.length; i++) {
+        var pattern = patterns[i];
+        if (text.indexOf(pattern.start) !== 0) {
+          continue;
+        }
+        if (pattern.end && text.lastIndexOf(pattern.end) !== text.length - pattern.end.length) {
+          continue;
+        }
+        return pattern;
+      }
+    };
     var isMatchingPattern = function (pattern, text, offset, delta) {
       var textEnd = text.substr(offset - pattern.end.length - delta, pattern.end.length);
       return textEnd === pattern.end;
     };
-
     var hasContent = function (offset, delta, pattern) {
-      return (offset - delta - pattern.end.length - pattern.start.length) > 0;
+      return offset - delta - pattern.end.length - pattern.start.length > 0;
     };
-
-    // Finds the best matching end pattern
     var findEndPattern = function (patterns, text, offset, delta) {
       var pattern, i;
-      var sortedPatterns = sortPatterns(patterns);
-
-      // Find best matching end
-      for (i = 0; i < sortedPatterns.length; i++) {
-        pattern = sortedPatterns[i];
+      for (i = 0; i < patterns.length; i++) {
+        pattern = patterns[i];
         if (pattern.end !== undefined && isMatchingPattern(pattern, text, offset, delta) && hasContent(offset, delta, pattern)) {
           return pattern;
         }
       }
     };
-
-    return {
-      findPattern: findPattern,
-      findEndPattern: findEndPattern
-    };
-  }
-);
-
-define(
-  'tinymce.plugins.textpattern.core.Formatter',
-
-  [
-    'tinymce.core.dom.TreeWalker',
-    'tinymce.core.util.Tools',
-    'tinymce.plugins.textpattern.core.Patterns'
-  ],
-
-  function (TreeWalker, Tools, Patterns) {
-    var splitContainer = function (container, pattern, offset, startOffset, delta) {
-
-      // Split text node and remove start/end from text node
-      container = startOffset > 0 ? container.splitText(startOffset) : container;
-      container.splitText(offset - startOffset - delta);
-      container.deleteData(0, pattern.start.length);
-      container.deleteData(container.data.length - pattern.end.length, pattern.end.length);
-
-      return container;
-    };
-
-    // Handles inline formats like *abc* and **abc**
-    var applyInlineFormat = function (editor, patterns, space) {
-      var selection, dom, rng, container, offset, startOffset, text, patternRng, pattern, delta, format;
-
-      selection = editor.selection;
-      dom = editor.dom;
-
-      if (!selection.isCollapsed()) {
+    var findInlinePattern = function (patterns, rng, space) {
+      if (rng.collapsed === false) {
         return;
       }
-
-      rng = selection.getRng(true);
-      container = rng.startContainer;
-      offset = rng.startOffset;
-      text = container.data;
-      delta = space === true ? 1 : 0;
-
-      if (container.nodeType != 3) {
+      var container = rng.startContainer;
+      var text = container.data;
+      var delta = space === true ? 1 : 0;
+      if (container.nodeType !== 3) {
         return;
       }
-
-      // Find best matching end
-      pattern = Patterns.findEndPattern(patterns, text, offset, delta);
-      if (pattern === undefined) {
+      var endPattern = findEndPattern(patterns, text, rng.startOffset, delta);
+      if (endPattern === undefined) {
         return;
       }
-
-      // Find start of matched pattern
-      // TODO: Might need to improve this if there is nested formats
-      startOffset = Math.max(0, offset - delta);
-      startOffset = text.lastIndexOf(pattern.start, startOffset - pattern.end.length - 1);
-
+      var endOffset = text.lastIndexOf(endPattern.end, rng.startOffset - delta);
+      var startOffset = text.lastIndexOf(endPattern.start, endOffset - endPattern.end.length);
+      endOffset = text.indexOf(endPattern.end, startOffset + endPattern.start.length);
       if (startOffset === -1) {
         return;
       }
-
-      // Setup a range for the matching word
-      patternRng = dom.createRng();
+      var patternRng = domGlobals.document.createRange();
       patternRng.setStart(container, startOffset);
-      patternRng.setEnd(container, offset - delta);
-      pattern = Patterns.findPattern(patterns, patternRng.toString());
-
-      if (!pattern || !pattern.end) {
+      patternRng.setEnd(container, endOffset + endPattern.end.length);
+      var startPattern = findPattern(patterns, patternRng.toString());
+      if (endPattern === undefined || startPattern !== endPattern || container.data.length <= endPattern.start.length + endPattern.end.length) {
         return;
       }
-
-      // If container match doesn't have anything between start/end then do nothing
-      if (container.data.length <= pattern.start.length + pattern.end.length) {
-        return;
+      return {
+        pattern: endPattern,
+        startOffset: startOffset,
+        endOffset: endOffset
+      };
+    };
+    var findReplacementPattern = function (patterns, startSearch, text) {
+      for (var i = 0; i < patterns.length; i++) {
+        var index = text.lastIndexOf(patterns[i].start, startSearch);
+        if (index !== -1) {
+          return Option.some({
+            pattern: patterns[i],
+            startOffset: index
+          });
+        }
       }
+      return Option.none();
+    };
 
-      format = editor.formatter.get(pattern.format);
-      if (format && format[0].inline) {
+    var isText = function (node) {
+      return node && node.nodeType === 3;
+    };
+    var setSelection = function (editor, textNode, offset) {
+      var newRng = editor.dom.createRng();
+      newRng.setStart(textNode, offset);
+      newRng.setEnd(textNode, offset);
+      editor.selection.setRng(newRng);
+    };
+    var splitContainer = function (container, pattern, endOffset, startOffset) {
+      container = startOffset > 0 ? container.splitText(startOffset) : container;
+      container.splitText(endOffset - startOffset + pattern.end.length);
+      container.deleteData(0, pattern.start.length);
+      container.deleteData(container.data.length - pattern.end.length, pattern.end.length);
+      return container;
+    };
+    var splitAndApply = function (editor, container, found, inline) {
+      var formatArray = global$4.isArray(found.pattern.format) ? found.pattern.format : [found.pattern.format];
+      var validFormats = global$4.grep(formatArray, function (formatName) {
+        var format = editor.formatter.get(formatName);
+        return format && format[0].inline;
+      });
+      if (validFormats.length !== 0) {
         editor.undoManager.transact(function () {
-          container = splitContainer(container, pattern, offset, startOffset, delta);
-          editor.formatter.apply(pattern.format, {}, container);
+          container = splitContainer(container, found.pattern, found.endOffset, found.startOffset);
+          if (inline) {
+            editor.selection.setCursorLocation(container.nextSibling, 1);
+          }
+          formatArray.forEach(function (format) {
+            editor.formatter.apply(format, {}, container);
+          });
         });
-
         return container;
       }
     };
-
-    // Handles block formats like ##abc or 1. abc
-    var applyBlockFormat = function (editor, patterns) {
+    var applyInlinePattern = function (editor, patterns, inline) {
+      var rng = editor.selection.getRng();
+      return Option.from(findInlinePattern(patterns, rng, inline)).map(function (foundPattern) {
+        return splitAndApply(editor, rng.startContainer, foundPattern, inline);
+      });
+    };
+    var applyInlinePatternSpace = function (editor, patterns) {
+      applyInlinePattern(editor, patterns, true).each(function (wrappedTextNode) {
+        var lastChar = wrappedTextNode.data.slice(-1);
+        if (/[\u00a0 ]/.test(lastChar)) {
+          wrappedTextNode.deleteData(wrappedTextNode.data.length - 1, 1);
+          var lastCharNode = editor.dom.doc.createTextNode(lastChar);
+          editor.dom.insertAfter(lastCharNode, wrappedTextNode.parentNode);
+          setSelection(editor, lastCharNode, 1);
+        }
+      });
+    };
+    var applyInlinePatternEnter = function (editor, patterns) {
+      applyInlinePattern(editor, patterns, false).each(function (wrappedTextNode) {
+        setSelection(editor, wrappedTextNode, wrappedTextNode.data.length);
+      });
+    };
+    var applyBlockPattern = function (editor, patterns) {
       var selection, dom, container, firstTextNode, node, format, textBlockElm, pattern, walker, rng, offset;
-
       selection = editor.selection;
       dom = editor.dom;
-
       if (!selection.isCollapsed()) {
         return;
       }
-
       textBlockElm = dom.getParent(selection.getStart(), 'p');
       if (textBlockElm) {
-        walker = new TreeWalker(textBlockElm, textBlockElm);
-        while ((node = walker.next())) {
-          if (node.nodeType == 3) {
+        walker = new global$3(textBlockElm, textBlockElm);
+        while (node = walker.next()) {
+          if (isText(node)) {
             firstTextNode = node;
             break;
           }
         }
-
         if (firstTextNode) {
-          pattern = Patterns.findPattern(patterns, firstTextNode.data);
+          pattern = findPattern(patterns, firstTextNode.data);
           if (!pattern) {
             return;
           }
-
           rng = selection.getRng(true);
           container = rng.startContainer;
           offset = rng.startOffset;
-
-          if (firstTextNode == container) {
+          if (firstTextNode === container) {
             offset = Math.max(0, offset - pattern.start.length);
           }
-
-          if (Tools.trim(firstTextNode.data).length == pattern.start.length) {
+          if (global$4.trim(firstTextNode.data).length === pattern.start.length) {
             return;
           }
-
           if (pattern.format) {
             format = editor.formatter.get(pattern.format);
             if (format && format[0].block) {
               firstTextNode.deleteData(0, pattern.start.length);
               editor.formatter.apply(pattern.format, {}, firstTextNode);
-
               rng.setStart(container, offset);
               rng.collapse(true);
               selection.setRng(rng);
             }
           }
-
           if (pattern.cmd) {
             editor.undoManager.transact(function () {
               firstTextNode.deleteData(0, pattern.start.length);
@@ -392,64 +486,62 @@ define(
         }
       }
     };
-
-    return {
-      applyInlineFormat: applyInlineFormat,
-      applyBlockFormat: applyBlockFormat
+    var selectionInsertText = function (editor, string) {
+      var rng = editor.selection.getRng();
+      var container = rng.startContainer;
+      if (isText(container)) {
+        var offset = rng.startOffset;
+        container.insertData(offset, string);
+        setSelection(editor, container, offset + string.length);
+      } else {
+        var newNode = editor.dom.doc.createTextNode(string);
+        rng.insertNode(newNode);
+        setSelection(editor, newNode, newNode.length);
+      }
     };
-  }
-);
-
-define(
-  'tinymce.plugins.textpattern.core.KeyHandler',
-
-  [
-    'tinymce.core.util.VK',
-    'tinymce.plugins.textpattern.core.Formatter'
-  ],
-
-  function (VK, Formatter) {
-    function handleEnter(editor, patterns) {
-      var rng, wrappedTextNode;
-
-      wrappedTextNode = Formatter.applyInlineFormat(editor, patterns, false);
-      if (wrappedTextNode) {
-        rng = editor.dom.createRng();
-        rng.setStart(wrappedTextNode, wrappedTextNode.data.length);
-        rng.setEnd(wrappedTextNode, wrappedTextNode.data.length);
-        editor.selection.setRng(rng);
+    var applyReplacement = function (editor, target, match) {
+      target.deleteData(match.startOffset, match.pattern.start.length);
+      editor.insertContent(match.pattern.replacement);
+      Option.from(target.nextSibling).filter(isText).each(function (nextSibling) {
+        nextSibling.insertData(0, target.data);
+        editor.dom.remove(target);
+      });
+    };
+    var extractChar = function (node, match) {
+      var offset = match.startOffset + match.pattern.start.length;
+      var char = node.data.slice(offset, offset + 1);
+      node.deleteData(offset, 1);
+      return char;
+    };
+    var applyReplacementPattern = function (editor, patterns, inline) {
+      var rng = editor.selection.getRng();
+      var container = rng.startContainer;
+      if (rng.collapsed && isText(container)) {
+        findReplacementPattern(patterns, rng.startOffset, container.data).each(function (match) {
+          var char = inline ? Option.some(extractChar(container, match)) : Option.none();
+          applyReplacement(editor, container, match);
+          char.each(function (ch) {
+            return selectionInsertText(editor, ch);
+          });
+        });
       }
+    };
+    var applyReplacementPatternSpace = function (editor, patterns) {
+      applyReplacementPattern(editor, patterns, true);
+    };
+    var applyReplacementPatternEnter = function (editor, patterns) {
+      applyReplacementPattern(editor, patterns, false);
+    };
 
-      Formatter.applyBlockFormat(editor, patterns);
-    }
-
-    function handleInlineKey(editor, patterns) {
-      var wrappedTextNode, lastChar, lastCharNode, rng, dom;
-
-      wrappedTextNode = Formatter.applyInlineFormat(editor, patterns, true);
-      if (wrappedTextNode) {
-        dom = editor.dom;
-        lastChar = wrappedTextNode.data.slice(-1);
-
-        // Move space after the newly formatted node
-        if (/[\u00a0 ]/.test(lastChar)) {
-          wrappedTextNode.deleteData(wrappedTextNode.data.length - 1, 1);
-          lastCharNode = dom.doc.createTextNode(lastChar);
-
-          if (wrappedTextNode.nextSibling) {
-            dom.insertAfter(lastCharNode, wrappedTextNode.nextSibling);
-          } else {
-            wrappedTextNode.parentNode.appendChild(lastCharNode);
-          }
-
-          rng = dom.createRng();
-          rng.setStart(lastCharNode, 1);
-          rng.setEnd(lastCharNode, 1);
-          editor.selection.setRng(rng);
-        }
-      }
-    }
-
+    var handleEnter = function (editor, patternSet) {
+      applyReplacementPatternEnter(editor, patternSet.replacementPatterns);
+      applyInlinePatternEnter(editor, patternSet.inlinePatterns);
+      applyBlockPattern(editor, patternSet.blockPatterns);
+    };
+    var handleInlineKey = function (editor, patternSet) {
+      applyReplacementPatternSpace(editor, patternSet.replacementPatterns);
+      applyInlinePatternSpace(editor, patternSet.inlinePatterns);
+    };
     var checkKeyEvent = function (codes, event, predicate) {
       for (var i = 0; i < codes.length; i++) {
         if (predicate(codes[i], event)) {
@@ -457,121 +549,62 @@ define(
         }
       }
     };
-
     var checkKeyCode = function (codes, event) {
       return checkKeyEvent(codes, event, function (code, event) {
-        return code === event.keyCode && VK.modifierPressed(event) === false;
+        return code === event.keyCode && global$2.modifierPressed(event) === false;
       });
     };
-
     var checkCharCode = function (chars, event) {
       return checkKeyEvent(chars, event, function (chr, event) {
         return chr.charCodeAt(0) === event.charCode;
       });
     };
-
-    return {
+    var KeyHandler = {
       handleEnter: handleEnter,
       handleInlineKey: handleInlineKey,
       checkCharCode: checkCharCode,
       checkKeyCode: checkKeyCode
     };
-  }
-);
 
-define(
-  'tinymce.plugins.textpattern.core.Settings',
-  [
-  ],
-  function () {
-    var defaultPatterns = [
-      { start: '*', end: '*', format: 'italic' },
-      { start: '**', end: '**', format: 'bold' },
-      { start: '#', format: 'h1' },
-      { start: '##', format: 'h2' },
-      { start: '###', format: 'h3' },
-      { start: '####', format: 'h4' },
-      { start: '#####', format: 'h5' },
-      { start: '######', format: 'h6' },
-      { start: '1. ', cmd: 'InsertOrderedList' },
-      { start: '* ', cmd: 'InsertUnorderedList' },
-      { start: '- ', cmd: 'InsertUnorderedList' }
-    ];
-
-    var getPatterns = function (editorSettings) {
-      return editorSettings.textpattern_patterns !== undefined ?
-        editorSettings.textpattern_patterns :
-        defaultPatterns;
-    };
-
-    return {
-      getPatterns: getPatterns
-    };
-  }
-);
-
-/**
- * Plugin.js
- *
- * Released under LGPL License.
- * Copyright (c) 1999-2017 Ephox Corp. All rights reserved
- *
- * License: http://www.tinymce.com/license
- * Contributing: http://www.tinymce.com/contributing
- */
-
-/**
- * This class contains all core logic for the code plugin.
- *
- * @class tinymce.textpattern.Plugin
- * @private
- */
-define(
-  'tinymce.plugins.textpattern.Plugin',
-  [
-    'tinymce.core.PluginManager',
-    'tinymce.core.util.Delay',
-    'tinymce.core.util.VK',
-    'tinymce.plugins.textpattern.core.Formatter',
-    'tinymce.plugins.textpattern.core.KeyHandler',
-    'tinymce.plugins.textpattern.core.Settings'
-  ],
-  function (PluginManager, Delay, VK, Formatter, KeyHandler, Settings) {
-    PluginManager.add('textpattern', function (editor) {
-      var patterns = Settings.getPatterns(editor.settings);
-      var charCodes = [',', '.', ';', ':', '!', '?'];
+    var setup = function (editor, patternsState) {
+      var charCodes = [
+        ',',
+        '.',
+        ';',
+        ':',
+        '!',
+        '?'
+      ];
       var keyCodes = [32];
-
       editor.on('keydown', function (e) {
-        if (e.keyCode === 13 && !VK.modifierPressed(e)) {
-          KeyHandler.handleEnter(editor, patterns);
+        if (e.keyCode === 13 && !global$2.modifierPressed(e)) {
+          KeyHandler.handleEnter(editor, patternsState.get());
         }
       }, true);
-
       editor.on('keyup', function (e) {
         if (KeyHandler.checkKeyCode(keyCodes, e)) {
-          KeyHandler.handleInlineKey(editor, patterns);
+          KeyHandler.handleInlineKey(editor, patternsState.get());
         }
       });
-
       editor.on('keypress', function (e) {
         if (KeyHandler.checkCharCode(charCodes, e)) {
-          Delay.setEditorTimeout(editor, function () {
-            KeyHandler.handleInlineKey(editor, patterns);
+          global$1.setEditorTimeout(editor, function () {
+            KeyHandler.handleInlineKey(editor, patternsState.get());
           });
         }
       });
+    };
+    var Keyboard = { setup: setup };
 
-      this.setPatterns = function (newPatterns) {
-        patterns = newPatterns;
-      };
-      this.getPatterns = function () {
-        return patterns;
-      };
+    global.add('textpattern', function (editor) {
+      var patternsState = Cell(getPatternSet(editor.settings));
+      Keyboard.setup(editor, patternsState);
+      return Api.get(patternsState);
     });
+    function Plugin () {
+    }
 
-    return function () { };
-  }
-);
-dem('tinymce.plugins.textpattern.Plugin')();
+    return Plugin;
+
+}(window));
 })();
