@@ -153,6 +153,8 @@ ss.editorWrappers.tinyMCE = (function() {
         tinymce.EditorManager.baseURL = config.baseURL;
       }
 
+      config.skin = config.skin || 'silverstripe';
+
       // Bind the floatpanel hide and reposition listener to the closest scrollable panel
       tinymce.init(config).then((editors) => {
         if(editors.length > 0 && editors[0].container) {
