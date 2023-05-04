@@ -173,15 +173,19 @@ class LeftAndMain extends Controller implements PermissionProvider
     private string $httpErrorMessage;
 
     /**
-     * Assign themes to use for cms
+     * Used to allow errors to be displayed using a front-end template
+     */
+    private bool $suppressAdminErrorContext = false;
+
+    /**
+     * Themes to use within the CMS
+     *
+     * Default themes are assigned in _config/themes.yml
      *
      * @config
      * @var array
      */
-    private static $admin_themes = [
-        'silverstripe/admin:cms-forms',
-        SSViewer::DEFAULT_THEME,
-    ];
+    private static $admin_themes = [];
 
     /**
      * Codes which are required from the current user to view this controller.
@@ -635,6 +639,7 @@ class LeftAndMain extends Controller implements PermissionProvider
                 ),
             ];
 
+            $this->suppressAdminErrorContext = true;
             Security::permissionFailure($this, $messageSet);
             return;
         }
@@ -760,7 +765,8 @@ class LeftAndMain extends Controller implements PermissionProvider
 
     public function afterHandleRequest()
     {
-        if ($this->response->isError()
+        if (!$this->suppressAdminErrorContext
+            && $this->response->isError()
             && !$this->request->isAjax()
             && $this->response->getHeader('Content-Type') !== 'application/json'
         ) {

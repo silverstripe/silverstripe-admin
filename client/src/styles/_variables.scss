@@ -38,17 +38,18 @@ $border-color-light: lighten($border-color, 4);
 $border-color-dark: darken($border-color, 4);
 
 // Extra spacers
-$spacer-sm: $spacer * .75; // 12px
-$spacer-xs: $spacer * .625; // 10px
+$spacer-sm: calc($spacer * .75); // 12px
+$spacer-xs: calc($spacer * .625); // 10px
 
 // Grid columns
-//
-// Set the number of columns and specify the width of the gutters.
-$grid-gutter-width-half: $grid-gutter-width / 2; // TODO: Deprecate this, replacing with $panel-padding-x and $panel-padding-y
 
 // Panel padding
-$panel-padding-x: $grid-gutter-width / 2;
-$panel-padding-y: $grid-gutter-width / 2;
+$panel-padding: calc($grid-gutter-width / 2);
+$panel-padding-x: $panel-padding;
+$panel-padding-y: $panel-padding;
+
+// Set the number of columns and specify the width of the gutters.
+$grid-gutter-width-half: $panel-padding;
 
 // Pixel value used to responsively scale all typography. Applied to the `<html>` element.
 $font-size-root: 13px;
@@ -109,7 +110,7 @@ $toolbar-total-height: $toolbar-height + 1px; // Include border
 
 // Navs
 $nav-tabs-link-border-width: .15385rem;  // 2px just border bottom width
-$nav-link-padding: $nav-link-padding-y $nav-link-padding-x #{$nav-link-padding-y - ($nav-tabs-link-border-width / 2)};
+$nav-link-padding: $nav-link-padding-y $nav-link-padding-x #{$nav-link-padding-y - (calc($nav-tabs-link-border-width / 2))};
 
 
 // List group
@@ -186,7 +187,7 @@ $search-width-max: 100%;
 
 // CMS menu
 
-$cms-menu-width: $panel-padding-y * 9;
+$cms-menu-width: calc($panel-padding-y * 9);
 $cms-menu-width-collapsed: $cms-panel-xs;
 
 
@@ -198,7 +199,7 @@ $transition-speed-fast:   .3s;
 
 
 // line height to be based off the root height
-$line-height-root: $line-height-base * 1rem;
+$line-height-root: calc($line-height-base * 1rem);
 
 
 // Toasts

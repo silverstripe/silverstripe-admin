@@ -76,3 +76,7 @@ export const getFragments = ({ availableFragments, fragments = [] }) => (
         : capturedFragments
     ), '')
 );
+
+export const getCreateMutationType = ({ singularName }) => `Create${singularName}Input`;
+
+export const getUpdateMutationType = ({ singularName }) => `Update${singularName}Input`;

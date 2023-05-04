@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { TabContent } from 'reactstrap';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
@@ -27,10 +27,14 @@ function Tabs({
   const containerProps = { className: classnames([className, extraClass]), id };
   const currentTab = activeTab || getDefaultActiveKey(defaultActiveKey, children);
   const tabContext = useTabContext();
-  const nextTabContext = {
-    activeTab: currentTab,
-    isOnActiveTab: tabContext ? tabContext.isOnActiveTab : undefined
-  };
+  const isOnActiveTab = tabContext ? tabContext.isOnActiveTab : undefined;
+  const nextTabContext = useMemo(() => (
+    {
+      activeTab: currentTab,
+      isOnActiveTab
+    }),
+    [activeTab, isOnActiveTab]
+  );
 
   return (
     <div {...containerProps}>

@@ -71,8 +71,8 @@ function getAbsoluteBase() {
  * @param {String} base
  */
 function setAbsoluteBase(base) {
-  // Store absolute base
-  page.absoluteBaseURL = base;
+  // Store absolute base, which has to explicitly have a trailing slash
+  page.absoluteBaseURL = base.replace(/\/?$/, '/');
 
   // Set page.js base
   const a = document.createElement('a');

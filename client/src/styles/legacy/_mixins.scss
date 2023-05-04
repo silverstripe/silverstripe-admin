@@ -55,7 +55,7 @@
       float: none;
       width: auto;
       font-size: 12px;
-      padding: 0 ($spacer / 2) 4px 0;
+      padding: 0 map_get($spacers, 2) 4px 0;
 
       &.extra-details{
         overflow:hidden;

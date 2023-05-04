@@ -1,8 +1,8 @@
 // List-group, based on Bootstraps list-group
 
 .list-group {
-  margin-left: -$grid-gutter-width / 2;
-  margin-right: -$grid-gutter-width / 2;
+  margin-left: -($panel-padding);
+  margin-right: -($panel-padding);
   margin-bottom: $panel-padding-y;
 }
 
@@ -18,9 +18,9 @@
 
 .list-group-item {
   padding-top: $spacer-xs;
-  padding-right: $grid-gutter-width / 2;
+  padding-right: $panel-padding;
   padding-bottom: $spacer-xs;
-  padding-left: $grid-gutter-width / 2;
+  padding-left: $panel-padding;
   min-height: 65px; // img height plus border
   cursor: pointer;
   text-decoration: none;
@@ -72,7 +72,7 @@
   align-items: center;
 
   float: left;
-  margin: -12px 12px -12px #{0 - $grid-gutter-width / 2};
+  margin: -12px 12px -12px #{0 - $panel-padding};
 
   > img {
     max-height: 100%;

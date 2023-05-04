@@ -22,7 +22,7 @@ const config = [
               to: `${PATHS.DIST}/moment-locales`
             },
             {
-              from: `${PATHS.MODULES}/@popperjs/core/dist/umd/popper.min.js`,
+              from: `${PATHS.MODULES}/popper.js/dist/umd/popper.js`,
               to: `${PATHS.THIRDPARTY}/popper/popper.min.js`
             },
             {

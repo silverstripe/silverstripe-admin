@@ -269,7 +269,7 @@ class FormBuilder extends Component {
       } else {
         props.onClick = this.handleAction;
 
-        // Reset through componentWillReceiveProps()
+        // Reset component loading prop
         if (this.props.submitting && this.state.submittingAction === action.name) {
           props.loading = true;
         }

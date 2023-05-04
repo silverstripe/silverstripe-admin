@@ -181,7 +181,7 @@ div.grid-field__sort-field + .form__fieldgroup-item {
 .grid-field__icon-action[class*="font-icon-"] { // Override legacy styles (TODO: remove once jqueryui is removed)
   background: none;
   border: 0;
-  padding: $table-cell-padding ($table-cell-padding / 2);
+  padding: $table-cell-padding calc($table-cell-padding / 2);
   margin-top: -$table-cell-padding;
   margin-bottom: -$table-cell-padding;
   margin-right: 0;
