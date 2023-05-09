@@ -1,46 +1,39 @@
-/* global jest, describe, it, expect */
+/* global jest, test, describe, it, expect */
 
 import React from 'react';
 import { Component as Tabs } from '../Tabs';
-import Enzyme, { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16/build/index';
+import { render } from '@testing-library/react';
 
-Enzyme.configure({ adapter: new Adapter() });
+test('Tabs render() renders the navigation with hideNav: false', () => {
+  const { container } = render(
+    <Tabs {...{
+      id: '1',
+      className: 'hello',
+      extraClass: 'world',
+      activateTab: jest.fn(),
+      hideNav: false,
+    }}
+    >
+      <div title="Child One" />
+      <div title="Child Two" />
+    </Tabs>
+  );
+  expect(container.querySelectorAll('.hello.world .nav-tabs')).toHaveLength(1);
+});
 
-describe('Tabs', () => {
-  describe('render()', () => {
-    it('Renders the navigation with hideNav: false', () => {
-      const wrapper = shallow(
-        <Tabs
-          id="1"
-          className="hello"
-          extraClass="world"
-          hideNav={false}
-          activateTab={jest.fn()}
-        >
-          <div title="Child One" />
-          <div title="Child Two" />
-        </Tabs>
-      );
-
-      const tabNav = wrapper.find('TabNav');
-      expect(tabNav).toHaveLength(1);
-      expect(wrapper.props()).toMatchObject({ id: '1', className: 'hello world' });
-    });
-
-    it('Doesn\'t render the navigation with hideNav: true', () => {
-      const wrapper = shallow(
-        <Tabs
-          id={'2'}
-          hideNav
-          activateTab={jest.fn()}
-        >
-          <div title="Child One" />
-          <div title="Child Two" />
-        </Tabs>
-    );
-
-      expect(wrapper.find('Nav')).toHaveLength(0);
-    });
-  });
+test('Does not render the navigation with hideNav: true', () => {
+  const { container } = render(
+    <Tabs {...{
+      id: '1',
+      className: 'hello',
+      extraClass: 'world',
+      activateTab: jest.fn(),
+      hideNav: true,
+    }}
+    >
+      <div title="Child One" />
+      <div title="Child Two" />
+    </Tabs>
+  );
+  expect(container.querySelectorAll('.hello.world .nav-tabs')).toHaveLength(0);
 });

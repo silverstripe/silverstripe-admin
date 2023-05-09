@@ -197,10 +197,10 @@ class PopoverOptionSet extends Component {
    * @returns {Popover}
    */
   render() {
-    const { container, className, isOpen, placement, target } = this.props;
+    const { container, className, isOpen, placement, target, PopoverComponent } = this.props;
 
     return (
-      <Popover
+      <PopoverComponent
         className={classNames(className)}
         container={container}
         hideArrow
@@ -213,7 +213,7 @@ class PopoverOptionSet extends Component {
       >
         {this.renderSearchBox()}
         {this.renderOptionButtons()}
-      </Popover>
+      </PopoverComponent>
     );
   }
 }
@@ -242,7 +242,8 @@ PopoverOptionSet.propTypes = {
   toggle: PropTypes.func.isRequired,
   searchPlaceholder: PropTypes.string,
   disableSearch: PropTypes.bool,
-  ButtonComponent: PropTypes.elementType,
+  ButtonComponent: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  PopoverComponent: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   // Various classNames that can be configured:
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
   searchClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
@@ -261,6 +262,7 @@ PopoverOptionSet.defaultProps = {
   ),
   disableSearch: false,
   ButtonComponent: Button,
+  PopoverComponent: Popover,
   className: 'popover-option-set',
   searchClassName: 'popover-option-set__search',
   searchInputClassName: 'popover-option-set__search-input',

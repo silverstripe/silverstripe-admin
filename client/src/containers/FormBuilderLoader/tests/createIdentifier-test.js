@@ -1,46 +1,40 @@
-/* global jest, describe, beforeEach, it, expect */
+/* global jest, test, describe, beforeEach, it, expect */
 
-jest.unmock('../FormBuilderLoader');
+import { createFormIdentifierFromProps } from '../FormBuilderLoader';
 
-import { Component as FormBuilderLoader } from '../FormBuilderLoader';
-
-describe('createIdentifier', () => {
-  it('concatenates the identifier prop with the schema name prop', () => {
-    FormBuilderLoader.propTypes = {};
-    const form = new FormBuilderLoader();
-    let props = {};
-    expect(form.getIdentifier(props)).toBe('');
-    props = { identifier: 'one' };
-    expect(form.getIdentifier(props)).toBe('one');
-    props = {
-      identifier: 'one.two',
+test('createFormIdentifierFromProps concatenates the identifier prop with the schema name prop', () => {
+  let props = {};
+  expect(createFormIdentifierFromProps(props)).toBe('');
+  props = { identifier: 'one' };
+  expect(createFormIdentifierFromProps(props)).toBe('one');
+  props = {
+    identifier: 'one.two',
+    schema: 'three',
+  };
+  expect(createFormIdentifierFromProps(props)).toBe('one.two');
+  props = {
+    identifier: 'one.two',
+    schema: {
       schema: 'three',
-    };
-    expect(form.getIdentifier(props)).toBe('one.two');
-    props = {
-      identifier: 'one.two',
+    },
+  };
+  expect(createFormIdentifierFromProps(props)).toBe('one.two');
+  props = {
+    identifier: 'one.two',
+    schema: {
       schema: {
-        schema: 'three',
+        name: 'three',
       },
-    };
-    expect(form.getIdentifier(props)).toBe('one.two');
-    props = {
-      identifier: 'one.two',
+    },
+  };
+  expect(createFormIdentifierFromProps(props)).toBe('one.two.three');
+  props = {
+    identifier: null,
+    schema: {
       schema: {
-        schema: {
-          name: 'three',
-        },
+        name: 'three',
       },
-    };
-    expect(form.getIdentifier(props)).toBe('one.two.three');
-    props = {
-      identifier: null,
-      schema: {
-        schema: {
-          name: 'three',
-        },
-      },
-    };
-    expect(form.getIdentifier(props)).toBe('three');
-  });
+    },
+  };
+  expect(createFormIdentifierFromProps(props)).toBe('three');
 });

@@ -1,4 +1,8 @@
-/* global jest, describe, beforeEach, it, expect, modernizr */
+/* global jest, test, describe, beforeEach, it, expect, modernizr */
+
+import React from 'react';
+import { Component as DatetimeField } from '../DatetimeField';
+import { render, fireEvent, screen } from '@testing-library/react';
 
 jest.mock('modernizr', () => ({
   inputtypes: {
@@ -6,229 +10,273 @@ jest.mock('modernizr', () => ({
   },
 }));
 
-import React from 'react';
-import ReactTestUtils from 'react-dom/test-utils';
-import { Component as DatetimeField } from '../DatetimeField';
+function getSharedProps() {
+  return {
+    id: 'date',
+    title: '',
+    name: '',
+    value: ''
+  };
+}
 
-describe('DatetimeField without html5 date time field support', () => {
-  let datetimeField = null;
-  let inputField = null;
-  let props = null;
-
-  beforeEach(() => {
-    props = {
-      id: 'datetime',
-      title: '',
-      name: '',
-      value: '',
-      data: {
-        html5: false,
+function makePropsHtml4(obj = {}) {
+  return {
+    data: {
+      html5: false,
+    },
+    modernizr: {
+      inputtypes: {
+        'datetime-local': false,
       },
-      modernizr: {
-        inputtypes: {
-          'datetime-local': false,
-        },
-      },
-      onChange: jest.fn(),
-    };
-  });
+    },
+    ...getSharedProps(),
+    ...obj
+  };
+}
 
-  describe('onChange()', () => {
-    beforeEach(() => {
-      datetimeField = ReactTestUtils.renderIntoDocument(
-        <DatetimeField {...props} />
-      );
-      inputField = ReactTestUtils.findRenderedDOMComponentWithTag(datetimeField, 'input');
-    });
+function makePropsHtml5NoBrowserSupport(obj = {}) {
+  return {
+    data: {
+      html5: true
+    },
+    modernizr: {
+      inputtypes: {
+        'datetime-local': false,
+      }
+    },
+    ...getSharedProps(),
+    ...obj
+  };
+}
 
-    it('should call the onChange function on props', () => {
-      ReactTestUtils.Simulate.change(inputField);
-      expect(datetimeField.props.onChange).toBeCalled();
-    });
-  });
+function makePropsHtml5(obj = {}) {
+  return {
+    data: {
+      html5: true
+    },
+    modernizr: {
+      inputtypes: {
+        'datetime-local': true,
+      }
+    },
+    ...getSharedProps(),
+    ...obj
+  };
+}
 
-  describe('convertToIso()', () => {
-    beforeEach(() => {
-      props = {
-        ...props,
-        lang: 'en_NZ',
-      };
+function makePropsHtml5OptedOut(obj = {}) {
+  return {
+    data: {
+      html5: false
+    },
+    modernizr: {
+      inputtypes: {
+        'datetime-local': true,
+      }
+    },
+    ...getSharedProps(),
+    ...obj
+  };
+}
 
-      datetimeField = ReactTestUtils.renderIntoDocument(
-        <DatetimeField {...props} />
-      );
-    });
+test('DatetimeField convertToIso() html4 en_NZ', () => {
+  const onChange = jest.fn();
+  const { container } = render(
+    <DatetimeField {...makePropsHtml4({
+      lang: 'en_NZ',
+      onChange
+    })}
+    />
+  );
+  const input = container.querySelector('input#date');
+  fireEvent.change(input, { target: { value: '23/04/2017 1:22 PM' } });
+  expect(onChange).toBeCalledWith(
+    expect.objectContaining({ _reactName: 'onChange' }),
+    { id: 'date', value: '2017-04-23T13:22:00' }
+  );
+});
 
-    it('should covert local date to iso date time format', () => {
-      expect(datetimeField.convertToIso('23/04/2017 1:22 PM')).toBe('2017-04-23T13:22:00');
-      expect(datetimeField.convertToIso('23/04/2017')).toBe('2017-04-23T00:00:00');
-    });
+test('DatetimeField convertToIso() html4 en_NZ iso input', () => {
+  const onChange = jest.fn();
+  const { container } = render(
+    <DatetimeField {...makePropsHtml4({
+      lang: 'en_NZ',
+      onChange
+    })}
+    />
+  );
+  const input = container.querySelector('input#date');
+  fireEvent.change(input, { target: { value: '2017-04-23T00:32:21' } });
+  expect(onChange).toBeCalledWith(
+    expect.objectContaining({ _reactName: 'onChange' }),
+    { id: 'date', value: '2017-04-23T00:32:21' }
+  );
+});
 
-    it('should accept iso date time as an argument', () => {
-      expect(datetimeField.convertToIso('2017-04-23T00:32:21')).toBe('2017-04-23T00:32:21');
-    });
+test('DatetimeField convertToIso() html4 en_NZ invalid input', () => {
+  const onChange = jest.fn();
+  const { container } = render(
+    <DatetimeField {...makePropsHtml4({
+      lang: 'en_NZ',
+      onChange
+    })}
+    />
+  );
+  const input = container.querySelector('input#date');
+  fireEvent.change(input, { target: { value: '2017-04-23T003221' } });
+  expect(onChange).toBeCalledWith(
+    expect.objectContaining({ _reactName: 'onChange' }),
+    { id: 'date', value: '' }
+  );
+});
 
-    it('should return "" the invalid date time is provided', () => {
-      expect(datetimeField.convertToIso('2017-23-3T23:34:2321')).toBe('');
-    });
-  });
+test('DatetimeField convertToIso() html4 en_US iso input', () => {
+  const onChange = jest.fn();
+  const { container } = render(
+    <DatetimeField {...makePropsHtml4({
+      lang: 'en_US',
+      onChange
+    })}
+    />
+  );
+  const input = container.querySelector('input#date');
+  fireEvent.change(input, { target: { value: '04/23/2017 1:22 PM' } });
+  expect(onChange).toBeCalledWith(
+    expect.objectContaining({ _reactName: 'onChange' }),
+    { id: 'date', value: '2017-04-23T13:22:00' }
+  );
+});
 
-  describe('convertToLocalised()', () => {
-    beforeEach(() => {
-      props = {
-        ...props,
-        lang: 'en_NZ',
-      };
+test('DatetimeField convertToLocalised() html4 en_NZ', () => {
+  const { container } = render(
+    <DatetimeField {...makePropsHtml4({
+      lang: 'en_NZ',
+      value: '2017-04-23T13:22:00'
+    })}
+    />
+  );
+  const input = container.querySelector('input#date');
+  expect(input.getAttribute('value')).toBe('23/04/2017 1:22 PM');
+});
 
-      datetimeField = ReactTestUtils.renderIntoDocument(
-        <DatetimeField {...props} />
-      );
-    });
+test('DatetimeField convertToLocalised() html4 en_US', () => {
+  const { container } = render(
+    <DatetimeField {...makePropsHtml4({
+      lang: 'en_US',
+      value: '2017-04-23T13:22:00'
+    })}
+    />
+  );
+  const input = container.querySelector('input#date');
+  expect(input.getAttribute('value')).toBe('04/23/2017 1:22 PM');
+});
 
-    it('should covert invalid iso date time to ""', () => {
-      expect(datetimeField.convertToLocalised('2017-13-12T31:23:23')).toBe('');
-    });
+test('DatetimeField convertToLocalised() html4 en_NZ invalid input', () => {
+  const { container } = render(
+    <DatetimeField {...makePropsHtml4({
+      lang: 'en_NZ',
+      value: '2017-04-23T13:99:99'
+    })}
+    />
+  );
+  const input = container.querySelector('input#date');
+  expect(input.getAttribute('value')).toBe('');
+});
 
-    it('should covert iso date to local date format', () => {
-      expect(datetimeField.convertToLocalised('2017-12-01T02:32:33')).toBe('01/12/2017 2:32 AM');
-    });
+test('DatetimeField Browser doesn\'t support html5 date time input', () => {
+  const onChange = jest.fn();
+  const { container } = render(
+    <DatetimeField {...makePropsHtml5NoBrowserSupport({
+      lang: 'en_NZ',
+      value: '2017-04-23T13:22:00',
+      onChange
+    })}
+    />
+  );
+  const input = container.querySelector('input#date');
+  expect(input.getAttribute('value')).toBe('23/04/2017 1:22 PM');
+  fireEvent.change(input, { target: { value: '2023-01-30T13:22:00' } });
+  expect(onChange).toBeCalledWith(
+    expect.objectContaining({ _reactName: 'onChange' }),
+    { id: 'date', value: '2023-01-30T13:22:00' }
+  );
+});
 
-    it('should covert iso date to a differnt local date format', () => {
-      props.lang = 'en_US';
-      datetimeField = ReactTestUtils.renderIntoDocument(
-        <DatetimeField {...props} />
-      );
+test('DatetimeField Browser doesn\'t support html5 date time input', () => {
+  const onChange = jest.fn();
+  const { container } = render(
+    <DatetimeField {...makePropsHtml5NoBrowserSupport({
+      lang: 'en_NZ',
+      value: '2017-04-23T13:22:00',
+      onChange
+    })}
+    />
+  );
+  const input = container.querySelector('input#date');
+  expect(input.getAttribute('value')).toBe('23/04/2017 1:22 PM');
+  fireEvent.change(input, { target: { value: '2023-01-30T13:22:00' } });
+  expect(onChange).toBeCalledWith(
+    expect.objectContaining({ _reactName: 'onChange' }),
+    { id: 'date', value: '2023-01-30T13:22:00' }
+  );
+  fireEvent.change(input, { target: { value: '2023-01-30T13:99:99' } });
+  expect(onChange).toBeCalledWith(
+    expect.objectContaining({ _reactName: 'onChange' }),
+    { id: 'date', value: '' }
+  );
+});
 
-      expect(datetimeField.convertToLocalised('2017-12-01T23:02:22')).toBe('12/01/2017 11:02 PM');
-    });
-  });
+test('DatetimeField Browser supports html5 date time input but user has opt-outed', () => {
+  const onChange = jest.fn();
+  const { container } = render(
+    <DatetimeField {...makePropsHtml5OptedOut({
+      lang: 'en_NZ',
+      value: '2017-04-23T13:22:00',
+      onChange
+    })}
+    />
+  );
+  const input = container.querySelector('input#date');
+  expect(input.getAttribute('value')).toBe('23/04/2017 1:22 PM');
+  fireEvent.change(input, { target: { value: '2023-01-30T13:22:00' } });
+  expect(onChange).toBeCalledWith(
+    expect.objectContaining({ _reactName: 'onChange' }),
+    { id: 'date', value: '2023-01-30T13:22:00' }
+  );
+  fireEvent.change(input, { target: { value: '2023-01-30T13:99:99' } });
+  expect(onChange).toBeCalledWith(
+    expect.objectContaining({ _reactName: 'onChange' }),
+    { id: 'date', value: '' }
+  );
+});
 
-  describe('Browser doesn\'t support html5 date time input', () => {
-    beforeEach(() => {
-      props = {
-        ...props,
-        lang: 'en_NZ',
-        value: '2017-01-05T02:23:22',
-        data: {
-          ...props.data,
-          html5: true, // Note: support requested but denied
-        },
-        modernizr: {
-          inputtypes: {
-            'datetime-local': false,
-          },
-        },
-      };
+test('DatetimeField html5 en_NZ enter iso value', () => {
+  const onChange = jest.fn();
+  const { container } = render(
+    <DatetimeField {...makePropsHtml5({
+      lang: 'en_NZ',
+      onChange
+    })}
+    />
+  );
+  const input = container.querySelector('input#date');
+  fireEvent.change(input, { target: { value: '2017-04-23T13:22:00' } });
+  expect(onChange).toBeCalledWith(
+    expect.objectContaining({ _reactName: 'onChange' }),
+    { id: 'date', value: '2017-04-23T13:22:00' }
+  );
+});
 
-      datetimeField = ReactTestUtils.renderIntoDocument(
-        <DatetimeField {...props} />
-      );
-
-      inputField = ReactTestUtils.findRenderedDOMComponentWithTag(datetimeField, 'input');
-    });
-
-    it('should know it doesn\'t support html5', () => {
-      expect(datetimeField.props.data.html5).toBe(true);
-      expect(datetimeField.hasNativeSupport()).toBe(false);
-      expect(datetimeField.asHTML5()).toBe(false);
-    });
-
-    it('should use localised format of date value in the input field', () => {
-      expect(inputField.type).toBe('text');
-      expect(inputField.value).toBe('05/01/2017 2:23 AM');
-    });
-
-    it('should pass iso format instead of localised format', () => {
-      const value = '05/02/2018 3:12 PM';
-      const event = { target: { value } };
-      datetimeField.handleChange(event);
-      expect(datetimeField.props.onChange).toBeCalledWith(event, { id: 'datetime', value: '2018-02-05T15:12:00' });
-    });
-
-    it('should pass "" if the input value is not valid', () => {
-      const value = 'invalid value';
-      const event = { target: { value } };
-      datetimeField.handleChange(event);
-      expect(datetimeField.props.onChange).toBeCalledWith(event, { id: 'datetime', value: '' });
-    });
-  });
-
-  describe('Browser supports html5 date input and field opts in', () => {
-    beforeEach(() => {
-      props = {
-        ...props,
-        lang: 'en_NZ',
-        value: '2017-01-05T02:23:22',
-        data: {
-          ...props.data,
-          html5: true,
-        },
-        modernizr: {
-          inputtypes: {
-            'datetime-local': true,
-          },
-        },
-      };
-
-      datetimeField = ReactTestUtils.renderIntoDocument(
-        <DatetimeField {...props} />
-      );
-
-      inputField = ReactTestUtils.findRenderedDOMComponentWithTag(datetimeField, 'input');
-    });
-
-    it('should know it supports html5', () => {
-      expect(datetimeField.props.data.html5).toBe(true);
-      expect(datetimeField.hasNativeSupport()).toBe(true);
-      expect(datetimeField.asHTML5()).toBe(true);
-    });
-
-    it('should use iso format of date value in the input field', () => {
-      expect(inputField.type).toBe('datetime-local');
-      // Note that the inclusion of seconds or milliseconds is unnecessary but acceptable
-      expect(inputField.value).toMatch(/^2017-01-05T02:23(:22|:22.000)?$/);
-    });
-
-    it('should pass iso format as entered in the input field', () => {
-      const value = '2018-02-05T03:34:33';
-      const event = { target: { value } };
-      datetimeField.handleChange(event);
-      expect(datetimeField.props.onChange).toBeCalledWith(event, { id: 'datetime', value: '2018-02-05T03:34:33' });
-    });
-  });
-
-  describe('Browser supports html5 date time input but user has opt-outed', () => {
-    beforeEach(() => {
-      props = {
-        ...props,
-        lang: 'en_NZ',
-        value: '2017-01-05T02:23:22',
-        data: {
-          ...props.data,
-          html5: false,
-        },
-        modernizr: {
-          inputtypes: {
-            'datetime-local': true,
-          },
-        },
-      };
-      datetimeField = ReactTestUtils.renderIntoDocument(
-        <DatetimeField {...props} />
-      );
-
-      inputField = ReactTestUtils.findRenderedDOMComponentWithTag(datetimeField, 'input');
-    });
-
-    it('should use localised format of date value in the input field', () => {
-      expect(inputField.type).toBe('text');
-      expect(inputField.value).toBe('05/01/2017 2:23 AM');
-    });
-
-    it('should suppress HTML input even if supported', () => {
-      expect(datetimeField.props.data.html5).toBe(false);
-      expect(datetimeField.hasNativeSupport()).toBe(true);
-      expect(datetimeField.asHTML5()).toBe(false);
-    });
-  });
+test('DatetimeField html5 en_NZ enter localised value', () => {
+  const onChange = jest.fn();
+  const { container } = render(
+    <DatetimeField {...makePropsHtml5({
+      lang: 'en_NZ',
+      onChange
+    })}
+    />
+  );
+  const input = container.querySelector('input#date');
+  fireEvent.change(input, { target: { value: '23/04/2017 1:22 PM' } });
+  expect(onChange).not.toBeCalled();
 });

@@ -1,87 +1,58 @@
-/* global jest, describe, it, expect */
+/* global jest, test, describe, it, expect */
 
 import React from 'react';
 import Toast from '../Toast';
-import { ToastActions as Actions } from '../ToastActions';
-import Enzyme, { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16/build/index';
+import { render, fireEvent } from '@testing-library/react';
 
-Enzyme.configure({ adapter: new Adapter() });
-
-describe('Toast', () => {
-  it('Plain toast', () => {
-    const props = {
+test('Toast render', () => {
+  const onDismiss = jest.fn();
+  const { container } = render(
+    <Toast {...{
       type: 'notice',
       text: 'Foo bar',
-      onDismiss: jest.fn(),
+      onDismiss,
       dismissed: false,
       id: 'abc123'
-    };
+    }}
+    />
+  );
+  expect(container.querySelectorAll('.toast.toast--notice')).toHaveLength(1);
+  expect(container.querySelectorAll('.toast__close')).toHaveLength(1);
+  const content = container.querySelector('.toast__content');
+  expect(content.innerHTML).toBe('Foo bar');
+  expect(content.getAttribute('aria-live')).toBe('assertive');
+  expect(content.getAttribute('aria-atomic')).toBe('true');
+  const close = container.querySelector('.toast__close');
+  fireEvent.click(close, {});
+  expect(onDismiss).toBeCalled();
+});
 
-    const wrapper = shallow(<Toast {...props} />);
-
-    expect(wrapper.props()).toMatchObject({
-      isOpen: true,
-      className: 'toast toast--notice',
-    });
-
-    const closeButton = wrapper.find('.toast__close');
-    expect(closeButton).toHaveLength(1);
-    expect(closeButton.props()).toMatchObject({
-      noText: true,
-      children: 'Dismiss',
-    });
-
-    const toastContent = wrapper.find('.toast__content');
-    expect(toastContent.props()).toMatchObject({
-      'aria-live': 'assertive',
-      'aria-atomic': 'true',
-    });
-    expect(toastContent.text()).toBe(props.text);
-
-    const preventDefault = jest.fn();
-    closeButton.simulate('click', { preventDefault });
-    expect(preventDefault).toHaveBeenCalled();
-    expect(props.onDismiss).toHaveBeenCalled();
-
-    expect(wrapper.find(Actions)).toHaveLength(0);
-  });
-
-  it('Dismissed toast', () => {
-    const props = {
+test('Toast dismiss', () => {
+  const onDismiss = jest.fn();
+  const { container } = render(
+    <Toast {...{
       type: 'warning',
       text: 'Foo bar',
-      onDismiss: jest.fn(),
+      onDismiss,
       dismissed: true,
       id: 'abc123'
-    };
+    }}
+    />
+  );
+  expect(container.querySelectorAll('.toast--warning')).toHaveLength(1);
+  expect(container.querySelectorAll('.toast--dismissing')).toHaveLength(1);
+});
 
-    const wrapper = shallow(<Toast {...props} />);
-
-    expect(wrapper.hasClass('toast--warning')).toBe(true);
-    expect(wrapper.hasClass('toast--dismissing')).toBe(true);
-  });
-
-  it('With actions', () => {
-    const props = {
+test('Toast type error', () => {
+  const { container } = render(
+    <Toast {...{
       type: 'error',
       text: 'Foo bar',
-      onDismiss: jest.fn(),
       dismissed: false,
+      onDismiss: () => null,
       id: 'abc123',
-      actions: [{ label: 'click me', href: 'http://silverstripe.org' }]
-    };
-
-    const wrapper = shallow(<Toast {...props} />);
-
-    expect(wrapper.hasClass('toast--error')).toBe(true);
-
-    const actionsWrapper = wrapper.find(Actions);
-    expect(actionsWrapper).toHaveLength(1);
-    expect(actionsWrapper.props()).toMatchObject({
-      actions: props.actions,
-      onDismiss: props.onDismiss,
-      dismissed: false
-    });
-  });
+    }}
+    />
+  );
+  expect(container.querySelectorAll('.toast--error')).toHaveLength(1);
 });

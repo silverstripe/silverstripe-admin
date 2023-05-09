@@ -1,4 +1,4 @@
-/* global jest, describe, it, expect, beforeEach */
+/* global jest, test, describe, it, expect, beforeEach */
 import defaultTagHandlers from '../utilities/defaultTagHandlers';
 
 const formSchema = {
@@ -24,80 +24,69 @@ const formSchema = {
   }
 };
 
-describe('defaultTagHandlers', () => {
-  describe('default', () => {
-    it('none value', () => {
-      const tag = defaultTagHandlers.default({ key: 'NoneValue' });
-      expect(tag).toEqual(false);
-    });
+test('defaultTagHandlers default none value', () => {
+  const tag = defaultTagHandlers.default({ key: 'NoneValue' });
+  expect(tag).toEqual(false);
+});
 
-    it('some value', () => {
-      const inputTag = { key: 'NoneValue', value: 1 };
-      const tag = defaultTagHandlers.default(inputTag);
-      expect(tag).toEqual(inputTag);
-    });
-  });
+test('defaultTagHandlers default some value', () => {
+  const inputTag = { key: 'NoneValue', value: 1 };
+  const tag = defaultTagHandlers.default(inputTag);
+  expect(tag).toEqual(inputTag);
+});
 
-  describe('hidden', () => {
-    it('always false', () => {
-      const inputTag = { key: 'NoneValue', value: 1 };
-      const tag = defaultTagHandlers.Hidden(inputTag);
-      expect(tag).toEqual(false);
-    });
-  });
+test('defaultTagHandlers hidden always false', () => {
+  const inputTag = { key: 'NoneValue', value: 1 };
+  const tag = defaultTagHandlers.Hidden(inputTag);
+  expect(tag).toEqual(false);
+});
 
-  describe('boolean', () => {
-    it('uncheck', () => {
-      const inputTag = { key: 'NoneValue', value: 0 };
-      const tag = defaultTagHandlers.Boolean(inputTag);
-      expect(tag).toEqual(false);
-    });
+test('defaultTagHandlers boolean uncheck', () => {
+  const inputTag = { key: 'NoneValue', value: 0 };
+  const tag = defaultTagHandlers.Boolean(inputTag);
+  expect(tag).toEqual(false);
+});
 
-    it('checked', () => {
-      const inputTag = { key: 'NoneValue', value: 1 };
-      const tag = defaultTagHandlers.Boolean(inputTag);
-      expect(tag).toEqual({ key: 'NoneValue' });
-    });
-  });
+test('defaultTagHandlers boolean checked', () => {
+  const inputTag = { key: 'NoneValue', value: 1 };
+  const tag = defaultTagHandlers.Boolean(inputTag);
+  expect(tag).toEqual({ key: 'NoneValue' });
+});
 
-  describe('select', () => {
-    it('singleSelect', () => {
-      const inputTag = { key: 'SelectField', value: 1 };
-      const tag = defaultTagHandlers.SingleSelect(
-        inputTag,
-        formSchema.schema.fields[0],
-        formSchema
-      );
-      expect(tag).toEqual({ key: 'SelectField', value: 'one' });
-    });
-    it('multiSelect', () => {
-      const inputTag = { key: 'SelectField', value: [1, 3] };
-      const tag = defaultTagHandlers.MultiSelect(
-        inputTag,
-        formSchema.schema.fields[0],
-        formSchema
-      );
-      expect(tag).toEqual({ key: 'SelectField', value: 'one, three' });
-    });
-  });
+test('defaultTagHandlers select singleSelect', () => {
+  const inputTag = { key: 'SelectField', value: 1 };
+  const tag = defaultTagHandlers.SingleSelect(
+    inputTag,
+    formSchema.schema.fields[0],
+    formSchema
+  );
+  expect(tag).toEqual({ key: 'SelectField', value: 'one' });
+});
 
-  describe('Date and time', () => {
-    it('date', () => {
-      const inputTag = { key: 'DateField', value: '2018-08-21' };
-      const tag = defaultTagHandlers.Date(inputTag, { lang: 'fr-ca' });
-      expect(tag).toEqual({ key: 'DateField', value: '21 août 2018' });
-    });
+test('defaultTagHandlers select multiSelect', () => {
+  const inputTag = { key: 'SelectField', value: [1, 3] };
+  const tag = defaultTagHandlers.MultiSelect(
+    inputTag,
+    formSchema.schema.fields[0],
+    formSchema
+  );
+  expect(tag).toEqual({ key: 'SelectField', value: 'one, three' });
+});
 
-    it('time', () => {
-      const inputTag = { key: 'DateField', value: '2018-08-21 18:19:20' };
-      const tag = defaultTagHandlers.Time(inputTag, { lang: 'en-nz' });
-      expect(tag).toEqual({ key: 'DateField', value: '6:19 PM' });
-    });
+test('defaultTagHandlers Date and time date', () => {
+  const inputTag = { key: 'DateField', value: '2018-08-21' };
+  const tag = defaultTagHandlers.Date(inputTag, { lang: 'fr-ca' });
+  expect(tag).toEqual({ key: 'DateField', value: '21 août 2018' });
+});
 
-    it('datetime', () => {
-      const inputTag = { key: 'DateField', value: '2018-08-21 18:19:20' };
-      const tag = defaultTagHandlers.Datetime(inputTag, { lang: 'fr-fr' });
-      expect(tag).toEqual({ key: 'DateField', value: '21 août 2018 18:19' });
-    });
-  });
+test('defaultTagHandlers time', () => {
+  const inputTag = { key: 'DateField', value: '2018-08-21 18:19:20' };
+  const tag = defaultTagHandlers.Time(inputTag, { lang: 'en-nz' });
+  expect(tag).toEqual({ key: 'DateField', value: '6:19 PM' });
+});
+
+test('defaultTagHandlers datetime', () => {
+  const inputTag = { key: 'DateField', value: '2018-08-21 18:19:20' };
+  const tag = defaultTagHandlers.Datetime(inputTag, { lang: 'fr-fr' });
+  expect(tag).toEqual({ key: 'DateField', value: '21 août 2018 18:19' });
 });
