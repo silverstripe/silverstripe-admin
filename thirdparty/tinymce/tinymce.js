@@ -17630,11 +17630,19 @@
       }
       return sanitizedText;
     };
-    var isInvalidUri = function (settings, uri) {
+    var safeSvgDataUrlElements = [
+      'img',
+      'video'
+    ];
+    var blockSvgDataUris = function (allowSvgDataUrls, tagName) {
+      var allowed = allowSvgDataUrls === null || allowSvgDataUrls === undefined ? contains(safeSvgDataUrlElements, tagName) : allowSvgDataUrls;
+      return !allowed;
+    };
+    var isInvalidUri = function (settings, uri, tagName) {
       if (settings.allow_html_data_urls) {
         return false;
       } else if (/^data:image\//i.test(uri)) {
-        return settings.allow_svg_data_urls === false && /^data:image\/svg\+xml/i.test(uri);
+        return blockSvgDataUris(settings.allow_svg_data_urls, tagName) && /^data:image\/svg\+xml/i.test(uri);
       } else {
         return /^data:/i.test(uri);
       }
@@ -17717,7 +17725,7 @@
             stack.length = pos;
           }
         };
-        var parseAttribute = function (match, name, value, val2, val3) {
+        var parseAttribute = function (tagName, name, value, val2, val3) {
           var attrRule, i;
           var trimRegExp = /[\s\u0000-\u001F]+/g;
           name = name.toLowerCase();
@@ -17753,7 +17761,7 @@
             if (scriptUriRegExp.test(uri)) {
               return;
             }
-            if (isInvalidUri(settings, uri)) {
+            if (isInvalidUri(settings, uri, tagName)) {
               return;
             }
           }
@@ -17822,7 +17830,10 @@
                 }
                 attrList = [];
                 attrList.map = {};
-                attribsValue.replace(attrRegExp, parseAttribute);
+                attribsValue.replace(attrRegExp, function (match, name, val, val2, val3) {
+                  parseAttribute(value, name, val, val2, val3);
+                  return '';
+                });
               } else {
                 attrList = [];
                 attrList.map = {};
@@ -20416,6 +20427,14 @@
         }
         return collection;
       };
+      Node.prototype.children = function () {
+        var self = this;
+        var collection = [];
+        for (var node = self.firstChild; node; node = node.next) {
+          collection.push(node);
+        }
+        return collection;
+      };
       Node.prototype.empty = function () {
         var self = this;
         var nodes, i, node;
@@ -20681,6 +20700,23 @@
         whitespaceElements = schema.getWhiteSpaceElements();
         textBlockElements = schema.getTextBlockElements();
         specialElements = schema.getSpecialElements();
+        var removeOrUnwrapInvalidNode = function (node, originalNodeParent) {
+          if (originalNodeParent === void 0) {
+            originalNodeParent = node.parent;
+          }
+          if (specialElements[node.name]) {
+            node.empty().remove();
+          } else {
+            var children = node.children();
+            for (var _i = 0, children_1 = children; _i < children_1.length; _i++) {
+              var childNode_1 = children_1[_i];
+              if (!schema.isValidChild(originalNodeParent.name, childNode_1.name)) {
+                removeOrUnwrapInvalidNode(childNode_1, originalNodeParent);
+              }
+            }
+            node.unwrap();
+          }
+        };
         for (ni = 0; ni < nodes.length; ni++) {
           node = nodes[ni];
           if (!node.parent || node.fixed) {
@@ -20706,31 +20742,35 @@
             parents.push(parent);
           }
           if (parent && parents.length > 1) {
-            parents.reverse();
-            newParent = currentNode = filterNode(parents[0].clone());
-            for (i = 0; i < parents.length - 1; i++) {
-              if (schema.isValidChild(currentNode.name, parents[i].name)) {
-                tempNode = filterNode(parents[i].clone());
-                currentNode.append(tempNode);
+            if (schema.isValidChild(parent.name, node.name)) {
+              parents.reverse();
+              newParent = currentNode = filterNode(parents[0].clone());
+              for (i = 0; i < parents.length - 1; i++) {
+                if (schema.isValidChild(currentNode.name, parents[i].name)) {
+                  tempNode = filterNode(parents[i].clone());
+                  currentNode.append(tempNode);
+                } else {
+                  tempNode = currentNode;
+                }
+                for (childNode = parents[i].firstChild; childNode && childNode !== parents[i + 1];) {
+                  nextNode = childNode.next;
+                  tempNode.append(childNode);
+                  childNode = nextNode;
+                }
+                currentNode = tempNode;
+              }
+              if (!isEmpty$2(schema, nonEmptyElements, whitespaceElements, newParent)) {
+                parent.insert(newParent, parents[0], true);
+                parent.insert(node, newParent);
               } else {
-                tempNode = currentNode;
+                parent.insert(node, parents[0], true);
               }
-              for (childNode = parents[i].firstChild; childNode && childNode !== parents[i + 1];) {
-                nextNode = childNode.next;
-                tempNode.append(childNode);
-                childNode = nextNode;
+              parent = parents[0];
+              if (isEmpty$2(schema, nonEmptyElements, whitespaceElements, parent) || hasOnlyChild(parent, 'br')) {
+                parent.empty().remove();
               }
-              currentNode = tempNode;
-            }
-            if (!isEmpty$2(schema, nonEmptyElements, whitespaceElements, newParent)) {
-              parent.insert(newParent, parents[0], true);
-              parent.insert(node, newParent);
             } else {
-              parent.insert(node, parents[0], true);
-            }
-            parent = parents[0];
-            if (isEmpty$2(schema, nonEmptyElements, whitespaceElements, parent) || hasOnlyChild(parent, 'br')) {
-              parent.empty().remove();
+              removeOrUnwrapInvalidNode(node);
             }
           } else if (node.parent) {
             if (node.name === 'li') {
@@ -20750,11 +20790,7 @@
             if (schema.isValidChild(node.parent.name, 'div') && schema.isValidChild('div', node.name)) {
               node.wrap(filterNode(new Node$1('div', 1)));
             } else {
-              if (specialElements[node.name]) {
-                node.empty().remove();
-              } else {
-                node.unwrap();
-              }
+              removeOrUnwrapInvalidNode(node);
             }
           }
         }
@@ -20930,6 +20966,7 @@
         parser = SaxParser$1({
           validate: validate,
           allow_script_urls: settings.allow_script_urls,
+          allow_svg_data_urls: settings.allow_svg_data_urls,
           allow_conditional_comments: settings.allow_conditional_comments,
           self_closing_elements: cloneAndExcludeBlocks(schema.getSelfClosingElements()),
           cdata: function (text) {
