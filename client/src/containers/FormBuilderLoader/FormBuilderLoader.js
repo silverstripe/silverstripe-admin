@@ -475,7 +475,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export { FormBuilderLoader as Component };
+export { FormBuilderLoader as Component, createFormIdentifierFromProps };
 
 export default compose(
   inject(

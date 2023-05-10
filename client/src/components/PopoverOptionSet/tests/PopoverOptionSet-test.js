@@ -1,148 +1,114 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* global jest, describe, beforeEach, it, expect */
+/* global jest, test, expect */
 
 import React from 'react';
 import PopoverOptionSet from '../PopoverOptionSet';
-import { Button, InputGroup } from 'reactstrap';
-import Enzyme, { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { render, screen, fireEvent } from '@testing-library/react';
 
-Enzyme.configure({ adapter: new Adapter() });
+const buttonTypeA = {
+  key: 'dummy-key-a',
+  content: 'Hello A',
+  className: 'dummy-classname-a',
+  onClick: () => {},
+};
 
-describe('PopoverOptionSet', () => {
-  let props = null;
-  let buttonTypeA = null;
-  let buttonTypeB = null;
+const buttonTypeB = {
+  key: 'dummy-key-b',
+  content: 'Hello B',
+  className: 'dummy-classname-b',
+  onClick: () => {},
+};
 
-  const mockToggle = jest.fn();
+function makeProps(obj = {}) {
+  return {
+    buttons: [buttonTypeA, buttonTypeB],
+    ButtonComponent: ({ className }) => <button data-testid="test-button" className={className}/>,
+    PopoverComponent: ({ toggle, children }) => (
+      <div data-testid="test-popover" onClick={toggle}>
+        {children}
+      </div>
+    ),
+    provideButtonClickHandler: () => null,
+    container: 'div',
+    extraClass: '',
+    isOpen: true, // needs to be true in order to render the popover
+    placement: 'auto',
+    searchPlaceholder: '',
+    toggle: jest.fn(),
+    target: 'div',
+    ...obj
+  };
+}
 
-  beforeEach(() => {
-    buttonTypeA = {
-      key: 'dummy-key-a',
-      content: 'Hello A',
-      className: 'dummy-classname-a',
-      onClick: () => {},
-    };
-
-    buttonTypeB = {
-      key: 'dummy-key-b',
-      content: 'Hello B',
-      className: 'dummy-classname-b',
-      onClick: () => {},
-    };
-
-    props = {
-      buttons: [buttonTypeA, buttonTypeB],
-      provideButtonClickHandler: jest.fn(),
-      container: jest.fn(),
-      extraClass: '',
-      isOpen: false,
-      placement: 'auto',
-      toggle: mockToggle,
-      searchPlaceholder: '',
-      target: () => <div />
-    };
-  });
-
-  describe('handleToggle', () => {
-    it('should call the toggle and the handleClear function', () => {
-      const wrapper = shallow(
-        <PopoverOptionSet
-          {...props}
-        />
-      );
-
-      wrapper.instance().handleToggle();
-      expect(mockToggle).toHaveBeenCalled();
-    });
-  });
-
-  describe('handleSearchValueClear', () => {
-    it('should set the state', () => {
-      const wrapper = shallow(
-        <PopoverOptionSet
-          {...props}
-        />
-      );
-
-      wrapper.setState({ searchValue: 'something ' });
-      wrapper.instance().handleSearchValueClear();
-      expect(wrapper.state('searchValue')).toEqual('');
-    });
-  });
-
-  describe('handleSearchValueChange', () => {
-    it('should update the internal state on user input change', () => {
-      const wrapper = shallow(
-        <PopoverOptionSet {...props} />
-      );
-
-      const event = {
-        target: {
-          value: 'a'
-        }
-      };
-
-      wrapper.instance().handleSearchValueChange(event);
-      expect(wrapper.state('searchValue')).toEqual('a');
-    });
-  });
-
-  describe('renderSearchValueClearLink', () => {
-    it('should render a link to clear the search field', () => {
-      const wrapper = shallow(
-        <PopoverOptionSet {...props} />
-      );
-      wrapper.setState({ searchValue: 'something' });
-      expect(wrapper.find('.popover-option-set__search-clear').length).toEqual(1);
-    });
-  });
-
-  describe('renderOptionButtons', () => {
-    it('render all available buttons', () => {
-      const wrapper = shallow(
-        <PopoverOptionSet {...props} />
-      );
-      wrapper.setState({ searchValue: '' });
-      expect(wrapper.find(Button).length).toEqual(2);
-    });
-
-    it('render all buttons matching the search term', () => {
-      const wrapper = shallow(
-        <PopoverOptionSet {...props} />
-      );
-      wrapper.setState({ searchValue: 'Hello B' });
-      expect(wrapper.find(Button).length).toEqual(1);
-    });
-
-    it('render a message if no buttons are available', () => {
-      const wrapper = shallow(
-        <PopoverOptionSet {...props} />
-      );
-      wrapper.setState({ searchValue: 'Hello C' });
-      expect(wrapper.find(Button).length).toEqual(0);
-    });
-  });
-
-  describe('renderPopoverOptionSetContent', () => {
-    it('render container component', () => {
-      const wrapper = shallow(
-        <PopoverOptionSet {...props} />
-      );
-
-      expect(wrapper.find('.popover-option-set__button-container').length).toEqual(1);
-    });
-  });
-
-  describe('render', () => {
-    it('should render a Popover', () => {
-      const wrapper = shallow(
-        <PopoverOptionSet {...props} />
-      );
-
-      expect(wrapper.find(InputGroup)).toHaveLength(1);
-      expect(wrapper.find('.popover-option-set__button-container').length).toEqual(1);
-    });
-  });
+test('PopoverOptionSet handleToggle should call the toggle callback', async () => {
+  const toggle = jest.fn();
+  render(
+    <PopoverOptionSet {...makeProps({
+      toggle
+    })}
+    />
+  );
+  const popover = await screen.findByTestId('test-popover');
+  fireEvent.click(popover);
+  expect(toggle).toHaveBeenCalled();
 });
 
+test('PopoverOptionSet handleSearchValueClear should set the state', async () => {
+  render(
+    <PopoverOptionSet {...makeProps()}/>
+  );
+  const popover = await screen.findByTestId('test-popover');
+  const input = popover.querySelector('input.popover-option-set__search-input');
+  expect(screen.queryByText('No results found')).toBeNull();
+  fireEvent.change(input, { target: { value: 'something' } });
+  const results = await screen.findByText('No results found');
+  expect(results).not.toBeNull();
+});
+
+test('PopoverOptionSet handleSearchValueClear should set the state', async () => {
+  render(
+    <PopoverOptionSet {...makeProps()}/>
+  );
+  const popover = await screen.findByTestId('test-popover');
+  const input = popover.querySelector('input.popover-option-set__search-input');
+  expect(screen.queryByText('Clear')).toBeNull();
+  fireEvent.change(input, { target: { value: 'something' } });
+  const button = await screen.findByText('Clear');
+  expect(button.tagName).toBe('BUTTON');
+});
+
+test('PopoverOptionSet renderOptionButtons render all available buttons', async () => {
+  render(
+    <PopoverOptionSet {...makeProps({
+      onSearch: () => [
+        {
+          key: 'a',
+          content: 'A',
+          className: 'dummy-classname-a',
+          onClick: () => null,
+        },
+        {
+          key: 'b',
+          content: 'B',
+          className: 'dummy-classname-b',
+          onClick: () => null,
+        }
+      ]
+    })}
+    />
+  );
+  const popover = await screen.findByTestId('test-popover');
+  const input = popover.querySelector('input.popover-option-set__search-input');
+  fireEvent.change(input, { target: { value: 'something' } });
+  const buttons = await screen.findAllByTestId('test-button');
+  expect(buttons).toHaveLength(2);
+  expect(buttons[0].classList).toContain('dummy-classname-a');
+  expect(buttons[1].classList).toContain('dummy-classname-b');
+});
+
+test('PopoverOptionSet render should render a Popover', async () => {
+  render(
+    <PopoverOptionSet {...makeProps()}/>
+  );
+  const popover = await screen.findByTestId('test-popover');
+  expect(popover.querySelector('.popover-option-set__button-container')).not.toBeNull();
+});

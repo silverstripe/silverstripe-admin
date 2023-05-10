@@ -832,7 +832,7 @@ TreeDropdownField.defaultProps = {
   failed: [],
   findTreeByPath,
   findTreePath,
-  fetch,
+  fetch
 };
 
 function mapStateToProps(state, ownProps) {

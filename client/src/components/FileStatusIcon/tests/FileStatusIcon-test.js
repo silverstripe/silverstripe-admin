@@ -1,99 +1,69 @@
-/* global jest, describe, beforeEach, it, expect */
+/* global jest, test, describe, beforeEach, it, expect */
 
 import React from 'react';
-import ReactTestUtils from 'react-dom/test-utils';
+import { render } from '@testing-library/react';
 import FileStatusIcon from '../FileStatusIcon';
 
-describe('FileStatusIcon', () => {
-  let props = null;
+test('FileStatusIcon.render() shows the restricted access icon', () => {
+  const { container } = render(
+    <FileStatusIcon {...{
+      hasRestrictedAccess: true
+    }}
+    />
+  );
+  expect(container.querySelector('.font-icon-user-lock')).not.toBe(null);
+});
 
-  beforeEach(() => {
-    props = {
-      fileID: 123,
-      // <Tooltip> needs to be disabled in a jest context
-      // seems to need a real DOM to render into rather than a test-DOM
-      disableTooltip: true
-    };
-  });
+test('FileStatusIcon.render() shows the form submission icon if access restricted', () => {
+  const { container } = render(
+    <FileStatusIcon {...{
+      isTrackedFormUpload: true,
+      hasRestrictedAccess: true
+    }}
+    />
+  );
+  expect(container.querySelector('.font-icon-address-card')).not.toBe(null);
+});
 
-  const buildComponent = (fnProps) => {
-    const fileStatusIcon = ReactTestUtils.renderIntoDocument(<FileStatusIcon {...fnProps} />);
-    return fileStatusIcon;
-  };
+test('FileStatusIcon.render() shows the form submission alert icon if access unrestricted', () => {
+  const { container } = render(
+    <FileStatusIcon {...{
+      isTrackedFormUpload: true,
+      hasRestrictedAccess: false
+    }}
+    />
+  );
+  expect(container.querySelector('.font-icon-address-card-warning')).not.toBe(null);
+});
 
-  const getContainer = (fileStatusIcon) => {
-    const divs = ReactTestUtils.scryRenderedDOMComponentsWithClass(
-      fileStatusIcon,
-      'file-status-icon'
-    );
-    return divs[0];
-  };
+test('FileStatusIcon.render() can add an extraClassName to the container', () => {
+  const { container } = render(
+    <FileStatusIcon {...{
+      hasRestrictedAccess: true,
+      extraClassName: 'myclassname'
+    }}
+    />
+  );
+  expect(container.querySelector('.file-status-icon').classList).toContain('myclassname');
+});
 
-  const getSpan = (fileStatusIcon) => {
-    const spans = ReactTestUtils.scryRenderedDOMComponentsWithClass(
-      fileStatusIcon,
-      'file-status-icon__icon'
-    );
-    return spans[0];
-  };
+test('FileStatusIcon.render() has no background by default', () => {
+  const { container } = render(
+    <FileStatusIcon {...{
+      hasRestrictedAccess: true,
+    }}
+    />
+  );
+  expect(container.querySelector('.file-status-icon').classList).not.toContain('file-status-icon--background');
+});
 
-  describe('render()', () => {
-    let fileStatusIcon = null;
-
-    it('shows the restricted access icon', () => {
-      fileStatusIcon = buildComponent({
-        hasRestrictedAccess: true,
-        ...props
-      });
-      const span = getSpan(fileStatusIcon);
-      expect(span.classList).toContain('font-icon-user-lock');
-    });
-
-    it('shows the form submission icon if access restricted', () => {
-      fileStatusIcon = buildComponent({
-        isTrackedFormUpload: true,
-        hasRestrictedAccess: true,
-        ...props
-      });
-      const span = getSpan(fileStatusIcon);
-      expect(span.classList).toContain('font-icon-address-card');
-    });
-
-    it('shows the form submission alert icon if access unrestricted', () => {
-      fileStatusIcon = buildComponent({
-        isTrackedFormUpload: true,
-        hasRestrictedAccess: false,
-        ...props
-      });
-      const span = getSpan(fileStatusIcon);
-      expect(span.classList).toContain('font-icon-address-card-warning');
-    });
-
-    it('can add an extraClassName to the container', () => {
-      fileStatusIcon = buildComponent({
-        hasRestrictedAccess: true,
-        extraClassName: 'myclassname',
-        ...props
-      });
-      const div = getContainer(fileStatusIcon);
-      expect(div.classList).toContain('myclassname');
-    });
-
-    it('has no background by default or it has have one added', () => {
-      fileStatusIcon = buildComponent({
-        hasRestrictedAccess: true,
-        ...props
-      });
-      let div = getContainer(fileStatusIcon);
-      expect(div.classList).not.toContain('file-status-icon--background');
-
-      fileStatusIcon = buildComponent({
-        hasRestrictedAccess: true,
-        includeBackground: true,
-        ...props
-      });
-      div = getContainer(fileStatusIcon);
-      expect(div.classList).toContain('file-status-icon--background');
-    });
-  });
+test('FileStatusIcon.render() has a background if added', () => {
+  const { container } = render(
+    <FileStatusIcon {...{
+      hasRestrictedAccess: true,
+      includeBackground: true
+    }}
+    />
+  );
+  expect(container.querySelector('.file-status-icon').classList).toContain('file-status-icon--background');
 });

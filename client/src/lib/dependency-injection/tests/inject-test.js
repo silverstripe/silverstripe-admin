@@ -1,177 +1,133 @@
-/* global jest, describe, beforeEach, it, pit, expect, process */
+/* global jest, test, describe, beforeEach, it, pit, expect, process */
 
 import React, { Component } from 'react';
-import ReactTestUtils from 'react-dom/test-utils';
 import inject from '../inject';
 import injectorContext from '../injectorContext';
+import { render } from '@testing-library/react';
 
-describe('inject()', () => {
-  const emptyComponent = () => <div>Empty</div>;
-  let injectorGet = null;
-  let provideTestInjector = null;
+const injectorGet = jest.fn(item => item);
+const emptyComponent = () => <div>Empty</div>;
 
-  beforeEach(() => {
-    injectorGet = jest.fn(item => item);
-    provideTestInjector = (context) => (Injectable) => {
-      class InjectorProvider extends Component {
-        getChildContext() {
-          return {
-            injector: {
-              get: injectorGet,
-              validate: item => item,
-              context,
-            },
-          };
-        }
-
-        render() {
-          return <Injectable {...this.props} />;
-        }
-      }
-
-      InjectorProvider.childContextTypes = injectorContext;
-
-      return InjectorProvider;
-    };
-  });
-
-  describe('The higher-order component', () => {
-    it('should throw for incorrect params', () => {
-      expect(() => {
-        const injected = inject()(emptyComponent);
-
-        expect(injected).toBeTruthy();
-      }).not.toThrow();
-
-      expect(() => {
-        inject('TestComponent')(emptyComponent);
-      }).toThrow();
-
-      expect(() => {
-        inject(['TestComponent'], 'not a function')(emptyComponent);
-      }).toThrow();
-
-      expect(() => {
-        inject(['TestComponent'], () => 'a function', 'not a function')(emptyComponent);
-      }).toThrow();
-
-      expect(() => {
-        const injected = inject(['TestComponent'], () => 'a function', () => 'a function')(emptyComponent);
-
-        expect(injected).toBeTruthy();
-      }).not.toThrow();
-    });
-  });
-
-  describe('The component inside', () => {
-    const components = ['TestComponent'];
-    let testInjector = null;
-
-    beforeEach(() => {
-      testInjector = provideTestInjector();
-    });
-
-    it('should throw an exception if mapDependenciesToProps returns a non-object', () => {
-      const injected = inject(components, () => 'not an object')(emptyComponent);
-
-      expect(() => injected()).toThrow();
-    });
-
-    it('should provide the TestComponent in the TestComponent prop', () => {
-      const checkComponent = ({ TestComponent }) => {
-        expect(TestComponent).toBe('TestComponent');
-
-        return <div>Rendered</div>;
+const provideTestInjector = (context) => (Injectable) => {
+  class InjectorProvider extends Component {
+    getChildContext() {
+      return {
+        injector: {
+          get: injectorGet,
+          validate: item => item,
+          context,
+        },
       };
-      const injected = inject(components)(checkComponent);
-      const MyComponent = testInjector(injected);
+    }
+    render() {
+      return <Injectable {...this.props} />;
+    }
+  }
+  InjectorProvider.childContextTypes = injectorContext;
+  return InjectorProvider;
+};
 
-      const rendered = ReactTestUtils.renderIntoDocument(
-        <MyComponent />
-      );
+test('inject() The higher-order component should throw for incorrect params', () => {
+  expect(() => {
+    const injected = inject()(emptyComponent);
 
-      expect(ReactTestUtils.findRenderedDOMComponentWithTag(rendered, 'div').textContent).toBe('Rendered');
-      expect(injectorGet).toBeCalledWith('TestComponent', undefined);
-    });
+    expect(injected).toBeTruthy();
+  }).not.toThrow();
 
-    it('should provide the TestComponent in the testing prop', () => {
-      const checkComponent = ({ testing }) => {
-        expect(testing).toBe('TestComponent');
+  expect(() => {
+    inject('TestComponent')(emptyComponent);
+  }).toThrow();
 
-        return <div>Rendered</div>;
-      };
-      const mapToProps = (TestComponent) => ({ testing: TestComponent });
-      const injected = inject(components, mapToProps)(checkComponent);
-      const MyComponent = testInjector(injected);
+  expect(() => {
+    inject(['TestComponent'], 'not a function')(emptyComponent);
+  }).toThrow();
 
-      const rendered = ReactTestUtils.renderIntoDocument(
-        <MyComponent />
-      );
+  expect(() => {
+    inject(['TestComponent'], () => 'a function', 'not a function')(emptyComponent);
+  }).toThrow();
 
-      expect(ReactTestUtils.findRenderedDOMComponentWithTag(rendered, 'div').textContent).toBe('Rendered');
-      expect(injectorGet).toBeCalledWith('TestComponent', undefined);
-    });
+  expect(() => {
+    const injected = inject(['TestComponent'], () => 'a function', () => 'a function')(emptyComponent);
 
-    it('should not override the parent provided component the testing prop', () => {
-      const checkComponent = ({ testing }) => {
-        expect(testing).toBe('AnotherComponent');
+    expect(injected).toBeTruthy();
+  }).not.toThrow();
+});
 
-        return <div>Rendered</div>;
-      };
-      const mapToProps = (TestComponent) => ({ testing: TestComponent });
-      const injected = inject(components, mapToProps)(checkComponent);
-      const MyComponent = testInjector(injected);
+test('inject() The higher-order component should throw for incorrect params', () => {
+  const components = ['TestComponent'];
+  const injected = inject(components, () => 'not an object')(emptyComponent);
+  expect(() => injected()).toThrow();
+});
 
-      const rendered = ReactTestUtils.renderIntoDocument(
-        <MyComponent testing="AnotherComponent" />
-      );
+test('inject() The higher-order component should provide the TestComponent in the TestComponent prop', () => {
+  const components = ['TestComponent'];
+  const testInjector = provideTestInjector();
+  const checkComponent = ({ TestComponent }) => {
+    expect(TestComponent).toBe('TestComponent');
+    return <div>Rendered</div>;
+  };
+  const injected = inject(components)(checkComponent);
+  const MyComponent = testInjector(injected);
+  const { container } = render(<MyComponent />);
+  expect(container.querySelector('div').textContent).toBe('Rendered');
+  expect(injectorGet).toBeCalledWith('TestComponent', undefined);
+});
 
-      expect(ReactTestUtils.findRenderedDOMComponentWithTag(rendered, 'div').textContent).toBe('Rendered');
-      expect(injectorGet).toBeCalledWith('TestComponent', undefined);
-    });
-  });
+test('inject() The higher-order component should provide the TestComponent in the testing prop', () => {
+  const components = ['TestComponent'];
+  const testInjector = provideTestInjector();
+  const checkComponent = ({ testing }) => {
+    expect(testing).toBe('TestComponent');
+    return <div>Rendered</div>;
+  };
+  const mapToProps = (TestComponent) => ({ testing: TestComponent });
+  const injected = inject(components, mapToProps)(checkComponent);
+  const MyComponent = testInjector(injected);
+  const { container } = render(<MyComponent />);
+  expect(container.querySelector('div').textContent).toBe('Rendered');
+  expect(injectorGet).toBeCalledWith('TestComponent', undefined);
+});
 
-  describe('The context provided', () => {
-    const components = ['TestComponent'];
-    let testInjector = null;
+test('inject() The higher-order component should not override the parent provided component the testing prop', () => {
+  const components = ['TestComponent'];
+  const testInjector = provideTestInjector();
+  const checkComponent = ({ testing }) => {
+    expect(testing).toBe('AnotherComponent');
+    return <div>Rendered</div>;
+  };
+  const mapToProps = (TestComponent) => ({ testing: TestComponent });
+  const injected = inject(components, mapToProps)(checkComponent);
+  const MyComponent = testInjector(injected);
+  const { container } = render(<MyComponent testing="AnotherComponent" />);
+  expect(container.querySelector('div').textContent).toBe('Rendered');
+  expect(injectorGet).toBeCalledWith('TestComponent', undefined);
+});
 
-    beforeEach(() => {
-      testInjector = provideTestInjector('def');
-    });
+test('inject() The context provided should pass the current props and context to the getContext callback', () => {
+  const components = ['TestComponent'];
+  const testInjector = provideTestInjector('def');
+  const testContext = (props, currentContext) => {
+    expect(props.passthrough).toBe('abc');
+    expect(currentContext).toBe('def');
+    return currentContext;
+  };
+  const injected = inject(components, null, testContext)(emptyComponent);
+  const MyComponent = testInjector(injected);
+  const { container } = render(<MyComponent passthrough="abc" />);
+  expect(container.querySelector('div').textContent).toBe('Empty');
+  expect(injectorGet).toBeCalledWith('TestComponent', 'def');
+});
 
-
-    it('should pass the current props and context to the getContext callback', () => {
-      const testContext = (props, currentContext) => {
-        expect(props.passthrough).toBe('abc');
-        expect(currentContext).toBe('def');
-
-        return currentContext;
-      };
-      const injected = inject(components, null, testContext)(emptyComponent);
-      const MyComponent = testInjector(injected);
-
-      const rendered = ReactTestUtils.renderIntoDocument(
-        <MyComponent passthrough="abc" />
-      );
-
-      expect(ReactTestUtils.findRenderedDOMComponentWithTag(rendered, 'div').textContent).toBe('Empty');
-      expect(injectorGet).toBeCalledWith('TestComponent', 'def');
-    });
-
-    it('should see the newly created context in the registered component', () => {
-      const testContext = (props) => {
-        expect(props.passthrough).toBe('abc');
-        return 'defghi';
-      };
-      const injected = inject(components, null, testContext)(emptyComponent);
-      const MyComponent = testInjector(injected);
-
-      const rendered = ReactTestUtils.renderIntoDocument(
-        <MyComponent passthrough="abc" />
-      );
-
-      expect(ReactTestUtils.findRenderedDOMComponentWithTag(rendered, 'div').textContent).toBe('Empty');
-      expect(injectorGet).toBeCalledWith('TestComponent', 'defghi');
-    });
-  });
+test('inject() The context provided should see the newly created context in the registered component', () => {
+  const components = ['TestComponent'];
+  const testInjector = provideTestInjector('def');
+  const testContext = (props) => {
+    expect(props.passthrough).toBe('abc');
+    return 'defghi';
+  };
+  const injected = inject(components, null, testContext)(emptyComponent);
+  const MyComponent = testInjector(injected);
+  const { container } = render(<MyComponent passthrough="abc" />);
+  expect(container.querySelector('div').textContent).toBe('Empty');
+  expect(injectorGet).toBeCalledWith('TestComponent', 'defghi');
 });

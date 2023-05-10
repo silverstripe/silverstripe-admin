@@ -1,192 +1,138 @@
 /* eslint-disable import/no-extraneous-dependencies */
-/* global jest, describe, beforeEach, it, expect */
+/* global jest, test, describe, beforeEach, it, expect */
 
 import React from 'react';
 import { Component as ViewModeToggle } from '../ViewModeToggle';
-import Enzyme, { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { render, fireEvent } from '@testing-library/react';
 
-Enzyme.configure({ adapter: new Adapter() });
-
-describe('ViewModeToggle', () => {
-  let props = null;
-
-  // Mock select functions to replace the ones provided by mapDispatchToProps
-  const mockOnSplitSelect = jest.fn();
+test('ViewModeToggle simulate click events in split mode', () => {
   const mockOnEditSelect = jest.fn();
-  const mockOnPreviewSelect = jest.fn();
-
-  beforeEach(() => {
-    props = {};
-  });
-
-  describe('onClick functions trigger mapDispatchToProps functions to notify and update the Redux store', () => {
-    describe('simulate click events in split mode', () => {
-      props = {
-        id: 'view-mode-toggle-in-preview-nb',
-        activeState: 'split',
-        area: 'preview',
-        splitAvailable: true,
-      };
-
-      const wrapper = shallow(
-        <ViewModeToggle
-          onSplitSelect={mockOnSplitSelect}
-          onEditSelect={mockOnEditSelect}
-          onPreviewSelect={mockOnPreviewSelect}
-          {...props}
-        />
-      );
-
-      it('should call the edit button onClick function', () => {
-        expect(wrapper.instance().props.activeState).toBe('split');
-        wrapper.find('.font-icon-edit-write').at(0).simulate('click');
-        expect(mockOnEditSelect).toHaveBeenCalled();
-      });
-
-      it('should call the preview button onClick function', () => {
-        expect(wrapper.instance().props.activeState).toBe('split');
-        wrapper.find('.font-icon-eye').at(0).simulate('click');
-        expect(mockOnPreviewSelect).toHaveBeenCalled();
-      });
-    });
-
-    describe('simulate click events in edit mode', () => {
-      props = {
-        id: 'view-mode-toggle-in-edit-nb',
-        activeState: 'edit',
-        area: 'edit',
-        splitAvailable: false,
-      };
-
-      const wrapper = shallow(
-        <ViewModeToggle
-          onSplitSelect={mockOnSplitSelect}
-          onEditSelect={mockOnEditSelect}
-          onPreviewSelect={mockOnPreviewSelect}
-          {...props}
-        />
-      );
-
-      it('should call the split button onClick function', () => {
-        expect(wrapper.instance().props.activeState).toBe('edit');
-        wrapper.find('.font-icon-columns').at(0).simulate('click');
-        // expect(mockOnSplitSelect).not.toHaveBeenCalled();
-      });
-
-      it('should call the preview button onClick function', () => {
-        expect(wrapper.instance().props.activeState).toBe('edit');
-        wrapper.find('.font-icon-eye').at(0).simulate('click');
-        expect(mockOnPreviewSelect).toHaveBeenCalled();
-      });
-    });
-  });
-
-
-  describe('should render ViewModeToggle in the correct context', () => {
-    it('should not render ViewModeToggle in the edit context if the activeState is split', () => {
-      props = {
-        id: 'view-mode-toggle-in-edit-nb',
-        activeState: 'split',
-        area: 'edit',
-        splitAvailable: true,
-      };
-
-      const wrapper = shallow(
-        <ViewModeToggle
-          onSplitSelect={mockOnSplitSelect}
-          onEditSelect={mockOnEditSelect}
-          onPreviewSelect={mockOnPreviewSelect}
-          {...props}
-        />
-      );
-
-      expect(wrapper.find('div').length).toEqual(0);
-    });
-
-
-    it('should not render ViewModeToggle in the edit context if the activeState is preview', () => {
-      props = {
-        id: 'view-mode-toggle-in-edit-nb',
-        activeState: 'preview',
-        area: 'edit',
-        splitAvailable: true,
-      };
-
-      const wrapper = shallow(
-        <ViewModeToggle
-          onSplitSelect={mockOnSplitSelect}
-          onEditSelect={mockOnEditSelect}
-          onPreviewSelect={mockOnPreviewSelect}
-          {...props}
-        />
-      );
-
-      expect(wrapper.find('div').length).toEqual(0);
-    });
-
-    it('should render ViewModeToggle in the edit context if the activeState is edit', () => {
-      props = {
-        id: 'view-mode-toggle-in-edit-nb',
-        activeState: 'edit',
-        area: 'edit',
-        splitAvailable: false,
-      };
-      const wrapper = shallow(
-        <ViewModeToggle
-          onSplitSelect={mockOnSplitSelect}
-          onEditSelect={mockOnEditSelect}
-          onPreviewSelect={mockOnPreviewSelect}
-          {...props}
-        />
-      );
-
-      expect(wrapper.find('div').length).toEqual(1);
-    });
-  });
-
-  describe('should add the correct classes', () => {
-    props = {
+  const { container } = render(
+    <ViewModeToggle {...{
       id: 'view-mode-toggle-in-preview-nb',
       activeState: 'split',
       area: 'preview',
       splitAvailable: true,
-    };
+      onEditSelect: mockOnEditSelect,
+    }}
+    />
+  );
+  expect(container.querySelector('.viewmode-toggle__chosen-view-title').innerHTML).toBe('Split mode');
+  fireEvent.click(container.querySelectorAll('.font-icon-edit-write')[0]);
+  expect(mockOnEditSelect).toHaveBeenCalled();
+});
 
-    const wrapper = shallow(
-      <ViewModeToggle
-        onSplitSelect={mockOnSplitSelect}
-        onEditSelect={mockOnEditSelect}
-        onPreviewSelect={mockOnPreviewSelect}
-        {...props}
-      />
-    );
+test('ViewModeToggle should call the preview button onClick function', () => {
+  const mockOnPreviewSelect = jest.fn();
+  const { container } = render(
+    <ViewModeToggle {...{
+      id: 'view-mode-toggle-in-preview-nb',
+      activeState: 'split',
+      area: 'preview',
+      splitAvailable: true,
+      onPreviewSelect: mockOnPreviewSelect,
+    }}
+    />
+  );
+  expect(container.querySelector('.viewmode-toggle__chosen-view-title').innerHTML).toBe('Split mode');
+  fireEvent.click(container.querySelectorAll('.font-icon-eye')[0]);
+  expect(mockOnPreviewSelect).toHaveBeenCalled();
+});
 
-    it('should add correct font icon class to the buttons and the view mode toggle itself', () => {
-      const splitButtonClassInstances = wrapper.find('.font-icon-columns');
-      expect(splitButtonClassInstances.length).toEqual(2);
+test('ViewModeToggle simulate click events in edit mode should call the split button onClick function', () => {
+  const mockOnSplitSelect = jest.fn();
+  const { container } = render(
+    <ViewModeToggle {...{
+      id: 'view-mode-toggle-in-edit-nb',
+      activeState: 'edit',
+      area: 'edit',
+      splitAvailable: false,
+      onSplitSelect: mockOnSplitSelect,
+    }}
+    />
+  );
+  expect(container.querySelector('.viewmode-toggle__chosen-view-title').innerHTML).toBe('Edit mode');
+  fireEvent.click(container.querySelectorAll('.font-icon-columns')[0]);
+  expect(mockOnSplitSelect).not.toHaveBeenCalled();
+});
 
-      const editButtonClassInstances = wrapper.find('.font-icon-edit-write');
-      expect(editButtonClassInstances.length).toEqual(1);
+test('ViewModeToggle simulate click events in edit mode should call the preview button onClick function', () => {
+  const mockOnPreviewSelect = jest.fn();
+  const { container } = render(
+    <ViewModeToggle {...{
+      id: 'view-mode-toggle-in-edit-nb',
+      activeState: 'edit',
+      area: 'edit',
+      splitAvailable: false,
+      onPreviewSelect: mockOnPreviewSelect,
+    }}
+    />
+  );
+  expect(container.querySelector('.viewmode-toggle__chosen-view-title').innerHTML).toBe('Edit mode');
+  fireEvent.click(container.querySelectorAll('.font-icon-eye')[0]);
+  expect(mockOnPreviewSelect).toHaveBeenCalled();
+});
 
-      const previewButtonClassInstances = wrapper.find('.font-icon-eye');
-      expect(previewButtonClassInstances.length).toEqual(1);
-    });
+test('ViewModeToggle should not render in the edit context if the activeState is split', () => {
+  const { container } = render(
+    <ViewModeToggle {...{
+      id: 'view-mode-toggle-in-edit-nb',
+      activeState: 'split',
+      area: 'edit',
+      splitAvailable: true,
+    }}
+    />
+  );
+  expect(container.querySelectorAll('.viewmode-toggle')).toHaveLength(0);
+});
 
-    it('should add the activeMode to the button representing the active state', () => {
-      const splitButton = wrapper.find('.font-icon-columns').at(1);
-      const editButton = wrapper.find('.font-icon-edit-write').at(0);
-      const previewButton = wrapper.find('.font-icon-eye').at(0);
+test('ViewModeToggle should render in the edit context if the activeState is preview', () => {
+  const { container } = render(
+    <ViewModeToggle {...{
+      id: 'view-mode-toggle-in-edit-nb',
+      activeState: 'preview',
+      area: 'edit',
+      splitAvailable: true,
+    }}
+    />
+  );
+  expect(container.querySelectorAll('.viewmode-toggle')).toHaveLength(1);
+});
 
-      expect(splitButton.hasClass('viewmode-toggle--selected')).toBe(true);
-      expect(editButton.hasClass('viewmode-toggle--selected')).toBe(false);
-      expect(previewButton.hasClass('viewmode-toggle--selected')).toBe(false);
+test('ViewModeToggle should render in the edit context if the activeState is edit', () => {
+  const { container } = render(
+    <ViewModeToggle {...{
+      id: 'view-mode-toggle-in-edit-nb',
+      activeState: 'edit',
+      area: 'edit',
+      splitAvailable: false,
+    }}
+    />
+  );
+  expect(container.querySelectorAll('.viewmode-toggle')).toHaveLength(1);
+});
 
-      expect(splitButton.prop('id')).toEqual('splitModeButton');
-
-      expect(splitButton.prop('value')).toEqual('split');
-      expect(editButton.prop('value')).toEqual('content');
-      expect(previewButton.prop('value')).toEqual('preview');
-    });
-  });
+test('ViewModeToggle classes', () => {
+  const { container } = render(
+    <ViewModeToggle {...{
+      id: 'view-mode-toggle-in-preview-nb',
+      activeState: 'split',
+      area: 'preview',
+      splitAvailable: true,
+    }}
+    />
+  );
+  expect(container.querySelectorAll('.font-icon-columns')).toHaveLength(2);
+  expect(container.querySelectorAll('.font-icon-edit-write')).toHaveLength(1);
+  expect(container.querySelectorAll('.font-icon-eye')).toHaveLength(1);
+  const splitButton = container.querySelectorAll('.font-icon-columns')[1];
+  const editButton = container.querySelectorAll('.font-icon-edit-write')[0];
+  const previewButton = container.querySelectorAll('.font-icon-eye')[0];
+  expect(splitButton.classList.contains('viewmode-toggle--selected')).toBe(true);
+  expect(editButton.classList.contains('viewmode-toggle--selected')).toBe(false);
+  expect(previewButton.classList.contains('viewmode-toggle--selected')).toBe(false);
+  expect(splitButton.getAttribute('id')).toEqual('splitModeButton');
+  expect(splitButton.getAttribute('value')).toEqual('split');
+  expect(editButton.getAttribute('value')).toEqual('content');
+  expect(previewButton.getAttribute('value')).toEqual('preview');
 });

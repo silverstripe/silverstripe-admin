@@ -25,9 +25,10 @@ class Form extends Component {
    * @returns {Array|null}
    */
   renderMessages() {
+    const { FormAlertComponent } = this.props;
     if (Array.isArray(this.props.messages)) {
       return this.props.messages.map((message, index) => (
-        <FormAlert
+        <FormAlertComponent
           // eslint-disable-next-line react/no-array-index-key
           key={index}
           className={!index ? 'message-box--panel-top' : ''}
@@ -116,6 +117,7 @@ Form.propTypes = {
     type: PropTypes.string,
   })),
   formTag: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  FormAlertComponent: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 };
 
 Form.defaultProps = {
@@ -123,7 +125,8 @@ Form.defaultProps = {
   formTag: 'form',
   actionHolder: {
     className: 'btn-toolbar'
-  }
+  },
+  FormAlertComponent: FormAlert
 };
 
 export { Form as Component };

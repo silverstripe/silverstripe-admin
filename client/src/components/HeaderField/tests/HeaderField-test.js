@@ -1,42 +1,32 @@
-/* global jest, describe, it, expect */
+/* global jest, test, describe, it, expect */
 
 import React from 'react';
 import HeaderField from '../HeaderField';
-import Enzyme, { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16/build/index';
+import { render } from '@testing-library/react';
 
-Enzyme.configure({ adapter: new Adapter() });
+test('HeaderField minimal render', () => {
+  const { container } = render(
+    <HeaderField {...{
+      data: { title: 'test' }
+    }}
+    />
+  );
+  expect(container.querySelectorAll('h3')).toHaveLength(1);
+});
 
-describe('HeaderField', () => {
-  it('minimal render', () => {
-    const wrapper = shallow(<HeaderField data={{ title: 'test' }} />);
-
-    expect(wrapper.props()).toMatchObject({
-      className: 'field',
-    });
-
-    const headerWrapper = wrapper.find('h3');
-    expect(headerWrapper).toHaveLength(1);
-    expect(headerWrapper.props()).toMatchObject({
-      className: '',
-      children: 'test'
-    });
-  });
-  it('render with all options', () => {
-    const wrapper = shallow(
-      <HeaderField id="testID" className="a" extraClass="b" data={{ title: 'test', headingLevel: 1 }} />
-    );
-
-    expect(wrapper.props()).toMatchObject({
-      className: 'field',
-    });
-
-    const headerWrapper = wrapper.find('h1');
-    expect(headerWrapper).toHaveLength(1);
-    expect(headerWrapper.props()).toMatchObject({
-      className: 'a b',
-      id: 'testID',
-      children: 'test'
-    });
-  });
+test('HeaderField render with all options', () => {
+  const { container } = render(
+    <HeaderField {...{
+      data: { title: 'test', headingLevel: 1 },
+      className: 'a',
+      extraClass: 'b',
+      id: 'testID'
+    }}
+    />
+  );
+  const h1 = container.querySelector('h1');
+  expect(h1.classList).toContain('a');
+  expect(h1.classList).toContain('b');
+  expect(h1.id).toBe('testID');
+  expect(h1.innerHTML).toBe('test');
 });

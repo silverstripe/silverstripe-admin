@@ -1,311 +1,239 @@
-/* global jest, describe, it, expect, beforeEach */
-
-import Adapter from 'enzyme-adapter-react-16';
+/* global jest, test, describe, it, expect, beforeEach */
 
 jest.mock('components/FormAlert/FormAlert');
 
 import React from 'react';
-import ReactTestUtils from 'react-dom/test-utils';
+import { render } from '@testing-library/react';
 import fieldHolder from '../FieldHolder';
-import Enzyme, { mount } from 'enzyme';
 
+const InnerField = () => <div id="innerfield">Field</div>;
+const FieldHolder = fieldHolder(InnerField);
 
-Enzyme.configure({ adapter: new Adapter() });
+test('FieldHolder should render innerfield', () => {
+  const { container } = render(
+    <FieldHolder {...{
+      description: 'mydesc'
+    }}
+    />
+  );
+  expect(container.querySelector('div#innerfield').innerHTML).toBe('Field');
+});
 
-describe('FieldHolder', () => {
-  const InnerField = () => <div>Field</div>;
-  const Holder = fieldHolder(InnerField);
-  let props = null;
-  let component = null;
+test('FieldHolder should render a description', () => {
+  const { container } = render(
+    <FieldHolder {...{
+      description: 'mydesc'
+    }}
+    />
+  );
+  expect(container.querySelector('.form__field-description').innerHTML).toBe('mydesc');
+});
 
-  beforeEach(() => {
-    props = {};
-  });
+test('FieldHolder should render no description if null', () => {
+  const { container } = render(
+    <FieldHolder {...{
+      description: null
+    }}
+    />
+  );
+  expect(container.querySelectorAll('.form__field-description')).toHaveLength(0);
+});
 
-  describe('renderDescription()', () => {
-    it('should not return anything if description is null', () => {
-      props.description = null;
-      component = ReactTestUtils.renderIntoDocument(
-        <Holder {...props} />
-      );
-
-      const description = component.renderDescription();
-
-      expect(description).toBe(null);
-    });
-
-    it('should return a node if description is a string', () => {
-      props.description = 'test node';
-      component = ReactTestUtils.renderIntoDocument(
-        <Holder {...props} />
-      );
-
-      const description = component.renderDescription();
-
-      expect(description).not.toBe(null);
-    });
-  });
-
-  describe('renderMessage()', () => {
-    it('should not return anything if meta is empty', () => {
-      props.meta = {};
-      component = ReactTestUtils.renderIntoDocument(
-        <Holder {...props} />
-      );
-
-      const message = component.renderMessage();
-
-      expect(message).toBe(null);
-    });
-
-    it('should render message property', () => {
-      props.message = {
+test('FieldHolder should render message property', () => {
+  const { container } = render(
+    <FieldHolder {...{
+      message: {
         value: 'hello!',
-        type: 'errro',
-      };
+        type: 'error'
+      }
+    }}
+    />
+  );
+  expect(container.querySelector('.form__field-message--error div').innerHTML).toBe('hello!');
+});
 
-      component = ReactTestUtils.renderIntoDocument(
-        <Holder {...props} />
-      );
-
-      const formMsg = ReactTestUtils
-        .findRenderedDOMComponentWithClass(component, 'form__field-message');
-      expect(formMsg.textContent).toBe('hello!');
-    });
-
-    it('should let meta error override message if dirty', () => {
-      props.message = {
+test('FieldHolder should let meta error override message if dirty', () => {
+  const { container } = render(
+    <FieldHolder {...{
+      message: {
         value: 'hello!',
-        type: 'errro',
-      };
-      props.meta = {
+        type: 'error'
+      },
+      meta: {
         error: {
           value: 'My error',
         },
         touched: true,
         dirty: true,
-      };
+      }
+    }}
+    />
+  );
+  expect(container.querySelector('.form__field-message div').innerHTML).toBe('My error');
+});
 
-      component = ReactTestUtils.renderIntoDocument(
-        <Holder {...props} />
-      );
-
-      const formMsg = ReactTestUtils
-        .findRenderedDOMComponentWithClass(component, 'form__field-message');
-      expect(formMsg.textContent).toBe('My error');
-    });
-
-    it('should let message override meta error override if not dirty', () => {
-      props.message = {
+test('FieldHolder should let message override meta error override if not dirty', () => {
+  const { container } = render(
+    <FieldHolder {...{
+      message: {
         value: 'hello!',
-        type: 'errro',
-      };
-      props.meta = {
+        type: 'error'
+      },
+      meta: {
         error: {
           value: 'My error',
         },
         touched: true,
         dirty: false,
-      };
+      }
+    }}
+    />
+  );
+  expect(container.querySelector('.form__field-message div').innerHTML).toBe('hello!');
+});
 
-      component = ReactTestUtils.renderIntoDocument(
-        <Holder {...props} />
-      );
-
-      const formMsg = ReactTestUtils
-        .findRenderedDOMComponentWithClass(component, 'form__field-message');
-      expect(formMsg.textContent).toBe('hello!');
-    });
-
-    it('should not return anything if not touched', () => {
-      props.meta = {
-        error: 'My error',
+test('FieldHolder should not return anything if not touched', () => {
+  const { container } = render(
+    <FieldHolder {...{
+      meta: {
+        error: {
+          value: 'My error',
+        },
         touched: false,
-      };
-      component = ReactTestUtils.renderIntoDocument(
-        <Holder {...props} />
-      );
+      }
+    }}
+    />
+  );
+  expect(container.querySelectorAll('.form__field-message')).toHaveLength(0);
+});
 
-      const message = component.renderMessage();
-
-      expect(message).toBe(null);
-    });
-
-    it('should return a node if touched and has an error', () => {
-      props.meta = {
-        error: 'My error',
+test('FieldHolder return a node if touched and has an error', () => {
+  const { container } = render(
+    <FieldHolder {...{
+      meta: {
+        error: {
+          value: 'My error',
+        },
         touched: true,
-      };
-      component = ReactTestUtils.renderIntoDocument(
-        <Holder {...props} />
-      );
+      }
+    }}
+    />
+  );
+  expect(container.querySelectorAll('.form__field-message')).toHaveLength(1);
+});
 
-      const message = component.renderMessage();
+test('FieldHolder return a title when leftTitle is set', () => {
+  const { container } = render(
+    <FieldHolder {...{
+      leftTitle: 'My left title'
+    }}
+    />
+  );
+  expect(container.querySelector('.form__field-label').innerHTML).toBe('My left title');
+});
 
-      expect(message).not.toBe(null);
-    });
-  });
+test('FieldHolder should return a title when title is set and leftTitle is not set', () => {
+  const { container } = render(
+    <FieldHolder {...{
+      title: 'My title'
+    }}
+    />
+  );
+  expect(container.querySelector('.form__field-label').innerHTML).toBe('My title');
+});
 
-  describe('renderLeftTitle()', () => {
-    it('should return a title when leftTitle is set', () => {
-      props.leftTitle = 'My left title';
-      component = ReactTestUtils.renderIntoDocument(
-        <Holder {...props} />
-      );
+test('FieldHolder should return the left title when title and leftTitle are both set', () => {
+  const { container } = render(
+    <FieldHolder {...{
+      leftTitle: 'My left title',
+      title: 'My title'
+    }}
+    />
+  );
+  expect(container.querySelector('.form__field-label').innerHTML).toBe('My left title');
+});
 
-      const title = component.renderLeftTitle();
+test('FieldHolder rightTitle', () => {
+  const { container } = render(
+    <FieldHolder {...{
+      rightTitle: 'My right title'
+    }}
+    />
+  );
+  expect(container.querySelector('.form__field-label').innerHTML).toBe('My right title');
+});
 
-      expect(title).not.toBe(null);
-    });
+test('FieldHolder hideLabels', () => {
+  const { container } = render(
+    <FieldHolder {...{
+      leftTitle: 'My left title',
+      rightTitle: 'My right title',
+      hideLabels: true
+    }}
+    />
+  );
+  expect(container.querySelectorAll('.form__field-label')).toHaveLength(0);
+});
 
-    it('should return a title when title is set and leftTitle is not set', () => {
-      props.title = 'My title';
-      component = ReactTestUtils.renderIntoDocument(
-        <Holder {...props} />
-      );
+test('FieldHolder no labels', () => {
+  const { container } = render(
+    <FieldHolder/>
+  );
+  expect(container.querySelectorAll('.form__field-label')).toHaveLength(0);
+});
 
-      const title = component.renderLeftTitle();
+test('FieldHolder no prefix or suffix', () => {
+  const { container } = render(
+    <FieldHolder/>
+  );
+  expect(container.querySelectorAll('.input-group-text')).toHaveLength(0);
+});
 
-      expect(title).not.toBe(null);
-    });
-
-    it('should return the left title when title and leftTitle are both set', () => {
-      props.leftTitle = 'My left title';
-      props.title = 'My title';
-      component = ReactTestUtils.renderIntoDocument(
-        <Holder {...props} />
-      );
-
-      const title = component.renderLeftTitle();
-
-      expect(title.props.children).toBe('My left title');
-    });
-
-    it('should not return anything if hideLabels is set', () => {
-      props.leftTitle = 'My left title';
-      props.hideLabels = true;
-      component = ReactTestUtils.renderIntoDocument(
-        <Holder {...props} />
-      );
-
-      const title = component.renderLeftTitle();
-
-      expect(title).toBe(null);
-    });
-  });
-
-  describe('renderRightTitle()', () => {
-    it('should not return anything if rightTitle is not set', () => {
-      component = ReactTestUtils.renderIntoDocument(
-        <Holder {...props} />
-      );
-
-      const title = component.renderRightTitle();
-
-      expect(title).toBe(null);
-    });
-
-    it('should return a title when rightTitle is set', () => {
-      props.rightTitle = 'My right title';
-      component = ReactTestUtils.renderIntoDocument(
-        <Holder {...props} />
-      );
-
-      const title = component.renderRightTitle();
-
-      expect(title).not.toBe(null);
-    });
-
-    it('should not return anything if hideLabels is set', () => {
-      props.rightTitle = 'My right title';
-      props.hideLabels = true;
-      component = ReactTestUtils.renderIntoDocument(
-        <Holder {...props} />
-      );
-
-      const title = component.renderRightTitle();
-
-      expect(title).toBe(null);
-    });
-  });
-
-  describe('renderField()', () => {
-    it('should return just the field if no prefix or suffix', () => {
-      component = ReactTestUtils.renderIntoDocument(
-        <Holder {...props} />
-      );
-
-      const field = component.renderField();
-
-      expect(field.type).toBe(InnerField);
-    });
-
-    it('should return a wrapped field with a prefix', () => {
-      props.data = {
+test('FieldHolder prefix', () => {
+  const { container } = render(
+    <FieldHolder {...{
+      data: {
         prefix: 'My prefix',
-      };
-      component = ReactTestUtils.renderIntoDocument(
-        <Holder {...props} />
-      );
+      }
+    }}
+    />
+  );
+  expect(container.querySelector('.input-group-prepend .input-group-text').innerHTML).toBe('My prefix');
+});
 
-      const field = component.renderField();
-
-      expect(field.props.children[0].props.children).toBe('My prefix');
-      expect(field.props.children[1].type).toBe(InnerField);
-      expect(field.props.children[2]).toBe(undefined);
-    });
-
-    it('should return a wrapped field with a suffix', () => {
-      props.data = {
+test('FieldHolder prefix', () => {
+  const { container } = render(
+    <FieldHolder {...{
+      data: {
         suffix: 'My suffix',
-      };
-      component = ReactTestUtils.renderIntoDocument(
-        <Holder {...props} />
-      );
+      }
+    }}
+    />
+  );
+  expect(container.querySelector('.input-group-append .input-group-text').innerHTML).toBe('My suffix');
+});
 
-      const field = component.renderField();
+test('FieldHolder titleTip should be rendered if one is provided', () => {
+  const { container } = render(
+    <FieldHolder {...{
+      id: 'my-id',
+      title: 'My title',
+      titleTip: {
+        content: 'My content',
+      }
+    }}
+    />
+  );
+  expect(container.querySelector('button.tip.tip--title').getAttribute('aria-label')).toBe('Tip for My title');
+});
 
-      expect(field.props.children[0]).toBe(undefined);
-      expect(field.props.children[1].type).toBe(InnerField);
-      expect(field.props.children[2].props.children).toBe('My suffix');
-    });
-  });
-
-  describe('titleTips', () => {
-    // this is a workaround for enzyme testing reactstrap tips
-    // https://github.com/reactstrap/reactstrap/issues/738
-    // we do something similar in Tip.js
-    let div;
-    beforeEach(() => {
-      div = document.createElement('div');
-      div.id = 'FieldHolder-my-id-titleTip-tip';
-      document.body.appendChild(div);
-    });
-    afterEach(() => {
-      document.body.removeChild(div);
-    });
-
-    it('should render a titleTip if one is provided', () => {
-      const elProps = {
-        ...props,
-        id: 'my-id',
-        title: 'My title',
-        titleTip: {
-          content: 'My content',
-        }
-      };
-      const reactWrapper = mount(<Holder {...elProps} />);
-      expect(reactWrapper.find('button.tip.tip--title')).toHaveLength(1);
-    });
-
-    it('should not render a titleTip if one is not provided', () => {
-      const elProps = {
-        ...props,
-        id: 'my-id',
-        title: 'My title'
-      };
-      const reactWrapper = mount(<Holder {...elProps} />);
-      expect(reactWrapper.find('.tip')).toHaveLength(0);
-    });
-  });
+test('FieldHolder titleTip should not be rendered if one is not provided', () => {
+  const { container } = render(
+    <FieldHolder {...{
+      id: 'my-id',
+      title: 'My title',
+    }}
+    />
+  );
+  expect(container.querySelectorAll('button.tip.tip--title')).toHaveLength(0);
 });

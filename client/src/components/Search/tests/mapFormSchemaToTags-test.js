@@ -1,4 +1,4 @@
-/* global jest, describe, it, expect, beforeEach */
+/* global jest, test, describe, it, expect, beforeEach */
 import mapFormSchemaToTags from '../utilities/mapFormSchemaToTags';
 
 const formSchema = {
@@ -63,41 +63,37 @@ const expectedTags = {
   }
 };
 
+test('mapFormSchemaToTags mapping regular mapping', () => {
+  const tags = mapFormSchemaToTags(formSchema, formData);
 
-describe('mapFormSchemaToTags', () => {
-  describe('mapping', () => {
-    it('regular mapping', () => {
-      const tags = mapFormSchemaToTags(formSchema, formData);
-
-      expect(Object.keys(tags)).toHaveLength(3);
-      expect(tags).toEqual(expectedTags);
-    });
-
-    it('custom tag handler', () => {
-      const mockTagHandler = jest.fn();
-      mockTagHandler.mockReturnValue({ key: 'GenericFieldName' });
-      const tagHandlerOverrides = {
-        '#GenericFieldName': mockTagHandler
-      };
-
-      const tags = mapFormSchemaToTags(formSchema, formData, tagHandlerOverrides);
-
-      expect(Object.keys(tags)).toHaveLength(3);
-      expect(tags).toEqual(
-        Object.assign({}, expectedTags, { GenericFieldName: { key: 'GenericFieldName' } })
-      );
-      expect(mockTagHandler.mock.calls).toHaveLength(1);
-      expect(mockTagHandler.mock.calls[0][0]).toEqual(expectedTags.GenericFieldName);
-      expect(mockTagHandler.mock.calls[0][1]).toEqual(formSchema.schema.fields[0]);
-      expect(mockTagHandler.mock.calls[0][2]).toEqual(formSchema);
-      expect(mockTagHandler.mock.calls[0][3]).toEqual(formData);
-    });
-
-    it('loading', () => {
-      const tags = mapFormSchemaToTags(
-        Object.assign({}, formSchema, { metadata: { loading: true } }, formData)
-      );
-      expect(Object.keys(tags)).toHaveLength(0);
-    });
-  });
+  expect(Object.keys(tags)).toHaveLength(3);
+  expect(tags).toEqual(expectedTags);
 });
+
+test('mapFormSchemaToTags mapping custom tag handler', () => {
+  const mockTagHandler = jest.fn();
+  mockTagHandler.mockReturnValue({ key: 'GenericFieldName' });
+  const tagHandlerOverrides = {
+    '#GenericFieldName': mockTagHandler
+  };
+
+  const tags = mapFormSchemaToTags(formSchema, formData, tagHandlerOverrides);
+
+  expect(Object.keys(tags)).toHaveLength(3);
+  expect(tags).toEqual(
+    Object.assign({}, expectedTags, { GenericFieldName: { key: 'GenericFieldName' } })
+  );
+  expect(mockTagHandler.mock.calls).toHaveLength(1);
+  expect(mockTagHandler.mock.calls[0][0]).toEqual(expectedTags.GenericFieldName);
+  expect(mockTagHandler.mock.calls[0][1]).toEqual(formSchema.schema.fields[0]);
+  expect(mockTagHandler.mock.calls[0][2]).toEqual(formSchema);
+  expect(mockTagHandler.mock.calls[0][3]).toEqual(formData);
+});
+
+test('mapFormSchemaToTags mapping loading', () => {
+  const tags = mapFormSchemaToTags(
+    Object.assign({}, formSchema, { metadata: { loading: true } }, formData)
+  );
+  expect(Object.keys(tags)).toHaveLength(0);
+});
+

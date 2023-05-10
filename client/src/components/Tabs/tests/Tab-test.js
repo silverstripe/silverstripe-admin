@@ -1,53 +1,63 @@
-/* global jest, describe, it, expect */
+/* global jest, test, describe, it, expect */
 
 import React from 'react';
 import Tab from '../Tab';
-import Enzyme, { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16/build/index';
+import { render, fireEvent } from '@testing-library/react';
 
-Enzyme.configure({ adapter: new Adapter() });
+const onToggle = jest.fn();
 
-describe('Tab', () => {
-  it('render', () => {
-    const onToggle = jest.fn();
+function makeProps(obj = {}) {
+  return {
+    title: 'Foo bar',
+    tabClassName: 'special',
+    onToggle,
+    ...obj
+  };
+}
 
-    const wrapper = shallow(
-      <Tab title="Foo bar" tabClassName="special" onToggle={onToggle} />
-    );
+test('Tab onToggle', () => {
+  const { container } = render(<Tab {...makeProps()}/>);
+  const link = container.querySelector('.nav-item .special');
+  fireEvent.click(link, {});
+  expect(onToggle).toBeCalled();
+});
 
-    expect(wrapper.find('NavItem')).toHaveLength(1);
+test('Tab active', () => {
+  const { container } = render(
+    <Tab {...makeProps({
+      active: true,
+    })}
+    />
+  );
+  expect(container.querySelectorAll('.nav-item .special.active')).toHaveLength(1);
+});
 
-    const link = wrapper.find('NavItem').find('NavLink');
-    expect(link).toHaveLength(1);
-    expect(link.props()).toMatchObject({ disabled: false, className: 'special' });
+test('Tab inactive', () => {
+  const { container } = render(
+    <Tab {...makeProps({
+      active: false,
+    })}
+    />
+  );
+  expect(container.querySelectorAll('.nav-item .special.active')).toHaveLength(0);
+});
 
-    link.simulate('click');
-    expect(onToggle).toHaveBeenCalled();
-  });
+test('Tab disabled', () => {
+  const { container } = render(
+    <Tab {...makeProps({
+      disabled: true,
+    })}
+    />
+  );
+  expect(container.querySelector('.nav-item .special.disabled').hasAttribute('disabled')).toBeTruthy();
+});
 
-  it('active', () => {
-    const wrapper = shallow(
-      <Tab title="Foo bar" active tabClassName="special" onToggle={jest.fn()} />
-    );
-
-    const link = wrapper.find('NavItem').find('NavLink');
-    expect(link.props()).toMatchObject({ disabled: false, className: 'special active' });
-  });
-
-  it('disabled', () => {
-    const wrapper = shallow(
-      <Tab title="Foo bar" disabled tabClassName="special" onToggle={jest.fn()} />
-    );
-
-    const link = wrapper.find('NavItem').find('NavLink');
-    expect(link.props()).toMatchObject({ disabled: true, className: 'special' });
-  });
-
-  it('no title', () => {
-    const wrapper = shallow(
-      <Tab tabClassName="special" onToggle={jest.fn()} />
-    );
-
-    expect(wrapper.find('NavItem')).toHaveLength(0);
-  });
+test('Tab no title', () => {
+  const { container } = render(
+    <Tab {...makeProps({
+      title: null,
+    })}
+    />
+  );
+  expect(container.querySelectorAll('a')).toHaveLength(0);
 });

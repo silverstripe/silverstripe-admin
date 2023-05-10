@@ -24,11 +24,12 @@ class FormBuilderModal extends Component {
    * @returns {Component}
    */
   getForm() {
+    const { FormBuilderLoaderComponent } = this.props;
     if (!this.props.schemaUrl) {
       return null;
     }
     return (
-      <FormBuilderLoader
+      <FormBuilderLoaderComponent
         fieldHolder={{ className: classnames('modal-body', this.props.bodyClassName) }}
         actionHolder={{ className: 'modal-footer' }}
         autoFocus={this.props.autoFocus}
@@ -145,6 +146,7 @@ class FormBuilderModal extends Component {
 
   renderHeader() {
     let { title } = this.props;
+    const { ModalHeaderComponent } = this.props;
 
     if (title !== false) {
       if (typeof title === 'object') {
@@ -153,7 +155,7 @@ class FormBuilderModal extends Component {
         title = doc.body.textContent || '';
       }
       return (
-        <ModalHeader toggle={this.handleHide}>{title}</ModalHeader>
+        <ModalHeaderComponent toggle={this.handleHide}>{title}</ModalHeaderComponent>
       );
     }
 
@@ -174,9 +176,10 @@ class FormBuilderModal extends Component {
   render() {
     const form = this.getForm();
     const response = this.getResponse();
+    const { ModalComponent } = this.props;
 
     return (
-      <Modal
+      <ModalComponent
         isOpen={this.props.isOpen}
         toggle={this.handleHide}
         className={this.props.className}
@@ -187,7 +190,7 @@ class FormBuilderModal extends Component {
         {response}
         {form}
         {this.props.children}
-      </Modal>
+      </ModalComponent>
     );
   }
 }
@@ -215,6 +218,9 @@ FormBuilderModal.propTypes = {
   // Ignored and assumed true if onLoadingError is unassigned
   showErrorMessage: PropTypes.bool,
   onLoadingError: PropTypes.func,
+  ModalComponent: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  ModalHeaderComponent: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  FormBuilderLoaderComponent: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 };
 
 FormBuilderModal.defaultProps = {
@@ -226,6 +232,9 @@ FormBuilderModal.defaultProps = {
   modalClassName: 'form-builder-modal',
   responseClassGood: 'alert alert-success',
   responseClassBad: 'alert alert-danger',
+  ModalComponent: Modal,
+  ModalHeaderComponent: ModalHeader,
+  FormBuilderLoaderComponent: FormBuilderLoader,
 };
 
 export default FormBuilderModal;

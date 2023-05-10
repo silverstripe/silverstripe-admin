@@ -1,66 +1,39 @@
-/* global jest, describe, beforeEach, it, expect */
+/* global jest, test, describe, beforeEach, it, expect */
 
 import React from 'react';
-import ReactTestUtils from 'react-dom/test-utils';
+import { render } from '@testing-library/react';
 import GridFieldTable from '../GridFieldTable';
 
-describe('GridFieldTable', () => {
-  let props = null;
+test('GridFieldTable generateHeader() should return props.header if it is set', () => {
+  const { container } = render(
+    <GridFieldTable {...{
+      header: <tr className="header" />
+    }}
+    />
+  );
+  expect(container.querySelector('tr.header')).not.toBeNull();
+});
 
-  beforeEach(() => {
-    props = {
-    };
-  });
+test('GridFieldTable generateHeader() should return null if props.header and props.data are both not set', () => {
+  const { container } = render(
+    <GridFieldTable/>
+  );
+  expect(container.querySelector('thead').innerHTML).toBe('');
+});
 
-  describe('generateHeader()', () => {
-    let gridfield = null;
+test('GridFieldTable generateHeader() should return props.rows if it is set', () => {
+  const { container } = render(
+    <GridFieldTable {...{
+      rows: [<tr className="row" key="row1"><td>row1</td></tr>]
+    }}
+    />
+  );
+  expect(container.querySelectorAll('tbody .row')[0].classList).toContain('row');
+});
 
-    it('should return props.header if it is set', () => {
-      props.header = <tr className="header" />;
-
-      gridfield = ReactTestUtils.renderIntoDocument(
-        <GridFieldTable {...props} />
-      );
-
-      expect(gridfield.generateHeader().props.className).toBe('header');
-    });
-
-    it('should generate and return a header from props.data if it is set', () => {
-
-    });
-
-    it('should return null if props.header and props.data are both not set', () => {
-      gridfield = ReactTestUtils.renderIntoDocument(
-        <GridFieldTable {...props} />
-      );
-
-      expect(gridfield.generateHeader()).toBe(null);
-    });
-  });
-
-  describe('generateRows()', () => {
-    let gridfield = null;
-
-    it('should return props.rows if it is set', () => {
-      props.rows = [<tr className="row" key="row1"><td>row1</td></tr>];
-
-      gridfield = ReactTestUtils.renderIntoDocument(
-        <GridFieldTable {...props} />
-      );
-
-      expect(gridfield.generateRows()[0].props.className).toBe('row');
-    });
-
-    it('should generate and return rows from props.data if it is set', () => {
-
-    });
-
-    it('should return null if props.rows and props.data are both not set', () => {
-      gridfield = ReactTestUtils.renderIntoDocument(
-        <GridFieldTable {...props} />
-      );
-
-      expect(gridfield.generateRows()).toBe(null);
-    });
-  });
+test('GridFieldTable generateHeader() should return null if props.rows and props.data are both not set', () => {
+  const { container } = render(
+    <GridFieldTable/>
+  );
+  expect(container.querySelector('tbody').innerHTML).toBe('');
 });

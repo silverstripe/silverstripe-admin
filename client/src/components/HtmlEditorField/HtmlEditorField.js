@@ -89,10 +89,12 @@ class HtmlEditorField extends TextField {
     if (isReady !== prevState.isReady) {
       setTimeout(() => {
         const { document, jQuery: $ } = window;
-        const mountEvent = $.Event('EntwineElementsAdded');
+        const mountEvent = $ ? $.Event('EntwineElementsAdded') : new Event('noop');
         const editorElement = this.getEditorElement();
         mountEvent.targets = [editorElement];
-        $(document).triggerHandler(mountEvent);
+        if ($) {
+          $(document).triggerHandler(mountEvent);
+        }
         this.registerChangeListener();
       }, 1);
     }
@@ -112,7 +114,7 @@ class HtmlEditorField extends TextField {
     }
 
     const { document, jQuery: $ } = window;
-    const unmountEvent = $.Event('EntwineElementsRemoved');
+    const unmountEvent = $ ? $.Event('EntwineElementsRemoved') : new Event('noop');
     const editorElement = this.getEditorElement();
     // Tell tinyMCE to persist changes into the text field
     const editor = this.getEditor();
@@ -125,7 +127,9 @@ class HtmlEditorField extends TextField {
     // by the react components. We also can't manufacture an event with the right target
     // without actually dispatching the event, and by then it's too late.
     super.handleChange({ target: editorElement });
-    $(document).triggerHandler(unmountEvent);
+    if ($) {
+      $(document).triggerHandler(unmountEvent);
+    }
   }
 }
 
