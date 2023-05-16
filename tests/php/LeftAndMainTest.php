@@ -14,10 +14,21 @@ use SilverStripe\Security\Member;
 use SilverStripe\View\Requirements;
 use SilverStripe\Core\Manifest\VersionedProvider;
 use SilverStripe\Dev\Deprecation;
+use SilverStripe\Admin\Tests\LeftAndMainTest\MyTree;
+use SilverStripe\Admin\Tests\LeftAndMainTest\MyTreeController;
+use stdClass;
 
 class LeftAndMainTest extends FunctionalTest
 {
     protected static $fixture_file = 'LeftAndMainTest.yml';
+
+    protected static $extra_dataobjects = [
+        MyTree::class
+    ];
+
+    protected static $extra_controllers = [
+        MyTreeController::class
+    ];
 
     protected $backupCombined;
 
@@ -237,5 +248,42 @@ class LeftAndMainTest extends FunctionalTest
             ['4.10.x-dev', '4.10'],
             ['myfork', 'myfork'],
         ];
+    }
+
+    public function testValidationResult()
+    {
+        $this->logInAs('admin');
+
+        $obj = MyTree::create();
+        $obj->write();
+
+        $getValidationResult = function ($content) use ($obj): stdClass {
+            $response = $this->post(
+                "admin/mytree/edit/EditForm/{$obj->ID}/",
+                [
+                    'ID' => $obj->ID,
+                    'Content' => $content,
+                    'ajax' => 1,
+                    'action_save' => 1
+                ],
+                [
+                    'X-Pjax' => 'ValidationResult',
+                ]
+            );
+            $validationResultPjax = json_decode($response->getBody())->ValidationResult;
+            return json_decode(preg_replace('#</?script[^>]*?>#', '', $validationResultPjax));
+        };
+
+        // Test valid content
+        $result = $getValidationResult('Valid content');
+        $this->assertTrue($result->isValid);
+        $this->assertSame(0, count($result->messages));
+
+        // Test invalid content
+        $result = $getValidationResult(MyTree::INVALID_CONTENT);
+        $this->assertFalse($result->isValid);
+        $this->assertSame(1, count($result->messages));
+        $this->assertSame($result->messages[0]->fieldName, 'Content');
+        $this->assertSame($result->messages[0]->message, MyTree::INVALID_CONTENT_MESSAGE);
     }
 }

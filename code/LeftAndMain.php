@@ -1044,6 +1044,12 @@ class LeftAndMain extends Controller implements PermissionProvider
                             'SilverStripe\\Admin\\CMSBreadcrumbs'
                         ]);
                     },
+                    'ValidationResult' => function () {
+                        return $this->prepareDataForPjax([
+                            'isValid' => true,
+                            'messages' => []
+                        ]);
+                    },
                     'default' => function () {
                         return $this->renderWith($this->getViewer('show'));
                     }
@@ -1492,6 +1498,12 @@ class LeftAndMain extends Controller implements PermissionProvider
                 return $negotiator->respond($request, [
                     'CurrentForm' => function () use ($result) {
                         return $result;
+                    },
+                    'ValidationResult' => function () use ($errors) {
+                        return $this->prepareDataForPjax([
+                            'isValid' => $errors->isValid(),
+                            'messages' => $errors->getMessages()
+                        ]);
                     }
                 ]);
             }
@@ -1528,6 +1540,20 @@ class LeftAndMain extends Controller implements PermissionProvider
             $form->setFields($readonlyFields);
         }
         return $form;
+    }
+
+    /**
+     * Convert an array of data to JSON and wrap it in an HTML tag as pjax is used and jQuery will parse this
+     * as an element on the client side in LeftAndMain.js handleAjaxResponse()
+     * The attribute type="application/json" denotes this is a data block and won't be processed by a browser
+     * https://html.spec.whatwg.org/#the-script-element
+     *
+     * @param array $data
+     * @return string
+     */
+    private function prepareDataForPjax(array $data): string
+    {
+        return '<script type="application/json">' . json_encode($data) . '</script>';
     }
 
     /**
