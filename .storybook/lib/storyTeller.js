@@ -1,7 +1,7 @@
 const path = require('path');
 const glob = require('fast-glob');
 const fs = require('fs');
-const chalk = require('chalk');
+const dir = require('node-dir');
 const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
 
@@ -59,7 +59,7 @@ module.exports = {
       try {
         fs.accessSync(`${config.path}/node_modules/`)
       } catch (err) {
-        console.log(chalk.yellow(`Running yarn in "${config.path}`));
+        console.log(`Running yarn in "${config.path}`);
         promises.push(exec(`cd ${config.path}; yarn`));
       }
     });
@@ -68,29 +68,29 @@ module.exports = {
   },
 
   /**
-   * Generate a JavaScript file to the given output location that declares what contexts should be
-   * included when storybook builds bundles with webpack. This is generated as webpack cannot handle
-   * compiling dynamic routes - it will need to statically analyze file paths.
+   * Generate an array of paths to files
+   * which match with provided pattern
+   * in source directories.
    *
    * @param {Array<Object>} storyRoots
-   * @param {string} output The output filename
+   * @return {Array<string>} output The output filename
    */
-  generateStoriesLoader(storyRoots, output = `${__dirname}/../.stories.js`) {
-    const script = `export default [\n${storyRoots.reduce((acc, { src, fileMatcher }) => {
-      const matcher = fileMatcher instanceof RegExp
-        ? fileMatcher.toString()
-        : fileMatcher;
-
-      return `${acc}  require.context('${src}', true, ${matcher}),\n`;
-    }, '')}];`;
-
-    fs.writeFile(output, script, err => {
-      if (err) {
-        console.log(chalk.bgRed(`Could not export modules: ${err}`));
-      }
+  generateStoriesLoader(storyRoots) {
+    const storyFiles = [];
+    storyRoots.forEach((story) => {
+      const baseDir = path.resolve(__dirname, `../${story.src}`);
+      const stories = dir
+        .files(baseDir, {
+          sync: true,
+          recursive: true
+        })
+        .filter(function(file) {
+          return file.match(story.fileMatcher)
+        });
+        storyFiles.push(...stories);
     });
 
-    console.log(`Outputted story loader file to "${chalk.yellow(fs.realpathSync(output))}".`);
+    return storyFiles;
   },
 
   /**

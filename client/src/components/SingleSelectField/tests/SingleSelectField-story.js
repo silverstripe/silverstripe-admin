@@ -1,7 +1,7 @@
 import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { storiesOf } from '@storybook/react';
-import { withKnobs, text, boolean, object } from '@storybook/addon-knobs/react';
+import { withKnobs, text, boolean, object } from '@storybook/addon-knobs';
 import SingleSelectField from 'components/SingleSelectField/SingleSelectField';
 
 const props = {

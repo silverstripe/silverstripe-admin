@@ -1,7 +1,7 @@
 import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { storiesOf, setAddon } from '@storybook/react';
-import { withKnobs, text, select } from '@storybook/addon-knobs/react';
+import { withKnobs, text, select } from '@storybook/addon-knobs';
 import JSXAddon from 'storybook-addon-jsx';
 
 import CheckboxField from 'components/CheckboxField/CheckboxField';

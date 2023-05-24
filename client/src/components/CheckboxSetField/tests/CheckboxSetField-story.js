@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf, setAddon } from '@storybook/react';
-import { withKnobs, text, boolean, object, select } from '@storybook/addon-knobs/react';
+import { withKnobs, text, boolean, object, select } from '@storybook/addon-knobs';
 import JSXAddon from 'storybook-addon-jsx';
 import ValueTracker from 'stories/ValueTracker';
 import CheckboxSetField from 'components/CheckboxSetField/CheckboxSetField';
