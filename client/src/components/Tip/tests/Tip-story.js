@@ -1,76 +1,76 @@
 import React from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { setAddon, storiesOf } from '@storybook/react';
-import { withKnobs, selectV2, text } from '@storybook/addon-knobs';
-import { withNotes } from '@storybook/addon-notes';
-import JSXAddon from 'storybook-addon-jsx';
-
-setAddon(JSXAddon);
-
-import notes from '../README.md';
+import { jsxDecorator } from 'storybook-addon-jsx';
 
 import Tip, { TIP_IMPORTANCE_LEVELS, TIP_TYPES } from 'components/Tip/Tip';
 import ValueTracker from 'stories/ValueTracker';
 import { FormGroup, Input, InputGroup, InputGroupAddon } from 'reactstrap';
 
 const inputProps = {
-  name: 'MyField',
-  id: 'MyField',
-  title: 'Field title',
-  placeholder: 'Placeholder text',
+    name: 'MyField',
+    id: 'MyField',
+    title: 'Field title',
+    placeholder: 'Placeholder text',
 };
 
-const importanceLevels = Object.keys(TIP_IMPORTANCE_LEVELS)
-  .reduce((accumulator, key) => ({
-    ...accumulator,
-    [`TIP_IMPORTANCE_LEVELS.${key}`]: TIP_IMPORTANCE_LEVELS[key]
-  }), {});
+const importanceLevels = Object.keys(TIP_IMPORTANCE_LEVELS).reduce(
+    (accumulator, key) => ({
+        ...accumulator,
+        [`TIP_IMPORTANCE_LEVELS.${key}`]: TIP_IMPORTANCE_LEVELS[key],
+    }),
+    {}
+);
 
+export default {
+    title: 'Admin/Tip',
+    decorators: [
+      jsxDecorator,
+      (Story) => (<div style={{ margin: '5em', width: '30em' }}>
+        <ValueTracker><Story/></ValueTracker>
+      </div>),
+    ]
+};
 
-storiesOf('Admin/Tip', module)
-  .addDecorator(withKnobs)
-  .addDecorator((storyFn) => (
-    <div style={{ margin: '5em', width: '30em' }}>
-      <ValueTracker>{storyFn()}</ValueTracker>
-    </div>
-  ))
-  .addWithJSX(
-    'Title tip',
-    withNotes(notes)(
-      () => (
-        <FormGroup>
-          {inputProps.title}
-          <Tip
-            id={`FieldHolder-${inputProps.id}-titleTip`}
-            content={text('Content', 'Example tip contents')}
-            icon="menu-help"
-            fieldTitle={inputProps.fieldTitle}
-            type={TIP_TYPES.TITLE}
-          />
-          <div className="form__field-holder">
-            <Input {...inputProps} />
-          </div>
-        </FormGroup>
-      )
-    )
-  )
-  .addWithJSX(
-    'Input group tip',
-    withNotes(notes)(
-      () => (
-        <InputGroup>
+export const _TitleTip = () => (
+    <FormGroup>
+        {inputProps.title}
+        <Tip
+          id={`FieldHolder-${inputProps.id}-titleTip`}
+          content={'Example tip contents'}
+          icon="attention"
+          fieldTitle={inputProps.title}
+          type={TIP_TYPES.TITLE}
+        />
+        <div className="form__field-holder">
           <Input {...inputProps} />
-          <InputGroupAddon addonType="append">
-            <Tip
-              id={'input-group-tip-field'}
-              content={text('Content', 'Example tip contents')}
-              fieldTitle={inputProps.fieldTitle}
-              icon={selectV2('Icon (examples)', ['lamp', 'attention', 'flag'], 'lamp')}
-              importance={selectV2('Importance', importanceLevels, 'normal')}
-              type={TIP_TYPES.INPUT_GROUP}
-            />
-          </InputGroupAddon>
-        </InputGroup>
-      )
-    )
-  );
+        </div>
+    </FormGroup>
+);
+
+export const _InputGroupTip = (args) => (
+    <InputGroup>
+      <Input {...inputProps} />
+      <InputGroupAddon addonType="append">
+        <Tip {...args} />
+      </InputGroupAddon>
+    </InputGroup>
+);
+
+_InputGroupTip.args = {
+    id: 'input-group-tip-field',
+    content: 'Example tip contents',
+    fieldTitle: inputProps.title,
+    icon: 'lamp',
+    importance: 'normal',
+    type: TIP_TYPES.INPUT_GROUP
+};
+
+_InputGroupTip.argsType = {
+    icon: {
+      control: 'inline-radio',
+      options: ['lamp', 'attention', 'flag'],
+    },
+    importance: {
+      control: 'inline-radio',
+      options: importanceLevels
+    }
+};

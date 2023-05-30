@@ -1,22 +1,37 @@
 import React from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { storiesOf, setAddon } from '@storybook/react';
-import { withKnobs, text, boolean, select } from '@storybook/addon-knobs';
-import JSXAddon from 'storybook-addon-jsx';
-
+import { jsxDecorator } from 'storybook-addon-jsx';
 import Badge, { statuses } from 'components/Badge/Badge';
 
+export default {
+    title: 'Admin/Badges',
+    component: Badge,
+    decorators: [
+        jsxDecorator,
+        (Story) => <div><Story/></div>
+    ],
+    argTypes: {
+        status: {
+          control: 'select',
+          options: statuses
+        },
+        inverted: {
+          control: 'boolean'
+        },
+        className: {
+          control: 'inline-radio',
+          options: {
+            'Empty class name': '',
+            'badge-pill class name': 'badge-pill'
+          }
+        }
+      }
+  };
 
-setAddon(JSXAddon);
-
-storiesOf('Admin/Badges', module)
-  .addDecorator(story => <div>{story()}</div>)
-  .addDecorator(withKnobs)
-  .addWithJSX('Badge', () => (
-    <Badge
-      message={text('message', 'Hello World')}
-      status={select('status', statuses, 'default')}
-      className={boolean('pill', true) ? 'badge-pill' : ''}
-      inverted={boolean('inverted')}
-    />
-  ));
+export const _Badge = {
+    args: {
+        message: 'Hello World!',
+        status: 'default',
+        className: 'badge-pill',
+        inverted: false
+    }
+};

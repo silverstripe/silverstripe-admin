@@ -12,11 +12,9 @@ const config = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
-    "@storybook/addon-notes",
     "@storybook/addon-actions",
-    "@storybook/addon-options",
     '@storybook/addon-controls',
-    "storybook-addon-jsx"
+    "storybook-addon-jsx",
   ],
   framework: {
     name: '@storybook/react-webpack5',

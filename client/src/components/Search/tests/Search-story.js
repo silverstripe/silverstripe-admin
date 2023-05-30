@@ -1,6 +1,4 @@
 import React from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { storiesOf } from '@storybook/react';
 import Search from '../Search';
 import SearchToggle from '../SearchToggle';
 import ValueTracker from 'stories/ValueTracker';
@@ -9,43 +7,46 @@ import { reducer as ReduxFormReducer } from 'redux-form';
 import SchemaReducer from 'state/schema/SchemaReducer';
 
 const FormReducer = combineReducers({
-  formState: ReduxFormReducer,
-  formSchemas: SchemaReducer,
+    formState: ReduxFormReducer,
+    formSchemas: SchemaReducer,
 });
 
 const props = {
-  name: 'MyField',
-  title: 'Field title',
-  onSearch: () => {},
-  store: createStore(combineReducers({ form: FormReducer })),
+    name: 'MyField',
+    title: 'Field title',
+    onSearch: () => {},
+    store: createStore(combineReducers({ form: FormReducer })),
 };
 
-storiesOf('Admin/Search', module)
-  .addDecorator((storyFn) => (
-    <ValueTracker>{storyFn()}</ValueTracker>
-  ))
-  .add('Simple Vanilla', () => (
+export default {
+    title: 'Admin/Search',
+    decorators: [(Story) => <ValueTracker><Story/></ValueTracker>],
+};
+
+export const SimpleVanilla = () => (
     <Search
       id="SimpleVanillaSearch"
       display="VISIBLE"
       displayBehavior={'NONE'}
       {...props}
     />
-  ))
-  .add('With Filters', () => (
+);
+
+export const WithFilters = () => (
     <Search
       id="SmallNotExpanded"
       display="VISIBLE"
       formSchemaUrl=""
       filters={{}}
       formData={{}}
-      placeholder={'Search "Pages"'}
+      placeholder={"Search 'Pages'"}
       displayBehavior={'NONE'}
       forceFilters
       {...props}
     />
-  ))
-  .add('Hideable', () => (
+);
+
+export const Hideable = () => (
     <Search
       id="Large Hideable"
       display="VISIBLE"
@@ -57,8 +58,9 @@ storiesOf('Admin/Search', module)
       displayBehavior={'HIDEABLE'}
       {...props}
     />
-  ))
-  .add('Toggeable', () => (
+);
+
+export const Toggeable = () => (
     <Search
       id="TOGGEABLE"
       display="NONE"
@@ -68,23 +70,29 @@ storiesOf('Admin/Search', module)
       forceFilters
       {...props}
     />
-  ))
-  .add('Wide', () => (
+);
+
+export const Wide = () => (
     <div style={{ width: '800px' }}>
-      <Search
-        id="WIDE"
-        display="VISIBLE"
-        displayBehavior="TOGGLABLE"
-        formSchemaUrl=""
-        formData={{}}
-        forceFilters
-        {...props}
-      />
+        <Search
+          id="WIDE"
+          display="VISIBLE"
+          displayBehavior="TOGGLABLE"
+          formSchemaUrl=""
+          formData={{}}
+          forceFilters
+          {...props}
+        />
     </div>
-  ))
-  .add('Toggle button', () => (
+);
+
+export const ToggleButton = () => (
     <div>
-      <SearchToggle />
-      <SearchToggle toggled />
+        <SearchToggle />
+        <SearchToggle toggled />
     </div>
-  ));
+);
+
+ToggleButton.story = {
+    name: 'Toggle button',
+};
