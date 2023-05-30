@@ -1,46 +1,99 @@
 import React from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { storiesOf, setAddon } from '@storybook/react';
-import { withKnobs, text, boolean, select } from '@storybook/addon-knobs/react';
-import JSXAddon from 'storybook-addon-jsx';
+import { jsxDecorator } from 'storybook-addon-jsx';
 import { action } from '@storybook/addon-actions';
 import Button from '../Button';
 import BackButton from '../BackButton';
 
-
-const colors = ['primary', 'secondary', 'success', 'info', 'warning', 'danger', 'link'];
+const colors = [
+    'primary',
+    'secondary',
+    'success',
+    'info',
+    'warning',
+    'danger',
+    'link',
+];
 const sizes = ['sm', 'md', 'lg'];
-const icons = ['', 'search', 'sync', 'plus-circled', 'cancel-circled', 'check-mark', 'edit'];
+const icons = [
+    '',
+    'search',
+    'sync',
+    'plus-circled',
+    'cancel-circled',
+    'check-mark',
+    'edit',
+];
 
 const onClick = (event) => {
-  event.preventDefault();
-  return action('onClick')(event);
+    event.preventDefault();
+    return action('onClick')(event);
 };
 onClick.toString = () => 'onClick';
 
+export default {
+    title: 'Admin/Button',
+    component: Button,
+    decorators: [
+        jsxDecorator,
+        (Story) => <div style={{ width: '100%' }}><Story/></div>
+    ],
+    argTypes: {
+        color: {
+            control: 'select',
+            options: colors
+        },
+        size: {
+            control: 'select',
+            options: sizes
+        },
+        icon: {
+            control: 'select',
+            options: icons
+        },
+        outline: {
+            control: 'boolean'
+        },
+        block: {
+            control: 'boolean'
+        },
+        active: {
+            control: 'boolean'
+        },
+        disabled: {
+            control: 'boolean'
+        },
+        noText: {
+            control: 'boolean'
+        },
+        className: {
+            control: 'text'
+        },
+        children: {
+            control: 'text'
+        },
+        onClick: { action: 'clicked' }
+    }
+};
 
-setAddon(JSXAddon);
+export const _Button = {
+    args: {
+        color: 'primary',
+        size: 'md',
+        icon: '',
+        outline: false,
+        block: false,
+        active: false,
+        disabled: false,
+        noText: false,
+        onClick,
+        className: '',
+        children: 'click me'
+    }
+};
 
-storiesOf('Admin/Button', module)
-  .addDecorator(story => <div style={{ width: '100%' }}>{story()}</div>)
-  .addDecorator(withKnobs)
-  .addWithJSX('Button', () => (
-    <Button
-      color={select('color', colors, 'primary')}
-      size={select('size', sizes, 'md')}
-      icon={select('icon', icons, '')}
-      outline={boolean('outline', false)}
-      block={boolean('block', false)}
-      active={boolean('active', false)}
-      disabled={boolean('disabled', false)}
-      noText={boolean('noText', false)}
-      onClick={onClick}
-      className={text('className', '')}
-    >{text('children', 'click me')}</Button>
-  ))
-  .addWithJSX('BackButton', () => (
-    <BackButton
-      className={text('className', '')}
-      onClick={onClick}
-    >{text('children', 'Back')}</BackButton>
-  ));
+export const _BackButton = (args) => (<BackButton {...args}/>);
+_BackButton.args = {
+    onClick,
+    className: '',
+    children: 'Back'
+};

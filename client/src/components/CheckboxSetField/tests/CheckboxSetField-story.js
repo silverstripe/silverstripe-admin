@@ -1,37 +1,58 @@
 import React from 'react';
-import { storiesOf, setAddon } from '@storybook/react';
-import { withKnobs, text, boolean, object, select } from '@storybook/addon-knobs/react';
-import JSXAddon from 'storybook-addon-jsx';
+import { jsxDecorator } from 'storybook-addon-jsx';
 import ValueTracker from 'stories/ValueTracker';
 import CheckboxSetField from 'components/CheckboxSetField/CheckboxSetField';
 
-setAddon(JSXAddon);
-
 const source = [
-  { value: '1', title: 'one' },
-  { value: '2', title: 'two' },
-  { value: '3', title: 'three' },
-  { value: '4', title: 'four' },
+    { value: '1', title: 'one' },
+    { value: '2', title: 'two' },
+    { value: '3', title: 'three' },
+    { value: '4', title: 'four' },
 ];
 
-storiesOf('Admin/CheckboxSetField', module)
-  .addDecorator((storyFn) => (
-    <ValueTracker>{storyFn()}</ValueTracker>
-  ))
-  .addDecorator(withKnobs)
-  .addWithJSX('CheckboxSet', () => (
-    <CheckboxSetField
-      id={text('id', 'FieldID')}
-      description={text('description', 'Field Description')}
-      value={['3']}
-      source={object('source', source)}
-      hideLabels={boolean('hideLabels', false)}
-      title={text('title', 'Field Title')}
-      rightTitle={text('rightTitle', 'Right Title')}
-      name={text('name', 'FieldName')}
-      message={{
-        type: select('message type', ['', 'error'], 'error'),
-        value: text('message', 'A message about the field.')
-      }}
-    />
-  ));
+export default {
+    title: 'Admin/CheckboxSetField',
+    component: CheckboxSetField,
+    decorators: [
+        jsxDecorator,
+        (Story) => <ValueTracker><Story/></ValueTracker>
+    ],
+    argTypes: {
+        id: { control: 'text' },
+        description: { control: 'text' },
+        value: {
+            control: 'inline-radio',
+            options: [1, 2, 3, 4]
+        },
+        hideLabels: { control: 'boolean' },
+        title: { control: 'text' },
+        rightTitle: { control: 'text' },
+        name: { control: 'text' },
+        message: {
+            type: {
+                control: 'select',
+                options: ['', 'error']
+            },
+            value: {
+                control: 'text'
+            }
+        }
+      }
+  };
+
+export const _CheckboxSetField = {
+    args: {
+        id: 'FieldID',
+        description: 'Field Description',
+        value: 3,
+        hideLabels: false,
+        title: 'Field Title',
+        rightTitle: 'Right Title',
+        name: 'FieldName',
+        message: {
+            type: 'error',
+            value: 'A message about the field.'
+        },
+        source
+    }
+};

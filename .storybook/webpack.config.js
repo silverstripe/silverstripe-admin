@@ -7,12 +7,15 @@ const {
   moduleCSS,
 } = webpackConfig;
 const { collectStoryRoots, getDefaultRoot } = require('./lib/storyTeller');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-const ENV = 'development';
 const PATHS = require('../webpack-vars');
+const ENV = 'development';
 
 // See https://storybook.js.org/configurations/custom-webpack-config/#full-control-mode
 module.exports = (config) => {
+  config = {...config.config};
+
   const resolve = resolveJS(ENV, PATHS);
   config.resolve = Object.assign({},
     resolve,
@@ -37,9 +40,6 @@ module.exports = (config) => {
     {
       test: /\.(html)$/,
       loader: 'html-loader',
-      options: {
-        attrs: false,
-      },
     },
     {
       test: /\.md$/,
@@ -54,9 +54,19 @@ module.exports = (config) => {
     }
   ];
 
+  config.resolve.fallback = {
+      path: false,
+      stream: false,
+      fs: false
+  };
+    
   config.plugins = [
     ...config.plugins,
     ...pluginJS(ENV),
+
+    // MiniCssExtractPlugin has been added temporary to fix Storybook warning
+    // "Error: You forgot to add 'mini-css-extract-plugin' plugin"
+    new MiniCssExtractPlugin(),
   ];
 
   return config;

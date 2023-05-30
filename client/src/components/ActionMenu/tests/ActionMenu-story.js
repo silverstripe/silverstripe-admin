@@ -1,20 +1,15 @@
 import React from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { storiesOf } from '@storybook/react';
 import ActionMenu from 'components/ActionMenu/ActionMenu';
 import { DropdownItem } from 'reactstrap';
 
-storiesOf('Admin/ActionMenu', module)
-  .add('Single', () => (
+export default {
+    title: 'Admin/ActionMenu',
+};
+
+export const Single = () => (
     <ActionMenu>
-      <DropdownItem>
-        Item One
-      </DropdownItem>
-      <DropdownItem>
-        Item Two
-      </DropdownItem>
-      <DropdownItem>
-        Item Three
-      </DropdownItem>
+        <DropdownItem>Item One</DropdownItem>
+        <DropdownItem>Item Two</DropdownItem>
+        <DropdownItem>Item Three</DropdownItem>
     </ActionMenu>
-  ));
+);

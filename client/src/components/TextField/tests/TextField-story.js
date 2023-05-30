@@ -1,54 +1,54 @@
 import React from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { setAddon, storiesOf } from '@storybook/react';
-import { withKnobs, number, text } from '@storybook/addon-knobs';
-import JSXAddon from 'storybook-addon-jsx';
-
-setAddon(JSXAddon);
+import { jsxDecorator } from 'storybook-addon-jsx';
 
 import TextField from 'components/TextField/TextField';
 import ValueTracker from 'stories/ValueTracker';
 
 const props = {
-  name: 'MyField',
-  id: 'MyField',
-  title: 'Field title',
-  placeholder: 'Placeholder text',
+    name: 'MyField',
+    id: 'MyField',
+    title: 'Field title',
+    placeholder: 'Placeholder text',
 };
 
-storiesOf('Admin/TextField', module)
-  .addDecorator(withKnobs)
-  .addDecorator((storyFn) => (
-    <ValueTracker>{storyFn()}</ValueTracker>
-  ))
-  .add('Textbox', () => (
+export default {
+    title: 'Admin/TextField',
+    decorators: [
+        jsxDecorator,
+        (Story) => <ValueTracker><Story/></ValueTracker>,
+    ]
+};
+
+export const Textbox = () => <TextField {...props} />;
+
+export const Textarea = () => (
     <TextField
       {...props}
+      data={{ rows: 4, columns: 40 }}
     />
-  ))
-  .add('Textarea', () => (
-    <TextField
-      {...props}
-      data={{ rows: number('Rows', 4), columns: number('Columns', 40) }}
-    />
-  ))
-  .add('All titles', () => (
+);
+
+export const AllTitles = () => (
     <TextField
       {...props}
       value="Default text"
-      rightTitle={text('Right Title', 'Right title')}
-      description={text('Description', 'My description')}
-      data={{ prefix: text('Prefix', 'prefix'), suffix: text('Suffix', 'suffix') }}
-    />
-  ))
-  .add('Validation failed', () => (
-    <TextField
-      {...props}
-      value="Default text"
-      description={text('Description', 'Field description')}
-      message={{
-        value: text('Validation Message', 'Validation message'),
-        type: 'error' // This is the only type covered by our styles anyway
+      rightTitle={'Right title'}
+      description={'My description'}
+      data={{
+        prefix: 'prefix',
+        suffix: 'suffix',
       }}
     />
-  ));
+);
+
+export const ValidationFailed = () => (
+    <TextField
+      {...props}
+      value="Default text"
+      description={'Field description'}
+      message={{
+        value: 'Validation message',
+        type: 'error', // This is the only type covered by our styles anyway
+      }}
+    />
+);
