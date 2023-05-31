@@ -1,50 +1,51 @@
-/* global jest, describe, it, expect */
+/* global jest, test, describe, it, expect */
 
 import React from 'react';
 import TabNav from '../TabNav';
-import Enzyme, { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16/build/index';
+import { render, fireEvent } from '@testing-library/react';
 
-Enzyme.configure({ adapter: new Adapter() });
+const onToggle = jest.fn();
 
-describe('TabNav', () => {
-  it('render', () => {
-    const onToggle = jest.fn();
-    const wrapper = shallow(
-      <TabNav currentTab="second" onToggle={onToggle}>
-        <div name="first" title="Child One" />
-        <div name="second" title="Child Two" />
-        <div name="three" title="Child Three" />
-      </TabNav>
-    );
+function makeProps(obj = {}) {
+  return {
+    onToggle,
+    ...obj
+  };
+}
 
-    expect(wrapper.find('Nav')).toHaveLength(1);
+test('TabNav render', () => {
+  const { container } = render(
+    <TabNav {...makeProps({
+      currentTab: 'second',
+    })}
+    >
+      <div name="first" title="Child One" />
+      <div name="second" title="Child Two" />
+      <div name="three" title="Child Three" />
+    </TabNav>
+  );
+  expect(container.querySelectorAll('.nav-tabs')).toHaveLength(1);
+  expect(container.querySelectorAll('.nav-tabs .nav-link')).toHaveLength(3);
+  const links = container.querySelectorAll('.nav-tabs .nav-link');
+  expect(links[0].classList).not.toContain('active');
+  expect(links[1].classList).toContain('active');
+  expect(links[2].classList).not.toContain('active');
+  fireEvent.click(links[1], {});
+  expect(onToggle).not.toBeCalled();
+  fireEvent.click(links[2], {});
+  expect(onToggle).toBeCalled();
+});
 
-    const tabs = wrapper.find('Tab');
-    expect(tabs).toHaveLength(3);
+test('TabNav hidden when no child is provided', () => {
+  const { container } = render(<TabNav {...makeProps()}/>);
+  expect(container.querySelectorAll('.nav-tabs .nav-link')).toHaveLength(0);
+});
 
-    expect(tabs.at(0).prop('active')).toBe(false);
-    expect(tabs.at(1).prop('active')).toBe(true);
-    expect(tabs.at(2).prop('active')).toBe(false);
-
-    tabs.at(1).prop('onToggle')();
-    expect(onToggle).not.toHaveBeenCalled();
-
-    tabs.at(2).prop('onToggle')();
-    expect(onToggle).toHaveBeenCalledWith('three');
-  });
-
-  it('hidden when no child is provided', () => {
-    const wrapper = shallow(<TabNav onToggle={jest.fn()} />);
-    expect(wrapper.find('Nav')).toHaveLength(0);
-  });
-
-  it('hidden when only one child is provided', () => {
-    const wrapper = shallow(
-      <TabNav currentTab="second" onToggle={jest.fn()}>
-        <div name="first" title="Child One" />
-      </TabNav>
-    );
-    expect(wrapper.find('Nav')).toHaveLength(0);
-  });
+test('TabNav hidden when only one child is provided', () => {
+  const { container } = render(
+    <TabNav {...makeProps()}>
+      <div name="first" title="Child One" />
+    </TabNav>
+  );
+  expect(container.querySelectorAll('.nav-tabs .nav-link')).toHaveLength(0);
 });

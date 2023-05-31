@@ -1,64 +1,78 @@
-/* global jest, describe, beforeEach, it, expect */
-
-jest.unmock('react');
-jest.unmock('react-dom/test-utils');
-jest.unmock('../FormBuilderModal');
+/* global jest, test, expect */
 
 import React from 'react';
-import ReactTestUtils from 'react-dom/test-utils';
+import { render, screen, fireEvent } from '@testing-library/react';
 import FormBuilderModal from '../FormBuilderModal';
 
-describe('FormBuilderModal', () => {
-  let props = null;
+let nextAction;
+let nextParam;
 
-  beforeEach(() => {
-    props = {
-      title: '',
-      show: false,
-      onHide: jest.fn(),
-      identifier: 'FormModalTest',
-    };
-  });
+function makeProps(obj = {}) {
+  return {
+    title: 'My title',
+    show: true,
+    showErrorMessage: true,
+    responseClassBad: 'response-bad',
+    responseClassGood: 'response-good',
+    onHide: jest.fn(),
+    identifier: 'FormModalTest',
+    schemaUrl: 'myschemaurl',
+    ModalComponent: ({ children }) => <div data-testid="test-modal">{children}</div>,
+    ModalHeaderComponent: () => <div data-testid="test-modalheader"/>,
+    FormBuilderLoaderComponent: ({ onLoadingError, onSubmit }) => (
+      <div
+        data-testid="test-formbuilderloader"
+        onClick={() => {
+          if (nextAction === 'onLoadingError') {
+            onLoadingError(nextParam);
+          }
+          if (nextAction === 'onSubmit') {
+            onSubmit(nextParam);
+          }
+        }}
+      />
+    ),
+    ...obj
+  };
+}
 
-  describe('getResponse()', () => {
-    let formModal = null;
-    let response = null;
-    let message = null;
+test('FormBuilderModal getResponse() should show no response initially', async () => {
+  render(
+    <FormBuilderModal {...makeProps({})}/>
+  );
+  const modal = await screen.findByTestId('test-modal');
+  expect(modal.textContent).toBe('');
+});
 
-    beforeEach(() => {
-      formModal = ReactTestUtils.renderIntoDocument(
-        <FormBuilderModal {...props} />
-      );
-      response = formModal.getResponse();
-      message = 'My message';
-    });
+test('FormBuilderModal getResponse() should show error message', async () => {
+  render(
+    <FormBuilderModal {...makeProps({})}/>
+  );
+  const loader = await screen.findByTestId('test-formbuilderloader');
+  nextAction = 'onLoadingError';
+  nextParam = {
+    errors: [{
+      value: 'catastrophe',
+    }]
+  };
+  fireEvent.click(loader);
+  const modal = await screen.findByTestId('test-modal');
+  expect(modal.querySelector('.response-bad span').textContent).toBe('catastrophe');
+});
 
-    it('should show no response initially', () => {
-      expect(response).toBeNull();
-    });
-
-    it('should show error message', () => {
-      message = 'This is an error';
-
-      formModal.state = {
-        response: message,
-        error: true,
-      };
-      const responseDom = ReactTestUtils.renderIntoDocument(formModal.getResponse());
-      expect(responseDom.classList.contains('alert-danger')).toBe(true);
-      expect(responseDom.textContent).toBe(message);
-    });
-
-    it('should show success message', () => {
-      message = 'This is a success';
-
-      formModal.state = {
-        response: message,
-        error: false,
-      };
-      const responseDom = ReactTestUtils.renderIntoDocument(formModal.getResponse());
-      expect(responseDom.classList.contains('alert-success')).toBe(true);
-      expect(responseDom.textContent).toBe(message);
-    });
-  });
+test('FormBuilderModal getResponse() should show success message', async () => {
+  render(
+    <FormBuilderModal {...makeProps({
+      onSubmit: (data) => Promise.resolve(data)
+    })}
+    />
+  );
+  const loader = await screen.findByTestId('test-formbuilderloader');
+  nextAction = 'onSubmit';
+  nextParam = {
+    message: 'happy days'
+  };
+  fireEvent.click(loader);
+  const modal = await screen.findByTestId('test-modal');
+  expect(modal.querySelector('.response-good span').textContent).toBe('happy days');
 });

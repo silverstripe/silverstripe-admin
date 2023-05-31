@@ -1,72 +1,46 @@
-/* global jest, describe, it, expect, beforeEach */
+/* global jest, test, describe, it, expect, beforeEach */
 
-import React from 'react';
-import ReactTestUtils from 'react-dom/test-utils';
 import FormAction from '../FormAction';
+import React from 'react';
+import { render } from '@testing-library/react';
 
-describe('FormAction', () => {
-  let props;
-  let component;
+test('FormAction.isPrimary() detects via the name if the button should be primary', () => {
+  const { container } = render(
+    <FormAction {...{
+      name: 'action_save'
+    }}
+    />
+  );
+  expect(container.querySelector('.btn.btn-primary')).not.toBe(null);
+});
 
-  beforeEach(() => {
-    props = {};
-    component = null;
-  });
+test('FormAction.isPrimary() detects via a legacy class name if the button should be primary', () => {
+  const { container } = render(
+    <FormAction {...{
+      extraClass: 'foo ss-ui-action-constructive bar'
+    }}
+    />
+  );
+  expect(container.querySelector('.btn.btn-primary')).not.toBe(null);
+});
 
-  describe('isPrimary()', () => {
-    it('detects via the name if the button should be primary', () => {
-      props = {
-        ...props,
-        name: 'action_save',
-      };
+test('FormAction.isDisabled() is true when disabled prop is passed', () => {
+  const { container } = render(
+    <FormAction {...{
+      disabled: true
+    }}
+    />
+  );
+  expect(container.querySelector('.btn.disabled')).not.toBe(null);
+});
 
-      component = ReactTestUtils.renderIntoDocument(
-        <FormAction {...props} />
-      );
-
-      expect(component.isPrimary()).toBe(true);
-    });
-
-    it('detects via a legacy class name if the button should be primary', () => {
-      props = {
-        ...props,
-        extraClass: 'foo ss-ui-action-constructive bar',
-      };
-
-      component = ReactTestUtils.renderIntoDocument(
-        <FormAction {...props} />
-      );
-
-      expect(component.isPrimary()).toBe(true);
-    });
-  });
-
-  describe('isDisabled()', () => {
-    it('is true when disabled prop is passed', () => {
-      props = {
-        ...props,
-        disabled: true,
-      };
-
-      component = ReactTestUtils.renderIntoDocument(
-        <FormAction {...props} />
-      );
-
-      expect(component.isDisabled()).toBe(true);
-    });
-
-    it('treats readonly prop as disabled', () => {
-      props = {
-        ...props,
-        disabled: false,
-        readOnly: true,
-      };
-
-      component = ReactTestUtils.renderIntoDocument(
-        <FormAction {...props} />
-      );
-
-      expect(component.isDisabled()).toBe(true);
-    });
-  });
+test('FormAction.isDisabled() ', () => {
+  const { container } = render(
+    <FormAction {...{
+      disabled: false,
+      readOnly: true,
+    }}
+    />
+  );
+  expect(container.querySelector('.btn.disabled')).not.toBe(null);
 });

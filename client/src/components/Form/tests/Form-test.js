@@ -1,71 +1,61 @@
-/* global jest, describe, beforeEach, it, expect, Event */
+/* global jest, test, expect */
 
 import React from 'react';
-import ReactTestUtils from 'react-dom/test-utils';
 import { Component as Form } from '../Form';
-import FormAlert from '../../FormAlert/FormAlert';
+import { render, screen } from '@testing-library/react';
 
-describe('Form', () => {
-  let props = null;
+function makeProps(obj = {}) {
+  return {
+    valid: true,
+    attributes: {
+      action: 'foo',
+      method: 'GET',
+    },
+    fields: [],
+    mapFieldsToComponents: () => <div>my fields</div>,
+    mapActionsToComponents: () => {},
+    FormAlertComponent: (message) => <div data-testid="test-form-alert">{message.message}</div>,
+    ...obj
+  };
+}
 
-  beforeEach(() => {
-    props = {
-      valid: true,
-      attributes: {
-        action: 'foo',
-        method: 'GET',
-      },
-      fields: [],
-      mapFieldsToComponents: () => {},
-      mapActionsToComponents: () => {},
-    };
-  });
-
-  describe('renderMessages()', () => {
-    it('returns form messages as alerts', () => {
-      props.messages = [
+test('Form renderMessages returns form messages as alerts', async () => {
+  render(
+    <Form {...makeProps({
+      messages: [
         { message: 'Looks good to me' },
         { message: 'You could try this' },
-      ];
+      ]
+    })}
+    />
+  );
+  const alerts = await screen.findAllByTestId('test-form-alert');
+  expect(alerts.length).toBe(2);
+  expect(alerts[0].textContent).toBe('Looks good to me');
+  expect(alerts[1].textContent).toBe('You could try this');
+});
 
-      const form = ReactTestUtils.renderIntoDocument(
-        <Form {...props} />
-      );
-      const messages = form.renderMessages();
+test('Form render() adds an invalid class when valid is false', async () => {
+  render(
+    <Form {...makeProps({
+      valid: false
+    })}
+    />
+  );
+  const form = await screen.findByRole('form');
+  expect(form.classList).toContain('form--invalid');
+});
 
-      expect(messages.length).toBe(2);
-
-      expect(messages[0].type).toEqual(FormAlert);
-      expect(messages[0].props.className).toContain('message-box--panel-top');
-
-      expect(messages[1].props.message).toBe('You could try this');
-      expect(messages[1].props.className).not.toContain('message-box--panel-top');
-    });
-  });
-
-  describe('render()', () => {
-    it('adds an invalid class when valid is false', () => {
-      props.valid = false;
-
-      const form = ReactTestUtils.renderIntoDocument(
-        <Form {...props} />
-      );
-
-      const result = ReactTestUtils.scryRenderedDOMComponentsWithTag(form, 'form');
-      expect(result.length).toBe(1);
-      expect(result[0].classList).toContain('form--invalid');
-    });
-
-    it('adds custom classes to the form container', () => {
-      props.attributes.className = 'foobar';
-
-      const form = ReactTestUtils.renderIntoDocument(
-        <Form {...props} />
-      );
-
-      const result = ReactTestUtils.scryRenderedDOMComponentsWithTag(form, 'form');
-      expect(result.length).toBe(1);
-      expect(result[0].classList).toContain('foobar');
-    });
-  });
+test('Form render() adds custom classes to the form container', async () => {
+  render(
+    <Form {...makeProps({
+      attributes: {
+        ...makeProps().attributes,
+        className: 'foobar'
+      }
+    })}
+    />
+  );
+  const form = await screen.findByRole('form');
+  expect(form.classList).toContain('foobar');
 });

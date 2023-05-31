@@ -139,7 +139,7 @@ class FormAction extends Component {
   isPrimary() {
     const { extraClass, name } = this.props;
 
-    const extraClasses = extraClass.split(' ');
+    const extraClasses = extraClass ? extraClass.split(' ') : [];
     return (
       name === 'action_save' ||
       !!extraClasses.find(className => className === 'ss-ui-action-constructive')

@@ -72,7 +72,7 @@ function fieldHolder(Field) {
      * @returns {object}
      */
     renderLeftTitle() {
-      const labelText = this.props.leftTitle !== null
+      const labelText = this.props.leftTitle
         ? this.props.leftTitle
         : this.props.title;
 
@@ -126,8 +126,8 @@ function fieldHolder(Field) {
       };
 
       const field = <Field {...props} />;
-      const prefix = this.props.data.prefix;
-      const suffix = this.props.data.suffix;
+      const prefix = this.props.data && this.props.data.prefix ? this.props.data.prefix : '';
+      const suffix = this.props.data && this.props.data.suffix ? this.props.data.suffix : '';
       if (!prefix && !suffix) {
         return field;
       }

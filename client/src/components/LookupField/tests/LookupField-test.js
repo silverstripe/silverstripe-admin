@@ -1,55 +1,50 @@
-/* global jest, describe, beforeEach, it, expect, require */
+/* global jest, test, describe, beforeEach, it, expect, require */
 
 import React from 'react';
 import { Component as LookupField } from '../LookupField';
-import Enzyme, { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16/build/index';
+import { render } from '@testing-library/react';
 
-Enzyme.configure({ adapter: new Adapter() });
+function makeProps(obj = {}) {
+  return {
+    id: 'set',
+    name: 'set',
+    source: [
+      { value: 'one', title: '1' },
+      { value: 'two', title: '2' },
+      { value: 'three', title: '3' },
+      { value: 'four', title: '4' },
+    ],
+    value: null,
+    ...obj
+  };
+}
 
-describe('LookupField', () => {
-  let props = null;
-  let field = null;
+test('LookupField getValueCSV() should return an empty string', () => {
+  const { container } = render(
+    <LookupField {...makeProps({
+      value: [],
+    })}
+    />
+  );
+  expect(container.querySelector('p').innerHTML).toBe("('None')");
+});
 
-  beforeEach(() => {
-    // Set up some mocked out file info before each test
-    props = {
-      id: 'set',
-      name: 'set',
+test('LookupField getValueCSV() should return the string value', () => {
+  const { container } = render(
+    <LookupField {...makeProps({
       value: 'two',
-      source: [
-        { value: 'one', title: '1' },
-        { value: 'two', title: '2' },
-        { value: 'three', title: '3' },
-        { value: 'four', title: '4' },
-      ],
-    };
-  });
+    })}
+    />
+  );
+  expect(container.querySelector('p').innerHTML).toBe('2');
+});
 
-  describe('getValueCSV()', () => {
-    it('should return an empty string', () => {
-      props.value = [];
-
-      field = shallow(<LookupField {...props} />).instance();
-      const value = field.getValueCSV();
-
-      expect(value).toEqual('');
-    });
-
-    it('should return the string value', () => {
-      field = shallow(<LookupField {...props} />).instance();
-      const value = field.getValueCSV();
-
-      expect(value).toEqual('2');
-    });
-
-    it('should return the string value', () => {
-      props.value = ['two', 'three'];
-
-      field = shallow(<LookupField {...props} />).instance();
-      const value = field.getValueCSV();
-
-      expect(value).toEqual('2, 3');
-    });
-  });
+test('LookupField getValueCSV() should return the string values', () => {
+  const { container } = render(
+    <LookupField {...makeProps({
+      value: ['two', 'three'],
+    })}
+    />
+  );
+  expect(container.querySelector('p').innerHTML).toBe('2, 3');
 });

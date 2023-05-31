@@ -1,105 +1,105 @@
-/* global jest, describe, beforeEach, it, expect, Event */
+/* global jest, test, describe, beforeEach, it, expect, Event */
 
 import React from 'react';
-import ReactTestUtils from 'react-dom/test-utils';
+import { render, fireEvent } from '@testing-library/react';
 // get non-default because it uses FieldHolder by default
 import { Component as CheckboxSetField } from '../CheckboxSetField';
 
-describe('CheckboxSetField', () => {
-  let props = null;
+function makeProps(obj = {}) {
+  return {
+    id: 'checkbox',
+    title: '',
+    name: 'checkbox',
+    value: '',
+    source: [
+      { value: 'one', title: '1' },
+      { value: 'two', title: '2' },
+      { value: 'three', title: '3' },
+      { value: 'four', title: '4' },
+    ],
+    ...obj,
+  };
+}
 
-  beforeEach(() => {
-    props = {
-      id: 'checkbox',
-      title: '',
-      name: 'checkbox',
-      value: '',
-      source: [
-        { value: 'one', title: '1' },
-        { value: 'two', title: '2' },
-        { value: 'three', title: '3' },
-        { value: 'four', title: '4' },
-      ],
-      onChange: jest.fn(),
-    };
-  });
+test('CheckboxSetField renders with two inputs checked', () => {
+  const { container } = render(
+    <CheckboxSetField {...makeProps({
+      value: ['one', 'three']
+    })}
+    />
+  );
+  expect(container.querySelector('input#checkbox-one').getAttribute('value')).toBe('1');
+  expect(container.querySelector('input#checkbox-one').hasAttribute('checked')).toBe(true);
+  expect(container.querySelector('input#checkbox-two').getAttribute('value')).toBe('1');
+  expect(container.querySelector('input#checkbox-two').hasAttribute('checked')).toBe(false);
+  expect(container.querySelector('input#checkbox-three').getAttribute('value')).toBe('1');
+  expect(container.querySelector('input#checkbox-three').hasAttribute('checked')).toBe(true);
+  expect(container.querySelector('input#checkbox-four').getAttribute('value')).toBe('1');
+  expect(container.querySelector('input#checkbox-four').hasAttribute('checked')).toBe(false);
+  // labels
+  expect(container.querySelectorAll('span')[0].innerHTML).toBe('1');
+  expect(container.querySelectorAll('span')[1].innerHTML).toBe('2');
+  expect(container.querySelectorAll('span')[2].innerHTML).toBe('3');
+  expect(container.querySelectorAll('span')[3].innerHTML).toBe('4');
+});
 
-  describe('getValues()', () => {
-    let checkboxSetField = null;
 
-    it('should convert string value to array', () => {
-      props.value = 'abc';
-      checkboxSetField = ReactTestUtils.renderIntoDocument(
-        <CheckboxSetField {...props} />
-      );
+test('CheckboxSetField renders with string value', () => {
+  const { container } = render(
+    <CheckboxSetField {...makeProps({
+      value: 'two'
+    })}
+    />
+  );
+  expect(container.querySelector('input#checkbox-one').hasAttribute('checked')).toBe(false);
+  expect(container.querySelector('input#checkbox-two').hasAttribute('checked')).toBe(true);
+  expect(container.querySelector('input#checkbox-three').hasAttribute('checked')).toBe(false);
+  expect(container.querySelector('input#checkbox-four').hasAttribute('checked')).toBe(false);
+});
 
-      expect(checkboxSetField.getValues()).toEqual(['abc']);
-    });
+test('CheckboxSetField renders with no value', () => {
+  const { container } = render(
+    <CheckboxSetField {...makeProps({
+      value: ''
+    })}
+    />
+  );
+  expect(container.querySelector('input#checkbox-one').hasAttribute('checked')).toBe(false);
+  expect(container.querySelector('input#checkbox-two').hasAttribute('checked')).toBe(false);
+  expect(container.querySelector('input#checkbox-three').hasAttribute('checked')).toBe(false);
+  expect(container.querySelector('input#checkbox-four').hasAttribute('checked')).toBe(false);
+});
 
-    it('should convert number value to array string', () => {
-      props.value = 123;
-      checkboxSetField = ReactTestUtils.renderIntoDocument(
-        <CheckboxSetField {...props} />
-      );
+test('CheckboxSetField onChange adds a value', () => {
+  const onChange = jest.fn();
+  const { container } = render(
+    <CheckboxSetField {...makeProps({
+      value: ['two', 'three'],
+      onChange
+    })}
+    />
+  );
+  const input = container.querySelector('input#checkbox-one');
+  fireEvent.click(input);
+  expect(onChange).toBeCalledWith(
+    expect.objectContaining({ _reactName: 'onChange' }),
+    { id: 'checkbox', value: ['one', 'two', 'three'] }
+  );
+});
 
-      expect(checkboxSetField.getValues()).toEqual(['123']);
-    });
-
-    it('should convert null value to empty array', () => {
-      props.value = null;
-      checkboxSetField = ReactTestUtils.renderIntoDocument(
-        <CheckboxSetField {...props} />
-      );
-
-      expect(checkboxSetField.getValues()).toEqual([]);
-    });
-  });
-
-  describe('getItemKey()', () => {
-    let checkboxSetField = null;
-    beforeEach(() => {
-      checkboxSetField = ReactTestUtils.renderIntoDocument(
-        <CheckboxSetField {...props} />
-      );
-    });
-
-    it('should generate a key for field', () => {
-      const key = checkboxSetField.getItemKey({ value: 'two' });
-
-      expect(key).toEqual('checkbox-two');
-    });
-  });
-
-  describe('onChange()', () => {
-    let checkboxSetField = null;
-
-    beforeEach(() => {
-      props.value = ['one', 'four'];
-      checkboxSetField = ReactTestUtils.renderIntoDocument(
-        <CheckboxSetField {...props} />
-      );
-    });
-
-    it('should add the selected value', () => {
-      const event = new Event('click');
-
-      checkboxSetField.handleChange(event, { id: 'checkbox-two', value: 1 });
-
-      expect(checkboxSetField.props.onChange).toBeCalledWith(
-        event,
-        { id: 'checkbox', value: ['one', 'two', 'four'] }
-      );
-    });
-
-    it('should remove the unselected value', () => {
-      const event = new Event('click');
-
-      checkboxSetField.handleChange(event, { id: 'checkbox-one', value: 0 });
-
-      expect(checkboxSetField.props.onChange).toBeCalledWith(
-        event,
-        { id: 'checkbox', value: ['four'] }
-      );
-    });
-  });
+test('CheckboxSetField onChange removes a value', () => {
+  const onChange = jest.fn();
+  const { container } = render(
+    <CheckboxSetField {...makeProps({
+      value: ['two', 'three'],
+      onChange
+    })}
+    />
+  );
+  const input = container.querySelector('input#checkbox-two');
+  fireEvent.click(input);
+  expect(onChange).toBeCalledWith(
+    expect.objectContaining({ _reactName: 'onChange' }),
+    { id: 'checkbox', value: ['three'] }
+  );
 });

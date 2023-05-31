@@ -1,38 +1,32 @@
-/* global jest, describe, it, expect */
+/* global jest, test, describe, it, expect */
 
 import React from 'react';
-import ReactTestUtils from 'react-dom/test-utils';
 import Badge from '../Badge';
+import { render } from '@testing-library/react';
 
-describe('Badge', () => {
-  describe('render()', () => {
-    let badge = null;
+test('Badge render() should return null if status is empty', () => {
+  const { container } = render(
+    <Badge {...{
+      status: null,
+      message: '',
+      className: ''
+    }}
+    />
+  );
+  expect(container.querySelector('.badge')).toBeNull();
+});
 
-    it('should return null if status is empty', () => {
-      badge = ReactTestUtils.renderIntoDocument(
-        <Badge
-          status={null}
-          message=""
-          className=""
-        />
-      );
-
-      expect(badge.render()).toBeNull();
-    });
-
-    it('should return a Bootstrap style badge when valid', () => {
-      badge = ReactTestUtils.renderIntoDocument(
-        <Badge
-          status="success"
-          message="Hello world"
-          className="customclass"
-        />
-      );
-
-      const result = badge.render();
-      expect(result.props.className).toContain('customclass');
-      expect(result.props.className).toContain('badge-success');
-      expect(result.props.children).toContain('Hello world');
-    });
-  });
+test('Badge render() should return a Bootstrap style badge when valid', () => {
+  const { container } = render(
+    <Badge {...{
+      status: 'success',
+      message: 'Hello world',
+      className: 'customclass'
+    }}
+    />
+  );
+  expect(container.querySelectorAll('.badge').length).toBe(1);
+  expect(container.querySelectorAll('.badge-success').length).toBe(1);
+  expect(container.querySelectorAll('.customclass').length).toBe(1);
+  expect(container.innerHTML).toContain('Hello world');
 });

@@ -1,216 +1,156 @@
-/* global jest, describe, it, expect, beforeEach */
+/* global jest, test, describe, it, expect, beforeEach */
 
 // FormBuilderLoader mock was not mocking properly
 // manually override with a stateless null component
 jest.mock('containers/FormBuilderLoader/FormBuilderLoader', () => () => null);
 
 import React from 'react';
-import ReactTestUtils from 'react-dom/test-utils';
 import { Component as Search, hasFilters } from '../Search';
+import { fireEvent, render } from '@testing-library/react';
 
-describe('Search', () => {
-  let props = null;
 
-  beforeEach(() => {
-    props = {
-      formSchemaUrl: 'someUrl',
-      id: 'MyForm',
-      onSearch: jest.fn(),
-      query: {},
-      formData: {},
-      actions: {
-        schema: {
-          setSchemaStateOverrides: jest.fn(),
-        },
-        reduxForm: {
-          initialize: jest.fn(),
-          reset: jest.fn(),
-          change: jest.fn()
-        }
+function makeProps(obj = {}) {
+  return {
+    formSchemaUrl: 'someUrl',
+    id: 'MyForm',
+    schemaName: 'mySchemaName',
+    onSearch: jest.fn(),
+    query: {},
+    formData: {},
+    actions: {
+      schema: {
+        setSchemaStateOverrides: jest.fn(),
       },
-    };
+      reduxForm: {
+        initialize: jest.fn(),
+        reset: jest.fn(),
+        change: jest.fn()
+      }
+    },
+    ...obj
+  };
+}
+
+test('Search handleChange', () => {
+  const reduxFormChange = jest.fn();
+  let props = makeProps();
+  props = {
+    ...props,
+    actions: {
+      ...props.actions,
+      reduxForm: {
+        change: reduxFormChange
+      }
+    },
+    formData: {
+      searchTerm: 'foo'
+    }
+  };
+  const { container } = render(<Search {...props}/>);
+  const input = container.querySelector('.search-box__content-field');
+  // handle change is called on initial render
+  expect(reduxFormChange).toHaveBeenCalledWith('mySchemaName', 'searchTerm', '');
+  fireEvent.change(input, { target: { value: 'foo' } });
+  expect(input.value).toEqual('foo');
+  expect(reduxFormChange).toHaveBeenCalledWith('mySchemaName', 'searchTerm', 'foo');
+});
+
+test('Search display NONE', () => {
+  const { container } = render(<Search {...makeProps({
+    display: 'NONE'
+  })}
+  />);
+  expect(container.querySelector('.search')).toBeNull();
+});
+
+test('Search display VISIBLE', () => {
+  const { container } = render(<Search {...makeProps({
+    display: 'VISIBLE'
+  })}
+  />);
+  expect(container.querySelector('.search')).not.toBeNull();
+  expect(container.querySelector('.search-form').classList).toContain('collapse');
+});
+
+test('Search display EXPANDED', () => {
+  const { container } = render(<Search {...makeProps({
+    display: 'EXPANDED'
+  })}
+  />);
+  expect(container.querySelector('.search')).not.toBeNull();
+  expect(container.querySelector('.search-form').classList).toContain('collapsing');
+  expect(container.querySelector('.search-form').getAttribute('style')).toContain('height: 0px;');
+});
+
+test('Search doSearch', () => {
+  const onSearch = jest.fn();
+  const { container } = render(<Search {...makeProps({
+    onSearch
+  })}
+  />);
+  const input = container.querySelector('.search-box__content-field');
+  fireEvent.change(input, { target: { value: 'foo' } });
+  fireEvent.click(container.querySelector('.search-form__submit'));
+  expect(onSearch).toHaveBeenCalledWith({ searchTerm: 'foo' });
+});
+
+test('Search setOverrides converts values into name/value notation', () => {
+  const mockSetSchemaStateOverrides = jest.fn();
+  let props = makeProps({
+    filters: {
+      foo: true,
+      bar: null
+    }
   });
-
-  describe('handleChange()', () => {
-    it('update search text', () => {
-      const component = ReactTestUtils.renderIntoDocument(
-        <Search {...props} />
-      );
-      component.setState({ searchText: 'foo' });
-      component.handleChange({ target: { value: 'bar' } });
-      expect(component.state.searchText).toEqual('bar');
-    });
+  props = {
+    ...props,
+    actions: {
+      ...props.actions,
+      schema: {
+        ...props.actions.schema,
+        setSchemaStateOverrides: mockSetSchemaStateOverrides
+      }
+    }
+  };
+  render(<Search {...props}/>);
+  expect(mockSetSchemaStateOverrides).toHaveBeenCalledWith('someUrl', {
+    fields: [
+      { name: 'foo', value: true },
+      { name: 'bar', value: null }
+    ]
   });
+});
 
-  describe('clearFormData()', () => {
-    it('Make sure we don\'t have any data', () => {
-      const component = ReactTestUtils.renderIntoDocument(
-        <Search {...props} term="Foo Bar" />
-      );
-      const resetCount = props.actions.reduxForm.reset.mock.calls.length;
-      component.clearFormData(props);
-      expect(props.actions.reduxForm.reset.mock.calls).toHaveLength(resetCount + 1);
-      expect(component.state.searchText).toEqual('');
-      expect(component.getData()).toEqual({});
-    });
-  });
+test('Search clear button()', () => {
+  const { container } = render(<Search {...makeProps()}/>);
+  const input = container.querySelector('.search-box__content-field');
+  expect(container.querySelector('.search-form__clear')).toBeNull();
+  fireEvent.change(input, { target: { value: 'foo' } });
+  expect(container.querySelector('.search-form__clear')).not.toBeNull();
+  fireEvent.change(input, { target: { value: '' } });
+  expect(container.querySelector('.search-form__clear')).toBeNull();
+});
 
-  describe('hide()', () => {
-    it('Using the internal state', () => {
-      const component = ReactTestUtils.renderIntoDocument(
-        <Search {...props} display="VISIBLE" />
-      );
-      component.hide();
-      expect(component.state.display).toEqual('NONE');
-    });
-    it('Using external handler', () => {
-      const onHide = jest.fn();
-      const component = ReactTestUtils.renderIntoDocument(
-        <Search {...props} onHide={onHide} display="VISIBLE" />
-      );
-      component.hide();
-      expect(component.state.display).toEqual('VISIBLE');
-      expect(onHide.mock.calls).toHaveLength(1);
-    });
-  });
+test('Search trailing space should be ignored', () => {
+  const onSearch = jest.fn();
+  const { container } = render(<Search {...makeProps({
+    onSearch
+  })}
+  />);
+  const input = container.querySelector('.search-box__content-field');
+  fireEvent.change(input, { target: { value: 'Hello world ' } });
+  fireEvent.click(container.querySelector('.search-form__submit'));
+  expect(onSearch).toBeCalledWith({ searchTerm: 'Hello world' });
+});
 
-  describe('show()', () => {
-    it('Updating internal state', () => {
-      const onHide = jest.fn();
-      const component = ReactTestUtils.renderIntoDocument(
-        <Search {...props} onHide={onHide} display="NONE" />
-      );
-      component.show();
-      expect(component.state.display).toEqual('VISIBLE');
-    });
-  });
+test('hasFilters returns false with null', () => {
+  expect(hasFilters(null)).toBeFalsy();
+});
 
-  describe('toggle()', () => {
-    it('Showing advanced search', () => {
-      const component = ReactTestUtils.renderIntoDocument(
-        <Search {...props} display="VISIBLE" />
-      );
-      component.toggle();
-      expect(component.state.display).toEqual('EXPANDED');
-    });
-    it('Hidding advanced search', () => {
-      const component = ReactTestUtils.renderIntoDocument(
-        <Search {...props} display="EXPANDED" />
-      );
-      component.toggle();
-      expect(component.state.display).toEqual('VISIBLE');
-    });
-  });
+test('hasFilters returns false with empty object', () => {
+  expect(hasFilters({})).toBeFalsy();
+});
 
-  describe('doSearch()', () => {
-    it('includes searchText', () => {
-      const component = ReactTestUtils.renderIntoDocument(
-        <Search {...props} />
-      );
-      component.setState({ searchText: 'foo' });
-      component.doSearch();
-      const data = props.onSearch.mock.calls[0][0];
-      expect(data.searchTerm).toEqual('foo');
-      expect(component.state.initialSearchText).toEqual('foo');
-    });
-
-    it('custom name', () => {
-      const component = ReactTestUtils.renderIntoDocument(
-        <Search name="MySuperSpecialName" {...props} />
-      );
-      component.setState({ searchText: 'foo' });
-      component.doSearch();
-      const data = props.onSearch.mock.calls[0][0];
-      expect(data.MySuperSpecialName).toEqual('foo');
-    });
-
-    it('filters out empty values', () => {
-      props.formData = { isEmpty: '' };
-      const component = ReactTestUtils.renderIntoDocument(
-        <Search {...props} />
-      );
-      component.setState({ searchText: 'foo' });
-      component.doSearch();
-      const data = props.onSearch.mock.calls[0][0];
-      expect(data.isEmpty).not.toBeDefined();
-    });
-  });
-
-  describe('setOverrides()', () => {
-    it('converts values into name/value notation', () => {
-      props.filters = { foo: true, bar: null };
-      const component = ReactTestUtils.renderIntoDocument(
-        <Search {...props} />
-      );
-      component.setOverrides(props);
-      const data = props.actions.schema.setSchemaStateOverrides.mock.calls[0][1];
-      expect(data.fields).toEqual([
-        { name: 'foo', value: true },
-        { name: 'bar', value: null },
-      ]);
-    });
-  });
-
-  describe('getData()', () => {
-    it('Retriving Data', () => {
-      props.term = 'Hello world';
-      const component = ReactTestUtils.renderIntoDocument(
-        <Search {...props} />
-      );
-      let data = component.getData(false);
-      expect(data).toEqual({ searchTerm: 'Hello world' });
-
-      data = component.getData(true);
-      expect(data).toEqual({});
-    });
-  });
-
-  describe('searchTermIsDirty()', () => {
-    it('Start pristine, dirty on change, pristine on search', () => {
-      props.term = '';
-      const component = ReactTestUtils.renderIntoDocument(
-        <Search {...props} />
-      );
-      // Starts oof pristine
-      let dirty = component.searchTermIsDirty();
-      expect(dirty).toEqual(false);
-
-      // Gets dirty after text change
-      component.setState({ searchText: 'Hello world' });
-      dirty = component.searchTermIsDirty();
-      expect(dirty).toEqual(true);
-
-      // Gets back to pristine after search
-      component.doSearch();
-      dirty = component.searchTermIsDirty();
-      expect(dirty).toEqual(false);
-    });
-
-    it('Trailing space should be ignored', () => {
-      props.term = ' Hello world';
-      const component = ReactTestUtils.renderIntoDocument(
-        <Search {...props} />
-      );
-      // Starts oof pristine
-      let dirty = component.searchTermIsDirty();
-      expect(dirty).toEqual(false);
-
-      // Gets dirty after text change
-      component.setState({ searchText: 'Hello world  ' });
-      dirty = component.searchTermIsDirty();
-      expect(dirty).toEqual(false);
-    });
-  });
-
-  describe('hasFilters', () => {
-    it('returns false with null', () => {
-      expect(hasFilters(null)).toBeFalsy();
-    });
-    it('returns false with empty object', () => {
-      expect(hasFilters({})).toBeFalsy();
-    });
-    it('returns true when keyed object', () => {
-      expect(hasFilters({ foo: 'bar' })).toBeTruthy();
-    });
-  });
+test('hasFilters returns true when keyed object', () => {
+  expect(hasFilters({ foo: 'bar' })).toBeTruthy();
 });

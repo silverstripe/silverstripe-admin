@@ -1,159 +1,182 @@
-/* global jest, describe, beforeEach, it, expect */
+/* global jest, test, expect, beforeAll, afterAll */
 
 import React from 'react';
 import Toasts from '../Toasts';
-import Toast from '../Toast';
-import Enzyme, { shallow, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16/build/index';
+import { render, fireEvent, act } from '@testing-library/react';
 
-Enzyme.configure({ adapter: new Adapter() });
-jest.useFakeTimers();
-
-const toastOne = { id: 'one', text: 'Let us toast your success', type: 'success', dismissed: false, onDismiss: jest.fn() };
-const toastTwo = { id: 'two', text: 'You have failed me for the last time', type: 'error', dismissed: false, onDismiss: jest.fn() };
-
-const getHandlers = () => ({
-  onDismiss: jest.fn(),
-  onPause: jest.fn(),
-  onResume: jest.fn(),
+// Need to use act() when using fake timers with react-testing-library
+// https://kentcdodds.com/blog/fix-the-not-wrapped-in-act-warning#1-when-using-jestusefaketimers
+beforeAll(() => {
+  jest.useFakeTimers();
 });
 
+afterAll(() => {
+  jest.useRealTimers();
+});
 
-describe('Toasts', () => {
-  describe('Rendering toasts', () => {
-    it('No Toast', () => {
-      const wrapper = shallow(<Toasts toasts={[]} {...getHandlers()} />);
+function makeProps(obj = {}) {
+  return {
+    onDismiss: jest.fn(),
+    onPause: jest.fn(),
+    onResume: jest.fn(),
+    ...obj
+  };
+}
 
-      expect(wrapper.props()).toMatchObject({
-        className: 'toasts',
-        'aria-live': 'polite',
-        'aria-atomic': 'true',
-      });
+const toastOne = {
+  id: 'one',
+  text: 'Let us toast your success',
+  type: 'success',
+  dismissed: false,
+  onDismiss: () => null,
+};
 
-      expect(wrapper.find(Toast)).toHaveLength(0);
-    });
+const toastTwo = {
+  id: 'two',
+  text: 'You have failed me for the last time',
+  type: 'error',
+  dismissed: false,
+  onDismiss: () => null,
+};
 
-    it('One toast', () => {
-      const handlers = getHandlers();
-      const wrapper = shallow(<Toasts toasts={[toastOne]} {...handlers} />);
+test('Toasts no toasts', () => {
+  const { container } = render(
+    <Toasts {...makeProps({
+      toasts: []
+    })}
+    />
+  );
+  expect(container.querySelectorAll('.toast')).toHaveLength(0);
+  const toasts = container.querySelector('.toasts');
+  expect(toasts.classList).toContain('toasts');
+  expect(toasts.getAttribute('aria-live')).toBe('polite');
+  expect(toasts.getAttribute('aria-atomic')).toBe('true');
+});
 
-      expect(wrapper.props()).toMatchObject({
-        className: 'toasts',
-        'aria-live': 'polite',
-        'aria-atomic': 'true',
-      });
+test('Toasts one toast', () => {
+  const onDismiss = jest.fn();
+  const { container } = render(
+    <Toasts {...makeProps({
+      toasts: [toastOne],
+      onDismiss
+    })}
+    />
+  );
+  expect(container.querySelectorAll('.toast')).toHaveLength(1);
+  const button = container.querySelector('.toast__close');
+  fireEvent.click(button);
+  expect(onDismiss).toBeCalledWith('one');
+});
 
-      const toasts = wrapper.find(Toast);
+test('Toasts many toasts', () => {
+  const onDismiss = jest.fn();
+  const { container } = render(
+    <Toasts {...makeProps({
+      toasts: [toastOne, toastTwo],
+      onDismiss
+    })}
+    />
+  );
+  expect(container.querySelectorAll('.toast')).toHaveLength(2);
+  const button = container.querySelectorAll('.toast__close')[1];
+  fireEvent.click(button);
+  expect(onDismiss).toBeCalledWith('two');
+});
 
-      expect(toasts).toHaveLength(1);
+test('Toasts Pause/Resuming dismissal timeout Pause on Mouse Enter', () => {
+  const onPause = jest.fn();
+  const { container } = render(
+    <Toasts {...makeProps({
+      toasts: [toastOne],
+      onPause
+    })}
+    />
+  );
+  const toast = container.querySelector('.toast');
+  fireEvent.mouseEnter(toast);
+  expect(onPause).not.toHaveBeenCalled();
+  act(() => jest.advanceTimersByTime(100));
+  expect(onPause).toHaveBeenCalled();
+});
 
-      const toast = toasts.first();
-      const { id, onDismiss, ...toastMinusId } = toastOne;
-      expect(toast.props()).toMatchObject(toastMinusId);
+test('Toasts Pause/Resuming dismissal timeout Pause on Focus', () => {
+  const onPause = jest.fn();
+  const { container } = render(
+    <Toasts {...makeProps({
+      toasts: [toastOne],
+      onPause
+    })}
+    />
+  );
+  const toast = container.querySelector('.toast');
+  fireEvent.focus(toast);
+  expect(onPause).not.toHaveBeenCalled();
+  act(() => jest.advanceTimersByTime(100));
+  expect(onPause).toHaveBeenCalled();
+});
 
-      toast.prop('onDismiss')();
-      expect(handlers.onDismiss).toBeCalledWith(id);
-    });
+test('Toasts Pause/Resuming dismissal timeout Resume on Mouse Leave', () => {
+  const onResume = jest.fn();
+  const { container } = render(
+    <Toasts {...makeProps({
+      toasts: [toastOne],
+      onResume
+    })}
+    />
+  );
+  const toast = container.querySelector('.toast');
+  fireEvent.mouseLeave(toast);
+  expect(onResume).not.toHaveBeenCalled();
+  act(() => jest.advanceTimersByTime(100));
+  expect(onResume).toHaveBeenCalled();
+});
 
-    it('Many toasts', () => {
-      const handlers = getHandlers();
-      const wrapper = shallow(<Toasts toasts={[toastOne, toastTwo]} {...handlers} />);
+test('Toasts Pause/Resuming dismissal timeout Pause on Blur', () => {
+  const onResume = jest.fn();
+  const { container } = render(
+    <Toasts {...makeProps({
+      toasts: [toastOne],
+      onResume
+    })}
+    />
+  );
+  const toast = container.querySelector('.toast');
+  fireEvent.blur(toast);
+  expect(onResume).not.toHaveBeenCalled();
+  act(() => jest.advanceTimersByTime(100));
+  expect(onResume).toHaveBeenCalled();
+});
 
-      expect(wrapper.props()).toMatchObject({
-        className: 'toasts',
-        'aria-live': 'polite',
-        'aria-atomic': 'true',
-      });
-
-      const toasts = wrapper.find(Toast);
-
-      expect(toasts).toHaveLength(2);
-
-      const toast = toasts.last();
-      const { id, onDismiss, ...toastMinusId } = toastTwo;
-      expect(toast.props()).toMatchObject(toastMinusId);
-
-      toast.prop('onDismiss')();
-      expect(handlers.onDismiss).toBeCalledWith(id);
-    });
-  });
-
-  describe('Pause/Resuming dismissal timeout', () => {
-    it('Pause on Mouse Enter', () => {
-      const handlers = getHandlers();
-      const wrapper = mount(<Toasts toasts={[toastOne]} {...handlers} />);
-
-      wrapper.simulate('mouseenter', {});
-
-      expect(handlers.onPause).not.toHaveBeenCalled();
-      jest.advanceTimersByTime(100);
-      expect(handlers.onPause).toHaveBeenCalled();
-    });
-
-    it('Pause on Focus', () => {
-      const handlers = getHandlers();
-      const wrapper = mount(<Toasts toasts={[toastOne]} {...handlers} />);
-
-      wrapper.simulate('focus', {});
-
-      expect(handlers.onPause).not.toHaveBeenCalled();
-      jest.advanceTimersByTime(100);
-      expect(handlers.onPause).toHaveBeenCalled();
-    });
-
-    it('Resume on Mouse Leave', () => {
-      const handlers = getHandlers();
-      const wrapper = mount(<Toasts toasts={[toastOne]} {...handlers} />);
-
-      wrapper.simulate('mouseleave', {});
-
-      expect(handlers.onResume).not.toHaveBeenCalled();
-      jest.advanceTimersByTime(100);
-      expect(handlers.onResume).toHaveBeenCalled();
-    });
-
-    it('Pause on Blur', () => {
-      const handlers = getHandlers();
-      const wrapper = mount(<Toasts toasts={[toastOne]} {...handlers} />);
-
-      wrapper.simulate('blur', {});
-
-      expect(handlers.onResume).not.toHaveBeenCalled();
-      jest.advanceTimersByTime(100);
-      expect(handlers.onResume).toHaveBeenCalled();
-    });
-
-    it('Debouncing', () => {
-      const handlers = getHandlers();
-      const wrapper = mount(<Toasts toasts={[toastOne]} {...handlers} />);
-
-      wrapper.simulate('focus');
-
-      // Nothing happens until our timeout is done
-      expect(handlers.onResume).not.toHaveBeenCalled();
-      expect(handlers.onPause).not.toHaveBeenCalled();
-
-      jest.advanceTimersByTime(75);
-      wrapper.simulate('blur');
-
-      jest.advanceTimersByTime(75);
-      // Timeout hasn't been reach yet
-      expect(handlers.onResume).not.toHaveBeenCalled();
-      expect(handlers.onPause).not.toHaveBeenCalled();
-
-      // mouseenter will clear existing timeout and start a new one
-      wrapper.simulate('mouseenter');
-
-      jest.advanceTimersByTime(75);
-      // No timeout has been reached yet
-      expect(handlers.onResume).not.toHaveBeenCalled();
-      expect(handlers.onPause).not.toHaveBeenCalled();
-
-      jest.advanceTimersByTime(75);
-
-      // Our last mouseenter timeout should have been reached now
-      expect(handlers.onResume).not.toHaveBeenCalled();
-      expect(handlers.onPause).toHaveBeenCalled();
-    });
-  });
+test('Toasts Pause/Resuming dismissal timeout Debouncing', async () => {
+  const onPause = jest.fn();
+  const onResume = jest.fn();
+  const { container } = render(
+    <Toasts {...makeProps({
+      toasts: [toastOne],
+      onPause,
+      onResume
+    })}
+    />
+  );
+  const toast = container.querySelector('.toast');
+  fireEvent.focus(toast);
+  // Nothing happens until our timeout is done
+  expect(onPause).not.toHaveBeenCalled();
+  expect(onResume).not.toHaveBeenCalled();
+  act(() => jest.advanceTimersByTime(75));
+  fireEvent.blur(toast);
+  act(() => jest.advanceTimersByTime(75));
+  // Timeout hasn't been reach yet
+  expect(onPause).not.toHaveBeenCalled();
+  expect(onResume).not.toHaveBeenCalled();
+  // mouseenter will clear existing timeout and start a new one
+  fireEvent.mouseEnter(toast);
+  act(() => jest.advanceTimersByTime(75));
+  // No timeout has been reached yet
+  expect(onPause).not.toHaveBeenCalled();
+  expect(onResume).not.toHaveBeenCalled();
+  act(() => jest.advanceTimersByTime(75));
+  // Our last mouseenter timeout should have been reached now
+  expect(onPause).toHaveBeenCalled();
+  expect(onResume).not.toHaveBeenCalled();
 });

@@ -1,139 +1,119 @@
-/* global jest, describe, beforeEach, it, expect */
+/* global jest, test, describe, beforeEach, it, expect */
 
 import React from 'react';
-import ReactTestUtils from 'react-dom/test-utils';
+import { render } from '@testing-library/react';
 import GridFieldActions from '../GridFieldActions';
 
-describe('GridFieldActions', () => {
-  let props = null;
-  let actionMenu = null;
+const button = {
+  type: 'submit',
+  title: 'Button',
+  group: 'My Group',
+  data: {},
+};
 
-  const button = {
-    type: 'submit',
-    title: 'Button',
-    group: 'My Group',
-    data: {},
-  };
+const link = {
+  type: 'link',
+  title: 'Link',
+  url: '/test-url',
+  group: 'My Group',
+  data: {},
+};
 
-  const link = {
-    type: 'link',
-    title: 'Link',
-    url: '/test-url',
-    group: 'My Group',
-    data: {},
-  };
+test('GridFieldActions.render() should not render, if there are no actions', () => {
+  const { container } = render(
+    <GridFieldActions {...{
+      schema: []
+    }}
+    />
+  );
+  expect(container.querySelectorAll('.action')).toHaveLength(0);
+});
 
-  beforeEach(() => {
-    props = {
-    };
-  });
+test('GridFieldActions.render() should render a single button, if there is only one action', () => {
+  const { container } = render(
+    <GridFieldActions {...{
+      schema: [link]
+    }}
+    />
+  );
+  expect(container.querySelectorAll('.action')).toHaveLength(1);
+});
 
-  describe('render()', () => {
-    it('should not render, if there are no actions', () => {
-      props.schema = [];
+test('GridFieldActions.render() should render a menu, if there is more than one action', () => {
+  const { container } = render(
+    <GridFieldActions {...{
+      schema: [button, link]
+    }}
+    />
+  );
+  expect(container.querySelector('.action-menu__toggle .sr-only').innerHTML).toBe('View actions');
+});
 
-      actionMenu = ReactTestUtils.renderIntoDocument(
-        <GridFieldActions {...props} />
-      );
+test('GridFieldActions.renderSingleAction() should render a button', () => {
+  const { container } = render(
+    <GridFieldActions {...{
+      schema: [button]
+    }}
+    />
+  );
+  expect(container.querySelector('button').type).toBe('submit');
+});
 
-      expect(actionMenu.render()).toBe(null);
-    });
+test('GridFieldActions.renderSingleAction() should render a link', () => {
+  const { container } = render(
+    <GridFieldActions {...{
+      schema: [link]
+    }}
+    />
+  );
+  expect(container.querySelector('a').classList).toContain('action');
+});
 
-    it('should render a single button, if there is only one action', () => {
-      props.schema = [link];
+test('GridFieldActions.renderSingleAction() should render a link when type is null', () => {
+  const { container } = render(
+    <GridFieldActions {...{
+      schema: [{
+        type: null,
+        title: 'Link',
+        url: '/test-url',
+        group: 'My Group',
+        data: {},
+      }]
+    }}
+    />
+  );
+  expect(container.querySelector('a').classList).toContain('action');
+});
 
-      actionMenu = ReactTestUtils.renderIntoDocument(
-        <GridFieldActions {...props} />
-      );
+test('GridFieldActions.renderMultipleActions() should render the correct type of element according to action type', () => {
+  const { container } = render(
+    <GridFieldActions {...{
+      schema: [button, link]
+    }}
+    />
+  );
+  const actions = container.querySelectorAll('.action');
+  expect(actions[0].innerHTML).toBe('Button');
+  expect(actions[0].tagName).toBe('BUTTON');
+  expect(actions[1].innerHTML).toBe('Link');
+  expect(actions[1].tagName).toBe('A');
+});
 
-      expect(ReactTestUtils.findRenderedDOMComponentWithClass(actionMenu, 'action').textContent).toBe('Link');
-      expect(ReactTestUtils.scryRenderedDOMComponentsWithClass(actionMenu, 'action-menu__toggle')).toHaveLength(0);
-    });
+test('GridFieldActions.renderMultipleActions() should not render a divider if there is only one defined', () => {
+  const { container } = render(
+    <GridFieldActions {...{
+      schema: [button, link]
+    }}
+    />
+  );
+  expect(container.querySelector('.dropdown-divider')).toBeNull();
+});
 
-    it('should render a menu, if there is more than one action', () => {
-      props.schema = [button, link];
-
-      actionMenu = ReactTestUtils.renderIntoDocument(
-        <GridFieldActions {...props} />
-      );
-
-      expect(ReactTestUtils.findRenderedDOMComponentWithClass(actionMenu, 'action-menu__toggle').textContent).toBe('View actions');
-    });
-  });
-
-  describe('renderSingleAction()', () => {
-    it('should render the correct type of element according to action type', () => {
-      props.schema = [button];
-
-      actionMenu = ReactTestUtils.renderIntoDocument(
-        <GridFieldActions {...props} />
-      );
-
-      expect(ReactTestUtils.findRenderedDOMComponentWithClass(actionMenu, 'action').tagName).toBe('BUTTON');
-
-      props.schema = [link];
-
-      actionMenu = ReactTestUtils.renderIntoDocument(
-        <GridFieldActions {...props} />
-      );
-
-      expect(ReactTestUtils.findRenderedDOMComponentWithClass(actionMenu, 'action').tagName).toBe('A');
-
-      props.schema = [
-        {
-          type: null,
-          title: 'Link',
-          url: '/test-url',
-          group: 'My Group',
-          data: {},
-        }
-      ];
-
-      expect(ReactTestUtils.findRenderedDOMComponentWithClass(actionMenu, 'action').tagName).toBe('A');
-
-      props.schema = [
-        {
-          type: [],
-          title: 'Link',
-          url: '/test-url',
-          group: 'My Group',
-          data: {},
-        }
-      ];
-
-      expect(ReactTestUtils.findRenderedDOMComponentWithClass(actionMenu, 'action').tagName).toBe('A');
-    });
-  });
-
-  describe('renderMultipleActions()', () => {
-    it('should render the correct type of element according to action type', () => {
-      props.schema = [button, link];
-
-      actionMenu = ReactTestUtils.renderIntoDocument(
-        <GridFieldActions {...props} />
-      );
-
-      actionMenu = ReactTestUtils.scryRenderedDOMComponentsWithClass(actionMenu, 'action');
-
-      expect(actionMenu[0].textContent).toBe('Button');
-      expect(actionMenu[0].tagName).toBe('BUTTON');
-      expect(actionMenu[1].textContent).toBe('Link');
-      expect(actionMenu[1].tagName).toBe('A');
-    });
-
-    it('should not render a divider if there is only one defined', () => {
-      props.schema = [button, link];
-
-      actionMenu = ReactTestUtils.renderIntoDocument(
-        <GridFieldActions {...props} />
-      );
-
-      expect(ReactTestUtils.scryRenderedDOMComponentsWithClass(actionMenu, 'dropdown-divider')).toHaveLength(0);
-    });
-
-    it('should render dividers according to groups provided declared for each actions', () => {
-      props.schema = [
-        {
+test('GridFieldActions.renderMultipleActions() should render dividers according to groups provided declared for each actions', () => {
+  const { container } = render(
+    <GridFieldActions {...{
+      schema: [
+          {
           type: 'submit',
           title: 'Button',
           group: 'First Group',
@@ -146,20 +126,21 @@ describe('GridFieldActions', () => {
           group: 'Second Group',
           data: {},
         }
-      ];
+      ]
+    }}
+    />
+  );
+  const actionMenu = container.querySelector('.action-menu__dropdown').children;
+  expect(actionMenu).toHaveLength(3);
+  expect(actionMenu[0].className).toContain('action');
+  expect(actionMenu[1].className).toContain('dropdown-divider');
+  expect(actionMenu[2].className).toContain('action');
+});
 
-      actionMenu = ReactTestUtils.renderIntoDocument(
-        <GridFieldActions {...props} />
-      );
-
-      actionMenu = ReactTestUtils.findRenderedDOMComponentWithClass(actionMenu, 'action-menu__dropdown').children;
-
-      expect(actionMenu).toHaveLength(3);
-      expect(actionMenu[0].className).toContain('action');
-      expect(actionMenu[1].className).toContain('dropdown-divider');
-      expect(actionMenu[2].className).toContain('action');
-
-      props.schema = [
+test('GridFieldActions.renderMultipleActions() ', () => {
+  const { container } = render(
+      <GridFieldActions {...{
+      schema: [
         {
           type: 'submit',
           title: 'Button',
@@ -200,23 +181,17 @@ describe('GridFieldActions', () => {
           group: 'Third Group',
           data: {},
         }
-      ];
-
-      actionMenu = ReactTestUtils.renderIntoDocument(
-        <GridFieldActions {...props} />
-      );
-
-      actionMenu = ReactTestUtils.findRenderedDOMComponentWithClass(actionMenu, 'action-menu__dropdown').children;
-
-      expect(actionMenu).toHaveLength(8);
-      expect(actionMenu[0].className).toContain('action');
-      expect(actionMenu[1].className).toContain('action');
-      expect(actionMenu[2].className).toContain('dropdown-divider');
-      expect(actionMenu[3].className).toContain('action');
-      expect(actionMenu[4].className).toContain('action');
-      expect(actionMenu[5].className).toContain('dropdown-divider');
-      expect(actionMenu[6].className).toContain('action');
-      expect(actionMenu[7].className).toContain('action');
-    });
-  });
+      ]
+    }}/>
+  );
+  const actionMenu = container.querySelector('.action-menu__dropdown').children;
+  expect(actionMenu).toHaveLength(8);
+  expect(actionMenu[0].className).toContain('action');
+  expect(actionMenu[1].className).toContain('action');
+  expect(actionMenu[2].className).toContain('dropdown-divider');
+  expect(actionMenu[3].className).toContain('action');
+  expect(actionMenu[4].className).toContain('action');
+  expect(actionMenu[5].className).toContain('dropdown-divider');
+  expect(actionMenu[6].className).toContain('action');
+  expect(actionMenu[7].className).toContain('action');
 });

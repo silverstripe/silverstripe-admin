@@ -101,10 +101,9 @@
     "@storybook/react": "^7.0.18",
     "@storybook/react-webpack5": "^7.0.18",
     "@storybook/testing-library": "^0.1.0",
+    "@testing-library/react": "^14.0.0",
     "babel-jest": "^29.2.2",
     "copy-webpack-plugin": "^11.0.0",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.6",
     "fast-glob": "^3.2.12",
     "html-loader": "^4.2.0",
     "is-plain-object": "^5.0.0",
@@ -113,8 +112,6 @@
     "markdown-loader": "^8.0.0",
     "mini-css-extract-plugin": "^2.7.6",
     "node-dir": "^0.1.17",
-    "react-16": "npm:react@^16.14.0",
-    "react-dom-16": "npm:react-dom@^16.14.0",
     "storybook": "^7.0.18",
     "storybook-addon-jsx": "^7.3.14",
     "webpack": "^5.74.0",
@@ -128,11 +125,6 @@
   ],
   "jest": {
     "testEnvironment": "jsdom",
-    "moduleNameMapper": {
-      "^react-dom/client$": "react-dom-16",
-      "^react-dom((/.*)?)$": "react-dom-16$1",
-      "^react((/.*)?)$": "react-16$1"
-    },
     "roots": [
       "client/src"
     ],
