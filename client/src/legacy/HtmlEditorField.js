@@ -190,10 +190,7 @@ ss.editorWrappers.tinyMCE = (function() {
 
     getSelection: function() {
       const instance = this.getInstance();
-      let selection = instance.selection.getContent({ format: 'text' });
-      if (!selection) {
-        selection = instance.selection.getSel().toString();
-      }
+      let selection = instance.selection.getSel().toString();
       return selection || '';
     },
 
