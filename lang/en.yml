@@ -1,6 +1,4 @@
 en:
-  LeftAndMain:
-    'php.Access to ''{title}'' section': 'Item in permission selection identifying the admin section. Example: Access to ''Files & Images'''
   SilverStripe\Admin\CMSProfileController:
     CANTEDIT: 'You don''t have permission to do that'
     MENUTITLE: 'My Profile'
