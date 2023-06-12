@@ -2032,10 +2032,10 @@ class LeftAndMain extends Controller implements PermissionProvider
             }
             $title = LeftAndMain::menu_title($class);
             $perms[$code] = [
+                // Item in permission selection identifying the admin section. Example: Access to 'Files & Images'
                 'name' => _t(
                     CMSMain::class . '.ACCESS',
                     "Access to '{title}' section",
-                    "Item in permission selection identifying the admin section. Example: Access to 'Files & Images'",
                     ['title' => $title]
                 ),
                 'category' => _t(Permission::class . '.CMS_ACCESS_CATEGORY', 'CMS Access')
