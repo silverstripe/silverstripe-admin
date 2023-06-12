@@ -94,21 +94,16 @@ class SecurityAdmin extends ModelAdmin implements PermissionProvider
         $extraInfo = match ($this->modelClass) {
             Member::class => _t(
                 __CLASS__ . '.ImportFormHelpMember',
-                implode('', [
-                    '<p>Groups can be assigned by the <em>Groups</em> column. Groups are identified by their ',
-                    '<em>Code</em> property, multiple groups can be separated by comma. ',
-                    'Existing group memberships are not cleared.</p>'
-                ]),
+                '<p>Groups can be assigned by the <em>Groups</em> column. Groups are identified by their'
+                . ' <em>Code</em> property, multiple groups can be separated by comma. Existing group'
+                . ' memberships are not cleared.</p>'
             ),
             Group::class => _t(
                 __CLASS__ . '.ImportFormHelpGroup',
-                implode('', [
-                    '<ul><li>Existing groups are matched by their unique <em>Code</em> value, ',
-                    'and updated with any new values from the imported file</li>',
-                    '<li>Group hierarchies can be created by using a <em>ParentCode</em> column.</li>',
-                    '<li>Permission codes can be assigned by the <em>PermissionCode</em> column. ',
-                    'Existing permission codes are not cleared.</li></ul>',
-                ]),
+                '<ul><li>Existing groups are matched by their unique <em>Code</em> value, and updated'
+                . ' with any new values from the imported file</li><li>Group hierarchies can be created'
+                . ' by using a <em>ParentCode</em> column.</li><li>Permission codes can be assigned by'
+                . ' the <em>PermissionCode</em> column. Existing permission codes are not cleared.</li></ul>'
             ),
             default => ''
         };
