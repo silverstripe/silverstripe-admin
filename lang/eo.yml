@@ -108,5 +108,3 @@ eo:
   SilverStripe\Admin\SudoModeController:
     INVALID: 'Nevalida pasvorto'
     TIMEOUT: 'Seanco eltempiĝis. Bonvolu refreŝigi kaj reprovi.'
-  LeftAndMain:
-    'php.Access to ''{title}'' section': 'Elemento en permesa elekto identigas la administran sekcion. Ekzemple: Aliro al ''Dosieroj kaj bildoj'''
