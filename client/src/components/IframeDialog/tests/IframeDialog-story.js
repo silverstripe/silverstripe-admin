@@ -2,7 +2,7 @@ import React from 'react';
 import IframeDialog from 'components/IframeDialog/IframeDialog';
 
 export default {
-    title: 'Admin/IframeDialog',
+  title: 'Admin/IframeDialog',
 };
 
 export const Dialog = () => (

@@ -9,37 +9,37 @@ import mockTree from './mockTree';
 
 // TreeDropdownField depends on having a basic Redux store present to operate
 const store = createStore(
-    combineReducers({ treeDropdownField: treeDropdownFieldReducer }),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  combineReducers({ treeDropdownField: treeDropdownFieldReducer }),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 // Replaces the standard API call with a mock that returns static tree data
 const fetchMock = () =>
-    Promise.resolve({ json: () => Promise.resolve(mockTree) });
+  Promise.resolve({ json: () => Promise.resolve(mockTree) });
 
 const props = {
-    id: 'MyField',
-    name: 'MyField',
-    data: {
-        urlTree: '',
-    },
-    fetch: fetchMock,
+  id: 'MyField',
+  name: 'MyField',
+  data: {
+    urlTree: '',
+  },
+  fetch: fetchMock,
 };
 
 export default {
-    title: 'Admin/TreeDropdownField',
+  title: 'Admin/TreeDropdownField',
 
-    decorators: [
-        (storyFn) => (
-            <div style={{ width: '400px' }}>
-                <Provider store={store}>
-                    <ValueTracker>{storyFn()}</ValueTracker>
-                </Provider>
-            </div>
-        ),
-    ],
+  decorators: [
+    (storyFn) => (
+      <div style={{ width: '400px' }}>
+        <Provider store={store}>
+          <ValueTracker>{storyFn()}</ValueTracker>
+        </Provider>
+      </div>
+    ),
+  ],
 };
 
 export const Standard = () => (
-    <TreeDropdownField {...props} />
+  <TreeDropdownField {...props} />
 );

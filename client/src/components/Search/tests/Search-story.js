@@ -7,20 +7,20 @@ import { reducer as ReduxFormReducer } from 'redux-form';
 import SchemaReducer from 'state/schema/SchemaReducer';
 
 const FormReducer = combineReducers({
-    formState: ReduxFormReducer,
-    formSchemas: SchemaReducer,
+  formState: ReduxFormReducer,
+  formSchemas: SchemaReducer,
 });
 
 const props = {
-    name: 'MyField',
-    title: 'Field title',
-    onSearch: () => {},
-    store: createStore(combineReducers({ form: FormReducer })),
+  name: 'MyField',
+  title: 'Field title',
+  onSearch: () => {},
+  store: createStore(combineReducers({ form: FormReducer })),
 };
 
 export default {
-    title: 'Admin/Search',
-    decorators: [(Story) => <ValueTracker><Story/></ValueTracker>],
+  title: 'Admin/Search',
+  decorators: [(Story) => <ValueTracker><Story/></ValueTracker>],
 };
 
 export const SimpleVanilla = () => (
@@ -88,11 +88,11 @@ export const Wide = () => (
 
 export const ToggleButton = () => (
     <div>
-        <SearchToggle />
-        <SearchToggle toggled />
+      <SearchToggle />
+      <SearchToggle toggled />
     </div>
 );
 
 ToggleButton.story = {
-    name: 'Toggle button',
+  name: 'Toggle button',
 };

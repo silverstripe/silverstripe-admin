@@ -178,8 +178,8 @@ test('TimeField html5 true should use iso format of time value in the input fiel
   const input = container.querySelector('input');
   fireEvent.change(input, { target: { id: 'time', value: '12:22:33' } });
   expect(onChange).toBeCalledWith(
-      expect.objectContaining({ _reactName: 'onChange' }),
-      { id: 'time', value: '12:22:33' }
+    expect.objectContaining({ _reactName: 'onChange' }),
+    { id: 'time', value: '12:22:33' }
   );
 });
 

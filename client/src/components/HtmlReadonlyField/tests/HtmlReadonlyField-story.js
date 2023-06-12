@@ -7,17 +7,17 @@ const htmlValue = `<div>Some <strong>HTML</strong>
 </div>`;
 
 export default {
-    title: 'Admin/HtmlReadonlyField',
+  title: 'Admin/HtmlReadonlyField',
 };
 
 export const Default = () => (
-    <HtmlReadonlyField name="default" value="This is readonly" />
+  <HtmlReadonlyField name="default" value="This is readonly" />
 );
 
 export const HtmlValue = () => (
-    <HtmlReadonlyField name="default" value={htmlValue} />
+  <HtmlReadonlyField name="default" value={htmlValue} />
 );
 
 HtmlValue.story = {
-    name: 'HTML Value',
+  name: 'HTML Value',
 };
