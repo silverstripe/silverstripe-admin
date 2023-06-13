@@ -7,15 +7,7 @@ export default {
 
 export const LoadingState = () => <UsedOnTable loading />;
 
-LoadingState.story = {
-  name: 'Loading state',
-};
-
 export const NoOwners = () => <UsedOnTable usedOn={[]} />;
-
-NoOwners.story = {
-  name: 'No owners',
-};
 
 export const WithOwners = () => (
   <UsedOnTable
@@ -51,7 +43,3 @@ export const WithOwners = () => (
     ]}
   />
 );
-
-WithOwners.story = {
-  name: 'With owners',
-};

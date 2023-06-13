@@ -15,14 +15,6 @@ export const NoBackButton = () => (
   <Toolbar showBackButton={f} onBackButtonClick={noop} />
 );
 
-NoBackButton.story = {
-  name: 'No back button',
-};
-
 export const BackButton = () => (
   <Toolbar showBackButton={t} onBackButtonClick={noop} />
 );
-
-BackButton.story = {
-  name: 'Back button',
-};

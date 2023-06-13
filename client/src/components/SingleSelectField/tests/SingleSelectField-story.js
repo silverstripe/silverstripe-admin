@@ -33,19 +33,15 @@ export default {
 };
 
 export const EmptyDefault = () => (
-    <SingleSelectField
-      {...props}
-      data={{
-        hasEmptyDefault: true,
-        emptyString: 'Choose an option',
-      }}
-    />
+  <SingleSelectField
+    {...props}
+    data={{
+      hasEmptyDefault: true,
+      emptyString: 'Choose an option',
+    }}
+  />
 );
 
-EmptyDefault.story = {
-  name: 'Empty default',
-};
-
 export const Readonly = () => (
-    <SingleSelectField {...props} readOnly value="One" />
+  <SingleSelectField {...props} readOnly value="One" />
 );

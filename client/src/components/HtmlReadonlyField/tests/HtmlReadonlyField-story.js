@@ -17,7 +17,3 @@ export const Default = () => (
 export const HtmlValue = () => (
   <HtmlReadonlyField name="default" value={htmlValue} />
 );
-
-HtmlValue.story = {
-  name: 'HTML Value',
-};

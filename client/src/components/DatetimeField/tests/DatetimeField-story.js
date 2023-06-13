@@ -23,7 +23,3 @@ export const Html5 = () => (
     }}
   />
 );
-
-Html5.story = {
-  name: 'HTML5',
-};

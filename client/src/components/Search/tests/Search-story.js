@@ -24,75 +24,71 @@ export default {
 };
 
 export const SimpleVanilla = () => (
-    <Search
-      id="SimpleVanillaSearch"
-      display="VISIBLE"
-      displayBehavior={'NONE'}
-      {...props}
-    />
+  <Search
+    id="SimpleVanillaSearch"
+    display="VISIBLE"
+    displayBehavior={'NONE'}
+    {...props}
+  />
 );
 
 export const WithFilters = () => (
-    <Search
-      id="SmallNotExpanded"
-      display="VISIBLE"
-      formSchemaUrl=""
-      filters={{}}
-      formData={{}}
-      placeholder={"Search 'Pages'"}
-      displayBehavior={'NONE'}
-      forceFilters
-      {...props}
-    />
+  <Search
+    id="SmallNotExpanded"
+    display="VISIBLE"
+    formSchemaUrl=""
+    filters={{}}
+    formData={{}}
+    placeholder={"Search 'Pages'"}
+    displayBehavior={'NONE'}
+    forceFilters
+    {...props}
+  />
 );
 
 export const Hideable = () => (
-    <Search
-      id="Large Hideable"
-      display="VISIBLE"
-      formSchemaUrl=""
-      forceFilters
-      filters={{}}
-      formData={{}}
-      placeholder="Search me"
-      displayBehavior={'HIDEABLE'}
-      {...props}
-    />
+  <Search
+    id="Large Hideable"
+    display="VISIBLE"
+    formSchemaUrl=""
+    forceFilters
+    filters={{}}
+    formData={{}}
+    placeholder="Search me"
+    displayBehavior={'HIDEABLE'}
+    {...props}
+  />
 );
 
 export const Toggeable = () => (
+  <Search
+    id="TOGGEABLE"
+    display="NONE"
+    displayBehavior="TOGGLABLE"
+    formSchemaUrl=""
+    formData={{}}
+    forceFilters
+    {...props}
+  />
+);
+
+export const Wide = () => (
+  <div style={{ width: '800px' }}>
     <Search
-      id="TOGGEABLE"
-      display="NONE"
+      id="WIDE"
+      display="VISIBLE"
       displayBehavior="TOGGLABLE"
       formSchemaUrl=""
       formData={{}}
       forceFilters
       {...props}
     />
-);
-
-export const Wide = () => (
-    <div style={{ width: '800px' }}>
-        <Search
-          id="WIDE"
-          display="VISIBLE"
-          displayBehavior="TOGGLABLE"
-          formSchemaUrl=""
-          formData={{}}
-          forceFilters
-          {...props}
-        />
-    </div>
+  </div>
 );
 
 export const ToggleButton = () => (
-    <div>
-      <SearchToggle />
-      <SearchToggle toggled />
-    </div>
+  <div>
+    <SearchToggle />
+    <SearchToggle toggled />
+  </div>
 );
-
-ToggleButton.story = {
-  name: 'Toggle button',
-};

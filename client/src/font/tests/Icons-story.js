@@ -99,13 +99,9 @@ export default {
 };
 
 export const IconReference = () => (
-    <div>
-      <style>{styles}</style>
-      {/* eslint-disable-next-line react/no-danger */}
-      <div dangerouslySetInnerHTML={{ __html: mapping.outerHTML }} />
-    </div>
+  <div>
+    <style>{styles}</style>
+    {/* eslint-disable-next-line react/no-danger */}
+    <div dangerouslySetInnerHTML={{ __html: mapping.outerHTML }} />
+  </div>
 );
-
-IconReference.story = {
-  name: 'Icon reference',
-};
