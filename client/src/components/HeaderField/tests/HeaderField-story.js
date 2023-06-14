@@ -7,17 +7,48 @@ export default {
   decorators: [
     jsxDecorator
   ],
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Generates a header field for displaying as a title.'
+      },
+      canvas: {
+        sourceState: 'shown',
+      },
+      controls: {
+        sort: 'alpha',
+      }
+    }
+  },
   argTypes: {
+    id: {
+      description: 'The ID for the component.',
+      control: 'text',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: '' },
+      }
+    },
     extraClass: {
-      control: 'text'
+      description: 'Extra classes the component should have.',
+      control: 'text',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: '' },
+      }
     },
     data: {
-      title: {
-        control: 'text'
+      description: `Extra data that helps define this field uniquely.
+      * headingLevel (number): The level depth for heading.
+      * title (string) (required): Title to display.`,
+      control: 'object',
+      type: {
+        required: true
       },
-      headingLevel: {
-        control: 'select',
-        options: [1, 2, 3, 4, 5]
+      table: {
+        type: { summary: 'object' },
+        defaultValue: { summary: '{}' },
       }
     }
   }
@@ -25,6 +56,7 @@ export default {
 
 export const Heading = {
   args: {
+    id: 'my-hidden',
     extraClass: 'my-extra-class',
     data: {
       title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',

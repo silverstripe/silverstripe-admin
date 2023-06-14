@@ -3,25 +3,79 @@ import FileStatusIcon from 'components/FileStatusIcon/FileStatusIcon';
 export default {
   title: 'Admin/FileStatusIcon',
   component: FileStatusIcon,
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: `Generates a file status icon element with a reactstrap tooltip.
+        The icon and tooltip text is controlled via boolean props on the component rather than passed in as strings.`
+      },
+      canvas: {
+        sourceState: 'shown',
+      },
+      controls: {
+        sort: 'alpha',
+      }
+    }
+  },
   argTypes: {
     fileID: {
-      control: 'number'
+      description: 'The database ID of the file.',
+      control: 'number',
+      table: {
+        type: { summary: 'number' },
+      }
     },
     hasRestrictedAccess: {
-      control: 'boolean'
+      description: 'Whether the file has restricted access / permissions.',
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: false },
+      }
     },
     isTrackedFormUpload: {
-      control: 'boolean'
+      description: 'Whether the file is associated with a tracked form upload.',
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: false },
+      }
     },
     includeBackground: {
       control: 'boolean'
     },
     placement: {
+      description: 'Reactstramp tooltip position.',
       control: 'select',
-      options: ['auto', 'top', 'bottom', 'left', 'right']
+      options: ['auto', 'top', 'bottom', 'left', 'right'],
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'auto' },
+      }
     },
     disableTooltip: {
-      control: 'boolean'
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: false },
+      }
+    },
+    extraClassName: {
+      description: 'Extra class the component should have',
+      control: 'text',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: '' },
+      }
+    },
+    includeBackground: {
+      description: 'Whether to render the icon on a white circle background',
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: false },
+      }
     }
   }
 };

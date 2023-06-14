@@ -3,25 +3,29 @@ import GridFieldActions from 'components/GridFieldActions/GridFieldActions';
 
 export default {
   title: 'Admin/GridFieldActions',
-};
-
-export const Single = () => {
-  const schema = [
-    {
-      type: 'link',
-      title: 'Link Type Action',
-      url: '#edit',
-      group: 'General',
-      data: {
-        extraClass: 'edit-link',
+  component: GridFieldActions,
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'GridFieldActions description.'
       },
-    },
-  ];
-  return <GridFieldActions schema={schema} />;
+      canvas: {
+        sourceState: 'shown',
+      },
+      controls: {
+        sort: 'alpha',
+      }
+    }
+  },
+  argTypes: {}
 };
 
-export const Multiple = () => {
-  const schema = [
+const Template = args => <GridFieldActions {...args} />;
+
+export const Multiple = Template.bind({});
+Multiple.args = {
+  schema: [
     {
       type: 'link',
       title: 'Link Type Action',
@@ -42,12 +46,12 @@ export const Multiple = () => {
         'data-url': 'admin/pages/edit/EditForm/8/field/Companies',
       },
     },
-  ];
-  return <GridFieldActions schema={schema} />;
+  ]
 };
 
-export const Grouped = () => {
-  const schema = [
+export const Grouped = Template.bind({});
+Grouped.args = {
+  schema: [
     {
       type: 'link',
       title: 'Action 1',
@@ -84,12 +88,12 @@ export const Grouped = () => {
         extraClass: 'edit-link',
       },
     },
-  ];
-  return <GridFieldActions schema={schema} />;
+  ]
 };
 
-export const Complex = () => {
-  const schema = [
+export const Complex = Template.bind({});
+Complex.args = {
+  schema: [
     {
       type: 'link',
       title: 'Link Type Action',
@@ -210,6 +214,19 @@ export const Complex = () => {
         'data-url': 'admin/pages/edit/EditForm/8/field/Companies',
       },
     },
-  ];
-  return <GridFieldActions schema={schema} />;
+  ]
+};
+export const _GridFieldActions = Template.bind({});
+_GridFieldActions.args = {
+  schema: [
+    {
+      type: 'link',
+      title: 'Link Type Action',
+      url: '#edit',
+      group: 'General',
+      data: {
+        extraClass: 'edit-link',
+      },
+    },
+  ]
 };

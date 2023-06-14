@@ -8,7 +8,23 @@ const centerStyles = {
 };
 
 export default {
-  title: 'Admin/PopoverField',
+  title: 'Admin/PopoverField/PopoverField',
+  component: PopoverField,
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: `Creates a popup box that may contain other nested fields. The activator for this popup
+        is represented by a button.`
+      },
+      canvas: {
+        sourceState: 'hide',
+      },
+      controls: {
+        sort: 'alpha',
+      }
+    }
+  },
 };
 
 export const Default = () => (
@@ -21,7 +37,7 @@ export const Default = () => (
         buttonTooltip: 'Button tooltip',
       }}
     >
-        <p>This is some info in the popover</p>
+      <p>This is some info in the popover</p>
     </PopoverField>
     <PopoverField
       id="popover-field-lots-of-content"
@@ -53,7 +69,7 @@ export const Icons = () => (
         popoverTitle: 'Default ellipsis button',
       }}
     >
-        <p>An ellipsis icon is used if no title is provided.</p>
+      <p>An ellipsis icon is used if no title is provided.</p>
     </PopoverField>
     <PopoverField
       id="popover-field-custom-icon"

@@ -86,8 +86,8 @@ class Search extends Component {
    */
   setOverrides(props) {
     if (props && (
-        !hasFilters(props.filters) || this.props.formSchemaUrl !== props.formSchemaUrl
-      )) {
+      !hasFilters(props.filters) || this.props.formSchemaUrl !== props.formSchemaUrl
+    )) {
       // clear any overrides that may be in place
       const schemaUrl = (props && props.formSchemaUrl) || this.props.formSchemaUrl;
       if (schemaUrl) {
@@ -424,7 +424,7 @@ class Search extends Component {
       if (displayBehavior === BEHAVIOR.TOGGLABLE) {
         return (<SearchToggle onToggle={this.show} />);
       }
-        return (<div />);
+      return (<div />);
     }
 
     // Display the SearchBox

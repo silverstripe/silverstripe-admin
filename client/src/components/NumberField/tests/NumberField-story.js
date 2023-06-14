@@ -9,33 +9,75 @@ const tagActions = actionListMaker('onClick', 'onChange');
 export default {
   title: 'Admin/NumberField',
   component: NumberField,
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'NumberField Component description.'
+      },
+      canvas: {
+        sourceState: 'shown',
+      },
+      controls: {
+        sort: 'alpha',
+      }
+    }
+  },
   decorators: [
     jsxDecorator,
-    (Story) => <div><Story/></div>
   ],
   argTypes: {
     title: {
-      control: 'text'
+      description: '',
+      control: 'text',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: '' },
+      }
     },
     value: {
-      control: 'number'
+      control: 'number',
+      table: {
+        type: { summary: 'number' },
+        defaultValue: { summary: '' },
+      }
     },
     placeholder: {
-      control: 'text'
+      control: 'text',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: '' },
+      }
     },
     description: {
-      control: 'text'
+      control: 'text',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: '' },
+      }
     },
     disabled: {
-      control: 'boolean'
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: false },
+      }
     },
     message: {
-      type: {
-        control: 'select',
-        options: ['', 'error']
-      },
-      value: {
-        control: 'text'
+      control: 'object',
+      table: {
+        type: { summary: 'object' },
+        defaultValue: { summary: "{ value: '', type: '' }" },
+      }
+    },
+    onClick: {
+      table: {
+        type: { summary: 'function' },
+      }
+    },
+    onChange: {
+      table: {
+        type: { summary: 'function' },
       }
     }
   }

@@ -1,9 +1,9 @@
 import React from 'react';
-import OptionsetField from 'components/OptionsetField/OptionsetField';
+import OptionField from 'components/OptionsetField/OptionField';
 
 export default {
-  title: 'Admin/OptionField/OptionsetField',
-  component: OptionsetField,
+  title: 'Admin/OptionField/OptionField',
+  component: OptionField,
   tags: ['autodocs'],
   parameters: {
     docs: {
@@ -36,14 +36,6 @@ export default {
         defaultValue: { summary: '' },
       }
     },
-    itemClass: {
-      description: 'Classes applicable to each item in the group.',
-      control: 'text',
-      table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: '' },
-      }
-    },
     name: {
       description: 'The name for the component.',
       control: 'text',
@@ -55,11 +47,37 @@ export default {
         defaultValue: { summary: '' },
       }
     },
-    value: {
-      description: 'The value that matches one of the source items value.',
+    type: {
+      description: 'The type of option component will be: `checkbox` or `radio`',
+      control: 'select',
+      options: ['checkbox', 'radio'],
       table: {
-        type: { summary: 'string|number' },
+        type: { summary: 'string' },
+        defaultValue: { summary: 'radio' },
+      }
+    },
+    leftTitle: {
+      description: 'Title to display to the left (if inline) or above the field, check below NOTE about handling raw html.',
+      control: 'text',
+      table: {
+        type: { summary: 'any' },
         defaultValue: { summary: '' },
+      }
+    },
+    title: {
+      description: 'Title to display if leftTitle is not defined, check below NOTE about handling raw html.',
+      control: 'text',
+      table: {
+        type: { summary: 'any' },
+        defaultValue: { summary: '' },
+      }
+    },
+    value: {
+      description: 'Whether this is checked or not, *this does not hold an explicit value*!',
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: false },
       }
     },
     source: {
@@ -99,16 +117,10 @@ export default {
   }
 };
 
-export const _OptionsetField = (args) => <OptionsetField {...args} />;
-_OptionsetField.args = {
+export const _OptionField = (args) => <OptionField {...args} />;
+_OptionField.args = {
   id: 'set',
   title: '',
   name: 'set',
-  value: '2',
-  source: [
-    { value: '1', title: 'one' },
-    { value: '2', title: 'two' },
-    { value: '3', title: 'three' },
-    { value: '4', title: 'four' },
-  ],
+  value: '2'
 };

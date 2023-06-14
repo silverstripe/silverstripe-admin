@@ -46,11 +46,26 @@ const handleSearch = (term, set) => set.filter(
 
 
 export default {
-  title: 'Admin/PopoverOptionSet',
+  title: 'Admin/PopoverField/PopoverOptionSet',
   component: PopoverOptionSetToggle,
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: `Generates a popover filled with buttons that can be filtered with a search.
+        This component can be viewed in the bundled pattern library.
+        Additionally a toggle component is provided as a basic implementation or example to get started.`
+      },
+      canvas: {
+        sourceState: 'hide',
+      },
+      controls: {
+        sort: 'alpha',
+      }
+    }
+  },
   decorators: [
     jsxDecorator,
-    (Story) => <ValueTracker><Story/></ValueTracker>
   ],
   argTypes: {
     buttons: {
@@ -83,12 +98,12 @@ WithIcons.args = {
 };
 
 export const ComplexContent = (args) => (
-    <>
-      <div>
-          Note that supplying JSX as content will mean that search will have to be disabled or you must implement a custom search function
-      </div>
-      <PopoverOptionSetToggle {...args} />
-    </>
+  <>
+    <div>
+      Note that supplying JSX as content will mean that search will have to be disabled or you must implement a custom search function
+    </div>
+    <PopoverOptionSetToggle {...args} />
+  </>
 );
 ComplexContent.args = {
   ...SimpleExample.args,
@@ -96,12 +111,12 @@ ComplexContent.args = {
 };
 
 export const CustomSearch = (args) => (
-    <>
-      <div>
-          This custom search function will ignore the Button prefix on each button
-      </div>
-      <PopoverOptionSetToggle {...args} />
-    </>
+  <>
+    <div>
+      This custom search function will ignore the Button prefix on each button
+    </div>
+    <PopoverOptionSetToggle {...args} />
+  </>
 );
 CustomSearch.args = {
   ...SimpleExample.args,

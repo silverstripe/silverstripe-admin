@@ -29,20 +29,22 @@ const compactTagListActions = actionListMaker('onSummary');
 
 export default {
   title: 'Admin/Tag',
-  decorators: [
-    jsxDecorator,
-    (Story) => <div style={{ background: 'white', padding: '20px' }}><Story/></div>
-  ],
-};
-
-export const _Tag = (args) => (<Tag {...args}/>);
-_Tag.args = {
-  dataKey: 'HelloWorld',
-  label: '',
-  value: '',
-  deletable: false,
-  focusable: true,
-  ...tagActions
+  component: Tag,
+  decorators: [jsxDecorator],
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: '`<Tag />` can be used to visually associate a record with related topics. Tags can be used individually or as part of a `<TagList />`'
+      },
+      canvas: {
+        sourceState: 'shown',
+      },
+      controls: {
+        sort: 'alpha',
+      }
+    }
+  },
 };
 
 export const _TagList = (args) => (<TagList {...args}/>);
@@ -61,4 +63,14 @@ _CompactTagList.args = {
   tags,
   ...tagListActions,
   ...compactTagListActions
+};
+
+export const _Tag = (args) => (<Tag {...args}/>);
+_Tag.args = {
+  dataKey: 'HelloWorld',
+  label: '',
+  value: '',
+  deletable: false,
+  focusable: true,
+  ...tagActions
 };

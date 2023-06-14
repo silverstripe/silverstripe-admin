@@ -4,6 +4,22 @@ import { DropdownItem } from 'reactstrap';
 
 export default {
   title: 'Admin/ActionMenu',
+  component: ActionMenu,
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'ActionMenu Component description.'
+      },
+      canvas: {
+        sourceState: 'shown',
+      },
+      controls: {
+        sort: 'alpha',
+      }
+    }
+  },
+  argTypes: {}
 };
 
 export const Single = () => (

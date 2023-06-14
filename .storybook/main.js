@@ -29,7 +29,8 @@ const config = {
     storyStoreV7: false
   },
   docs: {
-    autodocs: "tag"
+    autodocs: "tag",
+    defaultName: 'Documentation',
   },
   webpackFinal: async (config) => {
     return {

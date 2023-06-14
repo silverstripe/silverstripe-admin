@@ -61,7 +61,9 @@ class UsedOnTable extends PureComponent {
 
   renderRow(data, index) {
     const { id, type } = data;
-    const rowData = [data].concat(data.ancestors).reverse();
+    const rowData = data.ancestors
+      ? [data].concat(data.ancestors).reverse()
+      : [data].reverse();
     let cellLink = '#';
     let isFirst = true;
     const titleLinks = rowData.map((arr, i) => {

@@ -63,25 +63,68 @@ export default {
   decorators: [
     jsxDecorator
   ],
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'The breadcrumbs for the current section of the CMS.'
+      },
+      canvas: {
+        sourceState: 'shown',
+      },
+      controls: {
+        sort: 'alpha',
+      }
+    }
+  },
   argTypes: {
-    levels: {
+    href: {
+      table: {
+        type: { summary: 'string' },
+      }
+    },
+    text: {
+      table: {
+        type: { summary: 'string' },
+      }
+    },
+    crumbs: {
+      description: 'An array of objects, each object should have a `text` and `href` key.',
+      table: {
+        type: { summary: 'array' },
+      }
+    },
+    level: {
       control: 'select',
-      options: levels
+      options: levels,
+      table: {
+        type: { summary: 'string' },
+      },
+    },
+    icon: {
+      description: 'The font icon font name.',
+      control: 'select',
+      options: icons,
+      table: {
+        type: { summary: 'string' },
+      },
     },
     icons: {
-      control: 'select',
-      options: icons
+      description: 'Array of icons',
+      table: {
+        type: { summary: 'array' },
+      },
     },
   },
   args: {
-    levels: 'First',
-    icons: ''
+    level: 'First',
+    icon: ''
   }
 };
 
 export const _Breadcrumb = (args) => {
   // eslint-disable-next-line no-shadow
-  const { levels, icons } = args;
-  return (<Breadcrumb crumbs={buildBreadCrumb(0, levels, icons)}/>);
+  const { level, icon } = args;
+  return (<Breadcrumb crumbs={buildBreadCrumb(0, level, icon)}/>);
 };
 

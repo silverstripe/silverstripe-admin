@@ -3,15 +3,56 @@ import { Component as UsedOnTable } from 'components/UsedOnTable/UsedOnTable';
 
 export default {
   title: 'Admin/UsedOnTable',
+  component: UsedOnTable,
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: `Generates a generic table for loading a DataObject's ownership details.
+        Relies on the \`SilverStripe\Admin\Forms\UsedOnTable\` FormField class on the PHP side, can be used independently if desired.`
+      },
+      canvas: {
+        sourceState: 'shown',
+      },
+      controls: {
+        sort: 'alpha',
+      },
+      story: {
+        height: '300px'
+      }
+    },
+  },
+  argTypes: {
+    loading: {
+      description: 'Shows loadding icon.',
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
+      }
+    },
+    usedOn: {
+      control: 'object',
+      table: {
+        type: { summary: 'array' },
+      }
+    },
+  }
 };
 
-export const LoadingState = () => <UsedOnTable loading />;
+export const LoadingState = (args) => <UsedOnTable {...args} />;
+LoadingState.args = {
+  loading: true,
+};
 
-export const NoOwners = () => <UsedOnTable usedOn={[]} />;
+export const NoOwners = {
+  args: {
+    usedOn: []
+  }
+};
 
-export const WithOwners = () => (
-  <UsedOnTable
-    usedOn={[
+export const WithOwners = {
+  args: {
+    usedOn: [
       {
         id: 'a',
         title: 'Entry A item',
@@ -40,6 +81,6 @@ export const WithOwners = () => (
         state: 'draft',
         link: 'http://www.google.co.nz',
       },
-    ]}
-  />
-);
+    ]
+  }
+};
