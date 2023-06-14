@@ -66,7 +66,14 @@ class HtmlEditorField extends TextField {
    * render the editor proper
    */
   renderDependencyScript() {
-    return <Script url={this.props.data.editorjs} onLoad={this.handleReady} />;
+    if (!window.tinymce && !window.TinyMCE) {
+      return <Script url={this.props.data.editorjs} onLoad={this.handleReady} />;
+    }
+    // If the script is already loaded, mark as ready after this render cycle finishes.
+    setTimeout(() => {
+      this.handleReady();
+    }, 0);
+    return null;
   }
 
   render() {
