@@ -31,5 +31,10 @@
     "Admin.VALIDATOR_MESSAGE_ALPHA": "{name} niso samo črke.",
     "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} ni veljavna vrednost.",
     "Admin.EDIT_LINK": "Edit link",
-    "Admin.REMOVE_LINK": "Remove link"
+    "Admin.REMOVE_LINK": "Remove link",
+    "Admin.ENTER_PASSWORD": "Enter your password",
+    "Admin.VERIFY": "Verify",
+    "Admin.VERIFY_ITS_YOU": "Verify it's you first.",
+    "Admin.VERIFY_TO_CONTINUE": "Verify to continue",
+    "Admin.WHATS_THIS": "What is this?"
 }

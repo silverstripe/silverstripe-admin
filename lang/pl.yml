@@ -97,3 +97,6 @@ pl:
     MemberListCaution: 'Uwaga: Usunięcie członków z tej listy spowoduje usunięcie ich ze wszystkich grup i bazy danych'
     TABROLES: Role
     Users: Użytkownicy
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
+    PREVIEW: Podgląd
+    'PREVIEW''': Podgląd
