@@ -17,7 +17,9 @@
 class i18n {
   constructor() {
     this.defaultLocale = 'en_US';
-    this.currentLocale = this.detectLocale();
+    // Give a null current locale initially to avoid "locale is undefined" errors
+    this.currentLocale = null;
+    this.autoDetectLocale = true;
     this.lang = {};
   }
 
@@ -28,6 +30,7 @@ class i18n {
    */
   setLocale(locale) {
     this.currentLocale = locale;
+    this.autoDetectLocale = false;
   }
 
   /**
@@ -89,6 +92,11 @@ class i18n {
 
     for (let entity in dict) {
       this.lang[locale][entity] = dict[entity];
+    }
+
+    // Re-set current locale in case the new dictionary provides a better match than the old locale.
+    if (this.autoDetectLocale) {
+      this.currentLocale = this.detectLocale();
     }
   }
 
@@ -174,10 +182,9 @@ class i18n {
    * Detect document language settings by looking at <meta> tags.
    * If no match is found, returns this.defaultLocale.
    *
-   * @todo get by <html lang=''> - needs modification of SSViewer
-   *
    * @return {String} - Locale in mixed lowercase/uppercase format suitable
-   * for usage in i18n.lang arrays (e.g. 'en_US').
+   * for usage in i18n.lang arrays (e.g. 'en_US') or in 2-character lowercase
+   * format (e.g. 'en') if no mixed format is available.
    */
   detectLocale() {
     // Get by <html> tag
@@ -207,14 +214,13 @@ class i18n {
 
     // Get locale (e.g. 'en_US') from common name (e.g. 'en')
     // by looking at i18n.lang tables
-    let detectedLocale = null;
     if (rawLocale.length === 2) {
-      for (let compareLocale in i18n.lang) {
+      for (let compareLocale in this.lang) {
         if (compareLocale.substr(0, 2).toLowerCase() === rawLocale.toLowerCase()) {
           return compareLocale;
         }
-        }
       }
+    }
 
     // Parse raw locale
     const rawLocaleParts = rawLocale.match(/([^-|_]*)[-|_](.*)/);
