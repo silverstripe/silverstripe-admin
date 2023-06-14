@@ -105,3 +105,6 @@ eo:
     MemberListCaution: 'Averto: forigi membrojn el ĉi tiu listo forigos ilin ankaŭ el ĉiuj grupoj kaj la datumbazo.'
     TABROLES: Roloj
     Users: Uzantoj
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
+    PREVIEW: Antaŭvido
+    'PREVIEW''': Antaŭvido
