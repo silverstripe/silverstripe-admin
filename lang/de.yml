@@ -101,3 +101,6 @@ de:
   SilverStripe\Admin\SudoModeController:
     INVALID: 'Passwort falsch'
     TIMEOUT: 'Sitzung wurde geschlossen, bitte aktualisieren und nochmals versuchen.'
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
+    PREVIEW: Vorschau
+    'PREVIEW''': Vorschau

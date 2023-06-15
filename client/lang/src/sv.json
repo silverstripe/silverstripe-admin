@@ -34,5 +34,7 @@
     "Admin.WHATS_THIS": "Vad är detta?",
     "Admin.VERIFY_TO_CONTINUE": "Verifiera för att fortsätta",
     "Admin.ENTER_PASSWORD": "Ange ditt lösenord",
-    "Admin.VERIFY": "Verifiera"
+    "Admin.VERIFY": "Verifiera",
+    "Admin.EDIT_LINK": "Edit link",
+    "Admin.REMOVE_LINK": "Remove link"
 }
