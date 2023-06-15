@@ -98,3 +98,6 @@ sl:
     MemberListCaution: 'Previdno: S tem, ko boste odstranili uporabnike iz vseh skupin, jih boste tudi izbrisali iz baze podatkov.'
     TABROLES: Vloge
     Users: Uporabniki
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
+    PREVIEW: Predogled
+    'PREVIEW''': Predogled

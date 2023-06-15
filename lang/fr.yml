@@ -94,3 +94,6 @@ fr:
     MemberListCaution: 'Attention: Supprimer des membres de cette liste les supprimera de tous les groupes et de la base de données'
     TABROLES: Rôles
     Users: Utilisateurs
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
+    PREVIEW: Prévisualisation
+    'PREVIEW''': Prévisualisation
