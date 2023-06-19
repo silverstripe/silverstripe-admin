@@ -39,10 +39,10 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} er ikke en gyldig værdi.",
     "Admin.EDIT_LINK": "Edit link",
     "Admin.REMOVE_LINK": "Remove link",
-    "Admin.ENTER_PASSWORD": "Enter your password",
-    "Admin.VERIFY": "Verify",
-    "Admin.VERIFY_ITS_YOU": "Verify it's you first.",
+    "Admin.ENTER_PASSWORD": "Indtast dit kodeord",
+    "Admin.VERIFY": "Bekræft",
+    "Admin.VERIFY_ITS_YOU": "Bekræft først at det er dig",
     "Admin.VERIFY_TO_CONTINUE": "Verify to continue",
-    "Admin.WHATS_THIS": "What is this?"
+    "Admin.WHATS_THIS": "Hvad er dette?"
 });
 }
