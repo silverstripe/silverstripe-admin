@@ -113,7 +113,7 @@ test('GridFieldActions.renderMultipleActions() should render dividers according 
   const { container } = render(
     <GridFieldActions {...{
       schema: [
-          {
+        {
           type: 'submit',
           title: 'Button',
           group: 'First Group',
@@ -140,49 +140,50 @@ test('GridFieldActions.renderMultipleActions() should render dividers according 
 test('GridFieldActions.renderMultipleActions() ', () => {
   const { container } = render(
       <GridFieldActions {...{
-      schema: [
-        {
-          type: 'submit',
-          title: 'Button',
-          group: 'First Group',
-          data: {},
-        },
-        {
-          type: 'link',
-          title: 'Link',
-          url: '/test-url',
-          group: 'Second Group',
-          data: {},
-        },
-        {
-          type: 'link',
-          title: 'Link',
-          url: '/test-url',
-          group: 'Third Group',
-          data: {},
-        },
-        {
-          type: 'submit',
-          title: 'Button',
-          group: 'First Group',
-          data: {},
-        },
-        {
-          type: 'link',
-          title: 'Link',
-          url: '/test-url',
-          group: 'Second Group',
-          data: {},
-        },
-        {
-          type: 'link',
-          title: 'Link',
-          url: '/test-url',
-          group: 'Third Group',
-          data: {},
-        }
-      ]
-    }}/>
+        schema: [
+          {
+            type: 'submit',
+            title: 'Button',
+            group: 'First Group',
+            data: {},
+          },
+          {
+            type: 'link',
+            title: 'Link',
+            url: '/test-url',
+            group: 'Second Group',
+            data: {},
+          },
+          {
+            type: 'link',
+            title: 'Link',
+            url: '/test-url',
+            group: 'Third Group',
+            data: {},
+          },
+          {
+            type: 'submit',
+            title: 'Button',
+            group: 'First Group',
+            data: {},
+          },
+          {
+            type: 'link',
+            title: 'Link',
+            url: '/test-url',
+            group: 'Second Group',
+            data: {},
+          },
+          {
+            type: 'link',
+            title: 'Link',
+            url: '/test-url',
+            group: 'Third Group',
+            data: {},
+          }
+        ]
+      }}
+      />
   );
   const actionMenu = container.querySelector('.action-menu__dropdown').children;
   expect(actionMenu).toHaveLength(8);

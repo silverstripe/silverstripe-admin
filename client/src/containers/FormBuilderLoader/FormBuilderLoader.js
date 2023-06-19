@@ -186,7 +186,7 @@ class FormBuilderLoader extends Component {
           };
         })
       },
-        // Non-field messages
+      // Non-field messages
       messages: schema.errors.filter((error) => !error.field),
     };
 

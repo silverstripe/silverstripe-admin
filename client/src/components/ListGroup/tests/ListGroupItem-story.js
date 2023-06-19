@@ -2,13 +2,31 @@ import React from 'react';
 import ListGroupItem from 'components/ListGroup/ListGroupItem';
 
 export default {
-    title: 'Admin/ListGroupItem',
+  title: 'Admin/ListGroupItem',
+  component: ListGroupItem,
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'ListGroupItem Component Description.'
+      },
+      canvas: {
+        sourceState: 'shown',
+      },
+      controls: {
+        sort: 'alpha',
+      }
+    }
+  },
 };
 
-export const Items = () => (
-    <div>
-        <ListGroupItem>Item one</ListGroupItem>
-        <ListGroupItem className="active">Item two (active)</ListGroupItem>
-        <ListGroupItem>Item three</ListGroupItem>
-    </div>
+export const Items = (args) => (
+  <div>
+    <ListGroupItem>Item one</ListGroupItem>
+    <ListGroupItem {...args}>Item two (active)</ListGroupItem>
+    <ListGroupItem>Item three</ListGroupItem>
+  </div>
 );
+Items.args = {
+  className: 'active'
+};

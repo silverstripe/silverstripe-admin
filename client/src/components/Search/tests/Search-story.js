@@ -1,98 +1,110 @@
 import React from 'react';
 import Search from '../Search';
 import SearchToggle from '../SearchToggle';
-import ValueTracker from 'stories/ValueTracker';
 import { createStore, combineReducers } from 'redux';
 import { reducer as ReduxFormReducer } from 'redux-form';
 import SchemaReducer from 'state/schema/SchemaReducer';
 
 const FormReducer = combineReducers({
-    formState: ReduxFormReducer,
-    formSchemas: SchemaReducer,
+  formState: ReduxFormReducer,
+  formSchemas: SchemaReducer,
 });
 
-const props = {
-    name: 'MyField',
-    title: 'Field title',
-    onSearch: () => {},
-    store: createStore(combineReducers({ form: FormReducer })),
-};
-
 export default {
-    title: 'Admin/Search',
-    decorators: [(Story) => <ValueTracker><Story/></ValueTracker>],
+  title: 'Admin/Search',
+  component: Search,
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Allows users to search by term or filter results with a sub form.'
+      },
+      canvas: {
+        sourceState: 'hide',
+      },
+      controls: {
+        sort: 'alpha',
+        exclude: ['store'],
+      },
+      story: {
+        height: '200px'
+      }
+    }
+  },
 };
 
-export const SimpleVanilla = () => (
-    <Search
-      id="SimpleVanillaSearch"
-      display="VISIBLE"
-      displayBehavior={'NONE'}
-      {...props}
-    />
-);
+export const _Search = args => <Search {...args} />;
+_Search.args = {
+  name: 'MyField',
+  title: 'Field title',
+  onSearch: () => {},
+  store: createStore(combineReducers({ form: FormReducer })),
+};
 
-export const WithFilters = () => (
-    <Search
-      id="SmallNotExpanded"
-      display="VISIBLE"
-      formSchemaUrl=""
-      filters={{}}
-      formData={{}}
-      placeholder={"Search 'Pages'"}
-      displayBehavior={'NONE'}
-      forceFilters
-      {...props}
-    />
-);
+export const SimpleVanilla = {
+  args: {
+    ..._Search.args,
+    id: 'SimpleVanillaSearch',
+    display: 'VISIBLE',
+    displayBehavior: 'NONE'
+  }
+};
 
-export const Hideable = () => (
-    <Search
-      id="Large Hideable"
-      display="VISIBLE"
-      formSchemaUrl=""
-      forceFilters
-      filters={{}}
-      formData={{}}
-      placeholder="Search me"
-      displayBehavior={'HIDEABLE'}
-      {...props}
-    />
-);
+export const WithFilters = {
+  args: {
+    ..._Search.args,
+    id: 'SmallNotExpanded',
+    display: 'VISIBLE',
+    formSchemaUrl: '',
+    filters: {},
+    formData: {},
+    placeholder: "Search 'Pages'",
+    displayBehavior: 'NONE',
+    forceFilters: true
+  }
+};
 
-export const Toggeable = () => (
-    <Search
-      id="TOGGEABLE"
-      display="NONE"
-      displayBehavior="TOGGLABLE"
-      formSchemaUrl=""
-      formData={{}}
-      forceFilters
-      {...props}
-    />
-);
+export const Hideable = {
+  args: {
+    ..._Search.args,
+    id: 'Large Hideable',
+    display: 'VISIBLE',
+    formSchemaUrl: '',
+    forceFilters: true,
+    filters: {},
+    formData: {},
+    placeholder: 'Search me',
+    displayBehavior: 'HIDEABLE',
+  }
+};
 
-export const Wide = () => (
-    <div style={{ width: '800px' }}>
-        <Search
-          id="WIDE"
-          display="VISIBLE"
-          displayBehavior="TOGGLABLE"
-          formSchemaUrl=""
-          formData={{}}
-          forceFilters
-          {...props}
-        />
-    </div>
-);
+export const Toggeable = {
+  args: {
+    ..._Search.args,
+    id: 'TOGGEABLE',
+    display: 'NONE',
+    displayBehavior: 'TOGGLABLE',
+    formSchemaUrl: '',
+    formData: {},
+    forceFilters: true
+  }
+};
+
+export const Wide = {
+  args: {
+    ..._Search.args,
+    id: 'WIDE',
+    display: 'VISIBLE',
+    displayBehavior: 'TOGGLABLE',
+    formSchemaUrl: '',
+    formData: {},
+    forceFilters: true
+  }
+};
 
 export const ToggleButton = () => (
-    <div>
-        <SearchToggle />
-        <SearchToggle toggled />
-    </div>
+  <div>
+    <SearchToggle />
+    <SearchToggle toggled />
+  </div>
 );
-
-ToggleButton.story = {
-    name: 'Toggle button',
-};

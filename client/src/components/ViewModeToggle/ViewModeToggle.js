@@ -32,7 +32,7 @@ class ViewModeToggle extends Component {
         return previewIconClass;
       default:
         return splitIconClass;
-      }
+    }
   }
 
   getTitle() {
@@ -45,7 +45,7 @@ class ViewModeToggle extends Component {
         return i18n._t('Admin.PREVIEW_MODE', 'Preview mode');
       default:
         return i18n._t('Admin.SPLIT_MODE', 'Split mode');
-      }
+    }
   }
 
   toggle() {
@@ -91,7 +91,7 @@ class ViewModeToggle extends Component {
         'viewmode-toggle--selected': (activeState === VIEW_MODE_STATES.SPLIT),
         disabled: (!splitAvailable)
       }
-  );
+    );
 
     return (
       <DropdownItem
@@ -151,27 +151,27 @@ class ViewModeToggle extends Component {
     );
   }
 
-    render() {
-      const {
-        activeState,
-        area,
-        splitAvailable,
-        dropdownToggleProps,
-      } = this.props;
+  render() {
+    const {
+      activeState,
+      area,
+      splitAvailable,
+      dropdownToggleProps,
+    } = this.props;
 
-      // Hide button in CMS content area when preview panel is open
-      if (area === VIEW_MODE_STATES.EDIT && activeState === VIEW_MODE_STATES.SPLIT) {
-          return null;
-      }
+    // Hide button in CMS content area when preview panel is open
+    if (area === VIEW_MODE_STATES.EDIT && activeState === VIEW_MODE_STATES.SPLIT) {
+      return null;
+    }
 
-      const toggleClassName = classNames(
-        this.getIconClass(),
-        'btn',
-        'viewmode-toggle__dropdown',
-        dropdownToggleProps.classname
-      );
+    const toggleClassName = classNames(
+      this.getIconClass(),
+      'btn',
+      'viewmode-toggle__dropdown',
+      dropdownToggleProps.classname
+    );
 
-      return (
+    return (
         <Dropdown
           isOpen={this.state.dropdownOpen}
           toggle={this.toggle}
@@ -197,8 +197,8 @@ class ViewModeToggle extends Component {
             }
           </DropdownMenu>
         </Dropdown>
-        );
-    }
+    );
+  }
 }
 
 ViewModeToggle.propTypes = {
