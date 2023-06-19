@@ -100,3 +100,6 @@ da:
   SilverStripe\Admin\Forms\UsedOnTable:
     ADDEDTODRAFT: Kladde
     MODIFIEDONDRAFTSHORT: Ændret
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
+    PREVIEW: Preview
+    'PREVIEW''': Preview

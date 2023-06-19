@@ -38,6 +38,11 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.VALIDATOR_MESSAGE_ALPHA": "{name} ne estas nur literoj.",
     "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} ne estas valida valoro.",
     "Admin.EDIT_LINK": "Redakti ligilon",
-    "Admin.REMOVE_LINK": "Forigi ligilon"
+    "Admin.REMOVE_LINK": "Forigi ligilon",
+    "Admin.ENTER_PASSWORD": "Enter your password",
+    "Admin.VERIFY": "Verify",
+    "Admin.VERIFY_ITS_YOU": "Verify it's you first.",
+    "Admin.VERIFY_TO_CONTINUE": "Verify to continue",
+    "Admin.WHATS_THIS": "What is this?"
 });
 }

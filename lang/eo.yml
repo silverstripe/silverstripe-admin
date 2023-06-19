@@ -108,3 +108,6 @@ eo:
   SilverStripe\Admin\SudoModeController:
     INVALID: 'Nevalida pasvorto'
     TIMEOUT: 'Seanco eltempiĝis. Bonvolu refreŝigi kaj reprovi.'
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
+    PREVIEW: Antaŭvido
+    'PREVIEW''': Antaŭvido

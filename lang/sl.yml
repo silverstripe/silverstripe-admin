@@ -101,3 +101,6 @@ sl:
   SilverStripe\Admin\SudoModeController:
     INVALID: 'Napačno geslo'
     TIMEOUT: 'Seja je potekla, osvežite stran in poskusite znova.'
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
+    PREVIEW: Predogled
+    'PREVIEW''': Predogled

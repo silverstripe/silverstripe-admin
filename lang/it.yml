@@ -99,3 +99,6 @@ it:
     MemberListCaution: 'Attenzione: la rimozione degli utenti da questo elenco li rimuoverà da tutti i gruppi e dal database'
     TABROLES: Ruoli
     Users: Utenti
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
+    PREVIEW: Anteprima
+    'PREVIEW''': Anteprima

@@ -108,3 +108,6 @@ nl:
   SilverStripe\Admin\SudoModeController:
     INVALID: 'Incorrect wachtwoord'
     TIMEOUT: 'Sessie is verlopen, ververs en probeer het opnieuw.'
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
+    PREVIEW: Preview
+    'PREVIEW''': Preview
