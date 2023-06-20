@@ -32,9 +32,9 @@
     "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} er ikke en gyldig værdi.",
     "Admin.EDIT_LINK": "Edit link",
     "Admin.REMOVE_LINK": "Remove link",
-    "Admin.VERIFY_ITS_YOU": "Bekræft først at det er dig.",
-    "Admin.WHATS_THIS": "Hvad er dette?",
-    "Admin.VERIFY_TO_CONTINUE": "Bekræft for at forsætte",
     "Admin.ENTER_PASSWORD": "Indtast dit kodeord",
-    "Admin.VERIFY": "Bekræft"
+    "Admin.VERIFY": "Bekræft",
+    "Admin.VERIFY_ITS_YOU": "Bekræft først at det er dig",
+    "Admin.VERIFY_TO_CONTINUE": "Verify to continue",
+    "Admin.WHATS_THIS": "Hvad er dette?"
 }

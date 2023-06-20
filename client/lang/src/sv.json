@@ -30,11 +30,11 @@
     "Admin.VALIDATOR_MESSAGE_ALPHANUMERIC": "{name} is not an alphanumeric value.",
     "Admin.VALIDATOR_MESSAGE_ALPHA": "{name} is not only letters.",
     "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} is not a valid value.",
-    "Admin.VERIFY_ITS_YOU": "Verify it's you first.",
-    "Admin.WHATS_THIS": "Vad är detta?",
-    "Admin.VERIFY_TO_CONTINUE": "Verifiera för att fortsätta",
+    "Admin.EDIT_LINK": "Edit link",
+    "Admin.REMOVE_LINK": "Remove link",
     "Admin.ENTER_PASSWORD": "Ange ditt lösenord",
     "Admin.VERIFY": "Verifiera",
-    "Admin.EDIT_LINK": "Edit link",
-    "Admin.REMOVE_LINK": "Remove link"
+    "Admin.VERIFY_ITS_YOU": "Verify it's you first.",
+    "Admin.VERIFY_TO_CONTINUE": "Verifiera för att fortsätta",
+    "Admin.WHATS_THIS": "Vad är detta?"
 }
