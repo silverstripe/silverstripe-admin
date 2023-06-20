@@ -39,10 +39,10 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} ni veljavna vrednost.",
     "Admin.EDIT_LINK": "Edit link",
     "Admin.REMOVE_LINK": "Remove link",
-    "Admin.ENTER_PASSWORD": "Enter your password",
-    "Admin.VERIFY": "Verify",
-    "Admin.VERIFY_ITS_YOU": "Verify it's you first.",
-    "Admin.VERIFY_TO_CONTINUE": "Verify to continue",
-    "Admin.WHATS_THIS": "What is this?"
+    "Admin.ENTER_PASSWORD": "Vnesite vaše geslo",
+    "Admin.VERIFY": "Preveri",
+    "Admin.VERIFY_ITS_YOU": "Najprej potrdite, da ste to res vi.",
+    "Admin.VERIFY_TO_CONTINUE": "Za nadaljevanje potrdite",
+    "Admin.WHATS_THIS": "Kaj je to?"
 });
 }
