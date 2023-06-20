@@ -39,10 +39,10 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} is geen geldige waarde.",
     "Admin.EDIT_LINK": "Bewerk link",
     "Admin.REMOVE_LINK": "Verwijder link",
-    "Admin.ENTER_PASSWORD": "Enter your password",
-    "Admin.VERIFY": "Verify",
-    "Admin.VERIFY_ITS_YOU": "Verify it's you first.",
-    "Admin.VERIFY_TO_CONTINUE": "Verify to continue",
-    "Admin.WHATS_THIS": "What is this?"
+    "Admin.ENTER_PASSWORD": "Voer wachtwoord in",
+    "Admin.VERIFY": "Bevestig",
+    "Admin.VERIFY_ITS_YOU": "Verifieer dat dit je eerste is.",
+    "Admin.VERIFY_TO_CONTINUE": "Bevestig om door te gaan",
+    "Admin.WHATS_THIS": "Wat is dit?"
 });
 }
