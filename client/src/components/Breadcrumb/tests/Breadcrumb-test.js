@@ -1,8 +1,8 @@
 /* global jest, test, describe, beforeEach, it, expect */
 
 import React from 'react';
-import { Component as Breadcrumb } from '../Breadcrumb';
 import { render } from '@testing-library/react';
+import { Component as Breadcrumb } from '../Breadcrumb';
 
 test('BreadcrumbsComponent renderBreadcrumbs() should convert the props.crumbs array into jsx to be rendered', () => {
   const { container } = render(
@@ -17,9 +17,9 @@ test('BreadcrumbsComponent renderBreadcrumbs() should convert the props.crumbs a
             onClick: jest.fn(),
           },
         },
-      ]
+      ],
     }}
-    />
+    />,
   );
   const links = container.querySelectorAll('.breadcrumb__item-title');
   expect(links).toHaveLength(3);
@@ -44,12 +44,12 @@ test('BreadcrumbsComponent renderBreadcrumbs() can have multiple icons for the l
           href: 'href2',
           icons: [
             { className: 'breadcrumb2iconA', onClick: jest.fn() },
-            { className: 'breadcrumb2iconB', onClick: jest.fn() }
-          ]
+            { className: 'breadcrumb2iconB', onClick: jest.fn() },
+          ],
         },
-      ]
+      ],
     }}
-    />
+    />,
   );
   expect(container.querySelectorAll('.breadcrumb2iconA')).toHaveLength(1);
   expect(container.querySelectorAll('.breadcrumb2iconB')).toHaveLength(1);

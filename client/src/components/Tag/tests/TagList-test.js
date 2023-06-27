@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import TagList from '../TagList';
 import { fireEvent, render } from '@testing-library/react';
+import TagList from '../TagList';
 
 function makeProps(obj = {}) {
   return {
@@ -10,9 +10,9 @@ function makeProps(obj = {}) {
       { key: 'justKey' },
       { key: 'KeyPair', value: '123' },
       { key: 'KeyLabel', label: 'Some label' },
-      { key: 'KeyPairLabel', label: 'Some label', value: '123' }
+      { key: 'KeyPairLabel', label: 'Some label', value: '123' },
     ],
-    ...obj
+    ...obj,
   };
 }
 
@@ -32,7 +32,7 @@ test('TagList renders simple tags', () => {
 
 test('TagList renders deletable tags', () => {
   const { container } = render(<TagList {...makeProps({
-    deletable: true
+    deletable: true,
   })}
   />);
   const tags = container.querySelectorAll('.tag-list .tag-component');
@@ -45,7 +45,7 @@ test('TagList renders deletable tags', () => {
 
 test('TagList renders unfocusable tags', () => {
   const { container } = render(<TagList {...makeProps({
-    focusable: false
+    focusable: false,
   })}
   />);
   const tags = container.querySelectorAll('.tag-list .tag-component');
@@ -62,7 +62,7 @@ test('TagList handlers()', () => {
   const { container } = render(<TagList {...makeProps({
     deletable: true,
     onTagClick,
-    onTagDelete
+    onTagDelete,
   })}
   />);
   const tags = container.querySelectorAll('.tag-list .tag-component');
@@ -80,7 +80,7 @@ test('TagList handlers() - backspace', () => {
   const onTagDelete = jest.fn();
   const { container } = render(<TagList {...makeProps({
     deletable: true,
-    onTagDelete
+    onTagDelete,
   })}
   />);
   const tags = container.querySelectorAll('.tag-list .tag-component');
@@ -92,7 +92,7 @@ test('TagList handlers() - delete', () => {
   const onTagDelete = jest.fn();
   const { container } = render(<TagList {...makeProps({
     deletable: true,
-    onTagDelete
+    onTagDelete,
   })}
   />);
   const tags = container.querySelectorAll('.tag-list .tag-component');

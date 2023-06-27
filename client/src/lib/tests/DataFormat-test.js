@@ -1,13 +1,11 @@
 /* global jest, describe, beforeEach, it, pit, expect, process */
 
+import { decodeQuery, fileSize } from '../DataFormat';
 
 jest.unmock('isomorphic-fetch');
 jest.unmock('../DataFormat');
 jest.unmock('qs');
 jest.unmock('merge');
-
-import { decodeQuery, fileSize } from '../DataFormat';
-
 
 describe('DataFormat', () => {
   describe('decodeQuery', () => {

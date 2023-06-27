@@ -4,7 +4,7 @@ import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import Config from 'lib/Config';
 import buildApolloClient from 'boot/apollo/buildClient';
-import { setConfig } from 'state/config/ConfigActions';
+import setConfig from 'state/config/ConfigActions';
 import registerComponents from 'boot/registerComponents';
 import registerReducers from 'boot/registerReducers';
 import applyDevtools from 'boot/applyDevtools';
@@ -19,7 +19,7 @@ async function appBoot() {
   registerComponents();
   registerReducers();
   const middleware = [
-    thunkMiddleware
+    thunkMiddleware,
   ];
   const debugging = Config.get('debugging');
   let runMiddleware = applyMiddleware(...middleware);

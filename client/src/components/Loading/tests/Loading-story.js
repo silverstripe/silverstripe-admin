@@ -8,15 +8,15 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Provides a simple SilverStripe loading indicator component.'
+        component: 'Provides a simple SilverStripe loading indicator component.',
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      }
-    }
+      },
+    },
   },
   argTypes: {
     containerClass: {
@@ -24,9 +24,9 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'flexbox-area-grow' },
-      }
-    }
-  }
+      },
+    },
+  },
 };
 
 export const _Loading = () => <Loading />;

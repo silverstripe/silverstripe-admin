@@ -17,7 +17,7 @@ class IframeDialog extends Component {
   }
 
   renderHeader() {
-    const title = this.props.title;
+    const { title } = this.props;
     if (title) {
       return (
         <ModalHeader toggle={this.handleClosed}>{title}</ModalHeader>

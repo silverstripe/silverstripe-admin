@@ -1,10 +1,10 @@
 /* global jest, test, describe, it, expect */
 
 import React, { useState } from 'react';
-import useTabContext from '../useTabContext';
 import { Component as StatelessTabs } from 'components/Tabs/Tabs';
 import TabItem from 'components/Tabs/TabItem';
 import { render } from '@testing-library/react';
+import useTabContext from '../useTabContext';
 
 const TabContextPrinter = () => {
   const tabContext = useTabContext();
@@ -27,12 +27,12 @@ test('useTabContext in active tab', () => {
       <TabItem name="active">
         <TabContextPrinter />
       </TabItem>
-    </Tabs>
+    </Tabs>,
   );
   expect(JSON.parse(container.querySelector('.TabContextPrinter').innerHTML)).toMatchObject({
     activeTab: 'active',
     currentTab: 'active',
-    isOnActiveTab: true
+    isOnActiveTab: true,
   });
 });
 
@@ -43,12 +43,12 @@ test('useTabContext outside active tab', () => {
       <TabItem name="not-active">
         <TabContextPrinter />
       </TabItem>
-    </Tabs>
+    </Tabs>,
   );
   expect(JSON.parse(container.querySelector('.TabContextPrinter').innerHTML)).toMatchObject({
     activeTab: 'active',
     currentTab: 'not-active',
-    isOnActiveTab: false
+    isOnActiveTab: false,
   });
 });
 
@@ -62,12 +62,12 @@ test('useTabContext in nested tab', () => {
           </TabItem>
         </Tabs>
       </TabItem>
-    </Tabs>
+    </Tabs>,
   );
   expect(JSON.parse(container.querySelector('.TabContextPrinter').innerHTML)).toMatchObject({
     activeTab: 'sub-active',
     currentTab: 'sub-active',
-    isOnActiveTab: true
+    isOnActiveTab: true,
   });
 });
 
@@ -82,11 +82,11 @@ test('useTabContext inside active tab', () => {
         </Tabs>
       </TabItem>
       <TabItem name="not-active" />
-    </Tabs>
+    </Tabs>,
   );
   expect(JSON.parse(container.querySelector('.TabContextPrinter').innerHTML)).toMatchObject({
     activeTab: 'sub-active',
     currentTab: 'sub-active',
-    isOnActiveTab: true
+    isOnActiveTab: true,
   });
 });

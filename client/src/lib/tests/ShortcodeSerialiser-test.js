@@ -8,7 +8,7 @@ describe('ShortcodeSerialiser', () => {
       const result1 = ShortcodeSerialiser.match(
         'image',
         false,
-        '<p>[image id=4 alt="text" name=\'some text\']</p>'
+        '<p>[image id=4 alt="text" name=\'some text\']</p>',
       );
       expect(result1.name).toBe('image');
       expect(result1.original).toBe('[image id=4 alt="text" name=\'some text\']');
@@ -24,7 +24,7 @@ describe('ShortcodeSerialiser', () => {
       const result2 = ShortcodeSerialiser.match(
         'image',
         false,
-        '<p>[page id=4 alt="text" name=\'some text\']</p>'
+        '<p>[page id=4 alt="text" name=\'some text\']</p>',
       );
       expect(result2).toBe(null);
     });
@@ -34,11 +34,11 @@ describe('ShortcodeSerialiser', () => {
       const result1 = ShortcodeSerialiser.match(
         'image',
         true,
-        '<p>[image id=4 alt="text" name=\'some text\']Content in here[/image]</p>'
+        '<p>[image id=4 alt="text" name=\'some text\']Content in here[/image]</p>',
       );
       expect(result1.name).toBe('image');
       expect(result1.original).toBe(
-        '[image id=4 alt="text" name=\'some text\']Content in here[/image]'
+        '[image id=4 alt="text" name=\'some text\']Content in here[/image]',
       );
       expect(result1.properties).toEqual({
         id: '4',
@@ -52,7 +52,7 @@ describe('ShortcodeSerialiser', () => {
       const result2 = ShortcodeSerialiser.match(
         'image',
         true,
-        '<p>[image id=4 alt="text" name=\'some text\']Content in here</p>'
+        '<p>[image id=4 alt="text" name=\'some text\']Content in here</p>',
       );
       expect(result2).toBe(null);
     });
@@ -61,7 +61,7 @@ describe('ShortcodeSerialiser', () => {
       const result1 = ShortcodeSerialiser.match(
         'page',
         false,
-        '<p><a href="[page,id=\'4\',title=\'some%20title\']">Link here!</a></p>'
+        '<p><a href="[page,id=\'4\',title=\'some%20title\']">Link here!</a></p>',
       );
       expect(result1.name).toBe('page');
       expect(result1.original).toBe('[page,id=\'4\',title=\'some%20title\']');
@@ -78,7 +78,7 @@ describe('ShortcodeSerialiser', () => {
       const result1 = ShortcodeSerialiser.match(
         'image',
         false,
-        '<p>[image id=4 alt="text" name=\'some text\']</p><p>[image id=5]</p>'
+        '<p>[image id=4 alt="text" name=\'some text\']</p><p>[image id=5]</p>',
       );
       expect(result1.name).toBe('image');
       expect(result1.original).toBe('[image id=4 alt="text" name=\'some text\']');

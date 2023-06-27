@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import Tab from '../Tab';
 import { render, fireEvent } from '@testing-library/react';
+import Tab from '../Tab';
 
 const onToggle = jest.fn();
 
@@ -11,7 +11,7 @@ function makeProps(obj = {}) {
     title: 'Foo bar',
     tabClassName: 'special',
     onToggle,
-    ...obj
+    ...obj,
   };
 }
 
@@ -27,7 +27,7 @@ test('Tab active', () => {
     <Tab {...makeProps({
       active: true,
     })}
-    />
+    />,
   );
   expect(container.querySelectorAll('.nav-item .special.active')).toHaveLength(1);
 });
@@ -37,7 +37,7 @@ test('Tab inactive', () => {
     <Tab {...makeProps({
       active: false,
     })}
-    />
+    />,
   );
   expect(container.querySelectorAll('.nav-item .special.active')).toHaveLength(0);
 });
@@ -47,7 +47,7 @@ test('Tab disabled', () => {
     <Tab {...makeProps({
       disabled: true,
     })}
-    />
+    />,
   );
   expect(container.querySelector('.nav-item .special.disabled').hasAttribute('disabled')).toBeTruthy();
 });
@@ -57,7 +57,7 @@ test('Tab no title', () => {
     <Tab {...makeProps({
       title: null,
     })}
-    />
+    />,
   );
   expect(container.querySelectorAll('a')).toHaveLength(0);
 });

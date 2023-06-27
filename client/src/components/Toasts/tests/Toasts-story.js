@@ -9,8 +9,9 @@ const { onDismiss, primaryAction, onPause, onResume } = actionListMaker(
   'onDismiss',
   'primaryAction',
   'onPause',
-  'onResume'
+  'onResume',
 );
+/* eslint-disable-next-line no-unused-vars */
 const actions = [
   { label: 'Primary', onClick: primaryAction },
   { label: 'Secondary', href: 'https://silverstripe.com' },
@@ -54,7 +55,7 @@ export default {
         Do not use them to display critical information that requires immediate action from the user, such as validation errors. Consider using form alerts or modal alerts instead.
         For notifications with a moderate importance (e.g.: warning and non-critical errors), consider disabling the toast notification timeout by setting the \`stay\` attribute to \`true\`.
         If you attach actions to a toast notification, those should be shortcuts to a natural next step and an alternative 
-        way of performing that task should be available. e.g.: A toast confirming the publication of a page could offer an action to "View live page". `
+        way of performing that task should be available. e.g.: A toast confirming the publication of a page could offer an action to "View live page". `,
       },
       canvas: {
         sourceState: 'shown',
@@ -63,27 +64,27 @@ export default {
         sort: 'alpha',
       },
       story: {
-        height: '300px'
-      }
+        height: '300px',
+      },
     },
   },
   argsType: {
     text: {
-      control: 'text'
+      control: 'text',
     },
     type: {
       control: 'select',
-      options: ['info', 'success', 'warning', 'error']
+      options: ['info', 'success', 'warning', 'error'],
     },
     dismissed: {
-      control: 'boolean'
+      control: 'boolean',
     },
     onDismiss,
     actions: {
       control: 'select',
-      options: [0, 1, 2]
-    }
-  }
+      options: [0, 1, 2],
+    },
+  },
 };
 
 export const Single = (args) => (
@@ -93,7 +94,7 @@ Single.args = {
   text: 'The quick brown fox jumps over the lazy dog',
   type: 'info',
   dismissed: false,
-  onDismiss
+  onDismiss,
 };
 
 export const List = (args) => (

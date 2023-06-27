@@ -5,13 +5,15 @@ import React from 'react';
 import { createStore } from 'redux';
 import { render } from '@testing-library/react';
 
-const mockStore = createStore(state => state);
+import loadComponent from '../loadComponent';
+
+const mockStore = createStore((state) => state);
 
 function TestComponent() {
   return <span className="test-component">abc</span>;
 }
 
-const mockProvider = Item => Item;
+const mockProvider = (Item) => Item;
 
 jest.mock('../provideInjector', () => function mockInjector(Injected) {
   // eslint-disable-next-line
@@ -49,8 +51,6 @@ jest.mock('../Container', () => ({ ready: (callback) => { callback(); } }));
 jest.mock('@apollo/client', () => ({
   ApolloProvider: ({ children }) => <div className="myapolloprovider">{children}</div>,
 }));
-
-import loadComponent from '../loadComponent';
 
 describe('loadComponent', () => {
   it('should use the provided injector by default', () => {

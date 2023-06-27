@@ -42,7 +42,7 @@ const buildReducerContainer = (base = buildBaseContainer()) => ({
     };
     registry.add(
       meta,
-      enhancedFactory
+      enhancedFactory,
     );
   },
 

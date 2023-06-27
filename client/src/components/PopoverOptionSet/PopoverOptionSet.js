@@ -20,7 +20,7 @@ class PopoverOptionSet extends Component {
     this.focusOnTarget = this.focusOnTarget.bind(this);
 
     this.state = {
-      searchValue: ''
+      searchValue: '',
     };
   }
 
@@ -64,7 +64,7 @@ class PopoverOptionSet extends Component {
    */
   handleSearchValueClear() {
     this.setState(
-      { searchValue: '' }
+      { searchValue: '' },
     );
   }
 
@@ -74,7 +74,7 @@ class PopoverOptionSet extends Component {
    */
   handleSearchValueChange(event) {
     this.setState(
-      { searchValue: event.target.value }
+      { searchValue: event.target.value },
     );
   }
 
@@ -120,7 +120,7 @@ class PopoverOptionSet extends Component {
    */
   renderSearchBox() {
     const {
-      searchPlaceholder, disableSearch, searchClassName, searchInputClassName
+      searchPlaceholder, disableSearch, searchClassName, searchInputClassName,
     } = this.props;
     const { searchValue } = this.state;
 
@@ -151,7 +151,7 @@ class PopoverOptionSet extends Component {
   renderOptionButtons() {
     const {
       buttons, onSearch, buttonContainerClassName,
-      emptyResultClassName, buttonClassName, ButtonComponent
+      emptyResultClassName, buttonClassName, ButtonComponent,
     } = this.props;
     const { searchValue } = this.state;
 
@@ -179,7 +179,7 @@ class PopoverOptionSet extends Component {
             className={
               classNames(
                 button.className,
-                buttonClassName
+                buttonClassName,
               )
             }
             key={button.key}
@@ -226,7 +226,7 @@ PopoverOptionSet.propTypes = {
     className: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.object,
-      PropTypes.arrayOf(PropTypes.string)
+      PropTypes.arrayOf(PropTypes.string),
     ]),
     buttonProps: PropTypes.object,
   })).isRequired,
@@ -258,7 +258,7 @@ PopoverOptionSet.propTypes = {
 PopoverOptionSet.defaultProps = {
   searchPlaceholder: i18n._t('PopoverOptionSet.SEARCH_PLACEHOLDER', 'Search'),
   onSearch: (query, buttons) => buttons.filter(
-    ({ content }) => content.toLowerCase().includes(query.toLowerCase())
+    ({ content }) => content.toLowerCase().includes(query.toLowerCase()),
   ),
   disableSearch: false,
   ButtonComponent: Button,

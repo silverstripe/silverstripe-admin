@@ -21,7 +21,7 @@ function fieldHolder(Field) {
       }
 
       // If we have both meta and message, prefer meta only if form is dirty
-      const meta = this.props.meta;
+      const { meta } = this.props;
       if (meta && meta.error && meta.touched && (!message || meta.dirty)) {
         message = meta.error;
       }
@@ -86,7 +86,7 @@ function fieldHolder(Field) {
         {
           className: 'form__field-label',
           for: this.props.id,
-        }
+        },
       );
     }
 
@@ -106,7 +106,7 @@ function fieldHolder(Field) {
         {
           className: 'form__field-label',
           for: this.props.id,
-        }
+        },
       );
     }
 
@@ -121,7 +121,7 @@ function fieldHolder(Field) {
         ...this.props,
         extraClass: classnames(
           this.props.extraClass,
-          { 'is-invalid': hasMessage }
+          { 'is-invalid': hasMessage },
         ),
       };
 
@@ -175,7 +175,7 @@ function fieldHolder(Field) {
       return castStringToElement(
         'div',
         this.props.description,
-        { className: 'form__field-description' }
+        { className: 'form__field-description' },
       );
     }
 
@@ -220,7 +220,7 @@ function fieldHolder(Field) {
         suffix: PropTypes.string,
       }),
     ]),
-    titleTip: PropTypes.shape(tipShape)
+    titleTip: PropTypes.shape(tipShape),
   };
 
   FieldHolder.defaultProps = {

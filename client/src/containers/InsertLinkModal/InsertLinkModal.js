@@ -17,7 +17,7 @@ class InsertLinkModal extends Component {
   }
 
   componentDidUpdate(oldProps) {
-    const props = this.props;
+    const { props } = this;
     if ((props.isOpen && !oldProps.isOpen) || (!props.isOpen && oldProps.isOpen)) {
       props.setOverrides(props.isOpen ? props : null);
     }
@@ -36,7 +36,7 @@ class InsertLinkModal extends Component {
         onClosed: this.props.onClosed,
         autoFocus: true,
         showErrorMessage: true,
-      }
+      },
     );
     delete props.onInsert;
     delete props.sectionConfig;
@@ -103,7 +103,7 @@ const createInsertLinkModal = (sectionConfigKey, formName) => {
 
   return compose(
     connect(mapStateToProps, mapDispatchToProps),
-    fileSchemaModalHandler
+    fileSchemaModalHandler,
   )(InsertLinkModal);
 };
 
@@ -111,5 +111,5 @@ export { InsertLinkModal, createInsertLinkModal };
 
 export default compose(
   connect(() => ({}), mapDispatchToProps),
-  fileSchemaModalHandler
+  fileSchemaModalHandler,
 )(InsertLinkModal);

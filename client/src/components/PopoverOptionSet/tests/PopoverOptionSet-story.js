@@ -1,8 +1,7 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import ValueTracker from 'stories/ValueTracker';
-import { Component as PopoverOptionSetToggle } from '../PopoverOptionSetToggle';
 import { jsxDecorator } from 'storybook-addon-jsx';
+import { Component as PopoverOptionSetToggle } from '../PopoverOptionSetToggle';
 
 const buttons = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((letter) => ({
   content: `Button ${letter}`,
@@ -41,9 +40,8 @@ const customButtons = [
 ];
 
 const handleSearch = (term, set) => set.filter(
-  ({ content }) => content.toLowerCase() === `button ${term.toLowerCase()}`
+  ({ content }) => content.toLowerCase() === `button ${term.toLowerCase()}`,
 );
-
 
 export default {
   title: 'Admin/PopoverField/PopoverOptionSet',
@@ -54,15 +52,15 @@ export default {
       description: {
         component: `Generates a popover filled with buttons that can be filtered with a search.
         This component can be viewed in the bundled pattern library.
-        Additionally a toggle component is provided as a basic implementation or example to get started.`
+        Additionally a toggle component is provided as a basic implementation or example to get started.`,
       },
       canvas: {
         sourceState: 'hide',
       },
       controls: {
         sort: 'alpha',
-      }
-    }
+      },
+    },
   },
   decorators: [
     jsxDecorator,
@@ -70,15 +68,15 @@ export default {
   argTypes: {
     buttons: {
       control: 'object',
-      options: { ...buttons }
+      options: { ...buttons },
     },
     id: {
-      control: 'text'
+      control: 'text',
     },
     disableSearch: {
-      control: 'boolean'
-    }
-  }
+      control: 'boolean',
+    },
+  },
 };
 
 export const SimpleExample = {
@@ -86,7 +84,7 @@ export const SimpleExample = {
     buttons,
     id: 'Sample',
     disableSearch: true,
-  }
+  },
 };
 
 export const WithIcons = (args) => (
@@ -94,7 +92,7 @@ export const WithIcons = (args) => (
 );
 WithIcons.args = {
   ...SimpleExample.args,
-  buttons: iconButtons
+  buttons: iconButtons,
 };
 
 export const ComplexContent = (args) => (
@@ -107,7 +105,7 @@ export const ComplexContent = (args) => (
 );
 ComplexContent.args = {
   ...SimpleExample.args,
-  buttons: customButtons
+  buttons: customButtons,
 };
 
 export const CustomSearch = (args) => (
@@ -122,5 +120,5 @@ CustomSearch.args = {
   ...SimpleExample.args,
   buttons,
   onSearch: handleSearch,
-  searchPlaceholder: 'Custom search placeholder'
+  searchPlaceholder: 'Custom search placeholder',
 };

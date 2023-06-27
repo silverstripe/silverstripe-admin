@@ -15,7 +15,7 @@ const importanceLevels = Object.keys(TIP_IMPORTANCE_LEVELS).reduce(
     ...accumulator,
     [`TIP_IMPORTANCE_LEVELS.${key}`]: TIP_IMPORTANCE_LEVELS[key],
   }),
-  {}
+  {},
 );
 
 export default {
@@ -30,15 +30,15 @@ export default {
         You can use it with an \`InputField\` by passing the relevant configuration in the \`tip\` prop.
         See the \`addTip\` method in \`TextField.php\` for an explanation on how to add Tips from the backend.
         **Note:** The Tip UI will visually conflict with prefix / suffix rendering, as they use the same input-grou
-        functionality and this can't be stacked.`
+        functionality and this can't be stacked.`,
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      }
-    }
+      },
+    },
   },
   argTypes: {
     id: {
@@ -47,7 +47,7 @@ export default {
       table: {
         type: { summary: 'string|number' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     content: {
       description: 'The text to render in the popover. Should be plaintext - HTML will not be parsed.',
@@ -55,7 +55,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     icon: {
       description: 'An icon from the icon font to use. See the Icon reference in the Pattern Library UI. Defaults to `lamp`.',
@@ -63,7 +63,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'lamp' },
-      }
+      },
     },
     importance: {
       description: `Should be specified as \`'normal'\` or \`'high'\` (defaults to \`'normal'\`). Designates the colour used for
@@ -73,7 +73,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'lamp' },
-      }
+      },
     },
     fieldTitle: {
       description: 'A title for the field it relates to, which will be read aloud for screenreaders.',
@@ -81,9 +81,9 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'lamp' },
-      }
+      },
     },
-  }
+  },
 };
 
 export const _TitleTip = () => (
@@ -117,7 +117,7 @@ _InputGroupTip.args = {
   fieldTitle: inputProps.title,
   icon: 'lamp',
   importance: 'normal',
-  type: TIP_TYPES.INPUT_GROUP
+  type: TIP_TYPES.INPUT_GROUP,
 };
 
 _InputGroupTip.argsType = {
@@ -127,6 +127,6 @@ _InputGroupTip.argsType = {
   },
   importance: {
     control: 'inline-radio',
-    options: importanceLevels
-  }
+    options: importanceLevels,
+  },
 };

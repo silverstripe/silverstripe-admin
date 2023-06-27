@@ -1,9 +1,7 @@
 /* global jest, test, describe, expect, it, beforeEach */
 
 import React from 'react';
-import { Component as FormBuilder } from '../FormBuilder';
 import schemaFieldValues, { findField, schemaMerge } from 'lib/schemaFieldValues';
-import { render } from '@testing-library/react';
 
 const apiMock = jest.fn();
 apiMock.mockImplementation(() => Promise.resolve({}));
@@ -29,7 +27,7 @@ function makeProps(obj = {}) {
         fields: [],
       },
     },
-    ...obj
+    ...obj,
   };
 }
 
@@ -45,23 +43,23 @@ function makeSchema() {
         actions: [
           { id: 'actionOne', name: 'actionOne' },
           { id: 'actionTwo', name: 'actionTwo' },
-        ]
+        ],
       },
       state: {
         fields: [
           { id: 'fieldOne', name: 'fieldOne', value: 'valOne' },
           { id: 'fieldTwo', name: 'fieldTwo', value: null },
           { id: 'notInSchema', name: 'notInSchema', value: 'invalid' },
-        ]
-      }
-    }
+        ],
+      },
+    },
   };
 }
-
+/* eslint-disable-next-line no-unused-vars */
 function makePropsWithSchema(obj = {}) {
   return makeProps({
     ...makeSchema(),
-    ...obj
+    ...obj,
   });
 }
 
@@ -108,7 +106,7 @@ test('schemaFieldValues() should retrieve field values based on schema', () => {
       { id: 'fieldOne', name: 'fieldOne', value: 'valOne' },
       { id: 'fieldTwo', name: 'fieldTwo', value: null },
       { id: 'notInSchema', name: 'notInSchema', value: 'invalid' },
-    ]
+    ],
   };
   const fieldValues = schemaFieldValues(schema, state);
   expect(fieldValues).toEqual({

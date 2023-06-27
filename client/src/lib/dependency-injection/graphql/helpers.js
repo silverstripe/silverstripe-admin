@@ -46,9 +46,9 @@ export const getFields = ({ args, fields, pagination = true }, stack = [ROOT_FIE
       return `
       {
         ${getFields(
-          { args, fields: field, pagination: false },
-          [...stack, fields[i - 1]],
-        )}
+    { args, fields: field, pagination: false },
+    [...stack, fields[i - 1]],
+  )}
       }`;
     }
     const path = [...stack, field];

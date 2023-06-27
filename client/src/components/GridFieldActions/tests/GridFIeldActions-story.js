@@ -8,20 +8,20 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'GridFieldActions description.'
+        component: 'GridFieldActions description.',
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      }
-    }
+      },
+    },
   },
-  argTypes: {}
+  argTypes: {},
 };
 
-const Template = args => <GridFieldActions {...args} />;
+const Template = (args) => <GridFieldActions {...args} />;
 
 export const Multiple = Template.bind({});
 Multiple.args = {
@@ -46,7 +46,7 @@ Multiple.args = {
         'data-url': 'admin/pages/edit/EditForm/8/field/Companies',
       },
     },
-  ]
+  ],
 };
 
 export const Grouped = Template.bind({});
@@ -88,7 +88,7 @@ Grouped.args = {
         extraClass: 'edit-link',
       },
     },
-  ]
+  ],
 };
 
 export const Complex = Template.bind({});
@@ -214,7 +214,7 @@ Complex.args = {
         'data-url': 'admin/pages/edit/EditForm/8/field/Companies',
       },
     },
-  ]
+  ],
 };
 export const _GridFieldActions = Template.bind({});
 _GridFieldActions.args = {
@@ -228,5 +228,5 @@ _GridFieldActions.args = {
         extraClass: 'edit-link',
       },
     },
-  ]
+  ],
 };

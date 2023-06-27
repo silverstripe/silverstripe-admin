@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import LabelField from '../LabelField';
 import { render } from '@testing-library/react';
+import LabelField from '../LabelField';
 
 test('LabelField render() renders', () => {
   const { container } = render(
@@ -12,10 +12,10 @@ test('LabelField render() renders', () => {
       extraClass: 'my-extra-class',
       title: 'my-title',
       data: {
-        target: 'my-target'
-      }
+        target: 'my-target',
+      },
     }}
-    />
+    />,
   );
   expect(container.querySelectorAll('label')).toHaveLength(1);
 });

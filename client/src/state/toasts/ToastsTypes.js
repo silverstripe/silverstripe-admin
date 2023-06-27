@@ -8,7 +8,6 @@
  * @property {string} [id] Unique identifier for the toast. Will be generated if not provided.
  */
 
-
 /**
  * Full toast options after being enriched in the redux store. Only the component rendering
  * toast and the toast reducer need this.
@@ -25,4 +24,3 @@
  * @property {boolean} paused Whatever the toast container is currently paused.
  * @property {ToastOption[]} toasts List of current toast.
  */
-

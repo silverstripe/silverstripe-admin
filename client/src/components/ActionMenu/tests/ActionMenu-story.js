@@ -9,17 +9,17 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'ActionMenu Component description.'
+        component: 'ActionMenu Component description.',
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      }
-    }
+      },
+    },
   },
-  argTypes: {}
+  argTypes: {},
 };
 
 export const Single = () => (

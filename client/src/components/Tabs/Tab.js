@@ -37,7 +37,7 @@ Tab.propTypes = {
 
 Tab.defaultProps = {
   disabled: false,
-  active: false
+  active: false,
 };
 
 export default Tab;

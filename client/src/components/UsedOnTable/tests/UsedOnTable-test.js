@@ -4,7 +4,6 @@ import { render } from '@testing-library/react';
 import { Component as UsedOnTable } from '../UsedOnTable';
 import provideUsedOnData from '../provideUsedOnData';
 
-
 function makeProps(obj = {}) {
   return {
     identifier: 'abc',
@@ -19,14 +18,14 @@ function makeProps(obj = {}) {
     },
     forceFetch: true,
     loadUsedOn: () => {},
-    ...obj
+    ...obj,
   };
 }
 
 test('UsedOnTable provideUsedOnData HOC should try to load data onMount', () => {
   const loadUsedOn = jest.fn();
   const props = makeProps({
-    loadUsedOn
+    loadUsedOn,
   });
   const mockComponent = jest.fn((givenProps) => {
     // test that props are just passed through
@@ -54,7 +53,7 @@ test('UsedOnTable should not show a loading message if loading and there are alr
     loading: true,
     usedOn: [
       { id: 'abc', title: 'now I know', type: 'Page', ancestors: [] },
-    ]
+    ],
   })}
   />);
   expect(container.querySelector('.used-on__message--loading')).toBeNull();
@@ -84,7 +83,7 @@ test('UsedOnTable should convert index to 1-based count', () => {
   const { container } = render(<UsedOnTable {...makeProps({
     usedOn: [
       { id: 'abc', title: 'now I know', type: 'Page', ancestors: [] },
-    ]
+    ],
   })}
   />);
   const index = container.querySelector('.used-on__col--index');
@@ -98,7 +97,7 @@ test('UsedOnTable should add a link to table cells if the property is provided',
   const { container } = render(<UsedOnTable {...makeProps({
     usedOn: [
       { id: 'abc', title: 'now I know', type: 'Page', ancestors: [], link: 'http://www.silverstripe.org/' },
-    ]
+    ],
   })}
   />);
   const td = container.querySelectorAll('.used-on__cell-link');
@@ -111,7 +110,7 @@ test('UsedOnTable should add a link to table cell if an link is blank and ancest
   const { container } = render(<UsedOnTable {...makeProps({
     usedOn: [
       { id: 'abc', title: 'now I know', type: 'Page', ancestors: [{ title: 'Trees', link: 'http://www.silverstripe.org/trees' }], link: '' },
-    ]
+    ],
   })}
   />);
   const td = container.querySelectorAll('.used-on__cell-link');
@@ -124,7 +123,7 @@ test('UsedOnTable should add a hash link to table cells if no link is provided a
   const { container } = render(<UsedOnTable {...makeProps({
     usedOn: [
       { id: 'abc', title: 'now I know', type: 'Page', ancestors: [{ title: 'Flowers', link: '' }], link: '' },
-    ]
+    ],
   })}
   />);
   const td = container.querySelectorAll('.used-on__cell-link');
@@ -138,7 +137,7 @@ test('UsedOnTable should show the title provided', () => {
   const { container } = render(<UsedOnTable {...makeProps({
     usedOn: [
       { id: 'abc', title: 'now I know', type: 'Boom!', ancestors: [] },
-    ]
+    ],
   })}
   />);
   const type = container.querySelectorAll('.used-on__type');

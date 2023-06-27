@@ -1,12 +1,11 @@
 /* global jest, describe, beforeEach, it, pit, expect, process */
 
+import backend from '../Backend';
 
 jest.unmock('isomorphic-fetch');
 jest.unmock('../Backend');
 jest.unmock('qs');
 jest.unmock('merge');
-
-import backend from '../Backend';
 
 /**
  * Return a mock function that returns a promise
@@ -52,7 +51,7 @@ describe('Backend', () => {
           method: 'get',
           credentials: 'same-origin',
           headers: {},
-        }
+        },
       );
     });
   });
@@ -77,7 +76,7 @@ describe('Backend', () => {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
           body: JSON.stringify(postData),
-        }
+        },
       );
     });
   });
@@ -100,7 +99,7 @@ describe('Backend', () => {
           credentials: 'same-origin',
           headers: {},
           body: JSON.stringify(putData),
-        }
+        },
       );
     });
   });
@@ -123,7 +122,7 @@ describe('Backend', () => {
           credentials: 'same-origin',
           headers: {},
           body: JSON.stringify(deleteData),
-        }
+        },
       );
     });
   });
@@ -177,7 +176,7 @@ describe('Backend', () => {
           '{"id":1,"values":{"a":"aye","b":"bee"}}', {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-          }
+          },
         );
 
       promise
@@ -206,7 +205,7 @@ describe('Backend', () => {
           'two=2&three=3', {
             Accept: 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded',
-          }
+          },
         );
 
       promise
@@ -237,7 +236,7 @@ describe('Backend', () => {
           '{"two":2}', {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-          }
+          },
         );
 
       promise
@@ -296,7 +295,7 @@ describe('Backend', () => {
           }), {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-          }
+          },
         );
 
       promise

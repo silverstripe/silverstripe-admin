@@ -1,10 +1,10 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import { useTabFirstShow } from '../useTabContext';
 import { Component as Tabs } from 'components/Tabs/Tabs';
 import TabItem from 'components/Tabs/TabItem';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import { useTabFirstShow } from '../useTabContext';
 
 const TabContextPrinter = ({ callback }) => {
   useTabFirstShow(callback);
@@ -24,12 +24,12 @@ test('useTabFirstShow in active tab', () => {
       <TabItem name="active">
         <TabContextPrinter callback={callback} />
       </TabItem>
-    </Tabs>
+    </Tabs>,
   );
   expect(callback).toBeCalledWith({
     activeTab: 'active',
     currentTab: 'active',
-    isOnActiveTab: true
+    isOnActiveTab: true,
   });
 });
 
@@ -41,15 +41,14 @@ test('useTabFirstShow outside active tab', async () => {
       <TabItem name="secondary">
         <TabContextPrinter callback={callback}/>
       </TabItem>
-    </Tabs>
+    </Tabs>,
   );
   expect(callback).not.toBeCalled();
 });
 
-
 test('useTabFirstShow inside inactive tab', () => {
   const callback = jest.fn();
-  const { container } = render(
+  render(
     <Tabs id="foo" activeTab="secondary" activateTab={() => (false)}>
       <TabItem name="active" />
       <TabItem name="secondary">
@@ -59,18 +58,18 @@ test('useTabFirstShow inside inactive tab', () => {
           </TabItem>
         </Tabs>
       </TabItem>
-    </Tabs>
+    </Tabs>,
   );
   expect(callback).toBeCalledWith({
     activeTab: 'subactive',
     currentTab: 'subactive',
-    isOnActiveTab: true
+    isOnActiveTab: true,
   });
 });
 
 test('useTabFirstShow inside inactive tab', () => {
   const callback = jest.fn();
-  const { container } = render(
+  render(
     <Tabs id="foo" activeTab="secondary" activateTab={() => (false)}>
       <TabItem name="active" />
       <TabItem name="secondary">
@@ -81,7 +80,7 @@ test('useTabFirstShow inside inactive tab', () => {
           </TabItem>
         </Tabs>
       </TabItem>
-    </Tabs>
+    </Tabs>,
   );
   expect(callback).not.toBeCalled();
 });

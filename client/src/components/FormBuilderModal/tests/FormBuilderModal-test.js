@@ -32,13 +32,13 @@ function makeProps(obj = {}) {
         }}
       />
     ),
-    ...obj
+    ...obj,
   };
 }
 
 test('FormBuilderModal getResponse() should show no response initially', async () => {
   render(
-    <FormBuilderModal {...makeProps({})}/>
+    <FormBuilderModal {...makeProps({})}/>,
   );
   const modal = await screen.findByTestId('test-modal');
   expect(modal.textContent).toBe('');
@@ -46,14 +46,14 @@ test('FormBuilderModal getResponse() should show no response initially', async (
 
 test('FormBuilderModal getResponse() should show error message', async () => {
   render(
-    <FormBuilderModal {...makeProps({})}/>
+    <FormBuilderModal {...makeProps({})}/>,
   );
   const loader = await screen.findByTestId('test-formbuilderloader');
   nextAction = 'onLoadingError';
   nextParam = {
     errors: [{
       value: 'catastrophe',
-    }]
+    }],
   };
   fireEvent.click(loader);
   const modal = await screen.findByTestId('test-modal');
@@ -63,14 +63,14 @@ test('FormBuilderModal getResponse() should show error message', async () => {
 test('FormBuilderModal getResponse() should show success message', async () => {
   render(
     <FormBuilderModal {...makeProps({
-      onSubmit: (data) => Promise.resolve(data)
+      onSubmit: (data) => Promise.resolve(data),
     })}
-    />
+    />,
   );
   const loader = await screen.findByTestId('test-formbuilderloader');
   nextAction = 'onSubmit';
   nextParam = {
-    message: 'happy days'
+    message: 'happy days',
   };
   fireEvent.click(loader);
   const modal = await screen.findByTestId('test-modal');

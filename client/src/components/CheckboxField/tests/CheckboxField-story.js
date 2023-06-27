@@ -12,12 +12,12 @@ export default {
     docs: {
       description: {
         component: `Generates a single checkbox element.
-        _NOTE:_ For other properties, please refer to the [reactstrap Radio/Checkbox](https://reactstrap.github.io/components/form/) documentation.`
+        _NOTE:_ For other properties, please refer to the [reactstrap Radio/Checkbox](https://reactstrap.github.io/components/form/) documentation.`,
       },
       canvas: {
         sourceState: 'shown',
       },
-    }
+    },
   },
   argTypes: {
     id: {
@@ -26,7 +26,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     extraClass: {
       description: 'Extra classes the component should have.',
@@ -34,7 +34,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     name: {
       description: 'The name for the component. Required',
@@ -42,7 +42,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     leftTitle: {
       description: 'Title to display to the left (if inline) or above the field, check above NOTE about handling raw html.',
@@ -50,7 +50,7 @@ export default {
       table: {
         type: { summary: 'any' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     title: {
       description: 'Title to display if leftTitle is not defined, check above NOTE about handling raw html.',
@@ -58,50 +58,47 @@ export default {
       table: {
         type: { summary: 'any' },
         defaultValue: { summary: '' },
-      }
-    },
-    value: {
-      control: 'text'
+      },
     },
     message: {
       control: 'object',
       table: {
         type: { summary: 'object' },
         defaultValue: { summary: '{}' },
-      }
+      },
     },
     description: {
-      control: 'text'
+      control: 'text',
     },
     onChange: {
       description: 'Event handler for when the component changes.',
       table: {
         type: { summary: 'function' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     value: {
       description: 'Whether this is checked or not, *this does not hold an explicit value*!',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: false },
-      }
+      },
     },
     readOnly: {
       description: 'Whether this field is read only.',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: false },
-      }
+      },
     },
     disabled: {
       description: 'Whether this field is disabled.',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: false },
-      }
-    }
-  }
+      },
+    },
+  },
 };
 
 export const _CheckboxField = {
@@ -110,8 +107,8 @@ export const _CheckboxField = {
     value: '1',
     message: {
       type: 'error',
-      value: 'A message about the field.'
+      value: 'A message about the field.',
     },
-    description: 'A description of the field.'
-  }
+    description: 'A description of the field.',
+  },
 };

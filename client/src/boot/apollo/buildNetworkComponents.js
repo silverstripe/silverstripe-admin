@@ -1,7 +1,7 @@
 import { ApolloLink, HttpLink } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import Config from 'lib/Config';
-import { joinUrlPaths } from 'lib/urls';
+import joinUrlPaths from 'lib/urls';
 
 const buildNetworkComponents = (baseUrl) => {
   const httpLink = new HttpLink({

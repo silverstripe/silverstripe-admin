@@ -34,6 +34,6 @@ jQuery.entwine('ss', ($) => {
         const { dispatch } = Injector.reducer.store;
         dispatch(display(options));
       });
-    }
+    },
   });
 })(jQuery);

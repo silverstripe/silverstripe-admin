@@ -19,7 +19,7 @@ const ToastsContainer = ({ toasts, actions: { dismiss, pause, resume } }) => (
 const mapStateToProps = ({ toasts: { toasts } }) => ({ toasts });
 
 const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators(toastsActions, dispatch)
+  actions: bindActionCreators(toastsActions, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToastsContainer);

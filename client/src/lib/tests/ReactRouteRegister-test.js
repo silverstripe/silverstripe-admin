@@ -1,9 +1,9 @@
 /* global jest, describe, afterEach, it, expect */
 
+import reactRouteRegister from '../ReactRouteRegister';
+
 jest.unmock('deep-freeze-strict');
 jest.unmock('../ReactRouteRegister.js');
-
-import reactRouteRegister from '../ReactRouteRegister';
 
 const DummyComponent = () => {};
 

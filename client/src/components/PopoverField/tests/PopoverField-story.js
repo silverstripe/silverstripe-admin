@@ -15,15 +15,15 @@ export default {
     docs: {
       description: {
         component: `Creates a popup box that may contain other nested fields. The activator for this popup
-        is represented by a button.`
+        is represented by a button.`,
       },
       canvas: {
         sourceState: 'hide',
       },
       controls: {
         sort: 'alpha',
-      }
-    }
+      },
+    },
   },
 };
 

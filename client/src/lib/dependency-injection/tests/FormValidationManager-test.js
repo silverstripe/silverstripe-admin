@@ -33,7 +33,7 @@ describe('FormValidationManager', () => {
     expect(manager.getState().Population).toEqual(['qux', 'baz']);
     expect(manager.getState().CapitalCity).toEqual(['foo', 'bar']);
     expect(() => manager.addError({
-      uncle: 'cheese'
+      uncle: 'cheese',
     })).toThrow();
   });
 

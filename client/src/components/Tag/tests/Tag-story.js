@@ -1,9 +1,9 @@
 import React from 'react';
-import actionListMaker from '../../../stories/actionListMaker';
 import Tag from 'components/Tag/Tag';
 import TagList from 'components/Tag/TagList';
 import CompactTagList from 'components/Tag/CompactTagList';
 import { jsxDecorator } from 'storybook-addon-jsx';
+import actionListMaker from '../../../stories/actionListMaker';
 
 const tags = [
   { key: 'justKey' },
@@ -18,12 +18,12 @@ const tagActions = actionListMaker(
   'onDeleteKey',
   'onBackSpace',
   'onNext',
-  'onPrevious'
+  'onPrevious',
 );
 const tagListActions = actionListMaker(
   'onHolderFocus',
   'onTagClick',
-  'onTagDelete'
+  'onTagDelete',
 );
 const compactTagListActions = actionListMaker('onSummary');
 
@@ -35,15 +35,15 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: '`<Tag />` can be used to visually associate a record with related topics. Tags can be used individually or as part of a `<TagList />`'
+        component: '`<Tag />` can be used to visually associate a record with related topics. Tags can be used individually or as part of a `<TagList />`',
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      }
-    }
+      },
+    },
   },
 };
 
@@ -52,7 +52,7 @@ _TagList.args = {
   deletable: false,
   focusable: true,
   tags,
-  ...tagListActions
+  ...tagListActions,
 };
 
 export const _CompactTagList = (args) => (<CompactTagList {...args}/>);
@@ -62,7 +62,7 @@ _CompactTagList.args = {
   maxSize: 200,
   tags,
   ...tagListActions,
-  ...compactTagListActions
+  ...compactTagListActions,
 };
 
 export const _Tag = (args) => (<Tag {...args}/>);
@@ -72,5 +72,5 @@ _Tag.args = {
   value: '',
   deletable: false,
   focusable: true,
-  ...tagActions
+  ...tagActions,
 };

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
-import PopoverOptionSet from './PopoverOptionSet';
 import { inject } from 'lib/Injector';
 import i18n from 'i18n';
+import PopoverOptionSet from './PopoverOptionSet';
 
 /**
  * Simple component that presents a button that will toggle a PopoverOptionSet.
@@ -78,6 +78,5 @@ export default inject(
   (PopoverOptionSetComponent) => ({
     PopoverOptionSetComponent,
   }),
-  () => 'PopoverOptionSetToggle'
+  () => 'PopoverOptionSetToggle',
 )(PopoverOptionSetToggle);
-

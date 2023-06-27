@@ -9,7 +9,7 @@ export default {
     docs: {
       description: {
         component: `Generates a select/dropdown field.
-        _NOTE:_ For other properties, please refer to the [reactstrap Input](https://reactstrap.github.io/components/form/) documentation.`
+        _NOTE:_ For other properties, please refer to the [reactstrap Input](https://reactstrap.github.io/components/form/) documentation.`,
       },
       canvas: {
         sourceState: 'shown',
@@ -17,8 +17,8 @@ export default {
       controls: {
         sort: 'alpha',
         exclude: ['store'],
-      }
-    }
+      },
+    },
   },
   argTypes: {
     id: {
@@ -27,7 +27,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     extraClass: {
       description: 'Extra classes the component should have.',
@@ -35,18 +35,18 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     name: {
       description: 'The name for the component.',
       control: 'text',
       type: {
-        required: true
+        required: true,
       },
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     readOnly: {
       description: 'Whether this field is read only.',
@@ -54,21 +54,21 @@ export default {
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: false },
-      }
+      },
     },
     onChange: {
       description: 'Event handler for when the component changes.',
       table: {
         type: { summary: 'function' },
         defaultValue: { summary: false },
-      }
+      },
     },
     value: {
       description: 'The value that matches one of the source items value.',
       table: {
         type: { summary: 'string|number' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     source: {
       description: `Array of items to appear in the list with the following properties excepted.
@@ -79,7 +79,7 @@ export default {
       table: {
         type: { summary: 'object' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     disabled: {
       description: 'Whether this field is disabled.',
@@ -87,7 +87,7 @@ export default {
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: false },
-      }
+      },
     },
     data: {
       description: `Extra data that helps define this field uniquely.
@@ -97,9 +97,9 @@ export default {
       table: {
         type: { summary: 'object' },
         defaultValue: { summary: '' },
-      }
-    }
-  }
+      },
+    },
+  },
 };
 
 export const EmptyDefault = (args) => <SingleSelectField {...args} />;
@@ -132,13 +132,13 @@ EmptyDefault.args = {
   data: {
     hasEmptyDefault: true,
     emptyString: 'Choose an option',
-  }
+  },
 };
 
 export const Readonly = {
   args: {
     ...EmptyDefault.args,
     readOnly: true,
-    value: 'One'
-  }
+    value: 'One',
+  },
 };

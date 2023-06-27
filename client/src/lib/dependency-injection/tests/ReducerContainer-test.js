@@ -1,7 +1,8 @@
 /* global jest, describe, beforeEach, it, pit, expect, process */
 
-jest.mock('../MiddlewareRegistry', () => jest.fn().mockImplementation(() => ({ add: () => {} })));
 import buildReducerContainer from '../buildReducerContainer';
+
+jest.mock('../MiddlewareRegistry', () => jest.fn().mockImplementation(() => ({ add: () => {} })));
 
 describe('ReducerContainer', () => {
   let container = null;

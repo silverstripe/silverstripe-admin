@@ -1,8 +1,8 @@
 /* global jest, test, expect, beforeAll, afterAll */
 
 import React from 'react';
-import Toasts from '../Toasts';
 import { render, fireEvent, act } from '@testing-library/react';
+import Toasts from '../Toasts';
 
 // Need to use act() when using fake timers with react-testing-library
 // https://kentcdodds.com/blog/fix-the-not-wrapped-in-act-warning#1-when-using-jestusefaketimers
@@ -19,7 +19,7 @@ function makeProps(obj = {}) {
     onDismiss: jest.fn(),
     onPause: jest.fn(),
     onResume: jest.fn(),
-    ...obj
+    ...obj,
   };
 }
 
@@ -42,9 +42,9 @@ const toastTwo = {
 test('Toasts no toasts', () => {
   const { container } = render(
     <Toasts {...makeProps({
-      toasts: []
+      toasts: [],
     })}
-    />
+    />,
   );
   expect(container.querySelectorAll('.toast')).toHaveLength(0);
   const toasts = container.querySelector('.toasts');
@@ -58,9 +58,9 @@ test('Toasts one toast', () => {
   const { container } = render(
     <Toasts {...makeProps({
       toasts: [toastOne],
-      onDismiss
+      onDismiss,
     })}
-    />
+    />,
   );
   expect(container.querySelectorAll('.toast')).toHaveLength(1);
   const button = container.querySelector('.toast__close');
@@ -73,9 +73,9 @@ test('Toasts many toasts', () => {
   const { container } = render(
     <Toasts {...makeProps({
       toasts: [toastOne, toastTwo],
-      onDismiss
+      onDismiss,
     })}
-    />
+    />,
   );
   expect(container.querySelectorAll('.toast')).toHaveLength(2);
   const button = container.querySelectorAll('.toast__close')[1];
@@ -88,9 +88,9 @@ test('Toasts Pause/Resuming dismissal timeout Pause on Mouse Enter', () => {
   const { container } = render(
     <Toasts {...makeProps({
       toasts: [toastOne],
-      onPause
+      onPause,
     })}
-    />
+    />,
   );
   const toast = container.querySelector('.toast');
   fireEvent.mouseEnter(toast);
@@ -104,9 +104,9 @@ test('Toasts Pause/Resuming dismissal timeout Pause on Focus', () => {
   const { container } = render(
     <Toasts {...makeProps({
       toasts: [toastOne],
-      onPause
+      onPause,
     })}
-    />
+    />,
   );
   const toast = container.querySelector('.toast');
   fireEvent.focus(toast);
@@ -120,9 +120,9 @@ test('Toasts Pause/Resuming dismissal timeout Resume on Mouse Leave', () => {
   const { container } = render(
     <Toasts {...makeProps({
       toasts: [toastOne],
-      onResume
+      onResume,
     })}
-    />
+    />,
   );
   const toast = container.querySelector('.toast');
   fireEvent.mouseLeave(toast);
@@ -136,9 +136,9 @@ test('Toasts Pause/Resuming dismissal timeout Pause on Blur', () => {
   const { container } = render(
     <Toasts {...makeProps({
       toasts: [toastOne],
-      onResume
+      onResume,
     })}
-    />
+    />,
   );
   const toast = container.querySelector('.toast');
   fireEvent.blur(toast);
@@ -154,9 +154,9 @@ test('Toasts Pause/Resuming dismissal timeout Debouncing', async () => {
     <Toasts {...makeProps({
       toasts: [toastOne],
       onPause,
-      onResume
+      onResume,
     })}
-    />
+    />,
   );
   const toast = container.querySelector('.toast');
   fireEvent.focus(toast);

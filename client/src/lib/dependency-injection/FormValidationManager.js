@@ -27,7 +27,7 @@ class FormValidationManager {
 
     this.errorMap[fieldName] = [
       ...this.errorMap[fieldName],
-      message
+      message,
     ];
 
     return this;
@@ -39,13 +39,13 @@ class FormValidationManager {
    * @returns {FormValidationManager}
    */
   addErrors(map) {
-    Object.entries(map).forEach(entry => {
+    Object.entries(map).forEach((entry) => {
       const [fieldName] = entry;
       let [, messages] = entry;
       if (!Array.isArray(messages)) {
         messages = [messages];
       }
-      messages.forEach(message => this.addError(fieldName, message));
+      messages.forEach((message) => this.addError(fieldName, message));
     });
 
     return this;

@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import LiteralField from '../LiteralField';
 import { render } from '@testing-library/react';
+import LiteralField from '../LiteralField';
 
 test('LiteralField render() renders', () => {
   const { container } = render(
@@ -13,7 +13,7 @@ test('LiteralField render() renders', () => {
       extraClass: 'my-extra-class',
       value: '<h2>My literal heading</h2><p>My literal content</p>',
     }}
-    />
+    />,
   );
   const h2 = container.querySelector('h2');
   const p = container.querySelector('p');

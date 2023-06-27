@@ -1,15 +1,15 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import TabNav from '../TabNav';
 import { render, fireEvent } from '@testing-library/react';
+import TabNav from '../TabNav';
 
 const onToggle = jest.fn();
 
 function makeProps(obj = {}) {
   return {
     onToggle,
-    ...obj
+    ...obj,
   };
 }
 
@@ -22,7 +22,7 @@ test('TabNav render', () => {
       <div name="first" title="Child One" />
       <div name="second" title="Child Two" />
       <div name="three" title="Child Three" />
-    </TabNav>
+    </TabNav>,
   );
   expect(container.querySelectorAll('.nav-tabs')).toHaveLength(1);
   expect(container.querySelectorAll('.nav-tabs .nav-link')).toHaveLength(3);
@@ -45,7 +45,7 @@ test('TabNav hidden when only one child is provided', () => {
   const { container } = render(
     <TabNav {...makeProps()}>
       <div name="first" title="Child One" />
-    </TabNav>
+    </TabNav>,
   );
   expect(container.querySelectorAll('.nav-tabs .nav-link')).toHaveLength(0);
 });

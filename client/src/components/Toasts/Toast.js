@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import i18n from 'i18n';
 import { Toast as BsToast, ToastBody } from 'reactstrap';
 import classnames from 'classnames';
-import { ToastActions } from './ToastActions';
 import Button from 'components/Button/Button';
+import { ToastActions } from './ToastActions';
 
 /**
  * Props for an individual Toast
@@ -13,7 +13,7 @@ export const toastShape = {
   text: PropTypes.string.isRequired,
   dismissed: PropTypes.bool.isRequired,
   type: PropTypes.string.isRequired,
-  actions: PropTypes.arrayOf(PropTypes.shape(Button.propTypes))
+  actions: PropTypes.arrayOf(PropTypes.shape(Button.propTypes)),
 };
 
 /**
@@ -47,12 +47,11 @@ const Toast = ({ type, text, onDismiss, dismissed, actions }) => {
 
 Toast.propTypes = {
   ...toastShape,
-  onDismiss: PropTypes.func.isRequired
+  onDismiss: PropTypes.func.isRequired,
 };
 
 Toast.defaultProps = {
-  actions: []
+  actions: [],
 };
-
 
 export default Toast;

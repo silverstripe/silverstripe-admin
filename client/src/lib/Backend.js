@@ -122,7 +122,7 @@ function addQuerystring(url, querystring) {
  */
 function parseResponse(response) {
   return response.text().then(
-    body => decode(response.headers.get('Content-Type'), body)
+    (body) => decode(response.headers.get('Content-Type'), body),
   );
 }
 
@@ -184,7 +184,7 @@ function applySchemaToUrl(payloadSchema, url, data, opts = { setFromData: false 
 
   newUrl = addQuerystring(
     newUrl,
-    encodedQuery
+    encodedQuery,
   );
 
   // Template placeholders
@@ -297,7 +297,7 @@ class Backend {
     ['payloadFormat', 'responseFormat'].forEach(
       (key) => {
         if (formatShortcuts[refinedSpec[key]]) refinedSpec[key] = formatShortcuts[refinedSpec[key]];
-      }
+      },
     );
 
     return (data = {}, headers = {}) => {
@@ -317,7 +317,7 @@ class Backend {
         // Always add full payload data to GET requests.
         // GET requests with a HTTP body are technically legal,
         // but throw an error in the WHATWG fetch() implementation.
-        { setFromData: (refinedSpec.method.toLowerCase() === 'get') }
+        { setFromData: (refinedSpec.method.toLowerCase() === 'get') },
       );
 
       const encodedData = (refinedSpec.method.toLowerCase() !== 'get')
@@ -325,7 +325,7 @@ class Backend {
           refinedSpec.payloadFormat,
           // Filter raw data through the defined schema,
           // potentially removing keys because they're
-          applySchemaToData(refinedSpec.payloadSchema, mergedData)
+          applySchemaToData(refinedSpec.payloadSchema, mergedData),
         )
         : '';
 
@@ -373,7 +373,7 @@ class Backend {
       body: encodeBody(data),
       headers: Object.assign({}, defaultHeaders, headers),
     })
-    .then(checkStatus);
+      .then(checkStatus);
   }
 
   /**

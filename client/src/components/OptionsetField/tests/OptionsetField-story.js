@@ -9,15 +9,15 @@ export default {
     docs: {
       description: {
         component: `Generates a radio button group, behaves the similarly to 'SingleSelectField'.
-        _NOTE:_ For other properties, please refer to the [reactstrap Input](https://reactstrap.github.io/components/form/) documentation.`
+        _NOTE:_ For other properties, please refer to the [reactstrap Input](https://reactstrap.github.io/components/form/) documentation.`,
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      }
-    }
+      },
+    },
   },
   argTypes: {
     id: {
@@ -26,7 +26,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     extraClass: {
       description: 'Extra classes the component should have.',
@@ -34,7 +34,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     itemClass: {
       description: 'Classes applicable to each item in the group.',
@@ -42,7 +42,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     name: {
       description: 'The name for the component.',
@@ -53,14 +53,14 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     value: {
       description: 'The value that matches one of the source items value.',
       table: {
         type: { summary: 'string|number' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     source: {
       description: `Array of items to appear in the list with the following properties.
@@ -71,7 +71,7 @@ export default {
       table: {
         type: { summary: 'object' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     disabled: {
       description: 'Whether this field is disabled.',
@@ -79,7 +79,7 @@ export default {
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: false },
-      }
+      },
     },
     readOnly: {
       description: 'Whether this field is read only.',
@@ -87,16 +87,16 @@ export default {
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: false },
-      }
+      },
     },
     onChange: {
       description: 'Event handler for when the component changes.',
       table: {
         type: { summary: 'function' },
         defaultValue: { summary: false },
-      }
-    }
-  }
+      },
+    },
+  },
 };
 
 export const _OptionsetField = (args) => <OptionsetField {...args} />;

@@ -15,7 +15,7 @@ import i18n from 'i18n';
 // eslint-disable-next-line max-len
 const stringifyRegex = (regexp) => (regexp.toString().slice(1, -1));
 const SHORTCODE_ATTRS = stringifyRegex(
-  /((?:[,\s]+(?:[a-z0-9\-_]+)=(?:(?:[a-z0-9\-_]+)|(?:\d+\.\d+)|(?:'[^']*')|(?:"[^"]*")))*)/
+  /((?:[,\s]+(?:[a-z0-9\-_]+)=(?:(?:[a-z0-9\-_]+)|(?:\d+\.\d+)|(?:'[^']*')|(?:"[^"]*")))*)/,
 );
 // Used to extract individual items from above regexp
 // Each item matches[1] is key, and matches[2] || matches[3] || matches[4] || matches[5] is value
@@ -120,8 +120,8 @@ const ShortcodeSerialiser = {
       : { sep: ' ', quote: '"', replacer: /"/g };
     const attrs = Object.entries(object.properties)
       .map(([name, value]) => ((value)
-          ? `${rule.sep}${name}=${rule.quote}${`${value}`.replace(rule.replacer, '')}${rule.quote}`
-          : null
+        ? `${rule.sep}${name}=${rule.quote}${`${value}`.replace(rule.replacer, '')}${rule.quote}`
+        : null
       ))
       .filter((attr) => attr !== null)
       .join('');
@@ -149,8 +149,8 @@ const createHTMLSanitiser = () => {
 const sanitiseShortCodeProperties = (rawProperties) => {
   const sanitise = createHTMLSanitiser();
   return Object.entries(rawProperties).reduce((props, [name, value]) => ({
-      ...props,
-      [name]: sanitise(value)
+    ...props,
+    [name]: sanitise(value),
   }), {});
 };
 

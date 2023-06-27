@@ -137,8 +137,7 @@ class TinyMCEActionRegistrar {
     let command = this.getDefaultCommand();
 
     const commands = Object.keys(this.editorCommandsToUrlTestsMap);
-    const matchedCmd = commands.find(cmd =>
-      this.editorCommandsToUrlTestsMap[cmd] && this.editorCommandsToUrlTestsMap[cmd].test(url));
+    const matchedCmd = commands.find((cmd) => this.editorCommandsToUrlTestsMap[cmd] && this.editorCommandsToUrlTestsMap[cmd].test(url));
     if (matchedCmd) {
       command = matchedCmd;
     }

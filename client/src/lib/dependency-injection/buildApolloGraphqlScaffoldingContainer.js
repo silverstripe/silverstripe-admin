@@ -22,4 +22,3 @@ const buildApolloGraphqlScaffoldingContainer = (base = buildBaseContainer()) => 
   buildApolloGraphqlContainer(base, templates)
 );
 export default buildApolloGraphqlScaffoldingContainer;
-

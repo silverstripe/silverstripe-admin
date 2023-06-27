@@ -6,7 +6,7 @@ const initialState = {};
 function recordsReducer(state = initialState, action) {
   switch (action.type) {
     case ACTION_TYPES.FETCH_RECORDS_SUCCESS: {
-      const recordType = action.payload.recordType;
+      const { recordType } = action.payload;
       if (!recordType) {
         throw new Error('Undefined record type');
       }
@@ -18,7 +18,7 @@ function recordsReducer(state = initialState, action) {
     }
 
     case ACTION_TYPES.FETCH_RECORD_SUCCESS: {
-      const recordType = action.payload.recordType;
+      const { recordType } = action.payload;
       const newRecord = action.payload.data;
       if (!recordType) {
         throw new Error('Undefined record type');
@@ -41,7 +41,7 @@ function recordsReducer(state = initialState, action) {
     }
 
     case ACTION_TYPES.DELETE_RECORD_SUCCESS: {
-      const recordType = action.payload.recordType;
+      const { recordType } = action.payload;
       if (!recordType) {
         throw new Error('Undefined record type');
       }

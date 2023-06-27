@@ -40,7 +40,7 @@ export function fileSize(size) {
     metric = 'GB';
   }
 
-  if (isNaN(number)) {
+  if (Number.isNaN(number)) {
     return i18n._t('Admin.NO_SIZE', 'N/A');
   }
   return `${number} ${metric}`;

@@ -20,7 +20,7 @@ class PopoverField extends Component {
    * @returns {String}
    */
   getPlacement() {
-    const placement = this.props.data.placement;
+    const { placement } = this.props.data;
     return placement || 'bottom';
   }
 
@@ -70,7 +70,7 @@ class PopoverField extends Component {
     const wrapperClasses = classnames({
       [this.props.className]: true,
       'popover-container': true,
-      'popover-field': true
+      'popover-field': true,
     });
 
     return (

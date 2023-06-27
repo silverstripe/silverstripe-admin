@@ -31,4 +31,3 @@ describe('formatWrittenNumber', () => {
     expect(formatWrittenNumber(() => {})).toEqual(null);
   });
 });
-

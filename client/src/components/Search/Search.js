@@ -8,13 +8,13 @@ import * as schemaActions from 'state/schema/SchemaActions';
 import { reset, initialize, change } from 'redux-form';
 import { isDirty } from 'redux-form/lib/immutable';
 import getIn from 'redux-form/lib/structure/plain/getIn';
-import Focusedzone from '../Focusedzone/Focusedzone';
 import getFormState from 'lib/getFormState';
+import PropTypes from 'prop-types';
+import Focusedzone from '../Focusedzone/Focusedzone';
 import SearchBox from './SearchBox';
 import SearchForm from './SearchForm';
 import SearchToggle from './SearchToggle';
 import mapFormSchemaToTags from './utilities/mapFormSchemaToTags';
-import PropTypes from 'prop-types';
 
 const DISPLAY = {
   NONE: 'NONE',
@@ -24,7 +24,7 @@ const DISPLAY = {
 const BEHAVIOR = {
   NONE: 'NONE',
   HIDEABLE: 'HIDEABLE',
-  TOGGLABLE: 'TOGGLABLE'
+  TOGGLABLE: 'TOGGLABLE',
 };
 
 /**
@@ -146,7 +146,7 @@ class Search extends Component {
    * @param {Object} event onChangeEvent from a input field.
    */
   handleChange(event) {
-    const value = event.target.value;
+    const { value } = event.target;
     if (this.state.searchText !== value) {
       this.setState({ searchText: value });
     }
@@ -238,12 +238,12 @@ class Search extends Component {
       ...this.props,
       filters: {
         ...filters,
-        [key]: undefined
-      }
+        [key]: undefined,
+      },
     });
 
     if (Array.isArray(tag.linkedFields)) {
-      tag.linkedFields.forEach(linkFieldkey => { clearables[linkFieldkey] = undefined; });
+      tag.linkedFields.forEach((linkFieldkey) => { clearables[linkFieldkey] = undefined; });
     }
     this.doSearch(clearables);
   }
@@ -372,7 +372,7 @@ class Search extends Component {
       this.setState({
         display: DISPLAY.VISIBLE,
         initialSearchText: searchText,
-        searchText
+        searchText,
       });
     }
 
@@ -429,7 +429,7 @@ class Search extends Component {
 
     // Display the SearchBox
     const formId = `${id}_ExtraFields`;
-    const searchText = this.state.searchText;
+    const { searchText } = this.state;
 
     // Build classes
     const expanded = this.state.display === DISPLAY.EXPANDED;
@@ -438,7 +438,6 @@ class Search extends Component {
     // Decide if we display the X button
     const hideable =
       [BEHAVIOR.HIDEABLE, BEHAVIOR.TOGGLABLE].includes(displayBehavior);
-
 
     const dirty = formIsDirty || this.searchTermIsDirty();
     const data = this.getData();
@@ -483,7 +482,6 @@ class Search extends Component {
   }
 }
 
-
 Search.propTypes = {
   onSearch: PropTypes.func,
   onHide: PropTypes.func,
@@ -508,7 +506,7 @@ Search.propTypes = {
     right: PropTypes.bool,
     bottom: PropTypes.bool,
     left: PropTypes.bool,
-  })
+  }),
 };
 
 Search.defaultProps = {
@@ -521,7 +519,7 @@ Search.defaultProps = {
   filterPrefix: '',
   forceFilters: false,
   name: 'searchTerm',
-  identifier: 'Admin.SearchForm'
+  identifier: 'Admin.SearchForm',
 };
 
 function mapStateToProps(state, ownProps) {

@@ -43,7 +43,7 @@ const WILDCARD = '*';
  * @param meta
  */
 const validateMeta = (meta) => {
-  PRIORITIES.forEach(k => {
+  PRIORITIES.forEach((k) => {
     if (
       typeof meta[k] !== 'undefined' &&
       (typeof meta[k] !== 'string' && !Array.isArray(meta[k]))
@@ -67,7 +67,7 @@ const validateMeta = (meta) => {
  */
 const checkWildcard = (middleware) => {
   let wildcard = null;
-  PRIORITIES.forEach(PRIORITY => {
+  PRIORITIES.forEach((PRIORITY) => {
     if (middleware[PRIORITY].includes(WILDCARD)) {
       if (middleware[PRIORITY].length > 1) {
         throw new Error(`
@@ -112,7 +112,7 @@ class MiddlewareRegistry {
     const GRAPH_INIT = [GRAPH_HEAD, GRAPH_TAIL];
     const graph = [GRAPH_INIT];
     let sortedMiddlewares = [];
-    this._middlewares.forEach(middleware => {
+    this._middlewares.forEach((middleware) => {
       const { name } = middleware;
       const wildcard = checkWildcard(middleware);
       if (wildcard === AFTER) {
@@ -125,20 +125,20 @@ class MiddlewareRegistry {
         graph.push([name, GRAPH_TAIL]);
         graph.push([GRAPH_HEAD, name]);
 
-        middleware[BEFORE].forEach(beforeEntry => {
+        middleware[BEFORE].forEach((beforeEntry) => {
           graph.push([name, beforeEntry]);
         });
-        middleware[AFTER].forEach(afterEntry => {
+        middleware[AFTER].forEach((afterEntry) => {
           graph.push([afterEntry, name]);
         });
       }
     });
     // Apply the topological sort and strip out the placeholders
     toposort(graph)
-      .filter(item => !GRAPH_INIT.includes(item))
-      .forEach(name => {
+      .filter((item) => !GRAPH_INIT.includes(item))
+      .forEach((name) => {
         sortedMiddlewares = sortedMiddlewares.concat(
-          this._middlewares.filter(m => m.name === name)
+          this._middlewares.filter((m) => m.name === name),
         );
       });
 
@@ -167,7 +167,7 @@ class MiddlewareRegistry {
 
     const normalised = { ...meta, factory, context };
     // make sure before/after are at least empty arrays
-    PRIORITIES.forEach(k => {
+    PRIORITIES.forEach((k) => {
       if (!Array.isArray(meta[k])) {
         normalised[k] = meta[k] ? [meta[k]] : [];
       } else {
@@ -175,7 +175,7 @@ class MiddlewareRegistry {
       }
     });
     // If no before/after is specified, put it between the head and tail
-    if (PRIORITIES.every(p => !normalised[p].length)) {
+    if (PRIORITIES.every((p) => !normalised[p].length)) {
       normalised[AFTER] = [GRAPH_HEAD];
       normalised[BEFORE] = [GRAPH_TAIL];
     }
@@ -193,7 +193,7 @@ class MiddlewareRegistry {
   getMatchesForContext(context = GLOBAL_CONTEXT) {
     if (!this._contextCache[context]) {
       const requestedContext = context.split('.');
-      this._contextCache[context] = this._middlewares.filter(middleware => (
+      this._contextCache[context] = this._middlewares.filter((middleware) => (
         middleware.context[0] === GLOBAL_CONTEXT ||
         middleware.context.every((part, index) => (
           part === WILDCARD || requestedContext[index] === part

@@ -142,7 +142,7 @@ class FormAction extends Component {
     const extraClasses = extraClass ? extraClass.split(' ') : [];
     return (
       name === 'action_save' ||
-      !!extraClasses.find(className => className === 'ss-ui-action-constructive')
+      !!extraClasses.find((className) => className === 'ss-ui-action-constructive')
     );
   }
 

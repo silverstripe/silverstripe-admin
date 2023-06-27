@@ -1,7 +1,7 @@
 import React from 'react';
 import Tag from 'components/Tag/Tag';
-import TagPropType from './TagPropType';
 import PropTypes from 'prop-types';
+import TagPropType from './TagPropType';
 
 /**
  * Whatever the focus should move forward.
@@ -101,7 +101,7 @@ TagList.defaultProps = {
   focusable: true,
   onTagDelete: () => {},
   onTagClick: () => {},
-  onHolderFocus: () => {}
+  onHolderFocus: () => {},
 };
 
 export { TagList as Component };

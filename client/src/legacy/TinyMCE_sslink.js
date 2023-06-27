@@ -16,13 +16,13 @@ const plugin = {
     const title = i18n._t('Admin.INSERT_LINK', 'Insert link');
     const titleWithShortcut = i18n.inject(
       i18n._t('Admin.INSERT_LINK_WITH_SHORTCUT', 'Insert link {shortcut}'),
-      { shortcut: `[${metaKey}+K]` }
+      { shortcut: `[${metaKey}+K]` },
     );
     const actions = TinyMCEActionRegistrar.getSortedActions('sslink', editor.getParam('editorIdentifier'), true)
-      .map(action => Object.assign(
+      .map((action) => Object.assign(
         {},
         action,
-        { onAction: () => action.onAction(editor) }
+        { onAction: () => action.onAction(editor) },
       ));
 
     // Button in main toolbar
@@ -77,7 +77,7 @@ const plugin = {
           name: 'Silverstripe Link',
           url: 'https://docs.silverstripe.org/en/4/developer_guides/forms/field_types/htmleditorfield',
         };
-      }
+      },
     };
   },
 
@@ -94,7 +94,7 @@ const plugin = {
       node.normalize();
     }
     return result;
-  }
+  },
 };
 
 jQuery.entwine('ss', ($) => {
@@ -132,7 +132,7 @@ jQuery.entwine('ss', ($) => {
       /* noop */
     },
 
-  /**
+    /**
      * Default behaviour, recommended to overload this and sanitise where needed
      *
      * @param data
@@ -180,7 +180,7 @@ jQuery.entwine('ss', ($) => {
       editor.repaint();
 
       const instance = editor.getInstance();
-      const selection = instance.selection;
+      const { selection } = instance;
 
       // Workaround to editing a link that is just inserted issue.
       // What it does here is deselecting the link text in the editor

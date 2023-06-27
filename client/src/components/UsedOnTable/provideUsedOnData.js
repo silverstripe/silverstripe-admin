@@ -14,7 +14,7 @@ const provideUsedOnData = (UsedOnTable) => {
     }
 
     componentDidUpdate(oldProps) {
-      const tabContext = this.props.tabContext;
+      const { tabContext } = this.props;
 
       // Fetch data if
       // - identifier has changed
@@ -24,7 +24,6 @@ const provideUsedOnData = (UsedOnTable) => {
         oldProps.identifier !== this.props.identifier ||
         !tabContext ||
         tabContext.isOnActiveTab;
-
 
       if (doFetch) {
         this.fetchDataFromEndpoint();
@@ -86,7 +85,7 @@ const provideUsedOnData = (UsedOnTable) => {
   const ComponentWithTabContext = injectTabContext(UsedOnDataProvider);
   const connectedUsedOnDataProvider = connect(
     mapStateToProps,
-    { loadUsedOn }
+    { loadUsedOn },
   )(ComponentWithTabContext);
   connectedUsedOnDataProvider.Component = ComponentWithTabContext;
 

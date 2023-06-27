@@ -5,10 +5,11 @@ import ACTION_TYPES from './ConfigActionTypes';
  *
  * @param {object} config
  */
-export function setConfig(config) {
+function setConfig(config) {
   return {
     type: ACTION_TYPES.SET_CONFIG,
     payload: { config },
   };
 }
 
+export default setConfig;

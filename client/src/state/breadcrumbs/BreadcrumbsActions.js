@@ -7,9 +7,11 @@ import ACTION_TYPES from './BreadcrumbsActionTypes';
  * with a 'text' and optional 'href' property.
  * @return {object}
  */
-export function setBreadcrumbs(breadcrumbs) {
+function setBreadcrumbs(breadcrumbs) {
   return {
     type: ACTION_TYPES.SET_BREADCRUMBS,
     payload: { breadcrumbs },
   };
 }
+
+export default setBreadcrumbs;

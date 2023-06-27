@@ -66,7 +66,7 @@ const inject = (dependencies, mapDependenciesToProps, getContext = defaultContex
         let props = {};
         if (dependencies) {
           const { get } = this.context.injector;
-          const resolved = dependencies.map(dep => get(dep, this.state.context));
+          const resolved = dependencies.map((dep) => get(dep, this.state.context));
 
           if (mapDependenciesToProps) {
             props = mapDependenciesToProps(...resolved);

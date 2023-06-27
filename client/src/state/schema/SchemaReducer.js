@@ -18,7 +18,7 @@ export default function schemaReducer(state = initialState, action = null) {
     // for setting values overwriting schema values if a new schema is loaded afterwards
     case ACTION_TYPES.SET_SCHEMA_STATE_OVERRIDES: {
       const schema = state[action.payload.id] || {};
-      const stateOverride = action.payload.stateOverride;
+      const { stateOverride } = action.payload;
 
       if (!stateOverride || !stateOverride.fields) {
         return state;

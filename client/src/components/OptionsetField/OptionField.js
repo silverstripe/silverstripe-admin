@@ -112,7 +112,7 @@ OptionField.defaultProps = {
   className: '',
   type: 'radio',
   leftTitle: null,
-  rightTitle: null
+  rightTitle: null,
 };
 
 export { OptionField as Component };

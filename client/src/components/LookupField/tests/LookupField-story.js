@@ -9,15 +9,15 @@ export default {
     docs: {
       description: {
         component: `Generates a CSV list of values inside a Readonly styled box.
-        _NOTE:_ For other properties, please refer to the [reactstrap Input](https://reactstrap.github.io/components/form/) documentation.`
+        _NOTE:_ For other properties, please refer to the [reactstrap Input](https://reactstrap.github.io/components/form/) documentation.`,
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      }
-    }
+      },
+    },
   },
   argTypes: {
     id: {
@@ -25,31 +25,31 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     extraClass: {
       description: 'Extra classes the component should have.',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     name: {
       description: 'The name for the component.',
       type: {
-        required: true
+        required: true,
       },
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     value: {
       description: 'The values to look up in the source.',
       table: {
         type: { summary: 'string|array' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     source: {
       description: `Array of items to appear in the list with the following properties.
@@ -59,9 +59,9 @@ export default {
       table: {
         type: { summary: 'object' },
         defaultValue: { summary: '' },
-      }
-    }
-  }
+      },
+    },
+  },
 };
 
 export const _LookupField = (args) => <LookupField {...args} />;

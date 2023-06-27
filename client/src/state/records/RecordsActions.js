@@ -42,8 +42,8 @@ export function fetchRecords(recordType, method, url) {
       : [populate(url, payload), {}, headers];
 
     return backend[methodToLowerCase](...args)
-      .then(response => response.json())
-      .then(json => {
+      .then((response) => response.json())
+      .then((json) => {
         dispatch({
           type: ACTION_TYPES.FETCH_RECORDS_SUCCESS,
           payload: { recordType, data: json },
@@ -58,7 +58,6 @@ export function fetchRecords(recordType, method, url) {
       });
   };
 }
-
 
 /**
  * Fetches a single record
@@ -83,8 +82,8 @@ export function fetchRecord(recordType, method, url) {
       : [populate(url, payload), {}, headers];
 
     return backend[methodToLowerCase](...args)
-      .then(response => response.json())
-      .then(json => {
+      .then((response) => response.json())
+      .then((json) => {
         dispatch({
           type: ACTION_TYPES.FETCH_RECORD_SUCCESS,
           payload: { recordType, data: json },
@@ -113,8 +112,8 @@ export function deleteRecord(recordType, id, method, url, headers = {}) {
   const payload = { recordType, id };
   const methodToLowerCase = method.toLowerCase();
   const args = methodToLowerCase === 'get'
-      ? [populate(url, payload), headers]
-      : [populate(url, payload), {}, headers];
+    ? [populate(url, payload), headers]
+    : [populate(url, payload), {}, headers];
 
   return (dispatch) => {
     dispatch({

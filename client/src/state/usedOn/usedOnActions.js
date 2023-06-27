@@ -1,6 +1,6 @@
 import i18n from 'i18n';
-import TYPES from './usedOnTypes';
 import fetch from 'isomorphic-fetch';
+import TYPES from './usedOnTypes';
 
 export function saveUsedOn(identifier, usedOn) {
   return {
@@ -15,7 +15,7 @@ export function loadUsedOnFailed(identifier, error) {
     payload: {
       identifier,
       error: error.message,
-    }
+    },
   };
 }
 
@@ -32,7 +32,7 @@ export function loadUsedOn(identifier, method, url) {
     if (!identifier || !method || !url) {
       const message = i18n._t('Admin.NOT_AVAILABLE_USED_DATA', 'The usage data is currently unavailable.');
       return Promise.resolve(
-        dispatch(loadUsedOnFailed(identifier, message))
+        dispatch(loadUsedOnFailed(identifier, message)),
       );
     }
 
@@ -42,11 +42,11 @@ export function loadUsedOn(identifier, method, url) {
     });
 
     return fetch(url, settings)
-      .then(response => response.json())
-      .then(usedOn => {
+      .then((response) => response.json())
+      .then((usedOn) => {
         dispatch(saveUsedOn(identifier, usedOn));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadUsedOnFailed(identifier, error));
       });
   };

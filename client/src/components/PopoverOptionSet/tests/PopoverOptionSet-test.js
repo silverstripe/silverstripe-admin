@@ -1,8 +1,8 @@
 /* global jest, test, expect */
 
 import React from 'react';
-import PopoverOptionSet from '../PopoverOptionSet';
 import { render, screen, fireEvent } from '@testing-library/react';
+import PopoverOptionSet from '../PopoverOptionSet';
 
 const buttonTypeA = {
   key: 'dummy-key-a',
@@ -35,7 +35,7 @@ function makeProps(obj = {}) {
     searchPlaceholder: '',
     toggle: jest.fn(),
     target: 'div',
-    ...obj
+    ...obj,
   };
 }
 
@@ -43,9 +43,9 @@ test('PopoverOptionSet handleToggle should call the toggle callback', async () =
   const toggle = jest.fn();
   render(
     <PopoverOptionSet {...makeProps({
-      toggle
+      toggle,
     })}
-    />
+    />,
   );
   const popover = await screen.findByTestId('test-popover');
   fireEvent.click(popover);
@@ -54,7 +54,7 @@ test('PopoverOptionSet handleToggle should call the toggle callback', async () =
 
 test('PopoverOptionSet handleSearchValueClear should set the state', async () => {
   render(
-    <PopoverOptionSet {...makeProps()}/>
+    <PopoverOptionSet {...makeProps()}/>,
   );
   const popover = await screen.findByTestId('test-popover');
   const input = popover.querySelector('input.popover-option-set__search-input');
@@ -66,7 +66,7 @@ test('PopoverOptionSet handleSearchValueClear should set the state', async () =>
 
 test('PopoverOptionSet handleSearchValueClear should set the state', async () => {
   render(
-    <PopoverOptionSet {...makeProps()}/>
+    <PopoverOptionSet {...makeProps()}/>,
   );
   const popover = await screen.findByTestId('test-popover');
   const input = popover.querySelector('input.popover-option-set__search-input');
@@ -91,10 +91,10 @@ test('PopoverOptionSet renderOptionButtons render all available buttons', async 
           content: 'B',
           className: 'dummy-classname-b',
           onClick: () => null,
-        }
-      ]
+        },
+      ],
     })}
-    />
+    />,
   );
   const popover = await screen.findByTestId('test-popover');
   const input = popover.querySelector('input.popover-option-set__search-input');
@@ -107,7 +107,7 @@ test('PopoverOptionSet renderOptionButtons render all available buttons', async 
 
 test('PopoverOptionSet render should render a Popover', async () => {
   render(
-    <PopoverOptionSet {...makeProps()}/>
+    <PopoverOptionSet {...makeProps()}/>,
   );
   const popover = await screen.findByTestId('test-popover');
   expect(popover.querySelector('.popover-option-set__button-container')).not.toBeNull();

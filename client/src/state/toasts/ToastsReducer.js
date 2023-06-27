@@ -13,13 +13,12 @@ import { STAY_TIME } from './ToastConstants';
  * @typedef {import('./ToastsTypes').ToastState} ToastOption
  */
 
-
 /**
  * @type {ToastState}
  */
 const initState = {
   paused: false,
-  toasts: []
+  toasts: [],
 };
 
 /**
@@ -42,8 +41,8 @@ const pause = (state) => ({
     ({ timeout, ...toast }) => {
       if (timeout) { clearTimeout(timeout); }
       return toast;
-    }
-  )
+    },
+  ),
 });
 
 /**
@@ -54,10 +53,9 @@ const pause = (state) => ({
 const resume = (state) => ({
   paused: false,
   toasts: state.toasts.map(
-    (toast) => ({ timeout: scheduleDismissal(toast), ...toast })
-  )
+    (toast) => ({ timeout: scheduleDismissal(toast), ...toast }),
+  ),
 });
-
 
 /**
  * Add the provided toast list to the list of toast.
@@ -67,7 +65,7 @@ const resume = (state) => ({
  */
 const updateToastList = (state, toastsList) => ({
   ...state,
-  toasts: toastsList
+  toasts: toastsList,
 });
 
 /**
@@ -83,9 +81,9 @@ const appendToast = (state, toast) => updateToastList(
     {
       ...toast,
       timeout: state.paused ? undefined : scheduleDismissal(toast),
-      dismissed: false
-    }
-  ]
+      dismissed: false,
+    },
+  ],
 );
 
 /**
@@ -96,8 +94,8 @@ const appendToast = (state, toast) => updateToastList(
 const dissmissToast = (state, id) => updateToastList(
   state,
   state.toasts.map(
-    toast => (toast.id === id ? { ...toast, dismissed: true } : toast)
-  )
+    (toast) => (toast.id === id ? { ...toast, dismissed: true } : toast),
+  ),
 );
 
 /**
@@ -107,7 +105,7 @@ const dissmissToast = (state, id) => updateToastList(
  */
 const removeToast = (state, id) => updateToastList(
   state,
-  state.toasts.filter((toast) => toast.id !== id)
+  state.toasts.filter((toast) => toast.id !== id),
 );
 
 /**

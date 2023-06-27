@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import i18n from 'i18n';
-import ActionMenu from '../ActionMenu/ActionMenu';
 import classnames from 'classnames';
 import { inject } from 'lib/Injector';
 import PropTypes from 'prop-types';
+import ActionMenu from '../ActionMenu/ActionMenu';
 
 /**
  * Renders the right-hand collapsable change preview panel
@@ -59,7 +59,7 @@ class Preview extends Component {
       toolbarButtons.push(
         <a key="edit" href={editUrl} className="btn btn-outline-secondary font-icon-edit">
           <span className="btn__title">{i18n._t('Admin.EDIT', 'Edit')}</span>
-        </a>
+        </a>,
       );
     }
     return toolbarButtons;
@@ -168,8 +168,7 @@ export { Preview as Component };
 export default inject(
   ['ViewModeToggle'],
   (ViewModeToggle) => ({
-    ViewModeComponent: ViewModeToggle
+    ViewModeComponent: ViewModeToggle,
   }),
-  () => 'Admin.Preview'
+  () => 'Admin.Preview',
 )(Preview);
-

@@ -8,15 +8,15 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'ListGroupItem Component Description.'
+        component: 'ListGroupItem Component Description.',
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      }
-    }
+      },
+    },
   },
 };
 
@@ -28,5 +28,5 @@ export const Items = (args) => (
   </div>
 );
 Items.args = {
-  className: 'active'
+  className: 'active',
 };

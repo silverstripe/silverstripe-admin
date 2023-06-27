@@ -1,15 +1,15 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import { ToastActions, ToastAction } from '../ToastActions';
 import { render, fireEvent } from '@testing-library/react';
+import { ToastActions, ToastAction } from '../ToastActions';
 
 function makeProps(obj = {}) {
   return {
     label: 'foo bar',
     href: 'https://silverstripe.org/',
     dismissed: false,
-    ...obj
+    ...obj,
   };
 }
 
@@ -27,9 +27,9 @@ test('ToastActions button', () => {
     <ToastAction {...makeProps({
       href: null,
       onClick,
-      onDismiss
+      onDismiss,
     })}
-    />
+    />,
   );
   const button = container.querySelector('button');
   expect(button.innerHTML).toBe('foo bar');
@@ -46,9 +46,9 @@ test('ToastActions button toast already dismissed', () => {
       href: null,
       dismissed: true,
       onClick,
-      onDismiss
+      onDismiss,
     })}
-    />
+    />,
   );
   const button = container.querySelector('button');
   fireEvent.click(button, {});
@@ -77,9 +77,9 @@ test('ToastActions no actions', () => {
         },
       ],
       dismissed: false,
-      onDismiss
+      onDismiss,
     }}
-    />
+    />,
   );
   expect(container.querySelectorAll('a')).toHaveLength(1);
   expect(container.querySelectorAll('button')).toHaveLength(1);

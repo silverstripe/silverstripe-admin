@@ -1,15 +1,15 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import Tag from '../Tag';
 import { render, fireEvent } from '@testing-library/react';
+import Tag from '../Tag';
 
 test('Tag defaults to key', () => {
   const { container } = render(
     <Tag {...{
       dataKey: 'MyTagKey',
     }}
-    />
+    />,
   );
   expect(container.querySelector('.tag-component').innerHTML).toBe('MyTagKey');
 });
@@ -18,9 +18,9 @@ test('Tag label', () => {
   const { container } = render(
     <Tag {...{
       dataKey: 'MyTagKey',
-      label: 'My Tag Label'
+      label: 'My Tag Label',
     }}
-    />
+    />,
   );
   expect(container.querySelector('.tag-component').innerHTML).toBe('My Tag Label');
 });
@@ -29,11 +29,11 @@ test('Tag children overrides label', () => {
   const { container } = render(
     <Tag {...{
       dataKey: 'MyTagKey',
-      label: 'My Tag Label'
+      label: 'My Tag Label',
     }}
     >
       Your label means nothing to my children
-  </Tag>
+  </Tag>,
   );
   expect(container.querySelector('.tag-component').innerHTML).toBe('Your label means nothing to my children');
 });
@@ -42,9 +42,9 @@ test('Tag value', () => {
   const { container } = render(
     <Tag {...{
       dataKey: 'MyTagKey',
-      value: '123'
+      value: '123',
     }}
-    />
+    />,
   );
   expect(container.querySelector('.tag-component').innerHTML).toBe('MyTagKey: 123');
 });
@@ -54,9 +54,9 @@ test('Tag value and label', () => {
     <Tag {...{
       dataKey: 'MyTagKey',
       label: 'My Tag Label',
-      value: '123'
+      value: '123',
     }}
-    />
+    />,
   );
   expect(container.querySelector('.tag-component').innerHTML).toBe('My Tag Label: 123');
 });
@@ -65,9 +65,9 @@ test('Tag deleteable', () => {
   const { container } = render(
     <Tag {...{
       dataKey: 'MyTagKey',
-      deletable: true
+      deletable: true,
     }}
-    />
+    />,
   );
   expect(container.querySelectorAll('.tag-component__delete')).toHaveLength(1);
 });
@@ -76,9 +76,9 @@ test('Tag not deleteable', () => {
   const { container } = render(
     <Tag {...{
       dataKey: 'MyTagKey',
-      deletable: false
+      deletable: false,
     }}
-    />
+    />,
   );
   expect(container.querySelectorAll('.tag-component__delete')).toHaveLength(0);
 });
@@ -88,7 +88,7 @@ test('Tag focusable', () => {
     <Tag {...{
       dataKey: 'MyTagKey',
     }}
-    />
+    />,
   );
   expect(container.querySelector('.tag-component').getAttribute('tabindex')).toBe('0');
 });
@@ -97,9 +97,9 @@ test('Tag not focusable', () => {
   const { container } = render(
     <Tag {...{
       dataKey: 'MyTagKey',
-      focusable: false
+      focusable: false,
     }}
-    />
+    />,
   );
   expect(container.querySelector('.tag-component').hasAttribute('tabindex')).toBe(false);
 });
@@ -108,9 +108,9 @@ test('Tag deleteable focusable', () => {
   const { container } = render(
     <Tag {...{
       dataKey: 'MyTagKey',
-      deletable: true
+      deletable: true,
     }}
-    />
+    />,
   );
   expect(container.querySelector('.tag-component').getAttribute('tabindex')).toBe('0');
   expect(container.querySelectorAll('.tag-component__delete')).toHaveLength(1);
@@ -121,9 +121,9 @@ test('Tag deleteable not focusable', () => {
     <Tag {...{
       dataKey: 'MyTagKey',
       deletable: true,
-      focusable: false
+      focusable: false,
     }}
-    />
+    />,
   );
   expect(container.querySelector('.tag-component').hasAttribute('tabindex')).toBe(false);
   expect(container.querySelector('.tag-component__delete').getAttribute('tabindex')).toBe('-1');
@@ -134,9 +134,9 @@ test('Tag Handlers onClick', () => {
   const { container } = render(
     <Tag {...{
       dataKey: 'MyTagKey',
-      onClick
+      onClick,
     }}
-    />
+    />,
   );
   const span = container.querySelector('span');
   fireEvent.click(span, {});
@@ -149,9 +149,9 @@ test('Tag Handlers onDelete', () => {
     <Tag {...{
       dataKey: 'MyTagKey',
       onDelete,
-      deletable: true
+      deletable: true,
     }}
-    />
+    />,
   );
   const button = container.querySelector('.tag-component__delete');
   fireEvent.click(button, {});
@@ -164,12 +164,12 @@ test('Tag Handlers onKeyDown', () => {
     onBackSpace: jest.fn(),
     onPrevious: jest.fn(),
     onNext: jest.fn(),
-    onClick: jest.fn()
+    onClick: jest.fn(),
   };
   const props = {
     ...handlers,
     dataKey: 'MyTagKey',
-    deletable: true
+    deletable: true,
   };
   const { container } = render(<Tag {...props}/>);
   const span = container.querySelector('.tag-component');

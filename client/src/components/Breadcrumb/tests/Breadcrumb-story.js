@@ -4,7 +4,6 @@ import { action } from '@storybook/addon-actions';
 
 import { Component as Breadcrumb } from 'components/Breadcrumb/Breadcrumb';
 
-
 // Simple values to displays in the select fields.
 const icons = [
   '',
@@ -61,38 +60,38 @@ export default {
   title: 'Admin/Breadcrumb',
   component: Breadcrumb,
   decorators: [
-    jsxDecorator
+    jsxDecorator,
   ],
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
-        component: 'The breadcrumbs for the current section of the CMS.'
+        component: 'The breadcrumbs for the current section of the CMS.',
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      }
-    }
+      },
+    },
   },
   argTypes: {
     href: {
       table: {
         type: { summary: 'string' },
-      }
+      },
     },
     text: {
       table: {
         type: { summary: 'string' },
-      }
+      },
     },
     crumbs: {
       description: 'An array of objects, each object should have a `text` and `href` key.',
       table: {
         type: { summary: 'array' },
-      }
+      },
     },
     level: {
       control: 'select',
@@ -118,8 +117,8 @@ export default {
   },
   args: {
     level: 'First',
-    icon: ''
-  }
+    icon: '',
+  },
 };
 
 export const _Breadcrumb = (args) => {
@@ -127,4 +126,3 @@ export const _Breadcrumb = (args) => {
   const { level, icon } = args;
   return (<Breadcrumb crumbs={buildBreadCrumb(0, level, icon)}/>);
 };
-

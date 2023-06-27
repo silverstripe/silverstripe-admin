@@ -7,9 +7,11 @@ import ACTION_TYPES from './TabsActionTypes';
  * @param {String} name of the tab
  * @return {Object}
  */
-export function activateTab(fieldId, tab) {
+function activateTab(fieldId, tab) {
   return {
     type: ACTION_TYPES.TABS_ACTIVATE_TAB,
     payload: { fieldId, tab },
   };
 }
+
+export default activateTab;

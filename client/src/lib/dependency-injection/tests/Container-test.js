@@ -5,7 +5,7 @@ jest.mock('../buildInjectorContainer',
     register(arg) {
       this[arg] = `registered ${arg}`;
     },
-  })
+  }),
 );
 jest.mock('../buildBaseContainer', () => () => 'base');
 jest.mock('../buildComponentContainer', () => () => 'component');

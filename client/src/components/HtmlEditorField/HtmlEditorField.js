@@ -5,7 +5,6 @@ import { Component as TextField } from 'components/TextField/TextField';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import 'events-polyfill';
 
-
 class HtmlEditorField extends TextField {
   /**
    * sets initial state:
@@ -15,7 +14,7 @@ class HtmlEditorField extends TextField {
   constructor(props) {
     super(props);
     this.state = {
-        isReady: !props.data.editorjs
+      isReady: !props.data.editorjs,
     };
 
     this.inputRef = null;
@@ -27,7 +26,7 @@ class HtmlEditorField extends TextField {
     return {
       ...super.getInputProps(),
       ...this.props.data.attributes,
-      innerRef: ref => { this.inputRef = ref; },
+      innerRef: (ref) => { this.inputRef = ref; },
     };
   }
 
@@ -115,6 +114,7 @@ class HtmlEditorField extends TextField {
       this.inputRef.dispatchEvent(event);
     }
   }
+
   componentWillUnmount() {
     if (!this.state.isReady) {
       return;

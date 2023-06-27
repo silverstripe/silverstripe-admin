@@ -1,4 +1,3 @@
-import React from 'react';
 import { jsxDecorator } from 'storybook-addon-jsx';
 import Badge, { statuses } from 'components/Badge/Badge';
 
@@ -6,18 +5,18 @@ export default {
   title: 'Admin/Badges/Badge',
   component: Badge,
   decorators: [
-    jsxDecorator
+    jsxDecorator,
   ],
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
-        component: 'Badge component for displaying a message in a Bootstrap "badge" style.'
+        component: 'Badge component for displaying a message in a Bootstrap "badge" style.',
       },
       canvas: {
         sourceState: 'shown',
       },
-    }
+    },
   },
   argTypes: {
     message: {
@@ -31,7 +30,7 @@ export default {
       table: {
         type: { summary: 'success, warning, danger, info, default' },
         defaultValue: { summary: 'default' },
-      }
+      },
     },
     inverted: {
       description: 'If the colours should be inverted.',
@@ -46,14 +45,14 @@ export default {
       control: 'inline-radio',
       options: {
         'Empty class name': '',
-        'badge-pill class name': 'badge-pill'
+        'badge-pill class name': 'badge-pill',
       },
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'badge-pill' },
       },
-    }
-  }
+    },
+  },
 };
 
 /** Test message */
@@ -62,6 +61,6 @@ export const _Badge = {
     message: 'Hello World!',
     status: 'default',
     className: 'badge-pill',
-    inverted: false
-  }
+    inverted: false,
+  },
 };

@@ -12,7 +12,7 @@ describe('ApolloGraphqlManager', () => {
     const manager = createMock(
       { foo: 'bar' },
       { template1: 'template one' },
-      { fragment1: 'fragment one' }
+      { fragment1: 'fragment one' },
     );
 
     expect(manager.getConfig().foo).toBe('bar');
@@ -33,15 +33,15 @@ describe('ApolloGraphqlManager', () => {
     const apolloConfig = {
       props(test) {
         return {
-          propName: test
+          propName: test,
         };
-      }
+      },
     };
     const manager = createMock({ apolloConfig });
     manager.transformApolloConfig('props', (test) => (prevProps) => ({
-        ...prevProps,
-        newPropName: `${test}--${test}`,
-      }));
+      ...prevProps,
+      newPropName: `${test}--${test}`,
+    }));
 
     const config = manager.getApolloConfig();
     expect(typeof config.props).toBe('function');
@@ -55,10 +55,10 @@ describe('ApolloGraphqlManager', () => {
     manager.addParam('test', 'String');
     manager.addParams({
       foo: 'Boolean',
-      baz: 'Int!'
+      baz: 'Int!',
     });
 
-    const params = manager.getConfig().params;
+    const { params } = manager.getConfig();
     expect(typeof params).toBe('object');
     expect(params.test).toBe('String');
     expect(params.foo).toBe('Boolean');
@@ -70,7 +70,7 @@ describe('ApolloGraphqlManager', () => {
     manager.addField('test');
     manager.addFields(['rest', 'fest']);
 
-    const fields = manager.getConfig().fields;
+    const { fields } = manager.getConfig();
     expect(Array.isArray(fields)).toBe(true);
     expect(fields).toContain('test');
     expect(fields).toContain('rest');
@@ -83,7 +83,7 @@ describe('ApolloGraphqlManager', () => {
     manager.addFields(['Avatar', []]);
     manager.addField('URL', 'root/Avatar');
 
-    const fields = manager.getConfig().fields;
+    const { fields } = manager.getConfig();
     expect(Array.isArray(fields)).toBe(true);
     expect(fields).toContain('FirstName');
     expect(fields).toContain('Surname');
@@ -119,7 +119,7 @@ describe('ApolloGraphqlManager', () => {
     const manager = createMock();
     manager.useFragment('testFragment');
 
-    const fragments = manager.getConfig().fragments;
+    const { fragments } = manager.getConfig();
     expect(Array.isArray(fragments)).toBe(true);
     expect(fragments).toContain('testFragment');
   });
@@ -136,7 +136,7 @@ describe('ApolloGraphqlManager', () => {
   it('uses temp fragments', () => {
     const manager = createMock();
     manager.addTempFragment('testFragment', 'this is a test fragment');
-    const fragments = manager.getConfig().fragments;
+    const { fragments } = manager.getConfig();
     expect(Array.isArray(fragments)).toBe(true);
     expect(fragments).toContain('testFragment');
   });
@@ -172,8 +172,8 @@ describe('ApolloGraphqlManager', () => {
 
   it('coallesces data', () => {
     const manager = createMock();
-    ['options', 'props', 'variables', 'context', 'optimisticResponse'].forEach(key => {
-      expect(manager.coallesceData(key, { fruit: 'apple', }, { dinosaur: 'dilophosaurus' }))
+    ['options', 'props', 'variables', 'context', 'optimisticResponse'].forEach((key) => {
+      expect(manager.coallesceData(key, { fruit: 'apple' }, { dinosaur: 'dilophosaurus' }))
         .toEqual({ fruit: 'apple', dinosaur: 'dilophosaurus' });
     });
     expect(manager.coallesceData('refetchQueries', ['ankylosaurus'], ['velociraptor']))
@@ -192,7 +192,7 @@ describe('ApolloGraphqlManager', () => {
       .toBe('new');
     expect(manager.coallesceData('fetchPolicy', 'old', true))
       .toBe('old');
-    ['withRef', 'notifyOnNetworkStatusChange'].forEach(key => {
+    ['withRef', 'notifyOnNetworkStatusChange'].forEach((key) => {
       expect(manager.coallesceData(key, 'old', 'new'))
         .toBe('new');
       expect(manager.coallesceData('fetchPolicy', 'old', false))

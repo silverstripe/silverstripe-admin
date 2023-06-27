@@ -1,17 +1,17 @@
 /* global jest, test, describe, beforeEach, it, expect, modernizr, Event */
 
-jest.mock('modernizr', () => {});
-
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { Component as DateField } from '../DateField';
+
+jest.mock('modernizr', () => {});
 
 function getSharedProps() {
   return {
     id: 'date',
     title: '',
     name: '',
-    value: ''
+    value: '',
   };
 }
 
@@ -27,55 +27,55 @@ function makePropsHtml4(obj = {}) {
       },
     },
     ...getSharedProps(),
-    ...obj
+    ...obj,
   };
 }
 
 function makePropsHtml5NoBrowserSupport(obj = {}) {
   return {
     data: {
-      html5: true
+      html5: true,
     },
     modernizr: {
       inputtypes: {
         date: false,
-        time: false
-      }
+        time: false,
+      },
     },
     ...getSharedProps(),
-    ...obj
+    ...obj,
   };
 }
 
 function makePropsHtml5(obj = {}) {
   return {
     data: {
-      html5: true
+      html5: true,
     },
     modernizr: {
       inputtypes: {
         date: true,
-        time: true
-      }
+        time: true,
+      },
     },
     ...getSharedProps(),
-    ...obj
+    ...obj,
   };
 }
 
 function makePropsHtml5OptedOut(obj = {}) {
   return {
     data: {
-      html5: false
+      html5: false,
     },
     modernizr: {
       inputtypes: {
         date: true,
-        time: true
-      }
+        time: true,
+      },
     },
     ...getSharedProps(),
-    ...obj
+    ...obj,
   };
 }
 
@@ -83,9 +83,9 @@ test('DateField onChange() should call the onChange function on props', () => {
   const onChange = jest.fn();
   const { container } = render(
     <DateField {...makePropsHtml4({
-      onChange
+      onChange,
     })}
-    />
+    />,
   );
   const input = container.querySelector('input#date');
   fireEvent.change(input, { target: { value: 'New value' } });
@@ -99,9 +99,9 @@ test('DateField convertToIso html4 en_NZ', () => {
   const { container } = render(
     <DateField {...makePropsHtml4({
       lang: 'en_NZ',
-      onChange
+      onChange,
     })}
-    />
+    />,
   );
   const input = container.querySelector('input#date');
   fireEvent.change(input, { target: { value: '11/04/2017' } });
@@ -115,9 +115,9 @@ test('DateField convertToIso html4 en_US', () => {
   const { container } = render(
     <DateField {...makePropsHtml4({
       lang: 'en_US',
-      onChange
+      onChange,
     })}
-    />
+    />,
   );
   const input = container.querySelector('input#date');
   fireEvent.change(input, { target: { value: '04/11/2017' } });
@@ -131,9 +131,9 @@ test('DateField convertToIso html5 no browser support en_NZ', () => {
   const { container } = render(
     <DateField {...makePropsHtml5NoBrowserSupport({
       lang: 'en_NZ',
-      onChange
+      onChange,
     })}
-    />
+    />,
   );
   const input = container.querySelector('input#date');
   fireEvent.change(input, { target: { value: '11/04/2017' } });
@@ -147,9 +147,9 @@ test('DateField convertToIso html5 opted out en_NZ', () => {
   const { container } = render(
     <DateField {...makePropsHtml5OptedOut({
       lang: 'en_NZ',
-      onChange
+      onChange,
     })}
-    />
+    />,
   );
   const input = container.querySelector('input#date');
   fireEvent.change(input, { target: { value: '11/04/2017' } });
@@ -166,9 +166,9 @@ test('DateField html5 en_NZ iso date', () => {
   const { container } = render(
     <DateField {...makePropsHtml5({
       lang: 'en_NZ',
-      onChange
+      onChange,
     })}
-    />
+    />,
   );
   const input = container.querySelector('input#date');
   fireEvent.change(input, { target: { value: '2017-04-11' } });
@@ -182,9 +182,9 @@ test('DateField html5 en_NZ non iso date', () => {
   const { container } = render(
     <DateField {...makePropsHtml5({
       lang: 'en_NZ',
-      onChange
+      onChange,
     })}
-    />
+    />,
   );
   const input = container.querySelector('input#date');
   fireEvent.change(input, { target: { value: '11/04/2017' } });

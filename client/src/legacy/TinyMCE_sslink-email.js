@@ -62,9 +62,9 @@ jQuery.entwine('ss', ($) => {
       const handleInsert = (...args) => this.handleInsert(...args);
       const attrs = this.getOriginalAttributes();
       const editor = this.getElement().getEditor();
-      const selection = editor.getInstance().selection;
+      const { selection } = editor.getInstance();
       const selectionContent = editor.getSelection();
-      const tagName = selection.getNode().tagName;
+      const { tagName } = selection.getNode();
       const requireLinkText = tagName !== 'A' && selectionContent.trim() === '';
 
       // create/update the react component
@@ -84,7 +84,7 @@ jQuery.entwine('ss', ($) => {
           fileAttributes={attrs}
           identifier="Admin.InsertLinkEmailModal"
           requireLinkText={requireLinkText}
-        />
+        />,
       );
     },
 

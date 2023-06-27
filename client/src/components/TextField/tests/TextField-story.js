@@ -11,15 +11,15 @@ export default {
     docs: {
       description: {
         component: `Generates an editable text field.
-        _NOTE:_ For other properties, please refer to the [reactstrap Input](https://reactstrap.github.io/components/form/) documentation.`
+        _NOTE:_ For other properties, please refer to the [reactstrap Input](https://reactstrap.github.io/components/form/) documentation.`,
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      }
-    }
+      },
+    },
   },
   argTypes: {
     id: {
@@ -28,7 +28,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     extraClass: {
       description: 'Extra classes the component should have.',
@@ -36,18 +36,18 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     name: {
       description: 'The name for the component.',
       control: 'text',
       type: {
-        required: true
+        required: true,
       },
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     readOnly: {
       description: 'Whether this field is read only.',
@@ -55,21 +55,21 @@ export default {
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: false },
-      }
+      },
     },
     onChange: {
       description: 'Event handler for when the component changes.',
       table: {
         type: { summary: 'function' },
         defaultValue: { summary: false },
-      }
+      },
     },
     value: {
       description: 'The value to display for the field, can use `defaultValue` for uncontrollable component.',
       table: {
         type: { summary: 'string|number' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     disabled: {
       description: 'Whether this field is disabled.',
@@ -77,7 +77,7 @@ export default {
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: false },
-      }
+      },
     },
     type: {
       description: 'Defines the type this component will have, e.g. `email`, `tel`.',
@@ -86,12 +86,12 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      }
+      },
     },
-  }
+  },
 };
 
-export const DefaultTextField = args => <TextField {...args} />;
+export const DefaultTextField = (args) => <TextField {...args} />;
 DefaultTextField.args = {
   name: 'MyField',
   id: 'MyField',
@@ -102,8 +102,8 @@ DefaultTextField.args = {
 export const Textarea = {
   args: {
     ...DefaultTextField.args,
-    data: { rows: 4, columns: 40 }
-  }
+    data: { rows: 4, columns: 40 },
+  },
 };
 
 export const AllTitles = {
@@ -115,8 +115,8 @@ export const AllTitles = {
     data: {
       prefix: 'prefix',
       suffix: 'suffix',
-    }
-  }
+    },
+  },
 };
 
 export const ValidationFailed = {
@@ -128,6 +128,6 @@ export const ValidationFailed = {
     message: {
       value: 'Validation message',
       type: 'error',
-    }
-  }
+    },
+  },
 };

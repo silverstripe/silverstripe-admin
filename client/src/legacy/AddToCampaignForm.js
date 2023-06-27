@@ -13,7 +13,7 @@ jQuery.entwine('ss', ($) => {
    */
   $(
     '.cms-content-actions .add-to-campaign-action,' +
-    '#add-to-campaign__action'
+    '#add-to-campaign__action',
   ).entwine({
     onclick() {
       let dialog = $('#add-to-campaign__dialog-wrapper');
@@ -64,7 +64,7 @@ jQuery.entwine('ss', ($) => {
       const handleSubmit = (...args) => this._handleSubmitModal(...args);
       const id = $('form.cms-edit-form :input[name=ID]').val();
       const sectionConfigKey = 'SilverStripe\\CMS\\Controllers\\CMSPageEditController';
-      const store = window.ss.store;
+      const { store } = window.ss;
       const sectionConfig = store.getState().config.sections
         .find((section) => section.name === sectionConfigKey);
       const modalSchemaUrl = `${sectionConfig.form.AddToCampaignForm.schemaUrl}/${id}`;
@@ -86,7 +86,7 @@ jQuery.entwine('ss', ($) => {
           responseClassBad="modal__response modal__response--error"
           responseClassGood="modal__response modal__response--good"
           identifier="Admin.AddToCampaign"
-        />
+        />,
       );
       this.setReactRoot(root);
     },

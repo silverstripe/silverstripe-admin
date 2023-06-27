@@ -11,12 +11,12 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Badge component for displaying versioning states in a Bootstrap "badge" based style.'
+        component: 'Badge component for displaying versioning states in a Bootstrap "badge" based style.',
       },
       canvas: {
         sourceState: 'hide',
       },
-    }
+    },
   },
   argTypes: {
     status: {
@@ -25,19 +25,19 @@ export default {
       control: 'inline-radio',
       table: {
         type: { summary: 'string' },
-      }
+      },
     },
     className: {
       description: 'Any extra classes to apply for the badge.',
       control: 'text',
       table: {
         type: { summary: 'string' },
-      }
-    }
-  }
+      },
+    },
+  },
 };
 
 export const _VersionedBadge = {
   name: 'Versioned badge',
-  args: { status: 'draft' }
+  args: { status: 'draft' },
 };

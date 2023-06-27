@@ -15,7 +15,7 @@ const props = {
     { value: 'three', title: '3' },
     { value: 'four', title: '4' },
   ],
-  onChange: jest.fn()
+  onChange: jest.fn(),
 };
 
 test('OptionsetField getItemKey() should generate a key for field', () => {

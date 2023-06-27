@@ -24,9 +24,9 @@ function makeProps(obj = {}) {
 test('CheckboxSetField renders with two inputs checked', () => {
   const { container } = render(
     <CheckboxSetField {...makeProps({
-      value: ['one', 'three']
+      value: ['one', 'three'],
     })}
-    />
+    />,
   );
   expect(container.querySelector('input#checkbox-one').getAttribute('value')).toBe('1');
   expect(container.querySelector('input#checkbox-one').hasAttribute('checked')).toBe(true);
@@ -43,13 +43,12 @@ test('CheckboxSetField renders with two inputs checked', () => {
   expect(container.querySelectorAll('span')[3].innerHTML).toBe('4');
 });
 
-
 test('CheckboxSetField renders with string value', () => {
   const { container } = render(
     <CheckboxSetField {...makeProps({
-      value: 'two'
+      value: 'two',
     })}
-    />
+    />,
   );
   expect(container.querySelector('input#checkbox-one').hasAttribute('checked')).toBe(false);
   expect(container.querySelector('input#checkbox-two').hasAttribute('checked')).toBe(true);
@@ -60,9 +59,9 @@ test('CheckboxSetField renders with string value', () => {
 test('CheckboxSetField renders with no value', () => {
   const { container } = render(
     <CheckboxSetField {...makeProps({
-      value: ''
+      value: '',
     })}
-    />
+    />,
   );
   expect(container.querySelector('input#checkbox-one').hasAttribute('checked')).toBe(false);
   expect(container.querySelector('input#checkbox-two').hasAttribute('checked')).toBe(false);
@@ -75,15 +74,15 @@ test('CheckboxSetField onChange adds a value', () => {
   const { container } = render(
     <CheckboxSetField {...makeProps({
       value: ['two', 'three'],
-      onChange
+      onChange,
     })}
-    />
+    />,
   );
   const input = container.querySelector('input#checkbox-one');
   fireEvent.click(input);
   expect(onChange).toBeCalledWith(
     expect.objectContaining({ _reactName: 'onChange' }),
-    { id: 'checkbox', value: ['one', 'two', 'three'] }
+    { id: 'checkbox', value: ['one', 'two', 'three'] },
   );
 });
 
@@ -92,14 +91,14 @@ test('CheckboxSetField onChange removes a value', () => {
   const { container } = render(
     <CheckboxSetField {...makeProps({
       value: ['two', 'three'],
-      onChange
+      onChange,
     })}
-    />
+    />,
   );
   const input = container.querySelector('input#checkbox-two');
   fireEvent.click(input);
   expect(onChange).toBeCalledWith(
     expect.objectContaining({ _reactName: 'onChange' }),
-    { id: 'checkbox', value: ['three'] }
+    { id: 'checkbox', value: ['three'] },
   );
 });

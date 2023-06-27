@@ -33,22 +33,22 @@ export default {
   title: 'Admin/Buttons/Button',
   component: Button,
   decorators: [
-    jsxDecorator
+    jsxDecorator,
   ],
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component: `The Button wraps a regular [Reactstrap Button](https://reactstrap.github.io/components/buttons/)
-         component with a few Silverstripe-specific convenience props. All the regular Reactstrap props are also available.`
+         component with a few Silverstripe-specific convenience props. All the regular Reactstrap props are also available.`,
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      }
-    }
+      },
+    },
   },
 
   argTypes: {
@@ -59,7 +59,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'default' },
-      }
+      },
     },
     size: {
       description: 'Make the button smaller or larger. Acceptable values include `sm`, `md` and `lg`.',
@@ -68,12 +68,12 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'md' },
-      }
+      },
     },
     icon: {
       description: 'A valid icon name to display in the button.',
       control: 'select',
-      options: icons
+      options: icons,
     },
     outline: {
       description: 'Render the button border with a transparent background.',
@@ -81,7 +81,7 @@ export default {
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
-      }
+      },
     },
     block: {
       description: 'Display the button as a block taking the full width of its container.',
@@ -89,7 +89,7 @@ export default {
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
-      }
+      },
     },
     active: {
       description: 'Render the button in an active state. Useful for toggle buttons.',
@@ -97,7 +97,7 @@ export default {
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
-      }
+      },
     },
     disabled: {
       description: 'Prevent the user from interacting with the button.',
@@ -105,7 +105,7 @@ export default {
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
-      }
+      },
     },
     noText: {
       description: 'Hide the button text and display it as an `aria-label` instead. This should be use in conjunction with `icon` otherise your button will be empty.',
@@ -113,29 +113,29 @@ export default {
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
-      }
+      },
     },
     className: {
       control: 'text',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     children: {
       control: 'text',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     onClick: {
       action: 'clicked',
       table: {
         type: { summary: 'function' },
-      }
-    }
-  }
+      },
+    },
+  },
 };
 
 export const _Button = (args) => <Button {...args}/>;
@@ -150,6 +150,5 @@ _Button.args = {
   noText: false,
   onClick,
   className: '',
-  children: 'click me'
+  children: 'click me',
 };
-

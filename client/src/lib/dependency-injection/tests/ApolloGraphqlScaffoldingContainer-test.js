@@ -4,7 +4,6 @@ import buildApolloGraphqlScaffoldingContainer from '../buildApolloGraphqlScaffol
 import * as graphqlTemplates from '../graphql/templates';
 import { GLOBAL_CONTEXT } from '../MiddlewareRegistry';
 
-
 describe('Dynamic graphql injection', () => {
   let Injector;
 
@@ -28,7 +27,7 @@ describe('Dynamic graphql injection', () => {
           return {
             foo: 'bar',
           };
-        }
+        },
       },
       templateName: QUERY,
       pluralName: '',
@@ -43,11 +42,11 @@ describe('Dynamic graphql injection', () => {
       (updater) => {
         updater.test('MyTestQuery', (manager) => {
           manager.transformApolloConfig('props', () => (previous) => ({
-              ...previous,
-              qux: 'baz'
-            }));
+            ...previous,
+            qux: 'baz',
+          }));
         });
-      }
+      },
     );
 
     Injector.load();
@@ -65,7 +64,7 @@ describe('Dynamic graphql injection', () => {
           return {
             foo: 'bar',
           };
-        }
+        },
       },
       templateName: READ,
       pluralName: 'Dinos',
@@ -73,7 +72,7 @@ describe('Dynamic graphql injection', () => {
       params: {},
       fields: [
         'Spikes',
-        'Tail'
+        'Tail',
       ],
     };
 
@@ -84,11 +83,11 @@ describe('Dynamic graphql injection', () => {
         updater.test('MyTestReadQuery', (manager) => {
           manager.addField('Plates');
           manager.transformApolloConfig('props', () => (previous) => ({
-              ...previous,
-              qux: 'baz'
-            }));
+            ...previous,
+            qux: 'baz',
+          }));
         });
-      }
+      },
     );
     Injector.load();
 
@@ -110,7 +109,7 @@ describe('Dynamic graphql injection', () => {
       params: {},
       fields: [
         'Spikes',
-        'Tail'
+        'Tail',
       ],
     };
 
@@ -121,7 +120,7 @@ describe('Dynamic graphql injection', () => {
         updater.test('MyTestReadOneQuery', (manager) => {
           manager.addField('Plates');
         });
-      }
+      },
     );
     Injector.load();
 
@@ -153,7 +152,7 @@ describe('Dynamic graphql injection', () => {
         updater.test('MyTestUpdateQuery', (manager) => {
           manager.addField('Plates');
         });
-      }
+      },
     );
     Injector.load();
 
@@ -184,7 +183,7 @@ describe('Dynamic graphql injection', () => {
         updater.test('MyTestDeleteQuery', (manager) => {
           manager.addField('ID');
         });
-      }
+      },
     );
     Injector.load();
 
@@ -216,7 +215,7 @@ describe('Dynamic graphql injection', () => {
         updater.test('MyTestCreateQuery', (manager) => {
           manager.addField('Claws');
         });
-      }
+      },
     );
     Injector.load();
 
@@ -227,4 +226,3 @@ describe('Dynamic graphql injection', () => {
     expect(compiledQuery).toMatch(/\s*mutation\s+CreateDino\(\s*\$input:\s*CreateDinoInput!\s*\)\s+{\s+createDino\(\s*input:\s*\$input\s*\)\s+{\s+Club Claws\s+}\s+}\s*$/);
   });
 });
-

@@ -1,7 +1,7 @@
-import Injector from '../Injector';
 import getIn from 'redux-form/lib/structure/plain/getIn';
 import setIn from 'redux-form/lib/structure/plain/setIn';
 import { actionTypes } from 'redux-form';
+import Injector from '../Injector';
 
 const omittedActions = [
   actionTypes.REGISTER_FIELD,

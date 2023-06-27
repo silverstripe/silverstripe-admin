@@ -1,7 +1,7 @@
 import fieldHolder from 'components/FieldHolder/FieldHolder';
-import { Component as DateField } from '../DateField/DateField';
 import moment from 'moment';
 import i18n from 'i18n';
+import { Component as DateField } from '../DateField/DateField';
 
 const localFormat = 'L LT';
 const dateOnlyLocalFormat = 'L';
@@ -10,7 +10,7 @@ class DatetimeField extends DateField {
   getInputProps() {
     const placeholder = i18n.inject(
       i18n._t('Admin.FormatExample', 'Example: {format}'),
-      { format: this.moment().endOf('month').format(localFormat) }
+      { format: this.moment().endOf('month').format(localFormat) },
     );
     const type = this.asHTML5() ? 'datetime-local' : 'text';
     return {

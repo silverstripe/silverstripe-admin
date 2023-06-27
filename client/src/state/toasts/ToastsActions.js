@@ -1,6 +1,6 @@
+import { v4 as uuid } from 'uuid';
 import ACTION_TYPES from './ToastsActionTypes';
 import { FADEOUT_TIME } from './ToastConstants';
-import { v4 as uuid } from 'uuid';
 
 /**
  * @typedef {import('./ToastsTypes').BasicToastOption} BasicToastOption
@@ -17,7 +17,7 @@ import { v4 as uuid } from 'uuid';
 const defaultOptions = {
   text: '',
   stay: false,
-  type: 'notice'
+  type: 'notice',
 };
 
 /**
@@ -29,12 +29,12 @@ export function dismiss(id) {
   return (dispatch) => {
     dispatch({
       type: ACTION_TYPES.DISMISS,
-      payload: { id }
+      payload: { id },
     });
 
     setTimeout(
       () => dispatch({ type: ACTION_TYPES.REMOVE, payload: { id } }),
-      FADEOUT_TIME
+      FADEOUT_TIME,
     );
   };
 }

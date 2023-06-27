@@ -1,9 +1,9 @@
 import React from 'react';
-import Search from '../Search';
-import SearchToggle from '../SearchToggle';
 import { createStore, combineReducers } from 'redux';
 import { reducer as ReduxFormReducer } from 'redux-form';
 import SchemaReducer from 'state/schema/SchemaReducer';
+import SearchToggle from '../SearchToggle';
+import Search from '../Search';
 
 const FormReducer = combineReducers({
   formState: ReduxFormReducer,
@@ -17,7 +17,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Allows users to search by term or filter results with a sub form.'
+        component: 'Allows users to search by term or filter results with a sub form.',
       },
       canvas: {
         sourceState: 'hide',
@@ -27,13 +27,13 @@ export default {
         exclude: ['store'],
       },
       story: {
-        height: '200px'
-      }
-    }
+        height: '200px',
+      },
+    },
   },
 };
 
-export const _Search = args => <Search {...args} />;
+export const _Search = (args) => <Search {...args} />;
 _Search.args = {
   name: 'MyField',
   title: 'Field title',
@@ -46,8 +46,8 @@ export const SimpleVanilla = {
     ..._Search.args,
     id: 'SimpleVanillaSearch',
     display: 'VISIBLE',
-    displayBehavior: 'NONE'
-  }
+    displayBehavior: 'NONE',
+  },
 };
 
 export const WithFilters = {
@@ -60,8 +60,8 @@ export const WithFilters = {
     formData: {},
     placeholder: "Search 'Pages'",
     displayBehavior: 'NONE',
-    forceFilters: true
-  }
+    forceFilters: true,
+  },
 };
 
 export const Hideable = {
@@ -75,7 +75,7 @@ export const Hideable = {
     formData: {},
     placeholder: 'Search me',
     displayBehavior: 'HIDEABLE',
-  }
+  },
 };
 
 export const Toggeable = {
@@ -86,8 +86,8 @@ export const Toggeable = {
     displayBehavior: 'TOGGLABLE',
     formSchemaUrl: '',
     formData: {},
-    forceFilters: true
-  }
+    forceFilters: true,
+  },
 };
 
 export const Wide = {
@@ -98,8 +98,8 @@ export const Wide = {
     displayBehavior: 'TOGGLABLE',
     formSchemaUrl: '',
     formData: {},
-    forceFilters: true
-  }
+    forceFilters: true,
+  },
 };
 
 export const ToggleButton = () => (

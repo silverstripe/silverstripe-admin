@@ -67,8 +67,8 @@ class UsedOnTable extends PureComponent {
     let cellLink = '#';
     let isFirst = true;
     const titleLinks = rowData.map((arr, i) => {
-      let title = arr.title;
-      const link = arr.link;
+      let { title } = arr;
+      const { link } = arr;
       if (title && title.length >= 25) {
         title = `${title.substring(0, 25).trim()}...`;
       }

@@ -201,7 +201,7 @@ FormBuilderModal.propTypes = {
   title: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool,
-    PropTypes.shape({ html: PropTypes.string })
+    PropTypes.shape({ html: PropTypes.string }),
   ]),
   className: PropTypes.string,
   bodyClassName: PropTypes.string,

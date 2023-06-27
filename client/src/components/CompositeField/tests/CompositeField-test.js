@@ -17,7 +17,7 @@ test('CompositeField renders', () => {
     >
       <input name="child1" />
       <input name="child2" />
-    </CompositeField>
+    </CompositeField>,
   );
   const blockquote = container.querySelector('div blockquote');
   expect(blockquote.classList).toContain('myclassname');
@@ -40,7 +40,7 @@ test('CompositeField defaults', () => {
     >
       <input name="child1" />
       <input name="child2" />
-    </CompositeField>
+    </CompositeField>,
   );
   expect(container.tagName).toBe('DIV');
   expect(container.classList).toHaveLength(0);
@@ -61,7 +61,7 @@ test('CompositeField getLegend() returns null when the legend is undefined', () 
     >
       <input name="child1" />
       <input name="child2" />
-    </CompositeField>
+    </CompositeField>,
   );
   expect(container.querySelector('legend')).toBeNull();
 });
@@ -78,7 +78,7 @@ test('CompositeField getLegend() returns null when the tag is not a fieldset', (
     >
       <input name="child1" />
       <input name="child2" />
-    </CompositeField>
+    </CompositeField>,
   );
   expect(container.querySelector('legend')).toBeNull();
   expect(container.textContent).not.toContain('my legend');
@@ -96,7 +96,7 @@ test('CompositeField getLegend() returns a legend tag', () => {
     >
       <input name="child1" />
       <input name="child2" />
-    </CompositeField>
+    </CompositeField>,
   );
   const legend = container.querySelector('legend');
   expect(legend.textContent).toBe('my legend');

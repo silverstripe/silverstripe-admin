@@ -79,7 +79,7 @@ class ApolloGraphqlManager {
     };
     // Fields array is mutated by reference, so this has to be dereferenced from the configDefaults
     mergedConfig.fields = [
-      ...mergedConfig.fields
+      ...mergedConfig.fields,
     ];
     const {
       apolloConfig,
@@ -146,7 +146,7 @@ class ApolloGraphqlManager {
       throw new Error('addParam must be passed a name and type parameter');
     }
     return this.addParams({
-      [name]: type
+      [name]: type,
     });
   }
 
@@ -176,7 +176,7 @@ class ApolloGraphqlManager {
    */
   addArg(name, variableName, path = ROOT_FIELD) {
     return this.addArgs({
-      [name]: variableName
+      [name]: variableName,
     }, path);
   }
 
@@ -217,7 +217,7 @@ class ApolloGraphqlManager {
    */
   addFields(fields = [], path = ROOT_FIELD) {
     let fieldArray = [];
-    path.split('/').forEach(part => {
+    path.split('/').forEach((part) => {
       if (part === ROOT_FIELD) {
         fieldArray = this.config.fields;
       } else {
@@ -230,7 +230,7 @@ class ApolloGraphqlManager {
         fieldArray = next;
       }
     });
-    fields.forEach(f => fieldArray.push(f));
+    fields.forEach((f) => fieldArray.push(f));
     return this;
   }
 
@@ -296,7 +296,7 @@ Tried to use template '${name}', which could not be found. Please make sure that
       [TEMPLATE_OVERRIDE]: {
         strings,
         expressions,
-      }
+      },
     };
 
     return this;
@@ -378,7 +378,7 @@ Tried to use template '${name}', which could not be found. Please make sure that
     if (deferredApolloConfig.includes(key)) {
       const deferredValue = (...args) => {
         const oldValue = value(...args);
-        const bootedTransformers = transforms.map(transform => transform(...args));
+        const bootedTransformers = transforms.map((transform) => transform(...args));
 
         if (key === 'update') {
           return null;
@@ -435,7 +435,7 @@ Tried to use template '${name}', which could not be found. Please make sure that
     const config = this.getConfig();
     const template = this.getRawTemplate(config.templateName);
 
-    const expressed = template.expressions.map(expression => {
+    const expressed = template.expressions.map((expression) => {
       if (typeof expression !== 'function') {
         return expression;
       }

@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 import React from 'react';
-import withSudoMode from '../SudoMode';
 import fetch from 'isomorphic-fetch';
 import { fireEvent, render, screen } from '@testing-library/react';
+import withSudoMode from '../SudoMode';
 
 jest.mock('isomorphic-fetch');
 
@@ -30,7 +30,7 @@ function resetWindowConfig(options) {
         endpoints: {
           activate: 'admin/sudomode/activate',
         },
-        helpLink: mergedOptions.helpLink
+        helpLink: mergedOptions.helpLink,
       },
     ],
   };
@@ -67,13 +67,13 @@ test('SudoMode renders a loading component after entering password and clicking 
   resetWindowConfig({ sudoModeActive: false });
   const { container } = render(
     <ComponentWithSudoMode {...{
-      LoadingComponent
+      LoadingComponent,
     }}
-    />
+    />,
   );
   fireEvent.click(container.querySelector('.sudo-mode__notice-button'));
   fireEvent.change(container.querySelector('#sudoModePassword'), {
-    target: { value: 'password' }
+    target: { value: 'password' },
   });
   fireEvent.click(container.querySelector('.sudo-mode__verify-button'));
   expect(await screen.findByTestId('loading-component')).not.toBeNull();
@@ -97,13 +97,13 @@ test('Sudo mode shows errors on failure', async () => {
   }));
   const { container } = render(
     <ComponentWithSudoMode {...{
-      LoadingComponent
+      LoadingComponent,
     }}
-    />
+    />,
   );
   fireEvent.click(container.querySelector('.sudo-mode__notice-button'));
   fireEvent.change(container.querySelector('#sudoModePassword'), {
-    target: { value: 'password' }
+    target: { value: 'password' },
   });
   fireEvent.click(container.querySelector('.sudo-mode__verify-button'));
   await screen.findByTestId('loading-component');

@@ -26,7 +26,7 @@ function onEnter(callback) {
  * Display an advanced filter form.
  */
 function SearchForm({
-  visible, expanded, onSearch, onClear, formSchemaUrl, id, identifier, clearable
+  visible, expanded, onSearch, onClear, formSchemaUrl, id, identifier, clearable,
 }) {
   const handleKeyDown = onEnter(onSearch);
   const loadForm = (visible || expanded);
@@ -72,9 +72,8 @@ SearchForm.propTypes = {
 };
 
 SearchForm.defaultProps = {
-  formData: {}
+  formData: {},
 };
-
 
 export { SearchForm as Component };
 

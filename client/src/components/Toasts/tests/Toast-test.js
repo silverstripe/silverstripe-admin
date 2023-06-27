@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import Toast from '../Toast';
 import { render, fireEvent } from '@testing-library/react';
+import Toast from '../Toast';
 
 test('Toast render', () => {
   const onDismiss = jest.fn();
@@ -12,9 +12,9 @@ test('Toast render', () => {
       text: 'Foo bar',
       onDismiss,
       dismissed: false,
-      id: 'abc123'
+      id: 'abc123',
     }}
-    />
+    />,
   );
   expect(container.querySelectorAll('.toast.toast--notice')).toHaveLength(1);
   expect(container.querySelectorAll('.toast__close')).toHaveLength(1);
@@ -35,9 +35,9 @@ test('Toast dismiss', () => {
       text: 'Foo bar',
       onDismiss,
       dismissed: true,
-      id: 'abc123'
+      id: 'abc123',
     }}
-    />
+    />,
   );
   expect(container.querySelectorAll('.toast--warning')).toHaveLength(1);
   expect(container.querySelectorAll('.toast--dismissing')).toHaveLength(1);
@@ -52,7 +52,7 @@ test('Toast type error', () => {
       onDismiss: () => null,
       id: 'abc123',
     }}
-    />
+    />,
   );
   expect(container.querySelectorAll('.toast--error')).toHaveLength(1);
 });

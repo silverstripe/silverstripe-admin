@@ -1,10 +1,10 @@
 /* global jest, describe, afterEach, it, expect, window */
 
+import BootRoutes from '../BootRoutes';
+
 jest.unmock('../BootRoutes.js');
 jest.unmock('lib/Config');
 jest.unmock('lib/Router');
-
-import BootRoutes from '../BootRoutes';
 
 describe('Bootroutes', () => {
   beforeEach(() => {

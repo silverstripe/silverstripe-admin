@@ -14,11 +14,11 @@ const SummaryTag = ({ label, count, ...props }) => (
 
 SummaryTag.propTypes = Object.assign({}, Tag.propTypes, {
   label: PropTypes.string,
-  count: PropTypes.number
+  count: PropTypes.number,
 });
 
 SummaryTag.defaultProps = {
-  label: i18n._t('Admin.SUMMARY_TAG_LABEL', 'filters')
+  label: i18n._t('Admin.SUMMARY_TAG_LABEL', 'filters'),
 };
 
 export default SummaryTag;

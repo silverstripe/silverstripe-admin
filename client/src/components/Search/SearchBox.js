@@ -3,11 +3,11 @@ import i18n from 'i18n';
 import React, { Component } from 'react';
 import { Label, Button } from 'reactstrap';
 import classNames from 'classnames';
-import TagPropType from '../Tag/TagPropType';
 import CompactTagList from 'components/Tag/CompactTagList';
 import ResizeAware from 'components/ResizeAware/ResizeAware';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import TagPropType from '../Tag/TagPropType';
 
 /**
  * Displays a search box and a few buttons related buttons.
@@ -37,7 +37,7 @@ class SearchBox extends Component {
     this.state = {
       hasFocus: false,
       width: window.innerWidth - 180 - 55,
-      tagWidth: 0
+      tagWidth: 0,
     };
   }
 
@@ -101,7 +101,7 @@ class SearchBox extends Component {
    * Calculate the max-width available for tags.
    */
   calculateSpaceForTags() {
-    let width = this.state.width;
+    let { width } = this.state;
 
     // Keep a minimal amount of space for the input field.
     width -= 150;
@@ -200,7 +200,7 @@ class SearchBox extends Component {
     const { id, searchText, onChange, placeholder, name, borders } = this.props;
     const style = {
       paddingLeft: `${this.calculateInputLeftPadding()}px`,
-      paddingRight: `${this.calculateInputRightPadding()}px`
+      paddingRight: `${this.calculateInputRightPadding()}px`,
     };
 
     const mergedBorders = Object.assign({}, SearchBox.defaultProps.borders, borders);
@@ -212,7 +212,7 @@ class SearchBox extends Component {
         [`${classe}--right-border`]: mergedBorders.right,
         [`${classe}--bottom-border`]: mergedBorders.bottom,
         [`${classe}--left-border`]: mergedBorders.left,
-      }
+      },
     );
 
     return (
@@ -262,7 +262,7 @@ class SearchBox extends Component {
       <div
         role="presentation"
         className="search-box__enter"
-        onClick={e => { e.stopPropagation(); e.preventDefault(); this.props.onSearch(); }}
+        onClick={(e) => { e.stopPropagation(); e.preventDefault(); this.props.onSearch(); }}
       >
         {i18n._t('Admin.ENTER', 'Enter')}&nbsp;↵
       </div>
@@ -275,11 +275,11 @@ class SearchBox extends Component {
   renderFilterButton() {
     const { expanded, onToggleFilter, formId } = this.props;
     const classes = classNames(
-        'btn--icon',
-        'font-icon-caret-down-two',
-        'search-box__filter-trigger',
-        this.state.width < 576 ? 'search-box--no-label' : '',
-        { collapsed: !expanded }
+      'btn--icon',
+      'font-icon-caret-down-two',
+      'search-box__filter-trigger',
+      this.state.width < 576 ? 'search-box--no-label' : '',
+      { collapsed: !expanded },
     );
     const spanClass = this.state.width < 576 ? 'sr-only' : '';
     return (<Button
@@ -320,7 +320,7 @@ class SearchBox extends Component {
       'search-box--has-filters': showFilters,
       'search-box--has-not-filters': !showFilters,
       'search-box--compact': this.state.width < 576, // 'sm' breakpoint
-      'search-box--expanded': expanded
+      'search-box--expanded': expanded,
     });
 
     const showEnter = (dirty || !clearable) && this.state.hasFocus;
@@ -346,7 +346,6 @@ class SearchBox extends Component {
   }
 }
 
-
 SearchBox.propTypes = {
   onSearch: PropTypes.func,
   onToggleFilter: PropTypes.func,
@@ -365,7 +364,7 @@ SearchBox.propTypes = {
   name: PropTypes.string,
   dirty: PropTypes.bool,
   clearable: PropTypes.bool,
-  tagData: PropTypes.arrayOf(TagPropType)
+  tagData: PropTypes.arrayOf(TagPropType),
 };
 
 SearchBox.defaultProps = {
@@ -379,9 +378,8 @@ SearchBox.defaultProps = {
     right: false,
     bottom: true,
     left: true,
-  }
+  },
 };
-
 
 export { SearchBox as Component };
 

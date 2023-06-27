@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import FieldGroup from '../FieldGroup';
 import { render } from '@testing-library/react';
+import FieldGroup from '../FieldGroup';
 
 test('FieldGroup renders children', () => {
   const { container } = render(
@@ -10,13 +10,13 @@ test('FieldGroup renders children', () => {
       className: 'my-classname',
       data: {
         tag: 'fieldset',
-        legend: 'my-legend'
-      }
+        legend: 'my-legend',
+      },
     }}
     >
       <p>lorem</p>
       <p>ipsum</p>
-    </FieldGroup>
+    </FieldGroup>,
   );
   const fieldset = container.querySelector('fieldset');
   expect(fieldset.classList).toContain('my-classname');

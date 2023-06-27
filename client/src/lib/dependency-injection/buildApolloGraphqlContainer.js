@@ -1,11 +1,10 @@
 import buildBaseContainer from './buildBaseContainer';
 import ApolloGraphqlManager from './ApolloGraphqlManager';
 
-
 const buildApolloGraphqlContainer = (
   base = buildBaseContainer(),
   initialTemplates = {},
-  initialFragments = {}
+  initialFragments = {},
 ) => ({
   ...base,
 
@@ -71,7 +70,7 @@ templateName config is defined and that you have registered the template before 
       this,
       key,
       config,
-      ...args
+      ...args,
     );
   },
 
@@ -132,7 +131,7 @@ Otherwise, invoke the registerFragment() function with '{ force: true }' as the 
    * @returns {ApolloGraphqlManager}
    */
   getProcessedManager(key, middlewareMatches) {
-    const factories = middlewareMatches.map(middleware => middleware.factory).reverse();
+    const factories = middlewareMatches.map((middleware) => middleware.factory).reverse();
     const config = this.services[key];
 
     const manager = new ApolloGraphqlManager(

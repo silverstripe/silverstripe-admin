@@ -11,7 +11,7 @@ const toggleBtnClasses = (toggled) => classnames(
   'search-toggle',
   'font-icon-search',
   'btn--icon-lg',
-  { 'search-toggle__active': toggled }
+  { 'search-toggle__active': toggled },
 );
 
 /**
@@ -25,10 +25,9 @@ const SearchToggle = ({ onToggle, toggled }) => (<Button
   <span className="sr-only">{label}</span>
 </Button>);
 
-
 SearchToggle.propTypes = {
   onToggle: PropTypes.func,
-  toggled: PropTypes.bool
+  toggled: PropTypes.bool,
 };
 
 export { SearchToggle as Component };

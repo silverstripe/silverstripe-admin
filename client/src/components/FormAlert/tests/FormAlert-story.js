@@ -9,15 +9,15 @@ export default {
     docs: {
       description: {
         component: `Generates a bootstrap alert box, with state closing handled optionally.
-        _NOTE:_ For other properties, please refer to the [reactstrap Alert](https://reactstrap.github.io/components/alerts/) documentation.`
+        _NOTE:_ For other properties, please refer to the [reactstrap Alert](https://reactstrap.github.io/components/alerts/) documentation.`,
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      }
-    }
+      },
+    },
   },
   argTypes: {
     extraClass: {
@@ -26,7 +26,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     value: {
       description: 'The content to show.',
@@ -34,7 +34,7 @@ export default {
       table: {
         type: { summary: 'any' },
         defaultValue: { summary: '' },
-      }
+      },
     },
     type: {
       description: ' The kind of alert box to show, defines appearance, accepts the following: `success`, `warning`, `danger`, `info`',
@@ -43,18 +43,18 @@ export default {
         'success',
         'warning',
         'danger',
-        'info'
+        'info',
       ],
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'info' },
-      }
+      },
     },
     onClosed: {
       description: 'For manual handling of showing and hiding the message, used in conjunction with `visible`.',
       table: {
         type: { summary: 'function' },
-      }
+      },
     },
     visible: {
       description: 'Manual set whether the message is hidden or shown.',
@@ -62,24 +62,23 @@ export default {
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: false },
-      }
+      },
     },
     closeLabel: {
       description: 'The label for the screen reader close button. Providing a value for this will make the alert "dismissible."',
       control: 'string',
       table: {
         type: { summary: 'string' },
-      }
-    }
-  }
+      },
+    },
+  },
 };
 
 export const _FormAlert = (args) => <FormAlert {...args} />;
 _FormAlert.args = {
   type: 'success',
-  value: "This is a 'success'/'good' alert"
+  value: "This is a 'success'/'good' alert",
 };
-
 
 export const Types = () => (
   <div>

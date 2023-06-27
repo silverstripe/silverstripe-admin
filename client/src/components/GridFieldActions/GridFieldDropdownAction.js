@@ -24,7 +24,7 @@ class GridFieldDropdownAction extends PureComponent {
         elementType = undefined;
         break;
     }
-  return (
+    return (
     <DropdownItem
       className={classNames}
       href={url}
@@ -36,7 +36,7 @@ class GridFieldDropdownAction extends PureComponent {
     >
       {title}
     </DropdownItem>
-  );
+    );
   }
 }
 

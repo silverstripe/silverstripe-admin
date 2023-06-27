@@ -31,8 +31,8 @@ jQuery.entwine('ss', ($) => {
       if (isMultiple) {
         this.setValue(
           (state.value && state.value !== MULTI_EMPTY_VALUE)
-            ? state.value.map(next => Number(next))
-            : []
+            ? state.value.map((next) => Number(next))
+            : [],
         );
       } else {
         this.setValue(state.value ? Number(state.value) : '');
@@ -78,7 +78,7 @@ jQuery.entwine('ss', ($) => {
           onChange={onChange}
           value={this.getValue()}
           noHolder
-        />
+        />,
       );
       this.setReactRoot(root);
     },

@@ -15,11 +15,11 @@ function usedOnReducer(state = initialState, action) {
 
   switch (action.type) {
     case TYPES.SAVE_USED_ON: {
-      const usedOn = action.payload.usedOn;
+      const { usedOn } = action.payload;
 
       return {
         ...state,
-        loading: state.loading.filter(loading => loading !== identifier),
+        loading: state.loading.filter((loading) => loading !== identifier),
         usedOn: {
           ...state.usedOn,
           [identifier]: usedOn.usage,
@@ -49,11 +49,11 @@ function usedOnReducer(state = initialState, action) {
       };
     }
     case TYPES.LOAD_USED_ON_FAILED: {
-      const error = action.payload.error;
+      const { error } = action.payload;
 
       return {
         ...state,
-        loading: state.loading.filter(loading => loading !== identifier),
+        loading: state.loading.filter((loading) => loading !== identifier),
         errors: {
           ...state.errors,
           [identifier]: error,

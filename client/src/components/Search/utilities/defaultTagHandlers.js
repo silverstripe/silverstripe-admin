@@ -21,7 +21,7 @@ const selectTagHandler = (key, values, formSchema) => {
     // Convert our values to their display title equivalent.
     const labelValue = values.map((selectedValue) => {
       const sourceEntry = fieldState.source.find(
-        ({ value }) => value.toString() === selectedValue.toString()
+        ({ value }) => value.toString() === selectedValue.toString(),
       );
       return sourceEntry && sourceEntry.title ?
         sourceEntry.title :
@@ -74,13 +74,13 @@ const defaultTagHandlers = {
       const { value, ...valuelessTag } = tag;
       return valuelessTag;
     }
-      return false;
+    return false;
   },
   MultiSelect: (tag, field, formSchema) => {
     const value = selectTagHandler(tag.key, tag.value, formSchema);
     return value ? Object.assign({}, tag, { value }) : false;
   },
-  default: (tag) => (tag.value ? tag : false)
+  default: (tag) => (tag.value ? tag : false),
 };
 
 export default defaultTagHandlers;

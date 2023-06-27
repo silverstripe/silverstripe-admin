@@ -3,7 +3,7 @@
 import React from 'react';
 import getDefaultActiveKey from '../getDefaultActiveKey';
 
-const tabMaker = (...names) => names.map(name => <div name={name} />);
+const tabMaker = (...names) => names.map((name) => <div name={name} />);
 
 test('getDefaultActiveKey default to first tab', () => {
   const children = tabMaker('expected', 'two', 'three');
