@@ -29,7 +29,7 @@ function makeProps(obj = {}) {
 }
 
 test('InputField render() renders', () => {
-  const { container } = render(<InputField {...makeProps()}/>);
+  const { container } = render(<InputField {...makeProps()} />);
   expect(container.querySelectorAll('input')).toHaveLength(1);
 });
 

@@ -33,7 +33,7 @@ test('UsedOnTable provideUsedOnData HOC should try to load data onMount', () => 
     return null;
   });
   const Provider = provideUsedOnData(mockComponent).Component;
-  render(<Provider {...props}/>);
+  render(<Provider {...props} />);
   expect(loadUsedOn).toBeCalledWith('abc', 'get', 'http://www.bob.co.nz');
   expect(mockComponent).toBeCalled();
 });

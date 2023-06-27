@@ -16,7 +16,7 @@ test('GridFieldTable generateHeader() should return props.header if it is set', 
 
 test('GridFieldTable generateHeader() should return null if props.header and props.data are both not set', () => {
   const { container } = render(
-    <GridFieldTable/>,
+    <GridFieldTable />,
   );
   expect(container.querySelector('thead').innerHTML).toBe('');
 });
@@ -33,7 +33,7 @@ test('GridFieldTable generateHeader() should return props.rows if it is set', ()
 
 test('GridFieldTable generateHeader() should return null if props.rows and props.data are both not set', () => {
   const { container } = render(
-    <GridFieldTable/>,
+    <GridFieldTable />,
   );
   expect(container.querySelector('tbody').innerHTML).toBe('');
 });

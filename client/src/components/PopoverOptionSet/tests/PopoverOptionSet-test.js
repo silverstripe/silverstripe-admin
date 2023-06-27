@@ -21,7 +21,7 @@ const buttonTypeB = {
 function makeProps(obj = {}) {
   return {
     buttons: [buttonTypeA, buttonTypeB],
-    ButtonComponent: ({ className }) => <button data-testid="test-button" className={className}/>,
+    ButtonComponent: ({ className }) => <button data-testid="test-button" className={className} />,
     PopoverComponent: ({ toggle, children }) => (
       <div data-testid="test-popover" onClick={toggle}>
         {children}
@@ -54,7 +54,7 @@ test('PopoverOptionSet handleToggle should call the toggle callback', async () =
 
 test('PopoverOptionSet handleSearchValueClear should set the state', async () => {
   render(
-    <PopoverOptionSet {...makeProps()}/>,
+    <PopoverOptionSet {...makeProps()} />,
   );
   const popover = await screen.findByTestId('test-popover');
   const input = popover.querySelector('input.popover-option-set__search-input');
@@ -66,7 +66,7 @@ test('PopoverOptionSet handleSearchValueClear should set the state', async () =>
 
 test('PopoverOptionSet handleSearchValueClear should set the state', async () => {
   render(
-    <PopoverOptionSet {...makeProps()}/>,
+    <PopoverOptionSet {...makeProps()} />,
   );
   const popover = await screen.findByTestId('test-popover');
   const input = popover.querySelector('input.popover-option-set__search-input');
@@ -107,7 +107,7 @@ test('PopoverOptionSet renderOptionButtons render all available buttons', async 
 
 test('PopoverOptionSet render should render a Popover', async () => {
   render(
-    <PopoverOptionSet {...makeProps()}/>,
+    <PopoverOptionSet {...makeProps()} />,
   );
   const popover = await screen.findByTestId('test-popover');
   expect(popover.querySelector('.popover-option-set__button-container')).not.toBeNull();

@@ -47,7 +47,7 @@ export default {
   },
 };
 
-export const _TagList = (args) => (<TagList {...args}/>);
+export const _TagList = (args) => (<TagList {...args} />);
 _TagList.args = {
   deletable: false,
   focusable: true,
@@ -55,7 +55,7 @@ _TagList.args = {
   ...tagListActions,
 };
 
-export const _CompactTagList = (args) => (<CompactTagList {...args}/>);
+export const _CompactTagList = (args) => (<CompactTagList {...args} />);
 _CompactTagList.args = {
   deletable: false,
   focusable: true,
@@ -65,7 +65,7 @@ _CompactTagList.args = {
   ...compactTagListActions,
 };
 
-export const _Tag = (args) => (<Tag {...args}/>);
+export const _Tag = (args) => (<Tag {...args} />);
 _Tag.args = {
   dataKey: 'HelloWorld',
   label: '',

@@ -27,7 +27,7 @@ test('TextField onChange() should call the onChange function on props', () => {
 });
 
 test('TextField multiLine() should not be multi-line for empty data', () => {
-  const { container } = render(<TextField {...makeProps()}/>);
+  const { container } = render(<TextField {...makeProps()} />);
   const input = container.querySelector('input');
   expect(input.getAttribute('type')).toBe('text');
   expect(input.hasAttribute('multiline')).toBe(false);

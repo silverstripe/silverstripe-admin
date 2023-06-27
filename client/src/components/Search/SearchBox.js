@@ -5,7 +5,6 @@ import { Label, Button } from 'reactstrap';
 import classNames from 'classnames';
 import CompactTagList from 'components/Tag/CompactTagList';
 import ResizeAware from 'components/ResizeAware/ResizeAware';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import TagPropType from '../Tag/TagPropType';
 
@@ -73,7 +72,7 @@ class SearchBox extends Component {
    * @returns number
    */
   getComponentWidth() {
-    const node = ReactDOM.findDOMNode(this);
+    const { node } = this;
     if (!node) {
       return 0;
     }
@@ -172,7 +171,7 @@ class SearchBox extends Component {
   }
 
   focusOnLastTag() {
-    const node = ReactDOM.findDOMNode(this);
+    const { node } = this;
     if (!node) {
       return;
     }
@@ -183,7 +182,7 @@ class SearchBox extends Component {
   }
 
   focusOnInput() {
-    const node = ReactDOM.findDOMNode(this);
+    const { node } = this;
     if (!node) {
       return;
     }
@@ -282,16 +281,18 @@ class SearchBox extends Component {
       { collapsed: !expanded },
     );
     const spanClass = this.state.width < 576 ? 'sr-only' : '';
-    return (<Button
-      aria-expanded={expanded}
-      aria-controls={formId}
-      aria-label={i18n._t('Admin.ADVANCED', 'Advanced')}
-      onClick={onToggleFilter}
-      className={classes}
-      title={i18n._t('Admin.ADVANCED', 'Advanced')}
-    >
-      <span className={spanClass}>Search options</span>
-    </Button>);
+    // eslint-disable-next-line react/jsx-indent
+    return (
+      <Button
+        aria-expanded={expanded}
+        aria-controls={formId}
+        aria-label={i18n._t('Admin.ADVANCED', 'Advanced')}
+        onClick={onToggleFilter}
+        className={classes}
+        title={i18n._t('Admin.ADVANCED', 'Advanced')}
+      >
+        <span className={spanClass}>Search options</span>
+      </Button>);
   }
 
   /**

@@ -14,7 +14,7 @@ function makeProps(obj = {}) {
 }
 
 test('ToastActions link', () => {
-  const { container } = render(<ToastAction {...makeProps()}/>);
+  const { container } = render(<ToastAction {...makeProps()} />);
   const link = container.querySelector('a');
   expect(link.getAttribute('href')).toBe('https://silverstripe.org/');
   expect(link.innerHTML).toBe('foo bar');

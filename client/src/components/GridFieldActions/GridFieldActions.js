@@ -44,6 +44,7 @@ class GridFieldActions extends PureComponent {
               title={action.title}
               type={action.type}
               url={action.url}
+              // eslint-disable-next-line react/no-array-index-key
               key={actionIndex}
             />),
             ),
@@ -88,6 +89,7 @@ class GridFieldActions extends PureComponent {
   }
 }
 
+// eslint-disable-next-line react/forbid-foreign-prop-types
 const actionShape = GridFieldDropdownAction.propTypes;
 actionShape.group = PropTypes.string;
 

@@ -22,7 +22,7 @@ class ActionMenu extends PureComponent {
 
     // Force setting state to the end of the execution queue to clear a potential race condition
     // with entwine click handlers
-    window.setTimeout(() => this.setState({ isOpen: !this.state.isOpen }), 0);
+    window.setTimeout(() => this.setState((prevState) => ({ isOpen: !prevState.isOpen })), 0);
   }
 
   render() {

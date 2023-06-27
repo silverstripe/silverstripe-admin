@@ -124,5 +124,5 @@ export default {
 export const _Breadcrumb = (args) => {
   // eslint-disable-next-line no-shadow
   const { level, icon } = args;
-  return (<Breadcrumb crumbs={buildBreadCrumb(0, level, icon)}/>);
+  return (<Breadcrumb crumbs={buildBreadCrumb(0, level, icon)} />);
 };

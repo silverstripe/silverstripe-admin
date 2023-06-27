@@ -46,12 +46,12 @@ class GridField extends Component {
     return (
       <GridFieldCell className="grid-field__cell--actions" key="Actions">
         <GridFieldAction
-          icon={'cog'}
+          icon="cog"
           onClick={this.editRecord}
           record={record}
         />
         <GridFieldAction
-          icon={'cancel'}
+          icon="cancel"
           onClick={this.deleteRecord}
           record={record}
         />

@@ -45,7 +45,7 @@ test('Search handleChange', () => {
       searchTerm: 'foo',
     },
   };
-  const { container } = render(<Search {...props}/>);
+  const { container } = render(<Search {...props} />);
   const input = container.querySelector('.search-box__content-field');
   // handle change is called on initial render
   expect(reduxFormChange).toHaveBeenCalledWith('mySchemaName', 'searchTerm', '');
@@ -111,7 +111,7 @@ test('Search setOverrides converts values into name/value notation', () => {
       },
     },
   };
-  render(<Search {...props}/>);
+  render(<Search {...props} />);
   expect(mockSetSchemaStateOverrides).toHaveBeenCalledWith('someUrl', {
     fields: [
       { name: 'foo', value: true },
@@ -121,7 +121,7 @@ test('Search setOverrides converts values into name/value notation', () => {
 });
 
 test('Search clear button()', () => {
-  const { container } = render(<Search {...makeProps()}/>);
+  const { container } = render(<Search {...makeProps()} />);
   const input = container.querySelector('.search-box__content-field');
   expect(container.querySelector('.search-form__clear')).toBeNull();
   fireEvent.change(input, { target: { value: 'foo' } });

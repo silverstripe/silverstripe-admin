@@ -111,20 +111,20 @@ class BootRoutes {
     const rootRoute = reactRouteRegister.getRootRoute();
     const router = createBrowserRouter(
       createRoutesFromElements(
-          <Route
-            path={rootRoute.path}
-            element={
-              <rootRoute.component>
-                <NavigationBlocker shouldBlockFn={this.shouldConfirmBeforeUnload} blockMessage={this.getUnsavedChangesMessage()} />
-              </rootRoute.component>
+        <Route
+          path={rootRoute.path}
+          element={
+            <rootRoute.component>
+              <NavigationBlocker shouldBlockFn={this.shouldConfirmBeforeUnload} blockMessage={this.getUnsavedChangesMessage()} />
+            </rootRoute.component>
             }
-          >
-            {reactRouteRegister.getChildRoutes().map(
-              (route) => (
-                <Route key={route.path} path={route.path} element={<route.component />} />
-              ),
-            )}
-          </Route>,
+        >
+          {reactRouteRegister.getChildRoutes().map(
+            (route) => (
+              <Route key={route.path} path={route.path} element={<route.component />} />
+            ),
+          )}
+        </Route>,
       ),
       { basename: joinUrlPaths(Config.get('baseUrl'), Config.get('adminUrl')) },
     );

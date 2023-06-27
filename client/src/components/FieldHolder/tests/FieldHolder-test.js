@@ -177,14 +177,14 @@ test('FieldHolder hideLabels', () => {
 
 test('FieldHolder no labels', () => {
   const { container } = render(
-    <FieldHolder/>,
+    <FieldHolder />,
   );
   expect(container.querySelectorAll('.form__field-label')).toHaveLength(0);
 });
 
 test('FieldHolder no prefix or suffix', () => {
   const { container } = render(
-    <FieldHolder/>,
+    <FieldHolder />,
   );
   expect(container.querySelectorAll('.input-group-text')).toHaveLength(0);
 });

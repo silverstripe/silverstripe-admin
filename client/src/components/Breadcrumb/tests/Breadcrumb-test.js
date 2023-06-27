@@ -31,7 +31,7 @@ test('BreadcrumbsComponent renderBreadcrumbs() should convert the props.crumbs a
 });
 
 test('BreadcrumbsComponent renderBreadcrumbs() should convert the props.crumbs array into jsx to be rendered', () => {
-  const { container } = render(<Breadcrumb/>);
+  const { container } = render(<Breadcrumb />);
   expect(container.querySelectorAll('.breadcrumb__item')).toHaveLength(0);
 });
 

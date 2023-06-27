@@ -2,7 +2,6 @@
 import i18n from 'i18n';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
 import * as schemaActions from 'state/schema/SchemaActions';
 import { reset, initialize, change } from 'redux-form';
@@ -165,7 +164,7 @@ class Search extends Component {
       return;
     }
 
-    const node = ReactDOM.findDOMNode(this);
+    const { node } = this;
     if (!node) {
       return;
     }
@@ -188,7 +187,7 @@ class Search extends Component {
       return;
     }
 
-    const node = ReactDOM.findDOMNode(this);
+    const { node } = this;
     if (!node) {
       return;
     }

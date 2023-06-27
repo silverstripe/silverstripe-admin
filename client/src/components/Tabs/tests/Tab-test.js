@@ -16,7 +16,7 @@ function makeProps(obj = {}) {
 }
 
 test('Tab onToggle', () => {
-  const { container } = render(<Tab {...makeProps()}/>);
+  const { container } = render(<Tab {...makeProps()} />);
   const link = container.querySelector('.nav-item .special');
   fireEvent.click(link, {});
   expect(onToggle).toBeCalled();

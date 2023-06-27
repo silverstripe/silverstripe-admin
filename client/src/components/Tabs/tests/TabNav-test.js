@@ -37,7 +37,7 @@ test('TabNav render', () => {
 });
 
 test('TabNav hidden when no child is provided', () => {
-  const { container } = render(<TabNav {...makeProps()}/>);
+  const { container } = render(<TabNav {...makeProps()} />);
   expect(container.querySelectorAll('.nav-tabs .nav-link')).toHaveLength(0);
 });
 

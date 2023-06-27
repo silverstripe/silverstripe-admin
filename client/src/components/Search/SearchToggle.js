@@ -17,13 +17,14 @@ const toggleBtnClasses = (toggled) => classnames(
 /**
  * Simple Search toggle than can be use to enable/disable a Search component.
  */
-const SearchToggle = ({ onToggle, toggled }) => (<Button
-  title={label}
-  onClick={onToggle}
-  className={toggleBtnClasses(toggled)}
->
-  <span className="sr-only">{label}</span>
-</Button>);
+const SearchToggle = ({ onToggle, toggled }) => (
+  <Button
+    title={label}
+    onClick={onToggle}
+    className={toggleBtnClasses(toggled)}
+  >
+    <span className="sr-only">{label}</span>
+  </Button>);
 
 SearchToggle.propTypes = {
   onToggle: PropTypes.func,

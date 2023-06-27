@@ -17,7 +17,7 @@ function makeProps(obj = {}) {
 }
 
 test('TagList renders simple tags', () => {
-  const { container } = render(<TagList {...makeProps()}/>);
+  const { container } = render(<TagList {...makeProps()} />);
   const tags = container.querySelectorAll('.tag-list .tag-component');
   expect(tags).toHaveLength(4);
   expect(tags[0].innerHTML).toEqual('justKey');

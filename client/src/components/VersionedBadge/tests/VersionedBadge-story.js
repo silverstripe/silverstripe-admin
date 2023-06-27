@@ -5,7 +5,7 @@ export default {
   title: 'Admin/Badges/VersionedBadge',
   component: VersionedBadge,
   decorators: [
-    (Story) => <div><p>Modified Page <Story/></p></div>,
+    (Story) => <div><p>Modified Page <Story /></p></div>,
   ],
   tags: ['autodocs'],
   parameters: {

@@ -163,31 +163,31 @@ class ViewModeToggle extends Component {
     );
 
     return (
-        <Dropdown
-          isOpen={this.state.dropdownOpen}
-          toggle={this.toggle}
-          className="viewmode-toggle"
+      <Dropdown
+        isOpen={this.state.dropdownOpen}
+        toggle={this.toggle}
+        className="viewmode-toggle"
+      >
+        <DropdownToggle
+          className={toggleClassName}
+          caret
+          {...dropdownToggleProps}
         >
-          <DropdownToggle
-            className={toggleClassName}
-            caret
-            {...dropdownToggleProps}
-          >
-            <span className="viewmode-toggle__chosen-view-title" >{this.getTitle()}</span>
-          </DropdownToggle>
-          <DropdownMenu >
-            {this.renderSplitDropdownItem()}
-            {this.renderEditDropDownItem()}
-            {this.renderPreviewDropDownItem()}
-            {!splitAvailable &&
-              <div className="disabled-tooltip">
-                <span className="disabled-tooltip-span">
-                  {i18n._t('Admin.SCREEN_TOO_SMALL', 'Screen size too small')}
-                </span>
-              </div>
+          <span className="viewmode-toggle__chosen-view-title">{this.getTitle()}</span>
+        </DropdownToggle>
+        <DropdownMenu>
+          {this.renderSplitDropdownItem()}
+          {this.renderEditDropDownItem()}
+          {this.renderPreviewDropDownItem()}
+          {!splitAvailable &&
+          <div className="disabled-tooltip">
+            <span className="disabled-tooltip-span">
+              {i18n._t('Admin.SCREEN_TOO_SMALL', 'Screen size too small')}
+            </span>
+          </div>
             }
-          </DropdownMenu>
-        </Dropdown>
+        </DropdownMenu>
+      </Dropdown>
     );
   }
 }

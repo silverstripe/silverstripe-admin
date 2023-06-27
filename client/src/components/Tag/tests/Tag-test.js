@@ -33,7 +33,7 @@ test('Tag children overrides label', () => {
     }}
     >
       Your label means nothing to my children
-  </Tag>,
+    </Tag>,
   );
   expect(container.querySelector('.tag-component').innerHTML).toBe('Your label means nothing to my children');
 });
@@ -171,7 +171,7 @@ test('Tag Handlers onKeyDown', () => {
     dataKey: 'MyTagKey',
     deletable: true,
   };
-  const { container } = render(<Tag {...props}/>);
+  const { container } = render(<Tag {...props} />);
   const span = container.querySelector('.tag-component');
   fireEvent.keyDown(span, { key: 'Delete' });
   fireEvent.keyDown(span, { key: 'Backspace' });

@@ -82,7 +82,7 @@ test('TreeDropdownField should call setVisible with selected value', async () =>
       urlTree: 'foo',
     },
   };
-  render(<TreeDropdownField {...props}/>);
+  render(<TreeDropdownField {...props} />);
   await promise;
   expect(setVisible).toBeCalledWith('Form_Test', [4]);
 });
@@ -109,7 +109,7 @@ test('TreeDropdownField single-select should add valueObject to selectedValues',
       urlTree: 'foo',
     },
   };
-  render(<TreeDropdownField {...props}/>);
+  render(<TreeDropdownField {...props} />);
   expect(addSelectedValues).toBeCalledWith(props.id, [{ id: 67 }]);
 });
 
@@ -128,7 +128,7 @@ test('TreeDropdownField single-select should not call selectedValues without a v
       },
     },
   };
-  render(<TreeDropdownField {...props}/>);
+  render(<TreeDropdownField {...props} />);
   expect(addSelectedValues).not.toBeCalled();
 });
 
@@ -160,7 +160,7 @@ test('TreeDropdownField multi-select should add valueObjects to selectedValues',
       urlTree: 'foo',
     },
   };
-  render(<TreeDropdownField {...props}/>);
+  render(<TreeDropdownField {...props} />);
   expect(addSelectedValues).toBeCalledWith(props.id, [{ id: 67 }, { id: 12 }]);
 });
 
@@ -184,7 +184,7 @@ test('TreeDropdownField multi-select should not call selectedValues without a va
       urlTree: 'foo',
     },
   };
-  render(<TreeDropdownField {...props}/>);
+  render(<TreeDropdownField {...props} />);
   expect(addSelectedValues).not.toBeCalled();
 });
 

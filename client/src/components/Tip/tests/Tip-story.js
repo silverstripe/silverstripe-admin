@@ -91,7 +91,7 @@ export const _TitleTip = () => (
     {inputProps.title}
     <Tip
       id={`FieldHolder-${inputProps.id}-titleTip`}
-      content={'Example tip contents'}
+      content="Example tip contents"
       icon="attention"
       fieldTitle={inputProps.title}
       type={TIP_TYPES.TITLE}

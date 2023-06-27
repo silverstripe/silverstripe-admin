@@ -37,9 +37,9 @@ test('useTabFirstShow outside active tab', async () => {
   const callback = jest.fn();
   render(
     <Tabs id="foo" activeTab="active" activateTab={() => (false)}>
-      <TabItem name="active"/>
+      <TabItem name="active" />
       <TabItem name="secondary">
-        <TabContextPrinter callback={callback}/>
+        <TabContextPrinter callback={callback} />
       </TabItem>
     </Tabs>,
   );

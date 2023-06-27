@@ -141,7 +141,7 @@ class Preview extends Component {
         <div className="toolbar toolbar--south">
           <div className="btn-toolbar">
             {this.buildToolbarButtons()}
-            <ViewModeComponent id="view-mode-toggle-in-preview-nb" area={'preview'} />
+            <ViewModeComponent id="view-mode-toggle-in-preview-nb" area="preview" />
             {this.renderMoreActions()}
           </div>
         </div>

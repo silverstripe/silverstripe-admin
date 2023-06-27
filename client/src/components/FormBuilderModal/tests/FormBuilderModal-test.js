@@ -18,7 +18,7 @@ function makeProps(obj = {}) {
     identifier: 'FormModalTest',
     schemaUrl: 'myschemaurl',
     ModalComponent: ({ children }) => <div data-testid="test-modal">{children}</div>,
-    ModalHeaderComponent: () => <div data-testid="test-modalheader"/>,
+    ModalHeaderComponent: () => <div data-testid="test-modalheader" />,
     FormBuilderLoaderComponent: ({ onLoadingError, onSubmit }) => (
       <div
         data-testid="test-formbuilderloader"
@@ -38,7 +38,7 @@ function makeProps(obj = {}) {
 
 test('FormBuilderModal getResponse() should show no response initially', async () => {
   render(
-    <FormBuilderModal {...makeProps({})}/>,
+    <FormBuilderModal {...makeProps({})} />,
   );
   const modal = await screen.findByTestId('test-modal');
   expect(modal.textContent).toBe('');
@@ -46,7 +46,7 @@ test('FormBuilderModal getResponse() should show no response initially', async (
 
 test('FormBuilderModal getResponse() should show error message', async () => {
   render(
-    <FormBuilderModal {...makeProps({})}/>,
+    <FormBuilderModal {...makeProps({})} />,
   );
   const loader = await screen.findByTestId('test-formbuilderloader');
   nextAction = 'onLoadingError';

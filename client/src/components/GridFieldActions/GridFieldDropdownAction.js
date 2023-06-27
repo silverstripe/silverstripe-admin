@@ -25,17 +25,17 @@ class GridFieldDropdownAction extends PureComponent {
         break;
     }
     return (
-    <DropdownItem
-      className={classNames}
-      href={url}
-      tag={elementType}
-      type={elementType === 'button' ? 'button' : undefined}
-      data-url={data['data-url']}
-      data-action-state={data['data-action-state']}
-      name={data.name}
-    >
-      {title}
-    </DropdownItem>
+      <DropdownItem
+        className={classNames}
+        href={url}
+        tag={elementType}
+        type={elementType === 'button' ? 'button' : undefined}
+        data-url={data['data-url']}
+        data-action-state={data['data-action-state']}
+        name={data.name}
+      >
+        {title}
+      </DropdownItem>
     );
   }
 }

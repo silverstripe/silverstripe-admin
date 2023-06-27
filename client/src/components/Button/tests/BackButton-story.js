@@ -52,7 +52,7 @@ export default {
   },
 };
 
-export const _BackButton = (args) => <BackButton {...args}/>;
+export const _BackButton = (args) => <BackButton {...args} />;
 _BackButton.args = {
   onClick,
   className: '',

@@ -138,7 +138,7 @@ export default {
   },
 };
 
-export const _Button = (args) => <Button {...args}/>;
+export const _Button = (args) => <Button {...args} />;
 _Button.args = {
   color: 'primary',
   size: 'md',

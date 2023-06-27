@@ -19,12 +19,12 @@ const props = {
 };
 
 test('OptionsetField getItemKey() should generate a key for field', () => {
-  const { container } = render(<OptionsetField {...props}/>);
+  const { container } = render(<OptionsetField {...props} />);
   expect(container.querySelector('.option-val--one').id).toBe('set-one');
 });
 
 test('OptionsetField handleChange() should call the onChange callback', () => {
-  const { container } = render(<OptionsetField {...props}/>);
+  const { container } = render(<OptionsetField {...props} />);
   const input = container.querySelector('input#set-one');
   fireEvent.click(input, { target: { id: 'set-one', value: 1 } });
   expect(props.onChange).toBeCalled();

@@ -21,7 +21,7 @@ function makeProps(obj = {}) {
 }
 
 test('SingleSelectField render() renders', () => {
-  const { container } = render(<SingleSelectField {...makeProps()}/>);
+  const { container } = render(<SingleSelectField {...makeProps()} />);
   expect(container.querySelectorAll('select')).toHaveLength(1);
 });
 
