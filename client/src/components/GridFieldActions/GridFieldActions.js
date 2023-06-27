@@ -28,7 +28,7 @@ class GridFieldActions extends PureComponent {
       'btn',
       'btn--no-text',
       'btn-sm',
-      'font-icon-dot-3',
+      'font-icon-dot-3'
     ];
 
     return (
@@ -39,16 +39,16 @@ class GridFieldActions extends PureComponent {
         {Object.keys(groupedActions).map(
           (group, groupIndex) => [
             groupIndex !== 0 && <DropdownItem divider key={group} />,
-            groupedActions[group].map((action, actionIndex) => (<GridFieldDropdownAction
-              data={action.data}
-              title={action.title}
-              type={action.type}
-              url={action.url}
-              // eslint-disable-next-line react/no-array-index-key
-              key={actionIndex}
-            />),
-            ),
-          ],
+            groupedActions[group].map((action, actionIndex) =>
+              (<GridFieldDropdownAction
+                data={action.data}
+                title={action.title}
+                type={action.type}
+                url={action.url}
+                key={actionIndex} // eslint-disable-line react/no-array-index-key
+              />)
+            )
+          ]
         )}
       </ActionMenu>
     );
@@ -89,12 +89,11 @@ class GridFieldActions extends PureComponent {
   }
 }
 
-// eslint-disable-next-line react/forbid-foreign-prop-types
 const actionShape = GridFieldDropdownAction.propTypes;
 actionShape.group = PropTypes.string;
 
 GridFieldActions.propTypes = PropTypes.arrayOf(
-  PropTypes.shape(actionShape),
+  PropTypes.shape(actionShape)
 ).isRequired;
 
 export default GridFieldActions;

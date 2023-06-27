@@ -8,7 +8,7 @@ import deepFreeze from 'deep-freeze-strict';
 import {
   SubmissionError,
   autofill,
-  initialize,
+  initialize
 } from 'redux-form';
 import schemaFieldValues from 'lib/schemaFieldValues';
 import { createErrorHtml } from 'lib/createErrorBlock';
@@ -31,7 +31,7 @@ function createFormIdentifierFromProps({ identifier, schema = {} }) {
   return [
     identifier,
     schema.schema && schema.schema.name,
-  ].filter((id) => id).join('.');
+  ].filter(id => id).join('.');
 }
 
 class FormBuilderLoader extends Component {
@@ -96,7 +96,7 @@ class FormBuilderLoader extends Component {
     // need to initialise form data and setSchema before any redirects by callbacks happen
     const newSubmitFn = () => (
       submitFn()
-        .then((formSchema) => {
+        .then(formSchema => {
           let schema = formSchema;
           if (schema) {
             // Before modifying schema, check if the schema state is provided explicitly
@@ -107,7 +107,7 @@ class FormBuilderLoader extends Component {
             this.props.actions.schema.setSchema(
               this.props.schemaUrl,
               schema,
-              this.getIdentifier(),
+              this.getIdentifier()
             );
 
             // If state is updated in server response, re-initialize redux form state
@@ -134,7 +134,7 @@ class FormBuilderLoader extends Component {
     return promise
     // TODO Suggest storing messages in a separate redux store rather than throw an error
     // ref: https://github.com/erikras/redux-form/issues/94#issuecomment-143398399
-      .then((formSchema) => {
+      .then(formSchema => {
         if (!formSchema || !formSchema.state) {
           return formSchema;
         }
@@ -165,7 +165,7 @@ class FormBuilderLoader extends Component {
     if (!reduced.state) {
       reduced = {
         ...reduced,
-        state: this.props.schema.state,
+        state: this.props.schema.state
       };
     }
 
@@ -184,7 +184,7 @@ class FormBuilderLoader extends Component {
             ...field,
             message,
           };
-        }),
+        })
       },
       // Non-field messages
       messages: schema.errors.filter((error) => !error.field),
@@ -210,7 +210,7 @@ class FormBuilderLoader extends Component {
       return state;
     }
     const fieldOverrides = this.props.stateOverrides.fields;
-    let { fields } = state;
+    let fields = state.fields;
     if (fieldOverrides && fields) {
       fields = fields.map((field) => {
         const fieldOverride = fieldOverrides.find((override) => override.name === field.name);
@@ -222,7 +222,7 @@ class FormBuilderLoader extends Component {
     return Object.assign({},
       state,
       this.props.stateOverrides,
-      { fields },
+      { fields }
     );
   }
 
@@ -260,7 +260,7 @@ class FormBuilderLoader extends Component {
                 statusText: response.statusText,
                 json: {},
               });
-            }),
+            })
         );
       });
   }
@@ -285,7 +285,7 @@ class FormBuilderLoader extends Component {
       schema && 'schema',
       state && 'state',
       errors && 'errors',
-    ].filter((header) => header);
+    ].filter(header => header);
 
     // using `this.state.fetching` caused race-condition issues.
     this.props.actions.schema.setSchemaLoading(this.props.schemaUrl, true);
@@ -295,7 +295,7 @@ class FormBuilderLoader extends Component {
     }
 
     return this.callFetch(headerValues)
-      .then((formSchema) => {
+      .then(formSchema => {
         this.props.actions.schema.setSchemaLoading(this.props.schemaUrl, false);
 
         if (formSchema.errors) {
@@ -311,7 +311,7 @@ class FormBuilderLoader extends Component {
             formSchema,
             {
               state: this.overrideStateData(formSchema.state),
-            },
+            }
           );
 
           // Mock the will-be shape of the props so that the identifier is right
@@ -326,7 +326,7 @@ class FormBuilderLoader extends Component {
           this.props.actions.schema.setSchema(
             this.props.schemaUrl,
             overriddenSchema,
-            identifier,
+            identifier
           );
 
           const schemaData = formSchema.schema || this.props.schema.schema;
@@ -338,7 +338,7 @@ class FormBuilderLoader extends Component {
             identifier,
             formData,
             false,
-            { keepSubmitSucceeded: true },
+            { keepSubmitSucceeded: true }
           );
 
           if (typeof this.props.onReduxFormInit === 'function') {
@@ -423,7 +423,7 @@ class FormBuilderLoader extends Component {
       onSubmitSuccess: this.props.onSubmitSuccess,
       onSubmit: this.handleSubmit,
       onAutofill: this.handleAutofill,
-      autoFocus: this.props.autoFocus,
+      autoFocus: this.props.autoFocus
     });
 
     return <FormBuilder {...props} />;
@@ -483,10 +483,10 @@ export default compose(
       baseFormComponent: ReduxForm,
       baseFieldComponent: ReduxFormField,
     }),
-    ({ identifier }) => identifier,
+    ({ identifier }) => identifier
   ),
   connect(
     mapStateToProps,
-    mapDispatchToProps,
-  ),
+    mapDispatchToProps
+  )
 )(FormBuilderLoader);

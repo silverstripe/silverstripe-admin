@@ -71,7 +71,7 @@ class TreeDropdownField extends Component {
       this.initialise();
     }
 
-    const { id } = this.props;
+    const id = this.props.id;
     const values = (this.props.data.multiple)
       ? this.props.data.valueObjects || []
       : [this.props.data.valueObject];
@@ -154,27 +154,27 @@ class TreeDropdownField extends Component {
    * @return {Array}
    */
   getDropdownOptions() {
-    const { value } = this.props;
+    const value = this.props.value;
     const node = this.getVisibleTree();
     let options = node ? [...node.children] : [];
 
     const selectedOptions = this.props.selectedValues
-      .filter((selected) => (
+      .filter(selected => (
         selected.id === value ||
-        (Array.isArray(value) && value.find((item) => item === selected.id))
+        (Array.isArray(value) && value.find(item => item === selected.id))
       ));
 
     if (!this.state.opened && this.props.data.showSelectedPath) {
       options = selectedOptions
-        .map((selected) => ({
+        .map(selected => ({
           ...selected,
           title: selected.titlePath || selected.title,
         }));
     } else if (selectedOptions.length) {
       options = [
         ...selectedOptions
-          .filter((selected) => (
-            !options.find((item) => item.id === selected.id)
+          .filter(selected => (
+            !options.find(item => item.id === selected.id)
           )),
         ...options,
       ];
@@ -254,7 +254,7 @@ class TreeDropdownField extends Component {
     return this.props.fetch(fetchURLString, {
       credentials: 'same-origin',
     })
-      .then((response) => response.json());
+      .then(response => response.json());
   }
 
   /**
@@ -402,8 +402,8 @@ class TreeDropdownField extends Component {
 
       if (value && value.length) {
         const uniqueValues = value && value
-          .filter((item, index) => value.findIndex((next) => next.id === item.id) === index);
-        mappedValue = uniqueValues.map((item) => item.id);
+          .filter((item, index) => value.findIndex(next => next.id === item.id) === index);
+        mappedValue = uniqueValues.map(item => item.id);
 
         this.props.actions.treeDropdownField.addSelectedValues(this.props.id, uniqueValues);
       }
@@ -411,7 +411,7 @@ class TreeDropdownField extends Component {
       // Get node ID from object
       const id = value ? value.id : null;
       const tree = this.getVisibleTree() || this.props.tree;
-      let object = tree.children.find((item) => item.id === id);
+      let object = tree.children.find(item => item.id === id);
       if (object) {
         if (this.props.data.showSelectedPath) {
           object = {
@@ -528,7 +528,6 @@ class TreeDropdownField extends Component {
    * This essentially just sets the specific ID we want to use into the default input component.
    */
   renderInput({ children, ...props }) {
-    // eslint-disable-next-line no-param-reassign
     props.id = this.props.id;
     return <selectComponents.Input {...props}>{children}</selectComponents.Input>;
   }
@@ -543,7 +542,6 @@ class TreeDropdownField extends Component {
     }
 
     // Join titles with ' / '
-    // eslint-disable-next-line no-param-reassign
     breadcrumbs = breadcrumbs.map((item) => item.title).join(' / ');
     const icon = (this.hasSearch()) ? 'font-icon-search' : 'font-icon-left-open-big';
 
@@ -553,7 +551,7 @@ class TreeDropdownField extends Component {
         option: true,
         breadcrumbs: true,
       },
-      getClassNames('option', {}),
+      getClassNames('option', {})
     );
     const StyledDiv = styled.div(getStyles('option', props));
 
@@ -661,7 +659,7 @@ class TreeDropdownField extends Component {
           value
         ));
 
-      title = values.map((value) => value.title).join(', ');
+      title = values.map(value => value.title).join(', ');
     } else {
       const value = selected.find((item) => item.id === this.props.value);
       title = this.props.value;
@@ -720,17 +718,16 @@ class TreeDropdownField extends Component {
     // The value passed in is an array of all selected option objects
     // i.e. an id and title key must be present for each selected option
     const rawValue = Array.isArray(this.props.value) ? this.props.value : [this.props.value];
-    let value = this.props.selectedValues.filter((item) => rawValue.includes(item.id));
+    let value = this.props.selectedValues.filter(item => rawValue.includes(item.id));
 
     // If there weren't any "selected" values (e.g. setting the value programatically)
     // make sure the value is valid
     if (!value.length) {
-      value = options.filter((item) => rawValue.includes(item.id));
+      value = options.filter(item => rawValue.includes(item.id));
     }
 
     // Fall back to the empty default value if there is one
     if (!value.length && this.props.data.hasEmptyDefault) {
-      // eslint-disable-next-line prefer-destructuring
       value = options[0];
     }
 
@@ -814,7 +811,7 @@ TreeDropdownField.propTypes = {
     showSearch: PropTypes.bool,
     multiple: PropTypes.bool,
     showSelectedPath: PropTypes.bool,
-    treeBaseId: PropTypes.number,
+    treeBaseId: PropTypes.number
   }),
   onLoadingError: PropTypes.func,
   search: PropTypes.string,
@@ -835,11 +832,11 @@ TreeDropdownField.defaultProps = {
   failed: [],
   findTreeByPath,
   findTreePath,
-  fetch,
+  fetch
 };
 
 function mapStateToProps(state, ownProps) {
-  const { id } = ownProps;
+  const id = ownProps.id;
   const field = (state.treeDropdownField.fields[id])
     ? state.treeDropdownField.fields[id]
     : {
@@ -851,7 +848,7 @@ function mapStateToProps(state, ownProps) {
       selectedValues: [],
     };
 
-  let { value } = ownProps;
+  let value = ownProps.value;
 
   if (ownProps.data.multiple && ownProps.value === MULTI_EMPTY_VALUE) {
     value = [];

@@ -8,15 +8,15 @@ export default {
     docs: {
       description: {
         component: `Generates a file status icon element with a reactstrap tooltip.
-        The icon and tooltip text is controlled via boolean props on the component rather than passed in as strings.`,
+        The icon and tooltip text is controlled via boolean props on the component rather than passed in as strings.`
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      },
-    },
+      }
+    }
   },
   argTypes: {
     fileID: {
@@ -24,7 +24,7 @@ export default {
       control: 'number',
       table: {
         type: { summary: 'number' },
-      },
+      }
     },
     hasRestrictedAccess: {
       description: 'Whether the file has restricted access / permissions.',
@@ -32,7 +32,7 @@ export default {
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: false },
-      },
+      }
     },
     isTrackedFormUpload: {
       description: 'Whether the file is associated with a tracked form upload.',
@@ -40,7 +40,7 @@ export default {
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: false },
-      },
+      }
     },
     placement: {
       description: 'Reactstramp tooltip position.',
@@ -49,14 +49,14 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'auto' },
-      },
+      }
     },
     disableTooltip: {
       control: 'boolean',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: false },
-      },
+      }
     },
     extraClassName: {
       description: 'Extra class the component should have',
@@ -64,7 +64,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     includeBackground: {
       description: 'Whether to render the icon on a white circle background',
@@ -72,9 +72,9 @@ export default {
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: false },
-      },
-    },
-  },
+      }
+    }
+  }
 };
 
 export const _FileStatusIcon = {
@@ -84,6 +84,6 @@ export const _FileStatusIcon = {
     isTrackedFormUpload: false,
     includeBackground: false,
     placement: 'auto',
-    disableTooltip: false,
-  },
+    disableTooltip: false
+  }
 };

@@ -18,12 +18,12 @@ const tagActions = actionListMaker(
   'onDeleteKey',
   'onBackSpace',
   'onNext',
-  'onPrevious',
+  'onPrevious'
 );
 const tagListActions = actionListMaker(
   'onHolderFocus',
   'onTagClick',
-  'onTagDelete',
+  'onTagDelete'
 );
 const compactTagListActions = actionListMaker('onSummary');
 
@@ -35,42 +35,42 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: '`<Tag />` can be used to visually associate a record with related topics. Tags can be used individually or as part of a `<TagList />`',
+        component: '`<Tag />` can be used to visually associate a record with related topics. Tags can be used individually or as part of a `<TagList />`'
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      },
-    },
+      }
+    }
   },
 };
 
-export const _TagList = (args) => (<TagList {...args} />);
+export const _TagList = (args) => (<TagList {...args}/>);
 _TagList.args = {
   deletable: false,
   focusable: true,
   tags,
-  ...tagListActions,
+  ...tagListActions
 };
 
-export const _CompactTagList = (args) => (<CompactTagList {...args} />);
+export const _CompactTagList = (args) => (<CompactTagList {...args}/>);
 _CompactTagList.args = {
   deletable: false,
   focusable: true,
   maxSize: 200,
   tags,
   ...tagListActions,
-  ...compactTagListActions,
+  ...compactTagListActions
 };
 
-export const _Tag = (args) => (<Tag {...args} />);
+export const _Tag = (args) => (<Tag {...args}/>);
 _Tag.args = {
   dataKey: 'HelloWorld',
   label: '',
   value: '',
   deletable: false,
   focusable: true,
-  ...tagActions,
+  ...tagActions
 };

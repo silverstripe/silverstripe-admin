@@ -34,7 +34,7 @@ export function findField(fields, name) {
       return prev;
     }
     return findField(field.children, name);
-  }, fields.find((field) => field.name === name || field.name === `${name}[]`));
+  }, fields.find(field => field.name === name || field.name === `${name}[]`));
 }
 
 /**

@@ -57,9 +57,9 @@ jQuery.entwine('ss', ($) => {
       const handleInsert = (...args) => this.handleInsert(...args);
       const attrs = this.getOriginalAttributes();
       const editor = this.getElement().getEditor();
-      const { selection } = editor.getInstance();
+      const selection = editor.getInstance().selection;
       const selectionContent = editor.getSelection();
-      const { tagName } = selection.getNode();
+      const tagName = selection.getNode().tagName;
       const requireLinkText = tagName !== 'A' && selectionContent.trim() === '';
 
       // create/update the react component
@@ -79,14 +79,14 @@ jQuery.entwine('ss', ($) => {
           fileAttributes={attrs}
           identifier="Admin.InsertLinkExternalModal"
           requireLinkText={requireLinkText}
-        />,
+        />
       );
     },
 
     buildAttributes(data) {
       const attributes = this._super(data);
 
-      let { href } = attributes;
+      let href = attributes.href;
       // Prefix the URL with "http://" if no prefix is found
       if (!href.match(/:\/\//)) {
         href = `${window.location.protocol}//${href}`;

@@ -5,7 +5,7 @@ import { render } from '@testing-library/react';
 import inject from '../inject';
 import injectorContext from '../injectorContext';
 
-const injectorGet = jest.fn((item) => item);
+const injectorGet = jest.fn(item => item);
 const emptyComponent = () => <div>Empty</div>;
 
 const provideTestInjector = (context) => (Injectable) => {
@@ -14,7 +14,7 @@ const provideTestInjector = (context) => (Injectable) => {
       return {
         injector: {
           get: injectorGet,
-          validate: (item) => item,
+          validate: item => item,
           context,
         },
       };

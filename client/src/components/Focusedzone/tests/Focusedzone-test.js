@@ -8,12 +8,12 @@ test('Focusedzone.render() renders with children', () => {
   const { container } = render(
     <Focusedzone {...{
       className: 'my-classname',
-      onClickOut: () => {},
+      onClickOut: () => {}
     }}
     >
       <p>lorem</p>
       <p>ipsum</p>
-    </Focusedzone>,
+    </Focusedzone>
   );
   expect(container.querySelectorAll('div')).toHaveLength(1);
 });

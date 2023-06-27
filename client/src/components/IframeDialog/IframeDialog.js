@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/iframe-has-title */
 import React, { Component } from 'react';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import classnames from 'classnames';
@@ -18,7 +17,7 @@ class IframeDialog extends Component {
   }
 
   renderHeader() {
-    const { title } = this.props;
+    const title = this.props.title;
     if (title) {
       return (
         <ModalHeader toggle={this.handleClosed}>{title}</ModalHeader>

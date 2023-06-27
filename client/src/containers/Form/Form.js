@@ -20,7 +20,7 @@ InjectableForm.propTypes = {
 
 const InjectedForm = inject(
   ['Form'],
-  (formComponent) => ({ formComponent }),
+  (formComponent) => ({ formComponent })
 )(InjectableForm);
 
 export default reduxForm({

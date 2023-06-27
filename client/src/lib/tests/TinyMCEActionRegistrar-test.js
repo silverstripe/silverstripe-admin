@@ -40,7 +40,7 @@ describe('TinyMCEActionRegistrar', () => {
     TinyMCEActionRegistrar.addAction('menuTest', { text: 'Five', priority: 51 });
 
     const sortedActions = TinyMCEActionRegistrar.getSortedActions('menuTest');
-    const output = sortedActions.map((item) => item.text);
+    const output = sortedActions.map(item => item.text);
     expect(output).toEqual(['Five', 'One', 'Two', 'Apple']);
   });
 
@@ -55,17 +55,17 @@ describe('TinyMCEActionRegistrar', () => {
     let output;
     // No config ID gets only global actions
     sortedActions = TinyMCEActionRegistrar.getSortedActions('menuTest');
-    output = sortedActions.map((item) => item.text);
+    output = sortedActions.map(item => item.text);
     expect(output).toEqual(['Global2', 'Global1']);
 
     // With config id and includeGlobal=true gets everything
     sortedActions = TinyMCEActionRegistrar.getSortedActions('menuTest', 'special');
-    output = sortedActions.map((item) => item.text);
+    output = sortedActions.map(item => item.text);
     expect(output).toEqual(['Local2', 'Local1', 'Global2', 'Global1']);
 
     // With config id and includeGlobal=false gets only special
     sortedActions = TinyMCEActionRegistrar.getSortedActions('menuTest', 'special', false);
-    output = sortedActions.map((item) => item.text);
+    output = sortedActions.map(item => item.text);
     expect(output).toEqual(['Local2', 'Local1']);
   });
 });

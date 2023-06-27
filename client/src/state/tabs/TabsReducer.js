@@ -11,7 +11,7 @@ const initialState = deepFreeze({ fields: {} });
  * Default object for an empty field state
  */
 const initialFieldState = deepFreeze({
-  activeTab: null,
+  activeTab: null
 });
 
 export default function tabsReducer(state = initialState, action = null) {

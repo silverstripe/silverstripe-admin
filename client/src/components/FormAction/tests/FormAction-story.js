@@ -8,22 +8,22 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Used for form actions. For example a submit button. See the pattern library for examples.',
+        component: 'Used for form actions. For example a submit button. See the pattern library for examples.'
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      },
-    },
+      }
+    }
   },
   argTypes: {
     handleClick: {
       description: 'The handler for when a button is clicked.',
       table: {
         type: { summary: 'function' },
-      },
+      }
     },
     label: {
       description: 'The text to display on the button.',
@@ -31,7 +31,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     id: {
       description: 'The html id attribute.',
@@ -39,7 +39,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     type: {
       description: "Used for the button's `type` attribute. Defaults to `button`.",
@@ -47,7 +47,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     bootstrapButtonStyle: {
       description: 'The style of button to be shown, adds a class `btn-{style}` to the button. Defaults to `secondary`.',
@@ -58,12 +58,12 @@ export default {
         'secondary',
         'outline-secondary',
         'link',
-        'danger',
+        'danger'
       ],
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
+      }
     },
 
     icon: {
@@ -72,7 +72,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     loading: {
       description: 'If true, replaces the text/icon with a loading icon.',
@@ -80,7 +80,7 @@ export default {
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     disabled: {
       description: 'If true, gives the button a visually disabled state and disables click events.',
@@ -88,7 +88,7 @@ export default {
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     readOnly: {
       description: 'If true, will also cause the button to be disabled.',
@@ -96,7 +96,7 @@ export default {
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     extraClass: {
       description: 'Add extra custom classes.',
@@ -104,9 +104,9 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
-    },
-  },
+      }
+    }
+  }
 };
 
 export const _FormAction = (args) => <FormAction {...args} />;

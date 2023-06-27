@@ -20,7 +20,7 @@ export const statuses = [
  * @param {string} str
  * @returns {string}
  */
-const toTitleCase = (str) => str.replace(/^\w/, (c) => c.toUpperCase());
+const toTitleCase = (str) => str.replace(/^\w/, c => c.toUpperCase());
 
 const VersionedBadge = ({ status, className }) => {
   const props = {

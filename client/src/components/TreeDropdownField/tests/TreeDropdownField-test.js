@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* global jest, test, beforeAll, afterAll, expect */
 
 import React from 'react';
@@ -5,7 +6,6 @@ import { render, fireEvent, act } from '@testing-library/react';
 import { Component as TreeDropdownField } from '../TreeDropdownField';
 import mockTree from './mockTree';
 
-/* eslint-disable no-unused-vars */
 let resolveApiCall;
 let rejectApiCall;
 let lastApiCallArgs;
@@ -18,7 +18,7 @@ jest.mock('isomorphic-fetch', () => ({
       resolveApiCall = resolve;
       rejectApiCall = reject;
     });
-  },
+  }
 }));
 
 // Need to use act() when using fake timers with react-testing-library
@@ -52,7 +52,7 @@ function makeProps(obj = {}) {
     },
     fetch: () => Promise.resolve({ json: () => ({ tree: 'data' }) }),
     selectedValues: [],
-    ...obj,
+    ...obj
   };
 }
 
@@ -63,7 +63,7 @@ test('TreeDropdownField should call setVisible with selected value', async () =>
   });
   const setVisible = jest.fn(() => doResolve());
   let props = makeProps({
-    findTreePath: jest.fn((data, value) => (value ? [4, value] : null)),
+    findTreePath: jest.fn((data, value) => (value ? [4, value] : null))
   });
   props = {
     ...props,
@@ -71,18 +71,18 @@ test('TreeDropdownField should call setVisible with selected value', async () =>
       ...props.actions,
       treeDropdownField: {
         ...props.actions.treeDropdownField,
-        setVisible,
-      },
+        setVisible
+      }
     },
     value: 67,
     data: {
       valueObject: {
-        id: 67,
+        id: 67
       },
-      urlTree: 'foo',
-    },
+      urlTree: 'foo'
+    }
   };
-  render(<TreeDropdownField {...props} />);
+  render(<TreeDropdownField {...props}/>);
   await promise;
   expect(setVisible).toBeCalledWith('Form_Test', [4]);
 });
@@ -90,7 +90,7 @@ test('TreeDropdownField should call setVisible with selected value', async () =>
 test('TreeDropdownField single-select should add valueObject to selectedValues', () => {
   const addSelectedValues = jest.fn();
   let props = makeProps({
-    findTreePath: jest.fn((data, value) => (value ? [4, value] : null)),
+    findTreePath: jest.fn((data, value) => (value ? [4, value] : null))
   });
   props = {
     ...props,
@@ -98,25 +98,25 @@ test('TreeDropdownField single-select should add valueObject to selectedValues',
       ...props.actions,
       treeDropdownField: {
         ...props.actions.treeDropdownField,
-        addSelectedValues,
-      },
+        addSelectedValues
+      }
     },
     value: 67,
     data: {
       valueObject: {
-        id: 67,
+        id: 67
       },
-      urlTree: 'foo',
-    },
+      urlTree: 'foo'
+    }
   };
-  render(<TreeDropdownField {...props} />);
+  render(<TreeDropdownField {...props}/>);
   expect(addSelectedValues).toBeCalledWith(props.id, [{ id: 67 }]);
 });
 
 test('TreeDropdownField single-select should not call selectedValues without a valueObject', () => {
   const addSelectedValues = jest.fn();
   let props = makeProps({
-    findTreePath: jest.fn((data, value) => (value ? [4, value] : null)),
+    findTreePath: jest.fn((data, value) => (value ? [4, value] : null))
   });
   props = {
     ...props,
@@ -124,18 +124,18 @@ test('TreeDropdownField single-select should not call selectedValues without a v
       ...props.actions,
       treeDropdownField: {
         ...props.actions.treeDropdownField,
-        addSelectedValues,
-      },
+        addSelectedValues
+      }
     },
   };
-  render(<TreeDropdownField {...props} />);
+  render(<TreeDropdownField {...props}/>);
   expect(addSelectedValues).not.toBeCalled();
 });
 
 test('TreeDropdownField multi-select should add valueObjects to selectedValues', () => {
   const addSelectedValues = jest.fn();
   let props = makeProps({
-    findTreePath: jest.fn((data, value) => (value ? [4, value] : null)),
+    findTreePath: jest.fn((data, value) => (value ? [4, value] : null))
   });
   props = {
     ...props,
@@ -143,31 +143,31 @@ test('TreeDropdownField multi-select should add valueObjects to selectedValues',
       ...props.actions,
       treeDropdownField: {
         ...props.actions.treeDropdownField,
-        addSelectedValues,
-      },
+        addSelectedValues
+      }
     },
     value: 67,
     data: {
       multiple: true,
       valueObjects: [
         {
-          id: 67,
+          id: 67
         },
         {
-          id: 12,
+          id: 12
         },
       ],
-      urlTree: 'foo',
-    },
+      urlTree: 'foo'
+    }
   };
-  render(<TreeDropdownField {...props} />);
+  render(<TreeDropdownField {...props}/>);
   expect(addSelectedValues).toBeCalledWith(props.id, [{ id: 67 }, { id: 12 }]);
 });
 
 test('TreeDropdownField multi-select should not call selectedValues without a valueObjects', () => {
   const addSelectedValues = jest.fn();
   let props = makeProps({
-    findTreePath: jest.fn((data, value) => (value ? [4, value] : null)),
+    findTreePath: jest.fn((data, value) => (value ? [4, value] : null))
   });
   props = {
     ...props,
@@ -175,16 +175,16 @@ test('TreeDropdownField multi-select should not call selectedValues without a va
       ...props.actions,
       treeDropdownField: {
         ...props.actions.treeDropdownField,
-        addSelectedValues,
-      },
+        addSelectedValues
+      }
     },
     value: 67,
     data: {
       multiple: true,
-      urlTree: 'foo',
-    },
+      urlTree: 'foo'
+    }
   };
-  render(<TreeDropdownField {...props} />);
+  render(<TreeDropdownField {...props}/>);
   expect(addSelectedValues).not.toBeCalled();
 });
 
@@ -200,11 +200,11 @@ test('TreeDropdownField should clear search on reset', async () => {
         ...makeProps().actions,
         treeDropdownField: {
           ...makeProps().actions.treeDropdownField,
-          setSearch,
-        },
+          setSearch
+        }
       },
     })}
-    />,
+    />
   );
   const input = container.querySelector('.treedropdownfield__value-container input');
   // arrow down will trigger search reset
@@ -227,24 +227,24 @@ test('TreeDropdownField should set search after a delay', async () => {
         ...makeProps().actions,
         treeDropdownField: {
           ...makeProps().actions.treeDropdownField,
-          setSearch,
-        },
+          setSearch
+        }
       },
       value: 67,
       data: {
         multiple: false,
         valueObjects: [
           {
-            id: 67,
+            id: 67
           },
           {
-            id: 12,
+            id: 12
           },
         ],
-        urlTree: 'foo',
-      },
+        urlTree: 'foo'
+      }
     })}
-    />,
+    />
   );
   const input = container.querySelector('.treedropdownfield__value-container input');
   fireEvent.focus(input);
@@ -264,12 +264,12 @@ test('TreeDropdownField handleChange() single-select should return the id for th
         ...makeProps().actions,
         treeDropdownField: {
           ...makeProps().actions.treeDropdownField,
-          addSelectedValues,
-        },
+          addSelectedValues
+        }
       },
-      visible: [7],
+      visible: [7]
     })}
-    />,
+    />
   );
   const input = container.querySelector('.treedropdownfield__value-container input');
   fireEvent.focus(input);
@@ -282,8 +282,8 @@ test('TreeDropdownField handleChange() single-select should return the id for th
       children: [],
       count: 0,
       id: 27,
-      title: 'page twenty-seven',
-    }],
+      title: 'page twenty-seven'
+    }]
   );
 });
 
@@ -297,12 +297,12 @@ test('TreeDropdownField handleChange() multi-select should return an array of id
         ...makeProps().actions,
         treeDropdownField: {
           ...makeProps().actions.treeDropdownField,
-          addSelectedValues,
-        },
+          addSelectedValues
+        }
       },
-      visible: [7],
+      visible: [7]
     })}
-    />,
+    />
   );
   const input = container.querySelector('.treedropdownfield__value-container input');
   fireEvent.focus(input);
@@ -320,13 +320,13 @@ test('TreeDropdownField handleChange() multi-select should return an array of id
     children: [],
     count: 0,
     id: 27,
-    title: 'page twenty-seven',
+    title: 'page twenty-seven'
   }]);
   expect(addSelectedValues).toHaveBeenNthCalledWith(2, 'Form_Test', [{
     children: [],
     count: 0,
     id: 15,
-    title: 'page fifteen',
+    title: 'page fifteen'
   }]);
 });
 
@@ -336,9 +336,9 @@ test('TreeDropdownField getVisibleTree() should call findTreeByPath()', () => {
     <TreeDropdownField {...makeProps({
       tree: {},
       visible: [1],
-      findTreeByPath,
+      findTreeByPath
     })}
-    />,
+    />
   );
   expect(findTreeByPath).toHaveBeenCalledWith({}, [1]);
 });
@@ -348,7 +348,7 @@ test('TreeDropdownField getBreadcrumb() should traverse the path given and retur
     <TreeDropdownField {...makeProps({
       visible: [5, 9, 26],
     })}
-    />,
+    />
   );
   const input = container.querySelector('.treedropdownfield__value-container input');
   fireEvent.focus(input);
@@ -361,7 +361,7 @@ test('TreeDropdownField getBreadcrumb() should traverse and terminate early if u
     <TreeDropdownField {...makeProps({
       visible: [5, 8, 26],
     })}
-    />,
+    />
   );
   const input = container.querySelector('.treedropdownfield__value-container input');
   fireEvent.focus(input);
@@ -377,11 +377,11 @@ test('TreeDropdownField handleBack() should go up one level in the path', () => 
         ...makeProps().actions,
         treeDropdownField: {
           ...makeProps().actions.treeDropdownField,
-          setVisible,
-        },
+          setVisible
+        }
       },
     })}
-    />,
+    />
   );
   const input = container.querySelector('.treedropdownfield__value-container input');
   fireEvent.focus(input);

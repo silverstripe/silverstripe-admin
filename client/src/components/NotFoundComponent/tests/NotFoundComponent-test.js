@@ -9,9 +9,9 @@ test('NotFoundComponent render() renders', () => {
     <NotFoundComponent {...{
       itemName: 'MyItemName',
       name: 'MyName',
-      value: 'My value',
+      value: 'My value'
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('div.not-found-component')).toHaveLength(1);
 });

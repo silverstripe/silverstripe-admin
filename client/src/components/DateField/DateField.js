@@ -44,7 +44,7 @@ class DateField extends TextField {
   getInputProps() {
     const placeholder = i18n.inject(
       i18n._t('Admin.FormatExample', 'Example: {format}'),
-      { format: this.moment().endOf('month').format(localFormat) },
+      { format: this.moment().endOf('month').format(localFormat) }
     );
 
     const value = this.asHTML5()

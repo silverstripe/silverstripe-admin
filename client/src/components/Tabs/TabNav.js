@@ -24,7 +24,7 @@ function TabNav({ currentTab, children, onToggle }) {
 
 TabNav.propTypes = {
   currentTab: PropTypes.string,
-  onToggle: PropTypes.func.isRequired,
+  onToggle: PropTypes.func.isRequired
 };
 
 export default TabNav;

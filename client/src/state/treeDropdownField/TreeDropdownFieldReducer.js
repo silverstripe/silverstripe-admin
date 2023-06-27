@@ -115,11 +115,11 @@ export default function treeDropdownFieldReducer(state = initialState, action = 
       return reduceField((field) => ({
         loading: addToList(
           field.loading,
-          idFromPath(action.payload.path),
+          idFromPath(action.payload.path)
         ),
         failed: removeFromList(
           field.failed,
-          idFromPath(action.payload.path),
+          idFromPath(action.payload.path)
         ),
       }));
     }
@@ -131,11 +131,11 @@ export default function treeDropdownFieldReducer(state = initialState, action = 
         // Remove from both loading / failed
         loading: removeFromList(
           field.loading,
-          idFromPath(action.payload.path),
+          idFromPath(action.payload.path)
         ),
         failed: removeFromList(
           field.failed,
-          idFromPath(action.payload.path),
+          idFromPath(action.payload.path)
         ),
       }));
     }
@@ -146,11 +146,11 @@ export default function treeDropdownFieldReducer(state = initialState, action = 
         // Remove from loading, but add to failed
         loading: removeFromList(
           field.loading,
-          idFromPath(action.payload.path),
+          idFromPath(action.payload.path)
         ),
         failed: addToList(
           field.failed,
-          idFromPath(action.payload.path),
+          idFromPath(action.payload.path)
         ),
       }));
     }
@@ -164,10 +164,11 @@ export default function treeDropdownFieldReducer(state = initialState, action = 
 
     case ACTION_TYPES.TREEFIELD_ADD_SELECTED_VALUES: {
       const values = action.payload.values || [];
-      return reduceField((field) => ({
+      return reduceField(field => ({
         ...field,
         selectedValues: [
-          ...field.selectedValues.filter((value) => !values.find((item) => item.id === value.id),
+          ...field.selectedValues.filter(value =>
+            !values.find(item => item.id === value.id)
           ),
           ...values,
         ].sort((a, b) => a.id - b.id),

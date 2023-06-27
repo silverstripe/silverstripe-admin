@@ -13,8 +13,7 @@ export const toastShape = {
   text: PropTypes.string.isRequired,
   dismissed: PropTypes.bool.isRequired,
   type: PropTypes.string.isRequired,
-  // eslint-disable-next-line react/forbid-foreign-prop-types
-  actions: PropTypes.arrayOf(PropTypes.shape(Button.propTypes)),
+  actions: PropTypes.arrayOf(PropTypes.shape(Button.propTypes))
 };
 
 /**
@@ -48,11 +47,11 @@ const Toast = ({ type, text, onDismiss, dismissed, actions }) => {
 
 Toast.propTypes = {
   ...toastShape,
-  onDismiss: PropTypes.func.isRequired,
+  onDismiss: PropTypes.func.isRequired
 };
 
 Toast.defaultProps = {
-  actions: [],
+  actions: []
 };
 
 export default Toast;

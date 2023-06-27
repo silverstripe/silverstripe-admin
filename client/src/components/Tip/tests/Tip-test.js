@@ -9,7 +9,7 @@ function makeProps(obj = {}) {
     content: 'Test content',
     fieldTitle: 'Test',
     id: 'test',
-    ...obj,
+    ...obj
   };
 }
 
@@ -27,9 +27,9 @@ test('Tip render() should display a button with a lamp icon by default', () => {
 test('Tip render() should display a button with a different icon if specified', () => {
   const { container } = render(
     <Tip {...makeProps({
-      icon: 'white-question',
+      icon: 'white-question'
     })}
-    />,
+    />
   );
   expect(container.querySelectorAll('.btn.font-icon-white-question')).toHaveLength(1);
 });
@@ -47,9 +47,9 @@ test('Tip render() display a grey icon by default (when importance is set to `no
 test('Tip render() should display a red icon when the importance is bumped to `high`', () => {
   const { container } = render(
     <Tip {...makeProps({
-      importance: TIP_IMPORTANCE_LEVELS.HIGH,
+      importance: TIP_IMPORTANCE_LEVELS.HIGH
     })}
-    />,
+    />
   );
   expect(container.querySelectorAll('.btn.text-danger')).toHaveLength(1);
 });
@@ -64,9 +64,9 @@ test('Tip render() should render an input group tip by default', () => {
 test('Tip render() should render a title tip if specified', () => {
   const { container } = render(
     <Tip {...makeProps({
-      type: TIP_TYPES.TITLE,
+      type: TIP_TYPES.TITLE
     })}
-    />,
+    />
   );
   expect(container.querySelectorAll('.tip')).toHaveLength(1);
   expect(container.querySelectorAll('.tip--title')).toHaveLength(1);

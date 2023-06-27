@@ -10,14 +10,14 @@ const errorSpy = jest.spyOn(global.console, 'error');
 const warnSpy = jest.spyOn(global.console, 'warn');
 
 function delay(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 describe('ChangeTracker', () => {
   describe('Basics()', () => {
     beforeEach(() => {
       jQuery('body').append(
-        '<form method="GET" id="form_test" action="#"></form>',
+        '<form method="GET" id="form_test" action="#"></form>'
       );
     });
 
@@ -27,7 +27,7 @@ describe('ChangeTracker', () => {
 
     it('doesnt mark unaltered forms as changed', async () => {
       jQuery('#form_test').append(
-        '<input type="text" name="field_text" value="origval" />',
+        '<input type="text" name="field_text" value="origval" />'
       );
 
       jQuery('#form_test').changetracker();
@@ -42,7 +42,7 @@ describe('ChangeTracker', () => {
 
     it('can track changes on input type=text fields with existing values', async () => {
       jQuery('#form_test').append(
-        '<input type="text" name="field_text" value="origval" />',
+        '<input type="text" name="field_text" value="origval" />'
       );
 
       jQuery('#form_test').changetracker();
@@ -61,7 +61,7 @@ describe('ChangeTracker', () => {
     it('can track changes on input type=radio fields with existing values', async () => {
       jQuery('#form_test').append(
         '<input type="radio" id="field_radio1" name="field_radio" value="1" checked="checked" />'
-        + '<input type="radio" id="field_radio2" name="field_radio" value="2" />',
+        + '<input type="radio" id="field_radio2" name="field_radio" value="2" />'
       );
       jQuery('#form_test').changetracker();
 
@@ -81,7 +81,7 @@ describe('ChangeTracker', () => {
         '<select name="field_select">'
         + '<option value="1" selected="selected" />'
         + '<option value="2" />'
-        + '</select>',
+        + '</select>'
       );
 
       jQuery('#form_test').changetracker();
@@ -100,11 +100,11 @@ describe('ChangeTracker', () => {
     it('can exclude certain fields via an optional selector', async () => {
       jQuery('#form_test').append(
         '<input type="text" name="field_text" value="origval" />'
-        + '<input type="text" name="field_text_ignored" value="origval" />',
+        + '<input type="text" name="field_text_ignored" value="origval" />'
       );
 
       jQuery('#form_test').changetracker({
-        ignoreFieldSelector: ':input[name=field_text_ignored]',
+        ignoreFieldSelector: ':input[name=field_text_ignored]'
       });
 
       // We need to wait after initialisation or the test will fail - likely due to the debounce
@@ -128,11 +128,11 @@ describe('ChangeTracker', () => {
 
     it('can attach custom CSS classes for tracking changed state', async () => {
       jQuery('#form_test').append(
-        '<input type="text" name="field_text" value="origval" />',
+        '<input type="text" name="field_text" value="origval" />'
       );
 
       jQuery('#form_test').changetracker({
-        changedCssClass: 'customchanged',
+        changedCssClass: 'customchanged'
       });
 
       // We need to wait after initialisation or the test will fail - likely due to the debounce
@@ -151,7 +151,7 @@ describe('ChangeTracker', () => {
     it('can reset changed state of individual fields', async () => {
       jQuery('#form_test').append(
         '<input type="text" name="field_text1" value="origval" />'
-        + '<input type="text" name="field_text2" value="origval" />',
+        + '<input type="text" name="field_text2" value="origval" />'
       );
       jQuery('#form_test').changetracker();
 
@@ -175,7 +175,7 @@ describe('ChangeTracker', () => {
     it('can reset all fields in the form', async () => {
       jQuery('#form_test').append(
         '<input type="text" name="field_text1" value="origval" />'
-        + '<input type="text" name="field_text2" value="origval" />',
+        + '<input type="text" name="field_text2" value="origval" />'
       );
       jQuery('#form_test').changetracker();
 

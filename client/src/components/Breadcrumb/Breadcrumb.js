@@ -114,7 +114,7 @@ Breadcrumb.propTypes = {
       nodeName: PropTypes.string,
       className: PropTypes.string,
       onClick: PropTypes.func,
-    })),
+    }))
   })),
 };
 

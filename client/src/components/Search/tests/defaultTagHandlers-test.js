@@ -6,9 +6,9 @@ const formSchema = {
     fields: [
       {
         name: 'SelectField',
-        title: 'Select Field',
-      },
-    ],
+        title: 'Select Field'
+      }
+    ]
   },
   state: {
     fields: [
@@ -18,10 +18,10 @@ const formSchema = {
           { value: 1, title: 'one' },
           { value: 2, title: 'two' },
           { value: 3, title: 'three' },
-        ],
-      },
-    ],
-  },
+        ]
+      }
+    ]
+  }
 };
 
 test('defaultTagHandlers default none value', () => {
@@ -58,7 +58,7 @@ test('defaultTagHandlers select singleSelect', () => {
   const tag = defaultTagHandlers.SingleSelect(
     inputTag,
     formSchema.schema.fields[0],
-    formSchema,
+    formSchema
   );
   expect(tag).toEqual({ key: 'SelectField', value: 'one' });
 });
@@ -68,7 +68,7 @@ test('defaultTagHandlers select multiSelect', () => {
   const tag = defaultTagHandlers.MultiSelect(
     inputTag,
     formSchema.schema.fields[0],
-    formSchema,
+    formSchema
   );
   expect(tag).toEqual({ key: 'SelectField', value: 'one, three' });
 });

@@ -15,7 +15,7 @@ describe('toastsReducer', () => {
   beforeEach(() => {
     state = {
       paused: false,
-      toasts: [],
+      toasts: []
     };
   });
 
@@ -66,7 +66,7 @@ describe('toastsReducer', () => {
     it('many toasts', () => {
       state = {
         paused: false,
-        toasts: [{ id: 'preexisting', type: 'notice' }],
+        toasts: [{ id: 'preexisting', type: 'notice' }]
       };
       const thunk = display({ text: 'A toast message' });
       thunk(dispatch);
@@ -114,7 +114,7 @@ describe('toastsReducer', () => {
     it('single', () => {
       state = {
         paused: false,
-        toasts: [{ id: 'toDismiss', text: 'dimiss me', dismissed: false }],
+        toasts: [{ id: 'toDismiss', text: 'dimiss me', dismissed: false }]
       };
       const thunk = dismiss('toDismiss');
       thunk(dispatch);
@@ -134,7 +134,7 @@ describe('toastsReducer', () => {
           { id: 'first' },
           { id: 'toDismiss', text: 'dimiss me', dismissed: false },
           { id: 'last' },
-        ],
+        ]
       };
       const thunk = dismiss('toDismiss');
       thunk(dispatch);
@@ -153,7 +153,7 @@ describe('toastsReducer', () => {
         toasts: [
           { id: 'first' },
           { id: 'last' },
-        ],
+        ]
       };
       const thunk = dismiss('toDismiss');
       thunk(dispatch);

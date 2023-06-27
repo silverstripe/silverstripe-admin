@@ -21,13 +21,13 @@ describe('MiddlwareRegistry', () => {
       registry.add({ name: 'unknown' }, () => {});
       registry.add({ name: 'bar' }, () => {}, 'test');
 
-      const empty = registry._middlewares.find((m) => m.name === 'empty');
+      const empty = registry._middlewares.find(m => m.name === 'empty');
       expect(empty.context).toEqual(['__GLOBAL__']);
 
-      const unknown = registry._middlewares.find((m) => m.name === 'unknown');
+      const unknown = registry._middlewares.find(m => m.name === 'unknown');
       expect(unknown.context).toEqual(['__GLOBAL__']);
 
-      const bar = registry._middlewares.find((m) => m.name === 'bar');
+      const bar = registry._middlewares.find(m => m.name === 'bar');
       expect(bar.context).toEqual(['test']);
     });
 
@@ -36,15 +36,15 @@ describe('MiddlwareRegistry', () => {
       registry.add({ name: 'unknown' }, () => {});
       registry.add({ name: 'bar', before: 'foo' }, () => {}, 'test');
 
-      const empty = registry._middlewares.find((m) => m.name === 'empty');
+      const empty = registry._middlewares.find(m => m.name === 'empty');
       expect(empty.before).toEqual(['__TAIL__']);
       expect(empty.after).toEqual(['__HEAD__']);
 
-      const unknown = registry._middlewares.find((m) => m.name === 'unknown');
+      const unknown = registry._middlewares.find(m => m.name === 'unknown');
       expect(unknown.before).toEqual(['__TAIL__']);
       expect(unknown.after).toEqual(['__HEAD__']);
 
-      const bar = registry._middlewares.find((m) => m.name === 'bar');
+      const bar = registry._middlewares.find(m => m.name === 'bar');
       expect(bar.before).toEqual(['foo']);
     });
   });
@@ -61,7 +61,7 @@ describe('MiddlwareRegistry', () => {
       registry.add({ name: 'f', before: 'g' }, () => {});
       registry.sort();
 
-      const middlewares = registry._middlewares.map((m) => m.name);
+      const middlewares = registry._middlewares.map(m => m.name);
       expect(middlewares).toEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']);
     });
 
@@ -102,29 +102,29 @@ describe('MiddlwareRegistry', () => {
       registry.add({ name: 'global' }, () => {});
       registry.add({ name: 'wellington' }, () => {}, ['Earth', 'Australasia', 'NZ', 'Wellington']);
       let matches = registry.getMatchesForContext('Earth.Australasia.NZ.Wellington');
-      expect(matches.map((m) => m.name)).toEqual(['global', 'wellington']);
+      expect(matches.map(m => m.name)).toEqual(['global', 'wellington']);
 
       registry = new MiddlewareRegistry();
       registry.add({ name: 'continent' }, () => {}, ['Earth', 'Australasia']);
       registry.add({ name: 'oz' }, () => {}, ['Earth', 'Australasia', 'Australia']);
       matches = registry.getMatchesForContext('Earth.Australasia.NZ.Wellington');
-      expect(matches.map((m) => m.name)).toEqual(['continent']);
+      expect(matches.map(m => m.name)).toEqual(['continent']);
 
       registry.add({ name: 'country' }, () => {}, ['Earth', '*', 'NZ']);
       matches = registry.getMatchesForContext('Earth.Australasia.NZ.Wellington');
-      expect(matches.map((m) => m.name)).toEqual(['continent', 'country']);
+      expect(matches.map(m => m.name)).toEqual(['continent', 'country']);
 
       registry.add({ name: 'auckland' }, () => {}, ['Earth', 'Australasia', 'NZ', 'Auckland']);
       matches = registry.getMatchesForContext('Earth.Australasia.NZ');
-      expect(matches.map((m) => m.name)).toEqual(['continent', 'country']);
+      expect(matches.map(m => m.name)).toEqual(['continent', 'country']);
 
       matches = registry.getMatchesForContext('Earth.Australasia.NZ.Auckland.QueenStreet');
-      expect(matches.map((m) => m.name)).toEqual(['continent', 'country', 'auckland']);
+      expect(matches.map(m => m.name)).toEqual(['continent', 'country', 'auckland']);
 
       registry.add({ name: 'saturn' }, () => {}, ['Saturn', 'Europa']);
       registry.add({ name: 'europa' }, () => {}, ['*', 'Europa']);
       matches = registry.getMatchesForContext('Saturn.Europa.IceOcean');
-      expect(matches.map((m) => m.name)).toEqual(['saturn', 'europa']);
+      expect(matches.map(m => m.name)).toEqual(['saturn', 'europa']);
     });
 
     it('allows context', () => {

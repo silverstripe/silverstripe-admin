@@ -14,15 +14,15 @@ export default {
     docs: {
       description: {
         component: `Generates a block of raw HTML content inside a Readonly styled box.
-        _NOTE:_ For other properties, please refer to the [reactstrap Input](https://reactstrap.github.io/components/form/) documentation.`,
+        _NOTE:_ For other properties, please refer to the [reactstrap Input](https://reactstrap.github.io/components/form/) documentation.`
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      },
-    },
+      }
+    }
   },
   argTypes: {
     id: {
@@ -31,7 +31,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     extraClass: {
       description: 'Extra classes the component should have.',
@@ -39,7 +39,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     name: {
       description: 'The name for the component.',
@@ -47,7 +47,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     value: {
       description: 'The raw HTML content to generate.',
@@ -55,21 +55,21 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
-    },
-  },
+      }
+    }
+  }
 };
 
-const Template = (args) => <HtmlReadonlyField {...args} />;
+const Template = args => <HtmlReadonlyField {...args} />;
 
 export const _HtmlReadonlyField = Template.bind({});
 _HtmlReadonlyField.args = {
   name: 'default',
-  value: 'This is readonly',
+  value: 'This is readonly'
 };
 
 export const HtmlValue = Template.bind({});
 HtmlValue.args = {
   name: 'default',
-  value: htmlValue,
+  value: htmlValue
 };

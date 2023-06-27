@@ -10,11 +10,12 @@ import mockTree from './mockTree';
 // TreeDropdownField depends on having a basic Redux store present to operate
 const store = createStore(
   combineReducers({ treeDropdownField: treeDropdownFieldReducer }),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 // Replaces the standard API call with a mock that returns static tree data
-const fetchMock = () => Promise.resolve({ json: () => Promise.resolve(mockTree) });
+const fetchMock = () =>
+  Promise.resolve({ json: () => Promise.resolve(mockTree) });
 
 export default {
   title: 'Admin/TreeDropdownField',
@@ -30,7 +31,7 @@ export default {
         setting \`multi: true\`.
         A Redux store with \`TreeDropdownFieldReducer\` installed must be provided as context if the component is used outside
         the CMS. This is used to store the API responses and general state of each \`TreeDropdownField\` instance. You can open
-        the Redux Devtools panel to observe the actions and state used by the component.`,
+        the Redux Devtools panel to observe the actions and state used by the component.`
       },
       canvas: {
         sourceState: 'hide',
@@ -39,8 +40,8 @@ export default {
         sort: 'alpha',
       },
       story: {
-        height: '200px',
-      },
+        height: '200px'
+      }
     },
   },
 
@@ -55,7 +56,7 @@ export default {
   ],
 };
 
-export const Standard = (args) => <TreeDropdownField {...args} />;
+export const Standard = args => <TreeDropdownField {...args} />;
 Standard.args = {
   id: 'MyField',
   name: 'MyField',

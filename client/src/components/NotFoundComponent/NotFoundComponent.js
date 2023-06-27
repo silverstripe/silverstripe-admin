@@ -9,9 +9,9 @@ const NotFoundComponent = ({ itemName, name, value }) => (
     <FormAlert value={i18n.inject(
       i18n._t(
         'Admin.NOT_FOUND_COMPONENT',
-        'The component here ({component}) failed to load, there is a chance that you may lose data when saving due to this.',
+        'The component here ({component}) failed to load, there is a chance that you may lose data when saving due to this.'
       ),
-      { component: itemName },
+      { component: itemName }
     )}
     />
     {(name && typeof value === 'string')

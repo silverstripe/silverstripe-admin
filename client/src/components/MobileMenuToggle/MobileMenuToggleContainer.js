@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import MobileMenuToggle from './MobileMenuToggle';
 
 export default connect(
-  (state) => ({
+  state => ({
     isOpen: state.mobileMenu.isOpen,
   }),
-  (dispatch) => ({
+  dispatch => ({
     onClick() {
       dispatch(toggleMobileMenu());
     },
-  }),
+  })
 )(MobileMenuToggle);

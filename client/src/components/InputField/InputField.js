@@ -33,7 +33,7 @@ class InputField extends Component {
       maxLength: this.props.data && this.props.data.maxlength,
       type: this.props.type ? this.props.type : null,
       onBlur: this.props.onBlur,
-      onFocus: this.props.onFocus,
+      onFocus: this.props.onFocus
     };
 
     if (this.props.attributes && !Array.isArray(this.props.attributes)) {

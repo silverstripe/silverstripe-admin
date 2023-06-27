@@ -1,6 +1,6 @@
 import viewModeReducer from '../ViewModeReducer';
 import ACTION_TYPES from '../ViewModeActionTypes';
-import VIEW_MODE_STATES from '../ViewModeStates';
+import { VIEW_MODE_STATES } from '../ViewModeStates';
 
 describe('viewModeReducer', () => {
   const initialState = { };
@@ -44,7 +44,7 @@ describe('viewModeReducer', () => {
         type: ACTION_TYPES.SPLIT_AVAILABLE,
         payload: {
           panelWidth: 1200,
-        },
+        }
       });
 
       expect(nextState.splitAvailable).toBe(true);
@@ -55,7 +55,7 @@ describe('viewModeReducer', () => {
         type: ACTION_TYPES.SPLIT_AVAILABLE,
         payload: {
           panelWidth: 400,
-        },
+        }
       });
 
       expect(nextState.splitAvailable).toBe(false);
@@ -69,7 +69,7 @@ describe('viewModeReducer', () => {
         type: ACTION_TYPES.SPLIT_AVAILABLE,
         payload: {
           panelWidth: 400,
-        },
+        }
       });
 
       expect(nextState.splitAvailable).toBe(false);
@@ -84,7 +84,7 @@ describe('viewModeReducer', () => {
         type: ACTION_TYPES.SPLIT_AVAILABLE,
         payload: {
           panelWidth: 1200,
-        },
+        }
       });
 
       expect(nextState.splitAvailable).toBe(true);
@@ -99,7 +99,7 @@ describe('viewModeReducer', () => {
         type: ACTION_TYPES.SPLIT_AVAILABLE,
         payload: {
           panelWidth: 1200,
-        },
+        }
       });
 
       expect(nextState.splitAvailable).toBe(true);
@@ -114,7 +114,7 @@ describe('viewModeReducer', () => {
         type: ACTION_TYPES.SPLIT_AVAILABLE,
         payload: {
           panelWidth: 1200,
-        },
+        }
       });
 
       expect(nextState.splitAvailable).toBe(true);
@@ -129,7 +129,7 @@ describe('viewModeReducer', () => {
         type: ACTION_TYPES.SPLIT_AVAILABLE,
         payload: {
           panelWidth: 400,
-        },
+        }
       });
 
       expect(nextState.splitAvailable).toBe(false);

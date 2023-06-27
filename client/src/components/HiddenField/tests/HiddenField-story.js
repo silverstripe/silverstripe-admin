@@ -9,15 +9,15 @@ export default {
     docs: {
       description: {
         component: `Generates a hidden input type field.
-        _NOTE:_ For other properties, please refer to the [reactstrap Input](https://reactstrap.github.io/components/form/) documentation.`,
+        _NOTE:_ For other properties, please refer to the [reactstrap Input](https://reactstrap.github.io/components/form/) documentation.`
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      },
-    },
+      }
+    }
   },
   argTypes: {
     id: {
@@ -26,7 +26,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     extraClass: {
       description: 'Extra classes the component should have.',
@@ -34,7 +34,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     name: {
       description: 'The name for the component.',
@@ -44,8 +44,8 @@ export default {
         defaultValue: { summary: '' },
       },
       type: {
-        required: true,
-      },
+        required: true
+      }
     },
     value: {
       description: 'The value the input should hold.',
@@ -54,8 +54,8 @@ export default {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
       },
-    },
-  },
+    }
+  }
 };
 
 export const _HiddenField = (args) => <HiddenField {...args} />;

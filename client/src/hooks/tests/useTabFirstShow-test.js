@@ -24,12 +24,12 @@ test('useTabFirstShow in active tab', () => {
       <TabItem name="active">
         <TabContextPrinter callback={callback} />
       </TabItem>
-    </Tabs>,
+    </Tabs>
   );
   expect(callback).toBeCalledWith({
     activeTab: 'active',
     currentTab: 'active',
-    isOnActiveTab: true,
+    isOnActiveTab: true
   });
 });
 
@@ -37,11 +37,11 @@ test('useTabFirstShow outside active tab', async () => {
   const callback = jest.fn();
   render(
     <Tabs id="foo" activeTab="active" activateTab={() => (false)}>
-      <TabItem name="active" />
+      <TabItem name="active"/>
       <TabItem name="secondary">
-        <TabContextPrinter callback={callback} />
+        <TabContextPrinter callback={callback}/>
       </TabItem>
-    </Tabs>,
+    </Tabs>
   );
   expect(callback).not.toBeCalled();
 });
@@ -58,12 +58,12 @@ test('useTabFirstShow inside inactive tab', () => {
           </TabItem>
         </Tabs>
       </TabItem>
-    </Tabs>,
+    </Tabs>
   );
   expect(callback).toBeCalledWith({
     activeTab: 'subactive',
     currentTab: 'subactive',
-    isOnActiveTab: true,
+    isOnActiveTab: true
   });
 });
 
@@ -80,7 +80,7 @@ test('useTabFirstShow inside inactive tab', () => {
           </TabItem>
         </Tabs>
       </TabItem>
-    </Tabs>,
+    </Tabs>
   );
   expect(callback).not.toBeCalled();
 });

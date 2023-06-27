@@ -24,21 +24,21 @@ function makeProps(obj = {}) {
       'data-def': '456',
     },
     title: 'My title',
-    ...obj,
+    ...obj
   };
 }
 
 test('InputField render() renders', () => {
-  const { container } = render(<InputField {...makeProps()} />);
+  const { container } = render(<InputField {...makeProps()}/>);
   expect(container.querySelectorAll('input')).toHaveLength(1);
 });
 
 test('InputField render() renders with a null value', () => {
   const { container } = render(
     <InputField {...makeProps({
-      value: null,
+      value: null
     })}
-    />,
+    />
   );
   expect(container.querySelectorAll('input')).toHaveLength(1);
 });

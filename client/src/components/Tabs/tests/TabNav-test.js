@@ -9,7 +9,7 @@ const onToggle = jest.fn();
 function makeProps(obj = {}) {
   return {
     onToggle,
-    ...obj,
+    ...obj
   };
 }
 
@@ -22,7 +22,7 @@ test('TabNav render', () => {
       <div name="first" title="Child One" />
       <div name="second" title="Child Two" />
       <div name="three" title="Child Three" />
-    </TabNav>,
+    </TabNav>
   );
   expect(container.querySelectorAll('.nav-tabs')).toHaveLength(1);
   expect(container.querySelectorAll('.nav-tabs .nav-link')).toHaveLength(3);
@@ -37,7 +37,7 @@ test('TabNav render', () => {
 });
 
 test('TabNav hidden when no child is provided', () => {
-  const { container } = render(<TabNav {...makeProps()} />);
+  const { container } = render(<TabNav {...makeProps()}/>);
   expect(container.querySelectorAll('.nav-tabs .nav-link')).toHaveLength(0);
 });
 
@@ -45,7 +45,7 @@ test('TabNav hidden when only one child is provided', () => {
   const { container } = render(
     <TabNav {...makeProps()}>
       <div name="first" title="Child One" />
-    </TabNav>,
+    </TabNav>
   );
   expect(container.querySelectorAll('.nav-tabs .nav-link')).toHaveLength(0);
 });

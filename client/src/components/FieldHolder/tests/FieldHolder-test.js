@@ -12,9 +12,9 @@ const FieldHolder = fieldHolder(InnerField);
 test('FieldHolder should render innerfield', () => {
   const { container } = render(
     <FieldHolder {...{
-      description: 'mydesc',
+      description: 'mydesc'
     }}
-    />,
+    />
   );
   expect(container.querySelector('div#innerfield').innerHTML).toBe('Field');
 });
@@ -22,9 +22,9 @@ test('FieldHolder should render innerfield', () => {
 test('FieldHolder should render a description', () => {
   const { container } = render(
     <FieldHolder {...{
-      description: 'mydesc',
+      description: 'mydesc'
     }}
-    />,
+    />
   );
   expect(container.querySelector('.form__field-description').innerHTML).toBe('mydesc');
 });
@@ -32,9 +32,9 @@ test('FieldHolder should render a description', () => {
 test('FieldHolder should render no description if null', () => {
   const { container } = render(
     <FieldHolder {...{
-      description: null,
+      description: null
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('.form__field-description')).toHaveLength(0);
 });
@@ -44,10 +44,10 @@ test('FieldHolder should render message property', () => {
     <FieldHolder {...{
       message: {
         value: 'hello!',
-        type: 'error',
-      },
+        type: 'error'
+      }
     }}
-    />,
+    />
   );
   expect(container.querySelector('.form__field-message--error div').innerHTML).toBe('hello!');
 });
@@ -57,7 +57,7 @@ test('FieldHolder should let meta error override message if dirty', () => {
     <FieldHolder {...{
       message: {
         value: 'hello!',
-        type: 'error',
+        type: 'error'
       },
       meta: {
         error: {
@@ -65,9 +65,9 @@ test('FieldHolder should let meta error override message if dirty', () => {
         },
         touched: true,
         dirty: true,
-      },
+      }
     }}
-    />,
+    />
   );
   expect(container.querySelector('.form__field-message div').innerHTML).toBe('My error');
 });
@@ -77,7 +77,7 @@ test('FieldHolder should let message override meta error override if not dirty',
     <FieldHolder {...{
       message: {
         value: 'hello!',
-        type: 'error',
+        type: 'error'
       },
       meta: {
         error: {
@@ -85,9 +85,9 @@ test('FieldHolder should let message override meta error override if not dirty',
         },
         touched: true,
         dirty: false,
-      },
+      }
     }}
-    />,
+    />
   );
   expect(container.querySelector('.form__field-message div').innerHTML).toBe('hello!');
 });
@@ -100,9 +100,9 @@ test('FieldHolder should not return anything if not touched', () => {
           value: 'My error',
         },
         touched: false,
-      },
+      }
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('.form__field-message')).toHaveLength(0);
 });
@@ -115,9 +115,9 @@ test('FieldHolder return a node if touched and has an error', () => {
           value: 'My error',
         },
         touched: true,
-      },
+      }
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('.form__field-message')).toHaveLength(1);
 });
@@ -125,9 +125,9 @@ test('FieldHolder return a node if touched and has an error', () => {
 test('FieldHolder return a title when leftTitle is set', () => {
   const { container } = render(
     <FieldHolder {...{
-      leftTitle: 'My left title',
+      leftTitle: 'My left title'
     }}
-    />,
+    />
   );
   expect(container.querySelector('.form__field-label').innerHTML).toBe('My left title');
 });
@@ -135,9 +135,9 @@ test('FieldHolder return a title when leftTitle is set', () => {
 test('FieldHolder should return a title when title is set and leftTitle is not set', () => {
   const { container } = render(
     <FieldHolder {...{
-      title: 'My title',
+      title: 'My title'
     }}
-    />,
+    />
   );
   expect(container.querySelector('.form__field-label').innerHTML).toBe('My title');
 });
@@ -146,9 +146,9 @@ test('FieldHolder should return the left title when title and leftTitle are both
   const { container } = render(
     <FieldHolder {...{
       leftTitle: 'My left title',
-      title: 'My title',
+      title: 'My title'
     }}
-    />,
+    />
   );
   expect(container.querySelector('.form__field-label').innerHTML).toBe('My left title');
 });
@@ -156,9 +156,9 @@ test('FieldHolder should return the left title when title and leftTitle are both
 test('FieldHolder rightTitle', () => {
   const { container } = render(
     <FieldHolder {...{
-      rightTitle: 'My right title',
+      rightTitle: 'My right title'
     }}
-    />,
+    />
   );
   expect(container.querySelector('.form__field-label').innerHTML).toBe('My right title');
 });
@@ -168,23 +168,23 @@ test('FieldHolder hideLabels', () => {
     <FieldHolder {...{
       leftTitle: 'My left title',
       rightTitle: 'My right title',
-      hideLabels: true,
+      hideLabels: true
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('.form__field-label')).toHaveLength(0);
 });
 
 test('FieldHolder no labels', () => {
   const { container } = render(
-    <FieldHolder />,
+    <FieldHolder/>
   );
   expect(container.querySelectorAll('.form__field-label')).toHaveLength(0);
 });
 
 test('FieldHolder no prefix or suffix', () => {
   const { container } = render(
-    <FieldHolder />,
+    <FieldHolder/>
   );
   expect(container.querySelectorAll('.input-group-text')).toHaveLength(0);
 });
@@ -194,9 +194,9 @@ test('FieldHolder prefix', () => {
     <FieldHolder {...{
       data: {
         prefix: 'My prefix',
-      },
+      }
     }}
-    />,
+    />
   );
   expect(container.querySelector('.input-group-prepend .input-group-text').innerHTML).toBe('My prefix');
 });
@@ -206,9 +206,9 @@ test('FieldHolder prefix', () => {
     <FieldHolder {...{
       data: {
         suffix: 'My suffix',
-      },
+      }
     }}
-    />,
+    />
   );
   expect(container.querySelector('.input-group-append .input-group-text').innerHTML).toBe('My suffix');
 });
@@ -220,9 +220,9 @@ test('FieldHolder titleTip should be rendered if one is provided', () => {
       title: 'My title',
       titleTip: {
         content: 'My content',
-      },
+      }
     }}
-    />,
+    />
   );
   expect(container.querySelector('button.tip.tip--title').getAttribute('aria-label')).toBe('Tip for My title');
 });
@@ -233,7 +233,7 @@ test('FieldHolder titleTip should not be rendered if one is not provided', () =>
       id: 'my-id',
       title: 'My title',
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('button.tip.tip--title')).toHaveLength(0);
 });

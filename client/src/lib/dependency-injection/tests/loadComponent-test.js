@@ -7,13 +7,13 @@ import { render } from '@testing-library/react';
 
 import loadComponent from '../loadComponent';
 
-const mockStore = createStore((state) => state);
+const mockStore = createStore(state => state);
 
 function TestComponent() {
   return <span className="test-component">abc</span>;
 }
 
-const mockProvider = (Item) => Item;
+const mockProvider = Item => Item;
 
 jest.mock('../provideInjector', () => function mockInjector(Injected) {
   // eslint-disable-next-line

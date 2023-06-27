@@ -1,6 +1,6 @@
 import ACTION_TYPES from './ViewModeActionTypes';
-import SPLITMODE_BREAKPOINT from '../../lib/constants';
-import VIEW_MODE_STATES from './ViewModeStates';
+import { SPLITMODE_BREAKPOINT as viewWideEnoughForSplitMode } from '../../lib/constants';
+import { VIEW_MODE_STATES } from './ViewModeStates';
 
 const initialState = {
   activeState: VIEW_MODE_STATES.SPLIT,
@@ -35,8 +35,8 @@ function reducer(state = initialState, action) {
     }
 
     case ACTION_TYPES.SPLIT_AVAILABLE: {
-      const splitAvailable = action.payload.panelWidth > SPLITMODE_BREAKPOINT;
-      let { activeState } = state;
+      const splitAvailable = action.payload.panelWidth > viewWideEnoughForSplitMode;
+      let activeState = state.activeState;
 
       if (!state.lockState && activeState === VIEW_MODE_STATES.SPLIT && !splitAvailable) {
         // Resizing into a small viewport should automatically disable split view

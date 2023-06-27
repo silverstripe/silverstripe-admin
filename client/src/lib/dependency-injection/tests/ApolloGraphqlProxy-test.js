@@ -11,7 +11,7 @@ describe('ApolloGraphqlProxy', () => {
   it('Constructs', () => {
     const proxy = createMock(
       'ast',
-      { foo: 'bar' },
+      { foo: 'bar' }
     );
 
     expect(proxy.getGraphqlAST()).toBe('ast');
@@ -22,8 +22,8 @@ describe('ApolloGraphqlProxy', () => {
     const proxy = createMock(
       gql('query myQuery { foo }'),
       {
-        test: 'config',
-      },
+        test: 'config'
+      }
     );
 
     const hoc = proxy.getApolloHOC();

@@ -10,7 +10,7 @@ export const defaultTag = (strings, ...expressions) => (
 );
 
 export const processTag = (config) => (strings, ...expressions) => {
-  const expressed = expressions.map((expression) => {
+  const expressed = expressions.map(expression => {
     if (typeof expression !== 'function') {
       return expression;
     }

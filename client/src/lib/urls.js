@@ -1,4 +1,4 @@
-const joinUrlPaths = (...urlPaths) => {
+export const joinUrlPaths = (...urlPaths) => {
   // Just return a blank string if there's no paths passed in
   if (!urlPaths.length) {
     return '';
@@ -12,5 +12,3 @@ const joinUrlPaths = (...urlPaths) => {
   }
   return result;
 };
-
-export default joinUrlPaths;

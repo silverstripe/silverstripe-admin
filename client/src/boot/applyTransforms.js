@@ -40,7 +40,7 @@ const applyTransforms = () => {
         'FieldGroup',
       ];
       fields.forEach((field) => updater.component('FieldGroup', fieldHolder, `${field}Holder`));
-    },
+    }
   );
   Injector.transform(
     'form-action-changed',
@@ -78,13 +78,13 @@ const applyTransforms = () => {
             }
             return {
               ...curr,
-              [key]: errors,
+              [key]: errors
             };
           }, {});
           Validation.addErrors(errorMap);
 
           return Validation.getState();
-        },
+        }
       );
     });
 };

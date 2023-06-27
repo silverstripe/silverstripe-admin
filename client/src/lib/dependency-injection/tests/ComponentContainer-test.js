@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 /* global jest, describe, beforeEach, it, pit, expect, process */
 import React from 'react';
 import buildComponentContainer from '../buildComponentContainer';
@@ -20,17 +21,21 @@ describe('ComponentContainer', () => {
         }
       }
       TestComponent2.displayName = 'Testo';
-      const HOC2 = (TestComponent) =>
-        // eslint-disable-next-line react/prefer-stateless-function, react/no-multi-comp, implicit-arrow-linebreak
+      const HOC2 = (TestComponent) => {
+        // eslint-disable-next-line react/prefer-stateless-function, react/no-multi-comp
         class TestClass extends React.Component {
           render() {
             return <div className="hoc"><TestComponent /></div>;
           }
-        };
+        }
+
+        return TestClass;
+      };
+
       registry.register('TestComponent1', TestComponent1);
       registry.register('TestComponent2', TestComponent2);
-      registry.transform('test', (update) => update('TestComponent1', HOC1));
-      registry.transform('test', (update) => update('TestComponent2', HOC2, 'Besto'));
+      registry.transform('test', update => update('TestComponent1', HOC1));
+      registry.transform('test', update => update('TestComponent2', HOC2, 'Besto'));
       registry.load();
 
       const Service1 = registry.get('TestComponent1');

@@ -12,7 +12,7 @@ function unsavedFormsReducer(state = [], action) {
     case ACTION_TYPES.ADD_FORM_CHANGED:
     case reduxFormActionTypes.CHANGE: {
       return deepFreeze([
-        ...state.filter((form) => form.name !== formName),
+        ...state.filter(form => form.name !== formName),
         { name: formName },
       ]);
     }
@@ -20,14 +20,14 @@ function unsavedFormsReducer(state = [], action) {
     case ACTION_TYPES.REMOVE_FORM_CHANGED:
     case reduxFormActionTypes.STOP_SUBMIT: {
       return deepFreeze([
-        ...state.filter((form) => form.name !== formName),
+        ...state.filter(form => form.name !== formName),
       ]);
     }
 
     case reduxFormActionTypes.DESTROY: {
       // In the case of DESTROY, `action.meta.form` is an array instead of string
       return deepFreeze([
-        ...state.filter((form) => !formName.includes(form.name)),
+        ...state.filter(form => !formName.includes(form.name)),
       ]);
     }
 

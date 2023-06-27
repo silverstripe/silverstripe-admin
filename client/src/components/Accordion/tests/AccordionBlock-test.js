@@ -8,12 +8,12 @@ test('AccordionBlock render() renders with children', () => {
   const { container } = render(
     <AccordionBlock {...{
       groupid: 123,
-      title: 'My title',
+      title: 'My title'
     }}
     >
       <p>lorem</p>
       <p>ipsum</p>
-    </AccordionBlock>,
+    </AccordionBlock>
   );
   expect(container.querySelectorAll('div.accordion__block')).toHaveLength(1);
 });

@@ -9,12 +9,12 @@ function makeProps(obj = {}) {
     label: 'foo bar',
     href: 'https://silverstripe.org/',
     dismissed: false,
-    ...obj,
+    ...obj
   };
 }
 
 test('ToastActions link', () => {
-  const { container } = render(<ToastAction {...makeProps()} />);
+  const { container } = render(<ToastAction {...makeProps()}/>);
   const link = container.querySelector('a');
   expect(link.getAttribute('href')).toBe('https://silverstripe.org/');
   expect(link.innerHTML).toBe('foo bar');
@@ -27,9 +27,9 @@ test('ToastActions button', () => {
     <ToastAction {...makeProps({
       href: null,
       onClick,
-      onDismiss,
+      onDismiss
     })}
-    />,
+    />
   );
   const button = container.querySelector('button');
   expect(button.innerHTML).toBe('foo bar');
@@ -46,9 +46,9 @@ test('ToastActions button toast already dismissed', () => {
       href: null,
       dismissed: true,
       onClick,
-      onDismiss,
+      onDismiss
     })}
-    />,
+    />
   );
   const button = container.querySelector('button');
   fireEvent.click(button, {});
@@ -77,9 +77,9 @@ test('ToastActions no actions', () => {
         },
       ],
       dismissed: false,
-      onDismiss,
+      onDismiss
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('a')).toHaveLength(1);
   expect(container.querySelectorAll('button')).toHaveLength(1);

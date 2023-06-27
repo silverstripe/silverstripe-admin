@@ -10,7 +10,7 @@ import {
 import { schemaMerge, findField } from 'lib/schemaFieldValues';
 import createClassMap from '../createClassMap';
 
-const getFormState = (state) => state;
+const getFormState = state => state;
 /**
  * An API for updating schema state
  */
@@ -49,7 +49,7 @@ class FormStateManager {
     };
     const fields = [...schemaForm.fields, ...schemaForm.actions];
     const schema = findField(fields, fieldName);
-    const state = this.schema.state.fields.find((field) => field.name === fieldName);
+    const state = this.schema.state.fields.find(field => field.name === fieldName);
 
     return schemaMerge(schema, state);
   }
@@ -62,7 +62,7 @@ class FormStateManager {
    */
   mutateField(fieldName, updater) {
     const fieldList = this.schema.state.fields || [];
-    const fieldIndex = fieldList.findIndex((field) => field.name === fieldName);
+    const fieldIndex = fieldList.findIndex(field => field.name === fieldName);
 
     if (fieldIndex < 0) {
       return this;
@@ -97,7 +97,7 @@ class FormStateManager {
    * @returns {FormStateManager}
    */
   updateFields(updates) {
-    Object.keys(updates).forEach((key) => {
+    Object.keys(updates).forEach(key => {
       this.updateField(key, updates[key]);
     });
 
@@ -159,7 +159,7 @@ class FormStateManager {
   getValues() {
     return getFormValues(
       this.schema.name,
-      getFormState,
+      getFormState
     )(this.mockGlobalState) || {};
   }
 
@@ -179,7 +179,7 @@ class FormStateManager {
   isDirty() {
     return isDirty(
       this.schema.name,
-      getFormState,
+      getFormState
     )(this.mockGlobalState);
   }
 
@@ -190,7 +190,7 @@ class FormStateManager {
   isPristine() {
     return isPristine(
       this.schema.name,
-      getFormState,
+      getFormState
     )(this.mockGlobalState);
   }
 
@@ -201,7 +201,7 @@ class FormStateManager {
   isValid() {
     return isValid(
       this.schema.name,
-      getFormState,
+      getFormState
     )(this.mockGlobalState);
   }
 
@@ -212,7 +212,7 @@ class FormStateManager {
   isInvalid() {
     return isInvalid(
       this.schema.name,
-      getFormState,
+      getFormState
     )(this.mockGlobalState);
   }
 

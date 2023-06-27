@@ -59,7 +59,7 @@ describe('BaseContainer', () => {
       expect(container.middlewareRegistries.test.add).toBeCalledWith(
         meta,
         factory,
-        ['context', 'upper'],
+        ['context', 'upper']
       );
     });
   });
@@ -202,7 +202,7 @@ describe('BaseContainer', () => {
         return `modified ${original()}`;
       };
 
-      container.transform('test', (update) => update('TestComponent', HOC));
+      container.transform('test', update => update('TestComponent', HOC));
       container.load();
 
       const Service = container.get('TestComponent');
@@ -217,7 +217,7 @@ describe('BaseContainer', () => {
       const HOC = jest.fn();
       HOC.mockReturnValue('HOC');
 
-      container.transform('test', (update) => update('TestComponent', HOC));
+      container.transform('test', update => update('TestComponent', HOC));
       container.load();
 
       const Service = container.get('TestComponent');

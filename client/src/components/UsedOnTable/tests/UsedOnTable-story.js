@@ -9,7 +9,7 @@ export default {
     docs: {
       description: {
         component: `Generates a generic table for loading a DataObject's ownership details.
-        Relies on the \`SilverStripe\Admin\Forms\UsedOnTable\` FormField class on the PHP side, can be used independently if desired.`,
+        Relies on the \`SilverStripe\Admin\Forms\UsedOnTable\` FormField class on the PHP side, can be used independently if desired.`
       },
       canvas: {
         sourceState: 'shown',
@@ -18,8 +18,8 @@ export default {
         sort: 'alpha',
       },
       story: {
-        height: '300px',
-      },
+        height: '300px'
+      }
     },
   },
   argTypes: {
@@ -28,15 +28,15 @@ export default {
       control: 'boolean',
       table: {
         type: { summary: 'boolean' },
-      },
+      }
     },
     usedOn: {
       control: 'object',
       table: {
         type: { summary: 'array' },
-      },
+      }
     },
-  },
+  }
 };
 
 export const LoadingState = (args) => <UsedOnTable {...args} />;
@@ -46,8 +46,8 @@ LoadingState.args = {
 
 export const NoOwners = {
   args: {
-    usedOn: [],
-  },
+    usedOn: []
+  }
 };
 
 export const WithOwners = {
@@ -81,6 +81,6 @@ export const WithOwners = {
         state: 'draft',
         link: 'http://www.google.co.nz',
       },
-    ],
-  },
+    ]
+  }
 };

@@ -19,9 +19,9 @@ class ResizeAware extends Component {
 
     // Initialise Resize Observer
     this.observer = new ResizeObserver(
-      (entries) => entries.forEach(
-        ({ contentRect }) => this.handleResize(contentRect),
-      ),
+      entries => entries.forEach(
+        ({ contentRect }) => this.handleResize(contentRect)
+      )
     );
   }
 
@@ -87,7 +87,7 @@ class ResizeAware extends Component {
     return createElement(
       component,
       {
-        [hasCustomComponent ? 'getRef' : 'ref']: (el) => { this.container = el; },
+        [hasCustomComponent ? 'getRef' : 'ref']: el => { this.container = el; },
         ...(hasCustomComponent && sizes),
         ...props,
       },
@@ -95,21 +95,22 @@ class ResizeAware extends Component {
         ? children({ width, height })
         : Children.map(
           children,
-          (child) => (isValidElement(child)
-            ? cloneElement(child, !onlyEvent ? sizes : null)
-            : child),
-        ),
+          child =>
+            (isValidElement(child)
+              ? cloneElement(child, !onlyEvent ? sizes : null)
+              : child)
+        )
     );
   }
 }
 
 ResizeAware.propTypes = {
   component: PropTypes.oneOfType([PropTypes.string, PropTypes.elementType]),
-  onResize: PropTypes.func,
+  onResize: PropTypes.func
 };
 
 ResizeAware.defaultProps = {
-  component: 'div',
+  component: 'div'
 };
 
 export default ResizeAware;

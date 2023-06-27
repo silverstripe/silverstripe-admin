@@ -14,10 +14,10 @@ test('HtmlEditorField render() renders with editorjs', () => {
         attributes: {
           'data-abc': '123',
           'data-def': '456',
-        },
-      },
+        }
+      }
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('input')).toHaveLength(0);
 });
@@ -32,10 +32,10 @@ test('HtmlEditorField render() renders without editorjs', () => {
         attributes: {
           'data-abc': '123',
           'data-def': '456',
-        },
-      },
+        }
+      }
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('input')).toHaveLength(1);
 });

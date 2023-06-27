@@ -23,10 +23,10 @@ function makeProps(obj = {}) {
       reduxForm: {
         initialize: jest.fn(),
         reset: jest.fn(),
-        change: jest.fn(),
-      },
+        change: jest.fn()
+      }
     },
-    ...obj,
+    ...obj
   };
 }
 
@@ -38,14 +38,14 @@ test('Search handleChange', () => {
     actions: {
       ...props.actions,
       reduxForm: {
-        change: reduxFormChange,
-      },
+        change: reduxFormChange
+      }
     },
     formData: {
-      searchTerm: 'foo',
-    },
+      searchTerm: 'foo'
+    }
   };
-  const { container } = render(<Search {...props} />);
+  const { container } = render(<Search {...props}/>);
   const input = container.querySelector('.search-box__content-field');
   // handle change is called on initial render
   expect(reduxFormChange).toHaveBeenCalledWith('mySchemaName', 'searchTerm', '');
@@ -56,7 +56,7 @@ test('Search handleChange', () => {
 
 test('Search display NONE', () => {
   const { container } = render(<Search {...makeProps({
-    display: 'NONE',
+    display: 'NONE'
   })}
   />);
   expect(container.querySelector('.search')).toBeNull();
@@ -64,7 +64,7 @@ test('Search display NONE', () => {
 
 test('Search display VISIBLE', () => {
   const { container } = render(<Search {...makeProps({
-    display: 'VISIBLE',
+    display: 'VISIBLE'
   })}
   />);
   expect(container.querySelector('.search')).not.toBeNull();
@@ -73,7 +73,7 @@ test('Search display VISIBLE', () => {
 
 test('Search display EXPANDED', () => {
   const { container } = render(<Search {...makeProps({
-    display: 'EXPANDED',
+    display: 'EXPANDED'
   })}
   />);
   expect(container.querySelector('.search')).not.toBeNull();
@@ -84,7 +84,7 @@ test('Search display EXPANDED', () => {
 test('Search doSearch', () => {
   const onSearch = jest.fn();
   const { container } = render(<Search {...makeProps({
-    onSearch,
+    onSearch
   })}
   />);
   const input = container.querySelector('.search-box__content-field');
@@ -98,8 +98,8 @@ test('Search setOverrides converts values into name/value notation', () => {
   let props = makeProps({
     filters: {
       foo: true,
-      bar: null,
-    },
+      bar: null
+    }
   });
   props = {
     ...props,
@@ -107,21 +107,21 @@ test('Search setOverrides converts values into name/value notation', () => {
       ...props.actions,
       schema: {
         ...props.actions.schema,
-        setSchemaStateOverrides: mockSetSchemaStateOverrides,
-      },
-    },
+        setSchemaStateOverrides: mockSetSchemaStateOverrides
+      }
+    }
   };
-  render(<Search {...props} />);
+  render(<Search {...props}/>);
   expect(mockSetSchemaStateOverrides).toHaveBeenCalledWith('someUrl', {
     fields: [
       { name: 'foo', value: true },
-      { name: 'bar', value: null },
-    ],
+      { name: 'bar', value: null }
+    ]
   });
 });
 
 test('Search clear button()', () => {
-  const { container } = render(<Search {...makeProps()} />);
+  const { container } = render(<Search {...makeProps()}/>);
   const input = container.querySelector('.search-box__content-field');
   expect(container.querySelector('.search-form__clear')).toBeNull();
   fireEvent.change(input, { target: { value: 'foo' } });
@@ -133,7 +133,7 @@ test('Search clear button()', () => {
 test('Search trailing space should be ignored', () => {
   const onSearch = jest.fn();
   const { container } = render(<Search {...makeProps({
-    onSearch,
+    onSearch
   })}
   />);
   const input = container.querySelector('.search-box__content-field');

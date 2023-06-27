@@ -1,5 +1,5 @@
 /* global jest, describe, beforeEach, it, expect, console */
-import joinUrlPaths from 'lib/urls';
+import { joinUrlPaths } from 'lib/urls';
 
 describe('urls', () => {
   describe('joinUrlPaths()', () => {

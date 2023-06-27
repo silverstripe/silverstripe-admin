@@ -10,7 +10,7 @@ class DatetimeField extends DateField {
   getInputProps() {
     const placeholder = i18n.inject(
       i18n._t('Admin.FormatExample', 'Example: {format}'),
-      { format: this.moment().endOf('month').format(localFormat) },
+      { format: this.moment().endOf('month').format(localFormat) }
     );
     const type = this.asHTML5() ? 'datetime-local' : 'text';
     return {

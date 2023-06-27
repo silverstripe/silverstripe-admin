@@ -25,7 +25,7 @@ const Toolbar = ({ showBackButton, children, onBackButtonClick }) => {
 
 Toolbar.propTypes = {
   onBackButtonClick: PropTypes.func,
-  showBackButton: PropTypes.bool,
+  showBackButton: PropTypes.bool
 };
 
 Toolbar.defaultProps = {

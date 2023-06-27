@@ -46,7 +46,7 @@ const buildFormContainer = (base = buildBaseContainer()) => ({
       this,
       SCHEMA_MIDDLEWARE_SERVICE,
       context,
-      ...args,
+      ...args
     );
   },
 
@@ -61,7 +61,7 @@ const buildFormContainer = (base = buildBaseContainer()) => ({
       this,
       VALIDATION_MIDDLEWARE_SERVICE,
       context,
-      ...args,
+      ...args
     );
   },
 
@@ -77,7 +77,7 @@ const buildFormContainer = (base = buildBaseContainer()) => ({
         this,
         { name, ...priorities },
         `${serviceName}.${context}`,
-        wrapper,
+        wrapper
       )
     );
 
@@ -94,7 +94,7 @@ const buildFormContainer = (base = buildBaseContainer()) => ({
    * @returns {function}
    */
   getFactory(key, middlewareMatches) {
-    const factories = middlewareMatches.map((middleware) => middleware.factory);
+    const factories = middlewareMatches.map(middleware => middleware.factory);
     if (key === SCHEMA_MIDDLEWARE_SERVICE) {
       return this.getSchemaReducer(factories);
     } else if (key === VALIDATION_MIDDLEWARE_SERVICE) {
@@ -111,14 +111,15 @@ const buildFormContainer = (base = buildBaseContainer()) => ({
    * @returns {function}
    */
   getSchemaReducer(factories) {
-    return (formSchemaState, reduxFormState) => factories.reduce((currentState, currentFactory) => {
-      const manager = new FormStateManager(currentState, reduxFormState);
-      const modifications = currentFactory(manager);
-      return {
-        ...currentState,
-        ...modifications,
-      };
-    }, formSchemaState);
+    return (formSchemaState, reduxFormState) =>
+      factories.reduce((currentState, currentFactory) => {
+        const manager = new FormStateManager(currentState, reduxFormState);
+        const modifications = currentFactory(manager);
+        return {
+          ...currentState,
+          ...modifications,
+        };
+      }, formSchemaState);
   },
 
   /**
@@ -131,7 +132,7 @@ const buildFormContainer = (base = buildBaseContainer()) => ({
   getValidationReducer(factories) {
     return (values, schema) => {
       const validation = new FormValidationManager(values);
-      factories.forEach((factory) => factory(values, validation, schema));
+      factories.forEach(factory => factory(values, validation, schema));
 
       return validation.getState();
     };

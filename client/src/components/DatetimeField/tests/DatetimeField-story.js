@@ -15,15 +15,15 @@ export default {
     docs: {
       description: {
         component: `Generates an editable date time field.
-        _NOTE:_ For other properties, please refer to the [reactstrap FormControl](https://reactstrap.github.io/components/form/) documentation.`,
+        _NOTE:_ For other properties, please refer to the [reactstrap FormControl](https://reactstrap.github.io/components/form/) documentation.`
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      },
-    },
+      }
+    }
   },
   argTypes: {
     id: {
@@ -41,7 +41,7 @@ export default {
     name: {
       description: 'The name for the component.',
       type: {
-        required: true,
+        required: true
       },
       table: {
         type: { summary: 'string' },
@@ -52,7 +52,7 @@ export default {
       table: {
         type: { summary: 'function' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     value: {
       description: 'The value to display for the field - localised date time format or ISO 8601 date format',
@@ -60,21 +60,21 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     readOnly: {
       description: 'Whether this field is read only.',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: false },
-      },
+      }
     },
     disabled: {
       description: 'Whether this field is disabled.',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: false },
-      },
+      }
     },
     lang: {
       description: 'Locale string. E.g. `en_NZ`.',
@@ -82,9 +82,9 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
-    },
-  },
+      }
+    }
+  }
 };
 
 export const Basic = () => <DatetimeField {...props} />;

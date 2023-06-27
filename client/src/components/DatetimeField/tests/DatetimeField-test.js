@@ -15,7 +15,7 @@ function getSharedProps() {
     id: 'date',
     title: '',
     name: '',
-    value: '',
+    value: ''
   };
 }
 
@@ -30,52 +30,52 @@ function makePropsHtml4(obj = {}) {
       },
     },
     ...getSharedProps(),
-    ...obj,
+    ...obj
   };
 }
 
 function makePropsHtml5NoBrowserSupport(obj = {}) {
   return {
     data: {
-      html5: true,
+      html5: true
     },
     modernizr: {
       inputtypes: {
         'datetime-local': false,
-      },
+      }
     },
     ...getSharedProps(),
-    ...obj,
+    ...obj
   };
 }
 
 function makePropsHtml5(obj = {}) {
   return {
     data: {
-      html5: true,
+      html5: true
     },
     modernizr: {
       inputtypes: {
         'datetime-local': true,
-      },
+      }
     },
     ...getSharedProps(),
-    ...obj,
+    ...obj
   };
 }
 
 function makePropsHtml5OptedOut(obj = {}) {
   return {
     data: {
-      html5: false,
+      html5: false
     },
     modernizr: {
       inputtypes: {
         'datetime-local': true,
-      },
+      }
     },
     ...getSharedProps(),
-    ...obj,
+    ...obj
   };
 }
 
@@ -84,15 +84,15 @@ test('DatetimeField convertToIso() html4 en_NZ', () => {
   const { container } = render(
     <DatetimeField {...makePropsHtml4({
       lang: 'en_NZ',
-      onChange,
+      onChange
     })}
-    />,
+    />
   );
   const input = container.querySelector('input#date');
   fireEvent.change(input, { target: { value: '23/04/2017 1:22 PM' } });
   expect(onChange).toBeCalledWith(
     expect.objectContaining({ _reactName: 'onChange' }),
-    { id: 'date', value: '2017-04-23T13:22:00' },
+    { id: 'date', value: '2017-04-23T13:22:00' }
   );
 });
 
@@ -101,15 +101,15 @@ test('DatetimeField convertToIso() html4 en_NZ iso input', () => {
   const { container } = render(
     <DatetimeField {...makePropsHtml4({
       lang: 'en_NZ',
-      onChange,
+      onChange
     })}
-    />,
+    />
   );
   const input = container.querySelector('input#date');
   fireEvent.change(input, { target: { value: '2017-04-23T00:32:21' } });
   expect(onChange).toBeCalledWith(
     expect.objectContaining({ _reactName: 'onChange' }),
-    { id: 'date', value: '2017-04-23T00:32:21' },
+    { id: 'date', value: '2017-04-23T00:32:21' }
   );
 });
 
@@ -118,15 +118,15 @@ test('DatetimeField convertToIso() html4 en_NZ invalid input', () => {
   const { container } = render(
     <DatetimeField {...makePropsHtml4({
       lang: 'en_NZ',
-      onChange,
+      onChange
     })}
-    />,
+    />
   );
   const input = container.querySelector('input#date');
   fireEvent.change(input, { target: { value: '2017-04-23T003221' } });
   expect(onChange).toBeCalledWith(
     expect.objectContaining({ _reactName: 'onChange' }),
-    { id: 'date', value: '' },
+    { id: 'date', value: '' }
   );
 });
 
@@ -135,15 +135,15 @@ test('DatetimeField convertToIso() html4 en_US iso input', () => {
   const { container } = render(
     <DatetimeField {...makePropsHtml4({
       lang: 'en_US',
-      onChange,
+      onChange
     })}
-    />,
+    />
   );
   const input = container.querySelector('input#date');
   fireEvent.change(input, { target: { value: '04/23/2017 1:22 PM' } });
   expect(onChange).toBeCalledWith(
     expect.objectContaining({ _reactName: 'onChange' }),
-    { id: 'date', value: '2017-04-23T13:22:00' },
+    { id: 'date', value: '2017-04-23T13:22:00' }
   );
 });
 
@@ -151,9 +151,9 @@ test('DatetimeField convertToLocalised() html4 en_NZ', () => {
   const { container } = render(
     <DatetimeField {...makePropsHtml4({
       lang: 'en_NZ',
-      value: '2017-04-23T13:22:00',
+      value: '2017-04-23T13:22:00'
     })}
-    />,
+    />
   );
   const input = container.querySelector('input#date');
   expect(input.getAttribute('value')).toBe('23/04/2017 1:22 PM');
@@ -163,9 +163,9 @@ test('DatetimeField convertToLocalised() html4 en_US', () => {
   const { container } = render(
     <DatetimeField {...makePropsHtml4({
       lang: 'en_US',
-      value: '2017-04-23T13:22:00',
+      value: '2017-04-23T13:22:00'
     })}
-    />,
+    />
   );
   const input = container.querySelector('input#date');
   expect(input.getAttribute('value')).toBe('04/23/2017 1:22 PM');
@@ -175,9 +175,9 @@ test('DatetimeField convertToLocalised() html4 en_NZ invalid input', () => {
   const { container } = render(
     <DatetimeField {...makePropsHtml4({
       lang: 'en_NZ',
-      value: '2017-04-23T13:99:99',
+      value: '2017-04-23T13:99:99'
     })}
-    />,
+    />
   );
   const input = container.querySelector('input#date');
   expect(input.getAttribute('value')).toBe('');
@@ -189,16 +189,16 @@ test('DatetimeField Browser doesn\'t support html5 date time input', () => {
     <DatetimeField {...makePropsHtml5NoBrowserSupport({
       lang: 'en_NZ',
       value: '2017-04-23T13:22:00',
-      onChange,
+      onChange
     })}
-    />,
+    />
   );
   const input = container.querySelector('input#date');
   expect(input.getAttribute('value')).toBe('23/04/2017 1:22 PM');
   fireEvent.change(input, { target: { value: '2023-01-30T13:22:00' } });
   expect(onChange).toBeCalledWith(
     expect.objectContaining({ _reactName: 'onChange' }),
-    { id: 'date', value: '2023-01-30T13:22:00' },
+    { id: 'date', value: '2023-01-30T13:22:00' }
   );
 });
 
@@ -208,21 +208,21 @@ test('DatetimeField Browser doesn\'t support html5 date time input', () => {
     <DatetimeField {...makePropsHtml5NoBrowserSupport({
       lang: 'en_NZ',
       value: '2017-04-23T13:22:00',
-      onChange,
+      onChange
     })}
-    />,
+    />
   );
   const input = container.querySelector('input#date');
   expect(input.getAttribute('value')).toBe('23/04/2017 1:22 PM');
   fireEvent.change(input, { target: { value: '2023-01-30T13:22:00' } });
   expect(onChange).toBeCalledWith(
     expect.objectContaining({ _reactName: 'onChange' }),
-    { id: 'date', value: '2023-01-30T13:22:00' },
+    { id: 'date', value: '2023-01-30T13:22:00' }
   );
   fireEvent.change(input, { target: { value: '2023-01-30T13:99:99' } });
   expect(onChange).toBeCalledWith(
     expect.objectContaining({ _reactName: 'onChange' }),
-    { id: 'date', value: '' },
+    { id: 'date', value: '' }
   );
 });
 
@@ -232,21 +232,21 @@ test('DatetimeField Browser supports html5 date time input but user has opt-oute
     <DatetimeField {...makePropsHtml5OptedOut({
       lang: 'en_NZ',
       value: '2017-04-23T13:22:00',
-      onChange,
+      onChange
     })}
-    />,
+    />
   );
   const input = container.querySelector('input#date');
   expect(input.getAttribute('value')).toBe('23/04/2017 1:22 PM');
   fireEvent.change(input, { target: { value: '2023-01-30T13:22:00' } });
   expect(onChange).toBeCalledWith(
     expect.objectContaining({ _reactName: 'onChange' }),
-    { id: 'date', value: '2023-01-30T13:22:00' },
+    { id: 'date', value: '2023-01-30T13:22:00' }
   );
   fireEvent.change(input, { target: { value: '2023-01-30T13:99:99' } });
   expect(onChange).toBeCalledWith(
     expect.objectContaining({ _reactName: 'onChange' }),
-    { id: 'date', value: '' },
+    { id: 'date', value: '' }
   );
 });
 
@@ -255,15 +255,15 @@ test('DatetimeField html5 en_NZ enter iso value', () => {
   const { container } = render(
     <DatetimeField {...makePropsHtml5({
       lang: 'en_NZ',
-      onChange,
+      onChange
     })}
-    />,
+    />
   );
   const input = container.querySelector('input#date');
   fireEvent.change(input, { target: { value: '2017-04-23T13:22:00' } });
   expect(onChange).toBeCalledWith(
     expect.objectContaining({ _reactName: 'onChange' }),
-    { id: 'date', value: '2017-04-23T13:22:00' },
+    { id: 'date', value: '2017-04-23T13:22:00' }
   );
 });
 
@@ -272,9 +272,9 @@ test('DatetimeField html5 en_NZ enter localised value', () => {
   const { container } = render(
     <DatetimeField {...makePropsHtml5({
       lang: 'en_NZ',
-      onChange,
+      onChange
     })}
-    />,
+    />
   );
   const input = container.querySelector('input#date');
   fireEvent.change(input, { target: { value: '23/04/2017 1:22 PM' } });

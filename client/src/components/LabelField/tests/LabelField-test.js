@@ -12,10 +12,10 @@ test('LabelField render() renders', () => {
       extraClass: 'my-extra-class',
       title: 'my-title',
       data: {
-        target: 'my-target',
-      },
+        target: 'my-target'
+      }
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('label')).toHaveLength(1);
 });

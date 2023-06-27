@@ -37,7 +37,7 @@ class ReactRouteRegister {
     this.childRoutes = [];
     this.rootRoute = {
       path: '/',
-      routes: () => this.getChildRoutes(),
+      routes: () => this.getChildRoutes()
     };
   }
 
@@ -82,7 +82,7 @@ class ReactRouteRegister {
     }
 
     // Add route to correct place
-    const newRouteIndex = routes.findIndex((childRoute) => childRoute.path === route.path);
+    const newRouteIndex = routes.findIndex(childRoute => childRoute.path === route.path);
     if (newRouteIndex >= 0) {
       // Overwrite existing route
       routes[newRouteIndex] = newRoute;
@@ -100,12 +100,12 @@ class ReactRouteRegister {
    * @returns {Array}
    */
   findChildRoute(parentPaths) {
-    let { childRoutes } = this;
+    let childRoutes = this.childRoutes;
 
     // Traverse into route hierarchy, ignoring the root element
     if (parentPaths) {
-      parentPaths.forEach((path) => {
-        const nextParent = childRoutes.find((childRoute) => childRoute.path === path);
+      parentPaths.forEach(path => {
+        const nextParent = childRoutes.find(childRoute => childRoute.path === path);
         if (!nextParent) {
           throw new Error(`Parent path ${path} could not be found.`);
         }
@@ -141,7 +141,7 @@ class ReactRouteRegister {
    */
   remove(path, parentPaths = []) {
     const childRoutes = this.findChildRoute(parentPaths);
-    const routeIndex = childRoutes.findIndex((childRoute) => childRoute.path === path);
+    const routeIndex = childRoutes.findIndex(childRoute => childRoute.path === path);
     if (routeIndex < 0) {
       return null;
     }

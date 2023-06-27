@@ -30,7 +30,7 @@ test('castStringToElement should render a CompositeField with string', () => {
 test('castStringToElement should render a CompositeField with setInnerHtml given an object', () => {
   const Element = castStringToElement(
     CompositeField,
-    { html: '<div>My div content in something</div>' },
+    { html: '<div>My div content in something</div>' }
   );
   expect(Element.type.name).toEqual('CompositeField');
   expect(Element.props.dangerouslySetInnerHTML).toEqual({ __html: '<div>My div content in something</div>' });

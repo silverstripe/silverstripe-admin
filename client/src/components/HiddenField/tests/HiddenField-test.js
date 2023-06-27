@@ -12,7 +12,7 @@ test('HiddenField render() renders', () => {
       name: 'MyName',
       value: 'MyValue',
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('input')).toHaveLength(1);
 });
@@ -25,7 +25,7 @@ test('HiddenField render() renders', () => {
       name: 'MyName',
       value: null,
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('input')).toHaveLength(1);
 });

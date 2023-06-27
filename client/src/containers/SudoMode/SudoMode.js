@@ -40,7 +40,7 @@ const withSudoMode = (WrappedComponent) => {
 
       // React 15 compatible ref callback
       this.passwordInput = null;
-      this.setPasswordInput = (element) => {
+      this.setPasswordInput = element => {
         this.passwordInput = element;
       };
     }
@@ -72,7 +72,7 @@ const withSudoMode = (WrappedComponent) => {
       fetch(Config.getSection(configSectionKey).endpoints.activate, {
         method: 'POST',
         body: payload,
-      }).then((response) => response.json().then((result) => {
+      }).then(response => response.json().then(result => {
         // Happy path, send the user to the wrapped component
         if (result.result) {
           return this.setState({
@@ -201,7 +201,7 @@ const withSudoMode = (WrappedComponent) => {
 
       const LoadingComponent = this.props.LoadingComponent || loadComponent(
         'CircularLoading',
-        'SudoMode',
+        'SudoMode'
       );
 
       if (loading) {

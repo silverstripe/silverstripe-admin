@@ -2,6 +2,7 @@
 import i18n from 'i18n';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
 import * as schemaActions from 'state/schema/SchemaActions';
 import { reset, initialize, change } from 'redux-form';
@@ -23,7 +24,7 @@ const DISPLAY = {
 const BEHAVIOR = {
   NONE: 'NONE',
   HIDEABLE: 'HIDEABLE',
-  TOGGLABLE: 'TOGGLABLE',
+  TOGGLABLE: 'TOGGLABLE'
 };
 
 /**
@@ -145,7 +146,7 @@ class Search extends Component {
    * @param {Object} event onChangeEvent from a input field.
    */
   handleChange(event) {
-    const { value } = event.target;
+    const value = event.target.value;
     if (this.state.searchText !== value) {
       this.setState({ searchText: value });
     }
@@ -164,7 +165,7 @@ class Search extends Component {
       return;
     }
 
-    const { node } = this;
+    const node = ReactDOM.findDOMNode(this);
     if (!node) {
       return;
     }
@@ -187,7 +188,7 @@ class Search extends Component {
       return;
     }
 
-    const { node } = this;
+    const node = ReactDOM.findDOMNode(this);
     if (!node) {
       return;
     }
@@ -237,12 +238,12 @@ class Search extends Component {
       ...this.props,
       filters: {
         ...filters,
-        [key]: undefined,
-      },
+        [key]: undefined
+      }
     });
 
     if (Array.isArray(tag.linkedFields)) {
-      tag.linkedFields.forEach((linkFieldkey) => { clearables[linkFieldkey] = undefined; });
+      tag.linkedFields.forEach(linkFieldkey => { clearables[linkFieldkey] = undefined; });
     }
     this.doSearch(clearables);
   }
@@ -371,7 +372,7 @@ class Search extends Component {
       this.setState({
         display: DISPLAY.VISIBLE,
         initialSearchText: searchText,
-        searchText,
+        searchText
       });
     }
 
@@ -428,7 +429,7 @@ class Search extends Component {
 
     // Display the SearchBox
     const formId = `${id}_ExtraFields`;
-    const { searchText } = this.state;
+    const searchText = this.state.searchText;
 
     // Build classes
     const expanded = this.state.display === DISPLAY.EXPANDED;
@@ -505,7 +506,7 @@ Search.propTypes = {
     right: PropTypes.bool,
     bottom: PropTypes.bool,
     left: PropTypes.bool,
-  }),
+  })
 };
 
 Search.defaultProps = {
@@ -518,7 +519,7 @@ Search.defaultProps = {
   filterPrefix: '',
   forceFilters: false,
   name: 'searchTerm',
-  identifier: 'Admin.SearchForm',
+  identifier: 'Admin.SearchForm'
 };
 
 function mapStateToProps(state, ownProps) {

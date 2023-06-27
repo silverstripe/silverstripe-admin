@@ -16,7 +16,7 @@ BackButton.defaultProps = {
   ...Button.defaultProps,
   noText: true,
   icon: 'left-open-big',
-  children: i18n._t('Admin.BACK', 'Back'),
+  children: i18n._t('Admin.BACK', 'Back')
 };
 
 export default BackButton;

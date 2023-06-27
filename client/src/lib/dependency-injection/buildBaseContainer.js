@@ -44,7 +44,7 @@ const buildBaseContainer = () => ({
     if (!this.initialised) {
       throw new Error(`
       Injector.get(): Attempted to access DI layer before it was initialised.
-      Did you forget to invoke Injector.load()?`,
+      Did you forget to invoke Injector.load()?`
       );
     }
     const factory = this.factories[key];
@@ -78,7 +78,7 @@ const buildBaseContainer = () => ({
     registry.add(
       meta,
       factory,
-      context,
+      context
     );
   },
 
@@ -206,7 +206,7 @@ const buildBaseContainer = () => ({
    */
   getFactory(key, middlewareMatches) {
     const service = this.services[key];
-    const middlewares = middlewareMatches.map((m) => m.factory);
+    const middlewares = middlewareMatches.map(m => m.factory);
     return compose(...middlewares)(service);
   },
 });

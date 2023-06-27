@@ -35,7 +35,7 @@ const mapFormSchemaToTags = (formSchema, formData, tagHandlerOverrides = {}) => 
     const tag = {
       key: field.name,
       label: field.title,
-      value: formData[field.name],
+      value: formData[field.name]
     };
 
     let handler;
@@ -67,10 +67,10 @@ const mapFormSchemaToTags = (formSchema, formData, tagHandlerOverrides = {}) => 
     // Reduce the value of the children field into the main tag
     const value = children
       .map(fieldToTag)
-      .filter((subTag) => (subTag !== false))
+      .filter(subTag => (subTag !== false))
       .reduce(tagListReducer, '')
       .trim();
-    const linkedFields = children.map((linkedField) => linkedField.name);
+    const linkedFields = children.map(linkedField => linkedField.name);
     const focusSelector = `[name=${children[0].name}]`;
 
     return value ? Object.assign({}, tag, { value, linkedFields, focusSelector }) : false;
@@ -80,15 +80,15 @@ const mapFormSchemaToTags = (formSchema, formData, tagHandlerOverrides = {}) => 
     {},
     defaultTagHandlers,
     { Structural: structuralTagHandler },
-    tagHandlerOverrides,
+    tagHandlerOverrides
   );
 
-  const { fields } = formSchema.schema;
+  const fields = formSchema.schema.fields;
 
-  const tags = fields.map(fieldToTag).filter((tag) => (tag !== false));
+  const tags = fields.map(fieldToTag).filter(tag => (tag !== false));
 
   const keyedTags = {};
-  tags.forEach((tag) => { keyedTags[tag.key] = tag; });
+  tags.forEach(tag => { keyedTags[tag.key] = tag; });
 
   return keyedTags;
 };

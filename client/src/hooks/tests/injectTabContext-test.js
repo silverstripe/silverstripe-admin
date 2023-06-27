@@ -26,12 +26,12 @@ test('injectTabContext in active tab', () => {
       <TabItem name="active">
         <TabContextPrinter />
       </TabItem>
-    </Tabs>,
+    </Tabs>
   );
   expect(JSON.parse(container.querySelector('.TabContextPrinter').innerHTML)).toMatchObject({
     activeTab: 'active',
     currentTab: 'active',
-    isOnActiveTab: true,
+    isOnActiveTab: true
   });
 });
 
@@ -42,11 +42,11 @@ test('injectTabContext outside active tab', () => {
       <TabItem name="not-active">
         <TabContextPrinter />
       </TabItem>
-    </Tabs>,
+    </Tabs>
   );
   expect(JSON.parse(container.querySelector('.TabContextPrinter').innerHTML)).toMatchObject({
     activeTab: 'active',
     currentTab: 'not-active',
-    isOnActiveTab: false,
+    isOnActiveTab: false
   });
 });

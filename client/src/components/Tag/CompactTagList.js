@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TagList from 'components/Tag/TagList';
 import ResizeAware from 'components/ResizeAware/ResizeAware';
 import classnames from 'classnames';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import SummaryTag from './SummaryTag';
 
@@ -19,7 +20,7 @@ class CompactTagList extends Component {
     this.getPlaceholderSize = this.getPlaceholderSize.bind(this);
 
     this.state = {
-      showSummaryView: false,
+      showSummaryView: false
     };
   }
 
@@ -43,7 +44,7 @@ class CompactTagList extends Component {
    * @returns {number}
    */
   getPlaceholderSize() {
-    const { node } = this;
+    const node = ReactDOM.findDOMNode(this);
     if (!node) {
       return 0;
     }
@@ -72,11 +73,11 @@ class CompactTagList extends Component {
 
   render() {
     const { maxSize, onSummary, ...listProps } = this.props;
-    const { showSummaryView } = this.state;
+    const showSummaryView = this.state.showSummaryView;
     const count = this.props.tags.length;
     const classes = classnames(
       'compact-tag-list',
-      { 'compact-tag-list__show-summary-view': showSummaryView },
+      { 'compact-tag-list__show-summary-view': showSummaryView }
     );
 
     return (
@@ -97,12 +98,12 @@ class CompactTagList extends Component {
 
 CompactTagList.propTypes = Object.assign({}, TagList.propTypes, {
   maxSize: PropTypes.number,
-  onSummary: PropTypes.func,
+  onSummary: PropTypes.func
 });
 
 CompactTagList.defaultProps = {
   maxSize: 0,
-  onSummary: () => {},
+  onSummary: () => {}
 };
 
 export default CompactTagList;

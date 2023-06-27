@@ -9,7 +9,7 @@ function makeProps(obj = {}) {
     title: '',
     name: '',
     value: '',
-    ...obj,
+    ...obj
   };
 }
 
@@ -17,9 +17,9 @@ test('TextField onChange() should call the onChange function on props', () => {
   const onChange = jest.fn();
   const { container } = render(
     <TextField {...makeProps({
-      onChange,
+      onChange
     })}
-    />,
+    />
   );
   const input = container.querySelector('input');
   fireEvent.change(input, { target: { value: 'x' } });
@@ -27,7 +27,7 @@ test('TextField onChange() should call the onChange function on props', () => {
 });
 
 test('TextField multiLine() should not be multi-line for empty data', () => {
-  const { container } = render(<TextField {...makeProps()} />);
+  const { container } = render(<TextField {...makeProps()}/>);
   const input = container.querySelector('input');
   expect(input.getAttribute('type')).toBe('text');
   expect(input.hasAttribute('multiline')).toBe(false);
@@ -37,10 +37,10 @@ test('TextField multiLine() should be multi-line for three rows', () => {
   const { container } = render(
     <TextField {...makeProps({
       data: {
-        rows: 3,
-      },
+        rows: 3
+      }
     })}
-    />,
+    />
   );
   expect(container.querySelectorAll('textarea')).toHaveLength(1);
   expect(container.querySelector('textarea').getAttribute('rows')).toBe('3');
@@ -50,10 +50,10 @@ test('TextField attributs should assign placeholder', () => {
   const { container } = render(
     <TextField {...makeProps({
       attributes: {
-        placeholder: 'txt',
-      },
+        placeholder: 'txt'
+      }
     })}
-    />,
+    />
   );
   expect(container.querySelector('input').getAttribute('placeholder')).toBe('txt');
 });

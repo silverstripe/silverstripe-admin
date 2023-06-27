@@ -33,12 +33,12 @@ class GridField extends Component {
   }
 
   componentDidMount() {
-    const { data } = this.props;
+    const data = this.props.data;
 
     this.props.actions.fetchRecords(
       data.recordType,
       data.collectionReadEndpoint.method,
-      data.collectionReadEndpoint.url,
+      data.collectionReadEndpoint.url
     );
   }
 
@@ -79,7 +79,8 @@ class GridField extends Component {
       className: this.props.data.onDrillDown ? 'grid-field__row--drillable' : '',
       key: `${record.ID}`,
     };
-    const cells = this.props.data.columns.map((column) => this.createCell(record, column),
+    const cells = this.props.data.columns.map((column) =>
+      this.createCell(record, column)
     );
     const rowActions = this.createRowActions(record);
 
@@ -100,9 +101,9 @@ class GridField extends Component {
     const headers = {};
     headers[FormConstants.CSRF_HEADER] = this.props.config.SecurityID;
 
-    // eslint-disable-next-line no-alert, no-restricted-globals
+    // eslint-disable-next-line no-alert
     if (!confirm(
-      i18n._t('CampaignAdmin.DELETECAMPAIGN', 'Are you sure you want to delete this record?'),
+      i18n._t('CampaignAdmin.DELETECAMPAIGN', 'Are you sure you want to delete this record?')
     )) {
       return;
     }
@@ -112,7 +113,7 @@ class GridField extends Component {
       id,
       this.props.data.itemDeleteEndpoint.method,
       this.props.data.itemDeleteEndpoint.url,
-      headers,
+      headers
     );
   }
 
@@ -143,10 +144,12 @@ class GridField extends Component {
 
     // Placeholder to align the headers correctly with the content
     const actionPlaceholder = <th key="holder" className="grid-field__action-placeholder" />;
-    const headerCells = this.props.data.columns.map((column) => <GridFieldHeaderCell key={column.name}>{column.name}</GridFieldHeaderCell>,
+    const headerCells = this.props.data.columns.map((column) =>
+      <GridFieldHeaderCell key={column.name}>{column.name}</GridFieldHeaderCell>
     );
     const header = <GridFieldHeader>{headerCells.concat(actionPlaceholder)}</GridFieldHeader>;
-    const rows = this.props.records.map((record) => this.createRow(record),
+    const rows = this.props.records.map((record) =>
+      this.createRow(record)
     );
 
     return (

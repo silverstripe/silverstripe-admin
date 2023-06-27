@@ -9,7 +9,7 @@ class ValueTracker extends Component {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
-    let { value } = props;
+    let value = props.value;
     // fallback to using a value the child was given
     if (value === null) {
       React.Children.forEach(this.props.children, (child) => {

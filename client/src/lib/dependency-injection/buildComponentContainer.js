@@ -60,7 +60,7 @@ const buildComponentContainer = (base = buildBaseContainer()) => ({
    */
   getFactory(key, middlewareMatches) {
     const factory = base.getFactory.call(this, key, middlewareMatches);
-    const names = middlewareMatches.map((middleware) => middleware.displayName || middleware.name);
+    const names = middlewareMatches.map(middleware => middleware.displayName || middleware.name);
     factory.displayName = createDisplayName(this.services[key], names);
 
     return factory;

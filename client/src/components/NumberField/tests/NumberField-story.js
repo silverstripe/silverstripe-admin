@@ -12,15 +12,15 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'NumberField Component description.',
+        component: 'NumberField Component description.'
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      },
-    },
+      }
+    }
   },
   decorators: [
     jsxDecorator,
@@ -32,54 +32,54 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     value: {
       control: 'number',
       table: {
         type: { summary: 'number' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     placeholder: {
       control: 'text',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     description: {
       control: 'text',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     disabled: {
       control: 'boolean',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: false },
-      },
+      }
     },
     message: {
       control: 'object',
       table: {
         type: { summary: 'object' },
         defaultValue: { summary: "{ value: '', type: '' }" },
-      },
+      }
     },
     onClick: {
       table: {
         type: { summary: 'function' },
-      },
+      }
     },
     onChange: {
       table: {
         type: { summary: 'function' },
-      },
-    },
-  },
+      }
+    }
+  }
 };
 
 export const _NumberField = {
@@ -91,8 +91,8 @@ export const _NumberField = {
     disabled: false,
     message: {
       type: 'error',
-      value: '',
+      value: ''
     },
-    ...tagActions,
-  },
+    ...tagActions
+  }
 };

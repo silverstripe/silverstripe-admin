@@ -12,7 +12,7 @@ class CompositeField extends Component {
     if (this.props.data.tag === 'fieldset' && this.props.data.legend) {
       return castStringToElement(
         'legend',
-        this.props.data.legend,
+        this.props.data.legend
       );
     }
     return null;

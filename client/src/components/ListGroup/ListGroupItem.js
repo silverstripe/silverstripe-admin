@@ -16,7 +16,6 @@ class ListGroupItem extends Component {
   render() {
     const className = `list-group-item ${this.props.className}`;
     return (
-      // eslint-disable-next-line jsx-a11y/anchor-is-valid
       <a role="button" tabIndex={0} className={className} onClick={this.handleClick}>
         {this.props.children}
       </a>

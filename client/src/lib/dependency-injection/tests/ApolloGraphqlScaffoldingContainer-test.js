@@ -27,7 +27,7 @@ describe('Dynamic graphql injection', () => {
           return {
             foo: 'bar',
           };
-        },
+        }
       },
       templateName: QUERY,
       pluralName: '',
@@ -43,10 +43,10 @@ describe('Dynamic graphql injection', () => {
         updater.test('MyTestQuery', (manager) => {
           manager.transformApolloConfig('props', () => (previous) => ({
             ...previous,
-            qux: 'baz',
+            qux: 'baz'
           }));
         });
-      },
+      }
     );
 
     Injector.load();
@@ -64,7 +64,7 @@ describe('Dynamic graphql injection', () => {
           return {
             foo: 'bar',
           };
-        },
+        }
       },
       templateName: READ,
       pluralName: 'Dinos',
@@ -72,7 +72,7 @@ describe('Dynamic graphql injection', () => {
       params: {},
       fields: [
         'Spikes',
-        'Tail',
+        'Tail'
       ],
     };
 
@@ -84,10 +84,10 @@ describe('Dynamic graphql injection', () => {
           manager.addField('Plates');
           manager.transformApolloConfig('props', () => (previous) => ({
             ...previous,
-            qux: 'baz',
+            qux: 'baz'
           }));
         });
-      },
+      }
     );
     Injector.load();
 
@@ -109,7 +109,7 @@ describe('Dynamic graphql injection', () => {
       params: {},
       fields: [
         'Spikes',
-        'Tail',
+        'Tail'
       ],
     };
 
@@ -120,7 +120,7 @@ describe('Dynamic graphql injection', () => {
         updater.test('MyTestReadOneQuery', (manager) => {
           manager.addField('Plates');
         });
-      },
+      }
     );
     Injector.load();
 
@@ -152,7 +152,7 @@ describe('Dynamic graphql injection', () => {
         updater.test('MyTestUpdateQuery', (manager) => {
           manager.addField('Plates');
         });
-      },
+      }
     );
     Injector.load();
 
@@ -183,7 +183,7 @@ describe('Dynamic graphql injection', () => {
         updater.test('MyTestDeleteQuery', (manager) => {
           manager.addField('ID');
         });
-      },
+      }
     );
     Injector.load();
 
@@ -215,7 +215,7 @@ describe('Dynamic graphql injection', () => {
         updater.test('MyTestCreateQuery', (manager) => {
           manager.addField('Claws');
         });
-      },
+      }
     );
     Injector.load();
 

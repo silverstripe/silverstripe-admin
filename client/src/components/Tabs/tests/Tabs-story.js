@@ -14,15 +14,15 @@ export default {
         component: `For separating content into tabs without the need for separate pages.
         This extends from 'reactstrap' with similar expected behaviours, only difference is that when
         there is only one tab (or none) in the Tabset, then only the content will show without the
-        clickable tab.`,
+        clickable tab.`
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      },
-    },
+      }
+    }
   },
 };
 

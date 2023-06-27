@@ -8,15 +8,15 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'LiteralField Component Description.',
+        component: 'LiteralField Component Description.'
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      },
-    },
+      }
+    }
   },
   argTypes: {
     id: {
@@ -25,37 +25,37 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     name: {
       control: 'text',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     className: {
       control: 'text',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     extraClass: {
       control: 'text',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     value: {
       control: 'text',
       table: {
         type: { summary: 'any' },
         defaultValue: { summary: '' },
-      },
+      }
     },
-  },
+  }
 };
 
 export const _LiteralField = (args) => <LiteralField {...args} />;

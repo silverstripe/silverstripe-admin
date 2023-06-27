@@ -85,7 +85,7 @@ class Validator {
       fieldSchema.name,
       fieldSchema.validation,
       fieldSchema.leftTitle !== null ? fieldSchema.leftTitle : fieldSchema.title,
-      fieldSchema.customValidationMessage,
+      fieldSchema.customValidationMessage
     );
   }
 
@@ -95,7 +95,7 @@ class Validator {
       ? config.message
       : i18n._t(
         `Admin.VALIDATOR_MESSAGE_${rule.toUpperCase()}`,
-        i18n._t('Admin.VALIDATOR_MESSAGE_DEFAULT', '{name} is not a valid value.'),
+        i18n._t('Admin.VALIDATOR_MESSAGE_DEFAULT', '{name} is not a valid value.')
       );
 
     return i18n.inject(message, { name });
@@ -124,7 +124,7 @@ class Validator {
     if (value === '' && rules.required) {
       const config = Object.assign(
         { title: (title !== '') ? title : name },
-        rules.required,
+        rules.required
       );
       const message = overrideMessage || this.getMessage('required', config);
       return {

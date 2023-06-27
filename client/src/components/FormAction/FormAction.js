@@ -111,7 +111,7 @@ class FormAction extends Component {
   getLoadingIcon() {
     if (this.props.loading) {
       return (
-        <div className="btn__loading-icon">
+        <div className="btn__loading-icon" >
           <span className="btn__circle btn__circle--1" />
           <span className="btn__circle btn__circle--2" />
           <span className="btn__circle btn__circle--3" />
@@ -142,7 +142,7 @@ class FormAction extends Component {
     const extraClasses = extraClass ? extraClass.split(' ') : [];
     return (
       name === 'action_save' ||
-      !!extraClasses.find((className) => className === 'ss-ui-action-constructive')
+      !!extraClasses.find(className => className === 'ss-ui-action-constructive')
     );
   }
 
@@ -161,7 +161,6 @@ class FormAction extends Component {
     const { title } = this.props;
 
     return (
-      // eslint-disable-next-line react/jsx-props-no-spreading
       <button {...this.getButtonProps()}>
         {this.getLoadingIcon()}
         {castStringToElement('span', title, { className: 'btn__title' })}

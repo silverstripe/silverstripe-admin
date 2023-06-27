@@ -22,11 +22,11 @@ class FileStatusIcon extends PureComponent {
     const dataTitle = hasRestrictedAccess
       ? i18n._t(
         'SilverStripe\\Admin\\FileStatusIcon.TRACKED_FORM_UPLOAD_RESTRICTED',
-        'Form submission',
+        'Form submission'
       )
       : i18n._t(
         'SilverStripe\\Admin\\FileStatusIcon.TRACKED_FORM_UPLOAD_UNRESTRICTED',
-        'Form submission, unrestricted access',
+        'Form submission, unrestricted access'
       );
     return { className, 'data-title': dataTitle };
   }
@@ -38,7 +38,7 @@ class FileStatusIcon extends PureComponent {
     const className = classNames('icon', `${cssClass}__icon`, 'font-icon-user-lock');
     const dataTitle = i18n._t(
       'SilverStripe\\Admin\\FileStatusIcon.ACCESS_RESTRICTED',
-      'Restricted access',
+      'Restricted access'
     );
     return { className, 'data-title': dataTitle };
   }
@@ -63,7 +63,7 @@ class FileStatusIcon extends PureComponent {
   render() {
     const {
       fileID, hasRestrictedAccess, isTrackedFormUpload, placement, extraClassName,
-      disableTooltip, includeBackground,
+      disableTooltip, includeBackground
     } = this.props;
     if (!isTrackedFormUpload && !hasRestrictedAccess) {
       return '';
@@ -92,12 +92,12 @@ FileStatusIcon.propTypes = {
   placement: PropTypes.string,
   disableTooltip: PropTypes.bool,
   extraClassName: PropTypes.string,
-  includeBackground: PropTypes.bool,
+  includeBackground: PropTypes.bool
 };
 
 FileStatusIcon.defaultProps = {
   placement: 'auto',
-  disableTooltip: false,
+  disableTooltip: false
 };
 
 export default FileStatusIcon;

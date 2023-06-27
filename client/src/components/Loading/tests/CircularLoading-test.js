@@ -8,7 +8,7 @@ test('CircularLoading render() can be displayed as "block"', () => {
     <CircularLoading {...{
       block: true,
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('.ss-circular-loading-indicator--block')).toHaveLength(1);
 });
@@ -18,7 +18,7 @@ test('CircularLoading render() allows extra classes to be provided', () => {
     <CircularLoading {...{
       className: 'hello-world',
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('.ss-circular-loading-indicator.hello-world')).toHaveLength(1);
 });

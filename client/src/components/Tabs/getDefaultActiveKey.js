@@ -25,7 +25,6 @@ export default function getDefaultActiveKey(defaultActiveKey, children) {
 
   if (!activeTab) {
     // The first tab is the default one
-    // eslint-disable-next-line prefer-destructuring
     activeTab = tabs[0];
   }
 

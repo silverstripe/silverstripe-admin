@@ -5,21 +5,21 @@ export default {
   title: 'Admin/HeaderField',
   component: HeaderField,
   decorators: [
-    jsxDecorator,
+    jsxDecorator
   ],
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
-        component: 'Generates a header field for displaying as a title.',
+        component: 'Generates a header field for displaying as a title.'
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      },
-    },
+      }
+    }
   },
   argTypes: {
     id: {
@@ -28,7 +28,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     extraClass: {
       description: 'Extra classes the component should have.',
@@ -36,7 +36,7 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-      },
+      }
     },
     data: {
       description: `Extra data that helps define this field uniquely.
@@ -44,14 +44,14 @@ export default {
       * title (string) (required): Title to display.`,
       control: 'object',
       type: {
-        required: true,
+        required: true
       },
       table: {
         type: { summary: 'object' },
         defaultValue: { summary: '{}' },
-      },
-    },
-  },
+      }
+    }
+  }
 };
 
 export const Heading = {
@@ -60,7 +60,7 @@ export const Heading = {
     extraClass: 'my-extra-class',
     data: {
       title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-      headingLevel: 1,
-    },
-  },
+      headingLevel: 1
+    }
+  }
 };

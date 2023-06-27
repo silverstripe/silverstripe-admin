@@ -10,7 +10,7 @@ test('ResizeAware render() renders with children', () => {
       component: 'div',
       onResize: () => {},
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('div')).toHaveLength(1);
 });

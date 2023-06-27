@@ -31,8 +31,8 @@ const ToastActions = ({ actions, dismissed, onDismiss }) => (
   <div className="toast__actions">
     {actions.slice(0, 2).map(
       (props, index) =>
-        // eslint-disable-next-line react/no-array-index-key, implicit-arrow-linebreak
-        <ToastAction key={index} {...props} onDismiss={onDismiss} dismissed={dismissed} />,
+        // eslint-disable-next-line react/no-array-index-key
+        <ToastAction key={index} {...props} onDismiss={onDismiss} dismissed={dismissed} />
     )
     }
   </div>
@@ -44,14 +44,14 @@ ToastActions.propTypes = {
     PropTypes.shape({
       label: PropTypes.string.isRequired,
       href: PropTypes.string,
-      onClick: PropTypes.func,
-    }),
+      onClick: PropTypes.func
+    })
   ),
-  onDismiss: PropTypes.func.isRequired,
+  onDismiss: PropTypes.func.isRequired
 };
 
 ToastActions.defaultProps = {
-  actions: [],
+  actions: []
 };
 
 export { ToastAction, ToastActions };

@@ -13,21 +13,21 @@ export default {
   title: 'Admin/Buttons/BackButton',
   component: BackButton,
   decorators: [
-    jsxDecorator,
+    jsxDecorator
   ],
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
-        component: 'Generic Button component to allow users to return to a preview view. It displays a `<` icon and has an appropriate `aria-label.',
+        component: 'Generic Button component to allow users to return to a preview view. It displays a `<` icon and has an appropriate `aria-label.'
       },
       canvas: {
         sourceState: 'shown',
       },
       controls: {
         sort: 'alpha',
-      },
-    },
+      }
+    }
   },
   argTypes: {
     children: {
@@ -41,20 +41,20 @@ export default {
       control: 'text',
       table: {
         type: { summary: 'string' },
-      },
+      }
     },
     onClick: {
       action: 'clicked',
       table: {
         type: { summary: 'function' },
-      },
-    },
-  },
+      }
+    }
+  }
 };
 
-export const _BackButton = (args) => <BackButton {...args} />;
+export const _BackButton = (args) => <BackButton {...args}/>;
 _BackButton.args = {
   onClick,
   className: '',
-  children: 'Back',
+  children: 'Back'
 };

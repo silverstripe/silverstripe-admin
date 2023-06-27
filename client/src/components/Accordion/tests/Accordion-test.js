@@ -9,7 +9,7 @@ test('Accordion render() renders with children', () => {
     <Accordion>
       <p>lorem</p>
       <p>ipsum</p>
-    </Accordion>,
+    </Accordion>
   );
   expect(container.querySelectorAll('div')).toHaveLength(1);
 });

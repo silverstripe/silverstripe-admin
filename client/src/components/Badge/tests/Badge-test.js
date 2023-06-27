@@ -9,9 +9,9 @@ test('Badge render() should return null if status is empty', () => {
     <Badge {...{
       status: null,
       message: '',
-      className: '',
+      className: ''
     }}
-    />,
+    />
   );
   expect(container.querySelector('.badge')).toBeNull();
 });
@@ -21,9 +21,9 @@ test('Badge render() should return a Bootstrap style badge when valid', () => {
     <Badge {...{
       status: 'success',
       message: 'Hello world',
-      className: 'customclass',
+      className: 'customclass'
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('.badge').length).toBe(1);
   expect(container.querySelectorAll('.badge-success').length).toBe(1);

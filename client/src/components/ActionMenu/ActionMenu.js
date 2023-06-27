@@ -10,7 +10,7 @@ class ActionMenu extends PureComponent {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false,
+      isOpen: false
     };
   }
 
@@ -38,7 +38,7 @@ class ActionMenu extends PureComponent {
 
     const toggleClassName = classnames(
       dropdownToggleClassNames,
-      dropdownToggleProps.className,
+      dropdownToggleProps.className
     );
     const menuClassName = classnames('action-menu__dropdown', dropdownMenuProps.className);
 
@@ -70,7 +70,7 @@ ActionMenu.defaultProps = {
     'btn',
     'btn--no-text',
     'btn--icon-xl',
-    'font-icon-dot-3',
+    'font-icon-dot-3'
   ],
   dropdownToggleProps: {},
   dropdownMenuProps: {},

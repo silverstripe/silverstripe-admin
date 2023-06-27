@@ -59,7 +59,7 @@ class Preview extends Component {
       toolbarButtons.push(
         <a key="edit" href={editUrl} className="btn btn-outline-secondary font-icon-edit">
           <span className="btn__title">{i18n._t('Admin.EDIT', 'Edit')}</span>
-        </a>,
+        </a>
       );
     }
     return toolbarButtons;
@@ -123,15 +123,12 @@ class Preview extends Component {
     }
 
     // Show iframe preview
-    return (
-      // eslint-disable-next-line jsx-a11y/iframe-has-title
-      <iframe
-        style={{ visibility: this.state.frameLoaded ? 'visible' : 'hidden' }}
-        className="flexbox-area-grow preview__iframe"
-        src={previewUrl}
-        onLoad={this.setFrameLoaded}
-      />
-    );
+    return (<iframe
+      style={{ visibility: this.state.frameLoaded ? 'visible' : 'hidden' }}
+      className="flexbox-area-grow preview__iframe"
+      src={previewUrl}
+      onLoad={this.setFrameLoaded}
+    />);
   }
 
   render() {
@@ -171,7 +168,7 @@ export { Preview as Component };
 export default inject(
   ['ViewModeToggle'],
   (ViewModeToggle) => ({
-    ViewModeComponent: ViewModeToggle,
+    ViewModeComponent: ViewModeToggle
   }),
-  () => 'Admin.Preview',
+  () => 'Admin.Preview'
 )(Preview);

@@ -24,7 +24,7 @@ jQuery.entwine('ss', ($) => {
       // Duplicate input field to store ISO value
       const hiddenInput = $(
         '<input/>',
-        { type: 'hidden', name: this.attr('name'), value: this.val() },
+        { type: 'hidden', name: this.attr('name'), value: this.val() }
       );
       this.parent().append(hiddenInput);
 
@@ -46,7 +46,7 @@ jQuery.entwine('ss', ($) => {
       // Set useful localised placeholder
       const placeholder = i18n.inject(
         i18n._t('Admin.FormatExample', 'Example: {format}'),
-        { format: moment().endOf('month').format('L LT') },
+        { format: moment().endOf('month').format('L LT') }
       );
       this.attr('placeholder', placeholder);
 

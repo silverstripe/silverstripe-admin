@@ -10,13 +10,13 @@ test('FieldGroup renders children', () => {
       className: 'my-classname',
       data: {
         tag: 'fieldset',
-        legend: 'my-legend',
-      },
+        legend: 'my-legend'
+      }
     }}
     >
       <p>lorem</p>
       <p>ipsum</p>
-    </FieldGroup>,
+    </FieldGroup>
   );
   const fieldset = container.querySelector('fieldset');
   expect(fieldset.classList).toContain('my-classname');

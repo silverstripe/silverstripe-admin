@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { UncontrolledPopover, PopoverBody } from 'reactstrap';
 import i18n from 'i18n';
@@ -48,7 +48,7 @@ function Tip(props) {
   const { iconColor, description } = tipImportanceMap[importance];
   const label = i18n.inject(i18n._t('Admin.TIP_LABEL', '{description} for {fieldTitle}'), {
     description,
-    fieldTitle,
+    fieldTitle
   });
   const classes = ['tip', props.extraClass];
   if (props.type === TIP_TYPES.TITLE) {
@@ -62,7 +62,7 @@ function Tip(props) {
     onClick: () => {},
     className: classNames(classes),
     noText: true,
-    icon,
+    icon
   };
 
   return (
@@ -95,7 +95,7 @@ Tip.propTypes = {
 Tip.defaultProps = {
   importance: TIP_IMPORTANCE_LEVELS.NORMAL,
   icon: 'lamp',
-  type: TIP_TYPES.INPUT_GROUP,
+  type: TIP_TYPES.INPUT_GROUP
 };
 
 export default Tip;

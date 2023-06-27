@@ -6,7 +6,7 @@ export default function NavigationBlocker({ shouldBlockFn, blockMessage }) {
   const blocker = useBlocker(shouldBlockFn);
   useEffect(() => {
     if (blocker.state === 'blocked') {
-      // eslint-disable-next-line no-alert, no-restricted-globals
+      // eslint-disable-next-line no-alert
       const canUnload = confirm(blockMessage);
       if (canUnload) {
         blocker.proceed();

@@ -7,7 +7,7 @@ class FieldGroup extends CompositeField {
     return classnames(
       'field-group-component',
       { 'field-group-component__small-holder': this.props.smallholder },
-      super.getClassName(),
+      super.getClassName()
     );
   }
 }
@@ -17,12 +17,12 @@ class FieldGroup extends CompositeField {
 
 FieldGroup.propTypes = {
   ...CompositeField.propTypes,
-  smallholder: PropTypes.bool,
+  smallholder: PropTypes.bool
 };
 
 FieldGroup.defaultProps = {
   ...CompositeField.defaultProps,
-  smallholder: true,
+  smallholder: true
 };
 
 export default FieldGroup;

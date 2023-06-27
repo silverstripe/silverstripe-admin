@@ -22,7 +22,7 @@ import getDefaultActiveKey from './getDefaultActiveKey';
  * @constructor
  */
 function Tabs({
-  hideNav, children, activeTab, className, extraClass, id, activateTab, defaultActiveKey,
+  hideNav, children, activeTab, className, extraClass, id, activateTab, defaultActiveKey
 }) {
   const containerProps = { className: classnames([className, extraClass]), id };
   const currentTab = activeTab || getDefaultActiveKey(defaultActiveKey, children);
@@ -31,9 +31,9 @@ function Tabs({
   const nextTabContext = useMemo(() => (
     {
       activeTab: currentTab,
-      isOnActiveTab,
+      isOnActiveTab
     }),
-  [activeTab, isOnActiveTab],
+  [activeTab, isOnActiveTab]
   );
 
   return (
@@ -62,7 +62,7 @@ Tabs.propTypes = {
 Tabs.defaultProps = {
   className: '',
   extraClass: '',
-  hideNav: false,
+  hideNav: false
 };
 
 export { Tabs as Component };
@@ -85,11 +85,11 @@ function mapDispatchToProps(dispatch, ownProps) {
   return {
     activateTab(activeTab) {
       dispatch(Actions.activateTab(fieldID, activeTab));
-    },
+    }
   };
 }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Tabs);

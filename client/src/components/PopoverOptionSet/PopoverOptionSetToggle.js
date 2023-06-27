@@ -48,7 +48,7 @@ class PopoverOptionSetToggle extends Component {
 
     return (
       <div>
-        <Button {...buttonProps}>
+        <Button {...buttonProps} >
           {toggleText}
         </Button>
         <PopoverOptionSet {...popoverProps} />
@@ -78,5 +78,5 @@ export default inject(
   (PopoverOptionSetComponent) => ({
     PopoverOptionSetComponent,
   }),
-  () => 'PopoverOptionSetToggle',
+  () => 'PopoverOptionSetToggle'
 )(PopoverOptionSetToggle);

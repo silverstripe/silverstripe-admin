@@ -51,7 +51,7 @@ describe('Backend', () => {
           method: 'get',
           credentials: 'same-origin',
           headers: {},
-        },
+        }
       );
     });
   });
@@ -76,7 +76,7 @@ describe('Backend', () => {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
           body: JSON.stringify(postData),
-        },
+        }
       );
     });
   });
@@ -99,7 +99,7 @@ describe('Backend', () => {
           credentials: 'same-origin',
           headers: {},
           body: JSON.stringify(putData),
-        },
+        }
       );
     });
   });
@@ -122,7 +122,7 @@ describe('Backend', () => {
           credentials: 'same-origin',
           headers: {},
           body: JSON.stringify(deleteData),
-        },
+        }
       );
     });
   });
@@ -176,7 +176,7 @@ describe('Backend', () => {
           '{"id":1,"values":{"a":"aye","b":"bee"}}', {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-          },
+          }
         );
 
       promise
@@ -205,7 +205,7 @@ describe('Backend', () => {
           'two=2&three=3', {
             Accept: 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded',
-          },
+          }
         );
 
       promise
@@ -236,7 +236,7 @@ describe('Backend', () => {
           '{"two":2}', {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-          },
+          }
         );
 
       promise
@@ -295,7 +295,7 @@ describe('Backend', () => {
           }), {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-          },
+          }
         );
 
       promise

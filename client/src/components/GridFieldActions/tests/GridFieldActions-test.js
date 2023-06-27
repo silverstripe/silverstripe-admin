@@ -22,9 +22,9 @@ const link = {
 test('GridFieldActions.render() should not render, if there are no actions', () => {
   const { container } = render(
     <GridFieldActions {...{
-      schema: [],
+      schema: []
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('.action')).toHaveLength(0);
 });
@@ -32,9 +32,9 @@ test('GridFieldActions.render() should not render, if there are no actions', () 
 test('GridFieldActions.render() should render a single button, if there is only one action', () => {
   const { container } = render(
     <GridFieldActions {...{
-      schema: [link],
+      schema: [link]
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('.action')).toHaveLength(1);
 });
@@ -42,9 +42,9 @@ test('GridFieldActions.render() should render a single button, if there is only 
 test('GridFieldActions.render() should render a menu, if there is more than one action', () => {
   const { container } = render(
     <GridFieldActions {...{
-      schema: [button, link],
+      schema: [button, link]
     }}
-    />,
+    />
   );
   expect(container.querySelector('.action-menu__toggle .sr-only').innerHTML).toBe('View actions');
 });
@@ -52,9 +52,9 @@ test('GridFieldActions.render() should render a menu, if there is more than one 
 test('GridFieldActions.renderSingleAction() should render a button', () => {
   const { container } = render(
     <GridFieldActions {...{
-      schema: [button],
+      schema: [button]
     }}
-    />,
+    />
   );
   expect(container.querySelector('button').type).toBe('submit');
 });
@@ -62,9 +62,9 @@ test('GridFieldActions.renderSingleAction() should render a button', () => {
 test('GridFieldActions.renderSingleAction() should render a link', () => {
   const { container } = render(
     <GridFieldActions {...{
-      schema: [link],
+      schema: [link]
     }}
-    />,
+    />
   );
   expect(container.querySelector('a').classList).toContain('action');
 });
@@ -78,9 +78,9 @@ test('GridFieldActions.renderSingleAction() should render a link when type is nu
         url: '/test-url',
         group: 'My Group',
         data: {},
-      }],
+      }]
     }}
-    />,
+    />
   );
   expect(container.querySelector('a').classList).toContain('action');
 });
@@ -88,9 +88,9 @@ test('GridFieldActions.renderSingleAction() should render a link when type is nu
 test('GridFieldActions.renderMultipleActions() should render the correct type of element according to action type', () => {
   const { container } = render(
     <GridFieldActions {...{
-      schema: [button, link],
+      schema: [button, link]
     }}
-    />,
+    />
   );
   const actions = container.querySelectorAll('.action');
   expect(actions[0].innerHTML).toBe('Button');
@@ -102,9 +102,9 @@ test('GridFieldActions.renderMultipleActions() should render the correct type of
 test('GridFieldActions.renderMultipleActions() should not render a divider if there is only one defined', () => {
   const { container } = render(
     <GridFieldActions {...{
-      schema: [button, link],
+      schema: [button, link]
     }}
-    />,
+    />
   );
   expect(container.querySelector('.dropdown-divider')).toBeNull();
 });
@@ -125,10 +125,10 @@ test('GridFieldActions.renderMultipleActions() should render dividers according 
           url: '/test-url',
           group: 'Second Group',
           data: {},
-        },
-      ],
+        }
+      ]
     }}
-    />,
+    />
   );
   const actionMenu = container.querySelector('.action-menu__dropdown').children;
   expect(actionMenu).toHaveLength(3);
@@ -180,10 +180,10 @@ test('GridFieldActions.renderMultipleActions() ', () => {
           url: '/test-url',
           group: 'Third Group',
           data: {},
-        },
-      ],
+        }
+      ]
     }}
-    />,
+    />
   );
   const actionMenu = container.querySelector('.action-menu__dropdown').children;
   expect(actionMenu).toHaveLength(8);

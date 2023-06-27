@@ -15,7 +15,7 @@ test('ViewModeToggle simulate click events in split mode', () => {
       splitAvailable: true,
       onEditSelect: mockOnEditSelect,
     }}
-    />,
+    />
   );
   expect(container.querySelector('.viewmode-toggle__chosen-view-title').innerHTML).toBe('Split mode');
   fireEvent.click(container.querySelectorAll('.font-icon-edit-write')[0]);
@@ -32,7 +32,7 @@ test('ViewModeToggle should call the preview button onClick function', () => {
       splitAvailable: true,
       onPreviewSelect: mockOnPreviewSelect,
     }}
-    />,
+    />
   );
   expect(container.querySelector('.viewmode-toggle__chosen-view-title').innerHTML).toBe('Split mode');
   fireEvent.click(container.querySelectorAll('.font-icon-eye')[0]);
@@ -49,7 +49,7 @@ test('ViewModeToggle simulate click events in edit mode should call the split bu
       splitAvailable: false,
       onSplitSelect: mockOnSplitSelect,
     }}
-    />,
+    />
   );
   expect(container.querySelector('.viewmode-toggle__chosen-view-title').innerHTML).toBe('Edit mode');
   fireEvent.click(container.querySelectorAll('.font-icon-columns')[0]);
@@ -66,7 +66,7 @@ test('ViewModeToggle simulate click events in edit mode should call the preview 
       splitAvailable: false,
       onPreviewSelect: mockOnPreviewSelect,
     }}
-    />,
+    />
   );
   expect(container.querySelector('.viewmode-toggle__chosen-view-title').innerHTML).toBe('Edit mode');
   fireEvent.click(container.querySelectorAll('.font-icon-eye')[0]);
@@ -81,7 +81,7 @@ test('ViewModeToggle should not render in the edit context if the activeState is
       area: 'edit',
       splitAvailable: true,
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('.viewmode-toggle')).toHaveLength(0);
 });
@@ -94,7 +94,7 @@ test('ViewModeToggle should render in the edit context if the activeState is pre
       area: 'edit',
       splitAvailable: true,
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('.viewmode-toggle')).toHaveLength(1);
 });
@@ -107,7 +107,7 @@ test('ViewModeToggle should render in the edit context if the activeState is edi
       area: 'edit',
       splitAvailable: false,
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('.viewmode-toggle')).toHaveLength(1);
 });
@@ -120,7 +120,7 @@ test('ViewModeToggle classes', () => {
       area: 'preview',
       splitAvailable: true,
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('.font-icon-columns')).toHaveLength(2);
   expect(container.querySelectorAll('.font-icon-edit-write')).toHaveLength(1);

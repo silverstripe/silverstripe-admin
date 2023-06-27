@@ -14,7 +14,7 @@ class HtmlEditorField extends TextField {
   constructor(props) {
     super(props);
     this.state = {
-      isReady: !props.data.editorjs,
+      isReady: !props.data.editorjs
     };
 
     this.inputRef = null;
@@ -26,7 +26,7 @@ class HtmlEditorField extends TextField {
     return {
       ...super.getInputProps(),
       ...this.props.data.attributes,
-      innerRef: (ref) => { this.inputRef = ref; },
+      innerRef: ref => { this.inputRef = ref; },
     };
   }
 

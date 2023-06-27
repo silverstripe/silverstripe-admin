@@ -50,7 +50,7 @@ const buildInjectorContainer = () => ({
     }
 
     const requiredMethods = ['load', 'createTransformer', 'get', 'register'];
-    if (!requiredMethods.every((method) => typeof value[method] === 'function')) {
+    if (!requiredMethods.every(method => typeof value[method] === 'function')) {
       throw new Error(`
       Tried to register service ${key} that is not a valid object, Injector requires an object
       which contains the following methods: ${requiredMethods.join(', ')}
@@ -71,7 +71,7 @@ const buildInjectorContainer = () => ({
       throw new Error('Cannot mutate DI container after it has been initialised');
     }
     Object.values(this.services)
-      .forEach((service) => service.load());
+      .forEach(service => service.load());
 
     this.initialised = true;
     if (this.onInit) {
@@ -101,7 +101,7 @@ const buildInjectorContainer = () => ({
         ...updateContainer,
         [serviceName]: service.createTransformer(name, priorities),
       }),
-      {},
+      {}
     );
     callback(updater);
   },
@@ -138,7 +138,7 @@ const buildInjectorContainer = () => ({
     }
 
     this.onInit = callback;
-  },
+  }
 });
 
 export default buildInjectorContainer;

@@ -92,10 +92,10 @@ Form.propTypes = {
   valid: PropTypes.bool,
   actions: PropTypes.array,
   fieldHolder: PropTypes.shape({
-    className: PropTypes.string,
+    className: PropTypes.string
   }),
   actionHolder: PropTypes.shape({
-    className: PropTypes.string,
+    className: PropTypes.string
   }),
   extraClass: PropTypes.string,
   afterMessages: PropTypes.node,
@@ -124,9 +124,9 @@ Form.defaultProps = {
   setDOM: () => null,
   formTag: 'form',
   actionHolder: {
-    className: 'btn-toolbar',
+    className: 'btn-toolbar'
   },
-  FormAlertComponent: FormAlert,
+  FormAlertComponent: FormAlert
 };
 
 export { Form as Component };

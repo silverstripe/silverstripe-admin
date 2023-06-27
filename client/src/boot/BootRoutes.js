@@ -16,7 +16,7 @@ import i18n from 'i18n';
 import { isDirty } from 'redux-form';
 import getFormState from 'lib/getFormState';
 import { Route } from 'react-router';
-import joinUrlPaths from 'lib/urls';
+import { joinUrlPaths } from 'lib/urls';
 import NavigationBlocker from '../components/NavigationBlocker/NavigationBlocker';
 
 /**
@@ -122,11 +122,11 @@ class BootRoutes {
           {reactRouteRegister.getChildRoutes().map(
             (route) => (
               <Route key={route.path} path={route.path} element={<route.component />} />
-            ),
+            )
           )}
-        </Route>,
+        </Route>
       ),
-      { basename: joinUrlPaths(Config.get('baseUrl'), Config.get('adminUrl')) },
+      { basename: joinUrlPaths(Config.get('baseUrl'), Config.get('adminUrl')) }
     );
 
     createRoot(document.getElementsByClassName('cms-content')[0]).render(
@@ -134,7 +134,7 @@ class BootRoutes {
         <ReduxProvider store={this.store}>
           <RouterProvider router={router} />
         </ReduxProvider>
-      </ApolloProvider>,
+      </ApolloProvider>
     );
   }
 
@@ -143,7 +143,7 @@ class BootRoutes {
    */
   initLegacyRouter() {
     const sections = Config.get('sections');
-    const { store } = this;
+    const store = this.store;
 
     pageRouter('*', (ctx, next) => {
       const msg = this.getUnsavedChangesMessage();
@@ -193,7 +193,6 @@ class BootRoutes {
     // events that should be caught by react component event handlers.
     // Note that this empty link is rendered into an element that doesn't exist in the DOM.
     const root = createRoot(document.createElement('div'));
-    // eslint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
     root.render(<a role="none" onClick={() => {}} />);
 
     // Start the page router
@@ -212,7 +211,7 @@ class BootRoutes {
     const schemas = state.form.formSchemas;
 
     const changedForms = forms.filter((form) => {
-      const schema = Object.values(schemas).find((item) => item.name === form.name);
+      const schema = Object.values(schemas).find(item => item.name === form.name);
 
       const notify = schema && schema.state && schema.state.notifyUnsavedChanges;
 

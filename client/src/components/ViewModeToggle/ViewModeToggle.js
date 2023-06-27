@@ -5,7 +5,7 @@ import i18n from 'i18n';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { selectEditMode, selectPreviewMode, selectSplitMode } from 'state/viewMode/ViewModeActions';
-import VIEW_MODE_STATES from 'state/viewMode/ViewModeStates';
+import { VIEW_MODE_STATES } from 'state/viewMode/ViewModeStates';
 import classNames from 'classnames';
 
 class ViewModeToggle extends Component {
@@ -14,7 +14,7 @@ class ViewModeToggle extends Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      dropdownOpen: false,
+      dropdownOpen: false
     };
 
     this.handleSplitSelect = this.handleSplitSelect.bind(this);
@@ -51,8 +51,8 @@ class ViewModeToggle extends Component {
   toggle() {
     // Force setting state to the end of the execution queue to clear a potential race condition
     // with entwine click handlers
-    window.setTimeout(() => this.setState((prevState) => ({
-      dropdownOpen: !prevState.dropdownOpen,
+    window.setTimeout(() => this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen
     })), 0);
   }
 
@@ -84,11 +84,13 @@ class ViewModeToggle extends Component {
     const { activeState, splitAvailable, splitIconClass } = this.props;
 
     const itemClass = classNames(
-      'btn', 'icon-view', 'first', splitIconClass, {
+      'btn', 'icon-view', 'first',
+      splitIconClass,
+      {
         'viewmode-toggle__button': true,
         'viewmode-toggle--selected': (activeState === VIEW_MODE_STATES.SPLIT),
-        disabled: (!splitAvailable),
-      },
+        disabled: (!splitAvailable)
+      }
     );
 
     return (
@@ -110,7 +112,9 @@ class ViewModeToggle extends Component {
 
     // Highlight if chosen view mode
     const itemClass = classNames(
-      'btn', 'icon-view', 'last', 'viewmode-toggle__button', editIconClass, { 'viewmode-toggle--selected': (activeState === VIEW_MODE_STATES.EDIT) },
+      'btn', 'icon-view', 'last', 'viewmode-toggle__button',
+      editIconClass,
+      { 'viewmode-toggle--selected': (activeState === VIEW_MODE_STATES.EDIT) }
     );
 
     return (
@@ -130,7 +134,9 @@ class ViewModeToggle extends Component {
 
     // Highlight if chosen view mode
     const itemClass = classNames(
-      'btn', 'icon-view', 'viewmode-toggle__button', previewIconClass, { 'viewmode-toggle--selected': (activeState === VIEW_MODE_STATES.PREVIEW) },
+      'btn', 'icon-view', 'viewmode-toggle__button',
+      previewIconClass,
+      { 'viewmode-toggle--selected': (activeState === VIEW_MODE_STATES.PREVIEW) }
     );
 
     return (
@@ -159,7 +165,10 @@ class ViewModeToggle extends Component {
     }
 
     const toggleClassName = classNames(
-      this.getIconClass(), 'btn', 'viewmode-toggle__dropdown', dropdownToggleProps.classname,
+      this.getIconClass(),
+      'btn',
+      'viewmode-toggle__dropdown',
+      dropdownToggleProps.classname
     );
 
     return (
@@ -173,9 +182,9 @@ class ViewModeToggle extends Component {
           caret
           {...dropdownToggleProps}
         >
-          <span className="viewmode-toggle__chosen-view-title">{this.getTitle()}</span>
+          <span className="viewmode-toggle__chosen-view-title" >{this.getTitle()}</span>
         </DropdownToggle>
-        <DropdownMenu>
+        <DropdownMenu >
           {this.renderSplitDropdownItem()}
           {this.renderEditDropDownItem()}
           {this.renderPreviewDropDownItem()}

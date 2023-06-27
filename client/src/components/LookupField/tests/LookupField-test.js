@@ -15,7 +15,7 @@ function makeProps(obj = {}) {
       { value: 'four', title: '4' },
     ],
     value: null,
-    ...obj,
+    ...obj
   };
 }
 
@@ -24,7 +24,7 @@ test('LookupField getValueCSV() should return an empty string', () => {
     <LookupField {...makeProps({
       value: [],
     })}
-    />,
+    />
   );
   expect(container.querySelector('p').innerHTML).toBe("('None')");
 });
@@ -34,7 +34,7 @@ test('LookupField getValueCSV() should return the string value', () => {
     <LookupField {...makeProps({
       value: 'two',
     })}
-    />,
+    />
   );
   expect(container.querySelector('p').innerHTML).toBe('2');
 });
@@ -44,7 +44,7 @@ test('LookupField getValueCSV() should return the string values', () => {
     <LookupField {...makeProps({
       value: ['two', 'three'],
     })}
-    />,
+    />
   );
   expect(container.querySelector('p').innerHTML).toBe('2, 3');
 });

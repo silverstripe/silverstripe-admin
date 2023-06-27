@@ -14,7 +14,7 @@ test('Preview render() renders', () => {
       moreActions: [],
       ViewModeComponent: () => <div />,
     }}
-    />,
+    />
   );
   expect(container.querySelectorAll('div.preview')).toHaveLength(1);
 });

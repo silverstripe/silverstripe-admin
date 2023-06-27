@@ -14,23 +14,23 @@ function makeProps(obj = {}) {
     disabled: false,
     source: [],
     data: {
-      emptyString: 'Any',
+      emptyString: 'Any'
     },
-    ...obj,
+    ...obj
   };
 }
 
 test('SingleSelectField render() renders', () => {
-  const { container } = render(<SingleSelectField {...makeProps()} />);
+  const { container } = render(<SingleSelectField {...makeProps()}/>);
   expect(container.querySelectorAll('select')).toHaveLength(1);
 });
 
 test('SingleSelectField render() renders with a null value', () => {
   const { container } = render(
     <SingleSelectField {...makeProps({
-      value: null,
+      value: null
     })}
-    />,
+    />
   );
   expect(container.querySelectorAll('select')).toHaveLength(1);
 });
@@ -38,9 +38,9 @@ test('SingleSelectField render() renders with a null value', () => {
 test('SingleSelectField render() renders as a p tag when readOnly', () => {
   const { container } = render(
     <SingleSelectField {...makeProps({
-      readOnly: true,
+      readOnly: true
     })}
-    />,
+    />
   );
   expect(container.querySelectorAll('p')).toHaveLength(1);
 });
@@ -49,9 +49,9 @@ test('SingleSelectField render() renders as a p readOnly and a null value', () =
   const { container } = render(
     <SingleSelectField {...makeProps({
       readOnly: true,
-      value: null,
+      value: null
     })}
-    />,
+    />
   );
   expect(container.querySelectorAll('p')).toHaveLength(1);
 });

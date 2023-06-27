@@ -100,14 +100,14 @@ class FormBuilder extends Component {
     }
 
     const validationMiddleware = this.context.injector.validate(
-      this.props.identifier,
+      this.props.identifier
     );
 
     let middlewareValidationResult = {};
     if (validationMiddleware) {
       middlewareValidationResult = validationMiddleware(
         values,
-        this.props.schema.schema,
+        this.props.schema.schema
       ) || {};
     }
 
@@ -148,7 +148,7 @@ class FormBuilder extends Component {
 
     // Provides container components a place to hook in
     // and apply customisations to scaffolded components.
-    const { createFn } = this.props;
+    const createFn = this.props.createFn;
     if (typeof createFn === 'function') {
       return createFn(SchemaComponent, componentProps);
     }
@@ -171,7 +171,7 @@ class FormBuilder extends Component {
         props = Object.assign(
           {},
           field,
-          { children: this.mapFieldsToComponents(field.children) },
+          { children: this.mapFieldsToComponents(field.children) }
         );
       }
       props = Object.assign(
@@ -179,7 +179,7 @@ class FormBuilder extends Component {
           onAutofill: this.props.onAutofill,
           formid: this.props.form,
         },
-        props,
+        props
       );
 
       // Don't wrap structural or readonly fields, since they don't need connected fields.
@@ -234,16 +234,17 @@ class FormBuilder extends Component {
       'X-Requested-With': 'XMLHttpRequest',
     };
 
-    const submitFn = (customData) => this.submitApi(customData || dataWithAction, headers)
-      .then((formSchema) => {
-        this.setState({ submittingAction: null });
-        return formSchema;
-      })
-      .catch((reason) => {
-        // @todo Generic CMS error reporting
-        this.setState({ submittingAction: null });
-        throw reason;
-      });
+    const submitFn = (customData) =>
+      this.submitApi(customData || dataWithAction, headers)
+        .then(formSchema => {
+          this.setState({ submittingAction: null });
+          return formSchema;
+        })
+        .catch((reason) => {
+          // @todo Generic CMS error reporting
+          this.setState({ submittingAction: null });
+          throw reason;
+        });
 
     if (typeof this.props.onSubmit === 'function') {
       return this.props.onSubmit(dataWithAction, action, submitFn);
@@ -299,7 +300,7 @@ class FormBuilder extends Component {
           schemaComponent: (fieldState && fieldState.component)
             ? fieldState.component
             : field.component,
-        },
+        }
       );
       if (field.children) {
         data.children = this.normalizeFields(field.children, state);
@@ -310,8 +311,8 @@ class FormBuilder extends Component {
   }
 
   render() {
-    const { schema } = this.props.schema;
-    const { state } = this.props.schema;
+    const schema = this.props.schema.schema;
+    const state = this.props.schema.state;
     const BaseFormComponent = this.props.baseFormComponent;
 
     // Map form schema to React component attribute names,
@@ -443,6 +444,6 @@ FormBuilder.defaultProps = {
 export {
   FormBuilder as Component,
   basePropTypes,
-  schemaPropType,
+  schemaPropType
 };
 export default withInjector(FormBuilder);

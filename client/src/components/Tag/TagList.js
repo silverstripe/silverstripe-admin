@@ -101,7 +101,7 @@ TagList.defaultProps = {
   focusable: true,
   onTagDelete: () => {},
   onTagClick: () => {},
-  onHolderFocus: () => {},
+  onHolderFocus: () => {}
 };
 
 export { TagList as Component };
