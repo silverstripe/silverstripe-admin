@@ -123,12 +123,15 @@ class Preview extends Component {
     }
 
     // Show iframe preview
-    return (<iframe
-      style={{ visibility: this.state.frameLoaded ? 'visible' : 'hidden' }}
-      className="flexbox-area-grow preview__iframe"
-      src={previewUrl}
-      onLoad={this.setFrameLoaded}
-    />);
+    return (
+      // eslint-disable-next-line jsx-a11y/iframe-has-title
+      <iframe
+        style={{ visibility: this.state.frameLoaded ? 'visible' : 'hidden' }}
+        className="flexbox-area-grow preview__iframe"
+        src={previewUrl}
+        onLoad={this.setFrameLoaded}
+      />
+    );
   }
 
   render() {

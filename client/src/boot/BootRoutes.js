@@ -193,6 +193,7 @@ class BootRoutes {
     // events that should be caught by react component event handlers.
     // Note that this empty link is rendered into an element that doesn't exist in the DOM.
     const root = createRoot(document.createElement('div'));
+    // eslint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
     root.render(<a role="none" onClick={() => {}} />);
 
     // Start the page router
