@@ -49,6 +49,7 @@ import HtmlEditorField from 'components/HtmlEditorField/HtmlEditorField';
 import NumberField from 'components/NumberField/NumberField';
 import PopoverOptionSet from 'components/PopoverOptionSet/PopoverOptionSet';
 import ToastsContainer from 'containers/ToastsContainer/ToastsContainer';
+import ListboxField from 'components/ListboxField/ListboxField';
 
 export default () => {
   Injector.component.registerMany({
@@ -102,5 +103,6 @@ export default () => {
     NumberField,
     PopoverOptionSet,
     ToastsContainer,
+    ListboxField,
   });
 };
