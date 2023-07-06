@@ -564,24 +564,53 @@ $.entwine('ss', function($){
     '.cms-edit-form [name="CanEditType"], ' +
     '.cms-edit-form [name="CanCreateTopLevelType"]').entwine({
     onmatch: function () {
-      if (this.val() === 'OnlyTheseUsers') {
-        if (this.is(':checked')) {
-          this.showList(true);
-        } else {
-          this.hideList(true);
-        }
+      if (this.is(':checked')) {
+        this.toggleListDisplay(this.val(), true);
       }
     },
     onchange: function (e) {
-      if (e.target.value === 'OnlyTheseUsers') {
-        this.showList();
+      this.toggleListDisplay(e.target.value);
+    },
+    toggleListDisplay: function(checkedTarget, instant) {
+      if (checkedTarget === 'OnlyTheseUsers') {
+        this.showGroupsList(instant);
+        this.hideMembersList(instant);
       } else {
-        this.hideList();
+        this.hideGroupsList(instant);
+      }
+      if (checkedTarget === 'OnlyTheseMembers') {
+        this.showMembersList(instant);
+        this.hideGroupsList(instant);
+      } else {
+        this.hideMembersList(instant);
       }
     },
-    showList: function (instant) {
+    // these two functions retained for backwards compatibility
+    showList: function(instant) {
+      this.showGroupsList(instant);
+      this.showMembersList(instant);
+    },
+    hideList: function(instant) {
+      this.hideGroupsList(instant);
+      this.hideMembersList(instant);
+    },
+    showGroupsList: function (instant) {
       const holder = this.closest('.field');
-      const list = holder.next().filter('.listbox, .treedropdown, .treemultiselect');
+      this.showListElement(holder, holder.next().filter('.treemultiselect'), instant);
+    },
+    hideGroupsList: function (instant) {
+      const holder = this.closest('.field');
+      this.hideListElement(holder, holder.next().filter('.treemultiselect'), instant)
+    },
+    showMembersList: function (instant) {
+      const holder = this.closest('.field');
+      this.showListElement(holder, holder.next().next().filter('.listbox'), instant);
+    },
+    hideMembersList: function (instant) {
+      const holder = this.closest('.field');
+      this.hideListElement(holder, holder.next().next().filter('.listbox'), instant);
+    },
+    showListElement: function (holder, list, instant) {
       holder.addClass('field--merge-below');
       if (instant) {
         list.show().css('overflow', 'visible');
@@ -592,9 +621,7 @@ $.entwine('ss', function($){
         });
       }
     },
-    hideList: function (instant) {
-      const holder = this.closest('.field');
-      const list = holder.next().filter('.listbox, .treedropdown, .treemultiselect');
+    hideListElement: function (holder, list, instant) {
       list.css('overflow', 'hidden');
       if (instant) {
         list.hide().css('display', 'none');
@@ -604,7 +631,7 @@ $.entwine('ss', function($){
           holder.removeClass('field--merge-below');
         });
       }
-    },
+    }
   });
 
 });
