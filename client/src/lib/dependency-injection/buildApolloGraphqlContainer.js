@@ -1,7 +1,6 @@
 import buildBaseContainer from './buildBaseContainer';
 import ApolloGraphqlManager from './ApolloGraphqlManager';
 
-
 const buildApolloGraphqlContainer = (
   base = buildBaseContainer(),
   initialTemplates = {},

@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import createClassMap from '../createClassMap';
 import setIn from 'redux-form/lib/structure/plain/setIn';
 import {
   getFormValues,
@@ -9,6 +8,7 @@ import {
   isInvalid,
 } from 'redux-form';
 import { schemaMerge, findField } from 'lib/schemaFieldValues';
+import createClassMap from '../createClassMap';
 
 const getFormState = state => state;
 /**
@@ -158,9 +158,9 @@ class FormStateManager {
    */
   getValues() {
     return getFormValues(
-        this.schema.name,
-        getFormState
-      )(this.mockGlobalState) || {};
+      this.schema.name,
+      getFormState
+    )(this.mockGlobalState) || {};
   }
 
   /**

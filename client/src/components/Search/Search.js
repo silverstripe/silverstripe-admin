@@ -8,13 +8,13 @@ import * as schemaActions from 'state/schema/SchemaActions';
 import { reset, initialize, change } from 'redux-form';
 import { isDirty } from 'redux-form/lib/immutable';
 import getIn from 'redux-form/lib/structure/plain/getIn';
-import Focusedzone from '../Focusedzone/Focusedzone';
 import getFormState from 'lib/getFormState';
+import PropTypes from 'prop-types';
+import Focusedzone from '../Focusedzone/Focusedzone';
 import SearchBox from './SearchBox';
 import SearchForm from './SearchForm';
 import SearchToggle from './SearchToggle';
 import mapFormSchemaToTags from './utilities/mapFormSchemaToTags';
-import PropTypes from 'prop-types';
 
 const DISPLAY = {
   NONE: 'NONE',
@@ -439,7 +439,6 @@ class Search extends Component {
     const hideable =
       [BEHAVIOR.HIDEABLE, BEHAVIOR.TOGGLABLE].includes(displayBehavior);
 
-
     const dirty = formIsDirty || this.searchTermIsDirty();
     const data = this.getData();
     const clearable = (Object.keys(data).length > 0);
@@ -482,7 +481,6 @@ class Search extends Component {
     );
   }
 }
-
 
 Search.propTypes = {
   onSearch: PropTypes.func,

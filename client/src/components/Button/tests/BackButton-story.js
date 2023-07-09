@@ -3,26 +3,6 @@ import { jsxDecorator } from 'storybook-addon-jsx';
 import { action } from '@storybook/addon-actions';
 import BackButton from '../BackButton';
 
-const colors = [
-  'primary',
-  'secondary',
-  'success',
-  'info',
-  'warning',
-  'danger',
-  'link',
-];
-const sizes = ['sm', 'md', 'lg'];
-const icons = [
-  '',
-  'search',
-  'sync',
-  'plus-circled',
-  'cancel-circled',
-  'check-mark',
-  'edit',
-];
-
 const onClick = (event) => {
   event.preventDefault();
   return action('onClick')(event);

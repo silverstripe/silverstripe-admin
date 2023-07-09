@@ -3,11 +3,11 @@ import i18n from 'i18n';
 import React, { Component } from 'react';
 import { Label, Button } from 'reactstrap';
 import classNames from 'classnames';
-import TagPropType from '../Tag/TagPropType';
 import CompactTagList from 'components/Tag/CompactTagList';
 import ResizeAware from 'components/ResizeAware/ResizeAware';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import TagPropType from '../Tag/TagPropType';
 
 /**
  * Displays a search box and a few buttons related buttons.
@@ -275,11 +275,11 @@ class SearchBox extends Component {
   renderFilterButton() {
     const { expanded, onToggleFilter, formId } = this.props;
     const classes = classNames(
-        'btn--icon',
-        'font-icon-caret-down-two',
-        'search-box__filter-trigger',
-        this.state.width < 576 ? 'search-box--no-label' : '',
-        { collapsed: !expanded }
+      'btn--icon',
+      'font-icon-caret-down-two',
+      'search-box__filter-trigger',
+      this.state.width < 576 ? 'search-box--no-label' : '',
+      { collapsed: !expanded }
     );
     const spanClass = this.state.width < 576 ? 'sr-only' : '';
     return (<Button
@@ -346,7 +346,6 @@ class SearchBox extends Component {
   }
 }
 
-
 SearchBox.propTypes = {
   onSearch: PropTypes.func,
   onToggleFilter: PropTypes.func,
@@ -381,7 +380,6 @@ SearchBox.defaultProps = {
     left: true,
   }
 };
-
 
 export { SearchBox as Component };
 

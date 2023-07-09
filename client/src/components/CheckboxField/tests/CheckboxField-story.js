@@ -60,9 +60,6 @@ export default {
         defaultValue: { summary: '' },
       }
     },
-    value: {
-      control: 'text'
-    },
     message: {
       control: 'object',
       table: {

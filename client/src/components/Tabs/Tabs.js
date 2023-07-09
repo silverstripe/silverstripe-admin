@@ -4,9 +4,9 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as Actions from 'state/tabs/TabsActions';
+import useTabContext, { TabContext } from 'hooks/useTabContext';
 import TabNav from './TabNav';
 import getDefaultActiveKey from './getDefaultActiveKey';
-import useTabContext, { TabContext } from 'hooks/useTabContext';
 
 /**
  * Displays a tab set that cam be used to break up a form into smaller chunks.
@@ -33,7 +33,7 @@ function Tabs({
       activeTab: currentTab,
       isOnActiveTab
     }),
-    [activeTab, isOnActiveTab]
+  [activeTab, isOnActiveTab]
   );
 
   return (

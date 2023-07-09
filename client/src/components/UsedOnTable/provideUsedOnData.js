@@ -25,7 +25,6 @@ const provideUsedOnData = (UsedOnTable) => {
         !tabContext ||
         tabContext.isOnActiveTab;
 
-
       if (doFetch) {
         this.fetchDataFromEndpoint();
       }

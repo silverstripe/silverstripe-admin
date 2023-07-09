@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import Tag from '../Tag';
 import { render, fireEvent } from '@testing-library/react';
+import Tag from '../Tag';
 
 test('Tag defaults to key', () => {
   const { container } = render(
@@ -33,7 +33,7 @@ test('Tag children overrides label', () => {
     }}
     >
       Your label means nothing to my children
-  </Tag>
+    </Tag>
   );
   expect(container.querySelector('.tag-component').innerHTML).toBe('Your label means nothing to my children');
 });

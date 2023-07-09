@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import MobileMenuToggle from '../MobileMenuToggle';
 import { render } from '@testing-library/react';
+import MobileMenuToggle from '../MobileMenuToggle';
 
 test('MobileMenuToggle render() renders', () => {
   const { container } = render(

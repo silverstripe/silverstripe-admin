@@ -80,7 +80,6 @@ _FormAlert.args = {
   value: "This is a 'success'/'good' alert"
 };
 
-
 export const Types = () => (
   <div>
     <FormAlert type="success" value="This is a 'success'/'good' alert" />

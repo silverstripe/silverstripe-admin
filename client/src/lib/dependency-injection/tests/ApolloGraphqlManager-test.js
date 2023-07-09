@@ -39,9 +39,9 @@ describe('ApolloGraphqlManager', () => {
     };
     const manager = createMock({ apolloConfig });
     manager.transformApolloConfig('props', (test) => (prevProps) => ({
-        ...prevProps,
-        newPropName: `${test}--${test}`,
-      }));
+      ...prevProps,
+      newPropName: `${test}--${test}`,
+    }));
 
     const config = manager.getApolloConfig();
     expect(typeof config.props).toBe('function');

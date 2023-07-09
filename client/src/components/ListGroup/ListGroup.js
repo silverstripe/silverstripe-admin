@@ -1,6 +1,6 @@
 import React from 'react';
-import ListGroupItem from './ListGroupItem';
 import PropTypes from 'prop-types';
+import ListGroupItem from './ListGroupItem';
 
 const ListGroup = (props) => (
   <div className="list-group">

@@ -132,7 +132,7 @@ jQuery.entwine('ss', ($) => {
       /* noop */
     },
 
-  /**
+    /**
      * Default behaviour, recommended to overload this and sanitise where needed
      *
      * @param data

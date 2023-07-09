@@ -1,12 +1,11 @@
 /* global jest, describe, beforeEach, it, pit, expect, process */
 
+import backend from '../Backend';
 
 jest.unmock('isomorphic-fetch');
 jest.unmock('../Backend');
 jest.unmock('qs');
 jest.unmock('merge');
-
-import backend from '../Backend';
 
 /**
  * Return a mock function that returns a promise

@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import LiteralField from '../LiteralField';
 import { render } from '@testing-library/react';
+import LiteralField from '../LiteralField';
 
 test('LiteralField render() renders', () => {
   const { container } = render(

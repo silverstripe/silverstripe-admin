@@ -3,16 +3,16 @@ import React, { Component } from 'react';
 import i18n from 'i18n';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import FormConstants from 'components/Form/FormConstants';
+import * as actions from 'state/records/RecordsActions';
+import castStringToElement from 'lib/castStringToElement';
+import PropTypes from 'prop-types';
 import GridFieldTable from './GridFieldTable';
 import GridFieldHeader from './GridFieldHeader';
 import GridFieldHeaderCell from './GridFieldHeaderCell';
 import GridFieldRow from './GridFieldRow';
 import GridFieldCell from './GridFieldCell';
 import GridFieldAction from './GridFieldAction';
-import FormConstants from 'components/Form/FormConstants';
-import * as actions from 'state/records/RecordsActions';
-import castStringToElement from 'lib/castStringToElement';
-import PropTypes from 'prop-types';
 
 const NotYetLoaded = [];
 
@@ -46,12 +46,12 @@ class GridField extends Component {
     return (
       <GridFieldCell className="grid-field__cell--actions" key="Actions">
         <GridFieldAction
-          icon={'cog'}
+          icon="cog"
           onClick={this.editRecord}
           record={record}
         />
         <GridFieldAction
-          icon={'cancel'}
+          icon="cancel"
           onClick={this.deleteRecord}
           record={record}
         />

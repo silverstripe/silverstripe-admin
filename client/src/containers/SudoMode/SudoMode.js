@@ -103,7 +103,6 @@ const withSudoMode = (WrappedComponent) => {
       }
     }
 
-
     /**
      * Returns whether "sudo mode" is active for the current user.
      *

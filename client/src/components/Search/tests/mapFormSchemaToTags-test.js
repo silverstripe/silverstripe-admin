@@ -96,4 +96,3 @@ test('mapFormSchemaToTags mapping loading', () => {
   );
   expect(Object.keys(tags)).toHaveLength(0);
 });
-

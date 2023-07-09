@@ -1,10 +1,10 @@
 /* global jest, test, describe, it, expect */
 
 import React, { useState } from 'react';
-import { injectTabContext } from '../useTabContext';
 import { Component as StatelessTabs } from 'components/Tabs/Tabs';
 import TabItem from 'components/Tabs/TabItem';
 import { render } from '@testing-library/react';
+import { injectTabContext } from '../useTabContext';
 
 const TabContextPrinter = injectTabContext(({ tabContext }) => (
   <div className="TabContextPrinter">{JSON.stringify(tabContext)}</div>

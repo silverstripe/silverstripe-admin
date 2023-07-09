@@ -1,9 +1,9 @@
 /* global jest, test, describe, beforeEach, it, pit, expect, process */
 
 import React, { Component } from 'react';
+import { render } from '@testing-library/react';
 import inject from '../inject';
 import injectorContext from '../injectorContext';
-import { render } from '@testing-library/react';
 
 const injectorGet = jest.fn(item => item);
 const emptyComponent = () => <div>Empty</div>;
@@ -19,6 +19,7 @@ const provideTestInjector = (context) => (Injectable) => {
         },
       };
     }
+
     render() {
       return <Injectable {...this.props} />;
     }

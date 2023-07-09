@@ -1,5 +1,9 @@
 /* global jest, test, describe, beforeEach, it, expect, modernizr */
 
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react';
+import { Component as TimeField } from '../TimeField';
+
 jest.mock('modernizr', () => ({
   inputtypes: {
     // these being false here does not impact the html5 tests below
@@ -7,10 +11,6 @@ jest.mock('modernizr', () => ({
     time: false
   },
 }));
-
-import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import { Component as TimeField } from '../TimeField';
 
 function makePropsHtml4(obj = {}) {
   return {

@@ -1,5 +1,5 @@
-import MiddlewareRegistry, { GLOBAL_CONTEXT } from './MiddlewareRegistry';
 import { compose } from 'redux';
+import MiddlewareRegistry, { GLOBAL_CONTEXT } from './MiddlewareRegistry';
 
 const buildBaseContainer = () => ({
   /**

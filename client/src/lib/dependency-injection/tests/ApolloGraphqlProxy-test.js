@@ -1,7 +1,7 @@
 /* global jest, describe, beforeEach, it, pit, expect, process */
 
-import ApolloGraphqlProxy from '../ApolloGraphqlProxy';
 import gql from 'graphql-tag';
+import ApolloGraphqlProxy from '../ApolloGraphqlProxy';
 
 const createMock = (ast, config = {}) => (
   new ApolloGraphqlProxy(ast, config)

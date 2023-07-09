@@ -1,6 +1,6 @@
+import { v4 as uuid } from 'uuid';
 import ACTION_TYPES from './ToastsActionTypes';
 import { FADEOUT_TIME } from './ToastConstants';
-import { v4 as uuid } from 'uuid';
 
 /**
  * @typedef {import('./ToastsTypes').BasicToastOption} BasicToastOption

@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import Toast from '../Toast';
 import { render, fireEvent } from '@testing-library/react';
+import Toast from '../Toast';
 
 test('Toast render', () => {
   const onDismiss = jest.fn();

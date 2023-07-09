@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import i18n from 'i18n';
 import { Toast as BsToast, ToastBody } from 'reactstrap';
 import classnames from 'classnames';
-import { ToastActions } from './ToastActions';
 import Button from 'components/Button/Button';
+import { ToastActions } from './ToastActions';
 
 /**
  * Props for an individual Toast
@@ -53,6 +53,5 @@ Toast.propTypes = {
 Toast.defaultProps = {
   actions: []
 };
-
 
 export default Toast;

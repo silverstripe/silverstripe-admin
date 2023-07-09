@@ -75,7 +75,6 @@ SearchForm.defaultProps = {
   formData: {}
 };
 
-
 export { SearchForm as Component };
 
 export default SearchForm;

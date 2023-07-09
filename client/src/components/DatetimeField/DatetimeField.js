@@ -1,7 +1,7 @@
 import fieldHolder from 'components/FieldHolder/FieldHolder';
-import { Component as DateField } from '../DateField/DateField';
 import moment from 'moment';
 import i18n from 'i18n';
+import { Component as DateField } from '../DateField/DateField';
 
 const localFormat = 'L LT';
 const dateOnlyLocalFormat = 'L';

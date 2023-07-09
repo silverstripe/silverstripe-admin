@@ -373,7 +373,7 @@ class Backend {
       body: encodeBody(data),
       headers: Object.assign({}, defaultHeaders, headers),
     })
-    .then(checkStatus);
+      .then(checkStatus);
   }
 
   /**

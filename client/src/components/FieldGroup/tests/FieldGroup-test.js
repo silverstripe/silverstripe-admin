@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import FieldGroup from '../FieldGroup';
 import { render } from '@testing-library/react';
+import FieldGroup from '../FieldGroup';
 
 test('FieldGroup renders children', () => {
   const { container } = render(

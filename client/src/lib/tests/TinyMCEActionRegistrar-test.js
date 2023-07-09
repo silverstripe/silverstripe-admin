@@ -1,8 +1,8 @@
 /* global jest, describe, afterEach, it, expect */
 
-jest.unmock('../TinyMCEActionRegistrar.js');
-
 import TinyMCEActionRegistrar from '../TinyMCEActionRegistrar';
+
+jest.unmock('../TinyMCEActionRegistrar.js');
 
 describe('TinyMCEActionRegistrar', () => {
   describe('addCommandWithUrlTest method', () => {

@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import NotFoundComponent from '../NotFoundComponent';
 import { render } from '@testing-library/react';
+import NotFoundComponent from '../NotFoundComponent';
 
 test('NotFoundComponent render() renders', () => {
   const { container } = render(

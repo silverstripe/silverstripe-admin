@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
-import PopoverOptionSet from './PopoverOptionSet';
 import { inject } from 'lib/Injector';
 import i18n from 'i18n';
+import PopoverOptionSet from './PopoverOptionSet';
 
 /**
  * Simple component that presents a button that will toggle a PopoverOptionSet.
@@ -26,7 +26,7 @@ class PopoverOptionSetToggle extends Component {
   handleToggle() {
     // Force setting state to the end of the execution queue to clear a potential race condition
     // with entwine click handlers
-    window.setTimeout(() => this.setState({ isOpen: !this.state.isOpen }), 0);
+    window.setTimeout(() => this.setState((prevState) => ({ isOpen: !prevState.isOpen })), 0);
   }
 
   render() {
@@ -80,4 +80,3 @@ export default inject(
   }),
   () => 'PopoverOptionSetToggle'
 )(PopoverOptionSetToggle);
-

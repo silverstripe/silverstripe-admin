@@ -11,4 +11,3 @@ export function setConfig(config) {
     payload: { config },
   };
 }
-

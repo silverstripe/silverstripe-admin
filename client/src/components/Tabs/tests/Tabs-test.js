@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import { Component as Tabs } from '../Tabs';
 import { render } from '@testing-library/react';
+import { Component as Tabs } from '../Tabs';
 
 test('Tabs render() renders the navigation with hideNav: false', () => {
   const { container } = render(

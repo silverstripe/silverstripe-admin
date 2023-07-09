@@ -287,7 +287,6 @@ class FormBuilderLoader extends Component {
       errors && 'errors',
     ].filter(header => header);
 
-
     // using `this.state.fetching` caused race-condition issues.
     this.props.actions.schema.setSchemaLoading(this.props.schemaUrl, true);
 
@@ -314,7 +313,6 @@ class FormBuilderLoader extends Component {
               state: this.overrideStateData(formSchema.state),
             }
           );
-
 
           // Mock the will-be shape of the props so that the identifier is right
           const identifier = createFormIdentifierFromProps({

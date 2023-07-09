@@ -33,7 +33,7 @@ const ToastActions = ({ actions, dismissed, onDismiss }) => (
       (props, index) =>
         // eslint-disable-next-line react/no-array-index-key
         <ToastAction key={index} {...props} onDismiss={onDismiss} dismissed={dismissed} />
-      )
+    )
     }
   </div>
 );

@@ -37,7 +37,6 @@ const Tabs = (props) => {
   );
 };
 
-
 export const Basic = () => (
   <Tabs id="Root">
     <TabItem name="Main" title="Main">

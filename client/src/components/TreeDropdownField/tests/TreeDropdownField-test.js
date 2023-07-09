@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 /* global jest, test, beforeAll, afterAll, expect */
 
 import React from 'react';
-import { Component as TreeDropdownField, MULTI_EMPTY_VALUE, SINGLE_EMPTY_VALUE } from '../TreeDropdownField';
+import { render, fireEvent, act } from '@testing-library/react';
+import { Component as TreeDropdownField } from '../TreeDropdownField';
 import mockTree from './mockTree';
-import { render, screen, fireEvent, act } from '@testing-library/react';
 
 let resolveApiCall;
 let rejectApiCall;

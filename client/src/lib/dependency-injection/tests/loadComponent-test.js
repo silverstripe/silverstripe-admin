@@ -5,6 +5,8 @@ import React from 'react';
 import { createStore } from 'redux';
 import { render } from '@testing-library/react';
 
+import loadComponent from '../loadComponent';
+
 const mockStore = createStore(state => state);
 
 function TestComponent() {
@@ -49,8 +51,6 @@ jest.mock('../Container', () => ({ ready: (callback) => { callback(); } }));
 jest.mock('@apollo/client', () => ({
   ApolloProvider: ({ children }) => <div className="myapolloprovider">{children}</div>,
 }));
-
-import loadComponent from '../loadComponent';
 
 describe('loadComponent', () => {
   it('should use the provided injector by default', () => {

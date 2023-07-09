@@ -1,7 +1,7 @@
 /* global jest, describe, beforeEach, it, pit, expect, process */
 import
-  buildFormContainer,
-  { SCHEMA_MIDDLEWARE_SERVICE, VALIDATION_MIDDLEWARE_SERVICE }
+buildFormContainer,
+{ SCHEMA_MIDDLEWARE_SERVICE, VALIDATION_MIDDLEWARE_SERVICE }
   from '../buildFormContainer';
 
 describe('FormContainer', () => {

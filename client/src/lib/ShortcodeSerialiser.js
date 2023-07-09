@@ -120,8 +120,8 @@ const ShortcodeSerialiser = {
       : { sep: ' ', quote: '"', replacer: /"/g };
     const attrs = Object.entries(object.properties)
       .map(([name, value]) => ((value)
-          ? `${rule.sep}${name}=${rule.quote}${`${value}`.replace(rule.replacer, '')}${rule.quote}`
-          : null
+        ? `${rule.sep}${name}=${rule.quote}${`${value}`.replace(rule.replacer, '')}${rule.quote}`
+        : null
       ))
       .filter((attr) => attr !== null)
       .join('');
@@ -149,8 +149,8 @@ const createHTMLSanitiser = () => {
 const sanitiseShortCodeProperties = (rawProperties) => {
   const sanitise = createHTMLSanitiser();
   return Object.entries(rawProperties).reduce((props, [name, value]) => ({
-      ...props,
-      [name]: sanitise(value)
+    ...props,
+    [name]: sanitise(value)
   }), {});
 };
 

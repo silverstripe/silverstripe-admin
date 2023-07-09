@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import HiddenField from '../HiddenField';
 import { render } from '@testing-library/react';
+import HiddenField from '../HiddenField';
 
 test('HiddenField render() renders', () => {
   const { container } = render(

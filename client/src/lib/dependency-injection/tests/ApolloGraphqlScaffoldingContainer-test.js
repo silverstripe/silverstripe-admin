@@ -4,7 +4,6 @@ import buildApolloGraphqlScaffoldingContainer from '../buildApolloGraphqlScaffol
 import * as graphqlTemplates from '../graphql/templates';
 import { GLOBAL_CONTEXT } from '../MiddlewareRegistry';
 
-
 describe('Dynamic graphql injection', () => {
   let Injector;
 
@@ -43,9 +42,9 @@ describe('Dynamic graphql injection', () => {
       (updater) => {
         updater.test('MyTestQuery', (manager) => {
           manager.transformApolloConfig('props', () => (previous) => ({
-              ...previous,
-              qux: 'baz'
-            }));
+            ...previous,
+            qux: 'baz'
+          }));
         });
       }
     );
@@ -84,9 +83,9 @@ describe('Dynamic graphql injection', () => {
         updater.test('MyTestReadQuery', (manager) => {
           manager.addField('Plates');
           manager.transformApolloConfig('props', () => (previous) => ({
-              ...previous,
-              qux: 'baz'
-            }));
+            ...previous,
+            qux: 'baz'
+          }));
         });
       }
     );
@@ -227,4 +226,3 @@ describe('Dynamic graphql injection', () => {
     expect(compiledQuery).toMatch(/\s*mutation\s+CreateDino\(\s*\$input:\s*CreateDinoInput!\s*\)\s+{\s+createDino\(\s*input:\s*\$input\s*\)\s+{\s+Club Claws\s+}\s+}\s*$/);
   });
 });
-

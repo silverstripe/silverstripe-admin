@@ -2,12 +2,11 @@
 
 // FormBuilderLoader mock was not mocking properly
 // manually override with a stateless null component
-jest.mock('containers/FormBuilderLoader/FormBuilderLoader', () => () => null);
-
 import React from 'react';
-import { Component as Search, hasFilters } from '../Search';
 import { fireEvent, render } from '@testing-library/react';
+import { Component as Search, hasFilters } from '../Search';
 
+jest.mock('containers/FormBuilderLoader/FormBuilderLoader', () => () => null);
 
 function makeProps(obj = {}) {
   return {

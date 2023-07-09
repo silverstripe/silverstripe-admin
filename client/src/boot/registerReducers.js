@@ -14,7 +14,6 @@ import applyFormMiddleware from 'lib/dependency-injection/applyFormMiddleware';
 import ViewModeReducer from 'state/viewMode/ViewModeReducer';
 import ToastsReducer from 'state/toasts/ToastsReducer';
 
-
 export default (extra = {}) => {
   const FormReducer = combineReducers({
     formState: ReduxFormReducer,

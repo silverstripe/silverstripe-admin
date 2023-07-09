@@ -4,7 +4,6 @@ import { action } from '@storybook/addon-actions';
 
 import { Component as Breadcrumb } from 'components/Breadcrumb/Breadcrumb';
 
-
 // Simple values to displays in the select fields.
 const icons = [
   '',
@@ -127,4 +126,3 @@ export const _Breadcrumb = (args) => {
   const { level, icon } = args;
   return (<Breadcrumb crumbs={buildBreadCrumb(0, level, icon)}/>);
 };
-

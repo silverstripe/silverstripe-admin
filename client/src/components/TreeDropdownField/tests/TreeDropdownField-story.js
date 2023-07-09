@@ -65,4 +65,3 @@ Standard.args = {
   },
   fetch: fetchMock,
 };
-

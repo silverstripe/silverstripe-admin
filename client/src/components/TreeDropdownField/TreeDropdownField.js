@@ -268,7 +268,7 @@ class TreeDropdownField extends Component {
     // If any ancestor node in visible chain is either loading or failed then abort re-load
     const foundPrev = path.find((pathNode) => (
       this.props.loading.indexOf(pathNode) > -1
-        // TODO: investigate whether failed should not retry
+      // TODO: investigate whether failed should not retry
       || this.props.failed.indexOf(pathNode) > -1
     ));
     if (foundPrev) {
@@ -337,7 +337,7 @@ class TreeDropdownField extends Component {
     if ((option.value === SINGLE_EMPTY_VALUE || option.value === '') &&
       (!this.props.data.hasEmptyDefault || this.props.visible.length || this.hasSearch())
     ) {
-        return false;
+      return false;
     }
     const title = option.label && option.label.toLocaleLowerCase();
     // using this.props.search so that we do not get flash of filtered current content
@@ -682,11 +682,11 @@ class TreeDropdownField extends Component {
     );
   }
 
-  formatOptionLabel(option, { context, inputValue }) {
+  formatOptionLabel(option) {
     const { title } = option;
 
     return this.props.search.length
-      ? mapHighlight(title ? title : '', this.props.search, Highlight)
+      ? mapHighlight(title || '', this.props.search, Highlight)
       : title;
   }
 

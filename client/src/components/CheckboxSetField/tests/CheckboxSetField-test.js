@@ -43,7 +43,6 @@ test('CheckboxSetField renders with two inputs checked', () => {
   expect(container.querySelectorAll('span')[3].innerHTML).toBe('4');
 });
 
-
 test('CheckboxSetField renders with string value', () => {
   const { container } = render(
     <CheckboxSetField {...makeProps({

@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import Toolbar from '../Toolbar';
 import { render } from '@testing-library/react';
+import Toolbar from '../Toolbar';
 
 test('Toolbar render', () => {
   const { container } = render(

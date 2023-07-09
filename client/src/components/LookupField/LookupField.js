@@ -86,4 +86,3 @@ LookupField.defaultProps = {
 export { LookupField as Component };
 
 export default fieldHolder(LookupField);
-

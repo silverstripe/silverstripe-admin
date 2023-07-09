@@ -1,9 +1,9 @@
 import fieldHolder from 'components/FieldHolder/FieldHolder';
-import { Component as TextField } from '../TextField/TextField';
 import moment from 'moment';
 import modernizr from 'modernizr';
 import i18n from 'i18n';
 import PropTypes from 'prop-types';
+import { Component as TextField } from '../TextField/TextField';
 
 const localFormat = 'L';
 
@@ -18,7 +18,7 @@ class DateField extends TextField {
   }
 
   getLang() {
-      const lang = this.asHTML5() ? this.props.isoLang : this.props.lang;
+    const lang = this.asHTML5() ? this.props.isoLang : this.props.lang;
 
     return lang || moment().locale();
   }

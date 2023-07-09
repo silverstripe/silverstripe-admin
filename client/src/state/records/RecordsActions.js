@@ -59,7 +59,6 @@ export function fetchRecords(recordType, method, url) {
   };
 }
 
-
 /**
  * Fetches a single record
  *
@@ -113,8 +112,8 @@ export function deleteRecord(recordType, id, method, url, headers = {}) {
   const payload = { recordType, id };
   const methodToLowerCase = method.toLowerCase();
   const args = methodToLowerCase === 'get'
-      ? [populate(url, payload), headers]
-      : [populate(url, payload), {}, headers];
+    ? [populate(url, payload), headers]
+    : [populate(url, payload), {}, headers];
 
   return (dispatch) => {
     dispatch({

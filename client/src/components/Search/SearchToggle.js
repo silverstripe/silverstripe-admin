@@ -25,7 +25,6 @@ const SearchToggle = ({ onToggle, toggled }) => (<Button
   <span className="sr-only">{label}</span>
 </Button>);
 
-
 SearchToggle.propTypes = {
   onToggle: PropTypes.func,
   toggled: PropTypes.bool

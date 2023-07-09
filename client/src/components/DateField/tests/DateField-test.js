@@ -1,10 +1,10 @@
 /* global jest, test, describe, beforeEach, it, expect, modernizr, Event */
 
-jest.mock('modernizr', () => {});
-
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { Component as DateField } from '../DateField';
+
+jest.mock('modernizr', () => {});
 
 function getSharedProps() {
   return {

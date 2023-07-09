@@ -35,7 +35,6 @@ const createErrorBlock = (errors) =>
     };
   }, {});
 
-
 export default createErrorBlock;
 
 export {

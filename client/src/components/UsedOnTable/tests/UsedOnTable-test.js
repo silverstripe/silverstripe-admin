@@ -4,7 +4,6 @@ import { render } from '@testing-library/react';
 import { Component as UsedOnTable } from '../UsedOnTable';
 import provideUsedOnData from '../provideUsedOnData';
 
-
 function makeProps(obj = {}) {
   return {
     identifier: 'abc',

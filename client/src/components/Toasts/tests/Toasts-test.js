@@ -1,8 +1,8 @@
 /* global jest, test, expect, beforeAll, afterAll */
 
 import React from 'react';
-import Toasts from '../Toasts';
 import { render, fireEvent, act } from '@testing-library/react';
+import Toasts from '../Toasts';
 
 // Need to use act() when using fake timers with react-testing-library
 // https://kentcdodds.com/blog/fix-the-not-wrapped-in-act-warning#1-when-using-jestusefaketimers

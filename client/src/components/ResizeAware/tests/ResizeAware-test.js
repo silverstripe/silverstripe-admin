@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import ResizeAware from '../ResizeAware';
 import { render } from '@testing-library/react';
+import ResizeAware from '../ResizeAware';
 
 test('ResizeAware render() renders with children', () => {
   const { container } = render(

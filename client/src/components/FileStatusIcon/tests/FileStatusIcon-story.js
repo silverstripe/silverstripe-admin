@@ -42,9 +42,6 @@ export default {
         defaultValue: { summary: false },
       }
     },
-    includeBackground: {
-      control: 'boolean'
-    },
     placement: {
       description: 'Reactstramp tooltip position.',
       control: 'select',

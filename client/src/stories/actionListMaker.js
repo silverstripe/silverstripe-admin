@@ -21,4 +21,3 @@ const actionMaker = (accumulator, actionName) => {
 const actionListMaker = (...actionNames) => (actionNames.reduce(actionMaker, {}));
 
 export default actionListMaker;
-

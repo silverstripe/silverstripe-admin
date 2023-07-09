@@ -23,7 +23,7 @@ function TabItem({ name, className, extraClass, disabled, children }) {
       // a tab embedded inside another tab can only be active if it's parent is also active
       isOnActiveTab: isOnActiveTab !== false && activeTab === name
     }),
-    [activeTab, currentTab, isOnActiveTab]
+  [activeTab, currentTab, isOnActiveTab]
   );
   return (
     <TabContext.Provider value={nextTabContext}>

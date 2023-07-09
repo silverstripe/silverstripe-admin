@@ -1,6 +1,7 @@
+/* eslint-disable max-classes-per-file */
 /* global jest, describe, beforeEach, it, pit, expect, process */
-import buildComponentContainer from '../buildComponentContainer';
 import React from 'react';
+import buildComponentContainer from '../buildComponentContainer';
 
 describe('ComponentContainer', () => {
   let registry = null;

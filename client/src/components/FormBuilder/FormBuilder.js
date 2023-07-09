@@ -146,7 +146,6 @@ class FormBuilder extends Component {
       throw Error(`Component not found in injector: ${componentProps.schemaComponent}`);
     }
 
-
     // Provides container components a place to hook in
     // and apply customisations to scaffolded components.
     const createFn = this.props.createFn;

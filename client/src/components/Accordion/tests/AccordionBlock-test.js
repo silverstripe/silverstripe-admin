@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import AccordionBlock from '../AccordionBlock';
 import { render } from '@testing-library/react';
+import AccordionBlock from '../AccordionBlock';
 
 test('AccordionBlock render() renders with children', () => {
   const { container } = render(

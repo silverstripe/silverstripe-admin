@@ -1,10 +1,10 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import { useTabFirstShow } from '../useTabContext';
 import { Component as Tabs } from 'components/Tabs/Tabs';
 import TabItem from 'components/Tabs/TabItem';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import { useTabFirstShow } from '../useTabContext';
 
 const TabContextPrinter = ({ callback }) => {
   useTabFirstShow(callback);
@@ -46,10 +46,9 @@ test('useTabFirstShow outside active tab', async () => {
   expect(callback).not.toBeCalled();
 });
 
-
 test('useTabFirstShow inside inactive tab', () => {
   const callback = jest.fn();
-  const { container } = render(
+  render(
     <Tabs id="foo" activeTab="secondary" activateTab={() => (false)}>
       <TabItem name="active" />
       <TabItem name="secondary">
@@ -70,7 +69,7 @@ test('useTabFirstShow inside inactive tab', () => {
 
 test('useTabFirstShow inside inactive tab', () => {
   const callback = jest.fn();
-  const { container } = render(
+  render(
     <Tabs id="foo" activeTab="secondary" activateTab={() => (false)}>
       <TabItem name="active" />
       <TabItem name="secondary">

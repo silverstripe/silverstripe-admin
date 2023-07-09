@@ -1,8 +1,7 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import ValueTracker from 'stories/ValueTracker';
-import { Component as PopoverOptionSetToggle } from '../PopoverOptionSetToggle';
 import { jsxDecorator } from 'storybook-addon-jsx';
+import { Component as PopoverOptionSetToggle } from '../PopoverOptionSetToggle';
 
 const buttons = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((letter) => ({
   content: `Button ${letter}`,
@@ -43,7 +42,6 @@ const customButtons = [
 const handleSearch = (term, set) => set.filter(
   ({ content }) => content.toLowerCase() === `button ${term.toLowerCase()}`
 );
-
 
 export default {
   title: 'Admin/PopoverField/PopoverOptionSet',

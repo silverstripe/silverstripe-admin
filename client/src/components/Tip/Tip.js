@@ -2,8 +2,8 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { UncontrolledPopover, PopoverBody } from 'reactstrap';
 import i18n from 'i18n';
-import Button from '../Button/Button';
 import classNames from 'classnames';
+import Button from '../Button/Button';
 
 /**
  * List of values that can be passed in the `type` prop of the `<Tip />` component.
@@ -66,12 +66,12 @@ function Tip(props) {
   };
 
   return (
-    <Fragment>
+    <>
       <Button {...buttonProps}>{label}</Button>
       <UncontrolledPopover trigger="legacy" placement="top-end" target={buttonId}>
         <PopoverBody>{content}</PopoverBody>
       </UncontrolledPopover>
-    </Fragment>
+    </>
   );
 }
 

@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import InputField from '../InputField';
 import { render } from '@testing-library/react';
+import InputField from '../InputField';
 
 function makeProps(obj = {}) {
   return {

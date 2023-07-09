@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import SingleSelectField from '../SingleSelectField';
 import { render } from '@testing-library/react';
+import SingleSelectField from '../SingleSelectField';
 
 function makeProps(obj = {}) {
   return {

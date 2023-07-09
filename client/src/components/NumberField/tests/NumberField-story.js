@@ -1,8 +1,7 @@
-import React from 'react';
-import actionListMaker from '../../../stories/actionListMaker';
 import { jsxDecorator } from 'storybook-addon-jsx';
 
 import NumberField from 'components/NumberField/NumberField';
+import actionListMaker from '../../../stories/actionListMaker';
 
 const tagActions = actionListMaker('onClick', 'onChange');
 

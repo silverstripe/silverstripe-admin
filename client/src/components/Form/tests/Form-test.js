@@ -1,8 +1,8 @@
 /* global jest, test, expect */
 
 import React from 'react';
-import { Component as Form } from '../Form';
 import { render, screen } from '@testing-library/react';
+import { Component as Form } from '../Form';
 
 function makeProps(obj = {}) {
   return {

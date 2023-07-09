@@ -76,14 +76,6 @@ export default {
         defaultValue: { summary: false },
       }
     },
-    value: {
-      description: 'The value to display for the field - localised date time format or ISO 8601 date format',
-      control: 'text',
-      table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: '' },
-      }
-    },
     lang: {
       description: 'Locale string. E.g. `en_NZ`.',
       control: 'text',

@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import { Button, DropdownItem } from 'reactstrap';
-import GridFieldDropdownAction from './GridFieldDropdownAction';
-import ActionMenu from '../ActionMenu/ActionMenu';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import GridFieldDropdownAction from './GridFieldDropdownAction';
+import ActionMenu from '../ActionMenu/ActionMenu';
 
 class GridFieldActions extends PureComponent {
   renderMultipleActions(schema) {

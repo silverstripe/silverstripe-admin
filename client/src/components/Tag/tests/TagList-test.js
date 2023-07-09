@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import TagList from '../TagList';
 import { fireEvent, render } from '@testing-library/react';
+import TagList from '../TagList';
 
 function makeProps(obj = {}) {
   return {

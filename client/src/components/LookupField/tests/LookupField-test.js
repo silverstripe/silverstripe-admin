@@ -1,8 +1,8 @@
 /* global jest, test, describe, beforeEach, it, expect, require */
 
 import React from 'react';
-import { Component as LookupField } from '../LookupField';
 import { render } from '@testing-library/react';
+import { Component as LookupField } from '../LookupField';
 
 function makeProps(obj = {}) {
   return {

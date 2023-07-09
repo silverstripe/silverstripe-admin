@@ -1,4 +1,3 @@
-import React from 'react';
 import { jsxDecorator } from 'storybook-addon-jsx';
 import Badge, { statuses } from 'components/Badge/Badge';
 

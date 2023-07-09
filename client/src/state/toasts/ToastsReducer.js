@@ -13,7 +13,6 @@ import { STAY_TIME } from './ToastConstants';
  * @typedef {import('./ToastsTypes').ToastState} ToastOption
  */
 
-
 /**
  * @type {ToastState}
  */
@@ -57,7 +56,6 @@ const resume = (state) => ({
     (toast) => ({ timeout: scheduleDismissal(toast), ...toast })
   )
 });
-
 
 /**
  * Add the provided toast list to the list of toast.

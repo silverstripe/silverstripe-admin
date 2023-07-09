@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 import React from 'react';
-import withSudoMode from '../SudoMode';
 import fetch from 'isomorphic-fetch';
 import { fireEvent, render, screen } from '@testing-library/react';
+import withSudoMode from '../SudoMode';
 
 jest.mock('isomorphic-fetch');
 

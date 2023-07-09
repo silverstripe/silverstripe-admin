@@ -74,7 +74,7 @@ const defaultTagHandlers = {
       const { value, ...valuelessTag } = tag;
       return valuelessTag;
     }
-      return false;
+    return false;
   },
   MultiSelect: (tag, field, formSchema) => {
     const value = selectTagHandler(tag.key, tag.value, formSchema);

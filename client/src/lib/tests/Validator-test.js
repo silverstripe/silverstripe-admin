@@ -1,15 +1,15 @@
 /* global jest, describe, beforeEach, it, expect, console */
 
 // Needs to be set before requiring other libraries
+import i18n from 'i18n';
+import Validator from '../Validator';
+
 global.console = { warn: jest.fn() };
 
 jest.unmock('react');
 jest.unmock('react-dom/test-utils');
 jest.unmock('../Validator');
 jest.unmock('i18n');
-
-import Validator from '../Validator';
-import i18n from 'i18n';
 
 describe('Validator', () => {
   let validator = new Validator({});

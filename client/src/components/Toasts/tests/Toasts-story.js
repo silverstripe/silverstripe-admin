@@ -11,6 +11,7 @@ const { onDismiss, primaryAction, onPause, onResume } = actionListMaker(
   'onPause',
   'onResume'
 );
+/* eslint-disable-next-line no-unused-vars */
 const actions = [
   { label: 'Primary', onClick: primaryAction },
   { label: 'Secondary', href: 'https://silverstripe.com' },

@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import { ToastActions, ToastAction } from '../ToastActions';
 import { render, fireEvent } from '@testing-library/react';
+import { ToastActions, ToastAction } from '../ToastActions';
 
 function makeProps(obj = {}) {
   return {

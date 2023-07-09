@@ -1,8 +1,8 @@
 /* global jest, test, expect */
 
 import React from 'react';
-import PopoverOptionSet from '../PopoverOptionSet';
 import { render, screen, fireEvent } from '@testing-library/react';
+import PopoverOptionSet from '../PopoverOptionSet';
 
 const buttonTypeA = {
   key: 'dummy-key-a',

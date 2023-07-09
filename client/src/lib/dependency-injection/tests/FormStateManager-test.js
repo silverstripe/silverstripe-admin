@@ -1,5 +1,7 @@
 /* global jest, describe, beforeEach, it, pit, expect, process */
 
+import FormStateManager from '../FormStateManager';
+
 jest.mock('redux-form', () => ({
   isDirty: (name, getFormState) => (state) => getFormState(state)[name].dirty,
   isPristine: (name, getFormState) => (state) => !getFormState(state)[name].dirty,
@@ -7,8 +9,6 @@ jest.mock('redux-form', () => ({
   isValid: (name, getFormState) => (state) => getFormState(state)[name].valid,
   isInvalid: (name, getFormState) => (state) => !getFormState(state)[name].valid,
 }));
-
-import FormStateManager from '../FormStateManager';
 
 describe('FormStateManager', () => {
   let manager = null;

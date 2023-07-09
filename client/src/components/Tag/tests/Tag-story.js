@@ -1,9 +1,9 @@
 import React from 'react';
-import actionListMaker from '../../../stories/actionListMaker';
 import Tag from 'components/Tag/Tag';
 import TagList from 'components/Tag/TagList';
 import CompactTagList from 'components/Tag/CompactTagList';
 import { jsxDecorator } from 'storybook-addon-jsx';
+import actionListMaker from '../../../stories/actionListMaker';
 
 const tags = [
   { key: 'justKey' },

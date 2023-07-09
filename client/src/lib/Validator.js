@@ -94,9 +94,9 @@ class Validator {
     const message = (typeof config.message === 'string')
       ? config.message
       : i18n._t(
-          `Admin.VALIDATOR_MESSAGE_${rule.toUpperCase()}`,
-          i18n._t('Admin.VALIDATOR_MESSAGE_DEFAULT', '{name} is not a valid value.')
-        );
+        `Admin.VALIDATOR_MESSAGE_${rule.toUpperCase()}`,
+        i18n._t('Admin.VALIDATOR_MESSAGE_DEFAULT', '{name} is not a valid value.')
+      );
 
     return i18n.inject(message, { name });
   }

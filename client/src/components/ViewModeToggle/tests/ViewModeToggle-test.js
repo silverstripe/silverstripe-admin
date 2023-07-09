@@ -2,8 +2,8 @@
 /* global jest, test, describe, beforeEach, it, expect */
 
 import React from 'react';
-import { Component as ViewModeToggle } from '../ViewModeToggle';
 import { render, fireEvent } from '@testing-library/react';
+import { Component as ViewModeToggle } from '../ViewModeToggle';
 
 test('ViewModeToggle simulate click events in split mode', () => {
   const mockOnEditSelect = jest.fn();

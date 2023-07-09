@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import Tab from '../Tab';
 import { render, fireEvent } from '@testing-library/react';
+import Tab from '../Tab';
 
 const onToggle = jest.fn();
 

@@ -30,4 +30,3 @@ export default function getDefaultActiveKey(defaultActiveKey, children) {
 
   return activeTab.props.name;
 }
-

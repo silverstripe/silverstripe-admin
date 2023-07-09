@@ -103,15 +103,6 @@ export default {
         defaultValue: { summary: '{}' },
       }
     },
-    value: {
-      description: 'Whether this is checked or not, *this does not hold an explicit value*!',
-      control: 'inline-radio',
-      options: [1, 2, 3, 4],
-      table: {
-        type: { summary: 'string|number' },
-        defaultValue: { summary: '' },
-      }
-    },
     source: {
       description: `Array of items to appear in the list with the following properties.
       \* value (string|number): The value for item.

@@ -1,8 +1,8 @@
 /* global jest, test, describe, beforeEach, it, expect, modernizr */
 
 import React from 'react';
+import { render, fireEvent } from '@testing-library/react';
 import { Component as DatetimeField } from '../DatetimeField';
-import { render, fireEvent, screen } from '@testing-library/react';
 
 jest.mock('modernizr', () => ({
   inputtypes: {

@@ -1,10 +1,10 @@
 /* global jest, test, describe, it, expect */
 
 import React, { useState } from 'react';
-import useTabContext from '../useTabContext';
 import { Component as StatelessTabs } from 'components/Tabs/Tabs';
 import TabItem from 'components/Tabs/TabItem';
 import { render } from '@testing-library/react';
+import useTabContext from '../useTabContext';
 
 const TabContextPrinter = () => {
   const tabContext = useTabContext();

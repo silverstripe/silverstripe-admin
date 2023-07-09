@@ -1,8 +1,8 @@
 /* global jest, test, describe, beforeEach, it, expect */
 
 import React from 'react';
-import { Component as TextField } from '../TextField';
 import { render, fireEvent } from '@testing-library/react';
+import { Component as TextField } from '../TextField';
 
 function makeProps(obj = {}) {
   return {
@@ -57,5 +57,3 @@ test('TextField attributs should assign placeholder', () => {
   );
   expect(container.querySelector('input').getAttribute('placeholder')).toBe('txt');
 });
-
-

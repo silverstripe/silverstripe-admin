@@ -94,11 +94,11 @@ class ResizeAware extends Component {
       typeof children === 'function'
         ? children({ width, height })
         : Children.map(
-        children,
-        child =>
-          (isValidElement(child)
-            ? cloneElement(child, !onlyEvent ? sizes : null)
-            : child)
+          children,
+          child =>
+            (isValidElement(child)
+              ? cloneElement(child, !onlyEvent ? sizes : null)
+              : child)
         )
     );
   }

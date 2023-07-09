@@ -1,8 +1,8 @@
 /* global jest, test, describe, beforeEach, it, expect */
 
 import React from 'react';
-import { Component as Breadcrumb } from '../Breadcrumb';
 import { render } from '@testing-library/react';
+import { Component as Breadcrumb } from '../Breadcrumb';
 
 test('BreadcrumbsComponent renderBreadcrumbs() should convert the props.crumbs array into jsx to be rendered', () => {
   const { container } = render(

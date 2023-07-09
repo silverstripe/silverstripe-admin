@@ -1,9 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import { Component as Preview } from '../Preview';
 import { render } from '@testing-library/react';
-
+import { Component as Preview } from '../Preview';
 
 test('Preview render() renders', () => {
   const { container } = render(

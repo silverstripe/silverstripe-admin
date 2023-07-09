@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect, beforeEach */
 
-import FormAction from '../FormAction';
 import React from 'react';
 import { render } from '@testing-library/react';
+import FormAction from '../FormAction';
 
 test('FormAction.isPrimary() detects via the name if the button should be primary', () => {
   const { container } = render(

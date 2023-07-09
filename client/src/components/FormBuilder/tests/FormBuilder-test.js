@@ -1,9 +1,7 @@
 /* global jest, test, describe, expect, it, beforeEach */
 
 import React from 'react';
-import { Component as FormBuilder } from '../FormBuilder';
 import schemaFieldValues, { findField, schemaMerge } from 'lib/schemaFieldValues';
-import { render } from '@testing-library/react';
 
 const apiMock = jest.fn();
 apiMock.mockImplementation(() => Promise.resolve({}));
@@ -57,7 +55,7 @@ function makeSchema() {
     }
   };
 }
-
+/* eslint-disable-next-line no-unused-vars */
 function makePropsWithSchema(obj = {}) {
   return makeProps({
     ...makeSchema(),

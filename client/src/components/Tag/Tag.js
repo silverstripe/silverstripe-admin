@@ -79,7 +79,6 @@ const focusOnParent = (e) => {
   e.target.parentElement.focus();
 };
 
-
 /**
  * Optional _remove tag_ button displayed in the tag.
  * @param dataKey
@@ -98,7 +97,6 @@ const DeleteButton = ({ dataKey, onDelete }) => (
     className="tag-component__delete font-icon-cancel btn--no-text btn--icon-sm"
   />
 );
-
 
 Tag.propTypes = {
   onClick: PropTypes.func,

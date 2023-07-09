@@ -1,6 +1,6 @@
 import i18n from 'i18n';
-import TYPES from './usedOnTypes';
 import fetch from 'isomorphic-fetch';
+import TYPES from './usedOnTypes';
 
 export function saveUsedOn(identifier, usedOn) {
   return {

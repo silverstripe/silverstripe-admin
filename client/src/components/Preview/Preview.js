@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import i18n from 'i18n';
-import ActionMenu from '../ActionMenu/ActionMenu';
 import classnames from 'classnames';
 import { inject } from 'lib/Injector';
 import PropTypes from 'prop-types';
+import ActionMenu from '../ActionMenu/ActionMenu';
 
 /**
  * Renders the right-hand collapsable change preview panel
@@ -141,7 +141,7 @@ class Preview extends Component {
         <div className="toolbar toolbar--south">
           <div className="btn-toolbar">
             {this.buildToolbarButtons()}
-            <ViewModeComponent id="view-mode-toggle-in-preview-nb" area={'preview'} />
+            <ViewModeComponent id="view-mode-toggle-in-preview-nb" area="preview" />
             {this.renderMoreActions()}
           </div>
         </div>
@@ -172,4 +172,3 @@ export default inject(
   }),
   () => 'Admin.Preview'
 )(Preview);
-

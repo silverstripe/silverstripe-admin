@@ -1,4 +1,3 @@
-import React from 'react';
 import IframeDialog from 'components/IframeDialog/IframeDialog';
 
 export default {

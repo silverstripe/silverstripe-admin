@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import HeaderField from '../HeaderField';
 import { render } from '@testing-library/react';
+import HeaderField from '../HeaderField';
 
 test('HeaderField minimal render', () => {
   const { container } = render(

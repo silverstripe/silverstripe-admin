@@ -1,9 +1,9 @@
 import React from 'react';
-import Search from '../Search';
-import SearchToggle from '../SearchToggle';
 import { createStore, combineReducers } from 'redux';
 import { reducer as ReduxFormReducer } from 'redux-form';
 import SchemaReducer from 'state/schema/SchemaReducer';
+import SearchToggle from '../SearchToggle';
+import Search from '../Search';
 
 const FormReducer = combineReducers({
   formState: ReduxFormReducer,

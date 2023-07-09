@@ -1,10 +1,10 @@
 /* global jest, test, describe, it, expect, beforeEach */
 
-jest.mock('components/FormAlert/FormAlert');
-
 import React from 'react';
 import { render } from '@testing-library/react';
 import fieldHolder from '../FieldHolder';
+
+jest.mock('components/FormAlert/FormAlert');
 
 const InnerField = () => <div id="innerfield">Field</div>;
 const FieldHolder = fieldHolder(InnerField);
