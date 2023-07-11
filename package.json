@@ -90,7 +90,7 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.20.0",
-    "@silverstripe/eslint-config": "^1.0.0",
+    "@silverstripe/eslint-config": "^1.1.0",
     "@silverstripe/webpack-config": "^2.0.0",
     "@storybook/addon-actions": "^7.0.18",
     "@storybook/addon-controls": "^7.0.18",
