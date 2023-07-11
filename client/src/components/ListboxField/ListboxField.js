@@ -190,7 +190,7 @@ class ListboxField extends Component {
       if (Object.keys(passThroughAttributes.value).length > 0) {
         const value =
           passThroughAttributes.value[
-          Object.keys(passThroughAttributes.value)[0]
+            Object.keys(passThroughAttributes.value)[0]
           ];
 
         if (typeof value === 'object') {
