@@ -22,7 +22,10 @@ class ActionMenu extends PureComponent {
 
     // Force setting state to the end of the execution queue to clear a potential race condition
     // with entwine click handlers
-    window.setTimeout(() => this.setState((prevState) => ({ isOpen: !prevState.isOpen })), 0);
+    //
+    // ignore linting rule because following the recommended replacement caused behat failures
+    // eslint-disable-next-line react/no-access-state-in-setstate
+    window.setTimeout(() => this.setState({ isOpen: !this.state.isOpen }), 0);
   }
 
   render() {
