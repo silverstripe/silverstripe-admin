@@ -11,6 +11,20 @@
   font-style: normal;
 }
 
+[data-icon]:before {
+  // sass-lint:disable-block no-important
+  font-family: "silverstripe" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 [class^="font-icon-"]:before,
 [class*=" font-icon-"]:before {
   // sass-lint:disable-block no-important
@@ -371,10 +385,6 @@
 
 .font-icon-menu-settings:before {
   content: "\e001";
-}
-
-.font-icon-silverstripe:before {
-  content: "\4d";
 }
 
 .font-icon-sort:before {
@@ -1020,3 +1030,12 @@
 .font-icon-attention-1:before {
   content: "\e09a";
 }
+
+.font-icon-silverstripe:before {
+  content: "\4d";
+}
+
+.font-icon-silverstripe-cms:before {
+  content: "\e09b";
+}
+
