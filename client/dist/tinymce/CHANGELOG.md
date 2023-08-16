@@ -6,6 +6,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 6.6.2 - 2023-08-09
+
+### Fixed
+- An "Uncaught TypeError: Cannot read properties of null" error would sometimes be thrown when updating the content of a `streamContent: true` iframe dialog component. #TINY-10128
+
+## 6.6.1 - 2023-08-02
+
+### Added
+- Restored filtering option, `pad_empty_with_br`. Set to `true` to pad empty block elements with `<br>` tags instead of the `&nbsp;` character entity. #TINY-9861
+
+### Improved
+- When Safari is the host browser, content updates for iframe dialog components with `streamContent: true` set are now throttled to 500ms intervals. #TINY-10097
+
+### Changed
+- API comments/documentation: a markup typo and run-on sentences both corrected. #TINY-10073
+
+### Fixed
+- On Safari and Firefox, scroll positions were not always maintained when updating the content of a `streamContent: true` iframe dialog component. #TINY-10078
+- On Safari, iframe dialog components did not consistently autoscroll to the end of the scrollable area when `streamContent: true` was set. #TINY-10109
+- Scrolling behavior was inconsistent when updating a `streamContent: true` iframe dialog component with content lacking an HTML document type declaration. #TINY-10110
+- A warning message was sometimes printed to the browser console when closing a dialog that contained an iframe component. #TINY-10070
+- Lists could not be created within editable areas nested inside non-editable areas. #TINY-10000
+- On Safari and Firefox, the border around `iframe` dialog components did not highlight when focused. #TINY-10101
+- Right-clicking on an image in a non-editable context opened the Image context menu. #TINY-10016
+- The `color_cols` option was not respected when a custom `color_map` was defined. #TINY-10098
+- The `color_cols` options were were not rounded to the nearest number when set to a decimal number. #TINY-9737
+
+## 6.6.0 - 2023-07-12
+
+### Added
+- Added a new property value — `bottom` — for inline dialog configurations that anchors the dialog to the bottom of the editor. #TINY-9888
+- Added a new property — `persistent` — for inline dialog configurations that will stop the dialog closing when clicking away from it. #TINY-9991
+- New `ai`, `ai-prompt` and `send` icons. #TINY-9942
+- Added a new property — `streamContent` — for the `iframe` dialog component. This causes `setData()` to update content without reloading the frame, and end scroll positions will be maintained as new content streams in. #TINY-10032
+- AI Assistant plugin toolbar items added to the default toolbar and AI Assistant plugin menu items added to the default menu bar. #TINY-9939
+- Added a new property — `border` — for the `iframe` dialog component that allows a border to be added. #TINY-10049
+- Added a new property — `align` — for the label dialog component that controls text alignment. #TINY-10058
+
+### Improved
+- When defining a modal or inline dialog, if the buttons property is an empty array, or is not defined at all, the footer will now no longer be rendered. #TINY-9996
+- The `iframe` dialog component now has a minimum height of 200px. #TINY-10059
+- Improved detection of scrollable containers when the `ui_mode: 'split'` option is set. #TINY-9385
+
+### Changed
+- The icon in an `alertbanner` dialog component is no longer clickable if the _URL_ field is not specified. #TINY-10013
+
+### Fixed
+- Fixed an issue that caused the inline dialog `size` setting to have no effect. #TINY-10015
+- Fixed an issue that prevented the close button from being clicked when the dialog was blocked. #TINY-10056
+
 ## 6.5.1 - 2023-06-19
 
 ### Fixed
