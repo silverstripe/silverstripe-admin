@@ -33,11 +33,18 @@ eo:
     CollapsePanel: 'Maletendi panelon'
     DELETED: Forigita.
     DropdownBatchActionsDefault: 'Elekti agon...'
+    ErrorDetail: 'Detaloj pri eraro: {detail}'
+    ErrorMessage: 'Bedaŭrinde, ŝajnas ke okazis eraro {errorcode}.'
+    ErrorMessage403: 'Bedaŭrinde, ŝajnas ke la provita ago estas malpermesita.'
+    ErrorMessage404: 'Bedaŭrinde, ŝajnas ke vi provis aliri sekcion aŭ objekton kiu ne ekzistas.'
+    ErrorMessage500: 'Bedaŭrinde, ŝajnas ke okazis interna servila eraro.'
+    ErrorMessage503: 'Bedaŭrinde, ŝajnas ke la la servo estas dumtempe ne disponebla.'
     ExpandPanel: 'Etendi panelon'
     HelpMenu: Helpmenuo
     LOGOUT: Adiaŭi
     MenuToggleAuto: Aŭtomate
     MenuToggleStickyNav: 'Persista navigado'
+    NO_PREVIEW: 'Neniu antaŭvido disponeblas'
     NavigateUp: 'Navigi supren unu dosierujon'
     PERMAGAIN: 'Vi malkonektiĝis el la sistemo. Se vi volas ree ensaluti, enigu salutnomon kaj pasvorton malsupre.'
     PERMALREADY: 'Bedaŭrinde vi ne povas aliri tiun parton de la sistemo. Se vi volas ensaluti kiel alia uzanto, faru tion malsupre.'
@@ -49,13 +56,6 @@ eo:
     SUBMIT_BUTTON_LABEL: Ek
     ValidationError: 'Validiga eraro'
     Version: Versio
-    NO_PREVIEW: 'Neniu antaŭvido disponeblas'
-    ErrorDetail: 'Detaloj pri eraro: {detail}'
-    ErrorMessage: 'Bedaŭrinde, ŝajnas ke okazis eraro {errorcode}.'
-    ErrorMessage403: 'Bedaŭrinde, ŝajnas ke la provita ago estas malpermesita.'
-    ErrorMessage404: 'Bedaŭrinde, ŝajnas ke vi provis aliri sekcion aŭ objekton kiu ne ekzistas.'
-    ErrorMessage500: 'Bedaŭrinde, ŝajnas ke okazis interna servila eraro.'
-    ErrorMessage503: 'Bedaŭrinde, ŝajnas ke la la servo estas dumtempe ne disponebla.'
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
     Auto: Aŭtomate
     ChangeViewMode: 'Ŝanĝi vidan reĝimon'
@@ -75,6 +75,8 @@ eo:
     FileFieldLabel: 'CSV -dosiero <small>(Permesita sufikso: *.csv)</small>'
     Help1: '<p>Importi uzantojn en <em>CSV-formato</em> (perkome disigitaj valoroj). <small><a href="#" class="toggle-advanced">Vidigi altnivelan uzaĵon</a></small></p>'
     Help2: '<div class="advanced"><h4>Altnivela uzado</h4><ul><li>Permesitaj kolumnoj: <em>{kolumnoj}</em></li><li>Ekzistantaj uzantoj kongruiĝas laŭ sia unika atributo <em>Kodo</em>, kaj ĝisdatiĝas per eventualaj novaj valoroj el la importita dosiero</li><li>Grupoj estas agordeblaj per la kolumno <em>Grupoj</em>. Grupoj estas identigeblaj laŭ ilia atributo <em>Kodo</em>, pluraj grupoj estas apartigeblaj per komo. Ekzistantaj grupaj membrecoj ne vakiĝos.</li></ul></div>'
+    ImportFormHelpGroup: '<ul><li>ekzistantajn grupojn kongruigu laŭ sia unika <em>kodvaloro</em>, kaj ĝisdatigu per eventualaj novaj valoroj el la importita dosiero</li><li>Grupajn hierarkiojn kreu per <em>PatraKodo</em>-kolumno.</li><li>Eblas agordi permesajn kodojn per la <em>PermesoKodo</em>-kolumno. Ekzistantaj kodoj ne vakiĝas.</li></ul>'
+    ImportFormHelpMember: '<p>Groupojn agordu per la <em>Grupoj</em>-kolumno. Groupojn identigu per ilia <em>Kodo</em>-atributo; apartigu pluropajn grupojn per komo. Ekzistantaj groupaj membrecoj ne vakiĝas.</p>'
     ResultCreated: 'Kreis {count} membrojn'
     ResultDeleted: 'Forigis {count} membrojn'
     ResultNone: 'Neniuj ŝanĝoj'
@@ -93,6 +95,11 @@ eo:
     NOIMPORT: 'Nenio importota'
     Title: 'Datumaj modeloj'
     UPDATEDRECORDS: 'Ĝisdatigis {count} rikordojn.'
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem:
+    WONT_BE_SHOWN: 'Noto: ĉi tiu meŝago ne vidiĝos al viaj vizitantoj'
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
+    PREVIEW: Antaŭvido
+    'PREVIEW''': Antaŭvido
   SilverStripe\Admin\SecurityAdmin:
     ACCESS_HELP: 'Permesi vidi, aldoni, kaj redakti uzantojn, kaj ankaŭ agordi permesojn kaj rolojn al ili.'
     APPLY_ROLES: 'Apliki rolojn al grupoj'
@@ -101,10 +108,15 @@ eo:
     EDITPERMISSIONS_HELP: 'Kapablo redakti la permesojn kaj IP-adresojn por grupo. Bezonas la permeson "Aliro al sekcio ''Sekureco''".'
     IMPORTGROUPS: 'Importi grupojn'
     IMPORTUSERS: 'Importi uzantojn'
+    ImportFormHelpGroup: '<ul><li>ekzistantaj grupoj kongruiĝas laŭ sia unika <em>kodvaloro</em>, kaj ĝisdatiĝas per eventualaj novaj valoroj el la importita dosiero</li><li>Grupaj hierarkioj estas kreeblaj per <em>ParentCode</em>-kolumno.</li><li>Eblas agordi permesajn kodojn per la <em>PermissionCode</em>-kolumno. Ekzistantaj kodoj ne vakiĝas.</li></ul>'
+    ImportFormHelpMember: '<p>Groupojn agordu per la <em>Grupoj</em>-kolumno. Groupojn identigu per ilia <em>Kodo</em>-atributo; apartigu pluropajn grupojn per komo. Ekzistantaj groupaj membrecoj ne vakiĝas.</p>'
     MENUTITLE: Sekureco
     MemberListCaution: 'Averto: forigi membrojn el ĉi tiu listo forigos ilin ankaŭ el ĉiuj grupoj kaj la datumbazo.'
     TABROLES: Roloj
     Users: Uzantoj
-  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
-    PREVIEW: Antaŭvido
-    'PREVIEW''': Antaŭvido
+  SilverStripe\Admin\SudoModeController:
+    INVALID: 'Malĝusta pasvorto'
+    ImportFormHelpGroup: '<ul><li>ekzistantajn grupojn kongruigu laŭ sia unika <em>kodvaloro</em>, kaj ĝisdatigu per eventualaj novaj valoroj el la importita dosiero</li><li>Grupajn hierarkiojn kreu per <em>PatraKodo</em>-kolumno.</li><li>Eblas agordi permesajn kodojn per la <em>PermesoKodo</em>-kolumno. Ekzistantaj kodoj ne vakiĝas.</li></ul>'
+    ImportFormHelpMember: '<p>Groupojn agordu per la <em>Grupoj</em>-kolumno. Groupojn identigu per ilia <em>Kodo</em>-atributo; apartigu pluropajn grupojn per komo. Ekzistantaj groupaj membrecoj ne vakiĝas.</p>'
+    MENUTITLE: SilverStripe\Admin\SudoModeController
+    TIMEOUT: 'Tempolimo de seanco'
