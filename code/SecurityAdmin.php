@@ -123,11 +123,16 @@ class SecurityAdmin extends ModelAdmin implements PermissionProvider
         }
         /** @var GridFieldImportButton $importButton */
         $importButton = $config->getComponentByType(GridFieldImportButton::class);
-        $modalTitle = match ($this->modelClass) {
-            Member::class => _t(__CLASS__ . '.IMPORTUSERS', 'Import users'),
-            Group::class => _t(__CLASS__ . '.IMPORTGROUPS', 'Import groups'),
-        };
-        $importButton->setModalTitle($modalTitle);
+        if ($importButton) {
+            $modalTitle = match ($this->modelClass) {
+                Member::class => _t(__CLASS__ . '.IMPORTUSERS', 'Import users'),
+                Group::class => _t(__CLASS__ . '.IMPORTGROUPS', 'Import groups'),
+                default => null,
+            };
+            if ($modalTitle !== null) {
+                $importButton->setModalTitle($modalTitle);
+            }
+        }
         return $config;
     }
 
