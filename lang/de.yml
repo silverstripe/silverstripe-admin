@@ -86,6 +86,9 @@ de:
     NOIMPORT: 'Nichts zu importieren'
     Title: Datenmodelle
     UPDATEDRECORDS: '{count} Einträge aktualisiert.'
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
+    PREVIEW: Vorschau
+    'PREVIEW''': Vorschau
   SilverStripe\Admin\SecurityAdmin:
     ACCESS_HELP: 'Erlaubt anzeigen, hinzufügen und bearbeiten von Benutzern, wie auch das zuweisen von Berechtigungen und Rollen.'
     APPLY_ROLES: 'Rollen auf Gruppen anwenden'
@@ -98,6 +101,3 @@ de:
     MemberListCaution: 'Achtung: Benutzer von dieser Liste zu entfernen, wird diese von allen Gruppen entfernen und aus der Datenbank löschen.'
     TABROLES: Rollen
     Users: Benutzer
-  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
-    PREVIEW: Vorschau
-    'PREVIEW''': Vorschau

@@ -38,6 +38,7 @@ it:
     LOGOUT: Disconnetti
     MenuToggleAuto: Auto
     MenuToggleStickyNav: 'Sticky nav'
+    NO_PREVIEW: 'Anteprima non disponibile'
     NavigateUp: 'Navigare su una cartella'
     PERMAGAIN: 'Sei stato disconnesso dal CMS. Se si desidera accedere di nuovo, immettere un nome utente e una password di seguito.'
     PERMALREADY: 'Mi dispiace, ma non puoi accedere a questa parte del CMS. Se si desidera accedere come qualcun altro, farlo di seguito.'
@@ -49,7 +50,6 @@ it:
     SUBMIT_BUTTON_LABEL: Vai
     ValidationError: 'Errore di convalida'
     Version: Versione
-    NO_PREVIEW: 'Anteprima non disponibile'
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
     Auto: Auto
     ChangeViewMode: 'Cambia la modalità di visualizzazione'
@@ -87,6 +87,9 @@ it:
     NOIMPORT: 'Niente da importare'
     Title: 'Modelli di dati'
     UPDATEDRECORDS: 'Aggiornato {count} record.'
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
+    PREVIEW: Anteprima
+    'PREVIEW''': Anteprima
   SilverStripe\Admin\SecurityAdmin:
     ACCESS_HELP: 'Consentire la visualizzazione, l''aggiunta e la modifica degli utenti, nonché l''assegnazione di autorizzazioni e ruoli.'
     APPLY_ROLES: 'Applica ruoli ai gruppi'
@@ -99,6 +102,3 @@ it:
     MemberListCaution: 'Attenzione: la rimozione degli utenti da questo elenco li rimuoverà da tutti i gruppi e dal database'
     TABROLES: Ruoli
     Users: Utenti
-  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
-    PREVIEW: Anteprima
-    'PREVIEW''': Anteprima
