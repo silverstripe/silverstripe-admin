@@ -18,7 +18,7 @@ class CMSProfileController extends LeftAndMain
 
     private static $menu_title = 'My Profile';
 
-    private static $required_permission_codes = 'CMS_ACCESS';
+    private static $required_permission_codes = false;
 
     private static $tree_class = Member::class;
 
@@ -59,10 +59,8 @@ class CMSProfileController extends LeftAndMain
 
     public function canView($member = null)
     {
-        $currentUser = Security::getCurrentUser();
-
         if (!$member && $member !== false) {
-            $member = $currentUser;
+            $member = Security::getCurrentUser();
         }
 
         // cms menus only for logged-in members
@@ -70,8 +68,14 @@ class CMSProfileController extends LeftAndMain
             return false;
         }
 
-        // Check they are trying to edit themselves and they have permissions
-        return $member->ID === $currentUser->ID && parent::canView($member);
+        // Check they can access the CMS and that they are trying to edit themselves
+        if (Permission::checkMember($member, "CMS_ACCESS")
+            && $member->ID === Security::getCurrentUser()->ID
+        ) {
+            return true;
+        }
+
+        return false;
     }
 
     public function save(array $data, Form $form): HTTPResponse
