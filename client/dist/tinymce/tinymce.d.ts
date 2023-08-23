@@ -548,7 +548,9 @@ interface HtmlPanelSpec {
 }
 interface IframeSpec extends FormComponentWithLabelSpec {
     type: 'iframe';
+    border?: boolean;
     sandboxed?: boolean;
+    streamContent?: boolean;
     transparent?: boolean;
 }
 interface ImagePreviewSpec extends FormComponentSpec {
@@ -562,10 +564,12 @@ interface InputSpec extends FormComponentWithLabelSpec {
     maximized?: boolean;
     enabled?: boolean;
 }
+type Alignment = 'start' | 'center' | 'end';
 interface LabelSpec {
     type: 'label';
     label: string;
     items: BodyComponentSpec[];
+    align?: Alignment;
 }
 interface ListBoxSingleItemSpec {
     text: string;
@@ -964,7 +968,7 @@ interface DialogSpec<T extends DialogData> {
     title: string;
     size?: DialogSize;
     body: TabPanelSpec | PanelSpec;
-    buttons: DialogFooterButtonSpec[];
+    buttons?: DialogFooterButtonSpec[];
     initialData?: Partial<T>;
     onAction?: DialogActionHandler<T>;
     onChange?: DialogChangeHandler<T>;
@@ -1373,6 +1377,7 @@ interface DomParserSettings {
     forced_root_block?: boolean | string;
     forced_root_block_attrs?: Record<string, string>;
     inline_styles?: boolean;
+    pad_empty_with_br?: boolean;
     preserve_cdata?: boolean;
     remove_trailing_brs?: boolean;
     root_name?: string;
@@ -1420,8 +1425,9 @@ declare namespace Ui_d {
     export { Ui_d_Registry as Registry, PublicDialog_d as Dialog, PublicInlineContent_d as InlineContent, PublicMenu_d as Menu, PublicView_d as View, PublicSidebar_d as Sidebar, PublicToolbar_d as Toolbar, Ui_d_EditorUiApi as EditorUiApi, Ui_d_EditorUi as EditorUi, };
 }
 interface WindowParams {
-    readonly inline?: 'cursor' | 'toolbar';
+    readonly inline?: 'cursor' | 'toolbar' | 'bottom';
     readonly ariaAttrs?: boolean;
+    readonly persistent?: boolean;
 }
 type InstanceApi<T extends DialogData> = UrlDialogInstanceApi | DialogInstanceApi<T>;
 interface WindowManagerImpl {
@@ -1908,6 +1914,7 @@ interface BaseEditorOptions {
     noneditable_regexp?: RegExp | RegExp[];
     nowrap?: boolean;
     object_resizing?: boolean | string;
+    pad_empty_with_br?: boolean;
     paste_as_text?: boolean;
     paste_block_drop?: boolean;
     paste_data_images?: boolean;
@@ -2056,6 +2063,7 @@ interface EditorOptions extends NormalizedEditorOptions {
     noneditable_class: string;
     noneditable_regexp: RegExp[];
     object_resizing: string;
+    pad_empty_with_br: boolean;
     paste_as_text: boolean;
     preview_styles: string;
     promotion: boolean;
