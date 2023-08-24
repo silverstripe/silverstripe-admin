@@ -1,6 +1,6 @@
 <div class="cms-help__toggle">
     <button class="cms-help__menu" type="button" title="<%t SilverStripe\Admin\LeftAndMain.HelpMenu "Help menu" %>" aria-label="<%t SilverStripe\Admin\LeftAndMain.HelpMenu "Help menu" %>" aria-expanded="false">
-        <span class="cms-help__logo font-icon-silverstripe"></span>
+        <span class="cms-help__logo font-icon-silverstripe-cms"></span>
         <span class="cms-help__toggle-title">
             $ApplicationName
         </span>
