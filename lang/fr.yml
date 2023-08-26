@@ -82,6 +82,9 @@ fr:
     NOCSVFILE: 'Explorez pour importer un fichier CSV'
     NOIMPORT: 'Rien à importer'
     UPDATEDRECORDS: '{count} entrées mis à jour.'
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
+    PREVIEW: Prévisualisation
+    'PREVIEW''': Prévisualisation
   SilverStripe\Admin\SecurityAdmin:
     ACCESS_HELP: 'Autoriser l''affichage, l''ajout et la modification d''utilisateurs, ainsi que leur attribuer des autorisations et des rôles.'
     APPLY_ROLES: 'Appliquer des rôles à des groupes'
@@ -94,6 +97,3 @@ fr:
     MemberListCaution: 'Attention: Supprimer des membres de cette liste les supprimera de tous les groupes et de la base de données'
     TABROLES: Rôles
     Users: Utilisateurs
-  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
-    PREVIEW: Prévisualisation
-    'PREVIEW''': Prévisualisation

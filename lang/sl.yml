@@ -86,6 +86,9 @@ sl:
     NOIMPORT: 'Ničesar ni za uvoz'
     Title: 'Podatkovni modeli'
     UPDATEDRECORDS: 'Posodobili smo {count} zapis/ov.'
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
+    PREVIEW: Predogled
+    'PREVIEW''': Predogled
   SilverStripe\Admin\SecurityAdmin:
     ACCESS_HELP: 'Dovoljenje za pregled, dodajanje in urejanje uporabnikov ter dodeljevanje vlog in pravic uporabnikom.'
     APPLY_ROLES: 'Dodeljevanje vlog skupinam'
@@ -98,6 +101,3 @@ sl:
     MemberListCaution: 'Previdno: S tem, ko boste odstranili uporabnike iz vseh skupin, jih boste tudi izbrisali iz baze podatkov.'
     TABROLES: Vloge
     Users: Uporabniki
-  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
-    PREVIEW: Predogled
-    'PREVIEW''': Predogled
