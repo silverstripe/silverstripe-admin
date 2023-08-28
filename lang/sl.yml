@@ -86,6 +86,9 @@ sl:
     NOIMPORT: 'Ničesar ni za uvoz'
     Title: 'Podatkovni modeli'
     UPDATEDRECORDS: 'Posodobili smo {count} zapis/ov.'
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
+    PREVIEW: Predogled
+    'PREVIEW''': Predogled
   SilverStripe\Admin\SecurityAdmin:
     ACCESS_HELP: 'Dovoljenje za pregled, dodajanje in urejanje uporabnikov ter dodeljevanje vlog in pravic uporabnikom.'
     APPLY_ROLES: 'Dodeljevanje vlog skupinam'
@@ -101,6 +104,3 @@ sl:
   SilverStripe\Admin\SudoModeController:
     INVALID: 'Napačno geslo'
     TIMEOUT: 'Seja je potekla, osvežite stran in poskusite znova.'
-  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
-    PREVIEW: Predogled
-    'PREVIEW''': Predogled

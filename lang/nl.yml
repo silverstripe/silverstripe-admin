@@ -33,11 +33,18 @@ nl:
     CollapsePanel: Inklappen
     DELETED: Gewist.
     DropdownBatchActionsDefault: 'Kies een aktie...'
+    ErrorDetail: 'Foutdetails: {detail}'
+    ErrorMessage: 'Excuses, er was een {errorcode} fout.'
+    ErrorMessage403: 'Excuses, de actie die je probeerde uit te voeren is niet toegestaan.'
+    ErrorMessage404: 'Excuses, het onderdeel wat je probeert te openen bestaat niet.'
+    ErrorMessage500: 'Excuses, er was een fout op de server.'
+    ErrorMessage503: 'Excuses, de server is tijdelijk niet beschikbaar.'
     ExpandPanel: Uitklappen
     HelpMenu: Helpmenu
     LOGOUT: Uitloggen
     MenuToggleAuto: Auto
     MenuToggleStickyNav: 'Opengeklapt houden'
+    NO_PREVIEW: 'Geen voorbeeld beschikbaar'
     NavigateUp: 'Navigeer een niveau omhoog'
     PERMAGAIN: 'U bent uitgelogd. Als je opnieuw in wil loggen, voer uw gebruikersnaam en wachtwoord hier onder opnieuw in.'
     PERMALREADY: 'U heeft geen rechten binnen dit gedeelte van het CMS. Indien u in wil loggen als iemand anders, dan kan dat hier onder.'
@@ -49,13 +56,6 @@ nl:
     SUBMIT_BUTTON_LABEL: Ga
     ValidationError: Validatiefout
     Version: Versie
-    NO_PREVIEW: 'Geen voorbeeld beschikbaar'
-    ErrorDetail: 'Foutdetails: {detail}'
-    ErrorMessage: 'Excuses, er was een {errorcode} fout.'
-    ErrorMessage403: 'Excuses, de actie die je probeerde uit te voeren is niet toegestaan.'
-    ErrorMessage404: 'Excuses, het onderdeel wat je probeert te openen bestaat niet.'
-    ErrorMessage500: 'Excuses, er was een fout op de server.'
-    ErrorMessage503: 'Excuses, de server is tijdelijk niet beschikbaar.'
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
     Auto: Auto
     ChangeViewMode: 'Verander view modus'
@@ -93,6 +93,9 @@ nl:
     NOIMPORT: 'Niets om te importeren'
     Title: 'Data Modellen'
     UPDATEDRECORDS: '{count} records aangepast'
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
+    PREVIEW: Preview
+    'PREVIEW''': Preview
   SilverStripe\Admin\SecurityAdmin:
     ACCESS_HELP: 'Beheer rechten voor het toevoegen en bewerken van gebruikers, alsook het  toekennen van permissies en rollen.'
     APPLY_ROLES: 'Toepassen rollen voor groepen'
@@ -108,6 +111,3 @@ nl:
   SilverStripe\Admin\SudoModeController:
     INVALID: 'Incorrect wachtwoord'
     TIMEOUT: 'Sessie is verlopen, ververs en probeer het opnieuw.'
-  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
-    PREVIEW: Preview
-    'PREVIEW''': Preview
