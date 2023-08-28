@@ -1,0 +1,9 @@
+// This file is in the legacy folder instead of one level up just to be sure there is
+// no naming clash with the tinymce folder
+
+// Fix TinyMCE source view
+.tox .tox-dialog .tox-textarea-wrap {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
