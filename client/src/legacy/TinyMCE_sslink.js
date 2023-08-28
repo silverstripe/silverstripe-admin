@@ -1,6 +1,5 @@
 /* global tinymce, navigator */
 import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
-import ReactDOM from 'react-dom';
 import jQuery from 'jquery';
 import { createHTMLSanitiser } from 'lib/ShortcodeSerialiser';
 import i18n from 'i18n';
@@ -111,8 +110,11 @@ jQuery.entwine('ss', ($) => {
     },
 
     _clearModal() {
-      ReactDOM.unmountComponentAtNode(this[0]);
-      // this.empty();
+      const root = this.getReactRoot();
+      if (root) {
+        root.unmount();
+        this.setReactRoot(null);
+      }
     },
 
     open() {
