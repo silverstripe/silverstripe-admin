@@ -2,7 +2,6 @@
 import i18n from 'i18n';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
 import * as schemaActions from 'state/schema/SchemaActions';
 import { reset, initialize, change } from 'redux-form';
@@ -165,7 +164,7 @@ class Search extends Component {
       return;
     }
 
-    const node = ReactDOM.findDOMNode(this);
+    const node = this.nodeRef.container;
     if (!node) {
       return;
     }
@@ -188,7 +187,7 @@ class Search extends Component {
       return;
     }
 
-    const node = ReactDOM.findDOMNode(this);
+    const node = this.nodeRef.container;
     if (!node) {
       return;
     }
@@ -199,6 +198,7 @@ class Search extends Component {
     }
 
     const input = form.querySelector(filter);
+
     if (input) {
       input.focus();
       if (input.select) {
@@ -444,7 +444,7 @@ class Search extends Component {
     const clearable = (Object.keys(data).length > 0);
 
     return (
-      <Focusedzone onClickOut={this.show} className="search">
+      <Focusedzone onClickOut={this.show} className="search" ref={node => { this.nodeRef = node; }}>
         <SearchBox
           {...props}
           name={`SearchBox__${name}`}

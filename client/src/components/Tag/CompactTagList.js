@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import TagList from 'components/Tag/TagList';
 import ResizeAware from 'components/ResizeAware/ResizeAware';
 import classnames from 'classnames';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import SummaryTag from './SummaryTag';
 
@@ -44,7 +43,7 @@ class CompactTagList extends Component {
    * @returns {number}
    */
   getPlaceholderSize() {
-    const node = ReactDOM.findDOMNode(this);
+    const node = this.nodeRef;
     if (!node) {
       return 0;
     }
@@ -81,7 +80,7 @@ class CompactTagList extends Component {
     );
 
     return (
-      <div className={classes}>
+      <div className={classes} ref={node => { this.nodeRef = node; }}>
         <ResizeAware onResize={this.onResize} className="compact-tag-list__placeholder" aria-hidden>
           <TagList {...listProps} focusable={false} />
         </ResizeAware>
