@@ -62,6 +62,7 @@ use SilverStripe\View\SSViewer;
  * This is essentially an abstract class which should be subclassed.
  * See {@link CMSMain} for a good example.
  */
+#[\AllowDynamicProperties]
 class LeftAndMain extends Controller implements PermissionProvider
 {
 
