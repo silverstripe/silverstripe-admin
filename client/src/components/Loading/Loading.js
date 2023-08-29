@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuid } from 'uuid';
 
@@ -17,8 +17,9 @@ import { v4 as uuid } from 'uuid';
  * that the paths are being "drawn".
  */
 function Loading({ containerClass }) {
-  // If we are displaying many loading indicators at the same time, we need to
-  const [id] = useState(uuid());
+  // If we are displaying many loading indicators at the same time, we need to have a unique ID.
+  // The ID does not need to be the same each time this component renders.
+  const id = uuid();
 
   return (
     <div className={containerClass}>
