@@ -183,7 +183,7 @@ class Search extends Component {
   /**
    * Try to find the first form field in the advanced form and focus on it.
    */
-  focusFirstFormField(filter = 'input, textarea, select, button') {
+  focusFirstFormField(filter = 'input:not([type=hidden]), textarea, select, button') {
     if (this.state.display !== DISPLAY.EXPANDED) {
       return;
     }
