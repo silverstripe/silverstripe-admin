@@ -191,6 +191,9 @@ ss.editorWrappers.tinyMCE = (function() {
     getSelection: function() {
       const instance = this.getInstance();
       let selection = instance.selection.getSel().toString();
+      if (!selection && instance.selection.getSel().type === 'Range') {
+        selection = instance.selection.getNode().outerHTML;
+      }
       return selection || '';
     },
 
