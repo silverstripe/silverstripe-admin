@@ -111,7 +111,53 @@ jQuery.entwine('ss', ($) => {
       /* noop */
     },
 
-  /**
+    /**
+     * @param selection The current tinyMCE selection for this WYSIWYG
+     * @return {Boolean}
+     */
+    linkCanWrapSelection(selection) {
+      const selectionContent = selection.getContent() || '';
+      const node = selection.getNode();
+
+      // If there is direct selected content other than whitespace, we can wrap it.
+      if (selectionContent) {
+        return selectionContent.trim() !== '';
+      }
+
+      // If the selected node type can contain text, and we didn't find selected text above,
+      // then you haven't got a selection we can wrap in a link.
+      const x = document.createElement(node.nodeName);
+      x.textContent = 'Check the outer HTML';
+      if (x.outerHTML.includes('Check the outer HTML')) {
+        return false;
+      }
+
+      // Check if there is a single selected node which can be wrapped in a link.
+      if (node === selection.getSel().focusNode && node === selection.getSel().anchorNode) {
+        const parsed = tinymce.activeEditor.dom.createFragment(`<a>${node.outerHTML}</a>`);
+        if (parsed.childNodes.length === 1) {
+          return true;
+        }
+      }
+
+      return false;
+    },
+
+    /**
+     * Determine whether to show the link text field
+     *
+     * @return {Boolean}
+     */
+    getRequireLinkText() {
+      const selection = this.getElement().getEditor().getInstance().selection;
+      const isValidSelection = this.linkCanWrapSelection(selection);
+      const tagName = selection.getNode().tagName;
+      const requireLinkText = tagName !== 'A' && !isValidSelection;
+
+      return requireLinkText;
+    },
+
+    /**
      * Default behaviour, recommended to overload this and sanitise where needed
      *
      * @param data
