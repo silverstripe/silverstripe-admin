@@ -495,7 +495,7 @@ describe('TreeDropdownField', () => {
         <TreeDropdownField {...props} />
       );
       const options = field.getDropdownOptions();
-      expect(options[0].id).toBe(0);
+      expect(options[0].id).toBe('');
     });
 
     it('should return an empty first option if node has no children', () => {
@@ -506,7 +506,7 @@ describe('TreeDropdownField', () => {
       const options = field.getDropdownOptions();
 
       expect(options.length).toBe(1);
-      expect(options[0].id).toBe(0);
+      expect(options[0].id).toBe('');
       expect(options[0].title).toBe(null);
       expect(options[0].disabled).toBe(true);
     });

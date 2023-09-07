@@ -18,7 +18,7 @@ const SEARCH_DELAY = 500; // ms
 // legacy value for multi-select's empty value
 const MULTI_EMPTY_VALUE = 'unchanged';
 
-const SINGLE_EMPTY_VALUE = 0;
+const SINGLE_EMPTY_VALUE = '';
 
 class TreeDropdownField extends Component {
   constructor(props) {
@@ -174,7 +174,7 @@ class TreeDropdownField extends Component {
     // require an empty option in some instances
     // value is an empty string by react-select cannot find the options
     options.unshift({
-      id: this.props.data.multiple ? '' : SINGLE_EMPTY_VALUE,
+      id: SINGLE_EMPTY_VALUE,
       title: (this.props.data.hasEmptyDefault) ? this.props.data.emptyString : null,
       disabled: !options.length || !this.props.data.hasEmptyDefault,
     });
@@ -330,7 +330,7 @@ class TreeDropdownField extends Component {
     const parent = this.getVisibleTree();
 
     return options.filter((option) => {
-      if ((option.id === SINGLE_EMPTY_VALUE || option.id === '') &&
+      if ((option.id === SINGLE_EMPTY_VALUE) &&
         (!this.props.data.hasEmptyDefault || this.props.visible.length || this.hasSearch())
       ) {
           return false;
