@@ -1863,6 +1863,8 @@ class LeftAndMain extends Controller implements PermissionProvider
     /**
      * The urls used for the links in the Help dropdown in the backend
      *
+     * Set this to `false` via yml config if you do not want to show any help links
+     *
      * @config
      * @var array
      */
@@ -1889,13 +1891,16 @@ class LeftAndMain extends Controller implements PermissionProvider
             }
         });
 
-        foreach ($helpLinks as $key => $value) {
-            $translationKey = str_replace(' ', '', $key ?? '');
+        // Setting the `help_links` config to `false` means no help links will show
+        if (is_array($helpLinks)) {
+            foreach ($helpLinks as $key => $value) {
+                $translationKey = str_replace(' ', '', $key ?? '');
 
-            $formattedLinks[] = [
-                'Title' => _t(__CLASS__ . '.' . $translationKey, $key),
-                'URL' => $value
-            ];
+                $formattedLinks[] = [
+                    'Title' => _t(__CLASS__ . '.' . $translationKey, $key),
+                    'URL' => $value
+                ];
+            }
         }
 
         return ArrayList::create($formattedLinks);
