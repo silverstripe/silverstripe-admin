@@ -132,7 +132,69 @@ jQuery.entwine('ss', ($) => {
       /* noop */
     },
 
-  /**
+    /**
+     * Check if one node is the same as another node (or is the same as that other node's child)
+     */
+    checkNodeMatches(node, matchWith) {
+      if (node === matchWith) {
+        return true;
+      }
+      if (matchWith.children.length === 1) {
+        // In chrome, selecting an image actually results in selecting the paragraph.
+        // If there's exactly one child, treat that child as the selection to account for this scenario.
+        return node === matchWith.children[0];
+      }
+      return false;
+    },
+
+    /**
+     * @param selection The current tinyMCE selection for this WYSIWYG
+     * @return {Boolean}
+     */
+    linkCanWrapSelection(editor, selection) {
+      const selectionContent = editor.getSelection() || '';
+      const node = selection.getNode();
+
+      // If there is direct selected content other than whitespace, we can wrap it.
+      if (selectionContent) {
+        return selectionContent.trim() !== '';
+      }
+
+      // If the selected node type can contain text, and we didn't find selected text above,
+      // then you haven't got a selection we can wrap in a link.
+      const x = document.createElement(node.nodeName);
+      x.textContent = 'Check the outer HTML';
+      if (x.outerHTML.includes('Check the outer HTML')) {
+        return false;
+      }
+
+      // Check if there is a single selected node which can be wrapped in a link.
+      if (this.checkNodeMatches(node, selection.getSel().focusNode) && this.checkNodeMatches(node, selection.getSel().anchorNode)) {
+        const parsed = tinymce.activeEditor.dom.createFragment(`<a>${node.outerHTML}</a>`);
+        if (parsed.childNodes.length === 1) {
+          return true;
+        }
+      }
+
+      return false;
+    },
+
+    /**
+     * Determine whether to show the link text field
+     *
+     * @return {Boolean}
+     */
+    getRequireLinkText() {
+      const editor = this.getElement().getEditor();
+      const selection = editor.getInstance().selection;
+      const isValidSelection = this.linkCanWrapSelection(editor, selection);
+      const tagName = selection.getNode().tagName;
+      const requireLinkText = tagName !== 'A' && !isValidSelection;
+
+      return requireLinkText;
+    },
+
+    /**
      * Default behaviour, recommended to overload this and sanitise where needed
      *
      * @param data
