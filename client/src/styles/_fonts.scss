@@ -11,7 +11,7 @@
   font-style: normal;
 }
 
-[data-icon]:before {
+[data-icon]:not([data-icon="accept"]):not([data-icon="cancel"]):before {
   // sass-lint:disable-block no-important
   font-family: "silverstripe" !important;
   content: attr(data-icon);
