@@ -210,6 +210,13 @@ class LeftAndMainTest extends FunctionalTest
         $this->assertEquals('www.silverstripe.org', $silverstripeLink['URL']);
     }
 
+    public function testDisableHelpLinks()
+    {
+        Config::modify()->set(LeftAndMain::class, 'help_links', false);
+        $helpLinks = LeftAndMain::singleton()->getHelpLinks();
+        $this->assertCount(0, $helpLinks);
+    }
+
     /**
      * @dataProvider provideTestCMSVersionNumber
      */
