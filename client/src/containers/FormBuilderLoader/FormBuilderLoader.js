@@ -352,6 +352,7 @@ class FormBuilderLoader extends Component {
         return formSchema;
       })
       .catch((error) => {
+        this.setState({ didError: true });
         this.props.actions.schema.setSchemaLoading(this.props.schemaUrl, false);
         if (typeof this.props.onLoadingError === 'function') {
           return this.props.onLoadingError(this.normaliseError(error));
@@ -413,10 +414,13 @@ class FormBuilderLoader extends Component {
   }
 
   render() {
-    const Loading = this.props.loadingComponent;
+    if (this.state && this.state.didError) {
+      return null;
+    }
     // If the response from fetching the initial data
     // hasn't come back yet, don't render anything.
     if (!this.props.schema || !this.props.schema.schema || this.props.loading) {
+      const Loading = this.props.loadingComponent;
       return <Loading containerClass="loading--form flexbox-area-grow" />;
     }
 
