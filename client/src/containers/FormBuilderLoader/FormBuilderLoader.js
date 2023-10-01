@@ -184,10 +184,10 @@ class FormBuilderLoader extends Component {
             ...field,
             message,
           };
-        })
+        }),
+        // Non-field messages
+        messages: schema.errors.filter((error) => !error.field),
       },
-      // Non-field messages
-      messages: schema.errors.filter((error) => !error.field),
     };
 
     // Can be safely discarded
