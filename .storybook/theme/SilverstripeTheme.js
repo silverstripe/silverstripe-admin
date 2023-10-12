@@ -3,7 +3,7 @@ import { create } from '@storybook/theming/create';
 const SilverstripeTheme = create({
   base: 'light',
   brandTitle: 'Silverstripe CMS - Storybook',
-  brandImage: 'https://www.silverstripe.com/_resources/themes/app/dist/images/logos/silverstripe-logo.svg',
+  brandImage: 'https://www.silverstripe.org/themes/ssv3/img/global-logo-open-source.svg',
   brandTarget: '_self',
 
   // Main colors
