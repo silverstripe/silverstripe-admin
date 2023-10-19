@@ -569,7 +569,23 @@ $.entwine('ss', function($){
       }
     },
     onchange: function (e) {
-      this.toggleListDisplay(e.target.value);
+      this.toggleListDisplay(e.target.value, window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    },
+    checkIfHoldsField(candidate, type) {
+      let fieldName = '';
+      switch (this.attr('name')) {
+        case 'CanViewType':
+          fieldName = `Viewer${type}`;
+          break;
+        case 'CanEditType':
+          fieldName = `Editor${type}`;
+          break;
+        case 'CanCreateTopLevelType':
+          fieldName = `CreateTopLevel${type}`;
+          break;
+      }
+      const jCandidate = jQuery(candidate);
+      return jCandidate.find(`[name="${fieldName}"],[name="${fieldName}[]"]`).length > 0 && jCandidate.attr('id').endsWith('_Holder');
     },
     toggleListDisplay: function(checkedTarget, instant) {
       if (checkedTarget === 'OnlyTheseUsers') {
@@ -596,19 +612,19 @@ $.entwine('ss', function($){
     },
     showGroupsList: function (instant) {
       const holder = this.closest('.field');
-      this.showListElement(holder, holder.next().filter('.treemultiselect'), instant);
+      this.showListElement(holder, holder.parent().find('.form-group, .field').filter((_, candidate) => this.checkIfHoldsField(candidate, 'Groups')), instant);
     },
     hideGroupsList: function (instant) {
       const holder = this.closest('.field');
-      this.hideListElement(holder, holder.next().filter('.treemultiselect'), instant)
+      this.hideListElement(holder, holder.parent().find('.form-group, .field').filter((_, candidate) => this.checkIfHoldsField(candidate, 'Groups')), instant);
     },
     showMembersList: function (instant) {
       const holder = this.closest('.field');
-      this.showListElement(holder, holder.next().next().filter('.listbox'), instant);
+      this.showListElement(holder, holder.parent().find('.form-group, .field').filter((_, candidate) => this.checkIfHoldsField(candidate, 'Members')), instant);
     },
     hideMembersList: function (instant) {
       const holder = this.closest('.field');
-      this.hideListElement(holder, holder.next().next().filter('.listbox'), instant);
+      this.hideListElement(holder, holder.parent().find('.form-group, .field').filter((_, candidate) => this.checkIfHoldsField(candidate, 'Members')), instant);
     },
     showListElement: function (holder, list, instant) {
       holder.addClass('field--merge-below');
