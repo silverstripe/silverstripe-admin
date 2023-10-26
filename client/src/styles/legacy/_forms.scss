@@ -20,7 +20,7 @@ fieldset {
   }
 }
 
-.field { // TODO convert to .form-group
+.field {
 
   &.ui-tabs {
     border-bottom: 0;
@@ -70,7 +70,6 @@ fieldset {
     @extend .form-control;
   }
 
-  // TODO remove ID style
   &#Action {
       box-shadow: none;
   }

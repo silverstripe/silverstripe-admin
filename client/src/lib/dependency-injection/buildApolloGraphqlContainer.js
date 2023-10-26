@@ -32,15 +32,6 @@ const buildApolloGraphqlContainer = (
    */
   /* eslint-disable max-len, no-unused-vars */
   scaffold(key, config, { force }) {
-    /*
-     * @todo build out scaffolding
-     * I would recommend adding a default mutation update handlers here, instead of in the `register` method.
-     * This way query and mutation could be potentially be linked more easily.
-     * Config schema could be found in the `GraphqlManager.js` file.
-     *
-     * Proof-of-concept for handlers could be found here:
-     * https://github.com/flamerohr/silverstripe-graphql-react-boilerplate/tree/master/client/src/js/lib/graphql
-     */
     throw new Error('This API endpoint is not available yet');
   },
   /* eslint-enable */

@@ -9,9 +9,6 @@ import { loadComponent } from 'lib/Injector';
 import '../../../thirdparty/jquery-ui/jquery-ui.js';
 import '../../../thirdparty/jquery-entwine/jquery.entwine.js';
 
-// TODO Enable once https://github.com/webpack/extract-text-webpack-plugin/issues/179 is resolved. Included in bundle.scss for now.
-// import '../styles/legacy/GridField.scss';
-
 $.entwine('ss', function($) {
   $('.grid-field').entwine({
     onmatch: function () {
@@ -91,8 +88,7 @@ $.entwine('ss', function($) {
         dataType: 'html',
         success: function (data) {
           // Replace the grid field with response, not the form.
-          // TODO Only replaces all its children, to avoid replacing the current scope
-          // of the executing method. Means that it doesn't retrigger the onmatch() on the main container.
+          // It doesn't retrigger the onmatch() on the main container.
           self.empty().append($(data).children());
 
           // Refocus previously focused element. Useful e.g. for finding+adding
@@ -323,7 +319,6 @@ $.entwine('ss', function($) {
 
       const GridFieldActions = this.getComponent();
 
-      // TODO: rework entwine so that react has control of holder
       let root = this.getReactRoot();
       if (!root) {
         root = createRoot(this[0]);
@@ -651,8 +646,6 @@ $.entwine('ss', function($) {
   $('.grid-field[data-selectable] .ss-gridfield-items').entwine({
     onadd: function() {
       this._super();
-
-      // TODO Limit to single selection
       this.selectable();
     },
     onremove: function() {

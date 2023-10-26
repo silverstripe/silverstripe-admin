@@ -39,7 +39,6 @@ jQuery.entwine('ss', ($) => {
 
       const UsedOnTable = this.getComponent();
 
-      // TODO: rework entwine so that react has control of holder
       let root = this.getReactRoot();
       if (!root) {
         root = createRoot(this[0]);

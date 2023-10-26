@@ -975,7 +975,6 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     public function show(HTTPRequest $request): HTTPResponse
     {
-        // TODO Necessary for TableListField URLs to work properly
         if ($request->param('ID')) {
             $this->setCurrentPageID($request->param('ID'));
         }
@@ -1126,7 +1125,6 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * @todo Wrap in CMSMenu instance accessor
      * @return ArrayData A single menu entry (see {@link MainMenu})
      */
     public function MenuCurrentItem()

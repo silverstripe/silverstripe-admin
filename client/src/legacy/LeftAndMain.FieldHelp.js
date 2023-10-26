@@ -17,7 +17,6 @@ $.entwine('ss', function($) {
       var descriptionEl = this.find('.description'), inputEl, tooltipEl;
       if(descriptionEl.length) {
         this
-          // TODO Remove title setting, shouldn't be necessary
           .attr('title', descriptionEl.text())
           .tooltip({content: descriptionEl.html()});
         descriptionEl.remove();

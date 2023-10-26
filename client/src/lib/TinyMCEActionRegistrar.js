@@ -147,7 +147,6 @@ class TinyMCEActionRegistrar {
   }
 }
 
-// TODO Fix registration across modules, see lib/Router.js for details
 window.ss = window.ss || {};
 window.ss.tinymceactions = window.ss.tinymceactions || new TinyMCEActionRegistrar();
 

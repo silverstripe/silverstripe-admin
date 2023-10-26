@@ -69,7 +69,6 @@ class SingleSelectField extends Component {
    */
   getInputProps() {
     const props = {
-      // @TODO Prevent entwine chosen applying chosen
       className: `${this.props.className} ${this.props.extraClass} no-chosen`,
       id: this.props.id,
       name: this.props.name,

@@ -268,7 +268,6 @@ class TreeDropdownField extends Component {
     // If any ancestor node in visible chain is either loading or failed then abort re-load
     const foundPrev = path.find((pathNode) => (
       this.props.loading.indexOf(pathNode) > -1
-      // TODO: investigate whether failed should not retry
       || this.props.failed.indexOf(pathNode) > -1
     ));
     if (foundPrev) {

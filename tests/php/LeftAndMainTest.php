@@ -35,8 +35,6 @@ class LeftAndMainTest extends FunctionalTest
     {
         parent::setUp();
 
-        // @todo fix controller stack problems and re-activate
-        //$this->autoFollowRedirection = false;
         $this->resetMenu();
         $this->backupCombined = Requirements::get_combined_files_enabled();
         $base = ModuleLoader::inst()->getManifest()->getModule('silverstripe/admin');

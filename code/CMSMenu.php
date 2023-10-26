@@ -70,8 +70,6 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
      * Add a LeftAndMain controller to the CMS menu.
      *
      * @param string $controllerClass The class name of the controller
-     * @todo A director rule is added when a controller link is added, but it won't be removed
-     *          when the item is removed. Functionality needed in {@link Director}.
      */
     public static function add_controller($controllerClass)
     {
@@ -371,7 +369,6 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
      *
      * Sorted by url_priority config.
      *
-     * @todo A variation of this function could probably be moved to {@link ClassInfo}
      * @param string $root The root class to begin finding subclasses
      * @param boolean $recursive Look for subclasses recursively?
      * @param string $sort Name of config on which to sort. Can be 'menu_priority' or 'url_priority'
@@ -382,7 +379,6 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
         if (!$root) {
             $root = LeftAndMain::class;
         }
-        /** @todo Make these actual abstract classes */
         $abstractClasses = [LeftAndMain::class, CMSMain::class];
         $subClasses = array_values(ClassInfo::subclassesFor($root) ?? []);
         foreach ($subClasses as $className) {

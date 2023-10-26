@@ -12,7 +12,6 @@ class SecurityAdminTest extends FunctionalTest
 {
     protected static $fixture_file = 'LeftAndMainTest.yml';
 
-    // TODO Fix export feature (moved from MemberTableField to GridFieldExportButton)
     // public function testGroupExport() {
     //  $this->session()->inst_set('loggedInAs', $this->idFromFixture('Member', 'admin'));
 
@@ -30,7 +29,6 @@ class SecurityAdminTest extends FunctionalTest
     //  $this->assertMatchesRegularExpression('/"","","admin@example.com"/', $lines[1], "Member values are correctly exported");
     // }
 
-    // TODO Fix export feature (moved from MemberTableField to GridFieldExportButton)
     // public function testEmptyGroupExport() {
     //  $this->session()->inst_set('loggedInAs', $this->idFromFixture('Member', 'admin'));
 
