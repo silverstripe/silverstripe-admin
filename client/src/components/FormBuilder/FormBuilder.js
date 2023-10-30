@@ -241,7 +241,6 @@ class FormBuilder extends Component {
           return formSchema;
         })
         .catch((reason) => {
-          // @todo Generic CMS error reporting
           this.setState({ submittingAction: null });
           throw reason;
         });

@@ -53,7 +53,6 @@ jQuery.entwine('ss', ($) => {
       this.updateValue();
     },
     onchange() {
-      // TODO Validation
       this.updateValue();
     },
     updateValue() {

@@ -1,7 +1,7 @@
 // Tabs, styles built on top of Bootstrap 4 tab functionality
 .nav-tabs {
   margin-bottom: $panel-padding-y;
-  border-radius: 0; //  TODO remove once JQueryUI is removed
+  border-radius: 0;
 
   // Spacing between items
   .nav-item + .nav-item {

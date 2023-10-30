@@ -115,8 +115,6 @@ page.routeAppliesToCurrentLocation = routeAppliesToCurrentLocation;
  * copy of `router` and all modules in `custom` get a single copy of `router`,
  * the copy of `router` in `framework` is not the same copy of `router`
  * available in `custom`.
- *
- * @TODO Look into SystemJS as a solution https://github.com/systemjs/systemjs
  */
 
 window.ss = window.ss || {};

@@ -1,8 +1,5 @@
 import $ from 'jquery';
 
-// TODO Enable once https://github.com/webpack/extract-text-webpack-plugin/issues/179 is resolved. Included in bundle.scss for now.
-// import '../styles/legacy/CheckboxSetField.scss';
-
 $.entwine('ss', function($){
 	/**
 	 * Automatically check and disable all checkboxes if ADMIN permissions are selected.
@@ -44,7 +41,6 @@ $.entwine('ss', function($){
 	/**
 	 * Automatically check all "CMS section" checkboxes when "Access to all CMS interfaces" is ticked.
 	 *
-	 * @todo This should really be abstracted into a declarative dependency system
 	 * instead of custom logic.
 	 */
 	$('.permissioncheckboxset .valCMS_ACCESS_LeftAndMain input').entwine({

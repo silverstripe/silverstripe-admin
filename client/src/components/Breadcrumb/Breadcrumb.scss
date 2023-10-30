@@ -49,7 +49,7 @@
   }
 }
 
-.breadcrumb > li.breadcrumb__item--last, // TODO Fix Bootstrap clash
+.breadcrumb > li.breadcrumb__item--last,
 .breadcrumb__item--last {
   display: block;
   float: none;
@@ -71,7 +71,7 @@
   }
 }
 
-.cms h2.breadcrumb__item-title--last, // TODO Fix CMS clash
+.cms h2.breadcrumb__item-title--last,
 .breadcrumb__item--last .breadcrumb__item-title,
 .breadcrumb__item-title--last {
   margin: 0;

@@ -3,8 +3,6 @@
  *
  * @package framework
  * @subpackage scss
- * @todo Add radial gradient to default delete button state
- * @todo Create SASS mixin-function to simply swap the from/to, to to/from colours in grsdient mixins?
  */
 
 // Extends basic table styles, requires .table .table-hover
@@ -312,7 +310,6 @@
   white-space: nowrap;
 }
 
-// TODO create pagination component
 .grid-field__paginator_numbers  {
   float: right;
 }

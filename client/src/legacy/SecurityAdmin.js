@@ -27,7 +27,6 @@ var refreshAfterImport = function(e) {
 $('#MemberImportFormIframe, #GroupImportFormIframe').entwine({
   onadd: function() {
     this._super();
-    // TODO entwine can't seem to bind to iframe load events
     $(this).on('load', refreshAfterImport);
   }
 });

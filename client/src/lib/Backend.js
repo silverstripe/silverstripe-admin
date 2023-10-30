@@ -145,7 +145,6 @@ function applySchemaToData(payloadSchema, data) {
       return prev;
     }
 
-    // TODO Support for nested keys
     return Object.assign(prev, { [key]: data[key] });
   }, {});
 }

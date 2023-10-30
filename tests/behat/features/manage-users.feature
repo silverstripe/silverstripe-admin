@@ -71,7 +71,6 @@ Feature: Manage users
 
   Scenario: I can list all users in a specific group
     When I click the "Groups" CMS tab
-    # TODO Please check how performant this is
     And I click "ADMIN group" in the "#Form_EditForm_groups" element
     Then I should see "admin@example.org" in the "#Root_Members" element
     And I should not see "staffmember@example.org" in the "#Root_Members" element

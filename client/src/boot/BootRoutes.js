@@ -98,7 +98,6 @@ class BootRoutes {
 
       // Check if the beginning of the route is the same as the current location.
       // Since we haven't decided on a router yet, we can't use it for route matching.
-      // TODO Limit full page load when transitioning from legacy to react route or vice versa
       return currentPath.match(route);
     });
   }

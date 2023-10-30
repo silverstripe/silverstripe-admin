@@ -98,13 +98,6 @@ $.entwine('ss', function($){
         }
       }
 
-      // TODO
-      // // Rewrite # links
-      // html = html.replace(/(<a[^>]+href *= *")#/g, '$1' + window.location.href.replace(/#.*$/,'') + '#');
-      //
-      // // Rewrite iframe links (for IE)
-      // html = html.replace(/(<iframe[^>]*src=")([^"]+)("[^>]*>)/g, '$1' + $('base').attr('href') + '$2$3');
-
       this._super();
     },
     'from .cms-tabset': {
@@ -282,8 +275,6 @@ $.entwine('ss', function($){
      * Hook in (optional) validation routines.
      * Currently clientside validation is not supported out of the box in the CMS.
      *
-     * Todo:
-     *  Placeholder implementation
      *
      * Returns:
      *  {boolean}

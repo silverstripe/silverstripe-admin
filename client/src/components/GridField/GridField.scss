@@ -1,6 +1,5 @@
 // Grid-field
 // Uses bootstrap .table styles
-// TODO remove nesting once buttons have been BEMified
 
 .grid-field {
   border-bottom: 0;
@@ -67,7 +66,7 @@
     font-family: silverstripe;
   }
 
-  &.ss-gridfield-sorted-desc, // TODO BEMify class
+  &.ss-gridfield-sorted-desc,
   &.ss-gridfield-sorted-asc {
     border-bottom: $table-border-width solid $cyan;
 
@@ -77,11 +76,11 @@
     }
   }
 
-  &.ss-gridfield-sorted-desc::after { // TODO BEMify classes
+  &.ss-gridfield-sorted-desc::after {
     content: "*";
   }
 
-  &.ss-gridfield-sorted-asc::after { // TODO BEMify classes
+  &.ss-gridfield-sorted-asc::after {
     content: "(";
   }
 
@@ -147,7 +146,7 @@ input.grid-field__sort-field {
     padding-right: 30px;
   }
 
-  .grid-field & { // TODO Reduce nesting
+  .grid-field & {
     width: calc(100% + #{$input-btn-padding-x * 2});
     border-color: $table-bg-tools;
   }
@@ -178,7 +177,7 @@ div.grid-field__sort-field + .form__fieldgroup-item {
 
 // Grid-field body actions
 .grid-field__icon-action,
-.grid-field__icon-action[class*="font-icon-"] { // Override legacy styles (TODO: remove once jqueryui is removed)
+.grid-field__icon-action[class*="font-icon-"] { // Override legacy styles
   background: none;
   border: 0;
   padding: $table-cell-padding calc($table-cell-padding / 2);
@@ -230,7 +229,7 @@ div.grid-field__sort-field + .form__fieldgroup-item {
   padding: 16px 20px;
   display: block;
 
-  .grid-field .grid-field__table & {  // Override legacy styles (TODO: remove once jqueryui is removed)
+  .grid-field .grid-field__table & {  // Override legacy styles
     color: $text-muted;
     text-decoration: none;
   }
@@ -255,7 +254,6 @@ div.grid-field__sort-field + .form__fieldgroup-item {
 
 
 // Responsive grid-field
-// Todo: add .text-truncate for overflowing cells
 @include media-breakpoint-down(sm) {
   .grid-field__table td,
   .grid-field__table th {

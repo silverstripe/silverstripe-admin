@@ -77,24 +77,6 @@ $.entwine('ss.tree', function($){
         });
       };
 
-      /**
-       * @todo Icon and page type hover support
-       * @todo Sorting of sub nodes (originally placed in context menu)
-       * @todo Automatic load of full subtree via ajax on node checkbox selection (minNodeCount = 0)
-       *  to avoid doing partial selection with "hidden nodes" (unloaded markup)
-       * @todo Disallow drag'n'drop when node has "noChildren" set (see siteTreeHints)
-       * @todo Disallow moving of pages marked as deleted
-       *  most likely by server response codes rather than clientside
-       * @todo "defaultChild" when creating a page (sitetreeHints)
-       * @todo Duplicate page (originally located in context menu)
-       * @todo Update tree node title information and modified state after reordering (response is a JSON array)
-       *
-       * Tasks most likely not required after moving to a standalone tree:
-       *
-       * @todo Context menu - to be replaced by a bezel UI
-       * @todo Refresh form for selected tree node if affected by reordering (new parent relationship)
-       * @todo Cancel current form load via ajax when new load is requested (synchronous loading)
-       */
       var self = this;
         this
           .jstree(this.getTreeConfig())
@@ -165,8 +147,6 @@ $.entwine('ss.tree', function($){
     'from .cms-container form': {
       onaftersubmitform: function(e){
         const id = $('.cms-edit-form :input[name=ID]').val();
-        // TODO Trigger by implementing and inspecting "changed records" metadata
-        // sent by form submission response (as HTTP response headers)
         const node = this.find(`[data-id=${id}]`);
         let ids = [+id];
         node.find('li').each(function () {
@@ -430,7 +410,6 @@ $.entwine('ss.tree', function($){
       this.setIsUpdatingTree(true);
       self.jstree('save_selected');
 
-      // TODO 'initially_opened' config doesn't apply here
       self.jstree('open_node', this.getNodeByID(0));
       self.jstree('save_opened');
       self.jstree('save_selected');

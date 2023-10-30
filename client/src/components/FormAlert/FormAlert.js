@@ -73,7 +73,6 @@ class FormAlert extends Component {
   }
 
   render() {
-    // @todo default this.props.visible as null
     if ((typeof this.props.visible !== 'boolean' && this.state.visible) || this.props.visible) {
       // needs to be inside a div because the `Alert` component does some magic with props.children
       const body = castStringToElement('div', this.props.value);

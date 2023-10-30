@@ -15,10 +15,6 @@ class GridFieldTable extends Component {
       return this.props.header;
     }
 
-    if (typeof this.props.data !== 'undefined') {
-      // TODO: Generate the header.
-    }
-
     return null;
   }
 
@@ -33,10 +29,6 @@ class GridFieldTable extends Component {
   generateRows() {
     if (typeof this.props.rows !== 'undefined') {
       return this.props.rows;
-    }
-
-    if (typeof this.props.data !== 'undefined') {
-      // TODO: Generate the rows.
     }
 
     return null;
@@ -55,7 +47,6 @@ class GridFieldTable extends Component {
 }
 
 GridFieldTable.propTypes = {
-  data: PropTypes.object,
   header: PropTypes.object,
   rows: PropTypes.array,
 };
