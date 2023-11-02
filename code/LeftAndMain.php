@@ -867,9 +867,6 @@ class LeftAndMain extends Controller implements PermissionProvider
             if ($this->getRequest()->getHeader('X-Pjax') && !$response->getHeader('X-Pjax')) {
                 $response->addHeader('X-Pjax', $this->getRequest()->getHeader('X-Pjax'));
             }
-            if ($this->getRequest()->getHeader('X-Status') && !$response->getHeader('X-Status')) {
-                $response->addHeader('X-Status', $this->getRequest()->getHeader('X-Status'));
-            }
             $newResponse = new LeftAndMain_HTTPResponse(
                 $response->getBody(),
                 $response->getStatusCode(),

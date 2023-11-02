@@ -16,7 +16,7 @@ Feature: Lost Password
     And there should be an email to "admin@example.org" titled "Your password reset link"
     When I click on the "password reset link" link in the email to "admin@example.org"
     Then I should see "Please enter a new password"
-    When I fill in "newpassword" for "New Password"
-    And I fill in "newpassword" for "Confirm New Password"
+    When I fill in "NEWsecret!@#*&^" for "New Password"
+    And I fill in "NEWsecret!@#*&^" for "Confirm New Password"
     And I press the "Change Password" button
-    Then the password for "admin@example.org" should be "newpassword"
+    Then the password for "admin@example.org" should be "NEWsecret!@#*&^"
