@@ -65,6 +65,3 @@ Feature: Manage my own settings
     And I select "German (Germany)" from "Interface Language"
     And I press the "Save" button
     Then I should see "Sprache"
-
-  # TODO Date/time format - Difficult because its not exposed anywhere in the CMS?
-  # TODO Group modification as ADMIN user

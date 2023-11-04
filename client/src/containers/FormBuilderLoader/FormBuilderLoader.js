@@ -66,7 +66,6 @@ class FormBuilderLoader extends Component {
     const messages = {};
 
     // only error messages are collected
-    // TODO define message type as standard "success", "info", "warning" and "danger"
     if (state && state.fields) {
       state.fields.forEach((field) => {
         if (field.message) {
@@ -132,8 +131,6 @@ class FormBuilderLoader extends Component {
     }
 
     return promise
-    // TODO Suggest storing messages in a separate redux store rather than throw an error
-    // ref: https://github.com/erikras/redux-form/issues/94#issuecomment-143398399
       .then(formSchema => {
         if (!formSchema || !formSchema.state) {
           return formSchema;

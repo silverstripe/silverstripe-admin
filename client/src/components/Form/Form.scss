@@ -83,7 +83,6 @@
   }
 
   // Reset .file bootstrap overrides to default styles
-  // TODO rename .file to a different class name as it conflicts with default bootstrap
   &.file {
     height: auto;
     display: block;
@@ -91,7 +90,6 @@
     position: static;
   }
 
-  // TODO Fix for when the .form-group--no-label class is used but there is actually a label
   &.form-group--no-label:not(.stacked) .form__field-label + .form__field-holder {
     margin-left: 0;
   }
@@ -213,7 +211,6 @@ input.radio {
       @include make-row();
 
       // Composite fields
-      // TODO reduce nesting
       .form__field-holder .form-group {
         .form__field-holder,
         .form__field-label {
@@ -231,7 +228,6 @@ input.radio {
           }
         }
 
-        // TODO make label display on the right side like normal .form__field-extra-label
         .form__field-extra-label {
           @include make-col(12);
           margin-left: 0;

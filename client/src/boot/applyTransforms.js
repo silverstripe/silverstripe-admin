@@ -35,7 +35,6 @@ const applyTransforms = () => {
   Injector.transform(
     'field-holders',
     (updater) => {
-      // @todo: Should contain every field that exports itself wrapped in a `fieldHolder` by default
       const fields = [
         'FieldGroup',
       ];

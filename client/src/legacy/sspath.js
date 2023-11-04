@@ -177,8 +177,6 @@ var $window = $( window ),
     },
 
     // Converts query strings (foo=bar&baz=bla) to a hash.
-    // TODO Handle repeating elements (e.g. arr[]=one&arr[]=two)
-    // 2013-12-06 ischommer: Added to allow merge with existing keys
     convertSearchToArray: function(search) {
       var parts, i, tmp, params = {};
       search = search.replace( /^\?/, '' );

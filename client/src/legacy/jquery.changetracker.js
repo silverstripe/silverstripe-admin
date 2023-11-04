@@ -41,7 +41,6 @@ import debounce from 'lodash.debounce';
  * ignoreFieldSelector: jQuery selector string for specifically excluded fields
  * changedCssClass: CSS class attribute which is appended to all changed fields and the form itself
  *
- * @todo Implement form reset handling
  *
  * @name jQuery.changetracker
  * @author Ingo Schommer, SilverStripe Ltd.

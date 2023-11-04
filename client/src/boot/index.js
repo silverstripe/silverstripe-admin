@@ -53,7 +53,6 @@ async function appBoot() {
     routes.setStore(store);
     routes.start(window.location.pathname);
 
-    // @todo - Remove once we remove entwine
     // Enable top-level css selectors for react-dependant entwine sections
     if (window.jQuery) {
       // need to separate class adds ...because entwine...

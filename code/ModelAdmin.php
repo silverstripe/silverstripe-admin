@@ -644,8 +644,6 @@ abstract class ModelAdmin extends LeftAndMain
      * Imports the submitted CSV file based on specifications given in
      * {@link self::model_importers}.
      * Redirects back with a success/failure message.
-     *
-     * @todo Figure out ajax submission of files via jQuery.form plugin
      */
     public function import(array $data, Form $form): HTTPResponse
     {

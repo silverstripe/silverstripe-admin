@@ -472,7 +472,6 @@ $.entwine('ss', function($) {
       }
 
       if(typeof validationResult!=='undefined' && !validationResult) {
-        // TODO Automatically switch to the tab/position of the first error
         statusMessage("Validation failed.", "bad");
         clearButton();
       }
@@ -484,7 +483,6 @@ $.entwine('ss', function($) {
       // Artificial HTTP referer, IE doesn't submit them via ajax.
       // Also rewrites anchors to their page counterparts, which is important
       // as automatic browser ajax response redirects seem to discard the hash/fragment.
-      // TODO Replaces trailing slashes added by History after locale (e.g. admin/?locale=en/)
       formData.push({ name: 'BackURL', value: document.URL.replace(/\/$/, '') });
 
       // Save tab selections so we can restore them later
@@ -504,7 +502,7 @@ $.entwine('ss', function($) {
         },
         success: function(data, status, xhr) {
           clearButton();
-          form.removeClass('changed'); // TODO This should be using the plugin API
+          form.removeClass('changed');
           if(callback) callback(data, status, xhr);
 
           var newContentEls = self.handleAjaxResponse(data, status, xhr);
@@ -780,7 +778,6 @@ $.entwine('ss', function($) {
         $data = $($.parseHTML(data, document, false));
 
         // Try and guess the fragment if none is provided
-        // TODO: data-pjax-fragment might actually give us the fragment. For now we just check most common case
         guessFragment = 'Content';
         if ($data.is('form') && !$data.is('[data-pjax-fragment~=Content]')) guessFragment = 'CurrentForm';
 

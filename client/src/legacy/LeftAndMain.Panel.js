@@ -155,12 +155,8 @@ $.entwine('ss', function($) {
         this.setPersistedCollapsedState(!doExpand);
       }
 
-      // TODO Fix redraw order (inner to outer), and re-enable silent flag
-      // to avoid multiple expensive redraws on a single load.
-      // if(!silent) {
-        this.trigger('toggle', doExpand);
-        this.trigger(doExpand ? 'expand' : 'collapse');
-      // }
+      this.trigger('toggle', doExpand);
+      this.trigger(doExpand ? 'expand' : 'collapse');
     },
 
     expandPanel: function(force) {

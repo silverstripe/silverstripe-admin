@@ -410,7 +410,6 @@ $.entwine('ss.tree', function($){
         }
       }
 
-      // TODO Should work by triggering change() along, but doesn't - entwine event bubbling?
       this.trigger('chosen:updated');
 
       this._super(e);

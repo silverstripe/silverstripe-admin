@@ -19,10 +19,6 @@ const NotYetLoaded = [];
 /**
  * The component acts as a container for a grid field,
  * with smarts around data retrieval from external sources.
- *
- * @todo Convert to higher order component which hooks up form
- * schema data to an API backend as a grid data source
- * @todo Replace "dumb" inner components with third party library (e.g. https://griddlegriddle.github.io)
  */
 class GridField extends Component {
   constructor(props) {
@@ -134,7 +130,6 @@ class GridField extends Component {
 
   render() {
     if (this.props.records === NotYetLoaded) {
-      // TODO Replace with better loading indicator
       return <div>{ i18n._t('CampaignAdmin.LOADING', 'Loading...') }</div>;
     }
 
