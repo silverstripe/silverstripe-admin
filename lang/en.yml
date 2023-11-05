@@ -99,7 +99,6 @@ en:
     WONT_BE_SHOWN: 'Note: this message will not be shown to your visitors'
   SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
     PREVIEW: Preview
-    'PREVIEW''': Preview
   SilverStripe\Admin\SecurityAdmin:
     ACCESS_HELP: 'Allow viewing, adding and editing users, as well as assigning permissions and roles to them.'
     APPLY_ROLES: 'Apply roles to groups'
@@ -115,8 +114,8 @@ en:
     TABROLES: Roles
     Users: Users
   SilverStripe\Admin\SudoModeController:
+    INVALID: 'Incorrect password'
     ImportFormHelpGroup: '<ul><li>Existing groups are matched by their unique <em>Code</em> value, and updated with any new values from the imported file</li><li>Group hierarchies can be created by using a <em>ParentCode</em> column.</li><li>Permission codes can be assigned by the <em>PermissionCode</em> column. Existing permission codes are not cleared.</li></ul>'
     ImportFormHelpMember: '<p>Groups can be assigned by the <em>Groups</em> column. Groups are identified by their <em>Code</em> property, multiple groups can be separated by comma. Existing group memberships are not cleared.</p>'
-    INVALID: 'Incorrect password'
     MENUTITLE: SilverStripe\Admin\SudoModeController
     TIMEOUT: 'Session timed out, please refresh and try again.'
