@@ -61,16 +61,16 @@ describe('Validator', () => {
   describe('validateValue()', () => {
     it('should throw an error', () => {
       validator = new Validator({});
-      validator.validateValue('one', 'ruledoesnotexist');
+      validator.validateValue('one', [''], 'ruledoesnotexist');
       // eslint-disable-next-line no-console
       expect(console.warn).toBeCalled();
     });
 
     it('should not error when empty and not required', () => {
       validator = new Validator({});
-      const result1 = validator.validateValue('', 'date');
+      const result1 = validator.validateValue('', [''], 'date');
       expect(result1).toBe(true);
-      const result2 = validator.validateValue('', 'required');
+      const result2 = validator.validateValue('', [''], 'required');
       expect(result2).toBe(false);
     });
   });
@@ -100,10 +100,10 @@ describe('Validator', () => {
 
     beforeEach(() => {
       validator = new Validator({});
-      validator.validateValue = (value, rule) => {
+      validator.validateValue = (value, emptyValues, rule) => {
         switch (rule) {
           case 'required': {
-            return value !== '';
+            return !emptyValues.includes(value);
           }
           case 'numeric': {
             return !isNaN(value);
