@@ -75,6 +75,8 @@ nl:
     FileFieldLabel: 'CSV-bestand <small>(Toegestane extensie: *.csv)</small>'
     Help1: '<p>Importeer gebruikers met <em>CSV opmaak</em> (kommagescheiden waarden). <small><a href="#" class="toggle-advanced">Toon geavanceerde mogelijkheden</a></small></p>'
     Help2: '<div class="advanced"><h4>Geavanceerd gebruik</h4><ul><li>Mogelijke kolommen: <em>{columns}</em></li><li>Bestaande gebruikers worden gekoppeld op basis van de unieke <em>Code</em>, en bijgewerkt met nieuwe waarden vanuit het import-bestand.</li><li>Groepen kunnen aangegeven worden in de <em>Groups</em> kolom. Groepen kunnen aangegeven worden met de unieke <em>Code</em> eigenschap, meerdere groepen worden met een komma gescheiden. Bestaande groepen worden niet gewist.</li></ul></div>'
+    ImportFormHelpGroup: '<ul><li>Bestaande groepen worden gekoppeld op basis van de <em>Code</em>, en bijgewerkt met nieuwe waardes uit het geimporteerde Groepsrechten kunnen worden gemaakt met behulp van kolom <em>ParentCode</em>.</li><li>Permissiecodes worden toegewezen vanuit de kolom <em>PermissionCode</em>. Bestaande persmissiecodes blijven behouden.</li></ul>'
+    ImportFormHelpMember: '<p>Groepen kunnen worden gekoppeld met de kolom <em>Groups</em>. Deze worden herkend op basis van de unieke <em>Code</em> eigenschap, meerdere groepen scheiden met een komma. Bestaande groepen blijven behouden.</p>'
     ResultCreated: '{count} leden aangemaakt'
     ResultDeleted: '{count} leden verwijderd'
     ResultNone: 'Geen veranderingen'
@@ -93,6 +95,8 @@ nl:
     NOIMPORT: 'Niets om te importeren'
     Title: 'Data Modellen'
     UPDATEDRECORDS: '{count} records aangepast'
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem:
+    WONT_BE_SHOWN: 'Let op: dit bericht wordt niet aan uw bezoekers getoond'
   SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
     PREVIEW: Preview
     'PREVIEW''': Preview
@@ -104,7 +108,15 @@ nl:
     EDITPERMISSIONS_HELP: 'Mogelijkheid om permissies en IP-adressen voor groepen te bewerken. Hiervoor is het vinkje bij "Toegang tot het ''Beveiliging'' gedeelte" ook nodig'
     IMPORTGROUPS: 'Importeer groepen'
     IMPORTUSERS: 'Importeer gebruikers'
+    ImportFormHelpGroup: '<ul><li>Bestaande groepen worden gekoppeld op basis van de <em>Code</em>, en bijgewerkt met nieuwe waardes uit het geimporteerde Groepsrechten kunnen worden gemaakt met behulp van kolom <em>ParentCode</em>.</li><li>Permissiecodes worden toegewezen vanuit de kolom <em>PermissionCode</em>. Bestaande persmissiecodes blijven behouden.</li></ul>'
+    ImportFormHelpMember: '<p>Groepen kunnen worden gekoppeld met de kolom <em>Groups</em>. Deze worden herkend op basis van de unieke <em>Code</em> eigenschap, meerdere groepen scheiden met een komma. Bestaande groepen blijven behouden.</p>'
     MENUTITLE: Beveiliging
     MemberListCaution: 'Let op: Gebruikers die hier verwijderd worden, worden uit alle groepen én uit de database verwijderd.'
     TABROLES: Rollen
     Users: Gebruikers
+  SilverStripe\Admin\SudoModeController:
+    INVALID: 'Verkeerd wachtwoord'
+    ImportFormHelpGroup: '<ul><li>Bestaande groepen worden gekoppeld op basis van de <em>Code</em>, en bijgewerkt met nieuwe waardes uit het geimporteerde Groepsrechten kunnen worden gemaakt met behulp van kolom <em>ParentCode</em>.</li><li>Permissiecodes worden toegewezen vanuit de kolom <em>PermissionCode</em>. Bestaande persmissiecodes blijven behouden.</li></ul>'
+    ImportFormHelpMember: '<p>Groepen kunnen worden gekoppeld met de kolom <em>Groups</em>. Deze worden herkend op basis van de unieke <em>Code</em> eigenschap, meerdere groepen scheiden met een komma. Bestaande groepen blijven behouden.</p>'
+    MENUTITLE: SudoModeController
+    TIMEOUT: 'Er is een time-out voor de sessie opgetreden. Vernieuw de pagina en probeer het opnieuw.'
