@@ -23,6 +23,8 @@
     "Admin.REMOVE_LINK": "Remove link",
     "Admin.SELECTONEPAGE": "Please select at least one page",
     "Admin.VALIDATIONERROR": "Validation Error",
+    "Admin.DELETE_CONFIRM_MESSAGE": "Deleted",
+    "Admin.ARCHIVE_CONFIRM_MESSAGE": "Archived",
     "Admin.VALIDATION_ERRORS_IN_TAB": "This tab contains validation errors.",
     "Admin.VALIDATION_ERRORS_IN_TAB_SCREEN_READER": "(Has validation errors)",
     "Admin.VALIDATION_ERRORS_ON_PAGE": "There are validation errors on this page, please fix them before saving or publishing.",

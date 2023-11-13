@@ -557,7 +557,7 @@ $.entwine('ss', function($) {
   });
 
   // Covers both tabular delete button, and the button on the detail form
-  $('.grid-field .grid-field__col-compact .action--delete, .grid-field .grid-field__col-compact .action--archive, .cms-edit-form .btn-toolbar .action--delete, .cms-edit-form .btn-toolbar .action--archive').entwine({
+  $('.grid-field .grid-field__col-compact .action--delete, .grid-field .grid-field__col-compact .action--archive, .cms-edit-form .btn-toolbar .action--delete, .cms-edit-form .btn-toolbar .action--archive, .grid-field__col-compact .gridfield-button-unlink').entwine({
     onclick: function(e){
       const confirmMessage = $(this).hasClass('action--archive')
         ? i18n._t('Admin.ARCHIVECONFIRMMESSAGE', 'Are you sure you want to archive this record?')
@@ -568,6 +568,14 @@ $.entwine('ss', function($) {
         return false;
       } else {
         this._super(e);
+      }
+
+      const toastNotificationMessage = $(this).hasClass('action--archive')
+      ? ss.i18n._t('Admin.ARCHIVE_CONFIRM_MESSAGE', 'Archived')
+      : ss.i18n._t('Admin.DELETE_CONFIRM_MESSAGE', 'Deleted');
+
+      if ($(this).hasClass('dropdown-item')) {
+        jQuery.noticeAdd({text: toastNotificationMessage, type: 'success', stayTime: 5000, inEffect: {left: '0', opacity: 'show'}});
       }
     }
   });
