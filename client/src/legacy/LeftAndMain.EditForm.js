@@ -100,6 +100,7 @@ $.entwine('ss', function($){
 
       this._super();
     },
+
     'from .cms-tabset': {
       onafterredrawtabs: function () {
 
@@ -119,10 +120,7 @@ $.entwine('ss', function($){
           'Admin.VALIDATION_ERRORS_ON_PAGE',
           'There are validation errors on this page, please fix them before saving or publishing.'
         );
-        const toastNotificationMessage = ss.i18n._t(
-          'Admin.VALIDATIONERROR',
-          'Validation Error'
-        );
+
         const $editFormErrorBanner = $("#Form_EditForm_error");
 
         // Remove any existing invalid tab icons and screen-reader text
@@ -150,13 +148,6 @@ $.entwine('ss', function($){
         if (!validationErrorExists) {
           $editFormErrorBanner.hide();
           return;
-        }
-
-        // Show a toast notification for DataObject::getCMSValidator() validation errors
-        if (!this.getValidationErrorShown() && this.hasClass('validationerror')) {
-          errorMessage(toastNotificationMessage);
-          // Ensure that this error message popup won't be added more than once
-          this.setValidationErrorShown(true);
         }
 
         // Find tab-pane's with decedent validation .alert's
@@ -205,6 +196,17 @@ $.entwine('ss', function($){
     },
     redraw: function() {
       if(window.debug) console.log('redraw', this.attr('class'), this.get(0));
+
+      if (!this.getValidationErrorShown() && this.hasClass('validationerror')) {
+        const toastNotificationMessage = ss.i18n._t(
+          'Admin.VALIDATIONERROR',
+          'Validation Error'
+        );
+        
+        errorMessage(toastNotificationMessage);
+        // Ensure that this error message popup won't be added more than once
+        this.setValidationErrorShown(true);
+      }
 
       // Force initialization of tabsets to avoid layout glitches
       this.add(this.find('.cms-tabset')).redrawTabs();
