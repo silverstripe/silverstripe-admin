@@ -22,9 +22,10 @@ Feature: Manage users
     Then I click "Groups" in the ".breadcrumbs-wrapper" element
       And I click the "Groups" CMS tab
       And I click "ADMIN group2" in the "#Root_Groups" element
-      And I should see the "Unlink" button in the "Members" gridfield for the "ADMIN" row
-    Then I click the "Unlink" button in the "Members" gridfield for the "ADMIN" row
-      And I should not see the "Unlink" button in the "Members" gridfield for the "ADMIN" row
+      And I press the "View actions" button
+      And I press the "Unlink" button, confirming the dialog
+      And I wait for 1 seconds
+      Then I should see a "Deleted" success toast
     Then I click "Groups" in the ".breadcrumbs-wrapper" element
       And I click the "Groups" CMS tab
       And I click "ADMIN group" in the "#Root_Groups" element

@@ -37,8 +37,8 @@ Feature: Manage my own settings
   Scenario: I can't reset the password without the original
     Given I follow "Change Password"
     And I fill in "Current Password" with "idontknow"
-    And I fill in "New Password" with "newsecret"
-    And I fill in "Confirm Password" with "newsecret"
+    And I fill in "New Password" with "NEWsecret!@#*&^"
+    And I fill in "Confirm Password" with "NEWsecret!@#*&^"
     And I press the "Save" button
     Then I should see "The current password you have entered is not correct."
 
@@ -53,11 +53,11 @@ Feature: Manage my own settings
   Scenario: I can change my password
     Given I follow "Change Password"
     And I fill in "Current Password" with "secret"
-    And I fill in "New Password" with "newsecret"
-    And I fill in "Confirm Password" with "newsecret"
+    And I fill in "New Password" with "NEWsecret!@#*&^"
+    And I fill in "Confirm Password" with "NEWsecret!@#*&^"
     And I press the "Save" button
     And I am not logged in
-    When I log in with "joe@example.org" and "newsecret"
+    When I log in with "joe@example.org" and "NEWsecret!@#*&^"
     And I go to "admin/myprofile"
     Then I should see the CMS
 
