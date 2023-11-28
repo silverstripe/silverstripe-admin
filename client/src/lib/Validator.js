@@ -35,9 +35,9 @@ class Validator {
     return value;
   }
 
-  validateValue(value, rule, config) {
+  validateValue(value, emptyValues, rule, config) {
     // Empty values suppress error unless rule is required
-    if (value === '') {
+    if (emptyValues.includes(value)) {
       return rule !== 'required';
     }
     switch (rule) {
@@ -120,8 +120,13 @@ class Validator {
 
     const value = this.getFieldValue(name);
 
-    // no required rule given and no value, so skip all other validation
-    if (value === '' && rules.required) {
+    let emptyValues = [''];
+    if (rules.required && typeof rules.required === 'object' && rules.required.hasOwnProperty('extraEmptyValues')) {
+      emptyValues = emptyValues.concat(rules.required.extraEmptyValues);
+    }
+
+    // required rule given and empty value, so skip all other validation
+    if (rules.required && emptyValues.includes(value)) {
       const config = Object.assign(
         { title: (title !== '') ? title : name },
         rules.required
@@ -142,7 +147,7 @@ class Validator {
         return;
       }
 
-      const valid = this.validateValue(value, rule, config);
+      const valid = this.validateValue(value, emptyValues, rule, config);
       if (!valid) {
         const message = this.getMessage(rule, config);
         response.valid = false;
