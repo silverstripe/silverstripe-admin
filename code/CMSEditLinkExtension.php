@@ -11,6 +11,7 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldDetailForm;
 use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\Hierarchy\Hierarchy;
 
 /**
  * An extension that automatically generates a CMS edit link for DataObjects even if
@@ -37,6 +38,11 @@ class CMSEditLinkExtension extends Extension
 {
     private static string $cms_edit_owner = '';
 
+    public function getCMSEditOwnerRelation()
+    {
+        return $this->owner->config()->get('cms_edit_owner');
+    }
+
     /**
      * Get the ModelAdmin, LeftAndMain, or DataObject which owns this object for CMS editing purposes.
      *
@@ -44,7 +50,7 @@ class CMSEditLinkExtension extends Extension
      */
     public function getCMSEditOwner()
     {
-        $ownerType = $this->owner->config()->get('cms_edit_owner');
+        $ownerType = $this->owner->getCMSEditOwnerRelation();
         if (is_subclass_of($ownerType, LeftAndMain::class)) {
             return $ownerType::singleton();
         }
@@ -59,7 +65,12 @@ class CMSEditLinkExtension extends Extension
     public function getCMSEditLinkForManagedDataObject(DataObject $obj, string $reciprocalRelation): string
     {
         $fields = $this->owner->getCMSFields();
-        $link = $this->getCMSEditLinkForRelation($this->owner->hasMany(false), $obj, $reciprocalRelation, $fields);
+        if ($reciprocalRelation == 'Parent' && $this->owner->hasExtension(Hierarchy::class)) {
+            $children = $this->owner->AllChildren()->toArray();
+        } else {
+            $children = $this->owner->hasMany(false);
+        }
+        $link = $this->getCMSEditLinkForRelation($children, $obj, $reciprocalRelation, $fields);
         if (!$link) {
             throw new LogicException('Could not produce an edit link for the passed object.');
         }
@@ -81,7 +92,7 @@ class CMSEditLinkExtension extends Extension
         }
 
         if ($owner instanceof DataObject) {
-            $relativeLink = $owner->getCMSEditLinkForManagedDataObject($this->owner, $this->owner->config()->get('cms_edit_owner'));
+            $relativeLink = $owner->getCMSEditLinkForManagedDataObject($this->owner, $this->owner->getCMSEditOwnerRelation());
         } else {
             $relativeLink = $owner->getCMSEditLinkForManagedDataObject($this->owner);
         }
@@ -136,7 +147,7 @@ class CMSEditLinkExtension extends Extension
 
     private function constructLink(string $relation, int $id): string
     {
-        $ownerType = $this->owner->config()->get('cms_edit_owner');
+        $ownerType = $this->owner->getCMSEditOwnerRelation();
         $prefix = is_a($ownerType, CMSMain::class, true) ? 'field' : 'ItemEditForm/field';
         return Controller::join_links(
             $this->owner->CMSEditLink(),
