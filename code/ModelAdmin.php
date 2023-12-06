@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
+use SilverStripe\Control\HTTPResponse_Exception;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Core\Convert;
 use SilverStripe\Core\Injector\Injector;
@@ -620,7 +621,11 @@ abstract class ModelAdmin extends LeftAndMain
 
         $importers = [];
         foreach ($importerClasses as $modelClass => $importerClass) {
-            $importers[$modelClass] = new $importerClass($modelClass);
+            $importer = new $importerClass($modelClass);
+            if (ClassInfo::hasMethod($importer, 'setCheckPermissions')) {
+                $importer->setCheckPermissions(true);
+            }
+            $importers[$modelClass] = $importer;
         }
 
         return $importers;
@@ -647,19 +652,14 @@ abstract class ModelAdmin extends LeftAndMain
             return false;
         }
 
-        if (!$modelSNG->canCreate(Security::getCurrentUser())) {
-            return false;
-        }
-
         $fields = new FieldList(
             new HiddenField('ClassName', false, $this->modelClass),
             new FileField('_CsvFile', false)
         );
 
         // get HTML specification for each import (column names etc.)
-        $importerClass = $importers[$this->modelTab];
         /** @var BulkLoader $importer */
-        $importer = new $importerClass($this->modelClass);
+        $importer = $importers[$this->modelTab];
         $spec = $importer->getImportSpec();
         $specFields = new ArrayList();
         foreach ($spec['fields'] as $name => $desc) {
@@ -744,7 +744,13 @@ abstract class ModelAdmin extends LeftAndMain
         if (!empty($data['EmptyBeforeImport']) && $data['EmptyBeforeImport']) { //clear database before import
             $loader->deleteExistingRecords = true;
         }
-        $results = $loader->load($_FILES['_CsvFile']['tmp_name']);
+        try {
+            $results = $loader->load($_FILES['_CsvFile']['tmp_name']);
+        } catch (HTTPResponse_Exception $e) {
+            $form->sessionMessage($e->getMessage(), ValidationResult::TYPE_ERROR);
+            $this->redirectBack();
+            return false;
+        }
 
         $message = '';
 

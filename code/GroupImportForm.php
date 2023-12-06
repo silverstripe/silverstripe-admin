@@ -89,6 +89,7 @@ class GroupImportForm extends Form
     public function doImport($data, $form)
     {
         $loader = new GroupCsvBulkLoader();
+        $loader->setCheckPermissions(true);
 
         // load file
         $result = $loader->load($data['CsvFile']['tmp_name']);
