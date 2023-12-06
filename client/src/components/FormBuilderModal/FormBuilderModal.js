@@ -1,103 +1,71 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import FormBuilderLoader from 'containers/FormBuilderLoader/FormBuilderLoader';
 import castStringToElement from 'lib/castStringToElement';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal/Modal';
+import pick from 'lodash/pick';
 
 const noop = () => null;
 
-class FormBuilderModal extends Component {
-  constructor(props) {
-    super(props);
+/**
+ * React component for displaying a Form in a Modal using a form schema URL
+ */
+function FormBuilderModal(props) {
+  const {
+    responseClassBad,
+    responseClassGood,
+    onLoadingError,
+    showErrorMessage,
+    onClosed,
+    onSubmit,
+    schemaUrl,
+    bodyClassName,
+    FormBuilderLoaderComponent,
+    children
+  } = props;
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleHide = this.handleHide.bind(this);
-    this.clearResponse = this.clearResponse.bind(this);
-    this.handleLoadingError = this.handleLoadingError.bind(this);
-  }
+  const [response, setResponse] = useState(null);
+  const [error, setError] = useState(null);
 
-  /**
-   * Defines the form part of the Modal
-   *
-   * @returns {Component}
-   */
-  getForm() {
-    const { FormBuilderLoaderComponent } = this.props;
-    if (!this.props.schemaUrl) {
-      return null;
-    }
-    return (
-      <FormBuilderLoaderComponent
-        fieldHolder={{ className: classnames('modal-body', this.props.bodyClassName) }}
-        actionHolder={{ className: 'modal-footer' }}
-        autoFocus={this.props.autoFocus}
-        schemaUrl={this.props.schemaUrl}
-        onSubmit={this.handleSubmit}
-        onAction={this.props.onAction}
-        onLoadingError={this.handleLoadingError}
-        identifier={this.props.identifier}
-      />
-    );
-  }
+  // Register a success message
+  const setSuccess = (message) => {
+    setResponse(message);
+    setError(false);
+  };
 
-  /**
-   * Generates the response part of the Modal
-   *
-   * @returns {Component}
-   */
-  getResponse() {
-    if (!this.state || !this.state.response) {
-      return null;
-    }
+  // Register a failure message
+  const setFailure = (message) => {
+    setResponse(message);
+    setError(true);
+  };
 
-    let className = '';
+  // Clear the response
+  const clearResponse = () => {
+    setResponse(null);
+    setError(false);
+  };
 
-    if (this.state.error) {
-      className = this.props.responseClassBad;
-    } else {
-      className = this.props.responseClassGood;
-    }
-
-    return (
-      <div className={className}>
-        { castStringToElement('span', { html: this.state.response }) }
-      </div>
-    );
-  }
-
-  /**
-   * Removes the response from the state
-   */
-  clearResponse() {
-    this.setState({
-      response: null,
-    });
-  }
-
-  handleLoadingError(schema) {
-    const providesOnLoadingError = this.props.onLoadingError !== noop;
-    if (this.props.showErrorMessage || !providesOnLoadingError) {
-      const error = schema.errors && schema.errors[0];
-      this.setState({
-        response: error.value,
-        error: true,
-      });
+  const handleLoadingError = (schema) => {
+    const providesOnLoadingError = onLoadingError !== noop;
+    if (showErrorMessage || !providesOnLoadingError) {
+      const errorResponse = schema.errors && schema.errors[0];
+      setFailure(errorResponse.value);
     }
     if (providesOnLoadingError) {
-      this.props.onLoadingError(schema);
+      onLoadingError(schema);
     }
-  }
+  };
 
   /**
    * Call the callback for hiding this Modal
    */
-  handleHide() {
-    this.clearResponse();
-    if (typeof this.props.onClosed === 'function') {
-      this.props.onClosed();
+  const handleHide = () => {
+    clearResponse();
+    if (typeof onClosed === 'function') {
+      onClosed();
     }
-  }
+  };
 
   /**
    * Handle submitting the form in the Modal
@@ -107,11 +75,11 @@ class FormBuilderModal extends Component {
    * @param {Function} submitFn The original submit function
    * @returns {Promise}
    */
-  handleSubmit(data, action, submitFn) {
-    this.clearResponse();
+  const handleSubmit = (data, action, submitFn) => {
+    clearResponse();
     let promise = null;
-    if (typeof this.props.onSubmit === 'function') {
-      promise = this.props.onSubmit(data, action, submitFn);
+    if (typeof onSubmit === 'function') {
+      promise = onSubmit(data, action, submitFn);
     } else {
       promise = submitFn();
     }
@@ -119,21 +87,15 @@ class FormBuilderModal extends Component {
     if (promise) {
       // do not want this as part of the main promise chain.
       promise
-        .then((response) => {
-          if (response) {
-            this.setState({
-              response: response.message,
-              error: false,
-            });
+        .then((successResponse) => {
+          if (successResponse) {
+            setSuccess(successResponse.message);
           }
-          return response;
+          return successResponse;
         })
         .catch((errorPromise) => {
           errorPromise.then((errorText) => {
-            this.setState({
-              response: errorText,
-              error: true,
-            });
+            setFailure(errorText);
           });
         });
     } else {
@@ -141,47 +103,37 @@ class FormBuilderModal extends Component {
     }
 
     return promise;
-  }
+  };
 
-  render() {
-    const form = this.getForm();
-    const response = this.getResponse();
+  const modalProps = pick(props, Object.keys(Modal.propTypes));
+  const formBuilderProps = pick(props, [
+    'schemaUrl', 'bodyClassName', 'autoFocus', 'onAction', 'identifier'
+  ]);
 
-    return (
-      <Modal
-        onClosed={this.props.handleHide}
-        isOpen={this.props.isOpen}
-        toggle={this.handleHide}
-        className={this.props.className}
-        modalClassName={this.props.modalClassName}
-        size={this.props.size}
-        ModalComponent={this.props.ModalComponent}
-        ModalHeaderComponent={this.props.ModalHeaderComponent}
-        title={this.props.title}
-        showCloseButton={this.props.showCloseButton}
-      >
-        {response}
-        {form}
-        {this.props.children}
-      </Modal>
-    );
-  }
+  return (
+    <Modal {...modalProps} onClosed={handleHide}>
+      {response &&
+        <div className={error ? responseClassBad : responseClassGood}>
+          { castStringToElement('span', { html: response }) }
+        </div>
+      }
+      {schemaUrl &&
+        <FormBuilderLoaderComponent
+          {...formBuilderProps}
+          fieldHolder={{ className: classnames('modal-body', bodyClassName) }}
+          actionHolder={{ className: 'modal-footer' }}
+          onSubmit={handleSubmit}
+          onLoadingError={handleLoadingError}
+        />
+      }
+      {children}
+    </Modal>
+  );
 }
 
 FormBuilderModal.propTypes = {
   autoFocus: PropTypes.bool,
-  isOpen: PropTypes.bool,
-  title: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool,
-    PropTypes.shape({ html: PropTypes.string })
-  ]),
-  className: PropTypes.string,
   bodyClassName: PropTypes.string,
-  modalClassName: PropTypes.string,
-  showCloseButton: PropTypes.bool,
-  size: PropTypes.string,
-  onClosed: PropTypes.func,
   schemaUrl: PropTypes.string,
   onSubmit: PropTypes.func,
   onAction: PropTypes.func,
@@ -191,17 +143,13 @@ FormBuilderModal.propTypes = {
   // Ignored and assumed true if onLoadingError is unassigned
   showErrorMessage: PropTypes.bool,
   onLoadingError: PropTypes.func,
-  ModalComponent: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-  ModalHeaderComponent: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   FormBuilderLoaderComponent: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  ...Modal.propTypes,
 };
 
 FormBuilderModal.defaultProps = {
   showErrorMessage: false,
-  showCloseButton: true,
   onLoadingError: noop,
-  isOpen: false,
-  title: null,
   modalClassName: 'form-builder-modal',
   responseClassGood: 'alert alert-success',
   responseClassBad: 'alert alert-danger',
