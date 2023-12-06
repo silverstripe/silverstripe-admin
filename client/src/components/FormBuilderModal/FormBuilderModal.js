@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import i18n from 'i18n';
-import { Modal, ModalHeader } from 'reactstrap';
 import FormBuilderLoader from 'containers/FormBuilderLoader/FormBuilderLoader';
 import castStringToElement from 'lib/castStringToElement';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import Modal from 'components/Modal/Modal';
 
 const noop = () => null;
 
@@ -144,53 +143,27 @@ class FormBuilderModal extends Component {
     return promise;
   }
 
-  renderHeader() {
-    let { title } = this.props;
-    const { ModalHeaderComponent } = this.props;
-
-    if (title !== false) {
-      if (typeof title === 'object') {
-        // FormSchema title occasionaly contains html, only render text for modal title
-        const doc = new DOMParser().parseFromString(title.html, 'text/html');
-        title = doc.body.textContent || '';
-      }
-      return (
-        <ModalHeaderComponent toggle={this.handleHide}>{title}</ModalHeaderComponent>
-      );
-    }
-
-    if (this.props.showCloseButton === true && typeof this.props.onClosed === 'function') {
-      return (
-        <button
-          type="button"
-          className="close modal__close-button"
-          onClick={this.handleHide}
-          aria-label={i18n._t('Admin.CLOSE', 'Close')}
-        />
-      );
-    }
-
-    return null;
-  }
-
   render() {
     const form = this.getForm();
     const response = this.getResponse();
-    const { ModalComponent } = this.props;
 
     return (
-      <ModalComponent
+      <Modal
+        onClosed={this.props.handleHide}
         isOpen={this.props.isOpen}
         toggle={this.handleHide}
         className={this.props.className}
         modalClassName={this.props.modalClassName}
         size={this.props.size}
+        ModalComponent={this.props.ModalComponent}
+        ModalHeaderComponent={this.props.ModalHeaderComponent}
+        title={this.props.title}
+        showCloseButton={this.props.showCloseButton}
       >
-        {this.renderHeader()}
         {response}
         {form}
         {this.props.children}
-      </ModalComponent>
+      </Modal>
     );
   }
 }
@@ -232,8 +205,6 @@ FormBuilderModal.defaultProps = {
   modalClassName: 'form-builder-modal',
   responseClassGood: 'alert alert-success',
   responseClassBad: 'alert alert-danger',
-  ModalComponent: Modal,
-  ModalHeaderComponent: ModalHeader,
   FormBuilderLoaderComponent: FormBuilderLoader,
 };
 
