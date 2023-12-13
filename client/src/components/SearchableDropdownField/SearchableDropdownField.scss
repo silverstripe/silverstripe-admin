@@ -1,0 +1,121 @@
+.ss-searchable-dropdown-field__control {
+  border-color: $gray-200;
+  box-shadow: none;
+
+  // this is required to override default react-select style
+  &:hover {
+    border-color: $gray-200;
+  }
+
+  &--is-focused {
+    box-shadow: none;
+    border-color: $input-focus-border-color;
+
+    // this is required to override default react-select style
+    &:hover {
+      border-color: $input-focus-border-color;
+    }
+  }
+}
+
+.ss-searchable-dropdown-field__menu {
+  margin-top: 0;
+}
+
+.ss-searchable-dropdown-field__option+.ss-searchable-dropdown-field__option {
+  border-top: 1px solid $border-color-light;
+}
+
+.ss-searchable-dropdown-field__option-button {
+  border: 1px solid $border-color-light;
+  border-radius: $border-radius;
+  background: $white;
+  // needed to override the width rule in .fill-width
+  width: auto !important; // sass-lint:disable-line no-important
+  max-width: 25%;
+  margin: -4px -5px -4px 5px;
+  padding: 4px 5px 4px 4px;
+  cursor: pointer;
+
+  .font-icon-right-open-big {
+    margin: 2px 0 0 -1px;
+    width: 24px;
+  }
+}
+
+.ss-searchable-dropdown-field__option-count-icon {
+  padding: 0 calc($spacer / 2);
+  line-height: 0.8;
+}
+
+.ss-searchable-dropdown-field__option-context {
+  color: $gray-600;
+  font-size: $font-size-sm;
+}
+
+.ss-searchable-dropdown-field__option--is-focused {
+  background-color: $list-group-hover-bg;
+}
+
+.ss-searchable-dropdown-field__option--is-selected {
+  background: $link-color;
+  color: $white;
+
+  .ss-searchable-dropdown-field__option-button {
+    border-color: $brand-primary;
+    background: none;
+    color: $white;
+  }
+}
+
+.ss-searchable-dropdown-field__option-title--highlighted {
+  font-weight: bold;
+}
+
+.ss-searchable-dropdown-field--lazy-load {
+  .ss-searchable-dropdown-field__dropdown-indicator,
+  .ss-searchable-dropdown-field__indicator-separator {
+    display: none;
+  }
+}
+
+.ss-searchable-dropdown-field__indicator {
+  cursor: pointer;
+}
+
+.ss-searchable-dropdown-field__clear-indicator {
+  &:hover,
+  &:focus {
+    color: $brand-danger;
+  }
+}
+
+.ss-searchable-dropdown-field__dropdown-indicator {
+  &:focus {
+    color: $body-color-dark;
+  }
+}
+
+.ss-searchable-dropdown-field__multi-value {
+  color: $body-color;
+  background-color: $white;
+  border: 1px solid $gray-200;
+  border-radius: $border-radius;
+  margin-top: 3px;
+}
+
+.ss-searchable-dropdown-field__multi-value__remove {
+  font-size: $font-size-lg;
+  padding: 3px 5px 2px 5px;
+  border-left: 1px solid $gray-200;
+  border-radius: 0;
+
+  &:hover {
+    background-color: #ffe0e0;
+    color: $brand-danger;
+  }
+}
+
+.ss-searchable-dropdown-field__multi-value__label {
+  padding: 3px 10px 3px 10px;
+}
