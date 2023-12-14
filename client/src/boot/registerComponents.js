@@ -50,6 +50,7 @@ import NumberField from 'components/NumberField/NumberField';
 import PopoverOptionSet from 'components/PopoverOptionSet/PopoverOptionSet';
 import ToastsContainer from 'containers/ToastsContainer/ToastsContainer';
 import ListboxField from 'components/ListboxField/ListboxField';
+import SearchableDropdownField from 'components/SearchableDropdownField/SearchableDropdownField';
 
 export default () => {
   Injector.component.registerMany({
@@ -104,5 +105,6 @@ export default () => {
     PopoverOptionSet,
     ToastsContainer,
     ListboxField,
+    SearchableDropdownField,
   });
 };

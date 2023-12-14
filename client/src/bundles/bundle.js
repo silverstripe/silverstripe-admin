@@ -81,6 +81,7 @@ import 'expose-loader?exposes=formatWrittenNumber!lib/formatWrittenNumber';
 import 'expose-loader?exposes=withDragDropContext!lib/withDragDropContext';
 import 'expose-loader?exposes=withRouter!lib/withRouter';
 import 'expose-loader?exposes=ssUrlLib!lib/urls';
+import 'expose-loader?exposes=SearchableDropdownField!components/SearchableDropdownField/SearchableDropdownField';
 
 // Legacy CMS
 import '../legacy/jquery.changetracker';
@@ -117,5 +118,6 @@ import '../legacy/DatetimeField';
 import '../legacy/HtmlEditorField';
 import '../legacy/TabSet';
 import '../legacy/GridField';
+import '../legacy/SearchableDropdownField/SearchableDropdownFieldEntwine';
 
 import 'boot';
