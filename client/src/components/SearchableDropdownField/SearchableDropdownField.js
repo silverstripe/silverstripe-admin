@@ -133,6 +133,8 @@ const SearchableDropdownField = ({
     }
   }
 
+  const inputId = `${passThroughProps.id}__input`;
+
   const DynamicComponent = lazyLoad ? AsyncSelectComponent : SelectComponent;
 
   return <EmotionCssCacheProvider>
@@ -152,6 +154,7 @@ const SearchableDropdownField = ({
       noOptionsMessage={noOptionsMessage}
       {...refProps}
       value={val}
+      inputId={inputId}
     />
   </EmotionCssCacheProvider>;
 };
