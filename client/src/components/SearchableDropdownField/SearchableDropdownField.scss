@@ -20,6 +20,7 @@
 
 .ss-searchable-dropdown-field__menu {
   margin-top: 0;
+  z-index: 20000;
 }
 
 .ss-searchable-dropdown-field__option+.ss-searchable-dropdown-field__option {
