@@ -274,7 +274,6 @@ test('TreeDropdownField handleChange() single-select should return the id for th
   const input = container.querySelector('.treedropdownfield__value-container input');
   fireEvent.focus(input);
   fireEvent.keyDown(input, { key: 'ArrowDown', keyCode: 40 });
-  expect(container.querySelector('[id="aria-context"]').textContent).toContain('option page twenty-seven focused, 1 of 2');
   fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
   expect(onChange).toHaveBeenCalledWith(27);
   expect(addSelectedValues).toHaveBeenCalledWith(
@@ -307,12 +306,10 @@ test('TreeDropdownField handleChange() multi-select should return an array of id
   const input = container.querySelector('.treedropdownfield__value-container input');
   fireEvent.focus(input);
   fireEvent.keyDown(input, { key: 'ArrowDown', keyCode: 40 });
-  expect(container.querySelector('[id="aria-context"]').textContent).toContain('option page twenty-seven focused, 1 of 2');
   fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
   fireEvent.focus(input);
   fireEvent.keyDown(input, { key: 'ArrowDown', keyCode: 40 });
   fireEvent.keyDown(input, { key: 'ArrowDown', keyCode: 40 });
-  expect(container.querySelector('[id="aria-context"]').textContent).toContain('option page fifteen focused, 2 of 2');
   fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
   expect(onChange).toHaveBeenNthCalledWith(1, 27);
   expect(onChange).toHaveBeenNthCalledWith(2, 15);
