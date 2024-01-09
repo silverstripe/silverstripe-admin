@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { unstable_useBlocker as useBlocker } from 'react-router-dom';
+import { useBlocker } from 'react-router-dom';
 
 export default function NavigationBlocker({ shouldBlockFn, blockMessage }) {
   const blocker = useBlocker(shouldBlockFn);
