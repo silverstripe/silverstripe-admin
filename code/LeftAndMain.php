@@ -1040,7 +1040,6 @@ class LeftAndMain extends Controller implements PermissionProvider
             $menuIconStyling = '';
 
             if ($menuItems) {
-                /** @var CMSMenuItem $menuItem */
                 foreach ($menuItems as $code => $menuItem) {
                     // alternate permission checks (in addition to LeftAndMain->canView())
                     if (isset($menuItem->controller)
@@ -1192,7 +1191,7 @@ class LeftAndMain extends Controller implements PermissionProvider
 
     /**
      * @param bool $unlinked
-     * @return ArrayList
+     * @return ArrayList<ArrayData>
      */
     public function Breadcrumbs($unlinked = false)
     {

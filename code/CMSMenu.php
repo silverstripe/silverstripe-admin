@@ -246,7 +246,7 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
      * Defaults to {@link Security::getCurrentUser()}.
      *
      * @param Member $member
-     * @return array
+     * @return array<CMSMenuItem>
      */
     public static function get_viewable_menu_items($member = null)
     {
