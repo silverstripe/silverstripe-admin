@@ -156,8 +156,28 @@ ss.editorWrappers.tinyMCE = (function() {
 
       config.skin = config.skin || 'silverstripe';
 
+      const setHeight = (event, height) => {
+        if (event.target && event.target.iframeElement) {
+          event.target.iframeElement.height = height !== '' ? 'auto' : height;
+          const parentDiv = event.target.iframeElement.closest('.tox-sidebar-wrap');
+          if (parentDiv) {
+            parentDiv.style.height = height;
+          }
+        }
+      }
+
+      const initSetup = (editor) => {
+        editor.on('init', (event) => {
+          let height = document.querySelector(config.selector).style.height;
+          setHeight(event, height);
+        });
+        editor.on('ResizeEditor', (event) => {
+          setHeight(event, '');
+        });
+      }
+
       // Bind the floatpanel hide and reposition listener to the closest scrollable panel
-      tinymce.init(config).then((editors) => {
+      tinymce.init({...config, setup: initSetup}).then((editors) => {
         if(editors.length > 0 && editors[0].container) {
           const scrollPanel = $(editors[0].container).closest('.panel--scrollable');
           scrollPanel.on('scroll', (e) => hideOnScroll(e));
