@@ -177,16 +177,27 @@ var $window = $( window ),
     },
 
     // Converts query strings (foo=bar&baz=bla) to a hash.
-    // TODO Handle repeating elements (e.g. arr[]=one&arr[]=two)
-    // 2013-12-06 ischommer: Added to allow merge with existing keys
     convertSearchToArray: function(search) {
-      var parts, i, tmp, params = {};
+      var parts, i, tmp, key, value, params = {};
       search = search.replace( /^\?/, '' );
       parts = search ? search.split( '&' ) : [];
-      for(i=0; i < parts.length; i++) {
-        tmp = parts[i].split( '=' );
-        params[decodeURIComponent(tmp[0])] = decodeURIComponent(tmp[1]);
+
+      for(i = 0; i < parts.length; i++) {
+        tmp = parts[i].split('=');
+        key = decodeURIComponent(tmp[0]);
+        value = decodeURIComponent(tmp[1]);
+
+        // Check if key exists and add value if it does.
+        if (key in params) {
+          if (!Array.isArray(params[key])) {
+            params[key] = [params[key]];
+          }
+          params[key].push(value);
+        } else {
+          params[key] = value;
+        }
       }
+
       return params;
     },
 
