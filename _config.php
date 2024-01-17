@@ -11,7 +11,6 @@ use SilverStripe\Forms\HTMLEditor\TinyMCEConfig;
 
 // Enable SilverStripe insert link dialog on the rich text editor
 $module = ModuleLoader::inst()->getManifest()->getModule('silverstripe/admin');
-/** @var TinyMCEConfig $editorConfig */
 $editorConfig = TinyMCEConfig::get('cms');
 $editorConfig
     ->enablePlugins([

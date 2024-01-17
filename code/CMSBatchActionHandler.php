@@ -226,7 +226,7 @@ class CMSBatchActionHandler extends RequestHandler
      *  - Link
      *  - Title
      *
-     * @return ArrayList
+     * @return ArrayList<ArrayData>
      */
     public function batchActionList()
     {

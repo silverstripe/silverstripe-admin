@@ -72,7 +72,6 @@ class UsedOnTable extends FormField
     {
         $usage = ArrayList::create();
 
-        /** @var DataObject $record */
         $record = $this->getRecord() ?: DataObject::create();
         if ($record->canView()) {
             // Exclude classes from being queried and showing in the results via an extension hook

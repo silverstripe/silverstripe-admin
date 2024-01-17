@@ -121,7 +121,6 @@ class SecurityAdmin extends ModelAdmin implements PermissionProvider
             $config->removeComponentsByType(GridFieldImportButton::class);
             return $config;
         }
-        /** @var GridFieldImportButton $importButton */
         $importButton = $config->getComponentByType(GridFieldImportButton::class);
         if ($importButton) {
             $modalTitle = match ($this->modelClass) {

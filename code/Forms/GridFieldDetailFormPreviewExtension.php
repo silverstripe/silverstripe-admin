@@ -6,11 +6,15 @@ use SilverStripe\Admin\LeftAndMain;
 use SilverStripe\Admin\Navigator\SilverStripeNavigator;
 use SilverStripe\Core\Extension;
 use SilverStripe\Forms\Form;
+use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
 use SilverStripe\Forms\LiteralField;
 use SilverStripe\ORM\CMSPreviewable;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\View\SSViewer;
 
+/**
+ * @extends Extension<GridFieldDetailForm_ItemRequest>
+ */
 class GridFieldDetailFormPreviewExtension extends Extension
 {
     public function updateItemEditForm(Form $form): void

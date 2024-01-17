@@ -115,7 +115,6 @@ class CMSMenuItem
             $parts[] = sprintf('%s="%s"', Convert::raw2att($name), Convert::raw2att($value));
         }
 
-        /** @var DBHTMLText $fragment */
         $fragment = DBField::create_field('HTMLFragment', implode(' ', $parts));
         return $fragment;
     }

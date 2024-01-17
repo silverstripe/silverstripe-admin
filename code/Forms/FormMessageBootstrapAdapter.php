@@ -6,6 +6,8 @@ use SilverStripe\Core\Extension;
 
 /**
  * Will convert a SilverStripe message type into a Bootstrap alert type
+ *
+ * @extends Extension<Form|FormField>
  */
 class FormMessageBootstrapExtension extends Extension
 {

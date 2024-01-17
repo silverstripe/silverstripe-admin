@@ -343,7 +343,6 @@ abstract class ModelAdmin extends LeftAndMain
         // Validation
         if (singleton($this->modelClass)->hasMethod('getCMSCompositeValidator')) {
             $detailValidator = singleton($this->modelClass)->getCMSCompositeValidator();
-            /** @var GridFieldDetailForm $detailform */
             $detailform = $config->getComponentByType(GridFieldDetailForm::class);
             $detailform->setValidator($detailValidator);
         }
@@ -708,10 +707,6 @@ abstract class ModelAdmin extends LeftAndMain
         return $this->redirectBack();
     }
 
-    /**
-     * @param bool $unlinked
-     * @return ArrayList
-     */
     public function Breadcrumbs($unlinked = false)
     {
         $items = parent::Breadcrumbs($unlinked);

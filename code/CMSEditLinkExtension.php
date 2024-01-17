@@ -32,6 +32,9 @@ use SilverStripe\ORM\DataObject;
  *
  * If the cms_edit_owner is a has_one relation, the class on the other end
  * of the relation must have a CMSEditLink() method.
+ *
+ * @template T of LeftAndMain|DataObject
+ * @extends Extension<T&static>
  */
 class CMSEditLinkExtension extends Extension
 {
@@ -40,7 +43,7 @@ class CMSEditLinkExtension extends Extension
     /**
      * Get the ModelAdmin, LeftAndMain, or DataObject which owns this object for CMS editing purposes.
      *
-     * @return LeftAndMain|DataObject|null
+     * @return DataObject|LeftAndMain|null
      */
     public function getCMSEditOwner()
     {
@@ -71,6 +74,7 @@ class CMSEditLinkExtension extends Extension
      */
     public function CMSEditLink(): string
     {
+        /** @var DataObject|LeftAndMain|null $owner */
         $owner = $this->owner->getCMSEditOwner();
         if (!$owner || !$owner->exists()) {
             return '';

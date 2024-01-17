@@ -5,8 +5,12 @@ namespace SilverStripe\Admin;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\Director;
 use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Control\RequestHandler;
 use SilverStripe\Core\Extension;
 
+/**
+ * @extends Extension<RequestHandler>
+ */
 class AdminErrorExtension extends Extension
 {
     /**

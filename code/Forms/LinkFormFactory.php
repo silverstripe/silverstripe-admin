@@ -39,7 +39,6 @@ abstract class LinkFormFactory implements FormFactory
         $fields = $this->getFormFields($controller, $name, $context);
         $actions = $this->getFormActions($controller, $name, $context);
         $validator = $this->getValidator($controller, $name, $context);
-        /** @var Form $form */
         $form = Form::create($controller, $name, $fields, $actions, $validator);
         $form->addExtraClass('form--no-dividers');
 

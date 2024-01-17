@@ -103,7 +103,6 @@ class CMSProfileController extends LeftAndMain
      * in the breadcrumbs.
      *
      * @param bool $unlinked
-     * @return ArrayList
      */
     public function Breadcrumbs($unlinked = false)
     {

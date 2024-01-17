@@ -45,7 +45,6 @@ class SudoModeController extends LeftAndMain
 
     public function getClientConfig()
     {
-        /** @var HTTPRequest $request */
         $request = Injector::inst()->get(HTTPRequest::class);
 
         return array_merge_recursive(parent::getClientConfig(), [
