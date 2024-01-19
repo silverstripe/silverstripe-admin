@@ -1,4 +1,4 @@
-/* global tinymce, editorIdentifier, window */
+/* global tinymce, window */
 import i18n from 'i18n';
 import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
 import React from 'react';
@@ -7,16 +7,17 @@ import jQuery from 'jquery';
 import { createInsertLinkModal } from 'containers/InsertLinkModal/InsertLinkModal';
 import { loadComponent } from 'lib/Injector';
 
-// Link to external url
-TinyMCEActionRegistrar.addAction('sslink', {
-  text: i18n._t('Admin.LINKLABEL_EXTERNALURL', 'Link to external URL'),
-  // eslint-disable-next-line no-console
-  onclick: (editor) => editor.execCommand('sslinkexternal'),
-  priority: 70,
-}, editorIdentifier);
-
 const plugin = {
   init(editor) {
+    // Add "Link to external url" to link menu for this editor
+    TinyMCEActionRegistrar.addAction('sslink', {
+      text: i18n._t('Admin.LINKLABEL_EXTERNALURL', 'Link to external URL'),
+      // eslint-disable-next-line no-console
+      onclick: (editorInst) => editorInst.execCommand('sslinkexternal'),
+      priority: 70,
+    }, editor.settings.editorIdentifier);
+
+    // Add a command that corresponds with the above menu item
     editor.addCommand('sslinkexternal', () => {
       const field = window.jQuery(`#${editor.id}`).entwine('ss');
 
