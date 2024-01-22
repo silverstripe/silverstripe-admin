@@ -93,6 +93,7 @@ class MemberImportForm extends Form
     public function doImport($data, $form)
     {
         $loader = new MemberCsvBulkLoader();
+        $loader->setCheckPermissions(true);
 
         // optionally set group relation
         if ($this->group) {
