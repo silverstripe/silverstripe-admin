@@ -545,10 +545,10 @@ abstract class ModelAdmin extends LeftAndMain
     public function getModelImporters()
     {
         $importerClasses = $this->config()->get('model_importers');
+        $models = $this->getManagedModels();
 
         // fallback to all defined models if not explicitly defined
         if (is_null($importerClasses)) {
-            $models = $this->getManagedModels();
             foreach ($models as $modelName => $options) {
                 $importerClasses[$modelName] = 'SilverStripe\\Dev\\CsvBulkLoader';
             }
@@ -556,6 +556,9 @@ abstract class ModelAdmin extends LeftAndMain
 
         $importers = [];
         foreach ($importerClasses as $modelClass => $importerClass) {
+            if (isset($models[$modelClass])) {
+                $modelClass = $models[$modelClass]['dataClass'];
+            }
             $importer = new $importerClass($modelClass);
             if (ClassInfo::hasMethod($importer, 'setCheckPermissions')) {
                 $importer->setCheckPermissions(true);
@@ -675,8 +678,7 @@ abstract class ModelAdmin extends LeftAndMain
             $results = $loader->load($_FILES['_CsvFile']['tmp_name']);
         } catch (HTTPResponse_Exception $e) {
             $form->sessionMessage($e->getMessage(), ValidationResult::TYPE_ERROR);
-            $this->redirectBack();
-            return false;
+            return $this->redirectBack();
         }
 
         $message = '';
