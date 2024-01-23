@@ -3,10 +3,10 @@ Feature: Show toast messages
   I want to see toast message in the CMS when I create, edit, delete, publish, unpublish, archive a record
 
   Background:
-    Given the "Company" "Company A" with "Category"="Other" 
+    Given the "Company" "Company A" with "Category"="Other"
     And the "Company" "Company B" with "Category"="Other"
     And the "Company" "Company C" with "Category"="Other"
-    And the "Employee" "Employee A" with "Company"="1"
+    And the "Employee" "Employee A" with "Company"="3"
     And the "Employee" "Employee B" with "Company"="1"
     And the "Employee" "Employee C" with "Company"="1"
     And the "group" "EDITOR" has permissions "Access to 'Pages' section" and "Access to 'Test ModelAdmin' section" and "TEST_DATAOBJECT_EDIT"
@@ -38,7 +38,7 @@ Feature: Show toast messages
     And I should see a "Archived Company "Company B"" success toast
 
   Scenario: I can see toast message when I successfully delete a record
-    When I click "Company A" in the "#Form_EditForm" element
+    When I click "Company C" in the "#Form_EditForm" element
     And I click "Employees" in the ".ui-tabs-nav" element
     Then I should see "Employee A" in the "#Form_ItemEditForm_Employees" element
     And I click "Employee A" in the "#Form_ItemEditForm_Employees" element
@@ -47,7 +47,7 @@ Feature: Show toast messages
     Then I should not see "Employee A" in the "#Form_ItemEditForm_Employees" element
 
   Scenario: I can see toast message when I successfully delete a record by clicking the Unlink button in action menu
-    When I click "Company A" in the "#Form_EditForm" element
+    When I click "Company C" in the "#Form_EditForm" element
     And I click "Employees" in the ".ui-tabs-nav" element
     Then I should see "Employee A" in the "#Form_ItemEditForm_Employees" element
     And I press the "View actions" button
@@ -66,6 +66,7 @@ Feature: Show toast messages
 
   Scenario: I can see toast message when I have validation errors
     When I click "Company C" in the "#Form_EditForm" element
+    And I click "Main" in the ".ui-tabs-nav" element
     And I fill in "Name" with ""
     And I press the "Save" button
     Then I should see "Validation Error"
