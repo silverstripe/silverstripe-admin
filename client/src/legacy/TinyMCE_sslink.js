@@ -11,6 +11,16 @@ const plugin = {
    * @param {Object} editor
    */
   init(editor) {
+    function getActions() {
+      // Fetch the actions whenever the fetch function is called.
+      return TinyMCEActionRegistrar.getSortedActions('sslink', editor.getParam('editorIdentifier'), true)
+        .map(action => Object.assign(
+          {},
+          action,
+          { onAction: () => action.onAction(editor) }
+        ));
+    }
+
     const metaKey = navigator.platform.toUpperCase().includes('MAC') ? '⌘' : 'Ctrl';
     const title = i18n._t('Admin.INSERT_LINK', 'Insert link');
     const titleWithShortcut = i18n.inject(
@@ -33,33 +43,18 @@ const plugin = {
       }
     }
 
+    // Button in main toolbar
     editor.ui.registry.addMenuButton('sslink', {
       icon: 'link',
       tooltip: titleWithShortcut,
-      fetch: (callback) => callback(
-        // Fetch the actions whenever the fetch function is called.
-        TinyMCEActionRegistrar.getSortedActions('sslink', editor.getParam('editorIdentifier'), true)
-          .map(action => Object.assign(
-            {},
-            action,
-            { onAction: () => action.onAction(editor) }
-          ))
-      ),
+      fetch: (callback) => callback(getActions()),
     });
 
-    editor.on('preinit', () => {
-      // Right click context menu item
-      editor.ui.registry.addNestedMenuItem('sslink', {
-        icon: 'link',
-        text: title,
-        getSubmenuItems: () => // Fetch the actions whenever the fetch function is called.
-          TinyMCEActionRegistrar.getSortedActions('sslink', editor.getParam('editorIdentifier'), true)
-            .map(action => Object.assign(
-              {},
-              action,
-              { onAction: () => action.onAction(editor) }
-            )),
-      });
+    // Right click context menu item
+    editor.ui.registry.addNestedMenuItem('sslink', {
+      icon: 'link',
+      text: title,
+      getSubmenuItems: getActions,
     });
 
     // Context menu when a link is selected
