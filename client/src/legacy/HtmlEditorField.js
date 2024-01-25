@@ -86,7 +86,7 @@ ss.editorWrappers.tinyMCE = (function() {
     getConfig: function() {
       var selector = "#" + editorID,
         config = jQuery(selector).data('config'),
-        height = config.row_height ? config.row_height : 'undefined',
+        height = config.row_height ? config.row_height : undefined,
         self = this;
 
       // Add instance specific data to config
