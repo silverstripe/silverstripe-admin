@@ -17,26 +17,6 @@ const plugin = {
       i18n._t('Admin.INSERT_LINK_WITH_SHORTCUT', 'Insert link {shortcut}'),
       { shortcut: `[${metaKey}+K]` }
     );
-    const actions = TinyMCEActionRegistrar.getSortedActions('sslink', editor.getParam('editorIdentifier'), true)
-      .map(action => Object.assign(
-        {},
-        action,
-        { onAction: () => action.onAction(editor) }
-      ));
-
-    // Button in main toolbar
-    editor.ui.registry.addMenuButton('sslink', {
-      icon: 'link',
-      tooltip: titleWithShortcut,
-      fetch: (callback) => callback(actions),
-    });
-
-    // Right click context menu item
-    editor.ui.registry.addNestedMenuItem('sslink', {
-      icon: 'link',
-      text: title,
-      getSubmenuItems: () => actions,
-    });
 
     // Keyboard shortcut
     editor.addShortcut('Meta+k', 'Open link menu', () => {
@@ -52,6 +32,35 @@ const plugin = {
         editor.execCommand(TinyMCEActionRegistrar.getEditorCommandFromUrl(href));
       }
     }
+
+    editor.ui.registry.addMenuButton('sslink', {
+      icon: 'link',
+      tooltip: titleWithShortcut,
+      fetch: (callback) => callback(
+        // Fetch the actions whenever the fetch function is called.
+        TinyMCEActionRegistrar.getSortedActions('sslink', editor.getParam('editorIdentifier'), true)
+          .map(action => Object.assign(
+            {},
+            action,
+            { onAction: () => action.onAction(editor) }
+          ))
+      ),
+    });
+
+    editor.on('preinit', () => {
+      // Right click context menu item
+      editor.ui.registry.addNestedMenuItem('sslink', {
+        icon: 'link',
+        text: title,
+        getSubmenuItems: () => // Fetch the actions whenever the fetch function is called.
+          TinyMCEActionRegistrar.getSortedActions('sslink', editor.getParam('editorIdentifier'), true)
+            .map(action => Object.assign(
+              {},
+              action,
+              { onAction: () => action.onAction(editor) }
+            )),
+      });
+    });
 
     // Context menu when a link is selected
     editor.ui.registry.addButton('sslink-edit', {

@@ -1,4 +1,4 @@
-/* global tinymce, editorIdentifier, window */
+/* global tinymce, window */
 import i18n from 'i18n';
 import TinyMCEActionRegistrar from 'lib/TinyMCEActionRegistrar';
 import React from 'react';
@@ -9,19 +9,20 @@ import { loadComponent } from 'lib/Injector';
 
 const commandName = 'sslinkemail';
 
-// Link to email address
-TinyMCEActionRegistrar.addAction(
-  'sslink',
-  {
-    text: i18n._t('Admin.LINKLABEL_EMAIL', 'Link to email address'),
-    onclick: (editorInst) => editorInst.execCommand(commandName),
-    priority: 51,
-  },
-  editorIdentifier,
-).addCommandWithUrlTest(commandName, /^mailto:/);
-
 const plugin = {
   init(editor) {
+    // Add "Link to email address" to link menu for this editor
+    TinyMCEActionRegistrar.addAction(
+      'sslink',
+      {
+        text: i18n._t('Admin.LINKLABEL_EMAIL', 'Link to email address'),
+        onAction: (editorInst) => editorInst.execCommand(commandName),
+        priority: 51,
+      },
+      editor.getParam('editorIdentifier'),
+    ).addCommandWithUrlTest(commandName, /^mailto:/);
+
+    // Add a command that corresponds with the above menu item
     editor.addCommand(commandName, () => {
       const field = window.jQuery(`#${editor.id}`).entwine('ss');
 
