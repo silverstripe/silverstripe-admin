@@ -19,25 +19,6 @@ const plugin = {
       i18n._t('Admin.INSERT_LINK_WITH_SHORTCUT', 'Insert link {shortcut}'),
       { shortcut: `[${metaKey}+K]` }
     );
-    const actions = TinyMCEActionRegistrar.getSortedActions('sslink', editor.settings.editorIdentifier, true)
-      .map(action => Object.assign(
-        {},
-        action,
-        { onclick: () => action.onclick(editor) }
-      ));
-
-    editor.addButton('sslink', {
-      icon: 'link',
-      title: titleWithShortcut,
-      type: 'menubutton',
-      menu: actions,
-    });
-
-    editor.addMenuItem('sslink', {
-      icon: 'link',
-      text: title,
-      menu: actions,
-    });
 
     editor.addShortcut('Meta+k', 'Open link menu', () => {
       jQuery(`[aria-label^=\"${title}\"] > button`, editor.container).first().click();
@@ -52,7 +33,44 @@ const plugin = {
       }
     }
 
+    let actions = [];
+
+    const button = {
+      icon: 'link',
+      title: titleWithShortcut,
+      type: 'menubutton',
+      onPostRender: (data) => {
+        // Fetch the actions.
+        // We can't do this in the plugin's init method directly because not all actions will have
+        // been registered at that stage.
+        // We can't do this in the editor's preinit (or any other editor-related) event because
+        // the buttons will have already been fully rendered by then, and after that we can't
+        // access their state to update it.
+        actions = TinyMCEActionRegistrar.getSortedActions('sslink', editor.settings.editorIdentifier, true)
+        .map(action => Object.assign(
+          {},
+          action,
+          { onclick: () => action.onclick(editor) }
+        ));
+        // Set the button menu to include all link actions
+        // eslint-disable-next-line no-param-reassign
+        data.control.state.data.menu = actions;
+      },
+      menu: actions,
+    };
+
+    editor.addButton('sslink', button);
+
     editor.on('preinit', () => {
+      // Add context menu item. This happens after button rendering, so we know
+      // we have the same list of actions that the main button has at this stage.
+      editor.addMenuItem('sslink', {
+        icon: 'link',
+        text: title,
+        menu: actions,
+      });
+
+      // Add toolbar for when you right click on a link
       setupTinyMceInlineToolbar(editor, [
         { type: 'button', onClick: openLinkDialog, text: i18n._t('Admin.EDIT_LINK', 'Edit link') },
         { type: 'button', onClick: () => this.handleRemoveLinkClick(editor), text: i18n._t('Admin.REMOVE_LINK', 'Remove link') },
