@@ -3,3 +3,9 @@
 .chosen-container-multi .chosen-choices {
   padding: 4px 5px;
 }
+
+// Avoid chosen dropdowns overflowing when not active
+// affects non-firefox #1422
+.chosen-container:not(.chosen-container-active) .chosen-drop {
+  overflow: hidden;
+}

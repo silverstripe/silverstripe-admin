@@ -11,32 +11,22 @@ const plugin = {
    * @param {Object} editor
    */
   init(editor) {
+    function getActions() {
+      // Fetch the actions whenever the fetch function is called.
+      return TinyMCEActionRegistrar.getSortedActions('sslink', editor.getParam('editorIdentifier'), true)
+        .map(action => Object.assign(
+          {},
+          action,
+          { onAction: () => action.onAction(editor) }
+        ));
+    }
+
     const metaKey = navigator.platform.toUpperCase().includes('MAC') ? '⌘' : 'Ctrl';
     const title = i18n._t('Admin.INSERT_LINK', 'Insert link');
     const titleWithShortcut = i18n.inject(
       i18n._t('Admin.INSERT_LINK_WITH_SHORTCUT', 'Insert link {shortcut}'),
       { shortcut: `[${metaKey}+K]` }
     );
-    const actions = TinyMCEActionRegistrar.getSortedActions('sslink', editor.getParam('editorIdentifier'), true)
-      .map(action => Object.assign(
-        {},
-        action,
-        { onAction: () => action.onAction(editor) }
-      ));
-
-    // Button in main toolbar
-    editor.ui.registry.addMenuButton('sslink', {
-      icon: 'link',
-      tooltip: titleWithShortcut,
-      fetch: (callback) => callback(actions),
-    });
-
-    // Right click context menu item
-    editor.ui.registry.addNestedMenuItem('sslink', {
-      icon: 'link',
-      text: title,
-      getSubmenuItems: () => actions,
-    });
 
     // Keyboard shortcut
     editor.addShortcut('Meta+k', 'Open link menu', () => {
@@ -52,6 +42,20 @@ const plugin = {
         editor.execCommand(TinyMCEActionRegistrar.getEditorCommandFromUrl(href));
       }
     }
+
+    // Button in main toolbar
+    editor.ui.registry.addMenuButton('sslink', {
+      icon: 'link',
+      tooltip: titleWithShortcut,
+      fetch: (callback) => callback(getActions()),
+    });
+
+    // Right click context menu item
+    editor.ui.registry.addNestedMenuItem('sslink', {
+      icon: 'link',
+      text: title,
+      getSubmenuItems: getActions,
+    });
 
     // Context menu when a link is selected
     editor.ui.registry.addButton('sslink-edit', {

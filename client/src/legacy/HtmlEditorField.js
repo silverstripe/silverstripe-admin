@@ -66,6 +66,9 @@ ss.editorWrappers.tinyMCE = (function() {
     },
 
     setHeight: function (event, height) {
+      if (typeof height === 'undefined') {
+        return;
+      }
       if (event.target && event.target.iframeElement) {
         event.target.iframeElement.height = height !== '' ? 'auto' : height;
         const parentDiv = event.target.iframeElement.closest('.tox-sidebar-wrap');
@@ -83,6 +86,7 @@ ss.editorWrappers.tinyMCE = (function() {
     getConfig: function() {
       var selector = "#" + editorID,
         config = jQuery(selector).data('config'),
+        height = config.row_height ? config.row_height : undefined,
         self = this;
 
       // Add instance specific data to config
@@ -94,7 +98,6 @@ ss.editorWrappers.tinyMCE = (function() {
           self.save();
         });
         ed.on('init', (event) => {
-          let height = document.querySelector(config.selector).style.height;
           self.setHeight(event, height);
         });
         ed.on('ResizeEditor', (event) => {
