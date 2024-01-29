@@ -16,6 +16,8 @@ use SilverStripe\View\Requirements;
 use SilverStripe\Admin\Tests\LeftAndMainTest\MyTree;
 use SilverStripe\Admin\Tests\LeftAndMainTest\MyTreeController;
 use stdClass;
+use ReflectionObject;
+use InvalidArgumentException;
 
 class LeftAndMainTest extends FunctionalTest
 {
@@ -285,5 +287,63 @@ class LeftAndMainTest extends FunctionalTest
         $this->assertSame(1, count($result->messages));
         $this->assertSame($result->messages[0]->fieldName, 'Content');
         $this->assertSame($result->messages[0]->message, MyTree::INVALID_CONTENT_MESSAGE);
+    }
+
+    public function provideJsonSuccess(): array
+    {
+        return [
+            [
+                'statusCode' => 201,
+                'data' => [],
+                'expectedBody' => '',
+                'expectedException' => '',
+            ],
+            [
+                'statusCode' => 200,
+                'data' => ['foo' => 'bar', 'quotes' => '"something"', 'array' => [1, 2, 3]],
+                'expectedBody' => '{"foo":"bar","quotes":"\"something\"","array":[1,2,3]}',
+                'expectedException' => '',
+            ],
+            [
+                'statusCode' => 200,
+                'data' => ['unicode' => ['one' => 'ōōō', 'two' => '℅℅℅', 'three' => '👍👍👍']],
+                'expectedBody' => '{"unicode":{"one":"ōōō","two":"℅℅℅","three":"👍👍👍"}}',
+                'expectedException' => '',
+            ],
+            [
+                'statusCode' => 199,
+                'data' => [],
+                'expectedBody' => '',
+                'expectedException' => InvalidArgumentException::class,
+            ],
+            [
+                'statusCode' => 302,
+                'data' => [],
+                'expectedBody' => '',
+                'expectedException' => InvalidArgumentException::class,
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider provideJsonSuccess
+     */
+    public function testJsonSuccess(
+        int $statusCode,
+        array $data,
+        string $expectedBody,
+        string $expectedException
+    ): void {
+        $leftAndMain = new LeftAndMain();
+        $refelectionObject = new ReflectionObject($leftAndMain);
+        $method = $refelectionObject->getMethod('jsonSuccess');
+        $method->setAccessible(true);
+        if ($expectedException) {
+            $this->expectException($expectedException);
+        }
+        $response = $method->invoke($leftAndMain, $statusCode, $data);
+        $this->assertSame('application/json', $response->getHeader('Content-type'));
+        $this->assertSame($statusCode, $response->getStatusCode());
+        $this->assertSame($expectedBody, $response->getBody());
     }
 }

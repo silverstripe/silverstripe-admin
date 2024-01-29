@@ -413,6 +413,21 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
+     * Creates a successful json response
+     */
+    protected function jsonSuccess(int $statusCode, array $data = []): HTTPResponse
+    {
+        if ($statusCode < 200 || $statusCode >= 300) {
+            throw new InvalidArgumentException("Status code $statusCode must be between 200 and 299");
+        }
+        $body = empty($data) ? '' : json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        return $this->getResponse()
+            ->addHeader('Content-Type', 'application/json')
+            ->setStatusCode($statusCode)
+            ->setBody($body);
+    }
+
+    /**
      * Return an error HTTPResponse encoded as json
      *
      * @param int $errorCode
