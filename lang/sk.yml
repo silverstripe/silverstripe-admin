@@ -6,10 +6,129 @@ sk:
     RESTORED_PAGES: 'Obnovených %d stránok'
     UNPUBLISHED_PAGES: 'Nezverejnených %d stránok'
     UNPUBLISH_PAGES: Nezverejniť
+  SilverStripe\Admin\CMSProfileController:
+    CANTEDIT: 'Na to nemáte povolenie'
+    MENUTITLE: 'Môj profil'
+  SilverStripe\Admin\Forms\EditorEmailLinkFormFactory:
+    EMAIL: 'Emailová adresa'
+    LINKDESCR: 'Popis odkazu'
+    LINKTEXT: 'Text odkazu'
+    SUBJECT: Predmet
+  SilverStripe\Admin\Forms\EditorExternalLinkFormFactory:
+    ANCHORVALUE: Kotva
+    LINKDESCR: 'Popis odkazu'
+    LINKOPENNEWWIN: 'Otvoriť v novom okne/na karte'
+    LINKTEXT: 'Text odkazu'
+    URL: URL
+  SilverStripe\Admin\Forms\LinkFormFactory:
+    INSERT_LINK: 'Vložiť odkaz'
+  SilverStripe\Admin\Forms\UsedOnTable:
+    ADDEDTODRAFT: Koncept
+    MODIFIEDONDRAFTSHORT: Upravené
+    UNTITLED: 'Bez názvu'
+  SilverStripe\Admin\GroupImportForm:
+    Help1: '<p>Importujte jednu alebo viac skupín vo formáte <em>CSV</em> (hodnoty oddelené čiarkou). <small><a href="#" class="toggle-advanced">Zobraziť rozšírené použitie</a></small></p>'
+    Help2: '<div class="advanced"><h4>Rozšírené použitie</h4><ul><li>Povolené stĺpce: <em>{columns}</em></li><li>Existujúce skupiny sú spárované na základe stĺpca <em>Code</em> a upravené s novými hodnotami z importovaného súboru</li><li>Hierarchie skupín možno vytvoriť pomocou stĺpca <em>ParentCode</em>.</li><li>Kódy oprávnení možno priradiť stĺpcom <em>PermissionCode</em>. Existujúce oprávnenia nebudú vymazané.</li></ul></div>'
+    ResultCreated: 'Počet vytvorených skupín: {count}'
+    ResultDeleted: 'Počet odstránených skupín: {count}'
+    ResultUpdated: 'Počet upravených skupín: {count}'
+  SilverStripe\Admin\LeftAndMain:
+    ACCESSALLINTERFACES: 'Prístup do všetkých sekcií CMS'
+    ACCESSALLINTERFACESHELP: 'Nahrádza konkrétnejšie nastavenia prístupu.'
+    BROWSER_WARNING_HEADING: 'Nepodporovaný prehliadač'
+    BROWSER_WARNING_TEXT: 'Používate webový prehliadač, ktorý SilverStripe nepodporuje.<br />Aktualizujte prosím na jednu z nasledujúcich možností.'
+    CollapsePanel: 'Zbaliť panel'
+    DELETED: Odstránené.
+    DropdownBatchActionsDefault: 'Vyberte akciu...'
+    ErrorDetail: 'Podrobnosti o chybe: {detail}'
+    ErrorMessage: 'Ľutujeme, zdá sa, že došlo k chybe {errorcode}.'
+    ErrorMessage403: 'Ľutujeme, zdá sa, že akcia, ktorú ste sa pokúšali vykonať, je zakázaná.'
+    ErrorMessage404: 'Ľutujeme, zdá sa, že ste sa pokúšali o prístup k sekcii alebo objektu, ktorý neexistuje.'
+    ErrorMessage500: 'Ľutujeme, zdá sa, že došlo k internej chybe servera.'
+    ErrorMessage503: 'Ľutujeme, zdá sa, že služba je dočasne nedostupná.'
+    ExpandPanel: 'Rozbaliť panel'
+    HelpMenu: 'Ponuka pomoci'
+    LOGOUT: 'Odhlásiť sa'
+    MenuToggleAuto: Auto
+    MenuToggleStickyNav: 'Priľnavá navigácia'
+    NO_PREVIEW: 'Žiaden náhľad k dispozícii'
+    NavigateUp: 'Prejdite do priečinka nahor'
+    PERMAGAIN: 'Boli ste odhlásení z CMS. Ak sa chcete znovu prihlásiť, zadajte nižšie používateľské meno a heslo.'
+    PERMALREADY: 'Prepáčte, ale k tejto časti CMS nemáte prístup. Ak sa chcete prihlásiť ako niekto iný, urobte tak nižšie.'
+    PERMDEFAULT: 'Pre prístup do administratívnej časti musíte byť prihlásený; zadajte svoje prihlasovacie údaje nižšie.'
+    PROFILE: 'profil {name}'
+    PreviewButton: Náhľad
+    REQUIREJS: 'CMS vyžaduje, aby ste mali povolený JavaScript.'
+    SAVEDUP: Uložené.
+    SUBMIT_BUTTON_LABEL: Choď
+    ValidationError: 'Chyba platnosti'
+    Version: Verzia
+  SilverStripe\Admin\LeftAndMain_ViewModeSelector:
+    Auto: Auto
+    ChangeViewMode: 'Zmeniť režim zobrazenia'
+    Desktop: Desktop
+    DualWindowView: 'Dvojité okno'
+    EditView: 'Režim úpravy'
+    Mobile: Mobil
+    PreviewState: 'Stav ukážky'
+    PreviewView: 'Režim ukážky'
+    Responsive: Responzívne
+    SplitView: 'Split režim'
+    Tablet: Tablet
+    ViewDeviceWidth: 'Vyberte šírku ukážky'
+    Width: šírka
+  SilverStripe\Admin\MemberImportForm:
+    BtnImport: 'Importovať z CSV'
+    FileFieldLabel: 'Súbor CSV <small>(Povolené prípony: *.csv)</small>'
+    Help1: '<p>Importujte používateľov v <em>CSV formáte</em> (hodnoty oddelené čiarkou). <small><a href="#" class="toggle-advanced">Zobraziť rozšírené použitie</a></small></p>'
+    Help2: '<div class="advanced"><h4>Rozšírené použitie</h4><ul><li>Povolené stĺpce: <em>{columns}</em></li><li>Existujúci používatelia sú spárovaní na základe hodnoty <em>Code</em> a upravení s novými hodnotami z importovaného súboru.</li><li>Skupiny môžu byť priradené stĺpcom <em>Groups</em> Skupiny sú identifikované hodnotou <em>Code</em>, Viacero skupín môže byť oddelených čiarkou. Existujúce členstvá v skupinách nebudú zmazané.</li></ul></div>'
+    ImportFormHelpGroup: '<ul><li>Existujúce skupiny sú spárované na základe hodnoty <em>Code</em>, a upravené s novými hodnotami z importovaného súboru</li><li>Hierarchie skupín možno vytvoriť pomocou stĺpca <em>ParentCode</em>.</li><li>Kódy oprávnení možno priradiť stĺpcom <em>PermissionCode</em>. Existujúce oprávnenia nebudú vymazané.</li></ul>'
+    ImportFormHelpMember: '<p>Skupiny môžu byť priradené stĺpcom <em>Groups</em>. Skupiny sú identifikované hodnotou <em>Code</em>, viacero skupín môže byť oddelených čiarkou. Existujúce členstvá v skupinách nebudú vymazané.</p>'
+    ResultCreated: 'Počet vytvorených členov: {count}'
+    ResultDeleted: 'Počet odstránených členov: {count}'
+    ResultNone: 'Žiadne zmeny'
+    ResultUpdated: 'Počet upravených členov: {count}'
+  SilverStripe\Admin\ModelAdmin:
+    DELETE: Odstrániť
+    DELETEDRECORDS: 'Počet odstránených záznamov: {count}'
+    EMPTYBEFOREIMPORT: 'Nahradiť údaje'
+    IMPORT: 'Importovať z CSV'
+    IMPORTEDRECORDS: 'Počet importovaných záznamov: {count}'
+    IMPORTSPECFIELDS: 'Databázové stĺpce'
+    IMPORTSPECLINK: 'Zobraziť špecifikáciu pre {model}'
+    IMPORTSPECRELATIONS: Vzťahy
+    IMPORTSPECTITLE: 'Špecifikácia pre {model}'
+    NOCSVFILE: 'Zvoľte prosím súbor CSV na import'
+    NOIMPORT: 'Nič na importovanie'
+    Title: 'Dátové modely'
+    UPDATEDRECORDS: 'Počet upravených záznamov: {count}'
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem:
+    WONT_BE_SHOWN: 'Poznámka: Táto správa sa nebude zobrazovať vašim návštevníkom'
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
+    PREVIEW: Náhľad
   SilverStripe\Admin\SecurityAdmin:
+    ACCESS_HELP: 'Povoliť zobrazovanie, pridávanie a úpravu používateľov, ako aj priraďovanie im oprávnení a rolí.'
+    APPLY_ROLES: 'Priradiť role skupinám'
+    APPLY_ROLES_HELP: 'Schopnosť upravovať role priradené skupine. Vyžaduje sa oprávnenie "Prístup do sekcie ''Používatelia''".'
+    EDITPERMISSIONS: 'Spravovať oprávnenia pre skupiny'
+    EDITPERMISSIONS_HELP: 'Schopnosť upravovať oprávnenia a IP adresy pre skupinu. Vyžaduje sa oprávnenie "Prístup do sekcie ''Zabezpečenie''".'
     GROUPNAME: 'Názov skupiny'
+    IMPORTGROUPS: 'Importovať skupiny'
+    IMPORTUSERS: 'Importovať používateľov'
+    ImportFormHelpGroup: '<ul><li>Existujúce skupiny sú spárované na základe hodnoty <em>Code</em>, a upravené s novými hodnotami z importovaného súboru</li><li>Hierarchie skupín možno vytvoriť pomocou stĺpca <em>ParentCode</em>.</li><li>Kódy oprávnení možno priradiť stĺpcom <em>PermissionCode</em>. Existujúce oprávnenia nebudú vymazané.</li></ul>'
+    ImportFormHelpMember: '<p>Skupiny môžu byť priradené stĺpcom <em>Groups</em>. Skupiny sú identifikované hodnotou <em>Code</em>, viacero skupín môže byť oddelených čiarkou. Existujúce členstvá v skupinách nebudú vymazané.</p>'
     MEMBERS: Členovia
+    MENUTITLE: Zabezpečenie
+    MemberListCaution: 'Upozornenie: Odstránenie členov z tohto zoznamu ich odstráni zo všetkých skupín a databázy'
     NEWGROUP: 'Nová skupina'
     PERMISSIONS: Právomoci
     ROLES: Úlohy
     ROLESDESCRIPTION: 'Úlohy sú logické zoskupenia právomocí a môžu byť pridelené k skupinám.<br />Sú zdedené z nadradených skupín, ak je to požadované.'
+    TABROLES: Role
+    Users: Používatelia
+  SilverStripe\Admin\SudoModeController:
+    INVALID: 'Nesprávne heslo'
+    ImportFormHelpGroup: '<ul><li>Existujúce skupiny sú spárované na základe hodnoty <em>Code</em>, a upravené s novými hodnotami z importovaného súboru</li><li>Hierarchie skupín možno vytvoriť pomocou stĺpca <em>ParentCode</em>.</li><li>Kódy oprávnení možno priradiť stĺpcom <em>PermissionCode</em>. Existujúce oprávnenia nebudú vymazané.</li></ul>'
+    ImportFormHelpMember: '<p>Skupiny môžu byť priradené stĺpcom <em>Groups</em>. Skupiny sú identifikované hodnotou <em>Code</em>, viacero skupín môže byť oddelených čiarkou. Existujúce členstvá v skupinách nebudú vymazané.</p>'
+    MENUTITLE: SilverStripe\Admin\SudoModeController
+    TIMEOUT: 'Časový limit relácie vypršal, obnovte stránku a skúste to znova.'
