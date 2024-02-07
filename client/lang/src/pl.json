@@ -13,14 +13,11 @@
     "Admin.CONFIRMUNSAVEDSHORT": "UWAGA: Twoje zmiany nie zostały zapisane.",
     "Admin.DELETECONFIRMMESSAGE": "Czy na pewno chcesz usunąć ten rekord?",
     "Admin.EDIT": "Edytuj",
-    "Admin.EDIT_LINK": "Edit link",
-    "Admin.ENTER_PASSWORD": "Enter your password",
     "Admin.ERRORINTRANSACTION": "Wystąpił błąd podczas pobierania danych z serwera\nSpróbuj ponownie później.",
     "Admin.EXPANDPANEL": "Rozwiń panel",
     "Admin.FormatExample": "Przykład: {format}",
     "Admin.NONE": "Żaden",
     "Admin.NO_SIZE": "Nie dotyczy",
-    "Admin.REMOVE_LINK": "Remove link",
     "Admin.SELECTONEPAGE": "Wybierz co najmniej jedną stronę",
     "Admin.VALIDATIONERROR": "Niepoprawne dane",
     "Admin.VALIDATION_ERRORS_IN_TAB": "Ta zakładka zawiera błędy walidacji.",
@@ -32,9 +29,5 @@
     "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} nie jest prawidłową wartością.",
     "Admin.VALIDATOR_MESSAGE_EQUALS": "{name} nie są takie same.",
     "Admin.VALIDATOR_MESSAGE_NUMERIC": "{name} nie jest liczbą.",
-    "Admin.VALIDATOR_MESSAGE_REQUIRED": "{name} jest wymagane.",
-    "Admin.VERIFY": "Verify",
-    "Admin.VERIFY_ITS_YOU": "Verify it's you first.",
-    "Admin.VERIFY_TO_CONTINUE": "Verify to continue",
-    "Admin.WHATS_THIS": "What is this?"
+    "Admin.VALIDATOR_MESSAGE_REQUIRED": "{name} jest wymagane."
 }
