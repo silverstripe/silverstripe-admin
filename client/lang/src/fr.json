@@ -13,17 +13,12 @@
     "Admin.CONFIRMUNSAVEDSHORT": "ATTENTION: Vos changements n'ont pas été sauvegardés.",
     "Admin.DELETECONFIRMMESSAGE": "Êtes-vous sûr de vouloir supprimer cet enregistrement?",
     "Admin.EDIT": "Éditer",
-    "Admin.EDIT_LINK": "Edit link",
-    "Admin.ENTER_PASSWORD": "Enter your password",
     "Admin.ERRORINTRANSACTION": "Une erreur est survenue lors du transfert de donnée à partir du serveur.\nMerci de réessayer plus tard.",
     "Admin.EXPANDPANEL": "Ouvrir le panneau",
     "Admin.FormatExample": "Exemple: {format}",
     "Admin.NONE": "Aucun",
-    "Admin.NO_SIZE": "N/A",
-    "Admin.REMOVE_LINK": "Remove link",
     "Admin.SELECTONEPAGE": "Sélectionner au moins un page",
     "Admin.VALIDATIONERROR": "Erreur de validation",
-    "Admin.VALIDATION_ERRORS_IN_TAB": "This tab contains validation errors.",
     "Admin.VALIDATION_ERRORS_IN_TAB_SCREEN_READER": "(contient des erreurs de validation)",
     "Admin.VALIDATION_ERRORS_ON_PAGE": "Cette page contient des erreurs de validation. Merci de les solutionner avant de sauvegarder ou de publier.",
     "Admin.VALIDATOR_MESSAGE_ALPHA": "{name} n'est pas composé uniquement de lettres.",
@@ -32,9 +27,5 @@
     "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} n'est pas une valeur valide.",
     "Admin.VALIDATOR_MESSAGE_EQUALS": "{name} ne sont pas identiques.",
     "Admin.VALIDATOR_MESSAGE_NUMERIC": "{name} n'est pas un nombre.",
-    "Admin.VALIDATOR_MESSAGE_REQUIRED": "{name} est requis.",
-    "Admin.VERIFY": "Verify",
-    "Admin.VERIFY_ITS_YOU": "Verify it's you first.",
-    "Admin.VERIFY_TO_CONTINUE": "Verify to continue",
-    "Admin.WHATS_THIS": "What is this?"
+    "Admin.VALIDATOR_MESSAGE_REQUIRED": "{name} est requis."
 }

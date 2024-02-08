@@ -12,7 +12,6 @@ it:
     LINKDESCR: 'Descrizione del collegamento'
     LINKOPENNEWWIN: 'Apri in una nuova finestra/scheda'
     LINKTEXT: 'Link al testo'
-    URL: URL
   SilverStripe\Admin\Forms\LinkFormFactory:
     INSERT_LINK: 'Inserisci il link'
   SilverStripe\Admin\Forms\UsedOnTable:
@@ -36,8 +35,6 @@ it:
     ExpandPanel: 'Espandi pannello'
     HelpMenu: 'Menu aiuto'
     LOGOUT: Disconnetti
-    MenuToggleAuto: Auto
-    MenuToggleStickyNav: 'Sticky nav'
     NO_PREVIEW: 'Anteprima non disponibile'
     NavigateUp: 'Navigare su una cartella'
     PERMAGAIN: 'Sei stato disconnesso dal CMS. Se si desidera accedere di nuovo, immettere un nome utente e una password di seguito.'
@@ -51,17 +48,12 @@ it:
     ValidationError: 'Errore di convalida'
     Version: Versione
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
-    Auto: Auto
     ChangeViewMode: 'Cambia la modalità di visualizzazione'
-    Desktop: Desktop
     DualWindowView: 'Doppia finestra'
     EditView: 'Modalità modifica'
-    Mobile: Mobile
     PreviewState: 'Stato di anteprima'
     PreviewView: 'Modalità anteprima'
-    Responsive: Responsive
     SplitView: 'Modalità divisa'
-    Tablet: Tablet
     ViewDeviceWidth: 'Seleziona una larghezza di anteprima'
     Width: larghezza
   SilverStripe\Admin\MemberImportForm:

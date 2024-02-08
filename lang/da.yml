@@ -12,7 +12,6 @@ da:
     LINKDESCR: 'Link beskrivelse'
     LINKOPENNEWWIN: 'Åben i nyt vindue/fane'
     LINKTEXT: 'Link tekst'
-    URL: URL
   SilverStripe\Admin\Forms\LinkFormFactory:
     INSERT_LINK: 'Indsæt link'
   SilverStripe\Admin\Forms\UsedOnTable:
@@ -35,23 +34,17 @@ da:
     ExpandPanel: 'Udvid panel'
     HelpMenu: 'Hjælpe menu'
     LOGOUT: 'Log ud'
-    MenuToggleAuto: Auto
     MenuToggleStickyNav: 'Fikseret nav.'
     NavigateUp: 'Navigér en mappe op'
     PERMAGAIN: 'Du er blevet logget ud af CMS''et. Hvis du ønsker at logge ind igen så indtast et brugernavn og kodeord herunder.'
     PERMALREADY: 'Beklager, men du kan ikke tilgå denne del af CMS''et. Hvis du vil logge ind med en anden bruger, kan du gøre dette herunder.'
     PERMDEFAULT: 'Du skal være logget ind for at kunne tilgå administrationen; indtast venligst dine login oplysninger herunder.'
     PROFILE: '{name} profil'
-    PreviewButton: Preview
     REQUIREJS: 'CMS''et kræver at du har JavaScript akttiveret.'
     SAVEDUP: Gemt.
-    SUBMIT_BUTTON_LABEL: Go
     ValidationError: Valideringsfejl
-    Version: Version
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
-    Auto: Auto
     ChangeViewMode: 'Skift visningstilstand'
-    Desktop: Desktop
     DualWindowView: 'Dobbelt vindue'
     EditView: Rediger
     Mobile: Mobil
@@ -59,7 +52,6 @@ da:
     PreviewView: Preview
     Responsive: Responsivt
     SplitView: Opdelt
-    Tablet: Tablet
     ViewDeviceWidth: 'Sæt en bredde for preview'
     Width: bredde
   SilverStripe\Admin\MemberImportForm:
@@ -85,9 +77,6 @@ da:
     NOIMPORT: 'Intet at importere'
     Title: Datamodeller
     UPDATEDRECORDS: 'Opdaterede {count} elementer.'
-  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
-    PREVIEW: Preview
-    'PREVIEW''': Preview
   SilverStripe\Admin\SecurityAdmin:
     ACCESS_HELP: 'Tillad se, tilføj og rediger brugere, samt rettighed til at tildele roller til dem.'
     APPLY_ROLES: 'Tilføj roller til grupper'
