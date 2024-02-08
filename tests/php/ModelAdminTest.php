@@ -168,9 +168,11 @@ class ModelAdminTest extends FunctionalTest
     {
         $admin = new ModelAdminTest\MultiModelAdmin();
         $importers = $admin->getModelImporters();
-        $this->assertCount(2, $importers);
+        $this->assertCount(4, $importers);
         $this->assertArrayHasKey(Contact::class, $importers);
         $this->assertArrayHasKey(Player::class, $importers);
+        $this->assertArrayHasKey('Player', $importers);
+        $this->assertArrayHasKey('cricket-players', $importers);
     }
 
     public function testGetManagedModels()
