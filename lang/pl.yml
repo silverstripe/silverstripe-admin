@@ -12,7 +12,6 @@ pl:
     LINKDESCR: 'Opis linku'
     LINKOPENNEWWIN: 'Otwórz w nowym oknie/zakładce'
     LINKTEXT: 'Tekst linku'
-    URL: URL
   SilverStripe\Admin\Forms\LinkFormFactory:
     INSERT_LINK: 'Wstaw link'
   SilverStripe\Admin\Forms\UsedOnTable:
@@ -35,8 +34,6 @@ pl:
     ExpandPanel: 'Rozwiń panel'
     HelpMenu: Pomoc
     LOGOUT: 'Wyloguj się'
-    MenuToggleAuto: Auto
-    MenuToggleStickyNav: 'Sticky nav'
     NO_PREVIEW: 'Brak podglądu'
     NavigateUp: 'Przejdź do góry folderu'
     PERMAGAIN: 'Zostałeś wylogowany z CMS. Jeśli chcesz się ponownie zalogować, wpisz poniżej nazwę użytkownika i hasło.'
@@ -50,7 +47,6 @@ pl:
     ValidationError: 'Wykryto niepoprawne dane'
     Version: Wersja
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
-    Auto: Auto
     ChangeViewMode: 'Zmień tryb widoku'
     Desktop: 'Duży ekran'
     DualWindowView: 'Dzielone okno'
@@ -60,7 +56,6 @@ pl:
     PreviewView: 'Tryb podglądu'
     Responsive: Responsywny
     SplitView: 'Tryb podziału'
-    Tablet: Tablet
     ViewDeviceWidth: 'Wybierz szerokość podglądu'
     Width: szerokość
   SilverStripe\Admin\MemberImportForm:

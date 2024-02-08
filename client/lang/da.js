@@ -7,7 +7,6 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
 } else {
   ss.i18n.addDictionary('da', {
     "Admin.ANY": "Enhver",
-    "Admin.ARCHIVECONFIRMMESSAGE": "Are you sure you want to archive this record?",
     "Admin.BATCH_ARCHIVE_PROMPT": "Du har valgt {num} side(r).\n\nEr du sikker på du vil arkivere disse sider?\n\nDisse sider og alle deres undersider, bliver fjernes fra det udgivne site og arkiveres.",
     "Admin.BATCH_DELETELIVE_PROMPT": "Du har valgt {num} side(r).\n\nVil du virkeligt slette disse sider fra det udgivne site?",
     "Admin.BATCH_DELETE_PROMPT": "Du har valgt {num} side(r).\n\nEr du sikker på du vil slette disse sider?\n\nDisse sider og alle deres undersider, bliver slettet og arkiveres.",
@@ -20,19 +19,13 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.CONFIRMUNSAVEDSHORT": "Advarsel: Dine ændringer er ikke gemt.",
     "Admin.DELETECONFIRMMESSAGE": "Er du sikker på du vil slette dette element?",
     "Admin.EDIT": "Rediger",
-    "Admin.EDIT_LINK": "Edit link",
     "Admin.ENTER_PASSWORD": "Indtast dit kodeord",
     "Admin.ERRORINTRANSACTION": "Der skete en fejl ved hentning af data fra serveren\nPrøv venligst igen senere.",
     "Admin.EXPANDPANEL": "Udvid panel",
     "Admin.FormatExample": "Eksempel: {format}",
     "Admin.NONE": "Ingen",
-    "Admin.NO_SIZE": "N/A",
-    "Admin.REMOVE_LINK": "Remove link",
     "Admin.SELECTONEPAGE": "Vælg venligst mindst en side",
     "Admin.VALIDATIONERROR": "Valideringsfejl",
-    "Admin.VALIDATION_ERRORS_IN_TAB": "This tab contains validation errors.",
-    "Admin.VALIDATION_ERRORS_IN_TAB_SCREEN_READER": "(Has validation errors)",
-    "Admin.VALIDATION_ERRORS_ON_PAGE": "There are validation errors on this page, please fix them before saving or publishing.",
     "Admin.VALIDATOR_MESSAGE_ALPHA": "{name} er ikke kun bogstaver.",
     "Admin.VALIDATOR_MESSAGE_ALPHANUMERIC": "{name} er ikke en alfanumeriskværdi.",
     "Admin.VALIDATOR_MESSAGE_DATE": "{name} er ikke et korrekt dato format.",
@@ -42,7 +35,6 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.VALIDATOR_MESSAGE_REQUIRED": "{name} er krævet.",
     "Admin.VERIFY": "Bekræft",
     "Admin.VERIFY_ITS_YOU": "Bekræft først at det er dig",
-    "Admin.VERIFY_TO_CONTINUE": "Verify to continue",
     "Admin.WHATS_THIS": "Hvad er dette?"
 });
 }

@@ -12,7 +12,6 @@ nl:
     LINKDESCR: 'Link omschrijving'
     LINKOPENNEWWIN: 'Open in nieuw venster/tab'
     LINKTEXT: 'Link tekst'
-    URL: URL
   SilverStripe\Admin\Forms\LinkFormFactory:
     INSERT_LINK: 'Voeg link toe'
   SilverStripe\Admin\Forms\UsedOnTable:
@@ -42,7 +41,6 @@ nl:
     ExpandPanel: Uitklappen
     HelpMenu: Helpmenu
     LOGOUT: Uitloggen
-    MenuToggleAuto: Auto
     MenuToggleStickyNav: 'Opengeklapt houden'
     NO_PREVIEW: 'Geen voorbeeld beschikbaar'
     NavigateUp: 'Navigeer een niveau omhoog'
@@ -50,16 +48,13 @@ nl:
     PERMALREADY: 'U heeft geen rechten binnen dit gedeelte van het CMS. Indien u in wil loggen als iemand anders, dan kan dat hier onder.'
     PERMDEFAULT: 'U moet ingelogd zijn om het administratie gedeelte te kunnen benaderen; voer uw gegevens hier onder in.'
     PROFILE: '{name} profiel'
-    PreviewButton: Preview
     REQUIREJS: 'Het CMS heeft het nodig dat JavaScript is ingeschakeld.'
     SAVEDUP: Opgeslagen.
     SUBMIT_BUTTON_LABEL: Ga
     ValidationError: Validatiefout
     Version: Versie
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
-    Auto: Auto
     ChangeViewMode: 'Verander view modus'
-    Desktop: Desktop
     DualWindowView: 'Dubbel Venster'
     EditView: 'Edit modus'
     Mobile: Mobiel
@@ -67,7 +62,6 @@ nl:
     PreviewView: 'Preview modus'
     Responsive: Responsief
     SplitView: 'Gespleten modus'
-    Tablet: Tablet
     ViewDeviceWidth: 'Selecteer een preview breedte'
     Width: breedte
   SilverStripe\Admin\MemberImportForm:
@@ -97,9 +91,6 @@ nl:
     UPDATEDRECORDS: '{count} records aangepast'
   SilverStripe\Admin\Navigator\SilverStripeNavigatorItem:
     WONT_BE_SHOWN: 'Let op: dit bericht wordt niet aan uw bezoekers getoond'
-  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
-    PREVIEW: Preview
-    'PREVIEW''': Preview
   SilverStripe\Admin\SecurityAdmin:
     ACCESS_HELP: 'Beheer rechten voor het toevoegen en bewerken van gebruikers, alsook het  toekennen van permissies en rollen.'
     APPLY_ROLES: 'Toepassen rollen voor groepen'

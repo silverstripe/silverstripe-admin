@@ -6,7 +6,6 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
   }
 } else {
   ss.i18n.addDictionary('de', {
-    "Admin.ANY": "Any",
     "Admin.ARCHIVECONFIRMMESSAGE": "Sind Sie sicher dass Sie diesen Eintrag archivieren wollen?",
     "Admin.BATCH_ARCHIVE_PROMPT": "Sie haben {num} Seite(n) ausgewählt.\n\nWollen Sie diese wirklich archivieren?\n\nDiese Seiten und alle Unterseiten davon werden von der veröffentlichen Seite gelöscht und in das Archiv verschoben.",
     "Admin.BATCH_DELETELIVE_PROMPT": "Sie haben {num} Seite(n) ausgewählt.\n\nWollen Sie diese wirklich von der veröfffentlichten Seite löschen?",
@@ -14,20 +13,8 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.BATCH_PUBLISH_PROMPT": "Sie haben {num} Seite(n) ausgewählt.\n\nWollen Sie diese wirklich veröffentlichen?",
     "Admin.BATCH_RESTORE_PROMPT": "Sie haben {num} Seite(n) ausgewählt.\\n\\nWollen Sie diese wirklich wiederherstellen?\\n\\nUnterseiten von archivierten Seiten werden auf der Root-Ebene wiederhergestellt, es sei denn, diese Seiten werden ebenfalls wiederhergestellt.",
     "Admin.BATCH_UNPUBLISH_PROMPT": "Sie haben {num} Seite(n) ausgewählt.\n\nWollen Sie wirklich die Veröffentlichung zurücknehmen?",
-    "Admin.CLOSE": "Close",
-    "Admin.COLLAPSEPANEL": "Collapse panel",
     "Admin.CONFIRMUNSAVED": "Sind Sie sicher, dass Sie die Seite verlassen möchten?\n\nWARNUNG: Ihre Änderungen werden nicht gespeichert.\n\nDrücken Sie \"OK\" um fortzufahren, oder \"Abbrechen\" um auf dieser Seite zu bleiben.",
     "Admin.CONFIRMUNSAVEDSHORT": "WARNUNG: Ihre Änderungen wurden nicht gespeichert.",
-    "Admin.DELETECONFIRMMESSAGE": "Are you sure you want to delete this record?",
-    "Admin.EDIT": "Edit",
-    "Admin.EDIT_LINK": "Edit link",
-    "Admin.ENTER_PASSWORD": "Enter your password",
-    "Admin.ERRORINTRANSACTION": "An error occured while fetching data from the server\n Please try again later.",
-    "Admin.EXPANDPANEL": "Expand panel",
-    "Admin.FormatExample": "Example: {format}",
-    "Admin.NONE": "None",
-    "Admin.NO_SIZE": "N/A",
-    "Admin.REMOVE_LINK": "Remove link",
     "Admin.SELECTONEPAGE": "Bitte mindestens eine Seite auswählen",
     "Admin.VALIDATIONERROR": "Validationsfehler",
     "Admin.VALIDATION_ERRORS_IN_TAB": "Diese Registerkarte enthält Validierungsfehler.",
@@ -39,10 +26,6 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} ist kein gültiger Wert.",
     "Admin.VALIDATOR_MESSAGE_EQUALS": "{name} stimmen nicht überein.",
     "Admin.VALIDATOR_MESSAGE_NUMERIC": "{name} ist keine Zahl.",
-    "Admin.VALIDATOR_MESSAGE_REQUIRED": "{name} ist erforderlich.",
-    "Admin.VERIFY": "Verify",
-    "Admin.VERIFY_ITS_YOU": "Verify it's you first.",
-    "Admin.VERIFY_TO_CONTINUE": "Verify to continue",
-    "Admin.WHATS_THIS": "What is this?"
+    "Admin.VALIDATOR_MESSAGE_REQUIRED": "{name} ist erforderlich."
 });
 }

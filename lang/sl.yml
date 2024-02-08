@@ -33,11 +33,18 @@ sl:
     CollapsePanel: 'Zloži deščico'
     DELETED: Izbrisano
     DropdownBatchActionsDefault: 'Izberite akcijo ...'
+    ErrorDetail: 'Opis napake: {detail}'
+    ErrorMessage: 'Prišlo je do napake {errorcode}.'
+    ErrorMessage403: 'Postopek, ki ste ga želeli izvesti, ni dovoljen.'
+    ErrorMessage404: 'Odpreti ste želeli sklop ali element, ki ne obstaja.'
+    ErrorMessage500: 'Prišlo je do napake na strežniku.'
+    ErrorMessage503: 'Storitev trenutno ni na voljo.'
     ExpandPanel: 'Razpri deščico'
     HelpMenu: Pomoč
     LOGOUT: Odjava
     MenuToggleAuto: Samodejno
     MenuToggleStickyNav: 'Nepremična navigacija'
+    NO_PREVIEW: 'Predogled ni na voljo'
     NavigateUp: 'Nivo višje'
     PERMAGAIN: 'Odjavili smo vas iz urejevalnika. Za ponovno prijavo vnesite uporabniško ime in geslo. '
     PERMALREADY: 'Nimate pravic za dostop do tega dela urejevalnika. Če se želite prijaviti kot drug uporabnik, to storite spodaj.'
@@ -86,6 +93,8 @@ sl:
     NOIMPORT: 'Ničesar ni za uvoz'
     Title: 'Podatkovni modeli'
     UPDATEDRECORDS: 'Posodobili smo {count} zapis/ov.'
+  SilverStripe\Admin\Navigator\SilverStripeNavigatorItem:
+    WONT_BE_SHOWN: 'Opomba: tega sporočila obiskovalcem ne bomo prikazali.'
   SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
     PREVIEW: Predogled
     'PREVIEW''': Predogled
@@ -103,4 +112,4 @@ sl:
     Users: Uporabniki
   SilverStripe\Admin\SudoModeController:
     INVALID: 'Napačno geslo'
-    TIMEOUT: 'Seja je potekla, osvežite stran in poskusite znova.'
+    TIMEOUT: 'Seja je potekla. Osvežite stran in poskusite znova.'
