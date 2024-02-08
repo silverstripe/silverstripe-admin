@@ -6,7 +6,6 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
   }
 } else {
   ss.i18n.addDictionary('eo', {
-    "Admin.ANY": "Any",
     "Admin.ARCHIVECONFIRMMESSAGE": "Ĉu vi certas ke vi volas enarkivigi ĉi tiun rikordon?",
     "Admin.BATCH_ARCHIVE_PROMPT": "Vi elektis {num} paĝo(j)n.\n\nĈu vi vere volas enarĥivigi tiujn paĝojn?\n\nTiuj paĝoj kaj ĉiuj idaj paĝoj estos malpublikigitaj kaj senditaj al la arĥivo.",
     "Admin.BATCH_DELETELIVE_PROMPT": "Vi elektis {num} paĝo(j)n.\n\nĈi vi vere volas forigi tiujn paĝojn el la publika stadio?",
@@ -15,17 +14,10 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.BATCH_RESTORE_PROMPT": "Vi elektis {num} paĝo(j)n.\n\nĈu vi vere volas restaŭri al stadio?\n\nIdoj de enarĥivigitaj paĝoj estos restaŭritaj al la radika nivelo, escepte se tiuj paĝoj ankaŭ estos restaŭritaj.",
     "Admin.BATCH_UNPUBLISH_PROMPT": "Vi elektis {num} paĝo(j)n.\n\nĈi vi vere volas malpublikigi?",
     "Admin.CLOSE": "Fermi",
-    "Admin.COLLAPSEPANEL": "Collapse panel",
     "Admin.CONFIRMUNSAVED": "Ĉu vi vere volas navigi for de ĉi tiu paĝo?\n\nAVERTO: Viaj ŝanĝoj ne estas konservitaj.\n\nPremu je Akcepti por daŭrigi, aŭ Nuligi por resti ĉe la aktuala paĝo.",
     "Admin.CONFIRMUNSAVEDSHORT": "AVERTO: Viaj ŝanĝoj ne estas konservitaj.",
-    "Admin.DELETECONFIRMMESSAGE": "Are you sure you want to delete this record?",
-    "Admin.EDIT": "Edit",
     "Admin.EDIT_LINK": "Redakti ligilon",
     "Admin.ENTER_PASSWORD": "Enigu vian pasvorton",
-    "Admin.ERRORINTRANSACTION": "An error occured while fetching data from the server\n Please try again later.",
-    "Admin.EXPANDPANEL": "Expand panel",
-    "Admin.FormatExample": "Example: {format}",
-    "Admin.NONE": "None",
     "Admin.NO_SIZE": "neaplikebla",
     "Admin.REMOVE_LINK": "Forigi ligilon",
     "Admin.SELECTONEPAGE": "Bonvole elektu almenaŭ 1 paĝon.",

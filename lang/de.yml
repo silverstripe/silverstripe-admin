@@ -12,7 +12,6 @@ de:
     LINKDESCR: Link-Beschreibung
     LINKOPENNEWWIN: 'In neuem Tab/Fenster öffnen'
     LINKTEXT: Link-Text
-    URL: URL
   SilverStripe\Admin\Forms\LinkFormFactory:
     INSERT_LINK: 'Link einfügen'
   SilverStripe\Admin\Forms\UsedOnTable:
@@ -36,7 +35,6 @@ de:
     ExpandPanel: 'Panel aufklappen'
     HelpMenu: Hilfemenü
     LOGOUT: Abmelden
-    MenuToggleAuto: Auto
     MenuToggleStickyNav: Fixiert
     NavigateUp: 'Einen Ordner nach oben'
     PERMAGAIN: 'Sie wurden aus dem CMS abgemeldet. Wenn Sie sich wieder anmelden wollen, geben Sie unten Ihren Benutzer und Ihr Passwort ein.'
@@ -48,19 +46,14 @@ de:
     SAVEDUP: Gespeichert.
     SUBMIT_BUTTON_LABEL: Los
     ValidationError: Validierungsfehler
-    Version: Version
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
-    Auto: Auto
     ChangeViewMode: 'Ansicht ändern'
-    Desktop: Desktop
     DualWindowView: 'Geteiltes Fenster'
     EditView: Bearbeitungsmodus
     Mobile: Mobil
     PreviewState: Vorschau-Status
     PreviewView: Vorschaumodus
-    Responsive: Responsive
     SplitView: 'Geteilter Modus'
-    Tablet: Tablet
     ViewDeviceWidth: 'Wählen Sie eine Vorschaubreite'
     Width: Breite
   SilverStripe\Admin\MemberImportForm:

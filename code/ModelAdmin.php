@@ -555,6 +555,7 @@ abstract class ModelAdmin extends LeftAndMain
 
         $importers = [];
         foreach ($importerClasses as $modelClass => $importerClass) {
+            $tab = $modelClass;
             if (isset($models[$modelClass])) {
                 $modelClass = $models[$modelClass]['dataClass'];
             }
@@ -562,7 +563,7 @@ abstract class ModelAdmin extends LeftAndMain
             if (ClassInfo::hasMethod($importer, 'setCheckPermissions')) {
                 $importer->setCheckPermissions(true);
             }
-            $importers[$modelClass] = $importer;
+            $importers[$tab] = $importer;
         }
 
         return $importers;

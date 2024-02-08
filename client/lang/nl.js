@@ -26,7 +26,6 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.EXPANDPANEL": "Zijbalk openklappen",
     "Admin.FormatExample": "Voorbeeld: {format}",
     "Admin.NONE": "Geen",
-    "Admin.NO_SIZE": "N/A",
     "Admin.REMOVE_LINK": "Verwijder link",
     "Admin.SELECTONEPAGE": "Selecteer minstens 1 pagina.",
     "Admin.VALIDATIONERROR": "Validatiefout",
