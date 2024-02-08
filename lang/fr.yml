@@ -12,7 +12,6 @@ fr:
     LINKDESCR: 'Description du lien'
     LINKOPENNEWWIN: 'Ouvrir dans une nouvelle fenêtre/onglet'
     LINKTEXT: 'Texte du lien'
-    URL: URL
   SilverStripe\Admin\Forms\LinkFormFactory:
     INSERT_LINK: 'Ajouter un lien'
   SilverStripe\Admin\Forms\UsedOnTable:
@@ -35,7 +34,6 @@ fr:
     ExpandPanel: 'Ouvrir le panneau'
     HelpMenu: 'Menu d''aide'
     LOGOUT: Déconnexion
-    MenuToggleAuto: Auto
     NavigateUp: 'Naviguer dans un dossier'
     PERMAGAIN: 'Vous avez été déconnecté du CMS. Si vous souhaitez vous reconnecter, entrez un nom d''utilisateur et un mot de passe ci-dessous.'
     PERMALREADY: 'Je suis désolé, mais vous ne pouvez pas accéder à cette partie du CMS. Si vous souhaitez vous connecter en tant que quelqu''un d''autre, faites-le ci-dessous.'
@@ -46,9 +44,7 @@ fr:
     SAVEDUP: Sauvé.
     SUBMIT_BUTTON_LABEL: Aller
     ValidationError: 'Erreur de validation'
-    Version: Version
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
-    Auto: Auto
     ChangeViewMode: 'Changer le mode de visualisation'
     Desktop: Bureau
     DualWindowView: 'Fenêtre double'
@@ -77,7 +73,6 @@ fr:
     IMPORTEDRECORDS: '{count} entrées importées.'
     IMPORTSPECFIELDS: 'Colonnes de la base de données'
     IMPORTSPECLINK: 'Montrer les spécification pour {model}'
-    IMPORTSPECRELATIONS: Relations
     IMPORTSPECTITLE: 'Spécification pour {model}'
     NOCSVFILE: 'Explorez pour importer un fichier CSV'
     NOIMPORT: 'Rien à importer'

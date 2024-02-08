@@ -12,7 +12,6 @@ eo:
     LINKDESCR: 'Liga priskribo'
     LINKOPENNEWWIN: 'Malfermi en nova fenestro/langeto'
     LINKTEXT: 'Liga teksto'
-    URL: URL
   SilverStripe\Admin\Forms\LinkFormFactory:
     INSERT_LINK: 'Enmeti ligilon'
   SilverStripe\Admin\Forms\UsedOnTable:
@@ -118,5 +117,4 @@ eo:
     INVALID: 'Malĝusta pasvorto'
     ImportFormHelpGroup: '<ul><li>ekzistantajn grupojn kongruigu laŭ sia unika <em>kodvaloro</em>, kaj ĝisdatigu per eventualaj novaj valoroj el la importita dosiero</li><li>Grupajn hierarkiojn kreu per <em>PatraKodo</em>-kolumno.</li><li>Eblas agordi permesajn kodojn per la <em>PermesoKodo</em>-kolumno. Ekzistantaj kodoj ne vakiĝas.</li></ul>'
     ImportFormHelpMember: '<p>Groupojn agordu per la <em>Grupoj</em>-kolumno. Groupojn identigu per ilia <em>Kodo</em>-atributo; apartigu pluropajn grupojn per komo. Ekzistantaj groupaj membrecoj ne vakiĝas.</p>'
-    MENUTITLE: SilverStripe\Admin\SudoModeController
     TIMEOUT: 'Tempolimo de seanco'
