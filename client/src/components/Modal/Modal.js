@@ -34,7 +34,7 @@ Modal.propTypes = {
   isOpen: PropTypes.bool,
   className: PropTypes.string,
   modalClassName: PropTypes.string,
-  size: PropTypes.string,
+  size: PropTypes.oneOf(['', 'sm', 'lg', 'xl']),
   ModalComponent: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   ...ModalHeader.propTypes
 };
