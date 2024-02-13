@@ -7,28 +7,34 @@ import ModalHeader from './ModalHeader';
 /**
  * Component to render a modal
  */
-function Modal({
-  onClosed, title, ModalHeaderComponent, showCloseButton, children,
-  ModalComponent, isOpen, className, modalClassName, size
-}) {
-  return (
-    <ModalComponent
-      isOpen={isOpen}
-      toggle={onClosed}
-      className={className}
-      modalClassName={modalClassName}
-      size={size}
-    >
-      <ModalHeader
-        onClosed={onClosed}
-        title={title}
-        ModalHeaderComponent={ModalHeaderComponent}
-        showCloseButton={showCloseButton}
-      />
-      {children}
-    </ModalComponent>
-  );
-}
+const Modal = ({
+  children,
+  className,
+  isOpen,
+  modalClassName,
+  ModalComponent,
+  ModalHeaderComponent,
+  onClosed,
+  showCloseButton,
+  size,
+  title,
+}) => (
+  <ModalComponent
+    isOpen={isOpen}
+    toggle={onClosed}
+    className={className}
+    modalClassName={modalClassName}
+    size={size}
+  >
+    <ModalHeader
+      onClosed={onClosed}
+      title={title}
+      ModalHeaderComponent={ModalHeaderComponent}
+      showCloseButton={showCloseButton}
+    />
+    {children}
+  </ModalComponent>
+);
 
 Modal.propTypes = {
   isOpen: PropTypes.bool,

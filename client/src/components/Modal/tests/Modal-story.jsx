@@ -2,20 +2,12 @@ import { jsxDecorator } from 'storybook-addon-jsx';
 import Modal from 'components/Modal/Modal';
 import Button from 'components/Button/Button';
 import React from 'react';
-import { useArgs } from '@storybook/preview-api';
 
 export default {
   title: 'Admin/Modal',
   component: Modal,
   decorators: [
-    jsxDecorator,
-    (Story, context) => {
-        const [, updateArgs] = useArgs();
-        const onClosed = () => {
-          updateArgs({ title: 'boom' });
-        };
-        return Story({ ...context.args, onClosed });
-      }
+    jsxDecorator
   ],
   tags: ['autodocs'],
   parameters: {
@@ -57,14 +49,14 @@ export const _Modal = {
     isOpen: false,
     size: '',
   },
-  render: (args, { onClosed }) => {
-    return <Modal {...args} onClosed={onClosed}>
+  render: (args, { onClosed }) => (
+    <Modal {...args} onClosed={onClosed}>
       <div className="modal-body">
         <p>The quick brown fox jumps over the lazy dog.</p>
       </div>
       <div className="modal-footer">
         <Button color="primary">Do something</Button>
       </div>
-    </Modal>;
-  },
+    </Modal>
+  ),
 };

@@ -4,47 +4,75 @@ import castStringToElement from 'lib/castStringToElement';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal/Modal';
-import pick from 'lodash/pick';
 
 const noop = () => null;
 
 /**
- * React component for displaying a Form in a Modal using a form schema URL
+ * @typedef {Object} useResponseReturn
+ * @property {string} response Message we got back from posting the form.
+ * @property {boolean} error Whether the response was an error or not.
+ * @property {function} setSuccess Set the response to a success message.
+ * @property {function} setFailure Set the response to a failure message.
+ * @property {function} clearResponse Clear the response message and error state.
  */
-function FormBuilderModal(props) {
-  const {
-    responseClassBad,
-    responseClassGood,
-    onLoadingError,
-    showErrorMessage,
-    onClosed,
-    onSubmit,
-    schemaUrl,
-    bodyClassName,
-    FormBuilderLoaderComponent,
-    children
-  } = props;
 
+/**
+ * Custom hook to track response state of the FormBuilderModal
+ * @returns {useResponseReturn}
+ */
+const useResponse = () => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
 
-  // Register a success message
   const setSuccess = (message) => {
     setResponse(message);
     setError(false);
   };
 
-  // Register a failure message
   const setFailure = (message) => {
     setResponse(message);
     setError(true);
   };
 
-  // Clear the response
   const clearResponse = () => {
     setResponse(null);
     setError(false);
   };
+
+  return { response, error, setSuccess, setFailure, clearResponse };
+};
+
+/**
+ * React component for displaying a Form in a Modal using a form schema URL
+ */
+const FormBuilderModal = ({
+  children,
+  FormBuilderLoaderComponent,
+  onLoadingError,
+  onSubmit,
+  responseClassBad,
+  responseClassGood,
+  showErrorMessage,
+
+  // Form builder props
+  autoFocus,
+  bodyClassName,
+  identifier,
+  onAction,
+  schemaUrl,
+
+  // Props pass to modal
+  className,
+  isOpen,
+  modalClassName,
+  ModalComponent,
+  ModalHeaderComponent,
+  onClosed,
+  showCloseButton,
+  size,
+  title,
+}) => {
+  const { response, error, setSuccess, setFailure, clearResponse } = useResponse();
 
   const handleLoadingError = (schema) => {
     const providesOnLoadingError = onLoadingError !== noop;
@@ -105,13 +133,28 @@ function FormBuilderModal(props) {
     return promise;
   };
 
-  const modalProps = pick(props, Object.keys(Modal.propTypes));
-  const formBuilderProps = pick(props, [
-    'schemaUrl', 'bodyClassName', 'autoFocus', 'onAction', 'identifier'
-  ]);
+  const modalProps = {
+    className,
+    isOpen,
+    modalClassName,
+    ModalComponent,
+    ModalHeaderComponent,
+    onClosed: handleHide,
+    showCloseButton,
+    size,
+    title,
+
+  };
+  const formBuilderProps = {
+    autoFocus,
+    bodyClassName,
+    identifier,
+    onAction,
+    schemaUrl,
+  };
 
   return (
-    <Modal {...modalProps} onClosed={handleHide}>
+    <Modal {...modalProps}>
       {response &&
         <div className={error ? responseClassBad : responseClassGood}>
           { castStringToElement('span', { html: response }) }
@@ -129,7 +172,7 @@ function FormBuilderModal(props) {
       {children}
     </Modal>
   );
-}
+};
 
 FormBuilderModal.propTypes = {
   autoFocus: PropTypes.bool,

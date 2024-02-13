@@ -6,7 +6,12 @@ import PropTypes from 'prop-types';
 /**
  * Component to render a modal header.
  */
-function ModalHeader({ onClosed, title, ModalHeaderComponent, showCloseButton }) {
+const ModalHeader = ({
+  ModalHeaderComponent,
+  onClosed,
+  showCloseButton,
+  title,
+}) => {
   if (title !== false) {
     if (typeof title === 'object') {
       // FormSchema title occasionally contains html, only render text for modal title
@@ -30,7 +35,8 @@ function ModalHeader({ onClosed, title, ModalHeaderComponent, showCloseButton })
   }
 
   return null;
-}
+};
+
 ModalHeader.propTypes = {
   title: PropTypes.oneOfType([
     PropTypes.string,
