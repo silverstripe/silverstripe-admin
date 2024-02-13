@@ -230,6 +230,20 @@ class LeftAndMain extends Controller implements PermissionProvider
     private static $extra_requirements_javascript = [];
 
     /**
+     * Register additional i18n requirements through the {@link Requirements} class.
+     *
+     * YAML configuration example:
+     * <code>
+     * LeftAndMain:
+     *   extra_requirements_i18n:
+     *     - mysite/client/lang
+     *     'myorg/mymodule:client/lang': true
+     * </code>
+     * @var array See {@link extra_requirements_javascript}
+     */
+    private static array $extra_requirements_i18n = [];
+
+    /**
      * YAML configuration example:
      * <code>
      * LeftAndMain:
@@ -720,6 +734,17 @@ class LeftAndMain extends Controller implements PermissionProvider
                 }
 
                 Requirements::javascript($file, $config);
+            }
+        }
+
+        $extraI18n = $this->config()->get('extra_requirements_i18n');
+        if ($extraI18n) {
+            foreach ($extraI18n as $dir => $return) {
+                if (is_numeric($dir)) {
+                    $dir = $return;
+                    $return = false;
+                }
+                Requirements::add_i18n_javascript($dir, $return);
             }
         }
 
