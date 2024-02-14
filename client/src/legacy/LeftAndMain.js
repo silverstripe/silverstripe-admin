@@ -1508,13 +1508,13 @@ $.entwine('ss', function($) {
   });
 });
 
-function escapeHTMLEntities(encodedString) {
-    const textArea = document.createElement('textarea');
-    textArea.innerHTML = encodedString;
-    return textArea.value;
+function decodeEntities(str) {
+    const ta = document.createElement('textarea');
+    ta.innerHTML = str;
+    return ta.innerText;
 }
 
 var statusMessage = function(text, type) {
-  text = escapeHTMLEntities(text);
+  text = decodeEntities(text);
   jQuery.noticeAdd({text: text, type: type, stayTime: 5000, inEffect: {left: '0', opacity: 'show'}});
 };
