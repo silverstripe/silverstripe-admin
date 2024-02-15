@@ -1508,10 +1508,10 @@ $.entwine('ss', function($) {
   });
 });
 
-function decodeEntities(str) {
-    const ta = document.createElement('textarea');
-    ta.innerHTML = str;
-    return ta.innerText;
+function decodeEntities(text) {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = text;
+    return textarea.innerText;
 }
 
 var statusMessage = function(text, type) {
