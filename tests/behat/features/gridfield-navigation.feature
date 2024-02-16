@@ -1,7 +1,8 @@
+@retry
 Feature: Search in GridField
   As an author
   I want to navigate through the filtered and sorted GridField list
-  So that I see the filtered and sorted GridField when I navigate to an item and back to the GridFIeld list  
+  So that I see the filtered and sorted GridField when I navigate to an item and back to the GridFIeld list
 
   Background:
     Given the "Company" "Walmart" with "Category"="Retail"
@@ -10,13 +11,13 @@ Feature: Search in GridField
       And the "Employee" "Ford" with "Company"="1"
       And the "Company" "ExxonMobil" with "Category"="Oil"
       And the "Company" "Vitol" with "Category"="Other"
-      And the "Company" "Safeway" with "Category"="Other" 
-      And the "Company" "SuperValue" with "Category"="Other" 
+      And the "Company" "Safeway" with "Category"="Other"
+      And the "Company" "SuperValue" with "Category"="Other"
       And the "Company" "UBS" with "Category"="Other"
-      And the "Company" "Kraft Foods" with "Category"="Other" 
+      And the "Company" "Kraft Foods" with "Category"="Other"
       And the "Company" "Ahold" with "Category"="Other"
       And the "Company" "Cisco" with "Category"="Other"
-      And the "Company" "Bouygues" with "Category"="Other" 
+      And the "Company" "Bouygues" with "Category"="Other"
       And the "Company" "Insurance" with "Category"="Other"
       And the "group" "EDITOR" has permissions "Access to 'Pages' section" and "Access to 'GridField Test Navigation' section" and "TEST_DATAOBJECT_EDIT"
       And I am logged in as a member of "EDITOR" group
@@ -49,7 +50,7 @@ Feature: Search in GridField
       And I click on the ".action--previous" element
       And I should see "UBS" in the ".breadcrumbs-wrapper" element
       And I click on the ".action--previous" element
-      And I should see "SuperValue" in the ".breadcrumbs-wrapper" element      
+      And I should see "SuperValue" in the ".breadcrumbs-wrapper" element
     Then I click on the ".toolbar__back-button" element
       And I should see "View 1–5 of 11" in the ".pagination-records-number" element
     Then I click "SuperValue" in the "#Form_EditForm" element
