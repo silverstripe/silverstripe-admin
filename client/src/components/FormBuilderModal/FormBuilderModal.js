@@ -8,41 +8,6 @@ import Modal from 'components/Modal/Modal';
 const noop = () => null;
 
 /**
- * @typedef {Object} useResponseReturn
- * @property {string} response Message we got back from posting the form.
- * @property {boolean} error Whether the response was an error or not.
- * @property {function} setSuccess Set the response to a success message.
- * @property {function} setFailure Set the response to a failure message.
- * @property {function} clearResponse Clear the response message and error state.
- */
-
-/**
- * Custom hook to track response state of the FormBuilderModal
- * @returns {useResponseReturn}
- */
-const useResponse = () => {
-  const [response, setResponse] = useState(null);
-  const [error, setError] = useState(null);
-
-  const setSuccess = (message) => {
-    setResponse(message);
-    setError(false);
-  };
-
-  const setFailure = (message) => {
-    setResponse(message);
-    setError(true);
-  };
-
-  const clearResponse = () => {
-    setResponse(null);
-    setError(false);
-  };
-
-  return { response, error, setSuccess, setFailure, clearResponse };
-};
-
-/**
  * React component for displaying a Form in a Modal using a form schema URL
  */
 const FormBuilderModal = ({
@@ -72,13 +37,17 @@ const FormBuilderModal = ({
   size,
   title,
 }) => {
-  const { response, error, setSuccess, setFailure, clearResponse } = useResponse();
+  /** @var {string} response Message we got back from posting the form. */
+  const [response, setResponse] = useState(null);
+  /** @var {boolean} response Whether the response was an error or not. */
+  const [error, setError] = useState(null);
 
   const handleLoadingError = (schema) => {
     const providesOnLoadingError = onLoadingError !== noop;
     if (showErrorMessage || !providesOnLoadingError) {
       const errorResponse = schema.errors && schema.errors[0];
-      setFailure(errorResponse.value);
+      setResponse(errorResponse.value);
+      setError(true);
     }
     if (providesOnLoadingError) {
       onLoadingError(schema);
@@ -89,7 +58,10 @@ const FormBuilderModal = ({
    * Call the callback for hiding this Modal
    */
   const handleHide = () => {
-    clearResponse();
+    // Clear state
+    setResponse(null);
+    setError(false);
+
     if (typeof onClosed === 'function') {
       onClosed();
     }
@@ -104,7 +76,10 @@ const FormBuilderModal = ({
    * @returns {Promise}
    */
   const handleSubmit = (data, action, submitFn) => {
-    clearResponse();
+    // Clear state
+    setResponse(null);
+    setError(false);
+
     let promise = null;
     if (typeof onSubmit === 'function') {
       promise = onSubmit(data, action, submitFn);
@@ -117,13 +92,15 @@ const FormBuilderModal = ({
       promise
         .then((successResponse) => {
           if (successResponse) {
-            setSuccess(successResponse.message);
+            setResponse(successResponse.message);
+            setError(false);
           }
           return successResponse;
         })
         .catch((errorPromise) => {
           errorPromise.then((errorText) => {
-            setFailure(errorText);
+            setResponse(errorText);
+            setError(true);
           });
         });
     } else {
@@ -145,11 +122,15 @@ const FormBuilderModal = ({
     title,
 
   };
-  const formBuilderProps = {
+  const formBuilderLoaderProps = {
+    actionHolder: { className: 'modal-footer' },
     autoFocus,
     bodyClassName,
+    fieldHolder: { className: classnames('modal-body', bodyClassName) },
     identifier,
     onAction,
+    onLoadingError: handleLoadingError,
+    onSubmit: handleSubmit,
     schemaUrl,
   };
 
@@ -160,15 +141,7 @@ const FormBuilderModal = ({
           { castStringToElement('span', { html: response }) }
         </div>
       }
-      {schemaUrl &&
-        <FormBuilderLoaderComponent
-          {...formBuilderProps}
-          fieldHolder={{ className: classnames('modal-body', bodyClassName) }}
-          actionHolder={{ className: 'modal-footer' }}
-          onSubmit={handleSubmit}
-          onLoadingError={handleLoadingError}
-        />
-      }
+      {schemaUrl && <FormBuilderLoaderComponent {...formBuilderLoaderProps} />}
       {children}
     </Modal>
   );

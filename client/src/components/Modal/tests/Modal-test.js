@@ -1,10 +1,8 @@
 /* global jest, test, describe, it, expect */
 
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import Modal from '../Modal';
-
-let props;
 
 /** Component that printouts all of its props */
 const PrintProps = (componentName) => ({ children, ...propsToPrint }) => (
@@ -20,21 +18,19 @@ const PrintProps = (componentName) => ({ children, ...propsToPrint }) => (
   </div>
 );
 
-beforeEach(() => {
-  props = {
-    isOpen: true,
-    className: 'my-modal',
-    modalClassName: 'my-modal-dialog',
-    size: 'sm',
-    onClosed: jest.fn(),
-    title: 'Hello World!',
-    showCloseButton: true,
-  };
+const makeProps = () => ({
+  isOpen: true,
+  className: 'my-modal',
+  modalClassName: 'my-modal-dialog',
+  size: 'sm',
+  onClosed: jest.fn(),
+  title: 'Hello World!',
+  showCloseButton: true,
 });
 
 test('Modal renders', () => {
   const root = render(
-    <Modal {...props}>My Content</Modal>
+    <Modal {...makeProps()}>My Content</Modal>
   );
 
   const modal = root.getByRole('dialog');
@@ -42,20 +38,22 @@ test('Modal renders', () => {
   expect(modal.classList).toContain('my-modal-dialog');
   expect(modal.classList).toContain('modal');
 
-  const document = root.getByRole('document');
-  expect(document.classList).toContain('modal-sm');
+  const modalContainer = root.getByRole('document');
+  expect(modalContainer.classList).toContain('modal-sm');
 
   const header = root.getByRole('heading');
   expect(header.textContent).toContain('Hello World!');
 
-  const body = root.getByText('My Content');
-  expect(body).toBeTruthy();
+  const modalBody = root.getByText('My Content');
+  expect(modalBody).toBeTruthy();
 
   const closeButton = root.getByLabelText('Close');
   expect(closeButton).toBeTruthy();
 });
 
 test('Closing the Modal', () => {
+  const props = makeProps();
+
   const root = render(
     <Modal {...props}>My Content</Modal>
   );
@@ -67,13 +65,16 @@ test('Closing the Modal', () => {
 });
 
 test('Modal is not shown', () => {
-  const root = render(
-    <Modal {...props} isOpen={false}>My Content</Modal>
+  render(
+    <Modal {...makeProps()} isOpen={false}>My Content</Modal>
   );
-  expect(root.container.textContent).toBeFalsy();
+
+  const modalBody = screen.queryByText('My Content');
+  expect(modalBody).toBeNull();
 });
 
 test('Modal with custom components', () => {
+  const props = makeProps();
   props.ModalComponent = PrintProps('Custom Modal Component');
   props.ModalHeaderComponent = PrintProps('Custom Modal Header Component');
   const root = render(
