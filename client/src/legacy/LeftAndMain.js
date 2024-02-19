@@ -1508,7 +1508,13 @@ $.entwine('ss', function($) {
   });
 });
 
+function decodeEntities(text) {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = text;
+    return textarea.innerText;
+}
+
 var statusMessage = function(text, type) {
-  text = jQuery('<div/>').text(text).html(); // Escape HTML entities in text
+  text = decodeEntities(text);
   jQuery.noticeAdd({text: text, type: type, stayTime: 5000, inEffect: {left: '0', opacity: 'show'}});
 };
