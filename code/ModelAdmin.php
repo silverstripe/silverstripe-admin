@@ -622,7 +622,7 @@ abstract class ModelAdmin extends LeftAndMain
         $importers = [];
         foreach ($importerClasses as $modelClass => $importerClass) {
             $tab = $modelClass;
-            if (isset($models[$modelClass])) {
+            if (isset($models[$modelClass]['dataClass'])) {
                 $modelClass = $models[$modelClass]['dataClass'];
             }
             $importer = new $importerClass($modelClass);
