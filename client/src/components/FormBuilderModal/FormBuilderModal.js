@@ -120,7 +120,6 @@ const FormBuilderModal = ({
     showCloseButton,
     size,
     title,
-
   };
   const formBuilderLoaderProps = {
     actionHolder: { className: 'modal-footer' },

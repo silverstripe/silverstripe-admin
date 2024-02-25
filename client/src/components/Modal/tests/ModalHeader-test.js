@@ -4,18 +4,14 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import ModalHeader from '../ModalHeader';
 
-let props;
-
-beforeEach(() => {
-  props = {
-    onClosed: jest.fn(),
-    title: 'Hello World!',
-    showCloseButton: true,
-  };
+const makeProps = () => ({
+  onClosed: () => {},
+  title: 'Hello World!',
+  showCloseButton: true,
 });
 
 test('Modal renders', () => {
-  const root = render(<ModalHeader {...props} />);
+  const root = render(<ModalHeader {...makeProps()} />);
 
   const header = root.getByRole('heading');
   expect(header.textContent).toContain('Hello World!');
@@ -25,9 +21,10 @@ test('Modal renders', () => {
 });
 
 test('Closing the Modal', () => {
-  const root = render(<ModalHeader {...props} />);
+  const onClosed = jest.fn();
+  const root = render(<ModalHeader {...makeProps()} onClosed={onClosed} />);
 
   const closeButton = root.getByLabelText('Close');
   fireEvent.click(closeButton);
-  expect(props.onClosed).toBeCalled();
+  expect(onClosed).toBeCalled();
 });

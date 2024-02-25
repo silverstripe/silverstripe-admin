@@ -23,7 +23,7 @@ const makeProps = () => ({
   className: 'my-modal',
   modalClassName: 'my-modal-dialog',
   size: 'sm',
-  onClosed: jest.fn(),
+  onClosed: () => {},
   title: 'Hello World!',
   showCloseButton: true,
 });
@@ -52,16 +52,15 @@ test('Modal renders', () => {
 });
 
 test('Closing the Modal', () => {
-  const props = makeProps();
-
+  const onClosed = jest.fn();
   const root = render(
-    <Modal {...props}>My Content</Modal>
+    <Modal {...makeProps()} onClosed={onClosed}>My Content</Modal>
   );
 
   const closeButton = root.getByLabelText('Close');
   fireEvent.click(closeButton);
 
-  expect(props.onClosed).toBeCalled();
+  expect(onClosed).toBeCalled();
 });
 
 test('Modal is not shown', () => {
@@ -74,11 +73,16 @@ test('Modal is not shown', () => {
 });
 
 test('Modal with custom components', () => {
-  const props = makeProps();
-  props.ModalComponent = PrintProps('Custom Modal Component');
-  props.ModalHeaderComponent = PrintProps('Custom Modal Header Component');
+  const ModalComponent = PrintProps('Custom Modal Component');
+  const ModalHeaderComponent = PrintProps('Custom Modal Header Component');
   const root = render(
-    <Modal {...props}>My Content</Modal>
+    <Modal
+      {...makeProps()}
+      ModalComponent={ModalComponent}
+      ModalHeaderComponent={ModalHeaderComponent}
+    >
+      My Content
+    </Modal>
   );
 
   expect(root.getByText('Custom Modal Component')).toBeTruthy();
