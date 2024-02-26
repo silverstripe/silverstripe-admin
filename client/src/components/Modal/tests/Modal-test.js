@@ -51,6 +51,18 @@ test('Modal renders', () => {
   expect(closeButton).toBeTruthy();
 });
 
+test('Modal with HTML title', () => {
+  const title = { html: '<h1>My HTML Title</h1>' };
+
+  const root = render(
+    <Modal {...makeProps()} title={title}>My Content</Modal>
+  );
+
+  const header = root.getByRole('heading');
+  expect(header.textContent).toContain('My HTML Title');
+  expect(header.textContent).not.toContain(title.html);
+});
+
 test('Closing the Modal', () => {
   const onClosed = jest.fn();
   const root = render(
