@@ -202,7 +202,7 @@ $.entwine('ss', function($){
           'Admin.VALIDATIONERROR',
           'Validation Error'
         );
-        
+
         errorMessage(toastNotificationMessage);
         // Ensure that this error message popup won't be added more than once
         this.setValidationErrorShown(true);
