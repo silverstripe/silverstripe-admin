@@ -3,6 +3,11 @@ import FormAlert from 'components/FormAlert/FormAlert';
 import PropTypes from 'prop-types';
 
 class Form extends Component {
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
   componentDidMount() {
     if (!this.props.autoFocus) {
       return;
@@ -39,6 +44,13 @@ class Form extends Component {
     return null;
   }
 
+  handleSubmit(event, ...args) {
+    // Ensure submitting a nested form doesn't submit the parent form
+    event.stopPropagation();
+    // Pass submission handling up the component stack
+    this.props.handleSubmit(event, ...args);
+  }
+
   render() {
     const valid = this.props.valid !== false;
     const fields = this.props.mapFieldsToComponents(this.props.fields);
@@ -55,7 +67,7 @@ class Form extends Component {
     }
     const formProps = {
       ...this.props.attributes,
-      onSubmit: this.props.handleSubmit,
+      onSubmit: this.handleSubmit,
       className: className.join(' '),
     };
 
