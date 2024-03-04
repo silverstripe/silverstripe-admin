@@ -166,12 +166,12 @@ SearchableDropdownField.propTypes = {
   multi: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.object),
   optionUrl: PropTypes.string,
   passRef: PropTypes.bool.isRequired,
   searchable: PropTypes.bool.isRequired,
-  value: PropTypes.any.isRequired,
+  value: PropTypes.any,
   SelectComponent: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
   AsyncSelectComponent: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
 };
@@ -184,6 +184,8 @@ SearchableDropdownField.defaultProps = {
   multi: false,
   passRef: true,
   placeholder: '',
+  onChange: () => {},
+  value: '',
   SelectComponent: Select,
   AsyncSelectComponent: AsyncSelect,
 };
