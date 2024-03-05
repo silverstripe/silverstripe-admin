@@ -13,18 +13,22 @@ window.jQuery.entwine('ss', ($) => {
       const cmsContent = this.closest('.cms-content').attr('id');
       const context = cmsContent ? { context: cmsContent } : {};
       const schema = this.data('schema');
-      this.data('entwine-value', schema.value);
-      const Root = createRoot(this[0]);
-      const ReactField = loadComponent(schema.component, context);
-      this.setRoot(Root);
-      this.setComponent(ReactField);
-      this._super();
-      this.refresh();
+      if (schema) {
+        this.data('entwine-value', schema.value);
+        const Root = createRoot(this[0]);
+        const ReactField = loadComponent(schema.component, context);
+        this.setRoot(Root);
+        this.setComponent(ReactField);
+        this._super();
+        this.refresh();
+      }
     },
 
     onunmatch() {
       const Root = this.getRoot();
-      Root.unmount();
+      if (Root) {
+        Root.unmount();
+      }
     },
 
     getProps() {
