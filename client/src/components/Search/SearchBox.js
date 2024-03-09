@@ -290,7 +290,7 @@ class SearchBox extends Component {
       className={classes}
       title={i18n._t('Admin.ADVANCED', 'Advanced')}
     >
-      <span className={spanClass}>Search options</span>
+      <span className={spanClass}>{i18n._t('Admin.SEARCH_OPTIONS', 'Search options')}</span>
     </Button>);
   }
 
