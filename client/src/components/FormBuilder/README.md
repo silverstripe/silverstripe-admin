@@ -107,3 +107,7 @@ the submission process works as follows:
 
 See [handleSubmit](http://redux-form.com/6.0.5/docs/api/Props.md#-handlesubmit-eventorsubmit-function-) 
 in the redux-form docs for more details.
+
+Note that submissions from a `<FormBuilder>` component that rendered inside part of a regular edit form may
+have their submission event intercepted by entwine by `onsubmit` in `LeftAndMain.EditForm.js`. You
+can add a `bypass-entwine` class to your react component to prevent this behaviour.

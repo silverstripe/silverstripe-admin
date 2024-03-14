@@ -47,11 +47,12 @@ const Toast = ({ type, text, onDismiss, dismissed, actions }) => {
 
 Toast.propTypes = {
   ...toastShape,
-  onDismiss: PropTypes.func.isRequired
+  onDismiss: PropTypes.func
 };
 
 Toast.defaultProps = {
-  actions: []
+  actions: [],
+  onDismiss: () => {},
 };
 
 export default Toast;
