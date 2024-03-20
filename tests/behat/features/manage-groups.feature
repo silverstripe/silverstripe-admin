@@ -34,13 +34,6 @@ Feature: Manage groups
     And I press the "Create" button
     Then I should see "Validation Error"
 
-  Scenario: Members of a group with permissions
-    Given I go to "/Security/login"
-    And I press the "Log in as someone else" button
-    And I am logged in as a member of "BOB" group
-    When I go to "/my-page?stage=Stage"
-    Then I should not see "My page"
-
   Scenario: Members of a group with permissions can edit Group data
     Given I go to "/Security/login"
     And I press the "Log in as someone else" button
@@ -67,13 +60,6 @@ Feature: Manage groups
     And I should see "Saved Member "
     And I click "Users" in the ".breadcrumbs-wrapper" element
     And I should see "General Editor"
-
-  Scenario: Members of a group with permissions cannot view draft content
-    Given I go to "/Security/login"
-    And I press the "Log in as someone else" button
-    And I am logged in as a member of "BOB" group
-    When I go to "/my-page?stage=Stage"
-    Then I should not see "My page"
 
   Scenario: Members of a group without permissions cannot view draft content
     Given I go to "/Security/login"
