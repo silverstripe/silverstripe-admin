@@ -1261,8 +1261,8 @@ $.entwine('ss', function($) {
    * attribute to the grid field.
    */
   $('.cms .grid-field:not([cms-loading-ignore-url-params])').entwine({
-    showDetailView: function(url) {
-      $('.cms-container').loadPanel(url);
+    showDetailView: function(url, event) {
+      this.openUrl(event, url, () => $('.cms-container').loadPanel(url));
     }
   });
 
