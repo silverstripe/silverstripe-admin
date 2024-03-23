@@ -2,6 +2,7 @@
 
 namespace SilverStripe\Admin\Forms;
 
+use SilverStripe\Forms\EmailField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\RequiredFields;
@@ -11,7 +12,7 @@ class EditorEmailLinkFormFactory extends LinkFormFactory
     protected function getFormFields($controller, $name, $context)
     {
         $fields = FieldList::create([
-            TextField::create(
+            EmailField::create(
                 'Link',
                 _t(__CLASS__.'.EMAIL', 'Email address')
             ),
