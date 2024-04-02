@@ -81,7 +81,7 @@
     "redux-thunk": "^2.4.1",
     "remove-files-webpack-plugin": "^1.5.0",
     "resize-observer-polyfill": "^1.5.1",
-    "tinymce": "^6.2.0",
+    "tinymce": "^7.0.0",
     "toposort": "^2.0.2",
     "url": "^0.11.0",
     "uuid": "^9.0.0",
