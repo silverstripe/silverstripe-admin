@@ -1,3 +1,4 @@
+@retry
 Feature: Search in GridField
   As an author
   I want to search an item in the CMS
