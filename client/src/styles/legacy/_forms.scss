@@ -585,6 +585,10 @@ button.loading {
       }
     }
   }
+
+  .ui-accordion-content-active:not([style*="height"]) {
+    overflow: visible;
+  }
 }
 
 
