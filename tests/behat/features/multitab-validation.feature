@@ -1,3 +1,4 @@
+@retry
 Feature: Multi-tab page validation icons
   As a content author
   I want to see which tabs have form fields that failed validation

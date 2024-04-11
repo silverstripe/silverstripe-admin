@@ -1,3 +1,4 @@
+@retry
 Feature: Use Gridfield with ArrayData
   As a developer
   I want to be able to view read-only data from some arbitrary source
