@@ -1,3 +1,4 @@
+@retry
 Feature: Site settings
   As a site owner
   I want to be able to change site settings

@@ -1,5 +1,5 @@
-import $ from 'jquery';
 import i18n from 'i18n';
+import $ from 'jquery';
 
 $.entwine('ss.preview', function($){
 
@@ -506,8 +506,10 @@ $.entwine('ss.preview', function($){
       var id = $(doc).find('meta[name=x-page-id]').attr('content');
       var editLink = $(doc).find('meta[name=x-cms-edit-link]').attr('content');
       var contentPanel = $('.cms-content');
+      // ID may not be on the page
+      var inputId = contentPanel.find(':input[name=ID]').val();
 
-      if(id && contentPanel.find(':input[name=ID]').val() != id) {
+      if(id && (inputId !== undefined && inputId != id)) {
         // Ignore behaviour without history support (as we need ajax loading
         // for the new form to load in the background)
         $('.cms-container').entwine('.ss').loadPanel(editLink);
