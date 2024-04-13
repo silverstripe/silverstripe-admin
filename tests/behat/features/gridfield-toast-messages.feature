@@ -1,3 +1,4 @@
+@retry
 Feature: Show toast messages
   As an author
   I want to see toast message in the CMS when I create, edit, delete, publish, unpublish, archive a record
