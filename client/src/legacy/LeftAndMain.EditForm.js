@@ -260,6 +260,11 @@ $.entwine('ss', function($){
      * Suppress submission unless it is handled through ajaxSubmit().
      */
     onsubmit: function(e, button) {
+      // If the submit button a child of on an element with a .bypass-entwine-submission class on it then
+      // skip handling. Usually the element in question will be used by react e.g. FormBuilder
+      if ($(e.target.activeElement).closest('.bypass-entwine-submission').length) {
+        return true;
+      }
       // Only submit if a button is present.
       // This supressed submits from ENTER keys in input fields,
       // which means the browser auto-selects the first available form button.
