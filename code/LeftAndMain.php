@@ -1530,20 +1530,6 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * Convert an array of data to JSON and wrap it in an HTML tag as pjax is used and jQuery will parse this
-     * as an element on the client side in LeftAndMain.js handleAjaxResponse()
-     * The attribute type="application/json" denotes this is a data block and won't be processed by a browser
-     * https://html.spec.whatwg.org/#the-script-element
-     *
-     * @param array $data
-     * @return string
-     */
-    private function prepareDataForPjax(array $data): string
-    {
-        return '<script type="application/json">' . json_encode($data) . '</script>';
-    }
-
-    /**
      * Returns a placeholder form, used by {@link getEditForm()} if no record is selected.
      * Our javascript logic always requires a form to be present in the CMS interface.
      *
