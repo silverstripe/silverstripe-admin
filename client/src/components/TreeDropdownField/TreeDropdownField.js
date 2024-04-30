@@ -604,7 +604,7 @@ class TreeDropdownField extends Component {
           type="button"
           className="treedropdownfield__option-button fill-width"
           onClick={handleNavigate}
-          onMouseDown={handleNavigate}
+          onKeyDown={(event) => this.handleKeyDown(event)}
           onTouchStart={handleNavigate}
         >
           <span className="treedropdownfield__option-count-icon font-icon-right-open-big" />

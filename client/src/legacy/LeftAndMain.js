@@ -111,7 +111,15 @@ $.entwine('ss', function($) {
     // Determine action
     switch(data.type) {
       case 'event':
-        target.trigger(data.event, data.data);
+        let eventType = data.event;
+        let eventData = data.data;
+        if (!eventType) {
+           eventType = data.message.type;
+        }
+        if (!eventData) {
+          eventData = data.message.payload;
+        }
+        target.trigger(eventType, eventData);
         break;
       case 'callback':
         target[data.callback].call(target, data.data);

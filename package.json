@@ -18,7 +18,7 @@
     "css": "WEBPACK_CHILD=css npm run build",
     "test": "jest",
     "coverage": "jest --coverage",
-    "lint": "eslint client/src && sass-lint -v",
+    "lint": "eslint client/src && stylelint client/src/**/*.scss",
     "js-fix": "eslint client/src --fix",
     "pattern-lib": "storybook dev -p 6006",
     "static-pattern-lib": "storybook build"
@@ -90,8 +90,8 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.20.0",
-    "@silverstripe/eslint-config": "^1.1.0",
-    "@silverstripe/webpack-config": "^2.0.0",
+    "@silverstripe/eslint-config": "^1.2.1",
+    "@silverstripe/webpack-config": "^2.1.0",
     "@storybook/addon-actions": "^7.0.18",
     "@storybook/addon-controls": "^7.0.18",
     "@storybook/addon-essentials": "^7.0.18",
