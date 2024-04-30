@@ -92,7 +92,7 @@ const SearchableDropdownField = ({
       setHasChanges(true);
       setJustChanged(true);
     }
-    onChange(val);
+    onChange({}, val);
   };
 
   /**
