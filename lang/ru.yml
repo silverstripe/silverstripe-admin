@@ -12,6 +12,7 @@ ru:
     LINKDESCR: 'Описание ссылки'
     LINKOPENNEWWIN: 'Открыть в новом окне/вкладке'
     LINKTEXT: 'Текст ссылки'
+    URL: URL
   SilverStripe\Admin\Forms\LinkFormFactory:
     INSERT_LINK: 'Вставить ссылку'
   SilverStripe\Admin\Forms\UsedOnTable:
@@ -20,3 +21,6 @@ ru:
     UNTITLED: 'Без названия'
   SilverStripe\Admin\GroupImportForm:
     Help1: '<p>Импорт одну или больше групп в <em>CSV</em> форма (разделённые запятыми значения) <small><a href="#" class="toggle-advanced">Варианты использования</a></small></p>'
+  SilverStripe\Admin\LeftAndMain:
+    CollapsePanel: 'Collapse panel'
+    ExpandPanel: 'Expand panel'

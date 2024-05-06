@@ -3,7 +3,7 @@ hr:
     PUBLISHED_PAGES: 'Objavljeno %d stranica, %d neuspješno'
     PUBLISH_PAGES: Objavi
     RESTORE: Povrati
-    RESTORED_PAGES: 'Vraćeno ''%d'' stranica'
+    RESTORED_PAGES: "Vraćeno '%d' stranica"
     UNPUBLISHED_PAGES: 'Neobjavljene %d stranice'
     UNPUBLISH_PAGES: Odjavi
   SilverStripe\Admin\SecurityAdmin:

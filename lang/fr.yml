@@ -1,6 +1,6 @@
 fr:
   SilverStripe\Admin\CMSProfileController:
-    CANTEDIT: 'Vous n''avez pas les autorisations pour faire cela'
+    CANTEDIT: "Vous n'avez pas les autorisations pour faire cela"
     MENUTITLE: 'Mon profil'
   SilverStripe\Admin\Forms\EditorEmailLinkFormFactory:
     EMAIL: 'Adresse email'
@@ -12,6 +12,7 @@ fr:
     LINKDESCR: 'Description du lien'
     LINKOPENNEWWIN: 'Ouvrir dans une nouvelle fenêtre/onglet'
     LINKTEXT: 'Texte du lien'
+    URL: URL
   SilverStripe\Admin\Forms\LinkFormFactory:
     INSERT_LINK: 'Ajouter un lien'
   SilverStripe\Admin\Forms\UsedOnTable:
@@ -27,24 +28,27 @@ fr:
   SilverStripe\Admin\LeftAndMain:
     ACCESSALLINTERFACES: 'Accès à toutes les sections du CMS'
     BROWSER_WARNING_HEADING: 'Navigateur non pris en charge'
-    BROWSER_WARNING_TEXT: 'Vous utilisez un navigateur qui n''est pas supporté par SilverStripe.<br />Veuillez en utiliser un avec les options suivantes.'
+    BROWSER_WARNING_TEXT: "Vous utilisez un navigateur qui n'est pas supporté par SilverStripe.<br />Veuillez en utiliser un avec les options suivantes."
     CollapsePanel: 'Fermer le panneau'
     DELETED: Effacé.
     DropdownBatchActionsDefault: 'Choisir une action...'
     ExpandPanel: 'Ouvrir le panneau'
-    HelpMenu: 'Menu d''aide'
+    HelpMenu: "Menu d'aide"
     LOGOUT: Déconnexion
+    MenuToggleAuto: Auto
     NavigateUp: 'Naviguer dans un dossier'
-    PERMAGAIN: 'Vous avez été déconnecté du CMS. Si vous souhaitez vous reconnecter, entrez un nom d''utilisateur et un mot de passe ci-dessous.'
-    PERMALREADY: 'Je suis désolé, mais vous ne pouvez pas accéder à cette partie du CMS. Si vous souhaitez vous connecter en tant que quelqu''un d''autre, faites-le ci-dessous.'
-    PERMDEFAULT: 'Vous devez être connecté pour accéder à la zone d''''administration. Veuillez entrer vos identifiants ci-dessous.'
+    PERMAGAIN: "Vous avez été déconnecté du CMS. Si vous souhaitez vous reconnecter, entrez un nom d'utilisateur et un mot de passe ci-dessous."
+    PERMALREADY: "Je suis désolé, mais vous ne pouvez pas accéder à cette partie du CMS. Si vous souhaitez vous connecter en tant que quelqu'un d'autre, faites-le ci-dessous."
+    PERMDEFAULT: "Vous devez être connecté pour accéder à la zone d''administration. Veuillez entrer vos identifiants ci-dessous."
     PROFILE: 'Profil de {name}'
     PreviewButton: Prévisualisation
     REQUIREJS: 'Le CMS nécessite que le JavaScript soit activé.'
     SAVEDUP: Sauvé.
     SUBMIT_BUTTON_LABEL: Aller
     ValidationError: 'Erreur de validation'
+    Version: Version
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
+    Auto: Auto
     ChangeViewMode: 'Changer le mode de visualisation'
     Desktop: Bureau
     DualWindowView: 'Fenêtre double'
@@ -73,19 +77,20 @@ fr:
     IMPORTEDRECORDS: '{count} entrées importées.'
     IMPORTSPECFIELDS: 'Colonnes de la base de données'
     IMPORTSPECLINK: 'Montrer les spécification pour {model}'
+    IMPORTSPECRELATIONS: Relations
     IMPORTSPECTITLE: 'Spécification pour {model}'
     NOCSVFILE: 'Explorez pour importer un fichier CSV'
     NOIMPORT: 'Rien à importer'
     UPDATEDRECORDS: '{count} entrées mis à jour.'
   SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
     PREVIEW: Prévisualisation
-    'PREVIEW''': Prévisualisation
+    "PREVIEW'": Prévisualisation
   SilverStripe\Admin\SecurityAdmin:
-    ACCESS_HELP: 'Autoriser l''affichage, l''ajout et la modification d''utilisateurs, ainsi que leur attribuer des autorisations et des rôles.'
+    ACCESS_HELP: "Autoriser l'affichage, l'ajout et la modification d'utilisateurs, ainsi que leur attribuer des autorisations et des rôles."
     APPLY_ROLES: 'Appliquer des rôles à des groupes'
-    APPLY_ROLES_HELP: 'Possibilité de modifier les rôles assignés à un groupe. Nécessite l''autorisation "Accès à la section ''Usagers''".'
+    APPLY_ROLES_HELP: "Possibilité de modifier les rôles assignés à un groupe. Nécessite l'autorisation \"Accès à la section 'Usagers'\"."
     EDITPERMISSIONS: 'Gérer les autorisations pour les groupes'
-    EDITPERMISSIONS_HELP: 'Possibilité de modifier les permissions et les adresses IP d''un groupe. Nécessite la permission "Accès à la section ''Sécurité''".'
+    EDITPERMISSIONS_HELP: "Possibilité de modifier les permissions et les adresses IP d'un groupe. Nécessite la permission \"Accès à la section 'Sécurité'\"."
     IMPORTGROUPS: 'Importer des groupes'
     IMPORTUSERS: 'Importer des utilisateurs'
     MENUTITLE: Sécurité

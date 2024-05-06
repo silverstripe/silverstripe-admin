@@ -19,6 +19,7 @@ sk:
     LINKDESCR: 'Popis odkazu'
     LINKOPENNEWWIN: 'Otvoriť v novom okne/na karte'
     LINKTEXT: 'Text odkazu'
+    URL: URL
   SilverStripe\Admin\Forms\LinkFormFactory:
     INSERT_LINK: 'Vložiť odkaz'
   SilverStripe\Admin\Forms\UsedOnTable:
@@ -48,6 +49,7 @@ sk:
     ExpandPanel: 'Rozbaliť panel'
     HelpMenu: 'Ponuka pomoci'
     LOGOUT: 'Odhlásiť sa'
+    MenuToggleAuto: Auto
     MenuToggleStickyNav: 'Priľnavá navigácia'
     NO_PREVIEW: 'Žiaden náhľad k dispozícii'
     NavigateUp: 'Prejdite do priečinka nahor'
@@ -62,7 +64,9 @@ sk:
     ValidationError: 'Chyba platnosti'
     Version: Verzia
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
+    Auto: Auto
     ChangeViewMode: 'Zmeniť režim zobrazenia'
+    Desktop: Desktop
     DualWindowView: 'Dvojité okno'
     EditView: 'Režim úpravy'
     Mobile: Mobil
@@ -70,6 +74,7 @@ sk:
     PreviewView: 'Režim ukážky'
     Responsive: Responzívne
     SplitView: 'Split režim'
+    Tablet: Tablet
     ViewDeviceWidth: 'Vyberte šírku ukážky'
     Width: šírka
   SilverStripe\Admin\MemberImportForm:
@@ -125,4 +130,5 @@ sk:
     INVALID: 'Nesprávne heslo'
     ImportFormHelpGroup: '<ul><li>Existujúce skupiny sú spárované na základe hodnoty <em>Code</em>, a upravené s novými hodnotami z importovaného súboru</li><li>Hierarchie skupín možno vytvoriť pomocou stĺpca <em>ParentCode</em>.</li><li>Kódy oprávnení možno priradiť stĺpcom <em>PermissionCode</em>. Existujúce oprávnenia nebudú vymazané.</li></ul>'
     ImportFormHelpMember: '<p>Skupiny môžu byť priradené stĺpcom <em>Groups</em>. Skupiny sú identifikované hodnotou <em>Code</em>, viacero skupín môže byť oddelených čiarkou. Existujúce členstvá v skupinách nebudú vymazané.</p>'
+    MENUTITLE: SilverStripe\Admin\SudoModeController
     TIMEOUT: 'Časový limit relácie vypršal, obnovte stránku a skúste to znova.'
