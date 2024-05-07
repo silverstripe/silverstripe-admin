@@ -12,12 +12,16 @@
     "Admin.CONFIRMUNSAVEDSHORT": "Advarsel: Dine ændringer er ikke gemt.",
     "Admin.DELETECONFIRMMESSAGE": "Er du sikker på du vil slette dette element?",
     "Admin.EDIT": "Rediger",
+    "Admin.EDIT_MODE": "Rediger",
     "Admin.ENTER_PASSWORD": "Indtast dit kodeord",
-    "Admin.ERRORINTRANSACTION": "Der skete en fejl ved hentning af data fra serveren\nPrøv venligst igen senere.",
     "Admin.EXPANDPANEL": "Udvid panel",
     "Admin.FormatExample": "Eksempel: {format}",
+    "Admin.INSERT_LINK": "Indsæt link",
     "Admin.NONE": "Ingen",
+    "Admin.PREVIEW_MODE": "Preview",
+    "Admin.SEARCH": "Søg",
     "Admin.SELECTONEPAGE": "Vælg venligst mindst en side",
+    "Admin.SPLIT_MODE": "Opdelt",
     "Admin.VALIDATIONERROR": "Valideringsfejl",
     "Admin.VALIDATOR_MESSAGE_ALPHA": "{name} er ikke kun bogstaver.",
     "Admin.VALIDATOR_MESSAGE_ALPHANUMERIC": "{name} er ikke en alfanumeriskværdi.",
@@ -28,5 +32,7 @@
     "Admin.VALIDATOR_MESSAGE_REQUIRED": "{name} er krævet.",
     "Admin.VERIFY": "Bekræft",
     "Admin.VERIFY_ITS_YOU": "Bekræft først at det er dig",
-    "Admin.WHATS_THIS": "Hvad er dette?"
+    "Admin.WHATS_THIS": "Hvad er dette?",
+    "Boolean.ANY": "Enhver",
+    "PopoverOptionSet.SEARCH_PLACEHOLDER": "Søg"
 }

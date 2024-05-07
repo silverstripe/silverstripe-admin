@@ -28,10 +28,10 @@ it:
     ACCESSALLINTERFACES: 'Accesso a tutte le sezioni CMS'
     ACCESSALLINTERFACESHELP: 'Annulla le impostazioni di accesso più specifiche.'
     BROWSER_WARNING_HEADING: 'Browser non supportato'
-    BROWSER_WARNING_TEXT: 'Si sta utilizzando un browser Web che non è supportato da SilverStripe. <br/> Effettuare l''aggiornamento a una delle seguenti opzioni.'
+    BROWSER_WARNING_TEXT: "Si sta utilizzando un browser Web che non è supportato da SilverStripe. <br/> Effettuare l'aggiornamento a una delle seguenti opzioni."
     CollapsePanel: 'Comprimi pannello'
     DELETED: Cancellato.
-    DropdownBatchActionsDefault: 'Scegli un''azione...'
+    DropdownBatchActionsDefault: "Scegli un'azione..."
     ExpandPanel: 'Espandi pannello'
     HelpMenu: 'Menu aiuto'
     LOGOUT: Disconnetti
@@ -39,7 +39,7 @@ it:
     NavigateUp: 'Navigare su una cartella'
     PERMAGAIN: 'Sei stato disconnesso dal CMS. Se si desidera accedere di nuovo, immettere un nome utente e una password di seguito.'
     PERMALREADY: 'Mi dispiace, ma non puoi accedere a questa parte del CMS. Se si desidera accedere come qualcun altro, farlo di seguito.'
-    PERMDEFAULT: 'Devi essere registrato per accedere all''area di amministrazione; inserisci le tue credenziali di seguito.'
+    PERMDEFAULT: "Devi essere registrato per accedere all'area di amministrazione; inserisci le tue credenziali di seguito."
     PROFILE: 'Profilo {name}'
     PreviewButton: Anteprima
     REQUIREJS: 'Il CMS richiede che JavaScript sia abilitato.'
@@ -81,9 +81,9 @@ it:
     UPDATEDRECORDS: 'Aggiornato {count} record.'
   SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
     PREVIEW: Anteprima
-    'PREVIEW''': Anteprima
+    "PREVIEW'": Anteprima
   SilverStripe\Admin\SecurityAdmin:
-    ACCESS_HELP: 'Consentire la visualizzazione, l''aggiunta e la modifica degli utenti, nonché l''assegnazione di autorizzazioni e ruoli.'
+    ACCESS_HELP: "Consentire la visualizzazione, l'aggiunta e la modifica degli utenti, nonché l'assegnazione di autorizzazioni e ruoli."
     APPLY_ROLES: 'Applica ruoli ai gruppi'
     APPLY_ROLES_HELP: 'Possibilità di modificare i ruoli assegnati a un gruppo. Richiede l''autorizzazione "Accesso a" Utenti "sezione".'
     EDITPERMISSIONS: 'Gestisci le autorizzazioni per i gruppi'

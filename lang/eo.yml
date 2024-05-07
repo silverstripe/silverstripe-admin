@@ -98,7 +98,7 @@ eo:
     WONT_BE_SHOWN: 'Noto: ĉi tiu meŝago ne vidiĝos al viaj vizitantoj'
   SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
     PREVIEW: Antaŭvido
-    'PREVIEW''': Antaŭvido
+    "PREVIEW'": Antaŭvido
   SilverStripe\Admin\SecurityAdmin:
     ACCESS_HELP: 'Permesi vidi, aldoni, kaj redakti uzantojn, kaj ankaŭ agordi permesojn kaj rolojn al ili.'
     APPLY_ROLES: 'Apliki rolojn al grupoj'
