@@ -658,7 +658,7 @@ abstract class ModelAdmin extends LeftAndMain
 
         $importers = $this->getModelImporters();
         /** @var BulkLoader $loader */
-        $loader = $importers[$this->modelClass];
+        $loader = $importers[$this->modelTab];
 
         // File wasn't properly uploaded, show a reminder to the user
         if (empty($_FILES['_CsvFile']['tmp_name']) ||
