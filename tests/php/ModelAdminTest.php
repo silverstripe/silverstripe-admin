@@ -11,13 +11,12 @@ use SilverStripe\Admin\Tests\ModelAdminTest\Player;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\Session;
 use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Dev\FunctionalTest;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldExportButton;
 use SilverStripe\Forms\GridField\GridFieldImportButton;
 use SilverStripe\Forms\GridField\GridFieldPrintButton;
 use SilverStripe\Security\Permission;
-use SilverStripe\Dev\FunctionalTest;
-use SilverStripe\View\ArrayData;
 
 class ModelAdminTest extends FunctionalTest
 {
