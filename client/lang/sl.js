@@ -15,12 +15,16 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.CONFIRMUNSAVEDSHORT": "OPOZORILO: spremembe niso bile shranjene.",
     "Admin.DELETECONFIRMMESSAGE": "Ste prepričani, da želite izbrisati ta vnos?",
     "Admin.EDIT": "Uredi",
+    "Admin.EDIT_MODE": "Urejanje",
     "Admin.ENTER_PASSWORD": "Vnesite vaše geslo",
     "Admin.EXPANDPANEL": "Razpri deščico",
     "Admin.FormatExample": "Primer: {format}",
+    "Admin.INSERT_LINK": "Vstavi povezavo",
     "Admin.NONE": "Brez",
     "Admin.NO_SIZE": "ni podatka",
+    "Admin.PREVIEW_MODE": "Predogled",
     "Admin.SELECTONEPAGE": "Izberite vsaj eno možnost",
+    "Admin.SPLIT_MODE": "Deljeni način",
     "Admin.VALIDATIONERROR": "Napaka pri preverjanju",
     "Admin.VALIDATION_ERRORS_IN_TAB": "V zavihku so napačni podatki.",
     "Admin.VALIDATION_ERRORS_IN_TAB_SCREEN_READER": "(Vsebuje napačne podatke)",
@@ -35,6 +39,7 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.VERIFY": "Preveri",
     "Admin.VERIFY_ITS_YOU": "Najprej potrdite, da ste to res vi.",
     "Admin.VERIFY_TO_CONTINUE": "Za nadaljevanje potrdite",
-    "Admin.WHATS_THIS": "Kaj je to?"
+    "Admin.WHATS_THIS": "Kaj je to?",
+    "Boolean.ANY": "Poljuben"
 });
 }

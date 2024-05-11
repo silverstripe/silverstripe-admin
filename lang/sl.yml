@@ -97,13 +97,13 @@ sl:
     WONT_BE_SHOWN: 'Opomba: tega sporočila obiskovalcem ne bomo prikazali.'
   SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
     PREVIEW: Predogled
-    'PREVIEW''': Predogled
+    "PREVIEW'": Predogled
   SilverStripe\Admin\SecurityAdmin:
     ACCESS_HELP: 'Dovoljenje za pregled, dodajanje in urejanje uporabnikov ter dodeljevanje vlog in pravic uporabnikom.'
     APPLY_ROLES: 'Dodeljevanje vlog skupinam'
-    APPLY_ROLES_HELP: 'Dovoljenje za urejanje skupinam dodeljenih vlog. Zahteva pravico za dostop do razdelka ''Uporabniki''. '
+    APPLY_ROLES_HELP: "Dovoljenje za urejanje skupinam dodeljenih vlog. Zahteva pravico za dostop do razdelka 'Uporabniki'. "
     EDITPERMISSIONS: 'Upravljanje s pravicami posameznih skupin'
-    EDITPERMISSIONS_HELP: 'Dovoljenje za urejanje pravic in naslovov IP za skupine. Zahteva pravico za dostop do razdelka ''Varnost''. '
+    EDITPERMISSIONS_HELP: "Dovoljenje za urejanje pravic in naslovov IP za skupine. Zahteva pravico za dostop do razdelka 'Varnost'. "
     IMPORTGROUPS: 'Uvozi skupine'
     IMPORTUSERS: 'Uvozi uporabnike'
     MENUTITLE: Varnost

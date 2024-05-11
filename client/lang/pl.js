@@ -20,12 +20,15 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.CONFIRMUNSAVEDSHORT": "UWAGA: Twoje zmiany nie zostały zapisane.",
     "Admin.DELETECONFIRMMESSAGE": "Czy na pewno chcesz usunąć ten rekord?",
     "Admin.EDIT": "Edytuj",
-    "Admin.ERRORINTRANSACTION": "Wystąpił błąd podczas pobierania danych z serwera\nSpróbuj ponownie później.",
+    "Admin.EDIT_MODE": "Tryb edycji",
     "Admin.EXPANDPANEL": "Rozwiń panel",
     "Admin.FormatExample": "Przykład: {format}",
+    "Admin.INSERT_LINK": "Wstaw link",
     "Admin.NONE": "Żaden",
     "Admin.NO_SIZE": "Nie dotyczy",
+    "Admin.PREVIEW_MODE": "Tryb podglądu",
     "Admin.SELECTONEPAGE": "Wybierz co najmniej jedną stronę",
+    "Admin.SPLIT_MODE": "Tryb podziału",
     "Admin.VALIDATIONERROR": "Niepoprawne dane",
     "Admin.VALIDATION_ERRORS_IN_TAB": "Ta zakładka zawiera błędy walidacji.",
     "Admin.VALIDATION_ERRORS_IN_TAB_SCREEN_READER": "(błąd walidacji)",
@@ -36,6 +39,7 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.VALIDATOR_MESSAGE_DEFAULT": "{name} nie jest prawidłową wartością.",
     "Admin.VALIDATOR_MESSAGE_EQUALS": "{name} nie są takie same.",
     "Admin.VALIDATOR_MESSAGE_NUMERIC": "{name} nie jest liczbą.",
-    "Admin.VALIDATOR_MESSAGE_REQUIRED": "{name} jest wymagane."
+    "Admin.VALIDATOR_MESSAGE_REQUIRED": "{name} jest wymagane.",
+    "Boolean.ANY": "Każdy"
 });
 }
