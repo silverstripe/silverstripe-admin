@@ -33,10 +33,10 @@
     "Admin.IMPORTANT_TIP": "Important tip",
     "Admin.INSERT_LINK": "Insert link",
     "Admin.INSERT_LINK_WITH_SHORTCUT": "Insert link {shortcut}",
-    "Admin.LINK_EMAIL": "Insert email link",
-    "Admin.LINK_EXTERNAL": "Insert external link",
     "Admin.LINKLABEL_EMAIL": "Link to email address",
     "Admin.LINKLABEL_EXTERNALURL": "Link to external URL",
+    "Admin.LINK_EMAIL": "Insert email link",
+    "Admin.LINK_EXTERNAL": "Insert external link",
     "Admin.LOADING_ERROR": "As error occurred when loading the data: {message}",
     "Admin.NONE": "None",
     "Admin.NORMAL_TIP": "Tip",
@@ -98,7 +98,7 @@
     "PopoverOptionSet.NO_RESULTS": "No results found",
     "PopoverOptionSet.SEARCH_PLACEHOLDER": "Search",
     "PopoverOptionSetToggle.TOGGLE": "Toggle",
+    "SilverStripe\\Admin\\FileStatusIcon.ACCESS_RESTRICTED": "Restricted access",
     "SilverStripe\\Admin\\FileStatusIcon.TRACKED_FORM_UPLOAD_RESTRICTED": "Form submission",
-    "SilverStripe\\Admin\\FileStatusIcon.TRACKED_FORM_UPLOAD_UNRESTRICTED": "Form submission, unrestricted access",
-    "SilverStripe\\Admin\\FileStatusIcon.ACCESS_RESTRICTED": "Restricted access"
+    "SilverStripe\\Admin\\FileStatusIcon.TRACKED_FORM_UPLOAD_UNRESTRICTED": "Form submission, unrestricted access"
 }

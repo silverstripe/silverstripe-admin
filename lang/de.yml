@@ -81,7 +81,7 @@ de:
     UPDATEDRECORDS: '{count} Einträge aktualisiert.'
   SilverStripe\Admin\Navigator\SilverStripeNavigatorItem_Unversioned:
     PREVIEW: Vorschau
-    'PREVIEW''': Vorschau
+    "PREVIEW'": Vorschau
   SilverStripe\Admin\SecurityAdmin:
     ACCESS_HELP: 'Erlaubt anzeigen, hinzufügen und bearbeiten von Benutzern, wie auch das zuweisen von Berechtigungen und Rollen.'
     APPLY_ROLES: 'Rollen auf Gruppen anwenden'
