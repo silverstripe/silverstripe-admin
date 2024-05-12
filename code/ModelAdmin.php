@@ -169,6 +169,7 @@ abstract class ModelAdmin extends LeftAndMain
         $this->modelClass = isset($models[$this->modelTab]['dataClass'])
             ? $models[$this->modelTab]['dataClass']
             : $this->modelTab;
+        $this->checkOneRecordOnlyRedirect();
     }
 
     /**
@@ -735,4 +736,24 @@ abstract class ModelAdmin extends LeftAndMain
 
         return $items;
     }
+
+    /**
+     * checks if there is only one record and if no further records can be created.
+     * If those conditions are true, then redirect immediately to the record
+     * for the convenience of the user.
+     *
+     * @return void
+     */
+    protected function checkOneRecordOnlyRedirect()
+    {
+        if($this->getList()->count() === 1) {
+            $obj = $this->getList()->first();
+            if($obj->canCreate() === false) {
+                $link = $this->getCMSEditLinkForManagedDataObject($obj);
+                if($link && $this->getRequest()->getURL() !== $link) {
+                    $this->redirect($link);
+                }
+            }
+        }
+    }    
 }
