@@ -11,7 +11,7 @@ use SilverStripe\View\Requirements;
  */
 class GridFieldPrintButtonExtension extends Extension
 {
-    public function updatePrintData($data)
+    protected function updatePrintData($data)
     {
         Requirements::css('silverstripe/admin:client/dist/styles/GridField_print.css');
     }

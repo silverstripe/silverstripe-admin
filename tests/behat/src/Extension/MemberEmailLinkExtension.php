@@ -15,7 +15,7 @@ use SilverStripe\Security\Member;
  */
 class MemberEmailLinkExtension extends Extension implements TestOnly
 {
-    public function updateGridField(GridField $gridField)
+    protected function updateGridField(GridField $gridField)
     {
         if (is_a($this->getOwner()->getModelClass(), Member::class, true)) {
             $columns = $gridField->getConfig()->getComponentByType(GridFieldDataColumns::class);

@@ -16,7 +16,7 @@ class AdminErrorExtension extends Extension
     /**
      * Used by {@see RequestHandler::httpError}
      */
-    public function onBeforeHTTPError($statusCode, HTTPRequest $request, $errorMessage = null)
+    protected function onBeforeHTTPError($statusCode, HTTPRequest $request, $errorMessage = null)
     {
         $controller = $this->getAdminController();
         if (!$controller || Director::is_ajax($request) || $errorMessage === null) {

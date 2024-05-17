@@ -9,12 +9,12 @@ use SilverStripe\ORM\DataObject;
 class ExtTest_Extension extends Extension implements TestOnly
 {
 
-    public function updateUsageExcludedClasses(array &$excludedClasses)
+    protected function updateUsageExcludedClasses(array &$excludedClasses)
     {
         $excludedClasses[] = ExtTest_Middle::class;
     }
 
-    public function updateUsageAncestorDataObjects(array &$ancestorDataObjects, DataObject $dataObject)
+    protected function updateUsageAncestorDataObjects(array &$ancestorDataObjects, DataObject $dataObject)
     {
         if (!($dataObject instanceof ExtTest_Outer)) {
             return;
