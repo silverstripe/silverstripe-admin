@@ -381,7 +381,7 @@ abstract class ModelAdmin extends LeftAndMain
      * Archived flag is set to false. That would be best done as an extension, for example:
      *
      * <code>
-     * public function updateList(\SilverStripe\ORM\DataList $list)
+     * protected function updateList(\SilverStripe\ORM\DataList $list)
      * {
      *     return $list->filter('Archived', false);
      * }

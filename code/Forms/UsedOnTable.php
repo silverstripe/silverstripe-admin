@@ -83,7 +83,7 @@ class UsedOnTable extends FormField
             // Legacy extension hook kept for backwards compatibility
             // Use 'updateUsageExcludedClasses' extension hook instead which prevents database from being queried
             //
-            // Example: public function updateUsage(ArrayList &$usage, DataObject &$record)
+            // Example: protected function updateUsage(ArrayList &$usage, DataObject &$record)
             //     $dataObjects = $usage->exclude('ClassName', MyDataObject::class);
             $this->extend('updateUsage', $usage, $record);
         }

@@ -15,13 +15,13 @@ use SilverStripe\Forms\GridField\GridFieldExportButton;
 class ModelAdminExtension extends Extension implements TestOnly
 {
 
-    public function updateGridField(GridField &$field)
+    protected function updateGridField(GridField &$field)
     {
         $this->getOwner()->calls[__FUNCTION__]++;
         $field->setAttribute('ModelAdminExtension', 'called');
     }
 
-    public function updateGridFieldConfig(GridFieldConfig &$config)
+    protected function updateGridFieldConfig(GridFieldConfig &$config)
     {
         $this->getOwner()->calls[__FUNCTION__]++;
         $config->removeComponentsByType(GridFieldExportButton::class);

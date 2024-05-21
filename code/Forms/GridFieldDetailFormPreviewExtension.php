@@ -17,7 +17,7 @@ use SilverStripe\View\SSViewer;
  */
 class GridFieldDetailFormPreviewExtension extends Extension
 {
-    public function updateItemEditForm(Form $form): void
+    protected function updateItemEditForm(Form $form): void
     {
         $record = $this->owner->getRecord();
         // See LeftAndMain::getEditForm()

@@ -17,11 +17,11 @@ abstract class LeftAndMainExtension extends Extension
     {
     }
 
-    public function accessedCMS()
+    protected function accessedCMS()
     {
     }
 
-    public function augmentNewSiteTreeItem(&$item)
+    protected function augmentNewSiteTreeItem(&$item)
     {
     }
 }
