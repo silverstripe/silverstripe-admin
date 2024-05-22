@@ -121,7 +121,7 @@ $.entwine('ss', function($){
           'There are validation errors on this page, please fix them before saving or publishing.'
         );
 
-        const $editFormErrorBanner = $("#Form_EditForm_error");
+        const $editFormErrorBanner = $("#Form_EditForm_error, #Form_ItemEditForm_error");
 
         // Remove any existing invalid tab icons and screen-reader text
         this.find('.tab-attention, .tab-validation-error-sr').remove();
@@ -158,20 +158,28 @@ $.entwine('ss', function($){
           return;
         }
 
-        // Get the surrounding ss-tabset
+        // Get the tabs for this form
+        const $gridfieldTabs = this.find('.cms-content-header-tabs.cms-tabset-nav-primary li[role="tab"]');
         const $ssTabSet = $invalidTabPanes.closest('.tab-content').closest('.ss-tabset');
-        if ($ssTabSet.length) {
+        let getTabLi = null;
+        if ($gridfieldTabs.length > 1) {
+          // GridField logic
+          getTabLi = (invalidTabPaneId) => $gridfieldTabs.filter(`[aria-controls="${invalidTabPaneId}"]`);
+        } else if ($ssTabSet.length) {
+          // SiteTree logic
+          getTabLi = (invalidTabPaneId) => $ssTabSet.find(`#tab-${invalidTabPaneId}`).closest('li');
+        }
 
+        if (getTabLi !== null) {
           // Add invalid icons to tabs
           $invalidTabPanes.each((i) => {
             const invalidTabPaneId = $invalidTabPanes.eq(i).attr('id');
-            const $tabLi = $ssTabSet.find(`#tab-${invalidTabPaneId}`).closest('li');
+            const $tabLi = getTabLi(invalidTabPaneId);
             const $icon = $(`<i class="${iconClass}" title="${iconTitle}" aria-hidden="true"></i>`);
             const $screenReaderSpan = $(`<span class="tab-validation-error-sr sr-only">${iconScreenReaderText}</span>`);
             $tabLi.append($icon);
             $tabLi.append($screenReaderSpan);
           });
-
           // Set an alert message in the edit form error banner
           $editFormErrorBanner.attr('class', 'alert alert-danger');
           $editFormErrorBanner.html(alertMessageText);
