@@ -18,6 +18,7 @@ class FormMessageBootstrapExtension extends Extension
         'good' => 'alert-success',
         'bad' => 'alert-danger',
         'required' => 'alert-danger',
+        'validation' => 'alert-danger validation',
         'warning' => 'alert-warning',
     ];
 
