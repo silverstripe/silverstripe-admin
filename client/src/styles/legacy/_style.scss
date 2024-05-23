@@ -688,7 +688,10 @@ html, body {
 
 .validationerror .panel--padded .ui-tabs-nav {
   margin-top: -$panel-padding-y;
+}
 
+.validationerror .panel--padded .ui-tabs-nav,
+.validationerror .toolbar--north .ui-tabs-nav {
   .tab-attention {
     color: $state-draft;
     position: absolute;

@@ -22,8 +22,8 @@ class AdminContext implements Context
     {
         $id = str_replace('Main Content', 'Main', $tabLabel ?? '');
         $id = str_replace(' ', '_', $id ?? '');
-        $id = "tab-Root_$id";
-        $selector = "[aria-labelledby=$id] .font-icon-attention-1";
+        $id = "Root_$id";
+        $selector = "[aria-labelledby=tab-$id] .font-icon-attention-1, li[aria-controls=$id] .font-icon-attention-1";
         $hiddenSelector = ".ss-tabset-tabshidden $selector";
         $page = $this->getMainContext()->getSession()->getPage();
         if ($not) {
