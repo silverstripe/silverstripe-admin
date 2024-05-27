@@ -1,4 +1,3 @@
-import { Field as ReduxFormField } from 'redux-form';
 import Injector from 'lib/Injector';
 import ActionMenu from 'components/ActionMenu/ActionMenu';
 import Badge from 'components/Badge/Badge';
@@ -32,7 +31,6 @@ import NotFoundComponent from 'components/NotFoundComponent/NotFoundComponent';
 import Form from 'components/Form/Form';
 import FormAlert from 'components/FormAlert/FormAlert';
 import Preview from 'components/Preview/Preview';
-import ReduxForm from 'containers/Form/Form';
 import UsedOnTable from 'components/UsedOnTable/UsedOnTable';
 import Loading from 'components/Loading/Loading';
 import CircularLoading from 'components/Loading/CircularLoading';
@@ -82,8 +80,6 @@ export default () => {
     LabelField,
     TreeDropdownField,
     Preview,
-    ReduxForm,
-    ReduxFormField,
     Form,
     FormAlert,
     FormBuilderModal,

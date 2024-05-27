@@ -70,6 +70,7 @@
     "react-dnd": "^5.0.0",
     "react-dnd-html5-backend": "^5.0.1",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.51.5",
     "react-load-script": "^0.0.6",
     "react-redux": "^8.0.4",
     "react-router": "^6.7",

@@ -1,6 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, createContext } from 'react';
 import FormAlert from 'components/FormAlert/FormAlert';
 import PropTypes from 'prop-types';
+import { ReactHookFormContext } from 'containers/ReactHookForm/ReactHookForm';
+
+export const FormContext = createContext({});
 
 class Form extends Component {
   constructor(props) {
@@ -44,11 +47,23 @@ class Form extends Component {
     return null;
   }
 
-  handleSubmit(event, ...args) {
+  handleSubmit(event) {
     // Ensure submitting a nested form doesn't submit the parent form
-    event.stopPropagation();
-    // Pass submission handling up the component stack
-    this.props.handleSubmit(event, ...args);
+    if (event) {
+      event.stopPropagation();
+      // Prevent default <form> submission
+      event.preventDefault();
+    }
+    // This is set from the ReactHookFormContext - see ReactHookForm.js
+    const handleSubmit = this.context.handleSubmit;
+    const onSubmit = (data) => {
+      this.props.handleSubmit(data);
+    };
+    // This handleSubmit method gets turned in a <form onSubmit> prop in render()
+    // The code below is doing the <form onSubmit={handleSubmit(onSubmit)}> from the
+    // react-hook-form docs - https://react-hook-form.com/get-started
+    // This will return a promise if you need to use it
+    return handleSubmit(onSubmit)();
   }
 
   render() {
@@ -71,32 +86,40 @@ class Form extends Component {
       className: className.join(' '),
     };
 
+    const providerValue = {
+      handleSubmit: this.handleSubmit,
+    };
+
     return (
-      <FormTag
-        {...formProps}
-        ref={(form) => { this.form = form; this.props.setDOM(form); }}
-        role="form"
-      >
-        {fields &&
-          <fieldset {...this.props.fieldHolder}>
-            {messages}
-            {this.props.afterMessages}
+      <FormContext.Provider value={providerValue}>
+        <FormTag
+          {...formProps}
+          ref={(form) => { this.form = form; this.props.setDOM(form); }}
+          role="form"
+        >
+          {fields &&
+            <fieldset {...this.props.fieldHolder}>
+              {messages}
+              {this.props.afterMessages}
 
-            {fields}
-          </fieldset>
-        }
+              {fields}
+            </fieldset>
+          }
 
-        { actions && actions.length
-          ?
-            <div {...this.props.actionHolder}>
-              {actions}
-            </div>
-          : null
-        }
-      </FormTag>
+          { actions && actions.length
+            ?
+              <div {...this.props.actionHolder}>
+                {actions}
+              </div>
+            : null
+          }
+        </FormTag>
+      </FormContext.Provider>
     );
   }
 }
+
+Form.contextType = ReactHookFormContext;
 
 Form.propTypes = {
   autoFocus: PropTypes.bool,

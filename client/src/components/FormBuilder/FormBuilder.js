@@ -5,6 +5,9 @@ import schemaFieldValues, { schemaMerge } from 'lib/schemaFieldValues';
 import { createErrorBlock } from 'lib/createErrorBlock';
 import backend from 'lib/Backend';
 import { withInjector } from 'lib/Injector';
+import { Controller } from 'react-hook-form';
+import ReactHookForm, { ReactHookFormContext } from 'containers/ReactHookForm/ReactHookForm';
+import Form from 'components/Form/Form';
 
 class FormBuilder extends Component {
   constructor(props) {
@@ -33,7 +36,8 @@ class FormBuilder extends Component {
       }
     }
 
-    if (schemaComponent !== null) {
+    if (schemaComponent) {
+    // if (schemaComponent !== null) {
       return this.context.injector.get(schemaComponent, `${identifier}.${name}`);
     }
 
@@ -164,7 +168,7 @@ class FormBuilder extends Component {
    * @return {Array}
    */
   mapFieldsToComponents(fields) {
-    const FieldComponent = this.props.baseFieldComponent;
+    // const FieldComponent = this.props.baseFieldComponent;
     return fields.map((field) => {
       let props = field;
       if (field.children) {
@@ -188,7 +192,49 @@ class FormBuilder extends Component {
         return this.buildComponent(props);
       }
 
-      return <FieldComponent key={props.id} {...props} component={this.buildComponent} />;
+      // react-hook-form
+      // This is using a context consumer rather that static contextType because
+      // the static contextType is already been used by injector via the withInjector() HOC
+      return <ReactHookFormContext.Consumer>
+        {(value) =>
+          // redux-form
+          // return <FieldComponent key={props.id} {...props} component={this.buildComponent} />
+          // react-hook-form
+          // console.log('react-hook-form value from context is', value);
+          // https://react-hook-form.com/docs/usecontroller/controller
+          // console.log('field is', field);
+          <Controller
+            name={field.name}
+            defaultValue={field.value}
+            control={value.control}
+            render={(renderObj) => {
+              // renderObj.fieldState - error, invalid, isDirty, isTouched, isValidating
+              // renderObj.formState - defaultValues, dirtyFields, disabled, errors, isDirty,
+              //    isLoading, isSubmitSuccessful, isSubmitted, isSubmitting, isValid,
+              //    isValidating, submitCount, touchedFields, validatingFields
+
+              const handleChange = (inputValue) => {
+                // console.log(inputValue); // update redux here??
+                // doing this in onChange rather than onBlur so that you can see the elemental
+                // inline save button appear as soon as you start typing
+                this.props.actions.dispatchAddFormChanged(this.props.identifier, this.props.schema);
+                renderObj.field.onChange(inputValue);
+              };
+
+              // onChange + value are required to allow typing in the field
+              props.input = {
+                // name: renderObj.field.name,
+                // ref: renderObj.field.ref,
+                // onChange: renderObj.field.onChange,
+                onChange: handleChange,
+                // onBlur: renderObj.field.onBlur,
+                value: renderObj.field.value,
+              };
+              return this.buildComponent(props);
+            }}
+          />
+        }
+      </ReactHookFormContext.Consumer>;
     });
   }
 
@@ -220,6 +266,7 @@ class FormBuilder extends Component {
    */
   handleSubmit(data) {
     // Add form action data (or default to first action, same as browser behaviour)
+
     let action = '';
     if (this.state.submittingAction) {
       action = this.state.submittingAction;
@@ -312,7 +359,6 @@ class FormBuilder extends Component {
   render() {
     const schema = this.props.schema.schema;
     const state = this.props.schema.state;
-    const BaseFormComponent = this.props.baseFormComponent;
 
     // Map form schema to React component attribute names,
     // which requires renaming some of them (by unsetting the original keys)
@@ -352,7 +398,7 @@ class FormBuilder extends Component {
       attributes,
       data: schema.data,
       initialValues: schemaFieldValues(schema, state),
-      onSubmit: this.handleSubmit,
+      // onSubmit: this.handleSubmit,
       valid: state && state.valid,
       messages: (state && Array.isArray(state.messages)) ? state.messages : [],
       mapActionsToComponents: this.mapActionsToComponents,
@@ -370,11 +416,16 @@ class FormBuilder extends Component {
       formTag,
     };
 
-    return (
-      <BaseFormComponent
-        {...props}
-      />
-    );
+    // this gets turned into an onSubmit prop on components/Form which will be used
+    // by react-hook-form
+    props.handleSubmit = (data) => {
+      this.handleSubmit(data);
+    };
+
+    // react-hook-form - using components/Form directly
+    return <ReactHookForm>
+      <Form {...props} />
+    </ReactHookForm>;
   }
 }
 
@@ -410,8 +461,6 @@ const basePropTypes = {
   validate: PropTypes.func,
   values: PropTypes.object,
   submitting: PropTypes.bool,
-  baseFormComponent: PropTypes.elementType.isRequired,
-  baseFieldComponent: PropTypes.elementType.isRequired,
   getCustomFields: PropTypes.func,
   responseRequestedSchema: PropTypes.arrayOf(PropTypes.oneOf([
     'schema', 'state', 'errors', 'auto',

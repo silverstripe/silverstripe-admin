@@ -18,6 +18,8 @@ import FormBuilder, { basePropTypes, schemaPropType } from 'components/FormBuild
 import getIn from 'redux-form/lib/structure/plain/getIn';
 import { inject } from 'lib/Injector';
 import getFormState from 'lib/getFormState';
+// doesn't seem to need to be in registerComponents, though won't be injectable
+import { addFormChanged } from 'state/unsavedForms/UnsavedFormsActions';
 
 /**
  * Creates a dot-separated identifier for forms generated
@@ -97,6 +99,7 @@ class FormBuilderLoader extends Component {
       submitFn()
         .then(formSchema => {
           let schema = formSchema;
+
           if (schema) {
             // Before modifying schema, check if the schema state is provided explicitly
             const explicitUpdatedState = typeof schema.state !== 'undefined';
@@ -424,7 +427,10 @@ class FormBuilderLoader extends Component {
       onSubmitSuccess: this.props.onSubmitSuccess,
       onSubmit: this.handleSubmit,
       onAutofill: this.handleAutofill,
-      autoFocus: this.props.autoFocus
+      autoFocus: this.props.autoFocus,
+      // possibly not the best idea, though maybe ok
+      // should probably be a callback so the redux update happens in this file
+      actions: this.props.actions
     });
 
     return <FormBuilder {...props} />;
@@ -470,6 +476,10 @@ function mapDispatchToProps(dispatch) {
     actions: {
       schema: bindActionCreators(schemaActions, dispatch),
       reduxForm: bindActionCreators({ autofill, initialize }, dispatch),
+      dispatchAddFormChanged: (identifier, schema) => {
+        const formIdentifier = createFormIdentifierFromProps({ identifier, schema });
+        dispatch(addFormChanged(formIdentifier));
+      },
     },
   };
 }
@@ -478,11 +488,9 @@ export { FormBuilderLoader as Component, createFormIdentifierFromProps };
 
 export default compose(
   inject(
-    ['ReduxForm', 'ReduxFormField', 'Loading'],
-    (ReduxForm, ReduxFormField, Loading) => ({
+    ['Loading'],
+    (Loading) => ({
       loadingComponent: Loading,
-      baseFormComponent: ReduxForm,
-      baseFieldComponent: ReduxFormField,
     }),
     ({ identifier }) => identifier
   ),
