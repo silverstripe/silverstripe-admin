@@ -1,20 +1,16 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import FormAlert from 'components/FormAlert/FormAlert';
 import PropTypes from 'prop-types';
 
-class Form extends Component {
-  constructor(props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+const Form = (props) => {
+  let formRef = null;
 
-  componentDidMount() {
-    if (!this.props.autoFocus) {
+  useEffect(() => {
+    if (!props.autoFocus) {
       return;
     }
-
-    if (this.form) {
-      const input = this.form.querySelector('input:not([type=hidden]), select, textarea');
+    if (formRef) {
+      const input = formRef.querySelector('input:not([type=hidden]), select, textarea');
       if (input) {
         input.focus();
         if (input.select) {
@@ -22,17 +18,17 @@ class Form extends Component {
         }
       }
     }
-  }
+  }, []);
 
   /**
    * Generates a list of messages if any are available
    *
    * @returns {Array|null}
    */
-  renderMessages() {
-    const { FormAlertComponent } = this.props;
-    if (Array.isArray(this.props.messages)) {
-      return this.props.messages.map((message, index) => (
+  const renderMessages = () => {
+    const { FormAlertComponent } = props;
+    if (Array.isArray(props.messages)) {
+      return props.messages.map((message, index) => (
         <FormAlertComponent
           // eslint-disable-next-line react/no-array-index-key
           key={index}
@@ -42,61 +38,57 @@ class Form extends Component {
       ));
     }
     return null;
-  }
+  };
 
-  handleSubmit(event, ...args) {
+  const handleSubmit = (event, ...args) => {
     // Ensure submitting a nested form doesn't submit the parent form
     event.stopPropagation();
     // Pass submission handling up the component stack
-    this.props.handleSubmit(event, ...args);
+    props.handleSubmit(event, ...args);
+  };
+
+  const valid = props.valid !== false;
+  const fields = props.mapFieldsToComponents(props.fields);
+  const actions = props.mapActionsToComponents(props.actions);
+  const messages = renderMessages();
+  const FormTag = props.formTag;
+
+  const className = ['form'];
+  if (valid === false) {
+    className.push('form--invalid');
   }
-
-  render() {
-    const valid = this.props.valid !== false;
-    const fields = this.props.mapFieldsToComponents(this.props.fields);
-    const actions = this.props.mapActionsToComponents(this.props.actions);
-    const messages = this.renderMessages();
-    const FormTag = this.props.formTag;
-
-    const className = ['form'];
-    if (valid === false) {
-      className.push('form--invalid');
-    }
-    if (this.props.attributes && this.props.attributes.className) {
-      className.push(this.props.attributes.className);
-    }
-    const formProps = {
-      ...this.props.attributes,
-      onSubmit: this.handleSubmit,
-      className: className.join(' '),
-    };
-
-    return (
-      <FormTag
-        {...formProps}
-        ref={(form) => { this.form = form; this.props.setDOM(form); }}
-        role="form"
-      >
-        {fields &&
-          <fieldset {...this.props.fieldHolder}>
-            {messages}
-            {this.props.afterMessages}
-
-            {fields}
-          </fieldset>
-        }
-
-        { actions && actions.length
-          ?
-            <div {...this.props.actionHolder}>
-              {actions}
-            </div>
-          : null
-        }
-      </FormTag>
-    );
+  if (props.attributes && props.attributes.className) {
+    className.push(props.attributes.className);
   }
-}
+  const formProps = {
+    ...props.attributes,
+    onSubmit: handleSubmit,
+    className: className.join(' '),
+  };
+
+  return <FormTag
+    {...formProps}
+    ref={(form) => {
+      formRef = form;
+      props.setDOM(form);
+    }}
+    role="form"
+  >
+    {fields &&
+      <fieldset {...props.fieldHolder}>
+        {messages}
+        {props.afterMessages}
+        {fields}
+      </fieldset>
+    }
+    { actions && actions.length
+      ? <div {...props.actionHolder}>
+        {actions}
+      </div>
+      : null
+    }
+  </FormTag>;
+};
 
 Form.propTypes = {
   autoFocus: PropTypes.bool,
