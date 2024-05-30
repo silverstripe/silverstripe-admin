@@ -83,6 +83,7 @@ import 'expose-loader?exposes=withDragDropContext!lib/withDragDropContext';
 import 'expose-loader?exposes=withRouter!lib/withRouter';
 import 'expose-loader?exposes=ssUrlLib!lib/urls';
 import 'expose-loader?exposes=SearchableDropdownField!components/SearchableDropdownField/SearchableDropdownField';
+import 'expose-loader?exposes=ReactHookForm!containers/ReactHookForm/ReactHookForm';
 
 // Legacy CMS
 import '../legacy/jquery.changetracker';

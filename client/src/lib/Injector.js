@@ -6,6 +6,7 @@ import injectGraphql from './dependency-injection/injectGraphql';
 import * as graphqlTemplates from './dependency-injection/graphql/templates';
 import loadComponent from './dependency-injection/loadComponent';
 import Container from './dependency-injection/Container';
+import InjectorFunctionalContext from './dependency-injection/InjectorFunctionalContext';
 
 export {
   provideInjector,
@@ -15,6 +16,7 @@ export {
   injectGraphql,
   loadComponent,
   graphqlTemplates,
+  InjectorFunctionalContext
 };
 
 export default Container;

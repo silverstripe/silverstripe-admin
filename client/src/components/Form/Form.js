@@ -1,20 +1,21 @@
-import React, { Component } from 'react';
+import React, { useEffect, useContext, useMemo, createContext } from 'react';
 import FormAlert from 'components/FormAlert/FormAlert';
 import PropTypes from 'prop-types';
+import { ReactHookFormContext } from 'containers/ReactHookForm/ReactHookForm';
 
-class Form extends Component {
-  constructor(props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+export const FormContext = createContext({});
 
-  componentDidMount() {
-    if (!this.props.autoFocus) {
+const Form = (props) => {
+  let formRef = null;
+
+  const { handleSubmit: reactHookFormHandleSubmit } = useContext(ReactHookFormContext);
+
+  useEffect(() => {
+    if (!props.autoFocus) {
       return;
     }
-
-    if (this.form) {
-      const input = this.form.querySelector('input:not([type=hidden]), select, textarea');
+    if (formRef) {
+      const input = formRef.querySelector('input:not([type=hidden]), select, textarea');
       if (input) {
         input.focus();
         if (input.select) {
@@ -22,17 +23,17 @@ class Form extends Component {
         }
       }
     }
-  }
+  }, []);
 
   /**
    * Generates a list of messages if any are available
    *
    * @returns {Array|null}
    */
-  renderMessages() {
-    const { FormAlertComponent } = this.props;
-    if (Array.isArray(this.props.messages)) {
-      return this.props.messages.map((message, index) => (
+  const renderMessages = () => {
+    const { FormAlertComponent } = props;
+    if (Array.isArray(props.messages)) {
+      return props.messages.map((message, index) => (
         <FormAlertComponent
           // eslint-disable-next-line react/no-array-index-key
           key={index}
@@ -42,61 +43,72 @@ class Form extends Component {
       ));
     }
     return null;
-  }
+  };
 
-  handleSubmit(event, ...args) {
-    // Ensure submitting a nested form doesn't submit the parent form
-    event.stopPropagation();
-    // Pass submission handling up the component stack
-    this.props.handleSubmit(event, ...args);
-  }
-
-  render() {
-    const valid = this.props.valid !== false;
-    const fields = this.props.mapFieldsToComponents(this.props.fields);
-    const actions = this.props.mapActionsToComponents(this.props.actions);
-    const messages = this.renderMessages();
-    const FormTag = this.props.formTag;
-
-    const className = ['form'];
-    if (valid === false) {
-      className.push('form--invalid');
+  const handleSubmit = (event) => {
+    if (event) {
+      event.stopPropagation();
+      // Prevent default <form> submission
+      event.preventDefault();
     }
-    if (this.props.attributes && this.props.attributes.className) {
-      className.push(this.props.attributes.className);
-    }
-    const formProps = {
-      ...this.props.attributes,
-      onSubmit: this.handleSubmit,
-      className: className.join(' '),
+    const onSubmit = (data) => {
+      props.handleSubmit(data);
     };
+    // This handleSubmit method gets turned in a <form onSubmit> prop in render()
+    // The code below is doing the <form onSubmit={handleSubmit(onSubmit)}> from the
+    // react-hook-form docs - https://react-hook-form.com/get-started
+    // This will return a promise if you need to use it
+    return reactHookFormHandleSubmit(onSubmit)();
+  };
 
-    return (
-      <FormTag
-        {...formProps}
-        ref={(form) => { this.form = form; this.props.setDOM(form); }}
-        role="form"
-      >
-        {fields &&
-          <fieldset {...this.props.fieldHolder}>
-            {messages}
-            {this.props.afterMessages}
+  const valid = props.valid !== false;
+  const fields = props.mapFieldsToComponents(props.fields);
+  const actions = props.mapActionsToComponents(props.actions);
+  const messages = renderMessages();
+  const FormTag = props.formTag;
 
-            {fields}
-          </fieldset>
-        }
-
-        { actions && actions.length
-          ?
-            <div {...this.props.actionHolder}>
-              {actions}
-            </div>
-          : null
-        }
-      </FormTag>
-    );
+  const className = ['form'];
+  if (valid === false) {
+    className.push('form--invalid');
   }
-}
+  if (props.attributes && props.attributes.className) {
+    className.push(props.attributes.className);
+  }
+  const formProps = {
+    ...props.attributes,
+    onSubmit: handleSubmit,
+    className: className.join(' '),
+  };
+
+  const providerValue = useMemo(() => ({
+    handleSubmit,
+  }), []);
+
+  return <FormContext.Provider value={providerValue}>
+    <FormTag
+      {...formProps}
+      ref={(form) => {
+        formRef = form;
+        props.setDOM(form);
+      }}
+      role="form"
+    >
+      {fields &&
+        <fieldset {...props.fieldHolder}>
+          {messages}
+          {props.afterMessages}
+          {fields}
+        </fieldset>
+      }
+      { actions && actions.length
+        ? <div {...props.actionHolder}>
+          {actions}
+        </div>
+        : null
+      }
+    </FormTag>
+  </FormContext.Provider>;
+};
 
 Form.propTypes = {
   autoFocus: PropTypes.bool,
