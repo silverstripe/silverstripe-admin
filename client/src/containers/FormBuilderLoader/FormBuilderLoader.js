@@ -51,7 +51,7 @@ class FormBuilderLoader extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.schemaUrl !== prevProps.schemaUrl) {
+    if (this.props.schemaUrl !== prevProps.schemaUrl || this.props.refetchSchemaCriteria !== prevProps.refetchSchemaCriteria) {
       this.fetch();
     }
   }
@@ -441,6 +441,7 @@ FormBuilderLoader.propTypes = Object.assign({}, basePropTypes, {
   schemaUrl: PropTypes.string.isRequired,
   schema: schemaPropType,
   refetchSchemaOnMount: PropTypes.bool.isRequired,
+  refetchSchemaCriteria: PropTypes.string,
   form: PropTypes.string,
   submitting: PropTypes.bool,
   onFetchingSchema: PropTypes.func,
