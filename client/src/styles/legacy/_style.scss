@@ -1,11 +1,8 @@
-//
 // This file defines most styles of the CMS: Colors, fonts, backgrounds,
 // alignments, dimensions.
-//
 // Use SCSS variable definitions in screen.css to avoid repeating styles
 // like background colours or padding dimensions. See themes/_default.scss
 // to get started.
-//
 // To avoid this file getting too large and complicated, it is encouraged to
 // create new SCSS files for larger components like the CMS menu or tree
 // (see _tree.scss and _menu.scss).
@@ -40,6 +37,15 @@ html, body {
   height: 100%;
   width: 100vw;
   background: $body-bg;
+
+  // Hide threeColumnCompressor column.
+  .column-hidden {
+    display: none;
+
+    + .cms-preview {
+      border-left: 0;
+    }
+  }
 }
 
 .cms-container--content-mode {
@@ -88,6 +94,9 @@ html, body {
   min-height: $toolbar-total-height;
   background-color: $body-bg-dark;
   border-bottom: 1px solid $border-color;
+  width: 100%;
+  flex-flow: row wrap;
+  display: flex;
 
   .backlink {
     span.btn-icon-back {
@@ -110,7 +119,7 @@ html, body {
     min-height: $toolbar-height;
     min-width: 250px;
 
-    & * {
+    * {
       display: inline-block; // align back button and breadcrumbs
     }
 
@@ -132,13 +141,6 @@ html, body {
       line-height: 1.4;
     }
   }
-}
-
-.cms-content-header {
-  width: 100%;
-  flex-direction: row;
-  display: flex;
-  flex-wrap: wrap;
 
   @include media-breakpoint-down(sm) {
     .cms-content-header-nav {
@@ -163,17 +165,6 @@ html, body {
 
 .cms-edit-form.CMSMain {
   padding: 0;
-}
-
-// Hide threeColumnCompressor column.
-.cms-container {
-  .column-hidden {
-    display: none;
-
-    & + .cms-preview {
-      border-left: 0;
-    }
-  }
 }
 
 .cms-content-header-top {
@@ -238,7 +229,7 @@ html, body {
 
 // History checkboxes
 .cms-versions-form {
-  .form-group::after {
+  .form-group:after {
     visibility: hidden;
     margin: 0;
   }
@@ -488,13 +479,6 @@ html, body {
       border-bottom: 1px solid $nav-tabs-link-hover-border-color;
       margin-bottom: $panel-padding-y;
     }
-  }
-
-  .ui-tabs {
-    position: static;
-  }
-
-  .ui-tabs-panel {
     .toolbar--content {
       margin-left: -20px;
       margin-right: -20px;
@@ -507,6 +491,10 @@ html, body {
     }
   }
 
+  .ui-tabs {
+    position: static;
+  }
+
   .ui-widget-header {
     border: 0;
     background: none;
@@ -514,7 +502,7 @@ html, body {
 
   .ui-tabs-nav {
     float: right;
-    margin: map_get($spacers, 2) 0 $panel-padding-y 0;
+    margin: map_get($spacers, 2) 0 $panel-padding-y;
     padding: 0;
     border-bottom: 0;
 
@@ -549,7 +537,7 @@ html, body {
         margin-right: 0;
       }
 
-      & + li {
+      + li {
         margin-left: map_get($spacers, 2);
       }
     }
@@ -583,7 +571,7 @@ html, body {
         padding: 0; // Avoid double padding with parent
 
         .ui-tabs-panel {
-          padding: map_get($spacers, 2) 0 0 0;
+          padding: map_get($spacers, 2) 0 0;
         }
       }
 
@@ -676,7 +664,7 @@ html, body {
     // Align tab content with gutter (supports multiple rows of tabs)
     margin: 0 0 -1px;
 
-    & + li {
+    + li {
       margin-left: map_get($spacers, 2);
     }
   }
@@ -819,9 +807,9 @@ html, body {
   clear: both;
   margin-bottom: $spacer;
   padding: $alert-padding-y $alert-padding-x;
-  border: $alert-border-width solid #ccc;
-  background: #fff; // for browsers that don't understand rgba
+  border: $alert-border-width solid #ccc; // for browsers that don't understand rgba
   background: rgba(#fff, 0.5);
+
   @include border-radius($alert-border-radius);
 
   .panel--padded > & {
@@ -912,10 +900,10 @@ html, body {
   }
 
   // apply relevant styles from .font-icon-cancel
-  &::before {
+  &:before {
     content: "\44";
     font-size: 15px;
-    font-family: silverstripe, sans-serif;
+    font-family: "silverstripe", sans-serif;
     font-weight: normal;
     -webkit-font-smoothing: antialiased;
   }
@@ -1133,8 +1121,7 @@ html, body {
   margin: 0 0 8px;
   padding: 10px 12px;
   font-weight: normal;
-  border: 1px solid $border-color-light;
-  background: #fff; //for browsers that don't understand rgba
+  border: 1px solid $border-color-light; //for browsers that don't understand rgba
   background: rgba(#fff, 0.5);
   text-shadow: none;
 }
@@ -1192,10 +1179,6 @@ html, body {
       right: 0;
       margin-left: 0;
       margin-right: 0;
-
-      > btn {
-        margin-left: 0;
-      }
     }
   }
 
@@ -1259,13 +1242,14 @@ form.member-profile-form {
 .import-form .form-group {
   padding-bottom: 0;
 
-  &::after {
+  &:after {
     visibility: hidden;
     content: "";
     display: none;
   }
 }
 
+/* stylelint-disable-next-line no-duplicate-selectors */
 .cms {
   .cms-content {
     background: $body-bg;
@@ -1280,7 +1264,7 @@ form.member-profile-form {
 
     #Root_Main {
       .confirmedpassword {
-        border-bottom: none;
+        border-bottom: 0;
         box-shadow: none;
       }
 
@@ -1294,7 +1278,7 @@ form.member-profile-form {
         text-indent: -9999em;
         display: inline-block;
         width: 20px;
-        background: url('../../images/question.png') no-repeat 0px 0px;
+        background: url('../../images/question.png') no-repeat 0 0;
       }
     }
 
@@ -1309,7 +1293,7 @@ form.member-profile-form {
     }
 
     #Root_Main, #Root_Permissions {
-      border: none;
+      border: 0;
     }
   }
 }
@@ -1466,7 +1450,7 @@ form.member-profile-form {
 }
 
 .cms .ui-dialog .ss-ui-dialog.ui-dialog-content {
-  padding-top: 0px; //removes padding so that tabs are flush with header
+  padding-top: 0; //removes padding so that tabs are flush with header
 }
 
 // Elements with this class can either frame inline markup or an iframe,
@@ -1478,7 +1462,7 @@ form.member-profile-form {
   border-radius: map_get($spacers, 2);
   overflow: visible;
   padding: 0;
-  box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, .3);
+  box-shadow: 0 0 30px 10px rgba(0, 0, 0, .3);
 
   // Titlebar for pop-up dialog.
   .ui-dialog-titlebar.ui-widget-header {
@@ -1647,6 +1631,7 @@ form.small {
  * Users Members Admin
  * -------------------------------------------- */
 
+/* stylelint-disable selector-no-qualifying-type */
 .members_grid {
   span button#action_gridfield_relationfind {
     display: none; //hides find button - redundant functionality
@@ -1657,6 +1642,7 @@ form.small {
     }
   }
 }
+/* stylelint-enable selector-no-qualifying-type */
 
 /** --------------------------------------------
  * Page Settings Controller
@@ -1666,6 +1652,7 @@ form.small {
   .optionset li {
     white-space: nowrap;
 
+    /* stylelint-disable selector-max-compound-selectors */
     label {
       padding-left: 2px;
     }

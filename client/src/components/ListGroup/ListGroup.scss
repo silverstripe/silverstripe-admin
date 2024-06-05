@@ -17,10 +17,7 @@
 }
 
 .list-group-item {
-  padding-top: $spacer-xs;
-  padding-right: $panel-padding;
-  padding-bottom: $spacer-xs;
-  padding-left: $panel-padding;
+  padding: $spacer-xs $panel-padding $spacer-xs $panel-padding;
   min-height: 65px; // img height plus border
   cursor: pointer;
   text-decoration: none;
@@ -40,6 +37,12 @@
       color: $white;
       opacity: 1;
     }
+
+    .list-group-item__heading {
+      @include media-breakpoint-up(lg) {
+        color: $white;
+      }
+    }
   }
 }
 
@@ -54,14 +57,6 @@
   color: $body-color;
 }
 
-.list-group-item.active {
-  .list-group-item__heading {
-    @include media-breakpoint-up(lg) {
-      color: $white;
-    }
-  }
-}
-
 .list-group-item__thumbnail {
   width: 64px;
   height: auto;
@@ -70,7 +65,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
   float: left;
   margin: -12px 12px -12px #{0 - $panel-padding};
 

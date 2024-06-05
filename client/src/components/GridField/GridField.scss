@@ -27,14 +27,8 @@
 // Gridfield header tools & actions (sort and filter)
 .grid-field__sort {
   .grid-field & {
-    margin-top: #{-$spacer};
-    margin-left: #{-$spacer};
-    margin-right: #{-$spacer};
-    margin-bottom: calc(#{-$spacer} - 1px);
-    padding-top: $spacer;
-    padding-right: $spacer;
-    padding-bottom: calc(#{$spacer} + 1px);
-    padding-left: $spacer;
+    margin: #{-$spacer} #{-$spacer} calc(#{-$spacer} - 1px) #{-$spacer};
+    padding: $spacer $spacer calc(#{$spacer} + 1px) $spacer;
     width: calc(100% + #{$spacer * 2});
     height: $toolbar-height;
     text-align: left;
@@ -60,27 +54,27 @@
     border-bottom: $table-border-width solid $border-color-light;
   }
 
-  &::after {
+  &:after {
     content: ")";
     display: inline-block;
-    font-family: silverstripe;
+    font-family: "silverstripe";
   }
 
   &.ss-gridfield-sorted-desc,
   &.ss-gridfield-sorted-asc {
     border-bottom: $table-border-width solid $cyan;
 
-    &::after,
-    &:hover::after {
+    &:after,
+    &:hover:after {
       color: $cyan;
     }
   }
 
-  &.ss-gridfield-sorted-desc::after {
+  &.ss-gridfield-sorted-desc:after {
     content: "*";
   }
 
-  &.ss-gridfield-sorted-asc::after {
+  &.ss-gridfield-sorted-asc:after {
     content: "(";
   }
 
@@ -131,7 +125,7 @@
   &[class*="font-icon-"]:focus {
     background-color: darken($table-bg-tools, 6%);
 
-    &::before {
+    &:before {
       color: $white;
     }
   }
@@ -197,7 +191,7 @@ div.grid-field__sort-field + .form__fieldgroup-item {
     text-decoration: none; // For links
   }
 
-  &::before {
+  &:before {
     top: 0;
     color: lighten($body-color, 10%);
   }
@@ -261,7 +255,7 @@ div.grid-field__sort-field + .form__fieldgroup-item {
 
     &:first-child,
     .cms-list &,
-    &.col-Title, // sass-lint:disable-line class-name-format
+    &.col-Title,
     &.grid-field__col-compact,
     &.grid-field__cell--actions,
     &.grid-field__action-placeholder {

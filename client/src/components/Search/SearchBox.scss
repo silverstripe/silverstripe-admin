@@ -31,7 +31,7 @@ $search-box-height: 53px;
     margin: auto 0;
     pointer-events: none;
 
-    &::before {
+    &:before {
       display: block;
     }
 
@@ -75,7 +75,7 @@ $search-box-height: 53px;
   border-left: 1px solid $gray-200;
   margin: 0;
 
-  &[class*="font-icon-"]::before {
+  &[class*="font-icon-"]:before {
     font-size: 24px;
   }
 }
@@ -94,12 +94,12 @@ $search-box-height: 53px;
   }
 
   // Rotate ^ when filter-panel is open
-  &::before {
+  &:before {
     margin: 0;
     transform: rotate(180deg) translateY(2px);
   }
 
-  &.collapsed::before {
+  &.collapsed:before {
     transform: rotate(0deg) translateY(0);
   }
 
@@ -229,7 +229,7 @@ $search-box-height: 53px;
     display: none;
   }
 
-  &::before {
+  &:before {
     display: block;
   }
 }

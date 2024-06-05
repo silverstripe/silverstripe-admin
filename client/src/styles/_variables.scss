@@ -11,7 +11,7 @@ $brand-success: #3fa142;
 $brand-danger: #d40404;
 
 // Offical SilverStripe brand color
-$color-brand: white !default;
+$color-brand: #fff !default;
 
 // Generic colors
 $color-notice:  #93CDE8 !default;
@@ -66,7 +66,6 @@ $component-active-border-color: $brand-primary;
 $table-bg-tools: $gray-700;
 
 // Buttons
-//
 
 $btn-spacing: 5px;
 $btn-icon-spacing: 6px;
@@ -89,7 +88,6 @@ $input-padding-x-lg: 1.25rem;
 $input-padding-y-lg: .75rem;
 
 // Z-index master list
-//
 // Warning: Avoid customizing these values. They're used for a bird's eye view
 // of components dependent on the z-axis and are designed to all work together.
 

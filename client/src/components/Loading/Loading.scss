@@ -25,7 +25,6 @@ $dash: 750;
     width: 3rem;
     height: 3rem;
     padding: .5rem;
-
     background-color: $white;
     border-radius: $border-radius-sm;
 
@@ -53,7 +52,6 @@ $dash: 750;
       }
 
       &__fill-left {
-
         animation: spinner__animation__keyframes-left 3s infinite cubic-bezier(.445, .05, .55, .95)
         forwards;
 
@@ -71,11 +69,11 @@ $dash: 750;
           }
 
           75% {
-            stroke-dashoffset: $dash*2;
+            stroke-dashoffset: $dash * 2;
           }
 
           100% {
-            stroke-dashoffset: $dash*2;
+            stroke-dashoffset: $dash * 2;
           }
         }
       }
@@ -86,11 +84,11 @@ $dash: 750;
 
         @keyframes spinner__animation__keyframes-right {
           0% {
-            stroke-dashoffset: $dash*2;
+            stroke-dashoffset: $dash * 2;
           }
 
           25% {
-            stroke-dashoffset: $dash*2;
+            stroke-dashoffset: $dash * 2;
           }
 
           50% {
