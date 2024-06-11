@@ -5,10 +5,15 @@
  * The styles are usually added through jstree.js on DOM load,
  * but we need it earlier in order to correctly display the uninitialized tree.
  */
+
+// Refactoring duplicate selectors would likely result in messier code
+// or else be more effort than it's worth
+/* stylelint-disable no-duplicate-selectors */
+
 .cms {
   .jstree {
     > ul > li {
-      margin-left: 0px;
+      margin-left: 0;
     }
     ul, li {
       display: block;
@@ -30,7 +35,7 @@
         display: none;
       }
       // Expand/collapse arrows
-      & > .jstree-icon {
+      > .jstree-icon {
         cursor: pointer;
       }
     }
@@ -39,14 +44,14 @@
       text-decoration: none;
       width: 18px;
       height: 18px;
-      margin: 0 0 0 0;
+      margin: 0;
       padding: 0;
       float: left;
     }
     a {
       display: inline-block;
       line-height: 16px;
-      color: black;
+      color: #000;
       white-space: nowrap;
       text-decoration: none;
       padding: 1px 2px;
@@ -111,8 +116,8 @@
         padding: 0 !important;
         text-indent: -9999px !important;
         width: 100%;
-        border-right-width: 0px !important;
-        border-left-width: 0px !important;
+        border-right-width: 0 !important;
+        border-left-width: 0 !important;
       }
       ins,
       span,
@@ -123,8 +128,7 @@
     .jstree-wholerow-span {
       position: absolute;
       left: 0;
-      margin: 0px;
-      padding: 0;
+      margin: 0;
       height: 18px;
       border-width: 0;
       padding: 0;
@@ -148,15 +152,10 @@
 
   // Show drag icons when draggable class is applied
   .draggable a > .jstree-icon {
-    display: none;
-    cursor: move; // Fallback for IE users
-    cursor: -moz-grab;
-    cursor: -webkit-grab;
+    display: none; // Fallback for IE users
     cursor: grab;
 
     &:active {
-      cursor: -moz-grabbing;
-      cursor: -webkit-grabbing;
       cursor: grabbing;
     }
   }
@@ -187,7 +186,7 @@
       margin-right: 18px;
     }
     > ul > li {
-      margin-right: 0px;
+      margin-right: 0;
     }
   }
 
@@ -217,7 +216,7 @@
     width: 8px;
     z-index: 10001;
     background-color: transparent;
-    color: black;
+    color: #000;
   }
   #jstree-marker-line {
     padding: 0;
@@ -234,11 +233,11 @@
     z-index: 10000;
     background-color: #456c43;
     cursor: pointer;
-    border: 1px solid #eeeeee;
+    border: 1px solid #eee;
     border-left: 0;
-    -moz-box-shadow: 0px 0px 2px #666;
-    -webkit-box-shadow: 0px 0px 2px #666;
-    box-shadow: 0px 0px 2px #666;
+    -moz-box-shadow: 0 0 2px #666;
+    -webkit-box-shadow: 0 0 2px #666;
+    box-shadow: 0 0 2px #666;
     -moz-border-radius: 1px;
     border-radius: 1px;
     -webkit-border-radius: 1px;
@@ -254,30 +253,30 @@
     padding: 0;
     min-width: 180px;
     background: #FFF;
-    border: 1px solid silver;
+    border: 1px solid #c0c0c0;
     z-index: 10000; *width:180px;
     box-shadow: 0 0 10px #CCC;
 
-    &::before {
+    &:before {
       content:"";
       display:block; /* reduce the damage in FF3.0 */
       position:absolute;
       top: -10px;
       left: 24px;
       width:0;
-      border-width: 0 6px 10px 6px  ;
+      border-width: 0 6px 10px;
       border-color:  #FFF transparent;
       border-style: solid;
       z-index: 10000;
     }
-    &::after {
+    &:after {
       content:"";
       display:block; /* reduce the damage in FF3.0 */
       position:absolute;
       top: -11px;
       left: 23px;
       width:0;
-      border-width: 0 7px 11px 7px  ;
+      border-width: 0 7px 11px;
       border-color:  #CCC transparent;
       border-style: solid;
     }
@@ -295,7 +294,7 @@
       line-height: 20px;
       min-height: 23px;
       position: relative;
-      padding: 0px;
+      padding: 0;
       &:last-child {
         margin-bottom: 1px;
       }
@@ -304,14 +303,14 @@
         line-height: 23px;
         display: block;
         text-decoration: none;
-        margin: 1px 1px 0 1px;
+        margin: 1px 1px 0;
         border: 0;
         &:hover {
           padding: 1px 10px;
           background: #3875d7;
           background-image: linear-gradient(to bottom, #3875d7 20%, #2a62bc 90%);
           color: #FFF;
-          border: none;
+          border: 0;
           // Specificity override for icons in children pages
           .jstree-pageicon {
             color: #FFF;
@@ -334,7 +333,7 @@
         background: #3875d7;
         background-image: linear-gradient(to bottom, #3875d7 20%, #2a62bc 90%);
         color: #FFF;
-        border: none;
+        border: 0;
       }
     }
   }
@@ -354,7 +353,7 @@
       top: -2px;
       left: 100%;
       background: #FFF;
-      border: 1px solid silver;
+      border: 1px solid #c0c0c0;
       box-shadow: 0 0 10px #CCC;
       &.vakata-col-2{
         column-count: 2;
@@ -364,6 +363,7 @@
       }
       li {
         min-width:180px;
+        /* stylelint-disable-next-line selector-max-compound-selectors */
         a {
           @include hide-text-overflow;
         }
@@ -385,7 +385,7 @@
 
   #vakata-dragged {
     display: block;
-    margin: 0 0 0 0;
+    margin: 0;
     padding: 4px 4px 4px 24px;
     position: absolute;
     top: -2000px;
@@ -396,7 +396,7 @@
       text-decoration: none;
       width: 16px;
       height: 16px;
-      margin: 0 0 0 0;
+      margin: 0;
       padding: 0;
       position: absolute;
       top: 4px;
@@ -406,10 +406,10 @@
       -webkit-border-radius: 4px;
     }
     .jstree-ok {
-      background: green;
+      background: #0f0;
     }
     .jstree-invalid {
-      background: red;
+      background: #f00;
     }
   }
 
@@ -426,166 +426,165 @@
   }
 }
 
-.tree-holder, .cms-tree {
-  &.jstree {
-    li {
-      padding: 0px;
-      clear:  left;
-      &.Root {
-        & strong {
-          font-weight:  bold;
-          padding-left:  1px;
-        }
+.tree-holder.jstree, .cms-tree.jstree {
+  li {
+    padding: 0;
+    clear:  left;
+    &.Root {
+      strong {
+        font-weight:  bold;
+        padding-left:  1px;
+      }
 
-        & > a .jstree-icon {
-          background-position: -56px -36px;
-        }
+      > a .jstree-icon {
+        background-position: -56px -36px;
       }
-      &.status-deletedonlive,
-      &.status-archived {
-        > a, > a:link {
-          .text {
-            text-decoration: line-through;
-          }
-        }
-      }
-      &.jstree-checked {
-        > a, > a:link {
-          background-color: #fffcdc;
-        }
-      }
-      &.disabled,
-      &.edit-disabled {
-        > a, > a:link {
-          background-color: transparent;
-          cursor: default;
-          font-style: italic;
-          > .jstree-checkbox {
-            background-position: -57px -54px;
-            cursor: not-allowed;
-          }
-        }
-      }
-      &.readonly {
-        color: $text-muted;
-        padding-left: 18px;
-
-        // Don't show drag icons or required spacing
-        a, a:link {
-          margin: 0;
-          padding: 0;
-        }
-        .jstree-icon {
-          display: none;
+    }
+    &.status-deletedonlive,
+    &.status-archived {
+      > a, > a:link {
+        .text {
+          text-decoration: line-through;
         }
       }
     }
-    a, a:link {
-      color:  $link-color;
-      padding: 3px 6px 3px 6px;
-      border: none;
-      display:  inline-block;
-      margin-right: 5px;
-    }
-    ins {
-      background-color: transparent;
-      background-image: url('../../images/sitetree_ss_default_icons.png');
-
-      &.font-icon-drag-handle {
-        background: none;
-        font-size: 16px;
-
-        &::before {
-          margin-left: -1px;
-        }
+    &.jstree-checked {
+      > a, > a:link {
+        background-color: #fffcdc;
       }
-
-      &.font-icon-right-dir {
-        visibility: hidden;
-        background: none;
-        font-size: 20px;
-        margin-top: 2px;
-        transition: transform 0.2s ease-in;
-
-        &::before {
-          line-height: 18px;
-          height: 18px;
-          display: block;
+    }
+    &.disabled,
+    &.edit-disabled {
+      > a, > a:link {
+        background-color: transparent;
+        cursor: default;
+        font-style: italic;
+        > .jstree-checkbox {
+          background-position: -57px -54px;
+          cursor: not-allowed;
         }
       }
     }
-    span.badge {
-      margin-left: 3px;
-      text-shadow: none;
-    }
+    &.readonly {
+      color: $text-muted;
+      padding-left: 18px;
 
-    /* comment speech bubble - ccs3 only - source: http://nicolasgallagher.com/pure-css-speech-bubbles/demo/ */
-    span.comment-count {
-      clear: both;
-      position: relative;
-      text-transform: uppercase;
-      display: inline-block;
-      overflow: visible;
-      padding: 0px 3px;
-      font-size: 0.75em;
-      line-height: 1em;
-      margin-left: 3px;
-      margin-right: 6px;
-      border-radius: 2px, 2px;
-      color:  $state-draft;
-      border: 1px solid #C9B800;
-      background-color: #FFF0BC;
+      // Don't show drag icons or required spacing
+      a, a:link {
+        margin: 0;
+        padding: 0;
+      }
+      .jstree-icon {
+        display: none;
+      }
+    }
+  }
+  a, a:link {
+    color:  $link-color;
+    padding: 3px 6px;
+    border: 0;
+    display:  inline-block;
+    margin-right: 5px;
+  }
+  ins {
+    background-color: transparent;
+    background-image: url('../../images/sitetree_ss_default_icons.png');
+
+    &.font-icon-drag-handle {
+      background: none;
+      font-size: 16px;
 
       &:before {
-        content:"";
-          position:absolute;
-          border-style:solid;
-          display:block;
-          width:0;
-          bottom:-4px; /* value = - border-top-width - border-bottom-width */
-          left:3px; /* controls horizontal position */
-          border-width:4px 4px 0;
-          border-color:#C9B800 transparent;
-      }
-      &:after {
-        content:"";
-          position:absolute;
-          border-style:solid;
-          /* reduce the damage in FF3.0 */
-          display:block;
-          width:0;
-          bottom:-3px; /* value = - border-top-width - border-bottom-width */
-          left:4px; /* value = (:before left) + (:before border-left) - (:after border-left) */
-          border-width:3px 3px 0;
-          border-color:#FFF0BC transparent;
+        margin-left: -1px;
       }
     }
 
-    .jstree-hovered {
-      text-shadow: none;
-      text-decoration: none;
+    &.font-icon-right-dir {
+      visibility: hidden;
+      background: none;
+      font-size: 20px;
+      margin-top: 2px;
+      transition: transform 0.2s ease-in;
+
+      &:before {
+        line-height: 18px;
+        height: 18px;
+        display: block;
+      }
     }
-    .jstree-closed > ins {
-      visibility: visible;
+  }
+  span.badge {
+    margin-left: 3px;
+    text-shadow: none;
+  }
+
+  /* comment speech bubble - ccs3 only - source: http://nicolasgallagher.com/pure-css-speech-bubbles/demo/ */
+  span.comment-count {
+    clear: both;
+    position: relative;
+    text-transform: uppercase;
+    display: inline-block;
+    overflow: visible;
+    padding: 0 3px;
+    font-size: 0.75em;
+    line-height: 1em;
+    margin-left: 3px;
+    margin-right: 6px;
+    border-radius: 2px, 2px;
+    color:  $state-draft;
+    border: 1px solid #C9B800;
+    background-color: #FFF0BC;
+
+    &:before {
+      content:"";
+        position:absolute;
+        border-style:solid;
+        display:block;
+        width:0;
+        bottom:-4px; /* value = - border-top-width - border-bottom-width */
+        left:3px; /* controls horizontal position */
+        border-width:4px 4px 0;
+        border-color:#C9B800 transparent;
     }
-    .jstree-open > ins {
-      visibility: visible;
-      transform: rotate(90deg);
+    &:after {
+      content:"";
+        position:absolute;
+        border-style:solid;
+
+        /* reduce the damage in FF3.0 */
+        display:block;
+        width:0;
+        bottom:-3px; /* value = - border-top-width - border-bottom-width */
+        left:4px; /* value = (:before left) + (:before border-left) - (:after border-left) */
+        border-width:3px 3px 0;
+        border-color:#FFF0BC transparent;
     }
   }
 
-  // Applied to trees when displaying filter / search results.
-  &.filtered-list {
-    margin-top: map_get($spacers, 2);
-
-    li:not(.filtered-item) > a {
-      color: $text-muted;
-    }
+  .jstree-hovered {
+    text-shadow: none;
+    text-decoration: none;
+  }
+  .jstree-closed > ins {
+    visibility: visible;
+  }
+  .jstree-open > ins {
+    visibility: visible;
+    transform: rotate(90deg);
   }
 }
 
+// Applied to trees when displaying filter / search results.
+.tree-holder.filtered-list, .cms-tree.filtered-list {
+  margin-top: map_get($spacers, 2);
+
+  li:not(.filtered-item) > a {
+    color: $text-muted;
+  }
+}
 
 // For drag and drop icons to not appear whilst in multi-selection
+/* stylelint-disable max-nesting-depth */
 .cms-tree {
   padding-bottom: $panel-padding-y;
 
@@ -616,6 +615,7 @@
     }
   }
 }
+/* stylelint-enable max-nesting-depth */
 
 // Override thirdparty themes
 .jstree-default a .jstree-icon,
@@ -624,6 +624,7 @@
 .jstree-apple a .jstree-icon {
   background-position:-60px -19px;
 }
+
 .jstree-apple a {
   border-radius: 3px;
 }
@@ -667,7 +668,7 @@
   height: 16px;
   color: $gray-500;
 
-  &::before {
+  &:before {
     font-size: $font-size-lg;
   }
 }
@@ -683,6 +684,7 @@ a .jstree-pageicon {
 .jstree-apple .jstree-hovered {
   background: #e8f5ff;
 }
+
 @mixin tree-status-icon($label, $dotColor, $textColor, $bgColor) {
   .cms-tree.jstree .status-#{$label} > a .jstree-pageicon:after {
     content:"";
@@ -709,9 +711,10 @@ a .jstree-pageicon {
   // Dots
   .cms-tree.jstree .status-#{$label} > a .jstree-pageicon:after  {
     background-color:$dotColor;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3), inset 0 0 0 1px $textColor;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3), inset 0 0 0 1px $textColor;
   }
 }
+
 @include tree-status-icon('addedtodraft', #ff7f22, $state-draft, #fff2ea);
 @include tree-status-icon('modified', #fff2e8, $state-draft, #fff2ea);
 @include tree-status-icon('archived', #5F7688, #455b6c, #f1f3f6);
@@ -724,15 +727,16 @@ a .jstree-pageicon {
   &.multiple {
     li > a {
       // Hide draggable icon when multiselect is enabled
-       > .jstree-icon {
+      > .jstree-icon {
         display: none;
-        // But show the checkbox
-         &.jstree-checkbox {
-          display: inline-block;
-        }
+      }
+      // But show the checkbox
+      > .jstree-icon.jstree-checkbox {
+        display: inline-block;
       }
     }
 
+    /* stylelint-disable selector-no-qualifying-type */
     li#record-0 {
       // Hide checkbox on root node (shouldn't be selectable to avoid weird states when trying to e.g. remove it)
       > a .jstree-checkbox {
@@ -746,6 +750,7 @@ a .jstree-pageicon {
       background: url('../../images/throbber.gif') top left no-repeat;
     }
   }
+  /* stylelint-enable selector-no-qualifying-type */
 
   // Show the loading indicator on the page icon rather than the default
   // jstree icon (which is only used for its dragging handles)
@@ -758,3 +763,4 @@ a .jstree-pageicon {
     }
   }
 }
+/* stylelint-enable no-duplicate-selectors */

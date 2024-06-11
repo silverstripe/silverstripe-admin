@@ -7,6 +7,7 @@ $circular-button-padding: 7px;
 .toolbar--content,
 .toolbar--south {
   @include make-container();
+
   min-height: $toolbar-total-height;
 
   .btn-toolbar {
@@ -101,7 +102,7 @@ $circular-button-padding: 7px;
         margin-right: 0;
       }
 
-      .btn::before {
+      .btn:before {
         margin-right: 0;
       }
     }

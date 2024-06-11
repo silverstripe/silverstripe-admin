@@ -28,17 +28,25 @@
 
 .ui-widget-header {
 
-  & .ui-dialog-title {
+  .ui-dialog-title {
     padding: 6px 10px;
   }
 
-  & a.ui-dialog-titlebar-close {
+  a.ui-dialog-titlebar-close {
     position:  absolute;
     top: -5px;
     right: -13px;
     width: 30px;
     height:  30px;
     z-index: 100000;
+  }
+
+  .ui-icon-closethick {
+    @include icon-sprites(32x32);
+    @include sprite($sprites-32x32-dialog-close);
+
+    width: 30px;
+    height:  30px;
   }
 
   a.ui-state-hover {
@@ -49,13 +57,6 @@
       @include icon-sprites(32x32);
       @include sprite($sprites-32x32-dialog-close-over);
     }
-  }
-
-  .ui-icon-closethick {
-    @include icon-sprites(32x32);
-    @include sprite($sprites-32x32-dialog-close);
-    width: 30px;
-    height:  30px;
   }
 }
 
@@ -74,14 +75,13 @@
   }
   .ui-accordion-content {
     border: 1px solid $btn-secondary-border;
-    border-top: none;
+    border-top: 0;
   }
 }
 
 .ui-autocomplete {
   max-height: 240px;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden auto;
 
   /** sorry about the !important but the specificity of other selectors mandates it over writing out very specific selectors **/
   &-loading {

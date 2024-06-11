@@ -38,8 +38,8 @@
 
 
 // Form divider lines
-.form__divider::after,
-.form-group::after {
+.form__divider:after,
+.form-group:after {
   border-bottom: 1px solid $border-color-light;
   visibility: visible;
   width: 100%;
@@ -47,11 +47,11 @@
   display: block;
 }
 
-.form__divider::after {
+.form__divider:after {
   margin: $spacer 0;
 }
 
-.form-group::after {
+.form-group:after {
   margin: $spacer 0 #{-$spacer};
 }
 
@@ -62,7 +62,7 @@
 .form-field--no-divider {
   padding-bottom: 0;
 
-  &::after {
+  &:after {
     visibility: hidden;
     content: "";
     display: none;
@@ -75,7 +75,7 @@
   .form-group {
     padding-bottom: 0;
 
-    &::after {
+    &:after {
       border-bottom: 0;
       margin: 0;
       visibility: hidden;
@@ -136,7 +136,7 @@
 }
 
 // Icons used in readonly fields (eg URL field in assetAdmin)
-.form-control-static__icon::before {
+.form-control-static__icon:before {
   color: lighten($text-muted, 20%);
   vertical-align: middle;
   margin-right: 6px;
@@ -148,13 +148,11 @@
 .form__field-holder input.readonly,
 .form__field-holder span.readonly,
 .readonly .form__field-holder > div:not(.form__field-description) {
-  padding-top: $input-padding-y;
-  padding-bottom: $input-padding-y;
-  padding-left: $input-btn-padding-x;
-  padding-right: $input-btn-padding-x;
+  padding: $input-padding-y $input-btn-padding-x $input-padding-y $input-btn-padding-x;
   margin-bottom: 0;
   background-color: $input-disabled-bg;
   border: 1px solid darken($input-disabled-bg, 3%);
+
   @include border-radius($input-border-radius);
 
   &:focus {
@@ -230,11 +228,12 @@ input.radio {
 
         .form__field-extra-label {
           @include make-col(12);
+
           margin-left: 0;
         }
       }
 
-      &::after {
+      &:after {
         margin: $spacer $grid-gutter-width-half #{-$spacer};
         width: calc(100% - #{$grid-gutter-width}); // IE10 fix for avoiding horizontal scrollbars
       }
@@ -275,6 +274,7 @@ input.radio {
     .stacked .form__field-holder {
       @include make-col-ready();
       @include make-col(12);
+
       max-width: 100%;
     }
 
@@ -325,6 +325,7 @@ input.radio {
       // Based off of make-col-offset() mixin but adding the panel padding-x to offset
       // the checkbox width
       $_field-margin-left: percentage(calc(2 / $grid-columns));
+
       margin-left: calc(#{$_field-margin-left} + #{$panel-padding-x});
     }
 
@@ -341,6 +342,7 @@ input.radio {
 
     .form__field-extra-label {
       @include make-col(2);
+
       margin-left: 0;
     }
   }
@@ -355,6 +357,7 @@ input.radio {
     // Max-width to visually match other stacked fields + label
     .form-group.htmleditor.stacked .form__field-holder {
       @include make-col(12);
+
       max-width: calc(#{$input-max-width} + 16.66667%);
 
       // IE 11 renders the field wider than 100% with the above max-width
@@ -368,6 +371,7 @@ input.radio {
 
     .form__field-extra-label {
       @include make-col(3);
+
       margin-left: 0;
 
       // IE10 Possibly scrollbar effects the width to push columns
@@ -379,15 +383,16 @@ input.radio {
 }
 
 // Fix height of date-fields collapsing in IE
-input[type=date],
-input[type=time],
-input[type=datetime-local],
-input[type=month] {
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+input[type="month"] {
   &.form-control {
     min-height: calc(#{$input-padding-y} * 2 + #{$line-height-base} + 2px);
 
     // Reduce huge line-height for BS date-fields
-    @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    /* stylelint-disable-next-line media-feature-name-no-unknown */
+    @media screen and (min-device-pixel-ratio: 0) {
       line-height: $line-height-base;
     }
   }

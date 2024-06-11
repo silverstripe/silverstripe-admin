@@ -10,6 +10,7 @@
   max-width: 100%;
   width: 100%;
 
+  /* stylelint-disable-next-line media-query-no-invalid */
   @media(min-width: $tablet-width) {
     width: 375px;
 
@@ -23,7 +24,7 @@
 .search-form .form__field-holder > .field-group-component__small-holder {
   flex-direction: column;
 
-  @media(min-width: 375px) {
+  @media(width >= 375px) {
     flex-direction: row;
   }
 }

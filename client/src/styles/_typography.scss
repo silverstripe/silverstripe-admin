@@ -1,10 +1,12 @@
-//
 // File: typography.scss
-//
 // Contains the basic typography related styles for the admin interface.
 
 h1 {
   font-weight: 400;
+}
+
+th {
+  text-transform: uppercase;
 }
 
 // Tables
@@ -26,6 +28,16 @@ h1 {
   thead th {
     border: 0;
     background-color: transparent;
+  }
+
+  tfoot {
+    // background-color: transparent;
+    font-size: $font-size-sm;
+
+    td {
+      border-bottom: 0;
+      // background-color: $body-bg;
+    }
   }
 
   th,
@@ -59,26 +71,12 @@ h1 {
       border-top: $table-border-width solid $border-color-light;
     }
   }
-
-  tfoot {
-    // background-color: transparent;
-    font-size: $font-size-sm;
-
-    td {
-      border-bottom: 0;
-      // background-color: $body-bg;
-    }
-  }
 }
 
 .cms {
   code {
     font-family: "Bitstream Vera Sans Mono", "Courier", monospace;
   }
-}
-
-th {
-  text-transform: uppercase;
 }
 
 // Helpers
@@ -91,10 +89,8 @@ th {
   // These are technically the same, but use both
   overflow-wrap: break-word;
   word-wrap: break-word;
-
-  -ms-word-break: break-all; // sass-lint:disable-line no-misspelled-properties
+  -ms-word-break: break-all;
   word-break: break-word;
-
   -ms-hyphens: auto;
   -moz-hyphens: auto;
   -webkit-hyphens: auto;

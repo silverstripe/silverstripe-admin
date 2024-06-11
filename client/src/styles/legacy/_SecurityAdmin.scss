@@ -12,6 +12,7 @@
   .cms-content.cms-edit-form & {
     &.form-group--no-label > .form__field-holder--no-label {
       @include make-col(12);
+
       margin-left: 0;
     }
   }

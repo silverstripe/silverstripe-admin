@@ -12,7 +12,6 @@
 }
 
 [data-icon]:before {
-  // sass-lint:disable-block no-important
   font-family: "silverstripe" !important;
   content: attr(data-icon);
   font-style: normal !important;
@@ -27,7 +26,6 @@
 
 [class^="font-icon-"]:before,
 [class*=" font-icon-"]:before {
-  // sass-lint:disable-block no-important
   font-family: "silverstripe" !important;
   font-style: normal !important;
   font-weight: normal !important;
