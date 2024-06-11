@@ -26,6 +26,12 @@ Feature: Multi-tab page validation icons
     Then I should not see an invalid tab icon on the "Second" tab
     Then I should not see an invalid tab icon on the "Third" tab
     Then I should see an invalid tab icon on the "Fourth" tab
+    And I fill in "Third tab first field" with "abc@example.com"
+    When I press the "Save" button
+    Then I can see the form validation error message
+    Then I should not see an invalid tab icon on the "Second" tab
+    Then I should not see an invalid tab icon on the "Third" tab
+    Then I should see an invalid tab icon on the "Fourth" tab
     When I click on the "#tab-Root_Fourth" element
     And I fill in "Fourth tab first field" with "def"
     When I press the "Save" button
