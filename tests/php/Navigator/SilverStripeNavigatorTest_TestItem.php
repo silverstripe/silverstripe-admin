@@ -9,7 +9,7 @@ class SilverStripeNavigatorTest_TestItem extends SilverStripeNavigatorItem imple
 {
     public function getTitle()
     {
-        return self::class;
+        return SilverStripeNavigatorTest_TestItem::class;
     }
 
     public function getHTML()
