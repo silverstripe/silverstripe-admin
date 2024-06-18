@@ -45,7 +45,7 @@
       margin-left: 0;
       border-radius: 0;
 
-      &:active::before {
+      &:active:before {
         color: $white;
       }
     }
@@ -84,7 +84,7 @@
         display: block;
         text-align: center;
         background: $gray-700;
-        color: white;
+        color: #fff;
         padding: 4px 0;
         position: absolute;
         top: -24px;

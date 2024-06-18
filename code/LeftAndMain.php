@@ -597,7 +597,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     {
         $class = get_called_class();
         // If the user is accessing LeftAndMain directly, only generic permissions are required.
-        if ($class === self::class) {
+        if ($class === LeftAndMain::class) {
             return 'CMS_ACCESS';
         }
         $code = Config::inst()->get($class, 'required_permission_codes');
@@ -814,7 +814,7 @@ class LeftAndMain extends Controller implements PermissionProvider
             $errorCode = $this->response->getStatusCode();
             $errorType = $this->response->getStatusDescription();
             $defaultMessage = _t(
-                self::class . '.ErrorMessage',
+                LeftAndMain::class . '.ErrorMessage',
                 'Sorry, it seems there was a {errorcode} error.',
                 ['errorcode' => $errorCode]
             );
@@ -825,7 +825,7 @@ class LeftAndMain extends Controller implements PermissionProvider
                     'ErrorType' => $errorType,
                     'Message' => DBField::create_field(
                         'HTMLFragment',
-                        _t(self::class . '.ErrorMessage' . $errorCode, $defaultMessage)
+                        _t(LeftAndMain::class . '.ErrorMessage' . $errorCode, $defaultMessage)
                     ),
                 ]),
             ]), $errorCode, $errorType);
@@ -2053,7 +2053,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      * Called by {@link LeftAndMainErrorExtension}
      * @internal
      */
-    public function setHttpErrorMessage(string $message): self
+    public function setHttpErrorMessage(string $message): LeftAndMain
     {
         $this->httpErrorMessage = $message;
         return $this;

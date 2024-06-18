@@ -13,7 +13,7 @@
       background: $btn-secondary-bg;
     }
 
-    &:hover::after {
+    &:hover:after {
       height: auto;
       width: auto;
     }
@@ -35,7 +35,6 @@
   }
 
   #ActionMenus_MoreOptions {
-
     @include media-breakpoint-down(xs) {
       left: -205px !important;
     }

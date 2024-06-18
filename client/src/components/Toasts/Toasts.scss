@@ -39,7 +39,7 @@
 
 .toast {
   animation: $transition-speed-mid ease-out 0s 1 toastFadeIn;
-  margin: 0 0 map_get($spacers, sm) 0;
+  margin: 0 0 map_get($spacers, sm);
   word-wrap: break-word;
   max-height: 250px;
   border-left: $toast-border-radius solid;
@@ -79,7 +79,7 @@
   &--dismissing {
     // toastFadeOut is a two step animation: a fade out and a slide up.
     // Each step should take $transition-speed-mid, hence the multiplication by 2
-    animation: $transition-speed-mid*2 ease-out 0s 1 toastFadeOut;
+    animation: $transition-speed-mid * 2 ease-out 0s 1 toastFadeOut;
     opacity: 0;
     max-height: 0;
     margin-bottom: 0;

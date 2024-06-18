@@ -12,17 +12,17 @@
   text-overflow: ellipsis;
 
   &:focus-within {
-    border-color: green;
+    border-color: #0f0;
   }
 
-  &.btn-secondary:not(:disabled):not(.disabled):focus,
+  &.btn-secondary:not(:disabled, .disabled):focus,
   &:focus-within {
     border-color: $component-active-border-color;
     box-shadow: none;
     background: none;
   }
 
-  &.btn-secondary:not(:disabled):not(.disabled):hover {
+  &.btn-secondary:not(:disabled, .disabled):hover {
     background: #eef2f4;
   }
 
@@ -40,13 +40,13 @@
     line-height: 0;
     background: none;
 
-    &.btn[class*="font-icon-"]::before {
+    &.btn[class*="font-icon-"]:before {
       line-height: 10px;
     }
 
-    &.btn-secondary:not(:disabled):not(.disabled):hover,
-    &.btn-secondary:not(:disabled):not(.disabled):focus,
-    &.btn-secondary:not(:disabled):not(.disabled):active {
+    &.btn-secondary:not(:disabled, .disabled):hover,
+    &.btn-secondary:not(:disabled, .disabled):focus,
+    &.btn-secondary:not(:disabled, .disabled):active {
       background: none;
       border-color: transparent;
       box-shadow: none;

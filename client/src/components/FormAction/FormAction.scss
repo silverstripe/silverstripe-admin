@@ -40,8 +40,8 @@
 }
 
 // Button icons
-.btn[class*="font-icon-"]::before,
-.dropdown-item[class*="font-icon-"]::before {
+.btn[class*="font-icon-"]:before,
+.dropdown-item[class*="font-icon-"]:before {
   position: relative;
   margin-right: $btn-icon-spacing;
   line-height: $line-height-base * $font-size-root;
@@ -49,39 +49,39 @@
   font-size: $font-size-lg;
 }
 
-.btn--icon-danger:hover::before {
+.btn--icon-danger:hover:before {
   color: $brand-danger;
 }
 
 // Gives button a larger icon
-.btn--icon-sm[class*="font-icon-"]::before {
+.btn--icon-sm[class*="font-icon-"]:before {
   font-size: 14px;
 }
 
-.btn--icon-md[class*="font-icon-"]::before {
+.btn--icon-md[class*="font-icon-"]:before {
   font-size: 17px;
 }
 
 // Please use .btn--icon-lg
-.btn--icon-large[class*="font-icon-"]::before,
-.btn--icon-lg[class*="font-icon-"]::before {
+.btn--icon-large[class*="font-icon-"]:before,
+.btn--icon-lg[class*="font-icon-"]:before {
   font-size: 20px;
 }
 
-.btn--icon-xl[class*="font-icon-"]::before {
+.btn--icon-xl[class*="font-icon-"]:before {
   font-size: 22px;
 }
 
 // For buttons with icon and no text, removes space after icon
-.btn--no-text[class*="font-icon-"]::before,
-.no-text[class*="font-icon-"]::before {
+.btn--no-text[class*="font-icon-"]:before,
+.no-text[class*="font-icon-"]:before {
   margin-right: 0;
   text-indent: 0;
 }
 
 // Used buttons with text and icons, but you wan to hide the text only. eg. gridfield pagination
 // Could change to BS .text-hide { @include text-hide(); }, although slightly different
-.btn--hide-text[class*=font-icon-] {
+.btn--hide-text[class*="font-icon-"] {
 
   &:before {
     margin-right: 0;
@@ -124,8 +124,8 @@
 .btn--loading {
   min-width: 70px;
 
-  & > .btn__title,
-  &::before {
+  > .btn__title,
+  &:before {
     visibility: hidden;
   }
 }
@@ -159,7 +159,7 @@
 .btn-outline-primary {
   border-color: lighten($btn-primary-border, 10%);
 
-  &:not(:disabled):not(.disabled) {
+  &:not(:disabled, .disabled) {
     &:hover,
     &:active,
     &:focus {
@@ -197,7 +197,7 @@
     }
   }
 
-  &:not(:disabled):not(.disabled) {
+  &:not(:disabled, .disabled) {
     &:hover,
     &:focus,
     &.focus,
@@ -214,7 +214,7 @@
   color: $btn-secondary-color;
   border-color: $border-color;
 
-  &:not(:disabled):not(.disabled) {
+  &:not(:disabled, .disabled) {
     &:hover,
     &:focus,
     &:active,
@@ -301,14 +301,14 @@ button.close {
   position: static;
 
   // Temp override JQueryUI color
-  &::before {
+  &:before {
     color: $text-muted;
   }
 }
 
 // Main Save & Publish actions for edit page
 .btn-outline-secondary.font-icon-check-mark {
-  color: green;
+  color: #0f0;
 }
 
 .actions-warning {

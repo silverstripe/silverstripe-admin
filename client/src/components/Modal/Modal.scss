@@ -69,13 +69,13 @@
 
   // We can't insert our own classes into the header close button
   // so manually add font icon styles
-  &::before {
+  &:before {
     content: "\44"; // font-icon-cancel
     color: $text-muted;
     position: relative;
     top: -.2em;
     font-size: 22px; // btn-icon-xl
-    font-family: silverstripe;
+    font-family: "silverstripe";
     font-style: normal;
     font-weight: normal;
     font-variant: normal;
@@ -125,6 +125,7 @@
   // This prevents a scroll bar appearing during
   // the modal--slideup animation
   animation: modal--prevent-overflow $transition-speed-mid * 2;
+
   @keyframes modal--prevent-overflow {
     from {
       overflow: hidden;
@@ -143,6 +144,7 @@
 
   span {
     animation: modal--slideup $transition-speed-mid;
+
     @keyframes modal--slideup {
       from {
         transform: translateY(200%);
@@ -156,8 +158,8 @@
     }
   }
 
-  span::before {
-    font-family: silverstripe;
+  span:before {
+    font-family: "silverstripe";
     margin-bottom: $spacer;
     font-size: 48px;
     line-height: 40px;
@@ -166,12 +168,12 @@
   }
 }
 
-.modal__response--good span::before {
+.modal__response--good span:before {
   content: "O";
   color: $brand-success;
 }
 
-.modal__response--error span::before {
+.modal__response--error span:before {
   content: "#";
   color: $brand-danger;
 }

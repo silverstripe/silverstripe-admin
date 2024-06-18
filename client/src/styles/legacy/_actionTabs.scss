@@ -13,6 +13,8 @@
 
 $border: 1px solid darken(#D9D9D9, 15%);
 
+/* stylelint-disable max-nesting-depth */
+
 .cms {
   .ss-ui-action-tabset{
     position:relative;
@@ -40,6 +42,7 @@ $border: 1px solid darken(#D9D9D9, 15%);
     Title hidden in tree view, until hover/active state added. Active is applied
     to the first tab within the template, so there should always be one title
     visible. Added and removed with js in TabSet.js  */
+    /* stylelint-disable selector-max-compound-selectors */
     .cms-tree-view-sidebar{
       min-width: 176px; /* for when the scrollbar is present & find dropdown open */
       .ss-ui-action-tabset{
@@ -69,6 +72,7 @@ $border: 1px solid darken(#D9D9D9, 15%);
         }
       }
     }
+    /* stylelint-enable selector-max-compound-selectors */
 
     /****************************************************************
       Styles for the actions-menu implementation
@@ -84,8 +88,8 @@ $border: 1px solid darken(#D9D9D9, 15%);
 
         li{
           background: none;
-          border: none;
-          border-bottom: none !important; //over-ride jquery-ui style (which also has important)
+          border: 0;
+          border-bottom: 0 !important; //over-ride jquery-ui style (which also has important)
           display: inline;
           padding: 0;
           &:hover, &:active{
@@ -108,6 +112,7 @@ $border: 1px solid darken(#D9D9D9, 15%);
             &:hover{
               color: $link-hover-color;
             }
+
             /* Arrow */
             &:after {
               @include icon-sprites(32x32);
@@ -124,6 +129,7 @@ $border: 1px solid darken(#D9D9D9, 15%);
               @include sprite($sprites-32x32-arrow_down_darker, inline-block);
             }
           }
+
           /* Make arrow point in up when nav open */
           &.ui-state-active a {
             &:after {
@@ -137,12 +143,12 @@ $border: 1px solid darken(#D9D9D9, 15%);
           }
         }
       }
+
       /* Style the panel for actions-menu */
       .ui-tabs-panel {
         @include clearfix;
-        border-top-radius: 3px;
-        border-bottom-radius: 0;
         @include tightSpacing;
+
         clear:both;
         display:block;
         background-color: $body-bg;
@@ -181,7 +187,7 @@ $border: 1px solid darken(#D9D9D9, 15%);
         button {
           border-radius: 0;
           background: none;
-          border: none;
+          border: 0;
           color: $link-color;
           display: block;
           font-weight:normal;
@@ -203,7 +209,7 @@ $border: 1px solid darken(#D9D9D9, 15%);
             box-shadow: none;
             outline: none;
             background: none;
-            border: none;
+            border: 0;
           }
           &.loading {
             background: transparent url('../../images/network-save.gif') no-repeat map_get($spacers, 2) center;
@@ -216,3 +222,4 @@ $border: 1px solid darken(#D9D9D9, 15%);
     }
   }
 }
+/* stylelint-enable max-nesting-depth */

@@ -1,8 +1,7 @@
 
-/* -------------------------- */
+/* stylelint-disable max-nesting-depth, selector-max-compound-selectors */
 .cms-content-controls,
 .toolbar--south {
-
   /* Styling for icons in controls */
   .icon-view, .preview-selector.dropdown a.chosen-single {
     white-space: nowrap;
@@ -19,8 +18,8 @@
   .preview-selector {
     float: right;
     display: flex;
-    border-bottom:none;
-    position:relative;
+    border-bottom: 0;
+    position: relative;
     box-shadow: none;
     margin: 0 -10px 0 10px;
     padding: 0;
@@ -64,7 +63,7 @@
         display: inline-block;
       }
 
-      &::before {
+      &:before {
         font-size: 18px;
         line-height: 20px;
         vertical-align: middle;
@@ -95,12 +94,6 @@
       transform: rotate(180deg);
     }
 
-    // Rise up from bottom instead of down from top
-    .chosen-drop {
-      bottom: 32px !important;
-      top: auto !important;
-    }
-
     // Rise out from right, not from left (this needs to be done only when visible)
     .chosen-with-drop .chosen-drop {
       left: auto !important;
@@ -116,6 +109,10 @@
       // width & right prevent overflow with non-firefox #1422
       width: inherit;
       right: 0;
+
+      // Rise up from bottom instead of down from top
+      bottom: 32px !important;
+      top: auto !important;
 
       ul.chosen-results {
         padding: $dropdown-padding-y 0;
@@ -174,7 +171,7 @@
           background: $dropdown-link-active-bg;
           color: $component-active-color;
 
-          &.highlighted, &:hover, &:focus, &::before {
+          &.highlighted, &:hover, &:focus, &:before {
             background: $dropdown-link-active-bg;
             color: $component-active-color;
           }
@@ -191,7 +188,7 @@
           cursor: default;
         }
 
-        &::before {
+        &:before {
           color: $text-muted;
         }
       }
@@ -205,11 +202,11 @@
       height: 32px;
       background: rgba(255, 255, 255, 0); // Prevent clicking on browsers that do not support pointer-events: none;
 
-      &::before {
+      &:before {
         content: 'Screen size too small';
         text-align: center;
         background: #555;
-        color: white;
+        color: #fff;
         padding: 4px 0;
         position: absolute;
         top: -24px;
@@ -220,7 +217,7 @@
         z-index: 2;
       }
 
-      &::after {
+      &:after {
         content: '';
         position: absolute;
         width: 10px;
@@ -232,8 +229,8 @@
         top: -6px;
       }
 
-      &:hover::after,
-      &:hover::before {
+      &:hover:after,
+      &:hover:before {
         display: block;
       }
     }
@@ -258,6 +255,7 @@
     }
   }
 }
+/* stylelint-enable max-nesting-depth, selector-max-compound-selectors */
 
 .toolbar--south > .btn-toolbar > .preview-selector  {
   margin-left: auto;
@@ -331,7 +329,7 @@
       text-align: center;
       height: auto;
 
-      &::after {
+      &:after {
         color: $text-muted;
         position: relative;
         top: -24px;
@@ -358,7 +356,7 @@
       transition: all .3s ease-in;
       overflow: hidden;
 
-      &::after {
+      &:after {
         content: 'Rotate';
         font-size: $font-size-xxs;
         text-transform: uppercase;
@@ -374,13 +372,13 @@
         cursor: pointer;
       }
 
-      &:hover::after {
+      &:hover:after {
         color: $white;
       }
     }
 
     .rotate {
-      &::after {
+      &:after {
         top: -148px;
       }
 
@@ -403,7 +401,7 @@
     .preview__device {
       min-width: calc(#{$mobile-width} + #{$spacer} * 4);
 
-      &::after {
+      &:after {
         content: '#{$mobile-width} x #{$mobile-height}';
       }
     }
@@ -418,7 +416,7 @@
     .rotate {
       min-width: calc(#{$mobile-height} + #{$spacer} * 4);
 
-      &::after {
+      &:after {
         content: '#{$mobile-height} x #{$mobile-width}';
       }
 
@@ -434,7 +432,7 @@
     .preview__device {
       min-width: calc(#{$tablet-width} + #{$spacer} * 4);
 
-      &::after {
+      &:after {
         content: '#{$tablet-width} x #{$tablet-height}';
       }
     }
@@ -448,7 +446,7 @@
     .rotate {
       min-width: calc(#{$tablet-height} + #{$spacer} * 4);
 
-      &::after {
+      &:after {
         content: '#{$tablet-height} x #{$tablet-width}';
       }
 
@@ -464,7 +462,7 @@
     .preview__device {
       min-width: calc(#{$desktop-width} + calc(#{$spacer} * 4));
 
-      &::after {
+      &:after {
         content: '#{$desktop-width} x #{$desktop-height}';
       }
     }

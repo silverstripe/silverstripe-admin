@@ -141,7 +141,7 @@ abstract class ModelAdmin extends LeftAndMain
      *
      * Sets the `modelClass` field which determines which of the {@link DataObject} objects will have visible data. This
      * is determined by the URL (with the first slug being the name of the DataObject class to represent. If this class
-     * is loaded without any URL, we pick the first DataObject from the list of {@link self::$managed_models}.
+     * is loaded without any URL, we pick the first DataObject from the list of {@link ModelAdmin::$managed_models}.
      */
     protected function init()
     {
@@ -247,7 +247,7 @@ abstract class ModelAdmin extends LeftAndMain
     /**
      * Produces an edit form that includes a default {@link \SilverStripe\Forms\GridField\GridField} for the currently
      * active {@link \SilverStripe\ORM\DataObject}. The GridField will show data from the currently active `modelClass`
-     * only (see {@link self::init()}).
+     * only (see {@link ModelAdmin::init()}).
      *
      * @param int|null $id
      * @param \SilverStripe\Forms\FieldList $fields
@@ -534,8 +534,8 @@ abstract class ModelAdmin extends LeftAndMain
     }
 
     /**
-     * Returns all importers defined in {@link self::$model_importers}.
-     * If none are defined, we fall back to {@link self::managed_models}
+     * Returns all importers defined in {@link ModelAdmin::$model_importers}.
+     * If none are defined, we fall back to {@link ModelAdmin::managed_models}
      * with a default {@link CsvBulkLoader} class. In this case the column names of the first row
      * in the CSV file are assumed to have direct mappings to properties on the object.
      *
@@ -645,7 +645,7 @@ abstract class ModelAdmin extends LeftAndMain
 
     /**
      * Imports the submitted CSV file based on specifications given in
-     * {@link self::model_importers}.
+     * {@link ModelAdmin::model_importers}.
      * Redirects back with a success/failure message.
      */
     public function import(array $data, Form $form): HTTPResponse

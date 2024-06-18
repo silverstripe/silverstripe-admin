@@ -28,7 +28,7 @@ fieldset {
 
   &.noborder {
     padding-bottom: 0;
-    border-bottom: none;
+    border-bottom: 0;
     box-shadow: none;
   }
 
@@ -36,7 +36,7 @@ fieldset {
     margin-top: 7px;
 
     label.right {
-      margin: map_get($spacers, 1) 0 0 0;
+      margin: map_get($spacers, 1) 0 0;
       display: inline;
       font-style: normal;
       color: $body-color;
@@ -145,43 +145,6 @@ fieldset {
       }
     }
   }
-}
-
-form.small .field, .field.small {
-  label {
-    &.left {
-      width: $spacer * 7;
-    }
-  }
-
-  .middleColumn {
-    margin-left: $spacer * 7.5;
-  }
-
-  input.text,
-  textarea,
-  select {
-    width: auto;
-  }
-}
-
-/* Chosen override */
-.chosen-container {
-  width: 100%;
-  vertical-align: bottom;
-
-  .chosen-results {
-    padding-top: 4px;
-
-    li {
-      font-size: 11px;
-      line-height: $spacer;
-      padding: map_get($spacers, 2);
-    }
-  }
-}
-
-.field {
 
   /* dropdowns */
 
@@ -228,7 +191,6 @@ form.small .field, .field.small {
 
   .chosen-choices {
     border: 1px solid $border-color-dark;
-    border-radius: 3px;
     font-size: $font-size-root;
     background-image: linear-gradient(#efefef, #fff 10%, #fff 90%, #efefef);
     box-shadow: none;
@@ -266,8 +228,42 @@ form.small .field, .field.small {
 
   /* Hides borders in settings/access. Activated from JS */
   &.remove-splitter {
-    border-bottom: none;
+    border-bottom: 0;
     box-shadow: none;
+  }
+}
+
+form.small .field, .field.small {
+  label {
+    &.left {
+      width: $spacer * 7;
+    }
+  }
+
+  .middleColumn {
+    margin-left: $spacer * 7.5;
+  }
+
+  input.text,
+  textarea,
+  select {
+    width: auto;
+  }
+}
+
+/* Chosen override */
+.chosen-container {
+  width: 100%;
+  vertical-align: bottom;
+
+  .chosen-results {
+    padding-top: 4px;
+
+    li {
+      font-size: 11px;
+      line-height: $spacer;
+      padding: map_get($spacers, 2);
+    }
   }
 }
 
@@ -275,7 +271,7 @@ form.small .field, .field.small {
  * Buttons
  * ---------------------------------------------------- */
 .ss-ui-button {
-  margin-top: 0px;
+  margin-top: 0;
   text-decoration: none;
   color: $body-color;
   border: 1px solid $btn-secondary-border;
@@ -295,43 +291,25 @@ form.small .field, .field.small {
     background-color: $gray-200;
     box-shadow: 0 0 5px $shadow-level-2 inset;
   }
-}
 
-.south .btn-toolbar, .ui-tabs-panel .btn-toolbar,  .ui-tabs-panel iframe .btn-toolbar {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-input.loading, button.loading,
-input.ui-state-default.loading, .ui-widget-content input.ui-state-default.loading,
-.ui-widget-header input.ui-state-default.loading {
-  .ui-icon {
-    background: transparent url('../../images/network-save.gif') no-repeat 0 0;
-  }
-
-  color: $body-color;
-  cursor: default;
-}
-
-input.loading,
-button.loading {
-  &.ss-ui-action-constructive .ui-icon {
-    background: transparent url('../../images/network-save-constructive.gif') no-repeat 0 0;
-  }
-}
-
-.btn-toolbar .ss-ui-action-constructive:first-child {
-  margin-left: 5px;
-
-  .toolbar--content & {
-    margin-left: 15px;
-  }
-}
-
-
-
-.ss-ui-button {
   &.ss-ui-action-minor {
+    background: none;
+    border: 0;
+    color: $body-color;
+    text-decoration: underline;
+    box-shadow: none;
+
+    &:hover {
+      text-decoration: none;
+      color: $body-color-dark;
+    }
+
+    &:focus,
+    &:active {
+      text-decoration: none;
+      color: $body-color;
+    }
+
     span {
       padding-left: 0;
       padding-right: 0;
@@ -366,24 +344,6 @@ button.loading {
   &.ss-ui-button-small {
     .ui-button-text {
       font-size: $font-size-sm;
-    }
-  }
-
-  &.ss-ui-action-minor {
-    background: none;
-    border: 0;
-    color: $body-color;
-    text-decoration: underline;
-    box-shadow: none;
-
-    &:hover {
-      text-decoration: none;
-      color: $body-color-dark;
-    }
-    &:focus,
-    &:active {
-      text-decoration: none;
-      color: $body-color;
     }
   }
 
@@ -464,10 +424,41 @@ button.loading {
         color: darken($body-color, 10%);
       }
 
-      &::before {
+      &:before {
         margin: 0;
       }
     }
+  }
+}
+
+.south .btn-toolbar, .ui-tabs-panel .btn-toolbar,  .ui-tabs-panel iframe .btn-toolbar {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+input.loading, button.loading,
+input.ui-state-default.loading, .ui-widget-content input.ui-state-default.loading,
+.ui-widget-header input.ui-state-default.loading {
+  .ui-icon {
+    background: transparent url('../../images/network-save.gif') no-repeat 0 0;
+  }
+
+  color: $body-color;
+  cursor: default;
+}
+
+input.loading,
+button.loading {
+  &.ss-ui-action-constructive .ui-icon {
+    background: transparent url('../../images/network-save-constructive.gif') no-repeat 0 0;
+  }
+}
+
+.btn-toolbar .ss-ui-action-constructive:first-child {
+  margin-left: 5px;
+
+  .toolbar--content & {
+    margin-left: 15px;
   }
 }
 
@@ -489,12 +480,12 @@ button.loading {
     padding: map_get($spacers, 2) map_get($spacers, 2) 0 0;
 
     .field {
-      border: none;
+      border: 0;
       padding-bottom: 0;
     }
 
     .fieldholder-small {
-      padding: 0 0 map_get($spacers, 2) 0;
+      padding: 0 0 map_get($spacers, 2);
     }
 
     .fieldgroup input.text, .fieldgroup textarea, .fieldgroup select {
@@ -562,8 +553,8 @@ button.loading {
 
     .field {
       box-shadow: none;
-      padding-left: calc(map_get($spacers, 2) *1.5);
-      padding-right: calc(map_get($spacers, 2) *1.5);
+      padding-left: calc(map_get($spacers, 2) * 1.5);
+      padding-right: calc(map_get($spacers, 2) * 1.5);
 
       &:last-child {
         margin-bottom: 0;
@@ -627,8 +618,9 @@ div.switch-states{
   padding: 0;
 
   .switch{
-    @include box-shadow(inset 0 2px 6px rgba(0, 0, 0, 0.1), 0 1px 0px rgba(255, 255, 255, 0.1));
+    @include box-shadow(inset 0 2px 6px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1));
     @include border-radius(3px);
+
     background:lighten(#2d3035,69%);
     display: block;
     height: 25px;
@@ -638,6 +630,7 @@ div.switch-states{
 
     a {
       @include hide-text-overflow;
+
       color: $body-color;
       cursor: pointer;
       float:left;
@@ -646,6 +639,7 @@ div.switch-states{
       z-index:2;
       position:relative;
       min-width: 80px;
+
       /* Make text unselectable in browsers that support that */
       -webkit-touch-callout: none;
       -webkit-user-select: none;
@@ -659,7 +653,9 @@ div.switch-states{
 
       span{
         box-sizing: border-box;
+
         @include hide-text-overflow;
+
         display:inline-block;
         padding:0 10px;
         color: $body-color;
@@ -669,8 +665,10 @@ div.switch-states{
 
       &.active {
         background-image: linear-gradient(#2b9c32,#64ab36);
+
         @include border-radius(3px);
-        @include box-shadow(inset 0 2px 6px rgba(0, 0, 0, 0.3), 0 1px 0px rgba(255, 255, 255, 0.2));
+        @include box-shadow(inset 0 2px 6px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.2));
+
       background-color: #2b9c32;
 
         span {

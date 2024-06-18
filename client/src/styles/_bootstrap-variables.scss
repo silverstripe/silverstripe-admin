@@ -1,13 +1,10 @@
 // Variables
-//
 // Copy settings from this file into the provided `_custom.scss` to override
 // the Bootstrap defaults without modifying key, versioned files.
-//
 // Variables should follow the `$component-state-property-size` formula for
 // consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
 
 // Table of Contents
-//
 // Color system
 // Options
 // Spacing
@@ -45,9 +42,7 @@
 // Code
 
 
-//
 // Color system
-//
 
 $white:     #fff !default; // bootstrap default
 $gray-700:  #43536d !default;
@@ -117,7 +112,6 @@ $theme-colors: (
 
 
 // Options
-//
 // Quickly modify global styling by enabling or disabling optional features.
 
 //$enable-rounded:            true !default;
@@ -130,7 +124,6 @@ $enable-shadows:            true;
 
 
 // Spacing
-//
 // Control the default styling of most Bootstrap elements by modifying these
 // variables. Mostly focused on spacing.
 // You can add more entries to the $spacers map, should you need more variation.
@@ -162,14 +155,12 @@ $spacers: (
 //) !default;
 
 // Body
-//
 // Settings for the `<body>` element.
 
 $body-bg: lighten($gray-100, 4);
 $body-color: $gray-700; // eg. Text, labels, iconography
 
 // Links
-//
 // Style anchor elements.
 
 $link-color: #0071c4;
@@ -178,14 +169,12 @@ $link-hover-color: darken($link-color, 5%);
 //$link-hover-decoration: underline !default;
 
 // Paragraphs
-//
 // Style p element.
 
 //$paragraph-margin-bottom: 1rem;
 
 
 // Grid breakpoints
-//
 // Define the minimum dimensions at which your layout will change,
 // adapting to different screen sizes, for use in media queries.
 
@@ -208,7 +197,6 @@ $grid-breakpoints: (
 
 
 // Grid containers
-//
 // Define the maximum width of `.container` for different screen sizes.
 
 $container-max-widths: (
@@ -221,14 +209,12 @@ $container-max-widths: (
 
 
 // Grid columns
-//
 // Set the number of columns and specify the width of the gutters.
 
 //$grid-columns: 12 !default;
 $grid-gutter-width: $spacer * 2.5; // 40px
 
 // Components
-//
 // Define common padding and border radius sizes and more.
 
 $line-height-lg: calc(4 / 3);
@@ -252,7 +238,6 @@ $component-active-bg: $link-color;
 
 
 // Fonts
-//
 // Font, line-height, and color for body text, headings, and more.
 
 $font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -321,7 +306,6 @@ $text-muted: $gray-600;
 
 
 // Tables
-//
 // Customizes the `.table` component with basic values, each used across all table variations.
 
 $table-cell-padding: $spacer;
@@ -347,7 +331,6 @@ $table-border-color:            lighten($border-color, 4) !default;
 
 
 // Buttons
-//
 // For each of Bootstrap's buttons, define text, background and border color.
 
 $input-btn-padding-x: .7692rem; // 10px
@@ -515,7 +498,6 @@ $input-group-addon-bg:           $gray-100;
 
 
 // Dropdowns
-//
 // Dropdown menu container and contents.
 
 //$dropdown-min-width:             10rem !default;
@@ -543,7 +525,6 @@ $dropdown-item-padding-x:        1.3rem !default;
 
 
 // Z-index master list
-//
 // Warning: Avoid customizing these values. They're used for a bird's eye view
 // of components dependent on the z-axis and are designed to all work together.
 
@@ -747,7 +728,6 @@ $modal-md: 600px;
 
 
 // Alerts
-//
 // Define alert colors, border radius, and padding.
 
 //$alert-padding-y:             .75rem !default;
