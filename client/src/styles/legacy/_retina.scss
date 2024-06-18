@@ -5,14 +5,11 @@
  * @subpackage admin
  */
 
+/* stylelint-disable media-feature-name-no-unknown */
 @media
-  only screen and (-webkit-min-device-pixel-ratio: 2),
-  only screen and (   min--moz-device-pixel-ratio: 2),
-  only screen and (     -o-min-device-pixel-ratio: 2/1),
-  only screen and (        min-device-pixel-ratio: 2),
-  only screen and (                min-resolution: 192dpi),
-  only screen and (                min-resolution: 2dppx) {
-
+  only screen and (min-device-pixel-ratio: 2),
+  only screen and (resolution >= 192dpi),
+  only screen and (resolution >= 2dppx) {
   /* Sitetree */
   .tree-holder, .cms-tree {
     &.jstree-apple {
@@ -23,3 +20,4 @@
     }
   }
 }
+/* stylelint-enable media-feature-name-no-unknown */

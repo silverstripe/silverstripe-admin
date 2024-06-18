@@ -41,7 +41,7 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
      */
     public static function admin_url(string $action = '')
     {
-        return Controller::join_links(self::get_admin_route(), $action);
+        return Controller::join_links(AdminRootController::get_admin_route(), $action);
     }
 
     /**
@@ -69,18 +69,18 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
      */
     public static function rules()
     {
-        if (self::$adminRules === null) {
-            self::$adminRules = [];
+        if (AdminRootController::$adminRules === null) {
+            AdminRootController::$adminRules = [];
 
             // Map over the array calling add_rule_for_controller on each
             $classes = CMSMenu::get_cms_classes(null, true, CMSMenu::URL_PRIORITY);
             array_map([__CLASS__, 'add_rule_for_controller'], $classes ?? []);
         }
-        return self::$adminRules;
+        return AdminRootController::$adminRules;
     }
 
     /**
-     * Add the appropriate k/v pair to self::$rules for the given controller.
+     * Add the appropriate k/v pair to AdminRootController::$rules for the given controller.
      *
      * @param string $controllerClass Name of class
      */
@@ -98,8 +98,8 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
             $rule = $urlSegment . '//' . $urlRule;
 
             // ensure that the first call to add_rule_for_controller for a rule takes precedence
-            if (!isset(self::$adminRules[$rule])) {
-                self::$adminRules[$rule] = $controllerClass;
+            if (!isset(AdminRootController::$adminRules[$rule])) {
+                AdminRootController::$adminRules[$rule] = $controllerClass;
             }
         }
     }
@@ -111,12 +111,12 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
             $segment = Config::forClass($this->config()->get('default_panel'))
                 ->get('url_segment');
 
-            $this->redirect(Controller::join_links(self::admin_url(), $segment, '/'));
+            $this->redirect(Controller::join_links(AdminRootController::admin_url(), $segment, '/'));
             return $this->getResponse();
         }
 
         // Otherwise
-        $rules = self::rules();
+        $rules = AdminRootController::rules();
         foreach ($rules as $pattern => $controller) {
             if (($arguments = $request->match($pattern, true)) !== false) {
                 /** @var LeftAndMain $controllerObj */

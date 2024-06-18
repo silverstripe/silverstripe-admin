@@ -20,6 +20,7 @@
 }
 
 
+/* stylelint-disable max-nesting-depth */
 .cms {
   .grid-field {
     > .addNewGridFieldButton {
@@ -122,14 +123,9 @@
           padding-right: 0;
 
           .list-children-link {
-            margin-top: -$table-cell-padding;
-            margin-right: -(calc($table-cell-padding/ 2));
-            margin-bottom: -$table-cell-padding;
-            margin-left: -$grid-gutter-width-half;
-            padding-top: $table-cell-padding;
-            padding-right: 0;
-            padding-bottom: $table-cell-padding;
-            padding-left: $grid-gutter-width-half;
+            /* stylelint-disable-next-line scss/operator-no-unspaced */
+            margin: -$table-cell-padding -(calc($table-cell-padding/ 2)) -$table-cell-padding -$grid-gutter-width-half;
+            padding: $table-cell-padding 0 $table-cell-padding $grid-gutter-width-half;
             height: calc(#{$table-cell-padding * 2} + #{$line-height-base});
             line-height: $line-height-root;
             border-radius: 0;
@@ -160,7 +156,7 @@
             margin-left: 3px;
             margin-right: 6px;
             margin-top: -1px;
-            border-radius: 2px 2px;
+            border-radius: 2px;
             font-weight: normal;
           }
 
@@ -304,6 +300,7 @@
     }
   }
 }
+/* stylelint-enable max-nesting-depth */
 
 .grid-field__paginator {
   position: relative;

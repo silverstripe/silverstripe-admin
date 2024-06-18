@@ -57,14 +57,14 @@
   list-style-type: none;
   display: inline;
 
-  &::after {
+  &:after {
     content: "/";
     display: inline;
     margin: 0 5px;
   }
 
   &:last-of-type {
-    &::after {
+    &:after {
       display: none;
     }
   }

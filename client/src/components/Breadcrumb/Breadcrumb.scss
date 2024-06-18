@@ -54,7 +54,7 @@
   display: block;
   float: none;
 
-  &::after {
+  &:after {
     content: "";
     display: none;
   }
@@ -78,12 +78,14 @@
   font-size: $h3-font-size;
   font-weight: normal;
   line-height: 24px;
+
   @include text-truncate;
+
   display: flex;
   align-items: center;
 }
 
-.breadcrumb__icon::before {
+.breadcrumb__icon:before {
   margin-left: 1rem;
   font-size: 1.5rem;
   cursor: pointer;

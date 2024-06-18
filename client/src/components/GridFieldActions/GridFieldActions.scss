@@ -6,6 +6,6 @@
 .gridfield-actionmenu__container .action-menu__dropdown {
   // Override position rules as they cause overflow
   // !important is needed to override inline style added by js
-  left: auto !important; // sass-lint:disable-line no-important
+  left: auto !important;
   right: auto;
 }

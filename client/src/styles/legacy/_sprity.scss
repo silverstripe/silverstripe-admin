@@ -1,37 +1,45 @@
-$sprites-32x32-menu-arrow-up: -0px -0px 8px 6px;
-$sprites-32x32-menu-arrow-down: -0px -6px 8px 6px;
-$sprites-32x32-arrow_down_darker: -0px -24px 16px 16px;
-$sprites-32x32-arrow_down_lighter: -0px -40px 16px 16px;
-$sprites-32x32-arrow_up_lighter: -0px -72px 16px 16px;
-$sprites-32x32-arrow_up_darker: -0px -88px 16px 16px;
-$sprites-32x32-dialog-close-over: -0px -266px 30px 30px;
-$sprites-32x32-dialog-close: -0px -296px 30px 30px;
-$sprites-64x64-preview: -0px -400px 50px 44px;
-$sprites-32x32-2x-dialog-close: -0px -446px 60px 60px;
-$sprites-32x32-2x-dialog-close-over: -0px -506px 60px 60px;
+$sprites-32x32-menu-arrow-up: -0 -0 8px 6px;
+$sprites-32x32-menu-arrow-down: -0 -6px 8px 6px;
+$sprites-32x32-arrow_down_darker: -0 -24px 16px 16px;
+$sprites-32x32-arrow_down_lighter: -0 -40px 16px 16px;
+$sprites-32x32-arrow_up_lighter: -0 -72px 16px 16px;
+$sprites-32x32-arrow_up_darker: -0 -88px 16px 16px;
+$sprites-32x32-dialog-close-over: -0 -266px 30px 30px;
+$sprites-32x32-dialog-close: -0 -296px 30px 30px;
+$sprites-64x64-preview: -0 -400px 50px 44px;
+$sprites-32x32-2x-dialog-close: -0 -446px 60px 60px;
+$sprites-32x32-2x-dialog-close-over: -0 -506px 60px 60px;
 
 @mixin sprite-width($sprite) {
   width: nth($sprite, 3);
 }
+
 @mixin sprite-height($sprite) {
   height: nth($sprite, 4);
 }
+
 @function sprite-width($sprite) {
   @return nth($sprite, 3);
 }
+
 @function sprite-height($sprite) {
   @return nth($sprite, 4);
 }
+
 @mixin sprite-position($sprite) {
   $sprite-offset-x: nth($sprite, 1);
   $sprite-offset-y: nth($sprite, 2);
+
   background-position: $sprite-offset-x $sprite-offset-y;
 }
+
 @mixin sprite($sprite, $display: block) {
   @include sprite-position($sprite);
+
   background-repeat: no-repeat;
   overflow: hidden;
   display: $display;
+
   @include sprite-width($sprite);
   @include sprite-height($sprite);
 }
