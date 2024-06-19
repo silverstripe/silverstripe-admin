@@ -125,6 +125,14 @@ class Search extends Component {
       const value = formData[key];
       if (value) {
         data[key] = value;
+        // For has_one relations an autoscaffoled SearchableDropdownField will be used that itself
+        // uses a react-select field which uses objects as values. We need to extract the value
+        if (key.substring(key.length - 2) === 'ID'
+            && typeof value === 'object'
+            && value.hasOwnProperty('value')
+        ) {
+          data[key] = value.value;
+        }
       }
     });
 
