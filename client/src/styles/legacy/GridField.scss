@@ -123,8 +123,7 @@
           padding-right: 0;
 
           .list-children-link {
-            /* stylelint-disable-next-line scss/operator-no-unspaced */
-            margin: -$table-cell-padding -(calc($table-cell-padding/ 2)) -$table-cell-padding -$grid-gutter-width-half;
+            margin: -$table-cell-padding (-(calc($table-cell-padding / 2))) (-$table-cell-padding) (-$grid-gutter-width-half);
             padding: $table-cell-padding 0 $table-cell-padding $grid-gutter-width-half;
             height: calc(#{$table-cell-padding * 2} + #{$line-height-base});
             line-height: $line-height-root;
