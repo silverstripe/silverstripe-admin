@@ -7,7 +7,7 @@
 	<title>$Title</title>
 </head>
 <body class="loading cms" data-frameworkpath="$ModulePath(silverstripe/framework)"
-	data-member-tempid="$CurrentMember.TempIDHash.ATT" <% if $GraphQLLegacy %>data-graphql-legacy="1"<% end_if %>
+	data-member-tempid="$CurrentMember.TempIDHash.ATT"
 >
 	<% include SilverStripe\\Admin\\CMSLoadingScreen %>
 

@@ -21,31 +21,9 @@ const handleError = response => {
   return response;
 };
 
-const getGraphqlFragments = async (baseUrl, preferStatic = true) => {
-  // Backward compatibility hack. Remove when GraphQL 4 is in core
-  const isLegacy = !!document.body.getAttribute('data-graphql-legacy');
-
-  const urls = [
-    joinUrlPaths(baseUrl, '_graphql/admin.types.graphql'),
-    joinUrlPaths(baseUrl, 'admin.types.graphql'),
-  ];
-
-  const legacyURLs = [
-    joinUrlPaths(baseUrl, 'admin/graphql/types'),
-    joinUrlPaths(baseUrl, 'assets/admin.types.graphql'),
-  ];
-
-  let primaryURL;
-  let fallbackURL;
-
-  if (isLegacy) {
-    if (preferStatic) {
-      legacyURLs.reverse();
-    }
-    [primaryURL, fallbackURL] = legacyURLs;
-  } else {
-    [primaryURL, fallbackURL] = urls;
-  }
+const getGraphqlFragments = async (baseUrl) => {
+  const primaryURL = joinUrlPaths(baseUrl, '_graphql/admin.types.graphql');
+  const fallbackURL = joinUrlPaths(baseUrl, 'admin.types.graphql');
 
   const fetchConfig = {
     method: 'GET',
