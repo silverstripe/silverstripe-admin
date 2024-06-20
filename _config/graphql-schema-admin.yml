@@ -16,11 +16,6 @@ SilverStripe\Core\Injector\Injector:
           on: [ graphqlSchemaBuild.admin ]
           handler: '%$SilverStripe\GraphQL\Schema\Services\SchemaTranscribeHandler'
 
-
-
-SilverStripe\Admin\LeftAndMain:
-  graphql_legacy: false
-
 SilverStripe\GraphQL\Schema\Schema:
   schemas:
     admin:

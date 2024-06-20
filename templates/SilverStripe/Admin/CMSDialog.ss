@@ -6,7 +6,7 @@
 <title>$Title</title>
 </head>
 
-<body class="cms cms-dialog $BaseCSSClasses" lang="$Locale.RFC1766" <% if $GraphQLLegacy %>data-graphql-legacy="1"<% end_if %>>
+<body class="cms cms-dialog $BaseCSSClasses" lang="$Locale.RFC1766">
 	<div class="cms-dialog-content">
 		$Content
 		$Form
