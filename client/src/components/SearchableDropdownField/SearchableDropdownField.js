@@ -92,11 +92,7 @@ const SearchableDropdownField = ({
       setHasChanges(true);
       setJustChanged(true);
     }
-    if (multi) {
-      onChange(val);
-    } else {
-      onChange(val, { value: val.value });
-    }
+    onChange(val);
   };
 
   /**
@@ -125,15 +121,6 @@ const SearchableDropdownField = ({
   const refProps = passRef ? { ref: selectComponentRef } : {};
 
   let val = value;
-
-  if (typeof val !== 'object' && (options && options.length > 0)) {
-    options.forEach(option => {
-      // eslint-disable-next-line eqeqeq
-      if (option.value == value) {
-        val = option;
-      }
-    });
-  }
 
   // For non-multi only the first value is needed
   if (!multi && val) {
