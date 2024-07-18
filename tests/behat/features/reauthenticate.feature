@@ -1,4 +1,4 @@
-@modal @retry
+@modal @retry @job3
 Feature: Reauthenticate
   As a content editor
   I want to be able to log in through a CMS popup when my session expires

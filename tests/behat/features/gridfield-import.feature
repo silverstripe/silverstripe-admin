@@ -1,4 +1,4 @@
-@retry
+@retry @job1
 Feature: Import in GridField
   As a site owner
   I want confidence that only users with permission can import records

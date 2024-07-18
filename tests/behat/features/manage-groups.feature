@@ -1,4 +1,4 @@
-@javascript @retry
+@javascript @retry @job2
 Feature: Manage groups
   As a site administrator
   I want to create and manage user groups on my site

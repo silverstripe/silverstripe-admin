@@ -1,4 +1,4 @@
-@javascript @retry
+@javascript @retry @job2
 Feature: Manage Roles
   As a site administrator
   I want to create and manage group roles on my site
