@@ -460,77 +460,119 @@ $.entwine('ss', function($) {
       // default to first button if none given - simulates browser behaviour
       if(!button) button = this.find('.btn-toolbar :submit:first');
 
-      form.trigger('beforesubmitform');
-      this.trigger('submitform', {form: form, button: button});
+      var beforeSubmitFormEventData = {
+        // array of promises that must resolve({success:true}) before the form is submitted
+        // result of each promise must be an object of
+        // { success: <bool>, reason: <string> } where reason should be populated if success is false
+        promises: [],
+        // callbacks that are called on ajax success after submitted the form
+        onAjaxSuccessCallbacks: [],
+      };
+      form.trigger('beforesubmitform', beforeSubmitFormEventData);
 
-      // set button to "submitting" state
-      $(button).addClass('btn--loading loading');
-      $(button).prop('disabled', true);
+      Promise.all(beforeSubmitFormEventData.promises).then(function(results) {
 
-      if($(button).is('button')) {
-        $(button).data('original-text', $(button).text());
-
-        $(button).append($(
-          '<div class="btn__loading-icon">'+
-            '<span class="btn__circle btn__circle--1"></span>'+
-            '<span class="btn__circle btn__circle--2"></span>'+
-            '<span class="btn__circle btn__circle--3"></span>'+
-          '</div>'));
-
-        $(button).css($(button).outerWidth() + 'px');
-      }
-
-      // validate if required
-      var validationResult = form.validate();
-
-      var clearButton = function() {
-        $(button).removeClass('btn--loading loading');
-        $(button).prop('disabled', false);
-        $(button).find('.btn__loading-icon').remove();
-        $(button).css('width', 'auto');
-        $(button).text($(button).data('original-text'));
-      }
-
-      if(typeof validationResult!=='undefined' && !validationResult) {
-        statusMessage("Validation failed.", "bad");
-        clearButton();
-      }
-
-      // get all data from the form
-      var formData = form.serializeArray();
-      // add button action
-      formData.push({name: $(button).attr('name'), value:'1'});
-      // Artificial HTTP referer, IE doesn't submit them via ajax.
-      // Also rewrites anchors to their page counterparts, which is important
-      // as automatic browser ajax response redirects seem to discard the hash/fragment.
-      formData.push({ name: 'BackURL', value: document.URL.replace(/\/$/, '') });
-
-      // Save tab selections so we can restore them later
-      this.saveTabState(window.ss.tabStateUrl(), false);
-
-      // Standard Pjax behaviour is to replace the submitted form with new content.
-      // The returned view isn't always decided upon when the request
-      // is fired, so the server might decide to change it based on its own logic,
-      // sending back different `X-Pjax` headers and content
-      jQuery.ajax(jQuery.extend({
-        headers: {"X-Pjax" : "CurrentForm,Breadcrumbs,ValidationResult"},
-        url: form.attr('action'),
-        data: formData,
-        type: 'POST',
-        complete: function() {
-          clearButton()
-        },
-        success: function(data, status, xhr) {
-          clearButton();
-          form.removeClass('changed');
-          if(callback) callback(data, status, xhr);
-
-          var newContentEls = self.handleAjaxResponse(data, status, xhr);
-          if(!newContentEls) return;
-
-          newContentEls.filter('form').trigger('aftersubmitform', {status: status, xhr: xhr, formData: formData});
+        let success = true;
+        const reasons = [];
+        for (const result of results) {
+          if (result['success'] === false) {
+            success = false;
+            reasons.push(result['reason']);
+          }
         }
-      }, ajaxOptions));
+        if (!success) {
+          let invalid = false;
+          for (const reason of reasons) {
+            if (reason === 'invalid') {
+              invalid = true;
+              break;
+            }
+          }
+          if (invalid) {
+            jQuery.noticeAdd({
+              text: window.ss.i18n._t('Admin.VALIDATIONERROR', 'Validation Error'),
+              type: 'error',
+              stayTime: 5000,
+              inEffect: {
+                left: '0',
+                opacity: 'show'
+              }
+            });
+          }
+          return false;
+        }
+
+        self.trigger('submitform', {form: form, button: button});
+
+        // set button to "submitting" state
+        $(button).addClass('btn--loading loading');
+        $(button).prop('disabled', true);
+
+        if($(button).is('button')) {
+
+          $(button).append($(
+            '<div class="btn__loading-icon">'+
+              '<span class="btn__circle btn__circle--1"></span>'+
+              '<span class="btn__circle btn__circle--2"></span>'+
+              '<span class="btn__circle btn__circle--3"></span>'+
+            '</div>'));
+
+          $(button).css($(button).outerWidth() + 'px');
+        }
+
+        // validate if required
+        var validationResult = form.validate();
+
+        var clearButton = function() {
+          $(button).removeClass('btn--loading loading');
+          $(button).prop('disabled', false);
+          $(button).find('.btn__loading-icon').remove();
+          $(button).css('width', 'auto');
+          $(button).text($(button).data('original-text'));
+        }
+
+        if(typeof validationResult!=='undefined' && !validationResult) {
+          statusMessage("Validation failed.", "bad");
+          clearButton();
+        }
+
+        // get all data from the form
+        var formData = form.serializeArray();
+        // add button action
+        formData.push({name: $(button).attr('name'), value:'1'});
+        // Artificial HTTP referer, IE doesn't submit them via ajax.
+        // Also rewrites anchors to their page counterparts, which is important
+        // as automatic browser ajax response redirects seem to discard the hash/fragment.
+        formData.push({ name: 'BackURL', value: document.URL.replace(/\/$/, '') });
+
+        // Save tab selections so we can restore them later
+        self.saveTabState(window.ss.tabStateUrl(), false);
+
+        // Standard Pjax behaviour is to replace the submitted form with new content.
+        // The returned view isn't always decided upon when the request
+        // is fired, so the server might decide to change it based on its own logic,
+        // sending back different `X-Pjax` headers and content
+        jQuery.ajax(jQuery.extend({
+          headers: {"X-Pjax" : "CurrentForm,Breadcrumbs,ValidationResult"},
+          url: form.attr('action'),
+          data: formData,
+          type: 'POST',
+          complete: function() {
+            clearButton()
+          },
+          success: function(data, status, xhr) {
+            beforeSubmitFormEventData.onAjaxSuccessCallbacks.forEach(fn => fn());
+            clearButton();
+            form.removeClass('changed');
+            if(callback) callback(data, status, xhr);
+
+            var newContentEls = self.handleAjaxResponse(data, status, xhr);
+            if(!newContentEls) return;
+
+            newContentEls.filter('form').trigger('aftersubmitform', {status: status, xhr: xhr, formData: formData});
+          }
+        }, ajaxOptions));
+      });
 
       return false;
     },

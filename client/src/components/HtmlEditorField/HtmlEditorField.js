@@ -54,7 +54,7 @@ class HtmlEditorField extends TextField {
    */
   registerChangeListener() {
     const target = this.getEditorElement();
-    this.getEditor().on('change keyup setcontent', () => {
+    this.getEditor().on('change keyup', () => {
       super.handleChange({ target });
     });
   }
