@@ -1,4 +1,4 @@
-@retry
+@retry @job2
 Feature: Use Gridfield with arbitrary data
   As a developer
   I want to be able to view and edit data from some arbitrary source

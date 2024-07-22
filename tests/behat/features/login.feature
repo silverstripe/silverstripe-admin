@@ -1,4 +1,4 @@
-@retry
+@retry @job2
 Feature: Log in
   As an site owner
   I want to access to the CMS to be secure

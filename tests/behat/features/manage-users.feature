@@ -1,4 +1,4 @@
-@javascript @retry
+@javascript @retry @job3
 Feature: Manage users
   As a site administrator
   I want to create and manage user accounts on my site

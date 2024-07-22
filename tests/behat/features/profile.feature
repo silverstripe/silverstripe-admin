@@ -1,4 +1,4 @@
-@retry
+@retry @job3
 Feature: Manage my own settings
   As a CMS user
   I want to be able to change personal settings
