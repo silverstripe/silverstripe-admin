@@ -1,4 +1,4 @@
-@retry
+@retry @job1
 Feature: Search in GridField
   As an author
   I want to navigate through the filtered and sorted GridField list
