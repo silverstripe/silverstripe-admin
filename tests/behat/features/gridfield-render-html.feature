@@ -1,4 +1,4 @@
-@retry
+@retry @job1
 Feature: Render HTML in GridField
   As a developer
   I want to have the ability to render HTML in a GridField column
