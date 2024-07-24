@@ -65,6 +65,14 @@ const applyTransforms = () => {
       updater.form.addValidation(
         '*',
         (values, Validation, schema) => {
+          // Hardcoded exclusion for elemental inline forms
+          // This is done so that client-side validation doesn't run so that all validation is done
+          // on the server. This is done so that invalid, closed elements will popup open and
+          // also trigger a toast notification.
+          // Note that this has no effect on non-inline forms as they do not use form schema
+          if (schema.name.indexOf('ElementForm_') === 0) {
+            return Validation.getState();
+          }
           const validator = new Validator(values);
           const errorMap = Object.keys(values).reduce((curr, key) => {
             const field = findField(schema.fields, key);
