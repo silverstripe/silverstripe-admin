@@ -29,7 +29,8 @@ $editorConfig
         'use_native_selects' => false,
         'valid_elements' => "@[id|class|style|title],a[id|rel|rev|dir|tabindex|accesskey|type|name|href|target|title"
             . "|class],-strong/-b[class],-em/-i[class],-strike[class],-u[class],#p[id|dir|class|align|style],-ol[class],"
-            . "-ul[class],-li[class],br,img[id|dir|longdesc|usemap|class|src|border|alt=|title|width|height|align|data*],"
+            . "-ul[class],-li[class],br,"
+            . "img[id|dir|longdesc|usemap|class|src|border|alt=|title|width|height|align|name|hspace|vspace|data*],"
             . "-sub[class],-sup[class],-blockquote[dir|class],-cite[dir|class|id|title],"
             . "-table[cellspacing|cellpadding|width|height|class|align|summary|dir|id|style],"
             . "-tr[id|dir|class|rowspan|width|height|align|valign|bgcolor|background|bordercolor|style],"
@@ -40,8 +41,7 @@ $editorConfig
             . "-h1[id|dir|class|align|style],-h2[id|dir|class|align|style],-h3[id|dir|class|align|style],"
             . "-h4[id|dir|class|align|style],-h5[id|dir|class|align|style],-h6[id|dir|class|align|style],hr[class],"
             . "dd[id|class|title|dir],dl[id|class|title|dir],dt[id|class|title|dir]",
-        'extended_valid_elements' => "img[class|src|alt|title|hspace|vspace|width|height|align|name"
-            . "|usemap|data*],iframe[src|name|width|height|align|frameborder|marginwidth|marginheight|scrolling],"
+        'extended_valid_elements' => "iframe[src|name|width|height|align|frameborder|marginwidth|marginheight|scrolling],"
             . "object[width|height|data|type],param[name|value],map[class|name|id],area[shape|coords|href|target|alt]"
     ]);
 // enable ability to insert anchors
