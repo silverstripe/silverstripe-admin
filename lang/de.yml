@@ -32,10 +32,17 @@ de:
     CollapsePanel: 'Panel zuklappen'
     DELETED: Gelöscht.
     DropdownBatchActionsDefault: 'Aktion auswählen...'
+    ErrorDetail: 'Fehler-Detail: {detail}'
+    ErrorMessage: 'Entschuldigung, es scheint ein {errorcode} Fehler aufgetreten zu sein.'
+    ErrorMessage403: 'Entschuldigung, aber es scheint, dass die Aktion, die Sie durchführen wollten, verboten ist.'
+    ErrorMessage404: 'Entschuldigung, Sie haben versucht, auf einen Abschnitt oder ein Objekt zuzugreifen, das nicht existiert.'
+    ErrorMessage500: 'Entschuldigung, es scheint ein interner Serverfehler aufgetreten zu sein.'
+    ErrorMessage503: 'Entschuldigung, aber der Dienst scheint vorübergehend nicht verfügbar zu sein.'
     ExpandPanel: 'Panel aufklappen'
     HelpMenu: Hilfemenü
     LOGOUT: Abmelden
     MenuToggleStickyNav: Fixiert
+    NO_PREVIEW: 'Keine Vorschau verfügbar'
     NavigateUp: 'Einen Ordner nach oben'
     PERMAGAIN: 'Sie wurden aus dem CMS abgemeldet. Wenn Sie sich wieder anmelden wollen, geben Sie unten Ihren Benutzer und Ihr Passwort ein.'
     PERMALREADY: 'Es tut mir leid, Sie können diesen Teil des CMS nicht aufrufen. Wenn Sie sich als jemand anderes anmelden wollen, können Sie das unten tun.'
@@ -95,5 +102,5 @@ de:
     TABROLES: Rollen
     Users: Benutzer
   SilverStripe\Admin\SudoModeController:
-    INVALID: 'Passwort falsch'
-    TIMEOUT: 'Sitzung wurde geschlossen, bitte aktualisieren und nochmals versuchen.'
+    INVALID: 'Falsches Passwort'
+    TIMEOUT: 'Sitzung wurde unterbrochen, bitte aktualisieren Sie und versuchen Sie es erneut.'
