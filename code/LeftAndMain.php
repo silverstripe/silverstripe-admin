@@ -825,6 +825,7 @@ class LeftAndMain extends Controller implements PermissionProvider
                     'ErrorType' => $errorType,
                     'Message' => DBField::create_field(
                         'HTMLFragment',
+                        /** @phpstan-ignore translation.key (we need the key to be dynamic here) */
                         _t(LeftAndMain::class . '.ErrorMessage' . $errorCode, $defaultMessage)
                     ),
                 ]),
@@ -976,6 +977,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         if (!$localise) {
             return $title;
         }
+        /** @phpstan-ignore translation.key (we need the key to be dynamic here) */
         return i18n::_t("{$class}.MENUTITLE", $title);
     }
 
@@ -1864,6 +1866,7 @@ class LeftAndMain extends Controller implements PermissionProvider
                 $translationKey = str_replace(' ', '', $key ?? '');
 
                 $formattedLinks[] = [
+                    /** @phpstan-ignore translation.key (we need the key to be dynamic here) */
                     'Title' => _t(__CLASS__ . '.' . $translationKey, $key),
                     'URL' => $value
                 ];
