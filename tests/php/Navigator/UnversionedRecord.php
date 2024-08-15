@@ -28,7 +28,7 @@ class UnversionedRecord extends DataObject implements TestOnly, CMSPreviewable
         return 'text/html';
     }
 
-    public function CMSEditLink()
+    public function getCMSEditLink(): ?string
     {
         return null;
     }

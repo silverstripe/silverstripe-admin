@@ -102,7 +102,7 @@ class UsedOnTable extends FormField
                 'id' => $dataObject->ID,
                 'title' => $dataObject->getTitle() ?: _t(__CLASS__ . '.UNTITLED', 'Untitled'),
                 'type' => ucfirst($dataObject->i18n_singular_name() ?? ''),
-                'link' => $dataObject->hasMethod('CMSEditLink') ? $dataObject->CMSEditLink() : null,
+                'link' => $dataObject->getCMSEditLink(),
                 'ancestors' => []
             ];
 
@@ -115,7 +115,7 @@ class UsedOnTable extends FormField
             foreach ($ancestorDataObjects as $ancestorDataObject) {
                 $tableRowData['ancestors'][] = [
                     'title' => $ancestorDataObject->getTitle() ?: _t(__CLASS__ . '.UNTITLED', 'Untitled'),
-                    'link' => $ancestorDataObject->hasMethod('CMSEditLink') ? $ancestorDataObject->CMSEditLink() : null,
+                    'link' => $ancestorDataObject->getCMSEditLink(),
                 ];
             }
             $usageData[] = $tableRowData;

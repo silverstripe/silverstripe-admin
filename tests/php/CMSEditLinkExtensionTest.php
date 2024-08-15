@@ -72,7 +72,7 @@ class CMSEditLinkExtensionTest extends SapphireTest
         $this->assertNull($root->getCMSEditLinkForManagedDataObject($nested, 'AnotherOfTheSameClass'));
     }
 
-    public function testCMSEditLink()
+    public function testGetCMSEditLink()
     {
         $root = $this->objFromFixture(ManagedDataObject::class, 'root');
         $basicNested = $this->objFromFixture(BasicNestedObject::class, 'one');
@@ -80,18 +80,18 @@ class CMSEditLinkExtensionTest extends SapphireTest
         $polymorphic = $this->objFromFixture(PolymorphicNestedObject::class, 'one');
 
         $rootUrl = "http://localhost/admin/cms-edit-test/belongsHere/EditForm/field/belongsHere/item/$root->ID";
-        $this->assertSame($rootUrl, $root->CMSEditLink());
+        $this->assertSame($rootUrl, $root->getCMSEditLink());
         $this->assertSame(
             "$rootUrl/ItemEditForm/field/BasicNested/item/$basicNested->ID",
-            $basicNested->CMSEditLink()
+            $basicNested->getCMSEditLink()
         );
         $this->assertSame(
             "$rootUrl/ItemEditForm/field/Nested/item/$nested->ID",
-            $nested->CMSEditLink()
+            $nested->getCMSEditLink()
         );
         $this->assertSame(
             "$rootUrl/ItemEditForm/field/Polymorphic/item/$polymorphic->ID",
-            $polymorphic->CMSEditLink()
+            $polymorphic->getCMSEditLink()
         );
     }
 }
