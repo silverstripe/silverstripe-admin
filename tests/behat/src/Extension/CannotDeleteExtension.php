@@ -7,7 +7,7 @@ use SilverStripe\Dev\TestOnly;
 
 class CannotDeleteExtension extends Extension implements TestOnly
 {
-    public function canDelete()
+    protected function canDelete()
     {
         return false;
     }

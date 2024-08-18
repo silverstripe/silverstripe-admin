@@ -7,7 +7,7 @@ use SilverStripe\Dev\TestOnly;
 
 class CannotEditExtension extends Extension implements TestOnly
 {
-    public function canEdit()
+    protected function canEdit()
     {
         return false;
     }
