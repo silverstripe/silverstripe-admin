@@ -2,9 +2,9 @@
 
 namespace SilverStripe\Admin\Tests\CMSProfileControllerTest;
 
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;
 
-class TestExtension extends DataExtension
+class TestExtension extends Extension
 {
     protected function canEdit($member = null)
     {

@@ -27,7 +27,7 @@ use Traversable;
  * configuration will also include a 'help' link to the SilverStripe user
  * documentation.
  *
- * Additional CMSMenu items can be added through {@link LeftAndMainExtension::init()}
+ * Additional CMSMenu items can be added through {@link Extension::init()}
  * extensions added to {@link LeftAndMain}.
  */
 class CMSMenu implements IteratorAggregate, i18nEntityProvider

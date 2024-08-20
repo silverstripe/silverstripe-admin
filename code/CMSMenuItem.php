@@ -10,7 +10,7 @@ use SilverStripe\ORM\FieldType\DBHTMLText;
 /**
  * A simple CMS menu item.
  *
- * Items can be added to the menu through custom {@link LeftAndMainExtension}
+ * Items can be added to the menu through custom {@link Extension}
  * classes and {@link CMSMenu}.
  *
  * @see CMSMenu
