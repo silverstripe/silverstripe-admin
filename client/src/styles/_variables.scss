@@ -91,9 +91,9 @@ $input-padding-y-lg: .75rem;
 // Warning: Avoid customizing these values. They're used for a bird's eye view
 // of components dependent on the z-axis and are designed to all work together.
 
-$zindex-popover: 1060;
-$zindex-modal-bg: 1040;
-$zindex-modal: 1050;
+$zindex-popover: 1260;
+$zindex-modal-bg: 1240;
+$zindex-modal: 1250;
 $zindex-cms-content-header: 60;
 $zindex-cms-content-actions: 79;
 $zindex-menu: $zindex-cms-content-actions + 1;
