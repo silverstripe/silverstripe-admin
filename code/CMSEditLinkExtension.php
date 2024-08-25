@@ -31,7 +31,7 @@ use SilverStripe\ORM\DataObject;
  * Note that the cms_edit_owner must implement a getCMSEditLinkForManagedDataObject() method.
  *
  * If the cms_edit_owner is a has_one relation, the class on the other end
- * of the relation must have a CMSEditLink() method.
+ * of the relation must have a getCMSEditLink() method.
  *
  * @template T of LeftAndMain|DataObject
  * @extends Extension<T&static>
@@ -70,14 +70,21 @@ class CMSEditLinkExtension extends Extension
     }
 
     /**
-     * Get a link to edit this DataObject in the CMS.
+     * Provide a link to edit this DataObject in the CMS if there isn't one already.
+     * @throws LogicException if a link cannot be established
+     * e.g. if the object is not in a has_many relation or not edited inside a GridField.
      */
-    public function CMSEditLink(): string
+    protected function updateCMSEditLink(?string &$link): void
     {
+        // Don't update the link if it has already been established.
+        if ($link) {
+            return;
+        }
+
         /** @var DataObject|LeftAndMain|null $owner */
         $owner = $this->owner->getCMSEditOwner();
         if (!$owner || !$owner->exists()) {
-            return '';
+            return;
         }
 
         if (!$owner->hasMethod('getCMSEditLinkForManagedDataObject')) {
@@ -89,7 +96,7 @@ class CMSEditLinkExtension extends Extension
         } else {
             $relativeLink = $owner->getCMSEditLinkForManagedDataObject($this->owner);
         }
-        return Director::absoluteURL((string) $relativeLink);
+        $link = Director::absoluteURL($relativeLink);
     }
 
     private function getCMSEditLinkForRelation(array $componentConfig, DataObject $obj, string $reciprocalRelation, FieldList $fields): string
@@ -143,7 +150,7 @@ class CMSEditLinkExtension extends Extension
         $ownerType = $this->owner->config()->get('cms_edit_owner');
         $prefix = is_a($ownerType, CMSMain::class, true) ? 'field' : 'ItemEditForm/field';
         return Controller::join_links(
-            $this->owner->CMSEditLink(),
+            $this->owner->getCMSEditLink(),
             $prefix,
             $relation,
             'item',
