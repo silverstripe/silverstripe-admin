@@ -3,6 +3,7 @@
 namespace SilverStripe\Admin;
 
 use InvalidArgumentException;
+use Psr\Log\LoggerInterface;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
@@ -162,7 +163,8 @@ abstract class ModelAdmin extends LeftAndMain
             $this->modelTab = $this->unsanitiseClassName($this->modelTab);
 
             if (!$this->isManagedModel($this->modelTab)) {
-                throw new \RuntimeException(sprintf('ModelAdmin::init(): Invalid Model class %s', $this->modelTab));
+                Injector::inst()->get(LoggerInterface::class)->error(sprintf('ModelAdmin::init(): Invalid Model class %s', $this->modelTab));
+                return $this->httpError(404, 'Page not found');
             }
         }
 
