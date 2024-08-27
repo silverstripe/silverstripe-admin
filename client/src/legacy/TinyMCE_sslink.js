@@ -35,6 +35,9 @@ const plugin = {
 
     // Callback for opening the edit link dialog form
     function openLinkDialog() {
+      // Find "a" node (we might have clicked on a child element e.g. "span")
+      const linkNode = jQuery(tinymce.activeEditor.selection.getNode()).closest('a');
+      tinymce.activeEditor.selection.select(linkNode[0]);
       const node = tinymce.activeEditor.selection.getNode();
       const href = node.getAttribute('href');
 
@@ -192,7 +195,11 @@ jQuery.entwine('ss', ($) => {
      */
     getRequireLinkText() {
       const editor = this.getElement().getEditor();
-      const selection = editor.getInstance().selection;
+      let selection = editor.getInstance().selection;
+      const node = $(selection.getNode()).closest('a');
+      editor.getInstance().selection.select(node[0]);
+
+      selection = editor.getInstance().selection;
       const isValidSelection = this.linkCanWrapSelection(editor, selection);
       const tagName = selection.getNode().tagName;
       const requireLinkText = tagName !== 'A' && !isValidSelection;
