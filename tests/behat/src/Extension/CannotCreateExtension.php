@@ -7,7 +7,7 @@ use SilverStripe\Dev\TestOnly;
 
 class CannotCreateExtension extends Extension implements TestOnly
 {
-    public function canCreate()
+    protected function canCreate()
     {
         return false;
     }

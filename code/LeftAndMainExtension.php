@@ -26,7 +26,7 @@ abstract class LeftAndMainExtension extends Extension
         parent::__construct();
     }
 
-    public function init()
+    protected function onInit()
     {
     }
 
