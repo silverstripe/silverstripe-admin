@@ -611,8 +611,6 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * @uses LeftAndMainExtension->init()
-     * @uses LeftAndMainExtension->accessedCMS()
      * @uses CMSMenu
      */
     protected function init()
