@@ -206,37 +206,6 @@
     text-align: center;
     text-transform: uppercase;
   }
-
-  // Sub menu (will also be available for profile)
-  .toggle-children {
-    display: inline-block;
-    float: right;
-    width: 20px;
-    height: 100%;
-    cursor: pointer;
-    padding-top: 17px;
-  }
-
-  .toggle-children-icon {
-    background-image: none;
-    border-color: darken(#ccdce6, 25%);
-    border-style: solid;
-    border-width: 0 1px 1px 0;
-    width: 8px;
-    height: 8px;
-    position: absolute;
-    margin-top: 3px;
-    right: 8px;
-    z-index: 2;
-    -ms-transform: rotate(-45deg); // IE 9
-    -webkit-transform: rotate(-45deg); // Chrome, Safari, Opera
-    transform: rotate(-45deg);
-    // display: none;  // To be shown by javascript, see LeftAndMain.Panel.js
-  }
-
-  .opened .toggle-children-icon {
-    margin-top: 1px;
-  }
 }
 
 .cms-menu-mobile-overlay {
@@ -476,22 +445,12 @@
           margin-left: 38px;
         }
       }
-
-      span.toggle-children {
-        top: 0;
-      }
-
     }
 
-    &.current { //need to apply current stlye to children also (at least line height)
+    &.current {
 
       >a {
         background-color: $base-menu;
-
-        .toggle-children .toggle-children-icon {
-          @include icon-sprites(32x32);
-          @include sprite($sprites-32x32-menu-arrow-down);
-        }
       }
 
       a {
@@ -515,60 +474,6 @@
         }
 
       }
-    }
-
-    // Has sub menu
-    &.children {
-
-      .no-icon.text {
-        margin-left: 30px;
-      }
-
-      // Sub menu
-      ul li a {
-        font-size: 12px;
-        line-height: 18px;
-        height: 18px;
-        padding-top: 11px;
-        padding-bottom: 11px;
-        color: lighten($body-color, 10%);
-        background-color: $base-menu-bg;
-
-        /* stylelint-disable-next-line selector-max-compound-selectors */
-        span.text {
-          margin-left: 23px;
-        }
-      }
-
-      &.current {
-        > a {
-          background-color: transparent;
-
-          &:hover {
-            background-color: lighten($base-menu, 3%);
-          }
-        }
-      }
-
-      &.opened {
-        a:hover {
-          background-color: lighten($base-menu, 3%);
-        }
-
-        .current a {
-          background-color: $base-menu;
-        }
-
-        .opened .toggle-children-icon {
-          transform: rotate(45deg);
-        }
-      }
-    }
-  }
-
-  &.collapsed {
-    .toggle-children {
-      display: none;
     }
   }
 }
