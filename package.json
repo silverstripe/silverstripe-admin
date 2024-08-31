@@ -115,7 +115,7 @@
     "node-dir": "^0.1.17",
     "storybook": "^7.0.18",
     "storybook-addon-jsx": "^7.3.14",
-    "webpack": "^5.74.0",
+    "webpack": "^5.94.0",
     "webpack-cli": "^5.0.0"
   },
   "resolutions": {
