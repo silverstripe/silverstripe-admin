@@ -11,7 +11,6 @@ import Config from 'lib/Config';
 import pageRouter from 'lib/Router';
 import reactRouteRegister from 'lib/ReactRouteRegister';
 import App from 'containers/App/App';
-import { ApolloProvider } from '@apollo/client';
 import i18n from 'i18n';
 import { isDirty } from 'redux-form';
 import getFormState from 'lib/getFormState';
@@ -25,11 +24,9 @@ import NavigationBlocker from '../components/NavigationBlocker/NavigationBlocker
 class BootRoutes {
   /**
    * @param {Object} store Redux store
-   * @param {Object} client The Apollo client
    */
-  constructor(store, client) {
+  constructor(store) {
     this.store = store;
-    this.client = client;
 
     // pageRouter must be initialised, regardless of whether we are
     // using page.js routing for this request.
@@ -41,10 +38,6 @@ class BootRoutes {
 
   setStore(store) {
     this.store = store;
-  }
-
-  setClient(client) {
-    this.client = client;
   }
 
   /**
@@ -129,11 +122,9 @@ class BootRoutes {
     );
 
     createRoot(document.getElementsByClassName('cms-content')[0]).render(
-      <ApolloProvider client={this.client}>
-        <ReduxProvider store={this.store}>
-          <RouterProvider router={router} />
-        </ReduxProvider>
-      </ApolloProvider>
+      <ReduxProvider store={this.store}>
+        <RouterProvider router={router} />
+      </ReduxProvider>
     );
   }
 

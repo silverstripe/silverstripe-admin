@@ -1,4 +1,4 @@
-/* global jest, describe, beforeEach, it, pit, expect, process */
+/* global jest, describe, beforeEach, it, pit, expect, process, test */
 
 import backend from '../Backend';
 

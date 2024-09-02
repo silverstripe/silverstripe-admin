@@ -15,6 +15,7 @@ use SilverStripe\Security\Member;
 use SilverStripe\View\Requirements;
 use SilverStripe\Admin\Tests\LeftAndMainTest\MyTree;
 use SilverStripe\Admin\Tests\LeftAndMainTest\MyTreeController;
+use SilverStripe\Control\HTTPResponse_Exception;
 use stdClass;
 use ReflectionObject;
 use InvalidArgumentException;
@@ -294,8 +295,20 @@ class LeftAndMainTest extends FunctionalTest
         return [
             [
                 'statusCode' => 201,
-                'data' => [],
+                'data' => null,
                 'expectedBody' => '',
+                'expectedException' => '',
+            ],
+            [
+                'statusCode' => 200,
+                'data' => [],
+                'expectedBody' => '[]',
+                'expectedException' => '',
+            ],
+            [
+                'statusCode' => 200,
+                'data' => [1, "two", 3.3],
+                'expectedBody' => '[1,"two",3.3]',
                 'expectedException' => '',
             ],
             [
@@ -330,7 +343,7 @@ class LeftAndMainTest extends FunctionalTest
      */
     public function testJsonSuccess(
         int $statusCode,
-        array $data,
+        ?array $data,
         string $expectedBody,
         string $expectedException
     ): void {
@@ -345,5 +358,78 @@ class LeftAndMainTest extends FunctionalTest
         $this->assertSame('application/json', $response->getHeader('Content-type'));
         $this->assertSame($statusCode, $response->getStatusCode());
         $this->assertSame($expectedBody, $response->getBody());
+    }
+
+    public function provideJsonError(): array
+    {
+        return [
+            [
+                'statusCode' => 400,
+                'errorMessage' => null,
+                'expectedValue' => 'Sorry, it seems there was something wrong with the request.',
+            ],
+            [
+                'statusCode' => 401,
+                'errorMessage' => null,
+                'expectedValue' => 'Sorry, it seems you are not authorised to access this section or object.',
+            ],
+            [
+                'statusCode' => 403,
+                'errorMessage' => null,
+                'expectedValue' => 'Sorry, it seems the action you were trying to perform is forbidden.',
+            ],
+            [
+                'statusCode' => 404,
+                'errorMessage' => null,
+                'expectedValue' => 'Sorry, it seems you were trying to access a section or object that doesn\'t exist.',
+            ],
+            [
+                'statusCode' => 500,
+                'errorMessage' => null,
+                'expectedValue' => 'Sorry, it seems there was an internal server error.',
+            ],
+            [
+                'statusCode' => 503,
+                'errorMessage' => null,
+                'expectedValue' => 'Sorry, it seems the service is temporarily unavailable.',
+            ],
+            [
+                'statusCode' => 418,
+                'errorMessage' => null,
+                'expectedValue' => 'Error',
+            ],
+            [
+                'statusCode' => 400,
+                'errorMessage' => 'Test custom error message',
+                'expectedValue' => 'Test custom error message',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider provideJsonError
+     */
+    public function testJsonError(
+        int $statusCode,
+        ?string $errorMessage,
+        ?string $expectedValue,
+    ): void {
+        $leftAndMain = new LeftAndMain();
+        $refelectionObject = new ReflectionObject($leftAndMain);
+        $method = $refelectionObject->getMethod('jsonError');
+        $method->setAccessible(true);
+        $this->expectException(HTTPResponse_Exception::class);
+        $expectedMessage = json_encode((object) [
+            'status' => 'error',
+            'errors' => [
+                (object) [
+                    'type' => 'error',
+                    'code' => $statusCode,
+                    'value' => $expectedValue,
+                ],
+            ],
+        ]);
+        $this->expectExceptionMessage($expectedMessage);
+        $method->invoke($leftAndMain, $statusCode, $errorMessage);
     }
 }

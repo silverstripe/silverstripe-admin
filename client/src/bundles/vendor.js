@@ -34,11 +34,6 @@ import 'expose-loader?exposes=ReactDND!react-dnd';
 import 'expose-loader?exposes=ReactDNDHtml5Backend!react-dnd-html5-backend';
 import 'expose-loader?exposes=Page!page.js';
 import 'expose-loader?exposes=validator!validator';
-// @apollo/client needs virtual.js to help expose it correctly - see https://github.com/webpack-contrib/expose-loader/issues/188
-import 'virtual.js!=!expose-loader?exposes=ApolloClient!@apollo/client';
-import 'virtual.js!=!expose-loader?exposes=ApolloClientReactHoc!@apollo/client/react/hoc';
-import 'expose-loader?exposes=GraphQLTag!graphql-tag';
-import 'expose-loader?exposes=GraphQLFragments!graphql-fragments';
 import 'expose-loader?exposes=NodeUrl!url';
 import 'expose-loader?exposes=modernizr!modernizr';
 import 'expose-loader?exposes=moment!moment';
