@@ -337,11 +337,9 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * Returns configuration required by the client app.
+     * Returns configuration required by the client app
      *
      * @return array
-     *
-     * WARNING: Experimental API
      */
     public function getClientConfig()
     {
@@ -427,14 +425,31 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
+     * Get a data value from JSON in body of the POST request, ensuring it exists
+     * Will only read from the root node of the JSON body
+     */
+    protected function getPostedJsonValue(HTTPRequest $request, string $key): mixed
+    {
+        $data = json_decode($request->getBody(), true);
+        if (!array_key_exists($key, $data)) {
+            $this->jsonError(400);
+        }
+        return $data[$key];
+    }
+
+    /**
      * Creates a successful json response
      */
-    protected function jsonSuccess(int $statusCode, array $data = []): HTTPResponse
+    protected function jsonSuccess(int $statusCode, ?array $data = null): HTTPResponse
     {
         if ($statusCode < 200 || $statusCode >= 300) {
             throw new InvalidArgumentException("Status code $statusCode must be between 200 and 299");
         }
-        $body = empty($data) ? '' : json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        if (is_null($data)) {
+            $body = '';
+        } else {
+            $body = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        }
         return $this->getResponse()
             ->addHeader('Content-Type', 'application/json')
             ->setStatusCode($statusCode)
@@ -458,6 +473,18 @@ class LeftAndMain extends Controller implements PermissionProvider
         ];
         if ($errorMessage) {
             $error['value'] = $errorMessage;
+        } else {
+            $messageDefault = match ($errorCode) {
+                400 => 'Sorry, it seems there was something wrong with the request.',
+                401 => 'Sorry, it seems you are not authorised to access this section or object.',
+                403 => 'Sorry, it seems the action you were trying to perform is forbidden.',
+                404 => 'Sorry, it seems you were trying to access a section or object that doesn\'t exist.',
+                500 => 'Sorry, it seems there was an internal server error.',
+                503 => 'Sorry, it seems the service is temporarily unavailable.',
+                default => 'Error',
+            };
+            /** @phpstan-ignore translation.key (we need the key to be dynamic here) */
+            $error['value'] = _t(__CLASS__ . ".ErrorMessage{$errorCode}", $messageDefault);
         }
 
         // Support explicit error handling with status = error, or generic message handling

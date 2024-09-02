@@ -2,12 +2,9 @@
 /* eslint-disable react/no-multi-comp */
 
 import React from 'react';
-import { createStore } from 'redux';
 import { render } from '@testing-library/react';
 
 import loadComponent from '../loadComponent';
-
-const mockStore = createStore(state => state);
 
 function TestComponent() {
   return <span className="test-component">abc</span>;
@@ -48,9 +45,6 @@ jest.mock('../provideInjector', () => function mockInjector(Injected) {
 });
 
 jest.mock('../Container', () => ({ ready: (callback) => { callback(); } }));
-jest.mock('@apollo/client', () => ({
-  ApolloProvider: ({ children }) => <div className="myapolloprovider">{children}</div>,
-}));
 
 describe('loadComponent', () => {
   it('should use the provided injector by default', () => {
@@ -73,12 +67,6 @@ describe('loadComponent', () => {
     const Temp = loadComponent(TestComponent, {}, mockProvider);
     const temp = new Temp({});
     expect(temp.render()).toBe(null);
-  });
-
-  it('should return a rendered ApolloProvider if it has mounted', () => {
-    const Temp = loadComponent(TestComponent, { store: mockStore }, mockProvider);
-    const { container } = render(<Temp />);
-    expect(container.querySelector('.myapolloprovider')).not.toBe(null);
   });
 
   it('should return a rendered TestComponent if it has mounted and context is falsey', () => {

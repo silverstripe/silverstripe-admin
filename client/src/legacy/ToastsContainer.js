@@ -9,8 +9,11 @@ const ToastsContainer = loadComponent('ToastsContainer');
 
 /**
  * Initialised the toast container
+ *
+ * Using "toastcontainernamespace" instead of "ss" as this seems to have fixed a sporadic
+ * issue with the toast container not being initialised sometimes
  */
-jQuery.entwine('ss', ($) => {
+jQuery.entwine('toastcontainernamespace', ($) => {
   $('body').entwine({
     onmatch() {
       const container = $('<div class="toasts-container"></div>');

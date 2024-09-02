@@ -35,6 +35,8 @@ en:
     DropdownBatchActionsDefault: 'Choose an action...'
     ErrorDetail: 'Error detail: {detail}'
     ErrorMessage: 'Sorry, it seems there was a {errorcode} error.'
+    ErrorMessage400: 'Sorry, it seems there was something wrong with the request.'
+    ErrorMessage401: 'Sorry, it seems you are not authorised to access this section or object.'
     ErrorMessage403: 'Sorry, it seems the action you were trying to perform is forbidden.'
     ErrorMessage404: "Sorry, it seems you were trying to access a section or object that doesn't exist."
     ErrorMessage500: 'Sorry, it seems there was an internal server error.'

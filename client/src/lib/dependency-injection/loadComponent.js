@@ -1,7 +1,6 @@
 /* global window */
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { ApolloProvider } from '@apollo/client';
 import NotFoundComponent from 'components/NotFoundComponent/NotFoundComponent';
 import provideInjector from './provideInjector';
 import withInjector from './withInjector';
@@ -17,7 +16,6 @@ import contextType from './injectorContext';
  * @param targetName
  * @param context - properties include the following
  *    - store for the redux store
- *    - apolloClient for the apollo client (graphql)
  *    - context for filtering/applying transformations to the obtained component
  * @param overrideInjector
  */
@@ -86,14 +84,11 @@ const loadComponent = (targetName, context = {}, overrideInjector) => {
           const fullContext = { ...window.ss, ...context };
           const {
             store,
-            apolloClient: client,
           } = fullContext;
           return (
-            <ApolloProvider client={client}>
-              <Provider store={store}>
-                <Target {...this.props} />
-              </Provider>
-            </ApolloProvider>
+            <Provider store={store}>
+              <Target {...this.props} />
+            </Provider>
           );
         }
         return <Target {...this.props} />;

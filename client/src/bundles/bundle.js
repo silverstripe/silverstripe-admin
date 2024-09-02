@@ -15,6 +15,7 @@ import 'expose-loader?exposes=FormAlert!components/FormAlert/FormAlert';
 import 'expose-loader?exposes=Injector!lib/Injector';
 import 'expose-loader?exposes=reduxFieldReducer!lib/reduxFieldReducer';
 import 'expose-loader?exposes=getFormState!lib/getFormState';
+import 'expose-loader?exposes=getJsonErrorMessage!lib/getJsonErrorMessage';
 import 'expose-loader?exposes=PopoverField!components/PopoverField/PopoverField';
 import 'expose-loader?exposes=FieldHolder!components/FieldHolder/FieldHolder';
 import 'expose-loader?exposes=Form!components/Form/Form';
