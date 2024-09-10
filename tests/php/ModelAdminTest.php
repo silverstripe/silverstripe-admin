@@ -220,14 +220,14 @@ class ModelAdminTest extends FunctionalTest
     public function testGetManagedModelTabs()
     {
         $mock = $this->getMockBuilder(ModelAdminTest\MultiModelAdmin::class)
-            ->setMethods(['getManagedModels'])
+            ->onlyMethods(['getManagedModels'])
             ->getMock();
 
         // `getManagedModelTabs` relies on `getManagedModels` whose output format has changed within the 4.x line.
         // We need to mock `getManagedModels` so it returns both the legacy and updated format.
         $mock->expects($this->atLeastOnce())
             ->method('getManagedModels')
-            ->will($this->returnValue([
+            ->willReturn([
                 'Player' => [
                     'dataClass' => Player::class,
                     'title' => 'Ice Hockey Players'
@@ -239,7 +239,7 @@ class ModelAdminTest extends FunctionalTest
                     'dataClass' => Player::class,
                     'title' => 'Cricket Players',
                 ],
-            ]));
+            ]);
 
 
         $tabs = $mock->getManagedModelTabs()->toNestedArray();
@@ -386,11 +386,11 @@ class ModelAdminTest extends FunctionalTest
         // We need to mock `getManagedModels` to test the legacy format.
         $mock->expects($this->atLeastOnce())
             ->method('getManagedModels')
-            ->will($this->returnValue([
+            ->willReturn([
                 Player::class => [
                     'title' => 'Rugby Players'
                 ],
-            ]));
+            ]);
 
         $reflectionMethod = new ReflectionMethod($mock, 'getModelTabForModelClass');
         $reflectionMethod->setAccessible(true);

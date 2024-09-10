@@ -19,6 +19,8 @@ use SilverStripe\Control\HTTPResponse_Exception;
 use stdClass;
 use ReflectionObject;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use SilverStripe\Core\Manifest\VersionProvider;
 
 class LeftAndMainTest extends FunctionalTest
 {
@@ -218,21 +220,19 @@ class LeftAndMainTest extends FunctionalTest
         $this->assertCount(0, $helpLinks);
     }
 
-    /**
-     * @dataProvider provideTestCMSVersionNumber
-     */
+    #[DataProvider('provideTestCMSVersionNumber')]
     public function testCMSVersionNumber($frameworkVersion, $expected)
     {
         $versionProvider = $this
             ->getMockBuilder(VersionProvider::class)
-            ->setMethods(['getModules', 'getModuleVersionFromComposer'])
+            ->onlyMethods(['getModules', 'getModuleVersionFromComposer'])
             ->getMock();
         $data = ['silverstripe/framework' => $frameworkVersion];
         $versionProvider->method('getModules')->willReturn($data);
         $versionProvider->method('getModuleVersionFromComposer')->willReturn($data);
         $leftAndMain = $this
             ->getMockBuilder(LeftAndMain::class)
-            ->setMethods(['getVersionProvider'])
+            ->onlyMethods(['getVersionProvider'])
             ->getMock();
         $leftAndMain->method('getVersionProvider')->willReturn($versionProvider);
         $this->assertSame($expected, $leftAndMain->CMSVersionNumber());
@@ -241,7 +241,7 @@ class LeftAndMainTest extends FunctionalTest
     /**
      * @return array
      */
-    public function provideTestCMSVersionNumber()
+    public static function provideTestCMSVersionNumber()
     {
         return [
             ['4.9.1', '4.9'],
@@ -290,7 +290,7 @@ class LeftAndMainTest extends FunctionalTest
         $this->assertSame($result->messages[0]->message, MyTree::INVALID_CONTENT_MESSAGE);
     }
 
-    public function provideJsonSuccess(): array
+    public static function provideJsonSuccess(): array
     {
         return [
             [
@@ -338,9 +338,7 @@ class LeftAndMainTest extends FunctionalTest
         ];
     }
 
-    /**
-     * @dataProvider provideJsonSuccess
-     */
+    #[DataProvider('provideJsonSuccess')]
     public function testJsonSuccess(
         int $statusCode,
         ?array $data,
@@ -360,7 +358,7 @@ class LeftAndMainTest extends FunctionalTest
         $this->assertSame($expectedBody, $response->getBody());
     }
 
-    public function provideJsonError(): array
+    public static function provideJsonError(): array
     {
         return [
             [
@@ -406,9 +404,7 @@ class LeftAndMainTest extends FunctionalTest
         ];
     }
 
-    /**
-     * @dataProvider provideJsonError
-     */
+    #[DataProvider('provideJsonError')]
     public function testJsonError(
         int $statusCode,
         ?string $errorMessage,
