@@ -4,11 +4,11 @@ namespace SilverStripe\Admin\Navigator;
 
 use InvalidArgumentException;
 use SilverStripe\Core\ClassInfo;
-use SilverStripe\ORM\ArrayList;
+use SilverStripe\Model\List\ArrayList;
 use SilverStripe\ORM\CMSPreviewable;
 use SilverStripe\ORM\DataObject;
-use SilverStripe\ORM\SS_List;
-use SilverStripe\View\ViewableData;
+use SilverStripe\Model\List\SS_List;
+use SilverStripe\Model\ModelData;
 
 /**
  * Utility class representing links to different views of a record
@@ -20,7 +20,7 @@ use SilverStripe\View\ViewableData;
  * for example the "cmsworkflow" module defines a new "future state" item with a date selector
  * to view embargoed data at a future point in time. So the item doesn't always have to be a simple link.
  */
-class SilverStripeNavigator extends ViewableData
+class SilverStripeNavigator extends ModelData
 {
 
     /**
