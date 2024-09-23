@@ -20,7 +20,7 @@
     ],
     "require": {
         "php": "^8.1",
-        "silverstripe/framework": "^5.3",
+        "silverstripe/framework": "^5.4",
         "silverstripe/versioned": "^2",
         "silverstripe/vendor-plugin": "^2"
     },
