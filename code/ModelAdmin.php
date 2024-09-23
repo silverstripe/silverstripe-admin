@@ -27,11 +27,11 @@ use SilverStripe\Forms\GridField\GridFieldPaginator;
 use SilverStripe\Forms\GridField\GridFieldPrintButton;
 use SilverStripe\Forms\HiddenField;
 use SilverStripe\Forms\LiteralField;
-use SilverStripe\ORM\ArrayList;
+use SilverStripe\Model\List\ArrayList;
 use SilverStripe\ORM\DataObject;
-use SilverStripe\ORM\ValidationResult;
+use SilverStripe\Core\Validation\ValidationResult;
 use SilverStripe\Security\Security;
-use SilverStripe\View\ArrayData;
+use SilverStripe\Model\ArrayData;
 
 /**
  * Generates a three-pane UI for editing model classes, tabular results and edit forms.
@@ -412,7 +412,7 @@ abstract class ModelAdmin extends LeftAndMain
     }
 
     /**
-     * @return \SilverStripe\ORM\ArrayList An ArrayList of all managed models to build the tabs for this ModelAdmin
+     * @return \SilverStripe\Model\List\ArrayList An ArrayList of all managed models to build the tabs for this ModelAdmin
      */
     protected function getManagedModelTabs()
     {

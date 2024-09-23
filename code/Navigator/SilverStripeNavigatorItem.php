@@ -7,14 +7,14 @@ use SilverStripe\ORM\CMSPreviewable;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Versioned\Versioned;
 use SilverStripe\Security\Member;
-use SilverStripe\View\ViewableData;
+use SilverStripe\Model\ModelData;
 
 /**
  * SilverStripeNavigator items are links that appear in the $SilverStripeNavigator bar.
  * To add an item, extend this class - it will be automatically picked up.
  * When instanciating items manually, please ensure to call {@link canView()}.
  */
-abstract class SilverStripeNavigatorItem extends ViewableData
+abstract class SilverStripeNavigatorItem extends ModelData
 {
     /**
      * @param DataObject|CMSPreviewable

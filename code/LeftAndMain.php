@@ -34,15 +34,15 @@ use SilverStripe\Forms\LiteralField;
 use SilverStripe\Forms\PrintableTransformation;
 use SilverStripe\Forms\Schema\FormSchema;
 use SilverStripe\i18n\i18n;
-use SilverStripe\ORM\ArrayList;
+use SilverStripe\Model\List\ArrayList;
 use SilverStripe\ORM\CMSPreviewable;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\ORM\Hierarchy\Hierarchy;
-use SilverStripe\ORM\SS_List;
-use SilverStripe\ORM\ValidationException;
-use SilverStripe\ORM\ValidationResult;
+use SilverStripe\Model\List\SS_List;
+use SilverStripe\Core\Validation\ValidationException;
+use SilverStripe\Core\Validation\ValidationResult;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\PermissionProvider;
@@ -50,7 +50,7 @@ use SilverStripe\Security\Security;
 use SilverStripe\Security\SecurityToken;
 use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\Versioned\Versioned;
-use SilverStripe\View\ArrayData;
+use SilverStripe\Model\ArrayData;
 use SilverStripe\View\Requirements;
 use SilverStripe\View\SSViewer;
 
@@ -1979,8 +1979,8 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * Same as {@link ViewableData->CSSClasses()}, but with a changed name
-     * to avoid problems when using {@link ViewableData->customise()}
+     * Same as {@link ModelData->CSSClasses()}, but with a changed name
+     * to avoid problems when using {@link ModelData->customise()}
      * (which always returns "ArrayData" from the $original object).
      *
      * @return string
