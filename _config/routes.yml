@@ -7,3 +7,5 @@ After:
 SilverStripe\Control\Director:
   rules:
     'admin': 'SilverStripe\Admin\AdminRootController'
+  rule_patterns_must_use_primary_db:
+    - admin
