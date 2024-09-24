@@ -147,6 +147,11 @@ abstract class ModelAdmin extends LeftAndMain
     {
         parent::init();
 
+        // Don't do anything if already redirected
+        if ($this->redirectedTo()) {
+            return;
+        }
+
         $models = $this->getManagedModels();
         $this->modelTab = $this->getRequest()->param('ModelClass');
 
