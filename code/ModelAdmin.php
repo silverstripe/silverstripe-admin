@@ -147,11 +147,6 @@ abstract class ModelAdmin extends LeftAndMain
     {
         parent::init();
 
-        // Don't do anything if already redirected
-        if ($this->redirectedTo()) {
-            return;
-        }
-
         $models = $this->getManagedModels();
         $this->modelTab = $this->getRequest()->param('ModelClass');
 
@@ -159,6 +154,11 @@ abstract class ModelAdmin extends LeftAndMain
         if ($this->modelTab === null) {
             reset($models);
             $this->modelTab = key($models ?? []);
+        }
+
+        // Don't do anything if already redirected
+        if ($this->redirectedTo()) {
+            return;
         }
 
         // security check for valid models
