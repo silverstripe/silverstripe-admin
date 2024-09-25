@@ -150,25 +150,25 @@ abstract class ModelAdmin extends LeftAndMain
         $models = $this->getManagedModels();
         $this->modelTab = $this->getRequest()->param('ModelClass');
 
+        // security check for valid models
+        if ($this->modelTab && !$this->isManagedModel($this->modelTab)) {
+            // No need to throw exceptions since we are already redirected
+            if ($this->redirectedTo()) {
+                $this->modelTab = null;
+            } else {
+                // if it fails to match the string exactly, try reverse-engineering a classname
+                $this->modelTab = $this->unsanitiseClassName($this->modelTab);
+
+                if (!$this->isManagedModel($this->modelTab)) {
+                    throw new \RuntimeException(sprintf('ModelAdmin::init(): Invalid Model class %s', $this->modelTab));
+                }
+            }
+        }
+
         // if we've hit the "landing" page
         if ($this->modelTab === null) {
             reset($models);
             $this->modelTab = key($models ?? []);
-        }
-
-        // Don't do anything if already redirected
-        if ($this->redirectedTo()) {
-            return;
-        }
-
-        // security check for valid models
-        if (!$this->isManagedModel($this->modelTab)) {
-            // if it fails to match the string exactly, try reverse-engineering a classname
-            $this->modelTab = $this->unsanitiseClassName($this->modelTab);
-
-            if (!$this->isManagedModel($this->modelTab)) {
-                throw new \RuntimeException(sprintf('ModelAdmin::init(): Invalid Model class %s', $this->modelTab));
-            }
         }
 
         $this->modelClass = isset($models[$this->modelTab]['dataClass'])
