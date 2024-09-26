@@ -152,7 +152,8 @@ abstract class ModelAdmin extends LeftAndMain
 
         // security check for valid models
         if ($this->modelTab && !$this->isManagedModel($this->modelTab)) {
-            // No need to throw exceptions since we are already redirected
+            // No need to check model tab since we are already redirected
+            // This happens when there's a permission failure in LeftAndMain
             if ($this->redirectedTo()) {
                 $this->modelTab = null;
             } else {
