@@ -155,6 +155,7 @@ abstract class ModelAdmin extends LeftAndMain
             // No need to check model tab since we are already redirected
             // This happens when there's a permission failure in LeftAndMain
             if ($this->redirectedTo()) {
+                // reset so we use the "landing page"
                 $this->modelTab = null;
             } else {
                 // if it fails to match the string exactly, try reverse-engineering a classname
