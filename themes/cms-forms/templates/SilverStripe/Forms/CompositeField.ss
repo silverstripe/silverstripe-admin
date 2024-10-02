@@ -2,5 +2,5 @@
 	<legend>$Legend</legend>
 <% end_if %>
 <% loop $FieldList %>
-	$FieldHolder
+	$Holder
 <% end_loop %>

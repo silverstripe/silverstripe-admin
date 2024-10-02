@@ -1,7 +1,7 @@
 <div id="$HolderID" class="form-group field<% if $extraClass %> $extraClass<% end_if %>">
     <div class="form__field-holder form-check">
         <label class="form-check-label">
-            $Field
+            $
             $Title
         </label>
         <% if $Message %><p class="alert $AlertType" role="alert" id="message-$ID">$Message</p><% end_if %>

@@ -9,9 +9,9 @@
 			<% if $Zebra %> form__fieldgroup-zebra<% end_if %>
 			<% if $extraClass %> $extraClass<% end_if %>"
 	>
-		<%-- Note: _holder_small.ss overrides CompositeField.ss to force nested $SmallFieldHolder --%>
+		<%-- Note: _holder_small.ss overrides CompositeField.ss to force nested $Holder --%>
 		<% loop $FieldList %>
-			$SmallFieldHolder
+			$Holder
 		<% end_loop %>
 	</$Tag>
 </div>

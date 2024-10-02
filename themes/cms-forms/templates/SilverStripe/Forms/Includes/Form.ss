@@ -10,7 +10,7 @@
 	<fieldset>
 		<% if $Legend %><legend>$Legend</legend><% end_if %>
 		<% loop $Fields %>
-			$FieldHolder
+			$Holder
 		<% end_loop %>
 		<div class="clear"><!-- --></div>
 	</fieldset>
@@ -18,7 +18,7 @@
 	<% if $Actions %>
 	<div class="btn-toolbar">
 		<% loop $Actions %>
-			$Field
+			$
 		<% end_loop %>
 	</div>
 	<% end_if %>

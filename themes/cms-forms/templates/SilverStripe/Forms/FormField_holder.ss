@@ -3,7 +3,7 @@
         <label for="$ID" id="title-$ID" class="form__field-label">$Title</label>
     <% end_if %>
     <div class="form__field-holder<% if not $Title %> form__field-holder--no-label<% end_if %>">
-        $Field
+        $
         <% if $Message %><p class="alert $AlertType" role="alert" id="message-$ID">$Message</p><% end_if %>
         <% if $Description %><p class="form__field-description form-text" id="describes-$ID">$Description</p><% end_if %>
     </div>

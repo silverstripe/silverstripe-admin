@@ -1,3 +1,3 @@
 <% loop $FieldList %>
-	$SmallFieldHolder
+	$Holder
 <% end_loop %>

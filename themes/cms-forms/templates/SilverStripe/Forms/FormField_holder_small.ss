@@ -2,5 +2,5 @@
 	<% if $Title %>
 		<label for="$ID" id="title-$ID" class="form__fieldgroup-label">$Title</label>
 	<% end_if %>
-	$Field
+	$
 </div>

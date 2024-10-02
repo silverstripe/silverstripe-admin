@@ -1,5 +1,5 @@
 <% loop $FieldList %>
 	<div class="form__fieldgroup-item">
-		$FieldHolder
+		$Holder
 	</div>
 <% end_loop %>

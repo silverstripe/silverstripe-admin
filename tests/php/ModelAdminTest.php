@@ -136,7 +136,7 @@ class ModelAdminTest extends FunctionalTest
 
         $this->assertStringContainsString(
             'OverridenModelAdmin',
-            $field->extraClass(),
+            $field->getExtraClass(),
             'OverridenModelAdmin has added an extra class to the grid field'
         );
         $this->assertStringContainsString(

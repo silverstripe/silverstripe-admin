@@ -8,11 +8,11 @@
 	<div class="tab-content">
         <% loop $Tabs %>
             <% if $Tabs %>
-                $FieldHolder
+                $Holder
             <% else %>
                 <div $getAttributesHTML("class") class="tab-pane $extraClass">
                     <% loop $Fields %>
-                        $FieldHolder
+                        $Holder
                     <% end_loop %>
                 </div>
             <% end_if %>

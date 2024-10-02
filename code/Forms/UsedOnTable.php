@@ -185,7 +185,7 @@ class UsedOnTable extends FormField
     public function getAttributes()
     {
         $attributes = [
-            'class' => $this->extraClass(),
+            'class' => $this->getExtraClass(),
             'id' => $this->ID(),
             'data-schema' => json_encode($this->getSchemaData()),
             'data-state' => json_encode($this->getSchemaState()),
