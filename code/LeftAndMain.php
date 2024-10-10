@@ -22,6 +22,7 @@ use SilverStripe\Core\Convert;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Core\Manifest\ModuleResourceLoader;
 use SilverStripe\Core\Manifest\VersionProvider;
+use SilverStripe\Dev\Deprecation;
 use SilverStripe\Dev\TestOnly;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
@@ -1184,7 +1185,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function getTemplatesWithSuffix($suffix)
     {
         $templates = SSViewer::get_templates_by_class(get_class($this), $suffix, __CLASS__);
-        return SSViewer::chooseTemplate($templates);
+        return Deprecation::withSuppressedNotice(fn() => SSViewer::chooseTemplate($templates));
     }
 
     public function Content()

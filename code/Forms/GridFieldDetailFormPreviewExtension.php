@@ -5,6 +5,7 @@ namespace SilverStripe\Admin\Forms;
 use SilverStripe\Admin\LeftAndMain;
 use SilverStripe\Admin\Navigator\SilverStripeNavigator;
 use SilverStripe\Core\Extension;
+use SilverStripe\Dev\Deprecation;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
 use SilverStripe\Forms\LiteralField;
@@ -35,7 +36,7 @@ class GridFieldDetailFormPreviewExtension extends Extension
     {
         $navigator = SilverStripeNavigator::create($this->owner->getRecord());
         $templates = SSViewer::get_templates_by_class(LeftAndMain::class, '_SilverStripeNavigator', LeftAndMain::class);
-        $renderWith = SSViewer::chooseTemplate($templates);
+        $renderWith = Deprecation::withSuppressedNotice(fn() => SSViewer::chooseTemplate($templates));
         return $navigator->renderWith($renderWith);
     }
 }
