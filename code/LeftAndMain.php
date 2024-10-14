@@ -2,19 +2,16 @@
 
 namespace SilverStripe\Admin;
 
-use BadMethodCallException;
 use InvalidArgumentException;
 use LogicException;
 use ReflectionClass;
 use SilverStripe\CMS\Controllers\CMSMain;
 use SilverStripe\Admin\Navigator\SilverStripeNavigator;
-use SilverStripe\Control\ContentNegotiator;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\Director;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Control\HTTPResponse_Exception;
-use SilverStripe\Control\Middleware\HTTPCacheControlMiddleware;
 use SilverStripe\Control\PjaxResponseNegotiator;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Core\Config\Config;
@@ -43,13 +40,11 @@ use SilverStripe\ORM\Hierarchy\Hierarchy;
 use SilverStripe\Model\List\SS_List;
 use SilverStripe\Core\Validation\ValidationException;
 use SilverStripe\Core\Validation\ValidationResult;
-use SilverStripe\Security\Member;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\PermissionProvider;
 use SilverStripe\Security\Security;
 use SilverStripe\Security\SecurityToken;
 use SilverStripe\SiteConfig\SiteConfig;
-use SilverStripe\Versioned\Versioned;
 use SilverStripe\Model\ArrayData;
 use SilverStripe\View\Requirements;
 use SilverStripe\View\SSViewer;
@@ -61,7 +56,7 @@ use SilverStripe\View\SSViewer;
  * This is essentially an abstract class which should be subclassed.
  * See {@link CMSMain} for a good example.
  */
-class LeftAndMain extends Controller implements PermissionProvider
+class LeftAndMain extends AdminController implements PermissionProvider
 {
 
     /**
@@ -76,20 +71,6 @@ class LeftAndMain extends Controller implements PermissionProvider
      * @var bool
      */
     private static $client_debugging = true;
-
-    /**
-     * The current url segment attached to the LeftAndMain instance
-     *
-     * @config
-     * @var string
-     */
-    private static $url_segment = null;
-
-    /**
-     * @config
-     * @var string Used by {@link AdminRootController} to augment Director route rules for sub-classes of LeftAndMain
-     */
-    private static $url_rule = '/$Action/$ID/$OtherID';
 
     /**
      * @config
@@ -108,12 +89,6 @@ class LeftAndMain extends Controller implements PermissionProvider
      * @var int
      */
     private static $menu_priority = 0;
-
-    /**
-     * @config
-     * @var int
-     */
-    private static $url_priority = 50;
 
     /**
      * A subclass of {@link DataObject}.
@@ -186,18 +161,6 @@ class LeftAndMain extends Controller implements PermissionProvider
      * @var array
      */
     private static $admin_themes = [];
-
-    /**
-     * Codes which are required from the current user to view this controller.
-     * If multiple codes are provided, all of them are required.
-     * All CMS controllers require "CMS_ACCESS_LeftAndMain" as a baseline check,
-     * and fall back to "CMS_ACCESS_<class>" if no permissions are defined here.
-     * See {@link canView()} for more details on permission checks.
-     *
-     * @config
-     * @var array
-     */
-    private static $required_permission_codes;
 
     /**
      * Namespace for session info, e.g. current record.
@@ -281,16 +244,35 @@ class LeftAndMain extends Controller implements PermissionProvider
     private static $frame_options = 'SAMEORIGIN';
 
     /**
-     * The configuration passed to the supporting JS for each CMS section includes a 'name' key
-     * that by default matches the FQCN of the current class. This setting allows you to change
-     * the key if necessary (for example, if you are overloading CMSMain or another core class
-     * and want to keep the core JS - which depends on the core class names - functioning, you
-     * would need to set this to the FQCN of the class you are overloading).
+     * The urls used for the links in the Help dropdown in the backend
+     *
+     * Set this to `false` via yml config if you do not want to show any help links
      *
      * @config
-     * @var string|null
+     * @var array
      */
-    private static $section_name = null;
+    private static $help_links = [
+        'CMS User help' => 'https://userhelp.silverstripe.org/en/6/',
+        'Developer docs' => 'https://docs.silverstripe.org/en/6/',
+        'Community' => 'https://www.silverstripe.org/',
+        'Feedback' => 'https://www.silverstripe.org/give-feedback/',
+    ];
+
+    /**
+     * The href for the anchor on the Silverstripe logo
+     *
+     * @config
+     * @var string
+     */
+    private static $application_link = '//www.silverstripe.org/';
+
+    /**
+     * The application name
+     *
+     * @config
+     * @var string
+     */
+    private static $application_name = 'Silverstripe';
 
     /**
      * @var PjaxResponseNegotiator
@@ -303,6 +285,13 @@ class LeftAndMain extends Controller implements PermissionProvider
     protected $versionProvider;
 
     /**
+     * Cached search filter instance for current search
+     *
+     * @var LeftAndMain_SearchFilter
+     */
+    protected $searchFilterCache = null;
+
+    /**
      * Gets the combined configuration of all LeftAndMain subclasses required by the client app.
      *
      * @return string
@@ -312,7 +301,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function getCombinedClientConfig()
     {
         $combinedClientConfig = ['sections' => []];
-        $cmsClassNames = CMSMenu::get_cms_classes(LeftAndMain::class, true, CMSMenu::URL_PRIORITY);
+        $cmsClassNames = CMSMenu::get_cms_classes(AdminController::class, true, CMSMenu::URL_PRIORITY);
 
         // append LeftAndMain to the list as well
         $cmsClassNames[] = LeftAndMain::class;
@@ -336,40 +325,20 @@ class LeftAndMain extends Controller implements PermissionProvider
         return json_encode($combinedClientConfig);
     }
 
-    /**
-     * Returns configuration required by the client app
-     *
-     * @return array
-     */
-    public function getClientConfig()
+    public function getClientConfig(): array
     {
-        // Allows the section name to be overridden in config
-        $name = $this->config()->get('section_name');
-        $url = trim($this->Link() ?? '', '/');
-
-        if (!$name) {
-            $name = static::class;
-        }
-
-        $clientConfig = [
-            // Trim leading/trailing slash to make it easier to concatenate URL
-            // and use in routing definitions.
-            'name' => $name,
-            'url' => $url,
-            'reactRoutePath' => preg_replace('/^' . preg_quote(AdminRootController::admin_url(), '/') . '/', '', $url),
-            'form' => [
+        // Add WYSIWYG link form schema before extensions are applied
+        $this->beforeExtending('updateClientConfig', function (array &$clientConfig): void {
+            $clientConfig['form'] = [
                 'EditorExternalLink' => [
                     'schemaUrl' => $this->Link('methodSchema/Modals/EditorExternalLink'),
                 ],
                 'EditorEmailLink' => [
                     'schemaUrl' => $this->Link('methodSchema/Modals/EditorEmailLink'),
                 ],
-            ],
-        ];
-
-        $this->extend('updateClientConfig', $clientConfig);
-
-        return $clientConfig;
+            ];
+        });
+        return parent::getClientConfig();
     }
 
     /**
@@ -425,87 +394,9 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * Get a data value from JSON in body of the POST request, ensuring it exists
-     * Will only read from the root node of the JSON body
+     * Get the form schema from a given method.
+     * The method must return a Form.
      */
-    protected function getPostedJsonValue(HTTPRequest $request, string $key): mixed
-    {
-        $data = json_decode($request->getBody(), true);
-        if (!array_key_exists($key, $data)) {
-            $this->jsonError(400);
-        }
-        return $data[$key];
-    }
-
-    /**
-     * Creates a successful json response
-     */
-    protected function jsonSuccess(int $statusCode, ?array $data = null): HTTPResponse
-    {
-        if ($statusCode < 200 || $statusCode >= 300) {
-            throw new InvalidArgumentException("Status code $statusCode must be between 200 and 299");
-        }
-        if (is_null($data)) {
-            $body = '';
-        } else {
-            $body = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-        }
-        return $this->getResponse()
-            ->addHeader('Content-Type', 'application/json')
-            ->setStatusCode($statusCode)
-            ->setBody($body);
-    }
-
-    /**
-     * Return an error HTTPResponse encoded as json
-     *
-     * @param int $errorCode
-     * @param string $errorMessage
-     * @return HTTPResponse
-     * @throws HTTPResponse_Exception
-     */
-    public function jsonError($errorCode, $errorMessage = null)
-    {
-        // Build error from message
-        $error = [
-            'type' => 'error',
-            'code' => $errorCode,
-        ];
-        if ($errorMessage) {
-            $error['value'] = $errorMessage;
-        } else {
-            $messageDefault = match ($errorCode) {
-                400 => 'Sorry, it seems there was something wrong with the request.',
-                401 => 'Sorry, it seems you are not authorised to access this section or object.',
-                403 => 'Sorry, it seems the action you were trying to perform is forbidden.',
-                404 => 'Sorry, it seems you were trying to access a section or object that doesn\'t exist.',
-                500 => 'Sorry, it seems there was an internal server error.',
-                503 => 'Sorry, it seems the service is temporarily unavailable.',
-                default => 'Error',
-            };
-            /** @phpstan-ignore translation.key (we need the key to be dynamic here) */
-            $error['value'] = _t(__CLASS__ . ".ErrorMessage{$errorCode}", $messageDefault);
-        }
-
-        // Support explicit error handling with status = error, or generic message handling
-        // with a message of type = error
-        $result = [
-            'status' => 'error',
-            'errors' => [$error]
-        ];
-        $response = HTTPResponse::create(json_encode($result), $errorCode)
-            ->addHeader('Content-Type', 'application/json');
-
-        // Call a handler method such as onBeforeHTTPError404
-        $this->extend("onBeforeJSONError{$errorCode}", $request, $response);
-
-        // Call a handler method such as onBeforeHTTPError, passing 404 as the first arg
-        $this->extend('onBeforeJSONError', $errorCode, $request, $response);
-
-        // Throw a new exception
-        throw new HTTPResponse_Exception($response);
-    }
-
     public function methodSchema(HTTPRequest $request): HTTPResponse
     {
         $method = $request->param('Method');
@@ -574,258 +465,136 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * @param Member $member
-     * @return bool
+     * Try to redirect to an appropriate admin section if we can't access this one
      */
-    public function canView($member = null)
+    public function onInitPermissionFailure(): void
     {
-        if (!$member && $member !== false) {
-            $member = Security::getCurrentUser();
-        }
-
-        // cms menus only for logged-in members
-        if (!$member) {
-            return false;
-        }
-
-        // alternative extended checks
-        if ($this->hasMethod('alternateAccessCheck')) {
-            $alternateAllowed = $this->alternateAccessCheck($member);
-            if ($alternateAllowed === false) {
-                return false;
+        $menu = $this->MainMenu();
+        foreach ($menu as $candidate) {
+            if ($candidate->Link &&
+                $candidate->Link != $this->Link()
+                && $candidate->MenuItem->controller
+                && singleton($candidate->MenuItem->controller)->canView()
+            ) {
+                $this->redirect($candidate->Link);
+                return;
             }
         }
-
-        // Check for "CMS admin" permission
-        if (Permission::checkMember($member, "CMS_ACCESS_LeftAndMain")) {
-            return true;
-        }
-
-        // Check for LeftAndMain sub-class permissions
-        $codes = $this->getRequiredPermissions();
-        if ($codes === false) { // allow explicit FALSE to disable subclass check
-            return true;
-        }
-        foreach ((array)$codes as $code) {
-            if (!Permission::checkMember($member, $code)) {
-                return false;
-            }
-        }
-
-        return true;
+        $this->suppressAdminErrorContext = true;
     }
 
-    /**
-     * Get list of required permissions
-     *
-     * @return array|string|bool Code, array of codes, or false if no permission required
-     */
-    public static function getRequiredPermissions()
-    {
-        $class = get_called_class();
-        // If the user is accessing LeftAndMain directly, only generic permissions are required.
-        if ($class === LeftAndMain::class) {
-            return 'CMS_ACCESS';
-        }
-        $code = Config::inst()->get($class, 'required_permission_codes');
-        if ($code === false) {
-            return false;
-        }
-        if ($code) {
-            return $code;
-        }
-        return 'CMS_ACCESS_' . $class;
-    }
-
-    /**
-     * @uses CMSMenu
-     */
     protected function init()
     {
-        parent::init();
-
-        HTTPCacheControlMiddleware::singleton()->disableCache();
-
-        SSViewer::setRewriteHashLinksDefault(false);
-        ContentNegotiator::setEnabled(false);
-
-        // set language
-        $member = Security::getCurrentUser();
-        if (!empty($member->Locale)) {
-            i18n::set_locale($member->Locale);
-        }
-
-        // Allow customisation of the access check by a extension
-        // Also all the canView() check to execute Controller::redirect()
-        if (!$this->canView() && !$this->getResponse()->isFinished()) {
-            // When access /admin/, we should try a redirect to another part of the admin rather than be locked out
-            $menu = $this->MainMenu();
-            foreach ($menu as $candidate) {
-                if ($candidate->Link &&
-                    $candidate->Link != $this->Link()
-                    && $candidate->MenuItem->controller
-                    && singleton($candidate->MenuItem->controller)->canView()
-                ) {
-                    $this->redirect($candidate->Link);
-                    return;
-                }
+        $this->beforeExtending('onInit', function () {
+            // Audit logging hook
+            if (empty($_REQUEST['executeForm']) && !$this->getRequest()->isAjax()) {
+                $this->extend('accessedCMS');
             }
 
+            // Set the members html editor config
             if (Security::getCurrentUser()) {
-                $this->getRequest()->getSession()->clear("BackURL");
+                HTMLEditorConfig::set_active_identifier(Security::getCurrentUser()->getHtmlEditorConfigForCMS());
             }
 
-            // if no alternate menu items have matched, return a permission error
-            $messageSet = [
-                'default' => _t(
-                    __CLASS__ . '.PERMDEFAULT',
-                    "You must be logged in to access the administration area; please enter your credentials below."
-                ),
-                'alreadyLoggedIn' => _t(
-                    __CLASS__ . '.PERMALREADY',
-                    "I'm sorry, but you can't access that part of the CMS.  If you want to log in as someone else, do"
-                    . " so below."
-                ),
-                'logInAgain' => _t(
-                    __CLASS__ . '.PERMAGAIN',
-                    "You have been logged out of the CMS.  If you would like to log in again, enter a username and"
-                    . " password below."
-                ),
-            ];
-
-            $this->suppressAdminErrorContext = true;
-            Security::permissionFailure($this, $messageSet);
-            return;
-        }
-
-        // Don't continue if there's already been a redirection request.
-        if ($this->redirectedTo()) {
-            return;
-        }
-
-        // Audit logging hook
-        if (empty($_REQUEST['executeForm']) && !$this->getRequest()->isAjax()) {
-            $this->extend('accessedCMS');
-        }
-
-        // Set the members html editor config
-        if (Security::getCurrentUser()) {
-            HTMLEditorConfig::set_active_identifier(Security::getCurrentUser()->getHtmlEditorConfigForCMS());
-        }
-
-        // Set default values in the config if missing.  These things can't be defined in the config
-        // file because insufficient information exists when that is being processed
-        $htmlEditorConfig = HTMLEditorConfig::get_active();
-        $htmlEditorConfig->setOption('language', TinyMCEConfig::get_tinymce_lang());
-        $langUrl = TinyMCEConfig::get_tinymce_lang_url();
-        if ($langUrl) {
-            $htmlEditorConfig->setOption('language_url', $langUrl);
-        }
-
-        Requirements::customScript("
-            window.ss = window.ss || {};
-            window.ss.config = " . $this->getCombinedClientConfig() . ";
-        ");
-
-        Requirements::javascript('silverstripe/admin: client/dist/js/vendor.js');
-        Requirements::javascript('silverstripe/admin: client/dist/js/bundle.js');
-
-        // Bootstrap components
-        Requirements::javascript('silverstripe/admin: thirdparty/popper/popper.min.js');
-        Requirements::javascript('silverstripe/admin: thirdparty/bootstrap/js/dist/util.js');
-        Requirements::javascript('silverstripe/admin: thirdparty/bootstrap/js/dist/collapse.js');
-        Requirements::javascript('silverstripe/admin: thirdparty/bootstrap/js/dist/tooltip.js');
-        Requirements::customScript(
-            "window.jQuery('body').tooltip({ selector: '[data-toggle=tooltip]' });",
-            'bootstrap.tooltip-boot'
-        );
-
-        Requirements::css('silverstripe/admin: client/dist/styles/bundle.css');
-        Requirements::add_i18n_javascript('silverstripe/admin:client/lang');
-        Requirements::add_i18n_javascript('silverstripe/admin:client/dist/moment-locales', false);
-
-        if (LeftAndMain::config()->uninherited('session_keepalive_ping')) {
-            Requirements::javascript('silverstripe/admin: client/dist/js/LeftAndMain.Ping.js');
-        }
-
-        // Custom requirements
-        $extraJs = $this->config()->get('extra_requirements_javascript');
-
-        if ($extraJs) {
-            foreach ($extraJs as $file => $config) {
-                if (is_numeric($file)) {
-                    $file = $config;
-                    $config = [];
-                }
-
-                Requirements::javascript($file, $config);
+            // Set default values in the config if missing.  These things can't be defined in the config
+            // file because insufficient information exists when that is being processed
+            $htmlEditorConfig = HTMLEditorConfig::get_active();
+            $htmlEditorConfig->setOption('language', TinyMCEConfig::get_tinymce_lang());
+            $langUrl = TinyMCEConfig::get_tinymce_lang_url();
+            if ($langUrl) {
+                $htmlEditorConfig->setOption('language_url', $langUrl);
             }
-        }
 
-        $extraI18n = $this->config()->get('extra_requirements_i18n');
-        if ($extraI18n) {
-            foreach ($extraI18n as $dir => $return) {
-                if (is_numeric($dir)) {
-                    $dir = $return;
-                    $return = false;
-                }
-                Requirements::add_i18n_javascript($dir, $return);
+            Requirements::customScript("
+                window.ss = window.ss || {};
+                window.ss.config = " . $this->getCombinedClientConfig() . ";
+            ");
+
+            Requirements::javascript('silverstripe/admin: client/dist/js/vendor.js');
+            Requirements::javascript('silverstripe/admin: client/dist/js/bundle.js');
+
+            // Bootstrap components
+            Requirements::javascript('silverstripe/admin: thirdparty/popper/popper.min.js');
+            Requirements::javascript('silverstripe/admin: thirdparty/bootstrap/js/dist/util.js');
+            Requirements::javascript('silverstripe/admin: thirdparty/bootstrap/js/dist/collapse.js');
+            Requirements::javascript('silverstripe/admin: thirdparty/bootstrap/js/dist/tooltip.js');
+            Requirements::customScript(
+                "window.jQuery('body').tooltip({ selector: '[data-toggle=tooltip]' });",
+                'bootstrap.tooltip-boot'
+            );
+
+            Requirements::css('silverstripe/admin: client/dist/styles/bundle.css');
+            Requirements::add_i18n_javascript('silverstripe/admin:client/lang');
+            Requirements::add_i18n_javascript('silverstripe/admin:client/dist/moment-locales', false);
+
+            if (LeftAndMain::config()->uninherited('session_keepalive_ping')) {
+                Requirements::javascript('silverstripe/admin: client/dist/js/LeftAndMain.Ping.js');
             }
-        }
 
-        $extraCss = $this->config()->get('extra_requirements_css');
+            // Custom requirements
+            $extraJs = $this->config()->get('extra_requirements_javascript');
 
-        if ($extraCss) {
-            foreach ($extraCss as $file => $config) {
-                if (is_numeric($file)) {
-                    $file = $config;
-                    $config = [];
+            if ($extraJs) {
+                foreach ($extraJs as $file => $config) {
+                    if (is_numeric($file)) {
+                        $file = $config;
+                        $config = [];
+                    }
+
+                    Requirements::javascript($file, $config);
                 }
-                $media = null;
-                if (isset($config['media'])) {
-                     $media = $config['media'];
-                     unset($config['media']);
-                }
-
-                Requirements::css($file, $media, $config);
             }
-        }
 
-        $extraThemedCss = $this->config()->get('extra_requirements_themedCss');
-
-        if ($extraThemedCss) {
-            foreach ($extraThemedCss as $file => $config) {
-                if (is_numeric($file)) {
-                    $file = $config;
-                    $config = [];
+            $extraI18n = $this->config()->get('extra_requirements_i18n');
+            if ($extraI18n) {
+                foreach ($extraI18n as $dir => $return) {
+                    if (is_numeric($dir)) {
+                        $dir = $return;
+                        $return = false;
+                    }
+                    Requirements::add_i18n_javascript($dir, $return);
                 }
-                $media = null;
-                if (isset($config['media'])) {
-                     $media = $config['media'];
-                     unset($config['media']);
-                }
-
-                Requirements::themedCSS($file, $media, $config);
             }
-        }
 
-        $this->extend('onInit');
+            $extraCss = $this->config()->get('extra_requirements_css');
 
-        // Load the editor with original user themes before overwriting
-        // them with admin themes
-        $themes = HTMLEditorConfig::getThemes();
-        if (empty($themes)) {
-            HTMLEditorConfig::setThemes(SSViewer::get_themes());
-        }
+            if ($extraCss) {
+                foreach ($extraCss as $file => $config) {
+                    if (is_numeric($file)) {
+                        $file = $config;
+                        $config = [];
+                    }
+                    $media = null;
+                    if (isset($config['media'])) {
+                        $media = $config['media'];
+                        unset($config['media']);
+                    }
 
-        // Assign default cms theme and replace user-specified themes
-        SSViewer::set_themes(LeftAndMain::config()->uninherited('admin_themes'));
+                    Requirements::css($file, $media, $config);
+                }
+            }
 
-        // Set the current reading mode
-        Versioned::set_stage(Versioned::DRAFT);
+            $extraThemedCss = $this->config()->get('extra_requirements_themedCss');
 
-        // Set default reading mode to suppress ?stage=Stage querystring params in CMS
-        Versioned::set_default_reading_mode(Versioned::get_reading_mode());
+            if ($extraThemedCss) {
+                foreach ($extraThemedCss as $file => $config) {
+                    if (is_numeric($file)) {
+                        $file = $config;
+                        $config = [];
+                    }
+                    $media = null;
+                    if (isset($config['media'])) {
+                        $media = $config['media'];
+                        unset($config['media']);
+                    }
+
+                    Requirements::themedCSS($file, $media, $config);
+                }
+            }
+        });
+
+        // Run parent init and process the onInit extension hook
+        parent::init();
     }
 
     public function afterHandleRequest()
@@ -891,39 +660,6 @@ class LeftAndMain extends Controller implements PermissionProvider
         return $response;
     }
 
-    /**
-     * Overloaded redirection logic to trigger a fake redirect on ajax requests.
-     * While this violates HTTP principles, its the only way to work around the
-     * fact that browsers handle HTTP redirects opaquely, no intervention via JS is possible.
-     * In isolation, that's not a problem - but combined with history.pushState()
-     * it means we would request the same redirection URL twice if we want to update the URL as well.
-     * See LeftAndMain.js for the required jQuery ajaxComplete handlers.
-     */
-    public function redirect(string $url, int $code = 302): HTTPResponse
-    {
-        if ($this->getRequest()->isAjax()) {
-            $response = $this->getResponse();
-            $response->addHeader('X-ControllerURL', $url);
-            if ($this->getRequest()->getHeader('X-Pjax') && !$response->getHeader('X-Pjax')) {
-                $response->addHeader('X-Pjax', $this->getRequest()->getHeader('X-Pjax'));
-            }
-            $newResponse = new LeftAndMain_HTTPResponse(
-                $response->getBody(),
-                $response->getStatusCode(),
-                $response->getStatusDescription()
-            );
-            foreach ($response->getHeaders() as $k => $v) {
-                $newResponse->addHeader($k, $v);
-            }
-            $newResponse->setIsFinished(true);
-            $this->setResponse($newResponse);
-            // Actual response will be re-requested by client
-            return $newResponse;
-        } else {
-            return parent::redirect($url, $code);
-        }
-    }
-
     public function index(HTTPRequest $request): HTTPResponse
     {
         return $this->getResponseNegotiator()->respond($request);
@@ -938,41 +674,6 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function ShowSwitchView()
     {
         return false;
-    }
-
-
-    //------------------------------------------------------------------------------------------//
-    // Main controllers
-
-    /**
-     * You should implement a Link() function in your subclass of LeftAndMain,
-     * to point to the URL of that particular controller.
-     *
-     * @param string $action
-     * @return string
-     */
-    public function Link($action = null)
-    {
-        // LeftAndMain methods have a top-level uri access
-        if (static::class === LeftAndMain::class) {
-            $segment = '';
-        } else {
-            // Get url_segment
-            $segment = $this->config()->get('url_segment');
-            if (!$segment) {
-                throw new BadMethodCallException(
-                    sprintf('LeftAndMain subclasses (%s) must have url_segment', static::class)
-                );
-            }
-        }
-
-        $link = Controller::join_links(
-            AdminRootController::admin_url(),
-            $segment,
-            "$action"
-        );
-        $this->extend('updateLink', $link);
-        return $link;
     }
 
     /**
@@ -1271,13 +972,6 @@ class LeftAndMain extends Controller implements PermissionProvider
 
         return $items;
     }
-
-    /**
-     * Cached search filter instance for current search
-     *
-     * @var LeftAndMain_SearchFilter
-     */
-    protected $searchFilterCache = null;
 
     /**
      * Gets the current search filter for this request, if available
@@ -1862,21 +1556,6 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * The urls used for the links in the Help dropdown in the backend
-     *
-     * Set this to `false` via yml config if you do not want to show any help links
-     *
-     * @config
-     * @var array
-     */
-    private static $help_links = [
-        'CMS User help' => 'https://userhelp.silverstripe.org/en/5',
-        'Developer docs' => 'https://docs.silverstripe.org/en/5/',
-        'Community' => 'https://www.silverstripe.org/',
-        'Feedback' => 'https://www.silverstripe.org/give-feedback/',
-    ];
-
-    /**
      * Returns help_links in a format readable by a template
      * @return ArrayList
      */
@@ -1902,28 +1581,12 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * The href for the anchor on the Silverstripe logo
-     *
-     * @config
-     * @var string
-     */
-    private static $application_link = '//www.silverstripe.org/';
-
-    /**
      * @return string
      */
     public function ApplicationLink()
     {
         return $this->config()->get('application_link');
     }
-
-    /**
-     * The application name
-     *
-     * @config
-     * @var string
-     */
-    private static $application_name = 'Silverstripe';
 
     /**
      * Get the application name.

@@ -11,21 +11,15 @@ use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Manifest\ModuleLoader;
 use SilverStripe\Dev\FunctionalTest;
-use SilverStripe\Security\Member;
 use SilverStripe\View\Requirements;
 use SilverStripe\Admin\Tests\LeftAndMainTest\MyTree;
 use SilverStripe\Admin\Tests\LeftAndMainTest\MyTreeController;
-use SilverStripe\Control\HTTPResponse_Exception;
 use stdClass;
-use ReflectionObject;
-use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use SilverStripe\Core\Manifest\VersionProvider;
 
 class LeftAndMainTest extends FunctionalTest
 {
-    protected static $fixture_file = 'LeftAndMainTest.yml';
-
     protected static $extra_dataobjects = [
         MyTree::class
     ];
@@ -80,8 +74,7 @@ class LeftAndMainTest extends FunctionalTest
 
     public function testExtraCssAndJavascript()
     {
-        $admin = $this->objFromFixture(Member::class, 'admin');
-        $this->logInAs($admin);
+        $this->logInWithPermission('ADMIN');
         $response = $this->get('admin/security');
 
         // Check css
@@ -135,65 +128,6 @@ class LeftAndMainTest extends FunctionalTest
         $this->assertMatchesRegularExpression('/<body[^>]*>/i', $response->getBody(), "$link should contain <body> tag");
     }
 
-    public function testCanView()
-    {
-        $adminuser = $this->objFromFixture(Member::class, 'admin');
-        $securityonlyuser = $this->objFromFixture(Member::class, 'securityonlyuser');
-        $allcmssectionsuser = $this->objFromFixture(Member::class, 'allcmssectionsuser');
-
-        // anonymous user
-        $this->logOut();
-        $this->resetMenu();
-        $menuItems = LeftAndMain::singleton()->MainMenu(false);
-        $this->assertEquals(
-            $menuItems->column('Code'),
-            [],
-            'Without valid login, members cant access any menu entries'
-        );
-
-        // restricted cms user
-        $this->logInAs($securityonlyuser);
-        $this->resetMenu();
-        $menuItems = LeftAndMain::singleton()->MainMenu(false);
-        $menuItems = $menuItems->column('Code');
-        sort($menuItems);
-
-        $this->assertEquals(
-            [
-                'SilverStripe-Admin-CMSProfileController',
-                'SilverStripe-Admin-SecurityAdmin'
-            ],
-            $menuItems,
-            'Groups with limited access can only access the interfaces they have permissions for'
-        );
-
-        // all cms sections user
-        $this->logInAs($allcmssectionsuser);
-        $this->resetMenu();
-        $menuItems = LeftAndMain::singleton()->MainMenu(false);
-        $this->assertContains(
-            'SilverStripe-Admin-CMSProfileController',
-            $menuItems->column('Code'),
-            'Group with CMS_ACCESS_SilverStripe\\Admin\\LeftAndMain permission can edit own profile'
-        );
-        $this->assertContains(
-            'SilverStripe-Admin-SecurityAdmin',
-            $menuItems->column('Code'),
-            'Group with CMS_ACCESS_SilverStripe\\Admin\\LeftAndMain permission can access all sections'
-        );
-
-        // admin
-        $this->logInAs($adminuser);
-        $this->resetMenu();
-        $menuItems = LeftAndMain::singleton()->MainMenu(false);
-        $this->assertContains(
-            'SilverStripe-Admin-SecurityAdmin',
-            $menuItems->column('Code'),
-            'Administrators can access Security Admin'
-        );
-
-        $this->logOut();
-    }
 
     /**
      * Test that getHelpLinks transforms $help_links into the correct format
@@ -255,8 +189,7 @@ class LeftAndMainTest extends FunctionalTest
 
     public function testValidationResult()
     {
-        $this->logInAs('admin');
-
+        $this->logInWithPermission('ADMIN');
         $obj = MyTree::create();
         $obj->write();
 
@@ -288,144 +221,5 @@ class LeftAndMainTest extends FunctionalTest
         $this->assertSame(1, count($result->messages));
         $this->assertSame($result->messages[0]->fieldName, 'Content');
         $this->assertSame($result->messages[0]->message, MyTree::INVALID_CONTENT_MESSAGE);
-    }
-
-    public static function provideJsonSuccess(): array
-    {
-        return [
-            [
-                'statusCode' => 201,
-                'data' => null,
-                'expectedBody' => '',
-                'expectedException' => '',
-            ],
-            [
-                'statusCode' => 200,
-                'data' => [],
-                'expectedBody' => '[]',
-                'expectedException' => '',
-            ],
-            [
-                'statusCode' => 200,
-                'data' => [1, "two", 3.3],
-                'expectedBody' => '[1,"two",3.3]',
-                'expectedException' => '',
-            ],
-            [
-                'statusCode' => 200,
-                'data' => ['foo' => 'bar', 'quotes' => '"something"', 'array' => [1, 2, 3]],
-                'expectedBody' => '{"foo":"bar","quotes":"\"something\"","array":[1,2,3]}',
-                'expectedException' => '',
-            ],
-            [
-                'statusCode' => 200,
-                'data' => ['unicode' => ['one' => 'ōōō', 'two' => '℅℅℅', 'three' => '👍👍👍']],
-                'expectedBody' => '{"unicode":{"one":"ōōō","two":"℅℅℅","three":"👍👍👍"}}',
-                'expectedException' => '',
-            ],
-            [
-                'statusCode' => 199,
-                'data' => [],
-                'expectedBody' => '',
-                'expectedException' => InvalidArgumentException::class,
-            ],
-            [
-                'statusCode' => 302,
-                'data' => [],
-                'expectedBody' => '',
-                'expectedException' => InvalidArgumentException::class,
-            ],
-        ];
-    }
-
-    #[DataProvider('provideJsonSuccess')]
-    public function testJsonSuccess(
-        int $statusCode,
-        ?array $data,
-        string $expectedBody,
-        string $expectedException
-    ): void {
-        $leftAndMain = new LeftAndMain();
-        $refelectionObject = new ReflectionObject($leftAndMain);
-        $method = $refelectionObject->getMethod('jsonSuccess');
-        $method->setAccessible(true);
-        if ($expectedException) {
-            $this->expectException($expectedException);
-        }
-        $response = $method->invoke($leftAndMain, $statusCode, $data);
-        $this->assertSame('application/json', $response->getHeader('Content-type'));
-        $this->assertSame($statusCode, $response->getStatusCode());
-        $this->assertSame($expectedBody, $response->getBody());
-    }
-
-    public static function provideJsonError(): array
-    {
-        return [
-            [
-                'statusCode' => 400,
-                'errorMessage' => null,
-                'expectedValue' => 'Sorry, it seems there was something wrong with the request.',
-            ],
-            [
-                'statusCode' => 401,
-                'errorMessage' => null,
-                'expectedValue' => 'Sorry, it seems you are not authorised to access this section or object.',
-            ],
-            [
-                'statusCode' => 403,
-                'errorMessage' => null,
-                'expectedValue' => 'Sorry, it seems the action you were trying to perform is forbidden.',
-            ],
-            [
-                'statusCode' => 404,
-                'errorMessage' => null,
-                'expectedValue' => 'Sorry, it seems you were trying to access a section or object that doesn\'t exist.',
-            ],
-            [
-                'statusCode' => 500,
-                'errorMessage' => null,
-                'expectedValue' => 'Sorry, it seems there was an internal server error.',
-            ],
-            [
-                'statusCode' => 503,
-                'errorMessage' => null,
-                'expectedValue' => 'Sorry, it seems the service is temporarily unavailable.',
-            ],
-            [
-                'statusCode' => 418,
-                'errorMessage' => null,
-                'expectedValue' => 'Error',
-            ],
-            [
-                'statusCode' => 400,
-                'errorMessage' => 'Test custom error message',
-                'expectedValue' => 'Test custom error message',
-            ],
-        ];
-    }
-
-    #[DataProvider('provideJsonError')]
-    public function testJsonError(
-        int $statusCode,
-        ?string $errorMessage,
-        ?string $expectedValue,
-    ): void {
-        $leftAndMain = new LeftAndMain();
-        $refelectionObject = new ReflectionObject($leftAndMain);
-        $method = $refelectionObject->getMethod('jsonError');
-        $method->setAccessible(true);
-        $this->expectException(HTTPResponse_Exception::class);
-        $expectedMessage = json_encode((object) [
-            'status' => 'error',
-            'errors' => [
-                (object) [
-                    'type' => 'error',
-                    'code' => $statusCode,
-                    'value' => $expectedValue,
-                ],
-            ],
-        ]);
-        $this->expectExceptionMessage($expectedMessage);
-        $method->invoke($leftAndMain, $statusCode, $errorMessage);
     }
 }

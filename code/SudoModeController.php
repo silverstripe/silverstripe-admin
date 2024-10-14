@@ -15,11 +15,9 @@ use SilverStripe\Security\SudoMode\SudoModeServiceInterface;
 /**
  * Responsible for checking and verifying whether sudo mode is enabled
  */
-class SudoModeController extends LeftAndMain
+class SudoModeController extends AdminController
 {
     private static string $url_segment = 'sudomode';
-
-    private static bool $ignore_menuitem = true;
 
     private static array $allowed_actions = [
         'check',
@@ -43,7 +41,7 @@ class SudoModeController extends LeftAndMain
      */
     private static bool $required_permission_codes = false;
 
-    public function getClientConfig()
+    public function getClientConfig(): array
     {
         $request = Injector::inst()->get(HTTPRequest::class);
 
@@ -91,7 +89,7 @@ class SudoModeController extends LeftAndMain
             return $this->jsonResponse([
                 'result' => false,
                 'message' => _t(__CLASS__ . '.INVALID', 'Incorrect password'),
-            ]);
+            ], 401);
         }
 
         // Activate sudo mode and return successful result
