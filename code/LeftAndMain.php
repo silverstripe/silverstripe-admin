@@ -1200,16 +1200,12 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * Return appropriate template(s) for this class, with the given suffix using
+     * Return appropriate template candidates for this class, with the given suffix using
      * {@link SSViewer::get_templates_by_class()}
-     *
-     * @param string $suffix
-     * @return string|array
      */
-    public function getTemplatesWithSuffix($suffix)
+    public function getTemplatesWithSuffix(string $suffix): array
     {
-        $templates = SSViewer::get_templates_by_class(get_class($this), $suffix, __CLASS__);
-        return SSViewer::chooseTemplate($templates);
+        return SSViewer::get_templates_by_class(get_class($this), $suffix, __CLASS__);
     }
 
     public function Content()
@@ -1226,7 +1222,8 @@ class LeftAndMain extends Controller implements PermissionProvider
     {
         $template = $this->getTemplatesWithSuffix('_PreviewPanel');
         // Only render sections with preview panel
-        if ($template) {
+        $engine = $this->getTemplateEngine();
+        if ($engine->hasTemplate($template)) {
             return $this->renderWith($template);
         }
         return null;
@@ -1592,7 +1589,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     /**
      * Renders a panel containing tools which apply to all displayed
      * "content" (mostly through {@link EditForm()}), for example a tree navigation or a filter panel.
-     * Auto-detects applicable templates by naming convention: "<controller classname>_Tools.ss",
+     * Auto-detects applicable templates by naming convention: "<controller classname>_Tools",
      * and takes the most specific template (see {@link getTemplatesWithSuffix()}).
      * To explicitly disable the panel in the subclass, simply create a more specific, empty template.
      *
@@ -1601,8 +1598,9 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function Tools()
     {
         $templates = $this->getTemplatesWithSuffix('_Tools');
-        if ($templates) {
-            $viewer = SSViewer::create($templates);
+        $engine = $this->getTemplateEngine();
+        if ($engine->hasTemplate($templates)) {
+            $viewer = SSViewer::create($templates, $this->getTemplateEngine());
             return $viewer->process($this);
         } else {
             return false;
@@ -1623,8 +1621,9 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function EditFormTools()
     {
         $templates = $this->getTemplatesWithSuffix('_EditFormTools');
-        if ($templates) {
-            $viewer = SSViewer::create($templates);
+        $engine = $this->getTemplateEngine();
+        if ($engine->hasTemplate($templates)) {
+            $viewer = SSViewer::create($templates, $this->getTemplateEngine());
             return $viewer->process($this);
         } else {
             return false;

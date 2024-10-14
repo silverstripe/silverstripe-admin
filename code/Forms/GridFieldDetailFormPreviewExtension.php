@@ -35,7 +35,6 @@ class GridFieldDetailFormPreviewExtension extends Extension
     {
         $navigator = SilverStripeNavigator::create($this->owner->getRecord());
         $templates = SSViewer::get_templates_by_class(LeftAndMain::class, '_SilverStripeNavigator', LeftAndMain::class);
-        $renderWith = SSViewer::chooseTemplate($templates);
-        return $navigator->renderWith($renderWith);
+        return $navigator->renderWith($templates);
     }
 }
