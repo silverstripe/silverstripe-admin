@@ -1043,7 +1043,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function show(HTTPRequest $request): HTTPResponse
     {
         if ($request->param('ID')) {
-            $this->setCurrentPageID($request->param('ID'));
+            $this->setCurrentRecordID($request->param('ID'));
         }
         return $this->getResponseNegotiator()->respond($request);
     }
@@ -1233,14 +1233,22 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
+     * Get the class of the model which is managed by this controller.
+     * @return class-string<DataObject>
+     */
+    public function getModelClass(): string
+    {
+        return static::config()->get('tree_class') ?? '';
+    }
+
+    /**
      * Get dataobject from the current ID
      *
      * @param int|DataObject $id ID or object
-     * @return DataObject
      */
-    public function getRecord($id)
+    public function getRecord($id): ?DataObject
     {
-        $className = $this->config()->get('tree_class');
+        $className = $this->getModelClass();
         if (!$className) {
             return null;
         }
@@ -1313,7 +1321,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function save(array $data, Form $form): HTTPResponse
     {
         $request = $this->getRequest();
-        $className = $this->config()->get('tree_class');
+        $className = $this->getModelClass();
 
         // Existing or new record?
         $id = $data['ID'];
@@ -1326,7 +1334,7 @@ class LeftAndMain extends Controller implements PermissionProvider
                 $this->httpError(404, "Bad record ID #" . (int)$id);
             }
         } else {
-            if (!singleton($this->config()->get('tree_class'))->canCreate()) {
+            if (!singleton($className)->canCreate()) {
                 return Security::permissionFailure($this);
             }
             $record = $this->getNewItem($id, false);
@@ -1336,7 +1344,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         $form->saveInto($record, true);
         $record->write();
         $this->extend('onAfterSave', $record);
-        $this->setCurrentPageID($record->ID);
+        $this->setCurrentRecordID($record->ID);
 
         $message = _t(__CLASS__ . '.SAVEDUP', 'Saved.');
         if ($this->getSchemaRequested()) {
@@ -1362,7 +1370,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     public function getNewItem($id, $setID = true)
     {
-        $class = $this->config()->get('tree_class');
+        $class = $this->getModelClass();
         $object = Injector::inst()->create($class);
         if ($setID) {
             $object->ID = $id;
@@ -1372,7 +1380,7 @@ class LeftAndMain extends Controller implements PermissionProvider
 
     public function delete(array $data, Form $form): HTTPResponse
     {
-        $className = $this->config()->get('tree_class');
+        $className = $this->getModelClass();
 
         $id = $data['ID'];
         $record = DataObject::get_by_id($className, $id);
@@ -1402,9 +1410,9 @@ class LeftAndMain extends Controller implements PermissionProvider
      *
      * This is a "pseudo-abstract" method, usually connected to a {@link getEditForm()}
      * method in an entwine subclass. This method can accept a record identifier,
-     * selected either in custom logic, or through {@link currentPageID()}.
+     * selected either in custom logic, or through {@link currentRecordID()}.
      * The form usually construct itself from {@link DataObject->getCMSFields()}
-     * for the specific managed subclass defined in {@link LeftAndMain::$tree_class}.
+     * for the specific managed subclass defined in {@link LeftAndMain::getModelClass()}.
      *
      * @param HTTPRequest $request Passed if executing a HTTPRequest directly on the form.
      * If empty, this is invoked as $EditForm in the template
@@ -1427,7 +1435,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function getEditForm($id = null, $fields = null)
     {
         if (!$id) {
-            $id = $this->currentPageID();
+            $id = $this->currentRecordID();
         }
 
         // Check record exists
@@ -1457,8 +1465,8 @@ class LeftAndMain extends Controller implements PermissionProvider
             $fields->push(new HiddenField('ClassName'));
         }
 
-        $tree_class = $this->config()->get('tree_class');
-        if ($tree_class::has_extension(Hierarchy::class)
+        $modelClass = $this->getModelClass();
+        if ($modelClass::has_extension(Hierarchy::class)
             && !$fields->dataFieldByName('ParentID')
         ) {
             $fields->push(new HiddenField('ParentID'));
@@ -1636,7 +1644,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     public function batchactions()
     {
-        return new CMSBatchActionHandler($this, 'batchactions', $this->config()->get('tree_class'));
+        return new CMSBatchActionHandler($this, 'batchactions', $this->getModelClass());
     }
 
     /**
@@ -1681,7 +1689,7 @@ class LeftAndMain extends Controller implements PermissionProvider
 
     public function printable()
     {
-        $form = $this->getEditForm($this->currentPageID());
+        $form = $this->getEditForm($this->currentRecordID());
         if (!$form) {
             return false;
         }
@@ -1704,7 +1712,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function getSilverStripeNavigator(?DataObject $record = null)
     {
         if (!$record) {
-            $record = $this->currentPage();
+            $record = $this->currentRecord();
         }
         if ($record && (($record instanceof CMSPreviewable) || $record->has_extension(CMSPreviewable::class))) {
             $navigator = new SilverStripeNavigator($record);
@@ -1719,11 +1727,11 @@ class LeftAndMain extends Controller implements PermissionProvider
      * sources (in this order):
      * - GET/POST parameter named 'ID'
      * - URL parameter named 'ID'
-     * - Session value namespaced by classname, e.g. "CMSMain.currentPage"
+     * - Session value namespaced by classname, e.g. "CMSMain.currentRecord"
      *
      * @return int
      */
-    public function currentPageID()
+    public function currentRecordID()
     {
         if ($this->pageID) {
             return $this->pageID;
@@ -1732,9 +1740,9 @@ class LeftAndMain extends Controller implements PermissionProvider
             return $this->getRequest()->requestVar('ID');
         }
 
-        if ($this->getRequest()->requestVar('CMSMainCurrentPageID') && is_numeric($this->getRequest()->requestVar('CMSMainCurrentPageID'))) {
+        if ($this->getRequest()->requestVar('CMSMainCurrentRecordID') && is_numeric($this->getRequest()->requestVar('CMSMainCurrentRecordID'))) {
             // see GridFieldDetailForm::ItemEditForm
-            return $this->getRequest()->requestVar('CMSMainCurrentPageID');
+            return $this->getRequest()->requestVar('CMSMainCurrentRecordID');
         }
 
         if (isset($this->urlParams['ID']) && is_numeric($this->urlParams['ID'])) {
@@ -1747,34 +1755,34 @@ class LeftAndMain extends Controller implements PermissionProvider
 
         /** @deprecated */
         $session = $this->getRequest()->getSession();
-        return $session->get($this->sessionNamespace() . ".currentPage") ?: null;
+        return $session->get($this->sessionNamespace() . ".currentRecord") ?: null;
     }
 
     /**
      * Forces the current page to be set in session,
-     * which can be retrieved later through {@link currentPageID()}.
+     * which can be retrieved later through {@link currentRecordID()}.
      * Keep in mind that setting an ID through GET/POST or
      * as a URL parameter will overrule this value.
      *
      * @param int $id
      */
-    public function setCurrentPageID($id)
+    public function setCurrentRecordID($id)
     {
         $this->pageID = $id;
         $id = (int)$id;
         /** @deprecated */
-        $this->getRequest()->getSession()->set($this->sessionNamespace() . ".currentPage", $id);
+        $this->getRequest()->getSession()->set($this->sessionNamespace() . ".currentRecord", $id);
     }
 
     /**
-     * Uses {@link getRecord()} and {@link currentPageID()}
+     * Uses {@link getRecord()} and {@link currentRecordID()}
      * to get the currently selected record.
      *
      * @return DataObject
      */
-    public function currentPage()
+    public function currentRecord()
     {
-        return $this->getRecord($this->currentPageID());
+        return $this->getRecord($this->currentRecordID());
     }
 
     /**
@@ -1784,9 +1792,9 @@ class LeftAndMain extends Controller implements PermissionProvider
      * @param DataObject $record
      * @return bool
      */
-    public function isCurrentPage(DataObject $record)
+    public function isCurrentRecord(DataObject $record)
     {
-        return ($record->ID == $this->currentPageID());
+        return ($record->ID == $this->currentRecordID());
     }
 
     /**
@@ -1845,7 +1853,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     public function SwitchView()
     {
-        $page = $this->currentPage();
+        $page = $this->currentRecord();
         if (!$page) {
             return null;
         }
