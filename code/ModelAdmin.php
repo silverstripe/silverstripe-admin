@@ -335,7 +335,7 @@ abstract class ModelAdmin extends LeftAndMain
         ]));
 
         if (!$this->showSearchForm ||
-            (is_array($this->showSearchForm) && !in_array($this->modelClass, $this->showSearchForm ?? []))
+            (is_array($this->showSearchForm) && !in_array($this->getModelClass(), $this->showSearchForm ?? []))
         ) {
             $config->removeComponentsByType(GridFieldFilterHeader::class);
         }
@@ -349,8 +349,8 @@ abstract class ModelAdmin extends LeftAndMain
         }
 
         // Validation
-        if (singleton($this->modelClass)->hasMethod('getCMSCompositeValidator')) {
-            $detailValidator = singleton($this->modelClass)->getCMSCompositeValidator();
+        if (singleton($this->getModelClass())->hasMethod('getCMSCompositeValidator')) {
+            $detailValidator = singleton($this->getModelClass())->getCMSCompositeValidator();
             $detailform = $config->getComponentByType(GridFieldDetailForm::class);
             $detailform->setValidator($detailValidator);
         }
@@ -376,7 +376,7 @@ abstract class ModelAdmin extends LeftAndMain
      */
     public function getExportFields()
     {
-        return singleton($this->modelClass)->summaryFields();
+        return singleton($this->getModelClass())->summaryFields();
     }
 
     /**
@@ -400,7 +400,7 @@ abstract class ModelAdmin extends LeftAndMain
      */
     public function getList()
     {
-        $list = DataObject::singleton($this->modelClass)->get();
+        $list = DataObject::singleton($this->getModelClass())->get();
 
         $this->extend('updateList', $list);
 
@@ -410,12 +410,10 @@ abstract class ModelAdmin extends LeftAndMain
     /**
      * The model managed by this instance.
      * See $managed_models for potential values.
-     *
-     * @return string
      */
-    public function getModelClass()
+    public function getModelClass(): string
     {
-        return $this->modelClass;
+        return $this->modelClass ?? '';
     }
 
     /**
@@ -583,7 +581,7 @@ abstract class ModelAdmin extends LeftAndMain
      */
     public function ImportForm()
     {
-        $modelSNG = singleton($this->modelClass);
+        $modelSNG = singleton($this->getModelClass());
         $modelName = $modelSNG->i18n_singular_name();
         // check if a import form should be generated
         if (!$this->showImportForm ||
@@ -598,7 +596,7 @@ abstract class ModelAdmin extends LeftAndMain
         }
 
         $fields = new FieldList(
-            new HiddenField('ClassName', false, $this->modelClass),
+            new HiddenField('ClassName', false, $this->getModelClass()),
             new FileField('_CsvFile', false)
         );
 
@@ -615,7 +613,7 @@ abstract class ModelAdmin extends LeftAndMain
             $specRelations->push(new ArrayData(['Name' => $name, 'Description' => $desc]));
         }
         $specHTML = $this->customise([
-            'ClassName' => $this->sanitiseClassName($this->modelClass),
+            'ClassName' => $this->sanitiseClassName($this->getModelClass()),
             'ModelName' => Convert::raw2att($modelName),
             'Fields' => $specFields,
             'Relations' => $specRelations,
@@ -658,7 +656,7 @@ abstract class ModelAdmin extends LeftAndMain
     public function import(array $data, Form $form): HTTPResponse
     {
         if (!$this->showImportForm || (is_array($this->showImportForm)
-                && !in_array($this->modelClass, $this->showImportForm ?? []))
+                && !in_array($this->getModelClass(), $this->showImportForm ?? []))
         ) {
             return $this->redirectBack();
         }

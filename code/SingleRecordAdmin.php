@@ -44,7 +44,7 @@ abstract class SingleRecordAdmin extends LeftAndMain
     protected function getSingleRecord(): ?DataObject
     {
         $record = null;
-        $modelClass = static::config()->get('model_class');
+        $modelClass = $this->getModelClass();
         if (static::config()->get('restrict_to_single_record')) {
             $record = DataObject::get_one($modelClass);
         }

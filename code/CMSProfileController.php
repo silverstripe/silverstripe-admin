@@ -28,7 +28,7 @@ class CMSProfileController extends SingleRecordAdmin
     {
         parent::init();
         if (!$this->getResponse()->isRedirect()) {
-            $this->setCurrentPageID(Security::getCurrentUser()->ID);
+            $this->setCurrentRecordID(Security::getCurrentUser()->ID);
         }
     }
 

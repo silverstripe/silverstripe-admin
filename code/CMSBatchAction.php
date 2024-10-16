@@ -2,6 +2,7 @@
 
 namespace SilverStripe\Admin;
 
+use SilverStripe\CMS\Controllers\CMSMain;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPResponse;
@@ -107,9 +108,14 @@ abstract class CMSBatchAction
 
             // Now make sure the tree title is appropriately updated
             $publishedRecord = DataObject::get_by_id($this->managedClass, $id);
+            if ($publishedRecord instanceof SiteTree) {
+                $treeTitle = CMSMain::singleton()->getRecordTreeMarkup($publishedRecord);
+            } else {
+                $treeTitle = $publishedRecord->TreeTitle;
+            }
             if ($publishedRecord) {
                 $status['modified'][$id] = [
-                    'TreeTitle' => $publishedRecord->TreeTitle,
+                    'TreeTitle' => $treeTitle,
                 ];
             } else {
                 $status['deleted'][$id] = $id;

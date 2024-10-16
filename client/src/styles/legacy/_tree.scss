@@ -312,7 +312,7 @@
           color: #FFF;
           border: 0;
           // Specificity override for icons in children pages
-          .jstree-pageicon {
+          .jstree-recordicon {
             color: #FFF;
           }
         }
@@ -324,7 +324,7 @@
         text-decoration: none;
         margin-right: 2px;
       }
-      .jstree-pageicon {
+      .jstree-recordicon {
         margin-top: 3px;
         margin-right: 5px;
       }
@@ -668,7 +668,7 @@
 
 /* Page icons */
 
-.page-icon, a .jstree-pageicon {
+.record-icon, a .jstree-recordicon {
   display: block;
   width: 16px;
   height: 16px;
@@ -679,7 +679,7 @@
   }
 }
 
-a .jstree-pageicon {
+a .jstree-recordicon {
   float: left;
   margin-right: 4px;
   position: relative;
@@ -692,7 +692,7 @@ a .jstree-pageicon {
 }
 
 @mixin tree-status-icon($label, $dotColor, $textColor, $bgColor) {
-  .cms-tree.jstree .status-#{$label} > a .jstree-pageicon:after {
+  .cms-tree.jstree .status-#{$label} > a .jstree-recordicon:after {
     content:"";
     display: block;
     width: 8px;
@@ -711,7 +711,7 @@ a .jstree-pageicon {
     border-color:$textColor;
   }
   // Dots
-  .cms-tree.jstree .status-#{$label} > a .jstree-pageicon:after  {
+  .cms-tree.jstree .status-#{$label} > a .jstree-recordicon:after  {
     background-color:$dotColor;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3), inset 0 0 0 1px $textColor;
   }
@@ -760,7 +760,7 @@ a .jstree-pageicon {
     .jstree-icon {
       background-image: none !important;
     }
-    .jstree-pageicon {
+    .jstree-recordicon {
       background: url('../../images/throbber.gif') top left no-repeat;
     }
   }
