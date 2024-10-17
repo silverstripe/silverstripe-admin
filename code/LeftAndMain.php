@@ -2003,7 +2003,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         $perms = [
             "CMS_ACCESS_LeftAndMain" => [
                 'name' => _t(__CLASS__ . '.ACCESSALLINTERFACES', 'Access to all CMS sections'),
-                'category' => _t(Permission::class . '.CMS_ACCESS_CATEGORY', 'CMS Access'),
+                'category' => _t(__CLASS__ . '.CMS_ACCESS_CATEGORY', 'CMS Access'),
                 'help' => _t(__CLASS__ . '.ACCESSALLINTERFACESHELP', 'Overrules more specific access settings.'),
                 'sort' => -100
             ]
@@ -2035,11 +2035,11 @@ class LeftAndMain extends Controller implements PermissionProvider
             $perms[$code] = [
                 // Item in permission selection identifying the admin section. Example: Access to 'Files & Images'
                 'name' => _t(
-                    CMSMain::class . '.ACCESS',
+                    __CLASS__ . '.ACCESS',
                     "Access to '{title}' section",
                     ['title' => $title]
                 ),
-                'category' => _t(Permission::class . '.CMS_ACCESS_CATEGORY', 'CMS Access')
+                'category' => _t(__CLASS__ . '.CMS_ACCESS_CATEGORY', 'CMS Access')
             ];
         }
 
