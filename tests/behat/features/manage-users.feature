@@ -83,8 +83,8 @@ Feature: Manage users
       | First Name | John |
       | Surname | Doe |
       | Email | john.doe@example.org |
-      | Password | P@ssword#1 |
-      | Confirm Password | P@ssword#1 |
+      | Password | the-quick-brown-fox |
+      | Confirm Password | the-quick-brown-fox |
     And I press the "Create" button
     Then I should see a "Saved member" message
 
