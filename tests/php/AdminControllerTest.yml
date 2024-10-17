@@ -9,6 +9,10 @@ SilverStripe\Security\Group:
     Title: allcmssections
   rooteditusers:
     Title: rooteditusers
+  permission1:
+    Title: permission1
+  permission2:
+    Title: permission2
 SilverStripe\Security\Member:
   admin:
     Email: admin@example.com
@@ -23,6 +27,17 @@ SilverStripe\Security\Member:
   rootedituser:
     Email: rootedituser@test.com
     Groups: =>SilverStripe\Security\Group.rooteditusers
+  noaccessuser:
+    Email: noaccessuser@test.com
+  permission1user:
+    Email: permission1user@test.com
+    Groups: =>SilverStripe\Security\Group.permission1
+  permission2user:
+    Email: permission2user@test.com
+    Groups: =>SilverStripe\Security\Group.permission2
+  permission1and2user:
+    Email: permission1and2user@test.com
+    Groups: =>SilverStripe\Security\Group.permission1,=>SilverStripe\Security\Group.permission2
 SilverStripe\Security\Permission:
   admin:
     Code: ADMIN
@@ -36,3 +51,9 @@ SilverStripe\Security\Permission:
   allcmssections2:
     Code: CMS_ACCESS_LeftAndMain
     GroupID: =>SilverStripe\Security\Group.rooteditusers
+  permission1:
+    Code: PERMISSION1
+    GroupID: =>SilverStripe\Security\Group.permission1
+  permission2:
+    Code: PERMISSION2
+    GroupID: =>SilverStripe\Security\Group.permission2

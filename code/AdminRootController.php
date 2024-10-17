@@ -10,24 +10,41 @@ use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\View\TemplateGlobalProvider;
 
+/**
+ * Controller in charge of managing AdminController routing.
+ *
+ * Adds AdminController classes to the Director routing rules and redirects to an
+ * appropriate controller if a user navigates directly to /admin
+ */
 class AdminRootController extends Controller implements TemplateGlobalProvider
 {
-
     /**
      * Fallback admin URL in case this cannot be infered from Director.rules
-     *
-     * @var string
-     * @config
      */
-    private static $url_base = 'admin';
+    private static string $url_base = 'admin';
+
+    /**
+     * The LeftAndMain child that will be used as the initial panel to display if none is selected (i.e. if you
+     * visit /admin)
+     */
+    private static string $default_panel = SecurityAdmin::class;
+
+    /**
+     * Holds an array of url_pattern => controller k/v pairs, the same as Director::rules. However this is built
+     * dynamically from introspecting on all the classes that derive from AdminController.
+     *
+     * Don't access this directly - always access via the rules() accessor, which will build this array
+     * the first time it's accessed
+     *
+     * @internal
+     */
+    private static ?array $adminRules = null;
 
     /**
      * Convenience function to return the admin route config.
      * Looks for the {@link Director::$rules} for the current admin Controller.
-     *
-     * @return string
      */
-    public static function get_admin_route()
+    public static function get_admin_route(): string
     {
         $rules = Director::config()->get('rules');
         $adminRoute = array_search(__CLASS__, $rules ?? []);
@@ -36,44 +53,22 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
 
     /**
      * Returns the root admin URL for the site with trailing slash
-     *
-     * @return string
      */
-    public static function admin_url(string $action = '')
+    public static function admin_url(string $action = ''): string
     {
         return Controller::join_links(AdminRootController::get_admin_route(), $action);
     }
 
     /**
-     * @var string
-     * @config
-     * The LeftAndMain child that will be used as the initial panel to display if none is selected (i.e. if you
-     * visit /admin)
-     */
-    private static $default_panel = SecurityAdmin::class;
-
-    /**
-     * @var array
-     * @internal
-     *
-     * Holds an array of url_pattern => controller k/v pairs, the same as Director::rules. However this is built
-     * dynamically from introspecting on all the classes that derive from LeftAndMain.
-     *
-     * Don't access this directly - always access via the rules() accessor below, which will build this array
-     * the first time it's accessed
-     */
-    private static $adminRules = null;
-
-    /**
      * Gets a list of url_pattern => controller k/v pairs for each LeftAndMain derived controller
      */
-    public static function rules()
+    public static function rules(): array
     {
         if (AdminRootController::$adminRules === null) {
             AdminRootController::$adminRules = [];
 
             // Map over the array calling add_rule_for_controller on each
-            $classes = CMSMenu::get_cms_classes(null, true, CMSMenu::URL_PRIORITY);
+            $classes = CMSMenu::get_cms_classes(AdminController::class, true, CMSMenu::URL_PRIORITY);
             array_map([__CLASS__, 'add_rule_for_controller'], $classes ?? []);
         }
         return AdminRootController::$adminRules;
@@ -81,10 +76,8 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
 
     /**
      * Add the appropriate k/v pair to AdminRootController::$rules for the given controller.
-     *
-     * @param string $controllerClass Name of class
      */
-    protected static function add_rule_for_controller($controllerClass)
+    protected static function add_rule_for_controller(string $controllerClass): void
     {
         $config = Config::forClass($controllerClass);
         $urlSegment = $config->get('url_segment');
@@ -118,7 +111,7 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
         // Otherwise
         $rules = AdminRootController::rules();
         foreach ($rules as $pattern => $controller) {
-            if (($arguments = $request->match($pattern, true)) !== false) {
+            if ($request->match($pattern, true) !== false) {
                 /** @var LeftAndMain $controllerObj */
                 $controllerObj = Injector::inst()->create($controller);
                 return $controllerObj->handleRequest($request);
@@ -131,10 +124,10 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
     }
 
     /**
-     * @return array Returns an array of strings of the method names of methods on the call that should be exposed
+     * Returns an array of strings of the method names of methods on the call that should be exposed
      * as global variables in the templates.
      */
-    public static function get_template_global_variables()
+    public static function get_template_global_variables(): array
     {
         return [
             'adminURL' => 'admin_url'

@@ -10,7 +10,7 @@ use SilverStripe\Security\Permission;
 
 class SecurityAdminTest extends FunctionalTest
 {
-    protected static $fixture_file = 'LeftAndMainTest.yml';
+    protected static $fixture_file = 'AdminControllerTest.yml';
 
     // public function testGroupExport() {
     //  $this->session()->inst_set('loggedInAs', $this->idFromFixture('Member', 'admin'));

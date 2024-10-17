@@ -88,7 +88,7 @@ class SudoModeControllerTest extends FunctionalTest
             'Password' => 'wrongpassword!',
         ]);
 
-        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame(401, $response->getStatusCode());
         $result = json_decode((string) $response->getBody(), true);
         $this->assertFalse($result['result'], 'Should have failed with incorrect password');
         $this->assertEquals('Incorrect password', $result['message']);
