@@ -31,5 +31,3 @@ $editorConfig
     ]);
 // enable ability to insert anchors
 $editorConfig->insertButtonsAfter('sslink', 'anchor');
-
-CMSMenu::remove_menu_class(CMSProfileController::class);

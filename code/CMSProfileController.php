@@ -22,6 +22,8 @@ class CMSProfileController extends LeftAndMain
 
     private static $tree_class = Member::class;
 
+    private static $ignore_menuitem = true;
+
     public function getEditForm($id = null, $fields = null)
     {
         $this->setCurrentPageID(Security::getCurrentUser()->ID);
