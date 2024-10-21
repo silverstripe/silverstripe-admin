@@ -264,7 +264,7 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
                     $controllerObj = singleton($menuItem->controller);
                     if (Controller::has_curr()) {
                         // Necessary for canView() to have request data available,
-                        // e.g. to check permissions against LeftAndMain->currentPage()
+                        // e.g. to check permissions against LeftAndMain->currentRecord()
                         $controllerObj->setRequest(Controller::curr()->getRequest());
                         if (!$controllerObj->canView($member)) {
                             continue;
@@ -379,7 +379,7 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
         if (!$root) {
             $root = LeftAndMain::class;
         }
-        $abstractClasses = [LeftAndMain::class, CMSMain::class];
+        $abstractClasses = [LeftAndMain::class];
         $subClasses = array_values(ClassInfo::subclassesFor($root) ?? []);
         foreach ($subClasses as $className) {
             if ($recursive && $className != $root) {
