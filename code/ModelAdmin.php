@@ -410,12 +410,10 @@ abstract class ModelAdmin extends LeftAndMain
     /**
      * The model managed by this instance.
      * See $managed_models for potential values.
-     *
-     * @return string
      */
-    public function getModelClass()
+    public function getModelClass(): string
     {
-        return $this->modelClass;
+        return $this->modelClass ?? '';
     }
 
     /**
