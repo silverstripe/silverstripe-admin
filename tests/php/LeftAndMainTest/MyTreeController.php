@@ -9,7 +9,7 @@ class MyTreeController extends LeftAndMain implements TestOnly
 {
     private static $url_segment = 'mytree/edit';
 
-    private static $tree_class = MyTree::class;
+    private static $model_class = MyTree::class;
 
     private static $allowed_actions = [
         'EditForm'
