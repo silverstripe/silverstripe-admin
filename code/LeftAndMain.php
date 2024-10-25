@@ -100,7 +100,7 @@ class LeftAndMain extends AdminController implements PermissionProvider
      * @var string
      * @deprecated 5.4.0 Will be renamed to model_class
      */
-    private static $tree_class = null;
+    private static $model_class = null;
 
     /**
      * @var array
@@ -939,7 +939,7 @@ class LeftAndMain extends AdminController implements PermissionProvider
      */
     public function getRecord($id)
     {
-        $className = $this->config()->get('tree_class');
+        $className = $this->config()->get('model_class');
         if (!$className) {
             return null;
         }
@@ -1005,7 +1005,7 @@ class LeftAndMain extends AdminController implements PermissionProvider
     public function save(array $data, Form $form): HTTPResponse
     {
         $request = $this->getRequest();
-        $className = $this->config()->get('tree_class');
+        $className = $this->config()->get('model_class');
 
         // Existing or new record?
         $id = $data['ID'];
@@ -1018,7 +1018,7 @@ class LeftAndMain extends AdminController implements PermissionProvider
                 $this->httpError(404, "Bad record ID #" . (int)$id);
             }
         } else {
-            if (!singleton($this->config()->get('tree_class'))->canCreate()) {
+            if (!singleton($this->config()->get('model_class'))->canCreate()) {
                 return Security::permissionFailure($this);
             }
             $record = $this->getNewItem($id, false);
@@ -1054,7 +1054,7 @@ class LeftAndMain extends AdminController implements PermissionProvider
      */
     public function getNewItem($id, $setID = true)
     {
-        $class = $this->config()->get('tree_class');
+        $class = $this->config()->get('model_class');
         $object = Injector::inst()->create($class);
         if ($setID) {
             $object->ID = $id;
@@ -1064,7 +1064,7 @@ class LeftAndMain extends AdminController implements PermissionProvider
 
     public function delete(array $data, Form $form): HTTPResponse
     {
-        $className = $this->config()->get('tree_class');
+        $className = $this->config()->get('model_class');
 
         $id = $data['ID'];
         $record = DataObject::get_by_id($className, $id);
@@ -1096,7 +1096,7 @@ class LeftAndMain extends AdminController implements PermissionProvider
      * method in an entwine subclass. This method can accept a record identifier,
      * selected either in custom logic, or through {@link currentPageID()}.
      * The form usually construct itself from {@link DataObject->getCMSFields()}
-     * for the specific managed subclass defined in {@link LeftAndMain::$tree_class}.
+     * for the specific managed subclass defined in {@link LeftAndMain::$model_class}.
      *
      * @param HTTPRequest $request Passed if executing a HTTPRequest directly on the form.
      * If empty, this is invoked as $EditForm in the template
@@ -1149,8 +1149,8 @@ class LeftAndMain extends AdminController implements PermissionProvider
             $fields->push(new HiddenField('ClassName'));
         }
 
-        $tree_class = $this->config()->get('tree_class');
-        if ($tree_class::has_extension(Hierarchy::class)
+        $modelClass = $this->config()->get('model_class');
+        if ($modelClass::has_extension(Hierarchy::class)
             && !$fields->dataFieldByName('ParentID')
         ) {
             $fields->push(new HiddenField('ParentID'));
@@ -1171,14 +1171,14 @@ class LeftAndMain extends AdminController implements PermissionProvider
             if (!$actions || !$actions->count()) {
                 if ($record->hasMethod('canEdit') && $record->canEdit()) {
                     $actions->push(
-                        FormAction::create('save', _t(CMSMain::class . '.SAVE', 'Save'))
+                        FormAction::create('save', _t(__CLASS__ . '.SAVE', 'Save'))
                             ->addExtraClass('btn btn-primary')
                             ->addExtraClass('font-icon-add-circle')
                     );
                 }
                 if ($record->hasMethod('canDelete') && $record->canDelete()) {
                     $actions->push(
-                        FormAction::create('delete', _t(ModelAdmin::class . '.DELETE', 'Delete'))
+                        FormAction::create('delete', _t(__CLASS__ . '.DELETE', 'Delete'))
                             ->addExtraClass('btn btn-secondary')
                     );
                 }
@@ -1221,24 +1221,7 @@ class LeftAndMain extends AdminController implements PermissionProvider
             $form->addExtraClass('cms-previewable');
         }
         $form->addExtraClass('fill-height');
-
-        if ($record->hasMethod('getCMSCompositeValidator')) {
-            // As of framework v4.7, a CompositeValidator is always available form a DataObject, but it may be
-            // empty (which is fine)
-            $form->setValidator($record->getCMSCompositeValidator());
-        } elseif ($record->hasMethod('getCMSValidator')) {
-            // BC support for framework < v4.7
-            $validator = $record->getCMSValidator();
-
-            // The clientside (mainly LeftAndMain*.js) rely on ajax responses
-            // which can be evaluated as javascript, hence we need
-            // to override any global changes to the validation handler.
-            if ($validator) {
-                $form->setValidator($validator);
-            }
-        } else {
-            $form->unsetValidator();
-        }
+        $form->setValidator($record->getCMSCompositeValidator());
 
         // Check if this form is readonly
         if (!$record->canEdit()) {
@@ -1330,7 +1313,7 @@ class LeftAndMain extends AdminController implements PermissionProvider
      */
     public function batchactions()
     {
-        return new CMSBatchActionHandler($this, 'batchactions', $this->config()->get('tree_class'));
+        return new CMSBatchActionHandler($this, 'batchactions', $this->config()->get('model_class'));
     }
 
     /**

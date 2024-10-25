@@ -65,3 +65,7 @@ Feature: Manage my own settings
     And I select "German (Germany)" from "Interface Language"
     And I press the "Save" button
     Then I should see "Sprache"
+
+  Scenario: Breadcrumbs are in the correct place
+    Then I should see "Main" in the ".cms-content-header-tabs" element
+    And I should not see "Main" in the "#Form_EditForm" element
