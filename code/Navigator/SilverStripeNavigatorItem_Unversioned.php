@@ -5,7 +5,7 @@ namespace SilverStripe\Admin\Navigator;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Convert;
 use SilverStripe\Security\Member;
-use SilverStripe\Versioned\Versioned;
+use SilverStripe\Versioned\Mode\Versioned;
 
 class SilverStripeNavigatorItem_Unversioned extends SilverStripeNavigatorItem
 {

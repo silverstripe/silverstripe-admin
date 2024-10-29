@@ -5,7 +5,7 @@ namespace SilverStripe\Admin\Navigator;
 use InvalidArgumentException;
 use SilverStripe\ORM\CMSPreviewable;
 use SilverStripe\ORM\DataObject;
-use SilverStripe\Versioned\Versioned;
+use SilverStripe\Versioned\Mode\Versioned;
 use SilverStripe\Security\Member;
 use SilverStripe\Model\ModelData;
 

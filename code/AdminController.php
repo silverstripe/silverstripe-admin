@@ -14,7 +14,7 @@ use SilverStripe\Forms\HTMLEditor\HTMLEditorConfig;
 use SilverStripe\i18n\i18n;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\Security;
-use SilverStripe\Versioned\Versioned;
+use SilverStripe\Versioned\Mode\Versioned;
 use SilverStripe\View\SSViewer;
 
 /**
