@@ -20,6 +20,9 @@ class CMSProfileController extends LeftAndMain
 
     private static $required_permission_codes = 'CMS_ACCESS';
 
+    /**
+     * @deprecated 5.4.0 Will be renamed to model_class
+     */
     private static $tree_class = Member::class;
 
     public function getEditForm($id = null, $fields = null)
