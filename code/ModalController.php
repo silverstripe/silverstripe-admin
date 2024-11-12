@@ -4,107 +4,48 @@ namespace SilverStripe\Admin;
 
 use SilverStripe\Admin\Forms\EditorEmailLinkFormFactory;
 use SilverStripe\Admin\Forms\EditorExternalLinkFormFactory;
-use SilverStripe\Control\Controller;
-use SilverStripe\Control\RequestHandler;
-use SilverStripe\Dev\Deprecation;
 use SilverStripe\Forms\Form;
 
 /**
  * Parent controller for all CMS-global modals
  */
-class ModalController extends RequestHandler
+class ModalController extends FormSchemaController
 {
+    private static ?string $url_segment = 'modals';
+
     private static $allowed_actions = [
         'EditorExternalLink',
         'EditorEmailLink',
     ];
 
-    public function Link($action = null)
-    {
-        return Controller::join_links(
-            $this->getController()->Link(),
-            $this->getName(),
-            $action,
-            '/'
-        );
-    }
-
-    /**
-     * @var Controller
-     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it
-     */
-    protected $controller;
-
-    /**
-     * @var string
-     */
-    protected $name;
-
-    public function __construct($controller, $name)
-    {
-        parent::__construct();
-
-        $this->controller = $controller;
-        $this->name = $name;
-    }
-
-    public function getRequest()
-    {
-        return $this->controller->getRequest();
-    }
-
-    /**
-     * @return Controller
-     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it
-     */
-    public function getController()
-    {
-        Deprecation::noticeWithNoReplacment('2.4.0');
-        return $this->controller;
-    }
-
-    /**
-     * Get urlsegment
-     *
-     * @return string
-     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it
-     */
-    public function getName()
-    {
-        Deprecation::noticeWithNoReplacment('2.4.0');
-        return $this->name;
-    }
+    private static string $required_permission_codes = 'CMS_ACCESS';
 
     /**
      * Builds and returns the external link form
-     *
-     * @return Form
      */
-    public function EditorExternalLink()
+    public function EditorExternalLink(): Form
     {
         // Show link text field if requested
-        $showLinkText = $this->controller->getRequest()->getVar('requireLinkText');
+        $showLinkText = $this->getRequest()->getVar('requireLinkText');
         $factory = EditorExternalLinkFormFactory::singleton();
         return $factory->getForm(
-            $this->controller,
-            "{$this->name}/EditorExternalLink",
+            $this,
+            __FUNCTION__,
             [ 'RequireLinkText' => isset($showLinkText) ]
         );
     }
 
     /**
      * Builds and returns the external link form
-     *
-     * @return Form
      */
-    public function EditorEmailLink()
+    public function EditorEmailLink(): Form
     {
         // Show link text field if requested
-        $showLinkText = $this->controller->getRequest()->getVar('requireLinkText');
+        $showLinkText = $this->getRequest()->getVar('requireLinkText');
         $factory = EditorEmailLinkFormFactory::singleton();
         return $factory->getForm(
-            $this->controller,
-            "{$this->name}/EditorEmailLink",
+            $this,
+            __FUNCTION__,
             [ 'RequireLinkText' => isset($showLinkText) ]
         );
     }

@@ -19,18 +19,14 @@ use SilverStripe\Core\Convert;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Core\Manifest\ModuleResourceLoader;
 use SilverStripe\Core\Manifest\VersionProvider;
-use SilverStripe\Dev\Deprecation;
 use SilverStripe\Dev\TestOnly;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\HiddenField;
-use SilverStripe\Forms\HTMLEditor\HTMLEditorConfig;
-use SilverStripe\Forms\HTMLEditor\TinyMCEConfig;
 use SilverStripe\Forms\LiteralField;
 use SilverStripe\Forms\PrintableTransformation;
-use SilverStripe\Forms\Schema\FormSchema;
 use SilverStripe\i18n\i18n;
 use SilverStripe\Model\List\ArrayList;
 use SilverStripe\ORM\CMSPreviewable;
@@ -57,14 +53,8 @@ use SilverStripe\View\SSViewer;
  * This is essentially an abstract class which should be subclassed.
  * See {@link CMSMain} for a good example.
  */
-class LeftAndMain extends AdminController implements PermissionProvider
+class LeftAndMain extends FormSchemaController implements PermissionProvider
 {
-
-    /**
-     * Form schema header identifier
-     */
-    const SCHEMA_HEADER = 'X-Formschema-Request';
-
     /**
      * Enable front-end debugging (increases verbosity) in dev mode.
      * Will be ignored in live environments.
@@ -104,7 +94,6 @@ class LeftAndMain extends AdminController implements PermissionProvider
      *
      * @config
      * @var string
-     * @deprecated 2.4.0 Will be renamed to model_class
      */
     private static $model_class = null;
 
@@ -116,31 +105,15 @@ class LeftAndMain extends AdminController implements PermissionProvider
         'save',
         'printable',
         'show',
-        'Modals',
         'EditForm',
         'AddForm',
         'batchactions',
         'BatchActionsForm',
-        'schema',
-        'methodSchema',
-    ];
-
-    private static $url_handlers = [
-        'GET schema/$FormName/$ItemID/$OtherItemID' => 'schema',
-        'GET methodSchema/$Method/$FormName/$ItemID' => 'methodSchema',
     ];
 
     private static $dependencies = [
-        'FormSchema' => '%$' . FormSchema::class,
         'VersionProvider' => '%$' . VersionProvider::class,
     ];
-
-    /**
-     * Current form schema helper
-     *
-     * @var FormSchema
-     */
-    protected $schema = null;
 
     /**
      * Current pageID for this request
@@ -336,140 +309,17 @@ class LeftAndMain extends AdminController implements PermissionProvider
     {
         // Add WYSIWYG link form schema before extensions are applied
         $this->beforeExtending('updateClientConfig', function (array &$clientConfig): void {
+            $modalController = ModalController::singleton();
             $clientConfig['form'] = [
                 'EditorExternalLink' => [
-                    'schemaUrl' => $this->Link('methodSchema/Modals/EditorExternalLink'),
+                    'schemaUrl' => $modalController->Link('schema/EditorExternalLink'),
                 ],
                 'EditorEmailLink' => [
-                    'schemaUrl' => $this->Link('methodSchema/Modals/EditorEmailLink'),
+                    'schemaUrl' => $modalController->Link('schema/EditorEmailLink'),
                 ],
             ];
         });
         return parent::getClientConfig();
-    }
-
-    /**
-     * Get form schema helper
-     *
-     * @return FormSchema
-     */
-    public function getFormSchema()
-    {
-        return $this->schema;
-    }
-
-    /**
-     * Set form schema helper for this controller
-     *
-     * @param FormSchema $schema
-     * @return $this
-     */
-    public function setFormSchema(FormSchema $schema)
-    {
-        $this->schema = $schema;
-        return $this;
-    }
-
-    /**
-     * Gets a JSON schema representing the current edit form.
-     */
-    public function schema(HTTPRequest $request): HTTPResponse
-    {
-        $formName = $request->param('FormName');
-        $itemID = $request->param('ItemID');
-
-        if (!$formName) {
-            $this->jsonError(400, 'Missing request params');
-        }
-
-        $formMethod = "get{$formName}";
-        if (!$this->hasMethod($formMethod)) {
-            $this->jsonError(404, 'Form not found');
-        }
-
-        if (!$this->hasAction($formName)) {
-            $this->jsonError(401, 'Form not accessible');
-        }
-
-        if ($itemID) {
-            $form = $this->{$formMethod}($itemID);
-        } else {
-            $form = $this->{$formMethod}();
-        }
-        $schemaID = $request->getURL();
-        return $this->getSchemaResponse($schemaID, $form);
-    }
-
-    /**
-     * Get the form schema from a given method.
-     * The method must return a Form.
-     */
-    public function methodSchema(HTTPRequest $request): HTTPResponse
-    {
-        Deprecation::noticeWithNoReplacment('2.4.0', 'Will be replaced with SilverStripe\Admin\FormSchemaController::schema()');
-        $method = $request->param('Method');
-        $formName = $request->param('FormName');
-        $itemID = $request->param('ItemID');
-
-        if (!$formName || !$method) {
-            $this->jsonError(400, 'Missing request params');
-        }
-
-        if (!$this->hasMethod($method)) {
-            $this->jsonError(404, 'Method not found');
-        }
-        if (!$this->hasAction($method)) {
-            $this->jsonError(401, 'Method not accessible');
-        }
-
-        $methodItem = $this->{$method}();
-        if (!$methodItem->hasMethod($formName)) {
-            $this->jsonError(404, 'Form not found');
-        }
-        if (!$methodItem->hasAction($formName)) {
-            $this->jsonError(401, 'Form not accessible');
-        }
-
-        $form = $methodItem->{$formName}($itemID);
-        $schemaID = $request->getURL();
-
-        return $this->getSchemaResponse($schemaID, $form);
-    }
-
-    /**
-     * Check if the current request has a X-Formschema-Request header set.
-     * Used by conditional logic that responds to validation results
-     *
-     * @return bool
-     */
-    protected function getSchemaRequested()
-    {
-        $parts = $this->getRequest()->getHeader(static::SCHEMA_HEADER);
-        return !empty($parts);
-    }
-
-    /**
-     * Generate schema for the given form based on the X-Formschema-Request header value
-     *
-     * @param string $schemaID ID for this schema. Required.
-     * @param Form $form Required for 'state' or 'schema' response
-     * @param ValidationResult $errors Required for 'error' response
-     * @param array $extraData Any extra data to be merged with the schema response
-     */
-    protected function getSchemaResponse($schemaID, $form = null, ValidationResult $errors = null, $extraData = []): HTTPResponse
-    {
-        $parts = $this->getRequest()->getHeader(static::SCHEMA_HEADER);
-        $data = $this
-            ->getFormSchema()
-            ->getMultipartSchema($parts, $schemaID, $form, $errors);
-
-        if ($extraData) {
-            $data = array_merge($data, $extraData);
-        }
-
-        $response = new HTTPResponse(json_encode($data));
-        $response->addHeader('Content-Type', 'application/json');
-        return $response;
     }
 
     /**
@@ -497,20 +347,6 @@ class LeftAndMain extends AdminController implements PermissionProvider
             // Audit logging hook
             if (empty($_REQUEST['executeForm']) && !$this->getRequest()->isAjax()) {
                 $this->extend('accessedCMS');
-            }
-
-            // Set the members html editor config
-            if (Security::getCurrentUser()) {
-                HTMLEditorConfig::set_active_identifier(Security::getCurrentUser()->getHtmlEditorConfigForCMS());
-            }
-
-            // Set default values in the config if missing.  These things can't be defined in the config
-            // file because insufficient information exists when that is being processed
-            $htmlEditorConfig = HTMLEditorConfig::get_active();
-            $htmlEditorConfig->setOption('language', TinyMCEConfig::get_tinymce_lang());
-            $langUrl = TinyMCEConfig::get_tinymce_lang_url();
-            if ($langUrl) {
-                $htmlEditorConfig->setOption('language_url', $langUrl);
             }
 
             Requirements::customScript("
@@ -1259,18 +1095,6 @@ class LeftAndMain extends AdminController implements PermissionProvider
         $form->setAttribute('data-pjax-fragment', 'CurrentForm');
 
         return $form;
-    }
-
-    /**
-     * Handler for all global modals
-     *
-     * @return ModalController
-     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it
-     */
-    public function Modals()
-    {
-        Deprecation::noticeWithNoReplacment('2.4.0');
-        return ModalController::create($this, "Modals");
     }
 
     /**
