@@ -59,7 +59,7 @@ class SecurityAdmin extends ModelAdmin implements PermissionProvider
     private static $menu_priority = 0;
 
     /**
-     * @deprecated 5.4.0 Will be renamed to model_class
+     * @deprecated 2.4.0 Will be renamed to model_class
      */
     private static $tree_class = Group::class;
 

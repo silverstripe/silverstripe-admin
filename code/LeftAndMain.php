@@ -22,6 +22,7 @@ use SilverStripe\Core\Convert;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Core\Manifest\ModuleResourceLoader;
 use SilverStripe\Core\Manifest\VersionProvider;
+use SilverStripe\Dev\Deprecation;
 use SilverStripe\Dev\TestOnly;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
@@ -128,7 +129,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      *
      * @config
      * @var string
-     * @deprecated 5.4.0 Will be renamed to model_class
+     * @deprecated 2.4.0 Will be renamed to model_class
      */
     private static $tree_class = null;
 
@@ -485,8 +486,12 @@ class LeftAndMain extends Controller implements PermissionProvider
         throw new HTTPResponse_Exception($response);
     }
 
+    /**
+     * @deprecated 2.4.0 Will be replaced with SilverStripe\Admin\FormSchemaController::schema()
+     */
     public function methodSchema(HTTPRequest $request): HTTPResponse
     {
+        Deprecation::noticeWithNoReplacment('2.4.0', 'Will be replaced with SilverStripe\Admin\FormSchemaController::schema()');
         $method = $request->param('Method');
         $formName = $request->param('FormName');
         $itemID = $request->param('ItemID');
@@ -1564,9 +1569,11 @@ class LeftAndMain extends Controller implements PermissionProvider
      * Handler for all global modals
      *
      * @return ModalController
+     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it
      */
     public function Modals()
     {
+        Deprecation::noticeWithNoReplacment('2.4.0');
         return ModalController::create($this, "Modals");
     }
 

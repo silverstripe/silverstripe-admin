@@ -6,6 +6,7 @@ use SilverStripe\Admin\Forms\EditorEmailLinkFormFactory;
 use SilverStripe\Admin\Forms\EditorExternalLinkFormFactory;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\RequestHandler;
+use SilverStripe\Dev\Deprecation;
 use SilverStripe\Forms\Form;
 
 /**
@@ -30,6 +31,7 @@ class ModalController extends RequestHandler
 
     /**
      * @var Controller
+     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it
      */
     protected $controller;
 
@@ -53,9 +55,11 @@ class ModalController extends RequestHandler
 
     /**
      * @return Controller
+     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it
      */
     public function getController()
     {
+        Deprecation::noticeWithNoReplacment('2.4.0');
         return $this->controller;
     }
 
@@ -63,9 +67,11 @@ class ModalController extends RequestHandler
      * Get urlsegment
      *
      * @return string
+     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it
      */
     public function getName()
     {
+        Deprecation::noticeWithNoReplacment('2.4.0');
         return $this->name;
     }
 
