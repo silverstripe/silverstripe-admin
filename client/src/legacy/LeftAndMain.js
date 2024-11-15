@@ -575,7 +575,12 @@ $.entwine('ss', function($) {
             var newContentEls = self.handleAjaxResponse(data, status, xhr);
             if(!newContentEls) return;
 
-            newContentEls.filter('form').trigger('aftersubmitform', {status: status, xhr: xhr, formData: formData});
+            var formObject = {};
+            // Convert to a plain object for legacy compatibility
+            for (var pair of formData.entries()) {
+              formObject[pair[0]] = pair[1];
+            }
+            newContentEls.filter('form').trigger('aftersubmitform', {status: status, xhr: xhr, formData: formObject});
           }
         }, ajaxOptions));
       });
