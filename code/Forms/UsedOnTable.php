@@ -187,8 +187,6 @@ class UsedOnTable extends FormField
         $attributes = [
             'class' => $this->extraClass(),
             'id' => $this->ID(),
-            'data-schema' => json_encode($this->getSchemaData()),
-            'data-state' => json_encode($this->getSchemaState()),
         ];
 
         $attributes = array_merge($attributes, $this->attributes);
