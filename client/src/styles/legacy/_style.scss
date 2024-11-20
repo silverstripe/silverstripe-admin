@@ -119,8 +119,10 @@ html, body {
     min-height: $toolbar-height;
     min-width: 250px;
 
-    * {
-      display: inline-block; // align back button and breadcrumbs
+    // align back button and breadcrumbs
+    // but specifically do NOT override badge display
+    *:not(.badge) {
+      display: inline-block;
     }
 
     .section-icon {

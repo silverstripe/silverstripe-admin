@@ -158,27 +158,6 @@
             border-radius: 2px;
             font-weight: normal;
           }
-
-          span.badge.status-modified {
-            color: $state-draft;
-          }
-
-          span.badge.status-addedtodraft {
-            color: $state-draft;
-          }
-
-          span.badge.status-deletedonlive,
-          span.badge.status-removedfromdraft {
-            color: #636363;
-            border: 1px solid #E49393;
-            background-color: #F2DADB;
-          }
-
-          span.badge.status-workflow-approval {
-            color: #56660C;
-            border: 1px solid #7C8816;
-            background-color: #DAE79A;
-          }
         }
 
         a.view-link {
@@ -416,4 +395,8 @@
     position: relative;
     padding: $grid-gutter-width;
   }
+}
+
+.ss-gridfield-badge.badge {
+  margin-left: 5px;
 }

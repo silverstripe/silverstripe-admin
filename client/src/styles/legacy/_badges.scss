@@ -1,0 +1,16 @@
+.badge {
+  display: inline-block;
+  background-color: $color-notice;
+  border-color: transparent;
+  color: $body-color-dark;
+  // Badges with no text aren't displayed
+  &:empty {
+    display: none;
+  }
+}
+
+.badge--breadcrumbs {
+  border-width: 1px;
+  border-style: solid;
+  margin-left: $btn-spacing;
+}

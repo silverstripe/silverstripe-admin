@@ -654,6 +654,12 @@
     margin: 0;
     max-width: 40%;
     transition: max-width .75s linear;
+
+    // After the first badge, stop displaying.
+    // There's only enough space for a single badge in this view.
+    ~ .badge {
+      display: none;
+    }
   }
   span.badge:hover {
     max-width: 150px;
@@ -700,13 +706,9 @@ a .jstree-pageicon {
   }
   // Labels
   .jstree .status-#{$label} > .jstree-hovered,
-  .jstree .status-#{$label} > .jstree-clicked,
-  .cms-tree.jstree span.badge.status-#{$label}  {
+  .jstree .status-#{$label} > .jstree-clicked {
     background-color:$bgColor;
     border-color:$textColor;
-  }
-  .cms-tree.jstree span.badge.status-#{$label}  {
-    color: $textColor;
   }
   // Dots
   .cms-tree.jstree .status-#{$label} > a .jstree-pageicon:after  {
