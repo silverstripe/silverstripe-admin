@@ -67,7 +67,7 @@ abstract class FormSchemaController extends AdminController
     }
 
     /**
-     * Gets a JSON schema representing the current edit form.
+     * Gets a JSON schema representing a form.
      */
     public function schema(HTTPRequest $request): HTTPResponse
     {
@@ -104,16 +104,6 @@ abstract class FormSchemaController extends AdminController
     }
 
     /**
-     * Check if the current request has a X-Formschema-Request header set.
-     * Used by conditional logic that responds to validation results
-     */
-    protected function getSchemaRequested(): bool
-    {
-        $parts = $this->getRequest()->getHeader(static::SCHEMA_HEADER);
-        return !empty($parts);
-    }
-
-    /**
      * Generate schema for the given form based on the X-Formschema-Request header value
      *
      * @param string $schemaID ID for this schema. Required.
@@ -121,7 +111,7 @@ abstract class FormSchemaController extends AdminController
      * @param ValidationResult $errors Required for 'error' response
      * @param array $extraData Any extra data to be merged with the schema response
      */
-    protected function getSchemaResponse(string $schemaID, ?Form $form = null, ValidationResult $errors = null, array $extraData = []): HTTPResponse
+    public function getSchemaResponse(string $schemaID, ?Form $form = null, ValidationResult $errors = null, array $extraData = []): HTTPResponse
     {
         $parts = $this->getRequest()->getHeader(static::SCHEMA_HEADER);
         $data = $this
@@ -135,6 +125,16 @@ abstract class FormSchemaController extends AdminController
         $response = new HTTPResponse(json_encode($data));
         $response->addHeader('Content-Type', 'application/json');
         return $response;
+    }
+
+    /**
+     * Check if the current request has a X-Formschema-Request header set.
+     * Used by conditional logic that responds to validation results
+     */
+    protected function getSchemaRequested(): bool
+    {
+        $parts = $this->getRequest()->getHeader(static::SCHEMA_HEADER);
+        return !empty($parts);
     }
 
     private function prepareTinyMce(): void

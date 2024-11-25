@@ -93,7 +93,7 @@ const createInsertLinkModal = (sectionConfigKey, formName) => {
 
     // get the schemaUrl to use as a key for overrides
     const schemaUrl = `${sectionConfig.form[formName].schemaUrl}${requireTextFieldUrl}`
-      .replace(/:pageid/, ownProps.currentPageID);
+      .replace(/:pageid/, ownProps.currentPageID || 0);
 
     return {
       sectionConfig,

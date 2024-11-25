@@ -310,14 +310,9 @@ class LeftAndMain extends FormSchemaController implements PermissionProvider
         // Add WYSIWYG link form schema before extensions are applied
         $this->beforeExtending('updateClientConfig', function (array &$clientConfig): void {
             $modalController = ModalController::singleton();
-            $clientConfig['form'] = [
-                'EditorExternalLink' => [
-                    'schemaUrl' => $modalController->Link('schema/EditorExternalLink'),
-                ],
-                'EditorEmailLink' => [
-                    'schemaUrl' => $modalController->Link('schema/EditorEmailLink'),
-                ],
-            ];
+            foreach (array_keys(ModalController::config()->get('link_modal_form_factories')) as $name) {
+                $clientConfig['form'][$name]['schemaUrl'] = $modalController->Link('linkModalFormSchema/' . $name . '/:pageid');
+            }
         });
         return parent::getClientConfig();
     }
