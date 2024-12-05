@@ -537,13 +537,13 @@ $.entwine('ss', function($) {
         }
 
         // get all data from the form
-        var formData = form.serializeArray();
+        var formData = new FormData(form[0]);
         // add button action
-        formData.push({name: $(button).attr('name'), value:'1'});
+        formData.append($(button).attr('name'), '1');
         // Artificial HTTP referer, IE doesn't submit them via ajax.
         // Also rewrites anchors to their page counterparts, which is important
         // as automatic browser ajax response redirects seem to discard the hash/fragment.
-        formData.push({ name: 'BackURL', value: document.URL.replace(/\/$/, '') });
+        formData.append('BackURL', document.URL.replace(/\/$/, ''));
 
         // Save tab selections so we can restore them later
         self.saveTabState(window.ss.tabStateUrl(), false);
@@ -552,10 +552,16 @@ $.entwine('ss', function($) {
         // The returned view isn't always decided upon when the request
         // is fired, so the server might decide to change it based on its own logic,
         // sending back different `X-Pjax` headers and content
+
+        // Some tips on using FormData
+        // processData=false lets you prevent jQuery from automatically transforming the data into a query string
+        // setting contentType=false is imperative, since otherwise jQuery will set it incorrectly.
         jQuery.ajax(jQuery.extend({
           headers: {"X-Pjax" : "CurrentForm,Breadcrumbs,ValidationResult"},
           url: form.attr('action'),
           data: formData,
+          processData: false,
+          contentType: false,
           type: 'POST',
           complete: function() {
             clearButton()
@@ -569,7 +575,12 @@ $.entwine('ss', function($) {
             var newContentEls = self.handleAjaxResponse(data, status, xhr);
             if(!newContentEls) return;
 
-            newContentEls.filter('form').trigger('aftersubmitform', {status: status, xhr: xhr, formData: formData});
+            var formObject = {};
+            // Convert to a plain object for legacy compatibility
+            for (var pair of formData.entries()) {
+              formObject[pair[0]] = pair[1];
+            }
+            newContentEls.filter('form').trigger('aftersubmitform', {status: status, xhr: xhr, formData: formObject});
           }
         }, ajaxOptions));
       });
