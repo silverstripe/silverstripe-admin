@@ -27,7 +27,7 @@ class CMSProfileController extends LeftAndMain
 
     public function getEditForm($id = null, $fields = null)
     {
-        $this->setCurrentPageID(Security::getCurrentUser()->ID);
+        $this->setCurrentRecordID(Security::getCurrentUser()->ID);
 
         $form = parent::getEditForm($id, $fields);
 

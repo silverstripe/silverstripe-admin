@@ -171,6 +171,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      * Current pageID for this request
      *
      * @var null
+     * @deprecated 2.4.0 Will be renamed to recordID.
      */
     protected $pageID = null;
 
@@ -1029,7 +1030,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function show(HTTPRequest $request): HTTPResponse
     {
         if ($request->param('ID')) {
-            $this->setCurrentPageID($request->param('ID'));
+            $this->setCurrentRecordID($request->param('ID'));
         }
         return $this->getResponseNegotiator()->respond($request);
     }
@@ -1322,7 +1323,7 @@ class LeftAndMain extends Controller implements PermissionProvider
         $form->saveInto($record, true);
         $record->write();
         $this->extend('onAfterSave', $record);
-        $this->setCurrentPageID($record->ID);
+        $this->setCurrentRecordID($record->ID);
 
         $message = _t(__CLASS__ . '.SAVEDUP', 'Saved.');
         if ($this->getSchemaRequested()) {
@@ -1413,7 +1414,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function getEditForm($id = null, $fields = null)
     {
         if (!$id) {
-            $id = $this->currentPageID();
+            $id = $this->currentRecordID();
         }
 
         // Check record exists
@@ -1669,7 +1670,7 @@ class LeftAndMain extends Controller implements PermissionProvider
 
     public function printable()
     {
-        $form = $this->getEditForm($this->currentPageID());
+        $form = $this->getEditForm($this->currentRecordID());
         if (!$form) {
             return false;
         }
@@ -1692,7 +1693,7 @@ class LeftAndMain extends Controller implements PermissionProvider
     public function getSilverStripeNavigator(?DataObject $record = null)
     {
         if (!$record) {
-            $record = $this->currentPage();
+            $record = $this->currentRecord();
         }
         if ($record && (($record instanceof CMSPreviewable) || $record->has_extension(CMSPreviewable::class))) {
             $navigator = new SilverStripeNavigator($record);
@@ -1710,30 +1711,45 @@ class LeftAndMain extends Controller implements PermissionProvider
      * - Session value namespaced by classname, e.g. "CMSMain.currentPage"
      *
      * @return int
+     * @deprecated 5.4.0 use currentRecordID() instead.
      */
     public function currentPageID()
+    {
+        Deprecation::notice('5.4.0', 'use currentRecordID() instead.');
+        return $this->currentRecordID();
+    }
+
+    /**
+     * Identifier for the currently shown record,
+     * in most cases a database ID. Inspects the following
+     * sources (in this order):
+     * - GET/POST parameter named 'ID'
+     * - URL parameter named 'ID'
+     * - Session value namespaced by classname, e.g. "CMSMain.currentPage"
+     */
+    public function currentRecordID(): ?int
     {
         if ($this->pageID) {
             return $this->pageID;
         }
         if ($this->getRequest()->requestVar('ID') && is_numeric($this->getRequest()->requestVar('ID'))) {
-            return $this->getRequest()->requestVar('ID');
+            return (int) $this->getRequest()->requestVar('ID');
         }
 
         if ($this->getRequest()->requestVar('CMSMainCurrentPageID') && is_numeric($this->getRequest()->requestVar('CMSMainCurrentPageID'))) {
             // see GridFieldDetailForm::ItemEditForm
-            return $this->getRequest()->requestVar('CMSMainCurrentPageID');
+            return (int) $this->getRequest()->requestVar('CMSMainCurrentPageID');
         }
 
         if (isset($this->urlParams['ID']) && is_numeric($this->urlParams['ID'])) {
-            return $this->urlParams['ID'];
+            return (int) $this->urlParams['ID'];
         }
 
         if (is_numeric($this->getRequest()->param('ID'))) {
-            return $this->getRequest()->param('ID');
+            return (int) $this->getRequest()->param('ID');
         }
 
-        /** @deprecated */
+        // Using session for this is deprecated - see https://github.com/silverstripe/silverstripe-admin/pull/19
         $session = $this->getRequest()->getSession();
         return $session->get($this->sessionNamespace() . ".currentPage") ?: null;
     }
@@ -1745,12 +1761,23 @@ class LeftAndMain extends Controller implements PermissionProvider
      * as a URL parameter will overrule this value.
      *
      * @param int $id
+     * @deprecated 5.4.0 use setCurrentRecordID() instead.
      */
     public function setCurrentPageID($id)
     {
-        $this->pageID = $id;
+        Deprecation::notice('5.4.0', 'use setCurrentRecordID() instead.');
         $id = (int)$id;
-        /** @deprecated */
+        $this->setCurrentRecordID($id);
+    }
+
+    /**
+     * Sets the ID for the current record which can be retrieved later through {@link currentRecordID()}.
+     * Keep in mind that setting an ID through GET/POST or as a URL parameter will overrule this value.
+     */
+    public function setCurrentRecordID(?int $id): void
+    {
+        $this->pageID = $id;
+        // Setting session for this is deprecated - see https://github.com/silverstripe/silverstripe-admin/pull/19
         $this->getRequest()->getSession()->set($this->sessionNamespace() . ".currentPage", $id);
     }
 
@@ -1759,22 +1786,43 @@ class LeftAndMain extends Controller implements PermissionProvider
      * to get the currently selected record.
      *
      * @return DataObject
+     * @deprecated 5.4.0 use currentRecord() instead.
      */
     public function currentPage()
     {
-        return $this->getRecord($this->currentPageID());
+        Deprecation::notice('5.4.0', 'use currentRecord() instead.');
+        return $this->currentRecord();
+    }
+
+    /**
+     * Uses {@link getRecord()} and {@link currentRecordID()}
+     * to get the currently selected record.
+     */
+    public function currentRecord(): ?DataObject
+    {
+        return $this->getRecord($this->currentRecordID());
     }
 
     /**
      * Compares a given record to the currently selected one (if any).
      * Used for marking the current tree node.
      *
-     * @param DataObject $record
      * @return bool
+     * @deprecated 5.4.0 use isCurrentRecord() instead.
      */
     public function isCurrentPage(DataObject $record)
     {
-        return ($record->ID == $this->currentPageID());
+        Deprecation::notice('5.4.0', 'use isCurrentRecord() instead.');
+        return $this->isCurrentRecord($record);
+    }
+
+    /**
+     * Compares a given record to the currently selected one (if any).
+     * Used for marking the current tree node.
+     */
+    public function isCurrentRecord(DataObject $record): bool
+    {
+        return ($record->ID == $this->currentRecordID());
     }
 
     /**
@@ -1833,7 +1881,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     public function SwitchView()
     {
-        $page = $this->currentPage();
+        $page = $this->currentRecord();
         if (!$page) {
             return null;
         }

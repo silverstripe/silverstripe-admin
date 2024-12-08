@@ -32,6 +32,7 @@ interface LeftAndMain_SearchFilter
      *
      * @param DataObject $page
      * @return bool
+     * @deprecated 5.4.0 will be renamed to isRecordIncluded().
      */
     public function isPageIncluded($page);
 
@@ -40,6 +41,7 @@ interface LeftAndMain_SearchFilter
      *
      * @param DataObject $page
      * @return array|string
+     * @deprecated 5.4.0 will be renamed to getRecordClasses().
      */
     public function getPageClasses($page);
 }
