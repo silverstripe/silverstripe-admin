@@ -11,6 +11,26 @@ class SingleSelectField extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentDidMount() {
+    // If the value isn't in the available options, we should treat it as though it's empty.
+    // This is the same behaviour the entwine dropdown fields use.
+    let found = false;
+    /* eslint-disable-next-line no-restricted-syntax */
+    for (const option of this.getOptions()) {
+      // Intentionally use == instead of === to allow strings to match ints
+      // eslint-disable-next-line eqeqeq
+      if (option.value == this.props.value) {
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      if (typeof this.props.onChange === 'function') {
+        this.props.onChange(null, { id: this.props.id, value: '' });
+      }
+    }
+  }
+
   /**
    * Builds the select field in readonly mode with current props
    *
@@ -34,9 +54,7 @@ class SingleSelectField extends Component {
    */
   getSelectField() {
     // .slice() to copy the array, because we could modify it with an empty item
-    const options = (this.props.source)
-      ? this.props.source.slice()
-      : [];
+    const options = this.getOptions();
 
     if (this.props.data.hasEmptyDefault && !options.find((item) => !item.value)) {
       options.unshift({
@@ -48,7 +66,7 @@ class SingleSelectField extends Component {
 
     return (
       <Input type="select" {...this.getInputProps()}>
-        { options.map((item, index) => {
+        {options.map((item, index) => {
           const key = `${this.props.name}-${item.value || `empty${index}`}`;
           const description = item.description || null;
 
@@ -57,7 +75,7 @@ class SingleSelectField extends Component {
               {item.title}
             </option>
           );
-        }) }
+        })}
       </Input>
     );
   }
@@ -83,6 +101,12 @@ class SingleSelectField extends Component {
     }
 
     return props;
+  }
+
+  getOptions() {
+    return (this.props.source)
+      ? this.props.source.slice()
+      : [];
   }
 
   /**
