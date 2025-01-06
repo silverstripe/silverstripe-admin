@@ -45,7 +45,6 @@ use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\Model\ArrayData;
 use SilverStripe\View\Requirements;
 use SilverStripe\View\SSViewer;
-use SilverStripe\Dev\Deprecation;
 
 /**
  * LeftAndMain is the parent class of all the two-pane views in the CMS.
