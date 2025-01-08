@@ -129,7 +129,7 @@ $.entwine('ss', function($){
         // Check if there are any form validation errors
         let validationErrorExists = false;
 
-        // Validation errors from DataObject::getCMSValidator()
+        // Validation errors from the form validator
         if (this.hasClass('validationerror')) {
           validationErrorExists = true;
         }
