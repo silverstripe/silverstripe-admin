@@ -35,7 +35,6 @@ class CMSProfileController extends LeftAndMain
             return $form;
         }
 
-        $form->Fields()->removeByName('LastVisited');
         $form->Fields()->push(new HiddenField('ID', null, Security::getCurrentUser()->ID));
         $form->Actions()->push(
             FormAction::create('save', _t(CMSMain::class . '.SAVE', 'Save'))
