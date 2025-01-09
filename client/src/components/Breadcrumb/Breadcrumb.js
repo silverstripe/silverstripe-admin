@@ -102,14 +102,6 @@ Breadcrumb.propTypes = {
   crumbs: PropTypes.arrayOf(PropTypes.shape({
     onClick: PropTypes.func,
     text: PropTypes.string,
-    // pass in a single icon (retain backwards compatibility)
-    icon: PropTypes.shape({
-      nodeName: PropTypes.string,
-      className: PropTypes.string,
-      onClick: PropTypes.func,
-      action: (props) => { if (props.action) { throw new Error('action: no longer used'); } },
-    }),
-    // pass in an array multiple icons (use this going forward)
     icons: PropTypes.arrayOf(PropTypes.shape({
       nodeName: PropTypes.string,
       className: PropTypes.string,

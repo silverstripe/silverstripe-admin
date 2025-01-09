@@ -607,15 +607,6 @@ $.entwine('ss', function($){
         this.hideMembersList(instant);
       }
     },
-    // these two functions retained for backwards compatibility
-    showList: function(instant) {
-      this.showGroupsList(instant);
-      this.showMembersList(instant);
-    },
-    hideList: function(instant) {
-      this.hideGroupsList(instant);
-      this.hideMembersList(instant);
-    },
     showGroupsList: function (instant) {
       const holder = this.closest('.field');
       this.showListElement(holder, holder.parent().find('.form-group, .field').filter((_, candidate) => this.checkIfHoldsField(candidate, 'Groups')), instant);
