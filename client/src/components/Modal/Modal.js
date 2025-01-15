@@ -58,7 +58,7 @@ const Modal = ({
     typeof onClosed === 'function' && (
       <button
         type="button"
-        className="close modal__close-button"
+        className="btn-close modal__close-button"
         onClick={onClosed}
         aria-label={i18n._t('Admin.CLOSE', 'Close')}
       />

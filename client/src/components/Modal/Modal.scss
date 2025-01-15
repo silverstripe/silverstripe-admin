@@ -3,7 +3,7 @@
   // IE10 fix
   height: calc(100% - #{$toolbar-total-height});
 
-  @include media-breakpoint-down(sm) {
+  @include media-breakpoint-down(md) {
     height: calc(100% - 1rem);
     width: calc(100% - .5rem);
     margin: 0 auto;
@@ -41,7 +41,7 @@
   background-color: $body-bg-dark;
 
   // Close icon
-  .close {
+  .btn-close {
     position: relative;
     z-index: 2;
     height: 32px;
@@ -64,8 +64,10 @@
 }
 
 .modal__close-button,
-.modal-header .close {
+.modal-header .btn-close {
   opacity: 1;
+  // Replace .btn-close background, which renders the wrong button icon
+  --bs-btn-close-bg: none;
 
   // We can't insert our own classes into the header close button
   // so manually add font icon styles

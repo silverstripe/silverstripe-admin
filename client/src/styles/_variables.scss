@@ -87,12 +87,18 @@ $input-max-width: 895px; // Approx max possible at small screen sizes
 $input-padding-x-lg: 1.25rem;
 $input-padding-y-lg: .75rem;
 
+// From bootstrap 4 - see _bootstrap-form.scss
+$form-grid-gutter-width: 10px !default;
+$form-group-margin-bottom: 1rem !default;
+$form-check-input-margin-x: .25rem !default;
+
 // Z-index master list
 // Warning: Avoid customizing these values. They're used for a bird's eye view
 // of components dependent on the z-axis and are designed to all work together.
 
 $zindex-popover: 1060;
 $zindex-modal-bg: 1040;
+$zindex-modal-backdrop: 1040;
 $zindex-modal: 1050;
 $zindex-cms-content-header: 60;
 $zindex-cms-content-actions: 79;

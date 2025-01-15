@@ -22,7 +22,7 @@ const SearchToggle = ({ onToggle, toggled }) => (<Button
   onClick={onToggle}
   className={toggleBtnClasses(toggled)}
 >
-  <span className="sr-only">{label}</span>
+  <span className="visually-hidden">{label}</span>
 </Button>);
 
 SearchToggle.propTypes = {

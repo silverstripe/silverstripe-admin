@@ -103,10 +103,8 @@ $divided-panel-padding-x: calc($panel-padding-x / 2);
     }
 
     // Nesting needed for specificity, adds padding to clear link
-    .input-group-append {
-      .btn-link {
-        padding-right: $panel-padding-x;
-      }
+    .btn-link {
+      padding-right: $panel-padding-x;
     }
   }
 

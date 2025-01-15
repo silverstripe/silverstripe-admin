@@ -35,7 +35,7 @@
   }
 
   #ActionMenus_MoreOptions {
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(sm) {
       left: -205px !important;
     }
   }

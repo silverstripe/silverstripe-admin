@@ -176,7 +176,7 @@ $.entwine('ss', function($){
             const invalidTabPaneId = $invalidTabPanes.eq(i).attr('id');
             const $tabLi = getTabLi(invalidTabPaneId);
             const $icon = $(`<i class="${iconClass}" title="${iconTitle}" aria-hidden="true"></i>`);
-            const $screenReaderSpan = $(`<span class="tab-validation-error-sr sr-only">${iconScreenReaderText}</span>`);
+            const $screenReaderSpan = $(`<span class="tab-validation-error-sr visually-hidden">${iconScreenReaderText}</span>`);
             $tabLi.append($icon);
             $tabLi.append($screenReaderSpan);
           });

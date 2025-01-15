@@ -34,6 +34,11 @@ html [type="button"] {
   margin-right: 0;
 }
 
+// Fix btn-link to have transparent bg (i.e. it should look like a regular link)
+.btn-link:hover {
+  background-color: transparent;
+}
+
 // Don't tie input padding to btn padding
 .form-control {
   padding-top: $input-padding-y;
@@ -47,4 +52,27 @@ html [type="button"] {
 // Restore bottom padding
 .form-check {
   margin-bottom: $form-check-margin-bottom;
+}
+
+// Remove box shadow from the tables which is preventing the backgrounds from displaying
+.table > :not(caption) > * > * {
+  box-shadow: none;
+}
+
+// Render readonly form controls the same as disabled (bootstrap stopped doing this in 5.2)
+.form-control[readonly] {
+  color: $input-disabled-color;
+  background-color: $input-disabled-bg;
+  border-color: $input-disabled-border-color;
+  // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655.
+  opacity: 1;
+}
+
+// Restore bootstrap 4 height for some form elements
+.form-control, .field input.text, .field textarea, .field select {
+  height: $input-height;
+}
+
+textarea.form-control, .field textarea {
+  height: auto;
 }

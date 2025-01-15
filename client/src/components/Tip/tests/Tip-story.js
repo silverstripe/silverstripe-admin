@@ -1,7 +1,7 @@
 import React from 'react';
 import { jsxDecorator } from 'storybook-addon-jsx';
 import Tip, { TIP_IMPORTANCE_LEVELS, TIP_TYPES } from 'components/Tip/Tip';
-import { FormGroup, Input, InputGroup, InputGroupAddon } from 'reactstrap';
+import { FormGroup, Input, InputGroup } from 'reactstrap';
 
 const inputProps = {
   name: 'MyField',
@@ -105,9 +105,7 @@ export const _TitleTip = () => (
 export const _InputGroupTip = (args) => (
   <InputGroup>
     <Input {...inputProps} />
-    <InputGroupAddon addonType="append">
-      <Tip {...args} />
-    </InputGroupAddon>
+    <Tip {...args} />
   </InputGroup>
 );
 

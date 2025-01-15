@@ -80,7 +80,6 @@
 }
 
 // Used buttons with text and icons, but you wan to hide the text only. eg. gridfield pagination
-// Could change to BS .text-hide { @include text-hide(); }, although slightly different
 .btn--hide-text[class*="font-icon-"] {
 
   &:before {
@@ -142,39 +141,6 @@
   }
 }
 
-
-// Specific button variations
-.btn-primary {
-  border-bottom-color: $btn-primary-shadow;
-
-  .btn__circle {
-    background: $white;
-  }
-
-  &:focus {
-    outline-color: $brand-primary;
-  }
-}
-
-.btn-outline-primary {
-  border-color: lighten($btn-primary-border, 10%);
-
-  &:not(:disabled, .disabled) {
-    &:hover,
-    &:active,
-    &:focus {
-      color: darken($btn-primary-bg, 10%);
-      background-image: none;
-      background-color: lighten($btn-primary-bg, 50%);
-      border-color: $btn-primary-border;
-    }
-  }
-
-  .btn__circle {
-    background: $btn-primary-bg;
-  }
-}
-
 .btn-secondary {
   border-color: transparent;
   background-color: transparent;
@@ -200,12 +166,16 @@
   &:not(:disabled, .disabled) {
     &:hover,
     &:focus,
-    &.focus,
-    &:active,
-    &.active {
+    &.focus {
       background-color: $btn-secondary-bg;
       border-color: $btn-secondary-bg;
       color: $text-muted;
+    }
+    &:active,
+    &.active {
+      background-color: var(--bs-btn-active-bg);
+      border-color: var(--bs-btn-active-border-color);
+      color: var(--bs-btn-active-color);
     }
   }
 }
@@ -281,14 +251,14 @@
 
 // Close buttons
 // Bootstrap close button customizations
-.close {
+.btn-close {
   font-size: ($font-size-base * 1.8);
   opacity: .3;
   line-height: 20px;
   display: block;
 }
 
-button.close {
+button.btn-close {
   padding: $input-btn-padding-y $input-btn-padding-x;
 }
 
@@ -312,7 +282,7 @@ button.close {
 }
 
 .actions-warning {
-  color: #856404; // in bootstrap: theme-color-level(map-get($theme-colors, "yellow"), 6)
+  color: #856404; // in bootstrap: shift-color(map-get($theme-colors, "yellow"), 6)
 
   // override .btn styles
   &.btn {

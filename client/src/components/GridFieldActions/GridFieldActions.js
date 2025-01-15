@@ -22,7 +22,7 @@ class GridFieldActions extends PureComponent {
       return groupsList;
     }, []);
 
-    const dropdownMenuProps = { right: true };
+    const dropdownMenuProps = { end: true };
     const dropdownToggleClassNames = [
       'action-menu__toggle',
       'btn',

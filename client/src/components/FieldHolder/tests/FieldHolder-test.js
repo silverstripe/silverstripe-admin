@@ -198,7 +198,8 @@ test('FieldHolder prefix', () => {
     }}
     />
   );
-  expect(container.querySelector('.input-group-prepend .input-group-text').innerHTML).toBe('My prefix');
+  expect(container.querySelectorAll('.input-group-text')).toHaveLength(1);
+  expect(container.querySelector('.input-group .input-group-text').innerHTML).toBe('My prefix');
 });
 
 test('FieldHolder prefix', () => {
@@ -210,7 +211,8 @@ test('FieldHolder prefix', () => {
     }}
     />
   );
-  expect(container.querySelector('.input-group-append .input-group-text').innerHTML).toBe('My suffix');
+  expect(container.querySelectorAll('.input-group-text')).toHaveLength(1);
+  expect(container.querySelector('.input-group .input-group-text').innerHTML).toBe('My suffix');
 });
 
 test('FieldHolder titleTip should be rendered if one is provided', () => {

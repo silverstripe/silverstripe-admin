@@ -1,6 +1,6 @@
 <div id="$HolderID" class="form-group field<% if $extraClass %> $extraClass<% end_if %>">
     <div class="form__field-holder form-check">
-        <label class="form-check-label">
+        <label class="form-label form-check-label">
             $Field
             $Title
         </label>

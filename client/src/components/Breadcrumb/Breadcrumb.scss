@@ -36,7 +36,7 @@
   max-height: $toolbar-height;
   overflow: hidden;
 
-  @include media-breakpoint-down(sm) {
+  @include media-breakpoint-down(md) {
     margin-left: $toolbar-total-height;
 
     .toolbar__back-button + & {

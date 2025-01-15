@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormGroup, InputGroup, InputGroupAddon, Label } from 'reactstrap';
+import { FormGroup, InputGroup, InputGroupText, Label } from 'reactstrap';
 import castStringToElement from 'lib/castStringToElement';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
@@ -42,6 +42,7 @@ function fieldHolder(Field) {
           field: true,
           [this.props.extraClass]: true,
           readonly: this.props.readOnly,
+          'form-group': true,
         }),
         id: this.props.holderId,
       };
@@ -126,20 +127,22 @@ function fieldHolder(Field) {
       };
 
       const field = <Field {...props} />;
-      const prefix = this.props.data && this.props.data.prefix ? this.props.data.prefix : '';
-      const suffix = this.props.data && this.props.data.suffix ? this.props.data.suffix : '';
+      let prefix = this.props.data && this.props.data.prefix ? this.props.data.prefix : '';
+      let suffix = this.props.data && this.props.data.suffix ? this.props.data.suffix : '';
       if (!prefix && !suffix) {
         return field;
       }
+      if (prefix !== '' && typeof prefix === 'string') {
+        prefix = <InputGroupText>{prefix}</InputGroupText>;
+      }
+      if (suffix !== '' && typeof suffix === 'string') {
+        suffix = <InputGroupText>{suffix}</InputGroupText>;
+      }
       return (
         <InputGroup>
-          {prefix &&
-            <InputGroupAddon addonType="prepend">{prefix}</InputGroupAddon>
-          }
+          {prefix}
           {field}
-          {suffix &&
-            <InputGroupAddon addonType="append">{suffix}</InputGroupAddon>
-          }
+          {suffix}
         </InputGroup>
       );
     }

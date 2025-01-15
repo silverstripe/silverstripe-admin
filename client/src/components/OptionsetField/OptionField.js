@@ -20,7 +20,6 @@ class OptionField extends Component {
     const classes = classnames({
       [this.props.className]: true,
       [this.props.extraClass]: true,
-      'form-check': true,
       checked: this.props.value,
       disabled: this.props.readOnly,
       'option-field--disabled': this.props.readOnly || this.props.disabled,

@@ -14,7 +14,7 @@
 
 // Inverted states
 @each $color, $value in $theme-colors {
-  .badge-#{$color}--inverted {
+  .text-bg-#{$color}--inverted {
     @include badge-variant-inverted($value);
   }
 }

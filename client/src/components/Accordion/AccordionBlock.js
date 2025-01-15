@@ -17,7 +17,7 @@ const AccordionBlock = (props) => {
     <div className="accordion__block">
       <a
         className="accordion__title"
-        data-toggle="collapse"
+        data-bs-toggle="collapse"
         href={`#${listIDAttr}`}
         aria-expanded="true"
         aria-controls={listID}

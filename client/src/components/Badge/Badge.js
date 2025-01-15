@@ -23,13 +23,13 @@ class Badge extends PureComponent {
       return null;
     }
 
-    const invertedClass = inverted ? `badge-${status}--inverted` : '';
+    const colourClass = inverted ? `text-bg-${status}--inverted` : `text-bg-${status}`;
 
     const compiledClassNames = classnames(
       className,
       'badge',
       `badge-${status}`,
-      invertedClass,
+      colourClass,
     );
     return (
       <span className={compiledClassNames}>
@@ -48,7 +48,7 @@ Badge.propTypes = {
 
 Badge.defaultProps = {
   status: 'default',
-  className: 'badge-pill',
+  className: 'rounded-pill',
   inverted: false,
 };
 

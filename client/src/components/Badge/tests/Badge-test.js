@@ -26,7 +26,7 @@ test('Badge render() should return a Bootstrap style badge when valid', () => {
     />
   );
   expect(container.querySelectorAll('.badge').length).toBe(1);
-  expect(container.querySelectorAll('.badge-success').length).toBe(1);
+  expect(container.querySelectorAll('.text-bg-success').length).toBe(1);
   expect(container.querySelectorAll('.customclass').length).toBe(1);
   expect(container.innerHTML).toContain('Hello world');
 });

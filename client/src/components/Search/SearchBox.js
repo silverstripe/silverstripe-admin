@@ -280,7 +280,7 @@ class SearchBox extends Component {
       this.state.width < 576 ? 'search-box--no-label' : '',
       { collapsed: !expanded }
     );
-    const spanClass = this.state.width < 576 ? 'sr-only' : '';
+    const spanClass = this.state.width < 576 ? 'visually-hidden' : '';
     return (<Button
       aria-expanded={expanded}
       aria-controls={formId}

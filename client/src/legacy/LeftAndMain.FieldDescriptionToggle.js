@@ -23,7 +23,7 @@ $.entwine('ss', function ($) {
         $trigger = this
           .find('.middleColumn')
           .first() // Get the first middleColumn so we don't add multiple triggers on composite field types.
-          .after('<label class="right" for="' + fieldId + '"><a class="cms-description-trigger" href="javascript:void(0)"><span class="btn-icon-information"></span></a></label>')
+          .after('<label class="form-label end" for="' + fieldId + '"><a class="cms-description-trigger" href="javascript:void(0)"><span class="btn-icon-information"></span></a></label>')
           .next();
       }
 

@@ -349,11 +349,10 @@ class LeftAndMain extends FormSchemaController implements PermissionProvider
 
             // Bootstrap components
             Requirements::javascript('silverstripe/admin: thirdparty/popper/popper.min.js');
-            Requirements::javascript('silverstripe/admin: thirdparty/bootstrap/js/dist/util.js');
             Requirements::javascript('silverstripe/admin: thirdparty/bootstrap/js/dist/collapse.js');
             Requirements::javascript('silverstripe/admin: thirdparty/bootstrap/js/dist/tooltip.js');
             Requirements::customScript(
-                "window.jQuery('body').tooltip({ selector: '[data-toggle=tooltip]' });",
+                "window.jQuery('[data-bs-toggle=tooltip]').tooltip();",
                 'bootstrap.tooltip-boot'
             );
 

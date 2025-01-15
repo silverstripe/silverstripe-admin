@@ -13,7 +13,7 @@
   width: $cms-menu-width !important;
   overflow: hidden;
 
-  @include media-breakpoint-down(sm) {
+  @include media-breakpoint-down(md) {
     position: absolute;
     top: 0;
     left: -100%;
@@ -130,7 +130,7 @@
     padding-right: 1px;
     border-top: 1px solid rgba($border-color, .5);
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
       .toggle-collapse,
       .toggle-expand,
       .sticky-toggle {
@@ -220,7 +220,7 @@
 }
 
 .cms-menu.cms-menu--open + .cms-menu-mobile-overlay {
-  @include media-breakpoint-down(sm) {
+  @include media-breakpoint-down(md) {
     display: block;
   }
 }
@@ -258,7 +258,7 @@
     background-color: $brand-secondary-hover;
   }
 
-  @include media-breakpoint-down(sm) {
+  @include media-breakpoint-down(md) {
     text-align: center;
   }
 
@@ -277,7 +277,7 @@
       opacity: .9;
     }
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
       margin-left: $toolbar-total-height;
       margin-right: $toolbar-total-height;
     }
@@ -336,7 +336,7 @@
       padding-left: 0;
       transition: padding $transition-speed-fast;
 
-      @include media-breakpoint-down(sm) {
+      @include media-breakpoint-down(md) {
         left: 18px;
       }
     }
@@ -348,7 +348,7 @@
       white-space: nowrap;
       padding-left: 29px;
 
-      @include media-breakpoint-down(sm) {
+      @include media-breakpoint-down(md) {
         padding-left: 36px;
       }
     }
@@ -373,7 +373,7 @@
     }
   }
 
-  @include media-breakpoint-down(sm) {
+  @include media-breakpoint-down(md) {
     left: 20px;
   }
 }
@@ -441,7 +441,7 @@
         display: block;
         margin-left: 30px;
 
-        @include media-breakpoint-down(sm) {
+        @include media-breakpoint-down(md) {
           margin-left: 38px;
         }
       }
@@ -486,7 +486,7 @@
   top: 0;
   z-index: $zindex-menu + 1;
 
-  @include media-breakpoint-down(sm) {
+  @include media-breakpoint-down(md) {
     display: block;
   }
 }
@@ -593,7 +593,7 @@
   }
 }
 
-@include media-breakpoint-between(sm, sm) {
+@include media-breakpoint-between(sm, md) {
   .cms-help {
     &__links a.cms-help__link {
       display: none;

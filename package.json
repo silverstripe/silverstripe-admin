@@ -40,7 +40,7 @@
   "dependencies": {
     "@emotion/styled": "^11.10.5",
     "@popperjs/core": "^2.11.6",
-    "bootstrap": "^4.6.2",
+    "bootstrap": "^5.2.0",
     "chosen-js": "^1.8.7",
     "classnames": "^2.3.2",
     "core-js": "^3.26.0",
@@ -70,7 +70,7 @@
     "react-router": "^6.7",
     "react-router-dom": "^6.7",
     "react-select": "^5.5.8",
-    "reactstrap": "^8.9.0",
+    "reactstrap": "^9.2.0",
     "redux": "^5.0.1",
     "redux-form": "^8.3.10",
     "redux-thunk": "^3.1.0",

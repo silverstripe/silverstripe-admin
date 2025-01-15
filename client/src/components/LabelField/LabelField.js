@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const LabelField = ({ id, className, title, extraClass, data }) => {
   const htmlFor = data && data.target;
-  const classes = `${className} ${extraClass}`;
+  const classes = `form-label ${className} ${extraClass}`;
 
   return (
     <label id={id} className={classes} htmlFor={htmlFor}>{title}</label>

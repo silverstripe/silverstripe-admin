@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Input, InputGroup, InputGroupAddon, Popover, Util as reactstrapUtil } from 'reactstrap';
+import { Button, Input, InputGroup, Popover, Util as reactstrapUtil } from 'reactstrap';
 import classNames from 'classnames';
 import i18n from 'i18n';
 
@@ -91,7 +91,7 @@ class PopoverOptionSet extends Component {
 
   /**
    * Render a link to clear the search field if user entered input
-   * @returns {InputGroupAddon|null}
+   * @returns {button|null}
    */
   renderSearchValueClearLink() {
     const { clearButtonClassName } = this.props;
@@ -102,14 +102,12 @@ class PopoverOptionSet extends Component {
     }
 
     return (
-      <InputGroupAddon addonType="append">
-        <button
-          className={classNames(clearButtonClassName)}
-          onClick={this.handleSearchValueClear}
-        >
-          {i18n._t('PopoverOptionSet.CLEAR', 'Clear')}
-        </button>
-      </InputGroupAddon>
+      <button
+        className={classNames(clearButtonClassName)}
+        onClick={this.handleSearchValueClear}
+      >
+        {i18n._t('PopoverOptionSet.CLEAR', 'Clear')}
+      </button>
     );
   }
 

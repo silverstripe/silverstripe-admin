@@ -45,11 +45,11 @@ export default {
       control: 'inline-radio',
       options: {
         'Empty class name': '',
-        'badge-pill class name': 'badge-pill'
+        'rounded-pill class name': 'rounded-pill'
       },
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: 'badge-pill' },
+        defaultValue: { summary: 'rounded-pill' },
       },
     }
   }
@@ -60,7 +60,7 @@ export const _Badge = {
   args: {
     message: 'Hello World!',
     status: 'default',
-    className: 'badge-pill',
+    className: 'rounded-pill',
     inverted: false
   }
 };

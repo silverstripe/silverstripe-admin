@@ -11,7 +11,7 @@
   border: 0;
   display: block;
 
-  @include media-breakpoint-down(md) {
+  @include media-breakpoint-down(lg) {
     width: 100%;
   }
 }

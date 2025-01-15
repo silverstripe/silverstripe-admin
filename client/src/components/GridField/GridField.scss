@@ -200,7 +200,7 @@ div.grid-field__sort-field + .form__fieldgroup-item {
 .grid-field__icon-action--hidden-on-hover {
   opacity: 0;
 
-  @include media-breakpoint-down(sm) {
+  @include media-breakpoint-down(md) {
     opacity: 1;
   }
 }
@@ -243,7 +243,7 @@ div.grid-field__sort-field + .form__fieldgroup-item {
 
 
 // Responsive grid-field
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
   .grid-field__table td,
   .grid-field__table th {
     display: none;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, InputGroup, InputGroupAddon, Input, FormGroup, Label, FormFeedback } from 'reactstrap';
+import { Button, InputGroup, Input, FormGroup, Label, FormFeedback } from 'reactstrap';
 import { loadComponent } from 'lib/Injector';
 import fetch from 'isomorphic-fetch';
 import Config from 'lib/Config';
@@ -168,22 +168,20 @@ const withSudoMode = (WrappedComponent) => {
 
       return (
         <div className="sudo-mode__verify">
-          <FormGroup className="sudo-mode__verify-form-group">
+          <FormGroup className="sudo-mode__verify-form-group form-group">
             <Label for="sudoModePassword">
               { i18n._t('Admin.ENTER_PASSWORD', 'Enter your password') }
             </Label>
 
             <InputGroup>
               <Input {...inputProps} {...validationProps} />
-              <InputGroupAddon addonType="append">
-                <Button
-                  className="sudo-mode__verify-button"
-                  color="info"
-                  onClick={this.handleVerify}
-                >
-                  { i18n._t('Admin.VERIFY', 'Verify') }
-                </Button>
-              </InputGroupAddon>
+              <Button
+                className="sudo-mode__verify-button"
+                color="info"
+                onClick={this.handleVerify}
+              >
+                { i18n._t('Admin.VERIFY', 'Verify') }
+              </Button>
               <FormFeedback>{ errorMessage }</FormFeedback>
             </InputGroup>
           </FormGroup>

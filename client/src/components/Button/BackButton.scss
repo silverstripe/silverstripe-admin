@@ -5,7 +5,7 @@
   color: $text-muted; // TEMP: Needed for anchor buttons to override legacy styles
   margin-left: -$spacer-xs;
 
-  @include media-breakpoint-down(sm) {
+  @include media-breakpoint-down(md) {
     margin-left: 42px;
 
     .insert-media-modal & {

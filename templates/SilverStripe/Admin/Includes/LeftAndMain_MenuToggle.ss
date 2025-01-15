@@ -4,7 +4,7 @@
         <span class="cms-help__toggle-title">
             $ApplicationName
         </span>
-        <span class="cms-help__badge badge badge-info">
+        <span class="cms-help__badge badge badge-info text-bg-info">
                 <% if $CMSVersionNumber %>
                     <span class="cms-sitename__version" title="$ApplicationName (<%t SilverStripe\Admin\LeftAndMain.Version "Version" %> - $CMSVersion)">$CMSVersionNumber</span>
                 <% end_if %>
@@ -27,5 +27,5 @@
     <span class="sticky-toggle__status sticky-status-indicator"><%t SilverStripe\Admin\LeftAndMain.MenuToggleAuto "Auto" %></span>
 </div>
 
-<a class="toggle-expand" href="#" data-toggle="tooltip" title="<%t SilverStripe\Admin\LeftAndMain.ExpandPanel "Expand panel" %>" aria-label="<%t SilverStripe\Admin\LeftAndMain.ExpandPanel "Expand panel" %>"><span>&raquo;</span></a>
-<a class="toggle-collapse" href="#" data-toggle="tooltip" title="<%t SilverStripe\Admin\LeftAndMain.CollapsePanel "Collapse panel" %>" aria-label="<%t SilverStripe\Admin\LeftAndMain.CollapsePanel "Collapse panel" %>"><span>&laquo;</span></a>
+<a class="toggle-expand" href="#" data-bs-toggle="tooltip" title="<%t SilverStripe\Admin\LeftAndMain.ExpandPanel "Expand panel" %>" aria-label="<%t SilverStripe\Admin\LeftAndMain.ExpandPanel "Expand panel" %>"><span>&raquo;</span></a>
+<a class="toggle-collapse" href="#" data-bs-toggle="tooltip" title="<%t SilverStripe\Admin\LeftAndMain.CollapsePanel "Collapse panel" %>" aria-label="<%t SilverStripe\Admin\LeftAndMain.CollapsePanel "Collapse panel" %>"><span>&laquo;</span></a>

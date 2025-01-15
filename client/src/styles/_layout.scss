@@ -20,7 +20,7 @@ body {
 .CMSPageEditController,
 .CMSPageSettingsController {
   &.has-panel {
-    @include media-breakpoint-down(md) {
+    @include media-breakpoint-down(lg) {
       .cms-content-tools {
         display: none;
       }

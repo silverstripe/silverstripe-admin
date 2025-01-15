@@ -46,7 +46,7 @@ test('GridFieldActions.render() should render a menu, if there is more than one 
     }}
     />
   );
-  expect(container.querySelector('.action-menu__toggle .sr-only').innerHTML).toBe('View actions');
+  expect(container.querySelector('.action-menu__toggle .visually-hidden').innerHTML).toBe('View actions');
 });
 
 test('GridFieldActions.renderSingleAction() should render a button', () => {

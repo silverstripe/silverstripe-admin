@@ -32,7 +32,7 @@ $button-border-radius: .23rem;
   // Reactstrap requires form feedback to be places in the same input group as the field
   // that is marked as invalid, which causes Bootstrap to remove these properties from the
   // attached button. This restores the properties to what they were.
-  .input-group-append:not(:last-child) .sudo-mode__verify-button {
+  .sudo-mode__verify-button {
     border-top-right-radius: $button-border-radius;
     border-bottom-right-radius: $button-border-radius;
   }

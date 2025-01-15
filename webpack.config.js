@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const { JavascriptWebpackConfig, CssWebpackConfig } = require('@silverstripe/webpack-config');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const glob = require('glob');
+const path = require('path');
 const PATHS = require('./webpack-vars');
 
 const config = [
@@ -22,7 +24,7 @@ const config = [
               to: `${PATHS.DIST}/moment-locales`
             },
             {
-              from: `${PATHS.MODULES}/popper.js/dist/umd/popper.js`,
+              from: `${PATHS.MODULES}/@popperjs/core/dist/umd/popper.min.js`,
               to: `${PATHS.THIRDPARTY}/popper/popper.min.js`
             },
             {
@@ -45,6 +47,22 @@ const config = [
       watchOptions: {
         poll: true
       }
+    })
+    .getConfig(),
+  // Bootstrap components - can't just rely on CopyWebpackPlugin for these because some of them require
+  // additional files that aren't declared in the documentation.
+  new JavascriptWebpackConfig('bootstrap', PATHS, 'silverstripe/admin')
+    .setEntry(glob.sync(`${PATHS.MODULES}/bootstrap/js/dist/**/*.js`).reduce((obj, el) => {
+      const parsedPath = path.parse(el);
+      const dir = parsedPath.dir.replace(new RegExp(`${PATHS.MODULES}\/bootstrap\/js\/dist\/?`), '');
+      obj[path.join(dir, parsedPath.name)] = el;
+      return obj;
+    }, {}))
+    .mergeConfig({
+      output: {
+        path: `${path.resolve('thirdparty')}/bootstrap/js/dist`,
+        filename: '[name].js',
+      },
     })
     .getConfig(),
   // TinyMCE

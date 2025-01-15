@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   Input,
   InputGroup,
-  InputGroupAddon,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 
@@ -69,13 +68,11 @@ class InputField extends Component {
     return (
       <InputGroup>
         <Input {...this.getInputProps()} />
-        <InputGroupAddon addonType="append">
-          <Tip
-            {...tip}
-            fieldTitle={title}
-            id={`${id}-tip`}
-          />
-        </InputGroupAddon>
+        <Tip
+          {...tip}
+          fieldTitle={title}
+          id={`${id}-tip`}
+        />
       </InputGroup>
     );
   }

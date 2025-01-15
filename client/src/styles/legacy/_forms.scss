@@ -30,7 +30,8 @@ fieldset {
   &.checkbox {
     margin-top: 7px;
 
-    label.right {
+    label.right,
+    label.end {
       margin: map_get($spacers, 1) 0 0;
       display: inline;
       font-style: normal;
@@ -81,7 +82,8 @@ fieldset {
       min-width: 300px;
     }
 
-    .right { // The column the trigger is inside.
+    .right,
+    .end { // The column the trigger is inside.
       display: inline-block;
       vertical-align: middle;
       height: 15px;
@@ -105,7 +107,8 @@ fieldset {
     &.optionset,
     &.listbox,
     &.upload {
-      .right {
+      .right,
+      .end {
         vertical-align: top;
         margin-top: 4px;
       }
@@ -119,7 +122,8 @@ fieldset {
     }
 
     &.optionset {
-      .right {
+      .right,
+      .end {
         margin-top: 8px;
       }
 
@@ -230,7 +234,8 @@ fieldset {
 
 form.small .field, .field.small {
   label {
-    &.left {
+    &.left,
+    &.start {
       width: $spacer * 7;
     }
   }
@@ -723,10 +728,14 @@ div.switch-states{
 
 .ui-button-text-only .ui-button-text { padding: 0; }
 
-// Align buttons with input
-.urlsegment .update,
+// Remove spacing between url segment buttons
+.urlsegment .update {
+  margin-right: 0;
+}
+
 .urlsegment .cancel {
-  margin-top: 3px;
+  // Need important here to override overly specific bootstrap style selectors
+  margin-left: 0 !important;
 }
 
 .ui-datepicker {
@@ -747,11 +756,9 @@ div.switch-states{
 }
 
 .edit-holder {
-  .input-group-append {
-    .btn {
-      margin-right: 0;
-      padding-top: $input-padding-y;
-      padding-bottom: $input-padding-y;
-    }
+  .btn {
+    margin-right: 0;
+    padding-top: $input-padding-y;
+    padding-bottom: $input-padding-y;
   }
 }
