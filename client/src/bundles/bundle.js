@@ -77,7 +77,6 @@ import 'expose-loader?exposes=Config!lib/Config';
 import 'expose-loader?exposes=DataFormat!lib/DataFormat';
 import 'expose-loader?exposes=ReactRouteRegister!lib/ReactRouteRegister';
 import 'expose-loader?exposes=Router!lib/Router';
-import 'expose-loader?exposes=TinyMCEActionRegistrar!lib/TinyMCEActionRegistrar';
 import 'expose-loader?exposes=ShortcodeSerialiser!lib/ShortcodeSerialiser';
 import 'expose-loader?exposes=formatWrittenNumber!lib/formatWrittenNumber';
 import 'expose-loader?exposes=withRouter!lib/withRouter';

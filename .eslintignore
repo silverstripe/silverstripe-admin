@@ -9,7 +9,6 @@ client/src/legacy/InlineFormAction.js
 client/src/legacy/PermissionCheckboxSetField.js
 client/src/legacy/SelectionGroup.js
 client/src/legacy/TabSet.js
-client/src/legacy/TinyMCE_SSPlugin.js
 client/src/legacy/ToggleCompositeField.js
 client/src/legacy/ToggleField.js
 client/src/legacy/TreeDropdownField.js

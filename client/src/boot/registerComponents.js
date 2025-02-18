@@ -45,7 +45,6 @@ import CompactTagList from 'components/Tag/CompactTagList';
 import Tip from 'components/Tip/Tip';
 import Search from 'components/Search/Search';
 import SearchToggle from 'components/Search/SearchToggle';
-import HtmlEditorField from 'components/HtmlEditorField/HtmlEditorField';
 import NumberField from 'components/NumberField/NumberField';
 import PopoverOptionSet from 'components/PopoverOptionSet/PopoverOptionSet';
 import ToastsContainer from 'containers/ToastsContainer/ToastsContainer';
@@ -102,7 +101,6 @@ export default () => {
     Tip,
     Search,
     SearchToggle,
-    HtmlEditorField,
     NumberField,
     PopoverOptionSet,
     ToastsContainer,

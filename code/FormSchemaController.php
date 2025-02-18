@@ -7,7 +7,6 @@ use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Validation\ValidationResult;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\HTMLEditor\HTMLEditorConfig;
-use SilverStripe\Forms\HTMLEditor\TinyMCEConfig;
 use SilverStripe\Forms\Schema\FormSchema;
 use SilverStripe\Security\Security;
 
@@ -35,9 +34,11 @@ abstract class FormSchemaController extends AdminController
 
     protected function init()
     {
-        $this->beforeExtending('onInit', function () {
-            $this->prepareTinyMce();
-        });
+        // Set the members html editor config
+        $currentUser = Security::getCurrentUser();
+        if ($currentUser) {
+            HTMLEditorConfig::set_active_identifier($currentUser->getHTMLEditorConfigForCMS());
+        }
         parent::init();
     }
 
@@ -130,22 +131,5 @@ abstract class FormSchemaController extends AdminController
     {
         $parts = $this->getRequest()->getHeader(FormSchema::SCHEMA_HEADER);
         return !empty($parts);
-    }
-
-    private function prepareTinyMce(): void
-    {
-        // Set the members html editor config
-        if (Security::getCurrentUser()) {
-            HTMLEditorConfig::set_active_identifier(Security::getCurrentUser()->getHtmlEditorConfigForCMS());
-        }
-
-        // Set default values in the config if missing.  These things can't be defined in the config
-        // file because insufficient information exists when that is being processed
-        $htmlEditorConfig = HTMLEditorConfig::get_active();
-        $htmlEditorConfig->setOption('language', TinyMCEConfig::get_tinymce_lang());
-        $langUrl = TinyMCEConfig::get_tinymce_lang_url();
-        if ($langUrl) {
-            $htmlEditorConfig->setOption('language_url', $langUrl);
-        }
     }
 }

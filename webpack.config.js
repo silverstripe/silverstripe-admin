@@ -32,15 +32,6 @@ const config = [
               from: 'chosen-sprite*.png',
               to: `${PATHS.DIST}/images/`
             },
-            // Copy npm and custom tinymce content into the same dist directory
-            {
-              from: `${PATHS.MODULES}/tinymce`,
-              to: `${PATHS.DIST}/tinymce`
-            },
-            {
-              from: `${PATHS.SRC}/tinymce`,
-              to: `${PATHS.DIST}/tinymce`
-            },
           ]
         }),
       ],
@@ -65,19 +56,6 @@ const config = [
       },
     })
     .getConfig(),
-  // TinyMCE
-  new JavascriptWebpackConfig('tinymce', PATHS, 'silverstripe/admin')
-    .setEntry({
-      TinyMCE_sslink: `${PATHS.LEGACY_SRC}/TinyMCE_sslink.js`,
-      'TinyMCE_sslink-external': `${PATHS.LEGACY_SRC}/TinyMCE_sslink-external.js`,
-      'TinyMCE_sslink-email': `${PATHS.LEGACY_SRC}/TinyMCE_sslink-email.js`,
-    })
-    .mergeConfig({
-      watchOptions: {
-        poll: true
-      }
-    })
-    .getConfig(),
   // i18n
   new JavascriptWebpackConfig('i18n', PATHS, 'silverstripe/admin')
     .setEntry({
@@ -88,7 +66,6 @@ const config = [
   new CssWebpackConfig('css', PATHS)
     .setEntry({
       bundle: `${PATHS.SRC}/styles/bundle.scss`,
-      editor: `${PATHS.SRC}/styles/editor.scss`,
       GridField_print: `${PATHS.SRC}/styles/legacy/GridField_print.scss`,
     })
     .getConfig(),

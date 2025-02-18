@@ -300,21 +300,7 @@ $.entwine('ss', function($){
 
       return isValid;
     },
-    /*
-     * Track focus on htmleditor fields
-     */
-    'from .htmleditor': {
-      oneditorinit: function(e){
-        var self = this,
-          field = $(e.target).closest('.field.htmleditor'),
-          editor = field.find('textarea.htmleditor').getEditor().getInstance();
 
-        // TinyMCE 4 will add a focus event, but for now, use click
-        editor.onClick.add(function(e){
-          self.saveFieldFocus(field.attr('id'));
-        });
-      }
-    },
     /*
      * Track focus on inputs
      */

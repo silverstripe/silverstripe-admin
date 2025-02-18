@@ -90,21 +90,9 @@ import debounce from 'lodash.debounce';
 
         var value = $field.val();
 
-        if ($field && $field.hasClass('htmleditor')) {
-          var editorClass = $field.data('editor') || 'default';
-
-          // in case there are other editor class types
-          switch (editorClass) {
-            case 'tinyMCE':
-            case 'default':
-              var config = $.extend({ forced_root_block: 'p' }, $field.data('config'));
-
-              var serializer = tinymce.html.Serializer(config);
-              var parser = tinymce.html.DomParser(config);
-
-              value = serializer.serialize(parser.parse(value));
-              break;
-          }
+        if ($field && $field.is('textarea.htmleditor')) {
+          const editor = $field.entwine('ss').getEditor();
+          value = editor.prepValueForChangeTracker(value);
         }
 
         return value;
