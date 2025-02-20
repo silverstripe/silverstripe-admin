@@ -15,6 +15,7 @@ function SudoModePasswordField(props) {
   const {
     onSuccess,
     autocomplete,
+    verifyMessage,
   } = props;
   const passwordFieldRef = createRef();
   const [responseMessage, setResponseMessage] = useState('');
@@ -80,12 +81,16 @@ function SudoModePasswordField(props) {
    */
   function renderConfirm() {
     const helpLink = clientConfig.helpLink;
+    let verifyMessageValue = verifyMessage;
+    if (!verifyMessageValue) {
+      verifyMessageValue = i18n._t(
+        'Admin.SUDO_MODE_PASSWORD_FIELD_VERIFY',
+        'This section is protected and is in read-only mode. Before editing please verify that it\'s you first.'
+      );
+    }
     return <div className="sudo-mode__notice sudo-mode-password-field__notice--required">
       <p className="sudo-mode-password-field__notice-message">
-        { i18n._t(
-          'Admin.SUDO_MODE_PASSWORD_FIELD_VERIFY',
-          'This section is protected and is in read-only mode. Before editing please verify that it\'s you first.'
-        ) }
+        { verifyMessageValue }
         { helpLink && (
           <a href={helpLink} className="sudo-mode-password-field__notice-help" target="_blank" rel="noopener noreferrer">
             { i18n._t('Admin.WHATS_THIS', 'What is this?') }
@@ -150,6 +155,7 @@ function SudoModePasswordField(props) {
 }
 
 SudoModePasswordField.propTypes = {
+  verifyMessage: PropTypes.string,
   onSuccess: PropTypes.func.isRequired,
   autocomplete: PropTypes.string.isRequired,
 };

@@ -8,7 +8,6 @@ jQuery.entwine('ss', ($) => {
   // `.SudoModePasswordField` will match both the field holder and the field
   // we only want to run this on the field holder, hence the `:not(:input)`
   $('.js-injector-boot .SudoModePasswordField:not(:input)').entwine({
-    Component: null,
     ReactRoot: null,
 
     onmatch() {
@@ -17,9 +16,21 @@ jQuery.entwine('ss', ($) => {
       const context = (cmsContentID)
         ? { context: cmsContentID }
         : {};
+
       const SudoModePasswordField = loadComponent('SudoModePasswordField', context);
-      this.setComponent(SudoModePasswordField);
-      this.refresh();
+      const input = this.find('input.SudoModePasswordField')[0];
+      const props = {
+        autocomplete: input.getAttribute('autocomplete'),
+        onSuccess: () => this.reloadPage(),
+      };
+
+      let root = this.getReactRoot();
+      if (!root) {
+        root = createRoot(this[0]);
+      }
+
+      root.render(<SudoModePasswordField {...props}/>);
+      this.setReactRoot(root);
     },
 
     onunmatch() {
@@ -38,21 +49,6 @@ jQuery.entwine('ss', ($) => {
      */
     reloadPage() {
       this.closest('.cms-container').reloadCurrentPanel();
-    },
-
-    refresh() {
-      const SudoModePasswordField = this.getComponent();
-      let root = this.getReactRoot();
-      if (!root) {
-        root = createRoot(this[0]);
-      }
-      const input = this.find('input.SudoModePasswordField')[0];
-      const props = {
-        autocomplete: input.getAttribute('autocomplete'),
-        onSuccess: () => this.reloadPage(),
-      };
-      root.render(<SudoModePasswordField {...props}/>);
-      this.setReactRoot(root);
     },
   });
 });
