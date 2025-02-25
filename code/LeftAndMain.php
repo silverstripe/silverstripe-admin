@@ -67,8 +67,9 @@ class LeftAndMain extends Controller implements PermissionProvider
 
     /**
      * Form schema header identifier
+     * @deprecated 2.4.0 use SilverStripe\Forms\Schema\FormSchema::SCHEMA_HEADER instead.
      */
-    const SCHEMA_HEADER = 'X-Formschema-Request';
+    const SCHEMA_HEADER = FormSchema::SCHEMA_HEADER;
 
     /**
      * Enable front-end debugging (increases verbosity) in dev mode.
@@ -530,7 +531,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     protected function getSchemaRequested()
     {
-        $parts = $this->getRequest()->getHeader(static::SCHEMA_HEADER);
+        $parts = $this->getRequest()->getHeader(FormSchema::SCHEMA_HEADER);
         return !empty($parts);
     }
 
@@ -544,7 +545,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     protected function getSchemaResponse($schemaID, $form = null, ValidationResult $errors = null, $extraData = []): HTTPResponse
     {
-        $parts = $this->getRequest()->getHeader(static::SCHEMA_HEADER);
+        $parts = $this->getRequest()->getHeader(FormSchema::SCHEMA_HEADER);
         $data = $this
             ->getFormSchema()
             ->getMultipartSchema($parts, $schemaID, $form, $errors);
@@ -1271,9 +1272,11 @@ class LeftAndMain extends Controller implements PermissionProvider
      *
      * @throws InvalidArgumentException
      * @return LeftAndMain_SearchFilter
+     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it.
      */
     protected function getSearchFilter()
     {
+        Deprecation::noticeWithNoReplacment('2.4.0');
         if ($this->searchFilterCache) {
             return $this->searchFilterCache;
         }
