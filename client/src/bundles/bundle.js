@@ -102,6 +102,7 @@ import '../legacy/LeftAndMain.BatchActions';
 import '../legacy/LeftAndMain.FieldHelp';
 import '../legacy/LeftAndMain.FieldDescriptionToggle';
 import '../legacy/LeftAndMain.TreeDropdownField';
+import '../legacy/AddToCampaignForm';
 import '../legacy/SecurityAdmin';
 import '../legacy/ModelAdmin';
 import '../legacy/ToastsContainer';
