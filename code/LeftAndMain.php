@@ -165,6 +165,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      * Current form schema helper
      *
      * @var FormSchema
+     * @deprecated 2.4.0 Will be made private.
      */
     protected $schema = null;
 

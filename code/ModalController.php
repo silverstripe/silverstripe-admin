@@ -37,6 +37,7 @@ class ModalController extends RequestHandler
 
     /**
      * @var string
+     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it
      */
     protected $name;
 
