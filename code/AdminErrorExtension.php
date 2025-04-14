@@ -7,6 +7,7 @@ use SilverStripe\Control\Director;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\RequestHandler;
 use SilverStripe\Core\Extension;
+use SilverStripe\Admin\AdminController;
 
 /**
  * @extends Extension<RequestHandler>
@@ -27,11 +28,11 @@ class AdminErrorExtension extends Extension
 
     private function getAdminController(): ?Controller
     {
-        if ($this->owner instanceof LeftAndMain) {
+        if ($this->owner instanceof AdminController) {
             return $this->owner;
         }
         $controller = Controller::curr();
-        if ($controller instanceof LeftAndMain) {
+        if ($controller instanceof AdminController) {
             return $controller;
         }
         return null;
