@@ -4,7 +4,7 @@ Feature: GridField inline delete
   I want to inline delete records
 
   Background:
-    Given I add an extension "SilverStripe\FrameworkTest\Model\CompanyEmployeeDeleteExtension" to the "SilverStripe\FrameworkTest\Model\Company" class
+    Given I add an extension "SilverStripe\FrameworkTest\Model\CompanyEmployeeDeleteExtension" to the "SilverStripe\FrameworkTest\Model\Company" class without dev-build
     Given the "Company" "Company A" with "Category"="Other"
     And the "Company" "Company B" with "Category"="Other"
     And the "Company" "Company C" with "Category"="Other"
@@ -16,7 +16,6 @@ Feature: GridField inline delete
     And I go to "/admin/test"
 
   Scenario: I can see toast message when I successfully delete a record by clicking the Delete button in action menu
-  Given I take a screenshot after every step
     When I click "Company C" in the "#Form_EditForm" element
     And I click "Employees" in the ".ui-tabs-nav" element
     Then I should see "Employee A" in the "#Form_ItemEditForm_Employees" element
