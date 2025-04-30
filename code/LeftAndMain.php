@@ -490,11 +490,11 @@ class LeftAndMain extends Controller implements PermissionProvider
     }
 
     /**
-     * @deprecated 2.4.0 Will be replaced with SilverStripe\Admin\FormSchemaController::schema()
+     * @deprecated 2.4.0 Will be replaced with SilverStripe\Admin\FormSchemaController::schema() in a future major release
      */
     public function methodSchema(HTTPRequest $request): HTTPResponse
     {
-        Deprecation::noticeWithNoReplacment('2.4.0', 'Will be replaced with SilverStripe\Admin\FormSchemaController::schema()');
+        Deprecation::noticeWithNoReplacment('2.4.0', 'Will be replaced with SilverStripe\Admin\FormSchemaController::schema() in a future major release');
         $method = $request->param('Method');
         $formName = $request->param('FormName');
         $itemID = $request->param('ItemID');
@@ -1273,7 +1273,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      *
      * @throws InvalidArgumentException
      * @return LeftAndMain_SearchFilter
-     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it.
+     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it in a future major release.
      */
     protected function getSearchFilter()
     {
@@ -1581,7 +1581,7 @@ class LeftAndMain extends Controller implements PermissionProvider
      * Handler for all global modals
      *
      * @return ModalController
-     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it
+     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it in a future major release
      */
     public function Modals()
     {

@@ -71,7 +71,7 @@ class CMSEditLinkExtension extends Extension
 
     /**
      * Get a link to edit this DataObject in the CMS.
-     * @deprecated 2.4.0 Will be replaced with SilverStripe\ORM\DataObject::getCMSEditLink() and updateCMSEditLink()
+     * @deprecated 2.4.0 Will be replaced with SilverStripe\ORM\DataObject::getCMSEditLink() and updateCMSEditLink() in a future major release
      */
     public function CMSEditLink(): string
     {

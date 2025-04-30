@@ -7,7 +7,7 @@ use SilverStripe\ORM\DataObject;
 /**
  * Abstract interface for a class which may be used to filter the results displayed
  * in a nested tree
- * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it.
+ * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it in a future major release.
  */
 interface LeftAndMain_SearchFilter
 {

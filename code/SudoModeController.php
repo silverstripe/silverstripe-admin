@@ -20,7 +20,7 @@ class SudoModeController extends LeftAndMain
     private static string $url_segment = 'sudomode';
 
     /**
-     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it
+     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it in a future major release
      */
     private static bool $ignore_menuitem = true;
 

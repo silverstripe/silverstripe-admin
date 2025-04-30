@@ -31,13 +31,13 @@ class ModalController extends RequestHandler
 
     /**
      * @var Controller
-     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it
+     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it in a future major release
      */
     protected $controller;
 
     /**
      * @var string
-     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it
+     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it in a future major release
      */
     protected $name;
 
@@ -56,7 +56,7 @@ class ModalController extends RequestHandler
 
     /**
      * @return Controller
-     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it
+     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it in a future major release
      */
     public function getController()
     {
@@ -68,7 +68,7 @@ class ModalController extends RequestHandler
      * Get urlsegment
      *
      * @return string
-     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it
+     * @deprecated 2.4.0 Will be removed without equivalent functionality to replace it in a future major release
      */
     public function getName()
     {
@@ -80,11 +80,11 @@ class ModalController extends RequestHandler
      * Builds and returns the external link form
      *
      * @return Form
-     * @deprecated 2.4.0 Will be replaced with linkModalForm()
+     * @deprecated 2.4.0 Will be replaced with linkModalForm() in a future major release
      */
     public function EditorExternalLink()
     {
-        Deprecation::noticeWithNoReplacment('2.4.0', 'Will be replaced with linkModalForm()');
+        Deprecation::noticeWithNoReplacment('2.4.0', 'Will be replaced with linkModalForm() in a future major release');
         // Show link text field if requested
         $showLinkText = $this->controller->getRequest()->getVar('requireLinkText');
         $factory = EditorExternalLinkFormFactory::singleton();
@@ -99,11 +99,11 @@ class ModalController extends RequestHandler
      * Builds and returns the external link form
      *
      * @return Form
-     * @deprecated 2.4.0 Will be replaced with linkModalForm()
+     * @deprecated 2.4.0 Will be replaced with linkModalForm() in a future major release
      */
     public function EditorEmailLink()
     {
-        Deprecation::noticeWithNoReplacment('2.4.0', 'Will be replaced with linkModalForm()');
+        Deprecation::noticeWithNoReplacment('2.4.0', 'Will be replaced with linkModalForm() in a future major release');
         // Show link text field if requested
         $showLinkText = $this->controller->getRequest()->getVar('requireLinkText');
         $factory = EditorEmailLinkFormFactory::singleton();
