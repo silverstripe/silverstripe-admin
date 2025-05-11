@@ -2,6 +2,7 @@
 
 namespace SilverStripe\Admin\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use SilverStripe\Admin\CMSProfileController;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Dev\FunctionalTest;
@@ -122,9 +123,7 @@ class CMSProfileControllerTest extends FunctionalTest
         ];
     }
 
-    /**
-     * @dataProvider provideSudoMode
-     */
+    #[DataProvider('provideSudoMode')]
     public function testSudoMode(bool $enabled): void
     {
         Member::config()->set('require_sudo_mode', $enabled);
@@ -132,9 +131,11 @@ class CMSProfileControllerTest extends FunctionalTest
         $this->logInAs($member);
         $controller = new CMSProfileController();
         $request = new HTTPRequest('get', '');
+        Injector::inst()->registerService($request);
         $request->setSession(new Session([]));
         $controller->setRequest($request);
 
+        $controller->doInit();
         $form = $controller->getEditForm();
         $this->assertSame($enabled, $form->getFormRequiresSudoMode());
     }
