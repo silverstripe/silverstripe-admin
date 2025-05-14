@@ -199,7 +199,7 @@ class AdminControllerTest extends FunctionalTest
             [
                 'statusCode' => 418,
                 'errorMessage' => '',
-                'expectedValue' => 'Error',
+                'expectedValue' => 'Sorry, it seems there was a 418 error.',
             ],
             [
                 'statusCode' => 400,

@@ -12,6 +12,7 @@ use SilverStripe\Control\HTTPResponse_Exception;
 use SilverStripe\Control\Middleware\HTTPCacheControlMiddleware;
 use SilverStripe\Forms\HTMLEditor\HTMLEditorConfig;
 use SilverStripe\i18n\i18n;
+use SilverStripe\i18n\i18nEntityProvider;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\Security;
 use SilverStripe\Versioned\Versioned;
@@ -23,7 +24,7 @@ use SilverStripe\View\SSViewer;
  * This class is automatically routed via the AdminRootController.
  * It's responsible for ensuring permissions are respected.
  */
-abstract class AdminController extends Controller
+abstract class AdminController extends Controller implements i18nEntityProvider
 {
     /**
      * The current url segment attached to the controller
@@ -325,17 +326,17 @@ abstract class AdminController extends Controller
         if ($errorMessage) {
             $error['value'] = $errorMessage;
         } else {
-            $messageDefault = match ($errorCode) {
-                400 => 'Sorry, it seems there was something wrong with the request.',
-                401 => 'Sorry, it seems you are not authorised to access this section or object.',
-                403 => 'Sorry, it seems the action you were trying to perform is forbidden.',
-                404 => 'Sorry, it seems you were trying to access a section or object that doesn\'t exist.',
-                500 => 'Sorry, it seems there was an internal server error.',
-                503 => 'Sorry, it seems the service is temporarily unavailable.',
-                default => 'Error',
-            };
-            /** @phpstan-ignore translation.key (we need the key to be dynamic here) */
-            $error['value'] = _t(__CLASS__ . ".ErrorMessage{$errorCode}", $messageDefault);
+            $messageDefault = $this->getErrorCodeDefaultMessages()[$errorCode] ?? null;
+            if ($messageDefault) {
+                /** @phpstan-ignore translation.key (we need the key to be dynamic here) */
+                $error['value'] = _t(__CLASS__ . ".ErrorMessage{$errorCode}", $messageDefault);
+            } else {
+                $error['value'] = _t(
+                    __CLASS__ . ".ErrorMessage",
+                    'Sorry, it seems there was a {errorcode} error.',
+                    ['errorcode' => $errorCode]
+                );
+            }
         }
 
         // Support explicit error handling with status = error, or generic message handling
@@ -355,5 +356,26 @@ abstract class AdminController extends Controller
 
         // Throw a new exception
         throw new HTTPResponse_Exception($response);
+    }
+
+    public function provideI18nEntities()
+    {
+        $entities = [];
+        foreach ($this->getErrorCodeDefaultMessages() as $errorCode => $message) {
+            $entities[__CLASS__ . ".ErrorMessage{$errorCode}"] = $message;
+        }
+        return $entities;
+    }
+
+    private function getErrorCodeDefaultMessages(): array
+    {
+        return [
+            400 => 'Sorry, it seems there was something wrong with the request.',
+            401 => 'Sorry, it seems you are not authorised to access this section or object.',
+            403 => 'Sorry, it seems the action you were trying to perform is forbidden.',
+            404 => 'Sorry, it seems you were trying to access a section or object that doesn\'t exist.',
+            500 => 'Sorry, it seems there was an internal server error.',
+            503 => 'Sorry, it seems the service is temporarily unavailable.',
+        ];
     }
 }
