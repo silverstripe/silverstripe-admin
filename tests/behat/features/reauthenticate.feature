@@ -14,13 +14,16 @@ Feature: Reauthenticate
 
   Scenario: Reauthenticate with correct login
     When I press the "Add new" button
-      And I switch to the "login-dialog-iframe" iframe
-    Then I should see a "Let me back in" button
+    Then I should see "Login" in the ".login-dialog" element
+    When I switch to the "login-dialog-iframe" iframe
+    Then I should see "Your session has timed out due to inactivity" in the ".cms-security__container" element
+      And I should see a "Let me back in" button
     When I fill in "Password" with "Secret!123"
       And I press the "Let me back in" button
       And I am not in an iframe
-      And I go to "/admin/pages"
-    When I press the "Add new" button
+      Then I should not see the ".login-dialog" element
+    When I go to "/admin/pages"
+      And I press the "Add new" button
     Then I should see "Create" in the "#Form_AddForm_action_doAdd" element
 
   Scenario: Reauthenticate with wrong login
