@@ -1,4 +1,15 @@
 en:
+  SilverStripe\Admin\AdminController:
+    ErrorMessage: 'Sorry, it seems there was a {errorcode} error.'
+    ErrorMessage400: 'Sorry, it seems there was something wrong with the request.'
+    ErrorMessage401: 'Sorry, it seems you are not authorised to access this section or object.'
+    ErrorMessage403: 'Sorry, it seems the action you were trying to perform is forbidden.'
+    ErrorMessage404: "Sorry, it seems you were trying to access a section or object that doesn't exist."
+    ErrorMessage500: 'Sorry, it seems there was an internal server error.'
+    ErrorMessage503: 'Sorry, it seems the service is temporarily unavailable.'
+    PERMAGAIN: 'You have been logged out of the CMS.'
+    PERMALREADY: "I'm sorry, but you can't access that part of the CMS."
+    PERMDEFAULT: 'You must be logged in to access the administration area.'
   SilverStripe\Admin\CMSProfileController:
     CANTEDIT: "You don't have permission to do that"
     MENUTITLE: 'My Profile'
@@ -26,15 +37,20 @@ en:
     ResultDeleted: 'Deleted {count} groups'
     ResultUpdated: 'Updated {count} groups'
   SilverStripe\Admin\LeftAndMain:
+    ACCESS: "Access to '{title}' section"
     ACCESSALLINTERFACES: 'Access to all CMS sections'
     ACCESSALLINTERFACESHELP: 'Overrules more specific access settings.'
     BROWSER_WARNING_HEADING: 'Unsupported browser'
     BROWSER_WARNING_TEXT: 'You&apos;re using a web browser that&apos;s not supported by SilverStripe.<br />Please upgrade to one of the following options.'
+    CMS_ACCESS_CATEGORY: 'CMS Access'
     CollapsePanel: 'Collapse panel'
+    DELETE: Delete
     DELETED: Deleted.
     DropdownBatchActionsDefault: 'Choose an action...'
     ErrorDetail: 'Error detail: {detail}'
     ErrorMessage: 'Sorry, it seems there was a {errorcode} error.'
+    ErrorMessage400: 'Sorry, it seems there was something wrong with the request.'
+    ErrorMessage401: 'Sorry, it seems you are not authorised to access this section or object.'
     ErrorMessage403: 'Sorry, it seems the action you were trying to perform is forbidden.'
     ErrorMessage404: "Sorry, it seems you were trying to access a section or object that doesn't exist."
     ErrorMessage500: 'Sorry, it seems there was an internal server error.'
@@ -52,6 +68,7 @@ en:
     PROFILE: '{name} profile'
     PreviewButton: Preview
     REQUIREJS: 'The CMS requires that you have JavaScript enabled.'
+    SAVE: Save
     SAVEDUP: Saved.
     SUBMIT_BUTTON_LABEL: Go
     ValidationError: 'Validation error'

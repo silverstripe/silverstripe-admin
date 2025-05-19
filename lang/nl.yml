@@ -1,4 +1,10 @@
 nl:
+  SilverStripe\Admin\AdminController:
+    ErrorMessage: 'Excuses, er was een {errorcode} fout.'
+    ErrorMessage403: 'Excuses, de actie die je probeerde uit te voeren is niet toegestaan.'
+    ErrorMessage404: 'Excuses, het onderdeel wat je probeert te openen bestaat niet.'
+    ErrorMessage500: 'Excuses, er was een fout op de server.'
+    ErrorMessage503: 'Excuses, de server is tijdelijk niet beschikbaar.'
   SilverStripe\Admin\CMSProfileController:
     CANTEDIT: 'Je hebt geen toestemming om dat te doen'
     MENUTITLE: 'Mijn profiel'
@@ -30,6 +36,7 @@ nl:
     BROWSER_WARNING_HEADING: 'Browser wordt niet ondersteund'
     BROWSER_WARNING_TEXT: 'Deze webbrowser wordt niet ondersteund door het Silverstripe CMS.<br />Voor een update uit naar een van de volgende opties.'
     CollapsePanel: Inklappen
+    DELETE: Verwijder
     DELETED: Gewist.
     DropdownBatchActionsDefault: 'Kies een aktie...'
     ErrorDetail: 'Foutdetails: {detail}'
@@ -49,6 +56,7 @@ nl:
     PERMDEFAULT: 'U moet ingelogd zijn om het administratie gedeelte te kunnen benaderen; voer uw gegevens hier onder in.'
     PROFILE: '{name} profiel'
     REQUIREJS: 'Het CMS heeft het nodig dat JavaScript is ingeschakeld.'
+    SAVE: Opslaan
     SAVEDUP: Opgeslagen.
     SUBMIT_BUTTON_LABEL: Ga
     ValidationError: Validatiefout

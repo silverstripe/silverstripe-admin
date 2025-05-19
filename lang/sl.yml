@@ -1,4 +1,10 @@
 sl:
+  SilverStripe\Admin\AdminController:
+    ErrorMessage: 'Prišlo je do napake {errorcode}.'
+    ErrorMessage403: 'Postopek, ki ste ga želeli izvesti, ni dovoljen.'
+    ErrorMessage404: 'Odpreti ste želeli sklop ali element, ki ne obstaja.'
+    ErrorMessage500: 'Prišlo je do napake na strežniku.'
+    ErrorMessage503: 'Storitev trenutno ni na voljo.'
   SilverStripe\Admin\CMSProfileController:
     CANTEDIT: 'Nimate pravic za urejanje'
     MENUTITLE: 'Moj profil'
@@ -31,6 +37,7 @@ sl:
     BROWSER_WARNING_HEADING: 'Sistem v tem brskalniku ne deluje.'
     BROWSER_WARNING_TEXT: 'Uporabljate brskalnik, v katerem Silverstripe ne deluje.<br />Prosimo, da brskalnik nadgradite z eno od ponujenih možnosti.'
     CollapsePanel: 'Zloži deščico'
+    DELETE: Izbriši
     DELETED: Izbrisano
     DropdownBatchActionsDefault: 'Izberite akcijo ...'
     ErrorDetail: 'Opis napake: {detail}'

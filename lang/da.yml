@@ -29,6 +29,7 @@ da:
     BROWSER_WARNING_HEADING: 'Ikke supporteret browser'
     BROWSER_WARNING_TEXT: 'Du bruger en web browser der ikke er understøttet af SilverStripe.<br />Opdater venligst til en af de følgende muligheder.'
     CollapsePanel: 'Minimer panel'
+    DELETE: Slet
     DELETED: Slettet.
     DropdownBatchActionsDefault: 'Vælg en handling...'
     ExpandPanel: 'Udvid panel'
@@ -41,6 +42,7 @@ da:
     PERMDEFAULT: 'Du skal være logget ind for at kunne tilgå administrationen; indtast venligst dine login oplysninger herunder.'
     PROFILE: '{name} profil'
     REQUIREJS: "CMS'et kræver at du har JavaScript akttiveret."
+    SAVE: Gem
     SAVEDUP: Gemt.
     ValidationError: Valideringsfejl
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
