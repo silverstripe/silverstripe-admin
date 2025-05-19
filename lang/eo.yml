@@ -1,4 +1,10 @@
 eo:
+  SilverStripe\Admin\AdminController:
+    ErrorMessage: 'Bedaŭrinde, ŝajnas ke okazis eraro {errorcode}.'
+    ErrorMessage403: 'Bedaŭrinde, ŝajnas ke la provita ago estas malpermesita.'
+    ErrorMessage404: 'Bedaŭrinde, ŝajnas ke vi provis aliri sekcion aŭ objekton kiu ne ekzistas.'
+    ErrorMessage500: 'Bedaŭrinde, ŝajnas ke okazis interna servila eraro.'
+    ErrorMessage503: 'Bedaŭrinde, ŝajnas ke la la servo estas dumtempe ne disponebla.'
   SilverStripe\Admin\CMSProfileController:
     CANTEDIT: 'Vi ne havas permeson fari tion'
     MENUTITLE: 'Mia profilo'
@@ -30,6 +36,7 @@ eo:
     BROWSER_WARNING_HEADING: 'Nesubtenata foliumilo'
     BROWSER_WARNING_TEXT: 'Vi uzas foliumilon kiun ne subtenas SilverStripe.<br />Bonvolu instali iun el la jenaj ebloj.'
     CollapsePanel: 'Maletendi panelon'
+    DELETE: Forigi
     DELETED: Forigita.
     DropdownBatchActionsDefault: 'Elekti agon...'
     ErrorDetail: 'Detaloj pri eraro: {detail}'

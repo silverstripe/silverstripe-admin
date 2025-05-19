@@ -29,6 +29,7 @@ pl:
     BROWSER_WARNING_HEADING: 'Nieobsługiwane przeglądarki'
     BROWSER_WARNING_TEXT: "Twoja przeglądarka nie obsłuży poprawnie CMS'a.<br />Uaktualnij ją, a najlepiej zmień na jedną z proponowanych opcji."
     CollapsePanel: 'Zwiń panel'
+    DELETE: Usuń
     DELETED: Usunięto.
     DropdownBatchActionsDefault: 'Wybierz akcję...'
     ExpandPanel: 'Rozwiń panel'
@@ -42,6 +43,7 @@ pl:
     PROFILE: '{name} profil.'
     PreviewButton: Podgląd
     REQUIREJS: 'CMS wymaga włączenia obsługi JavaScript.'
+    SAVE: Zapisz
     SAVEDUP: Zapisano.
     SUBMIT_BUTTON_LABEL: Idź
     ValidationError: 'Wykryto niepoprawne dane'

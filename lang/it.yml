@@ -1,4 +1,10 @@
 it:
+  SilverStripe\Admin\AdminController:
+    ErrorMessage: 'Spiacente, sembra ci sia stato un errore {errorcode}.'
+    ErrorMessage403: "Spiacente, sembra che l'azione che hai provato ad eseguire non sia consentita."
+    ErrorMessage404: 'Spiacente, sembra tu abbia provato ad accedere ad una sezione o ad un oggetto che non esiste.'
+    ErrorMessage500: 'Spiacente, sembra ci sia stato un errore interno al server.'
+    ErrorMessage503: 'Spiacente, sembra che il servizio sia temporaneamente non disponibile.'
   SilverStripe\Admin\CMSProfileController:
     CANTEDIT: 'Non hai il permesso di farlo'
     MENUTITLE: 'Il mio profilo'
@@ -30,6 +36,7 @@ it:
     BROWSER_WARNING_HEADING: 'Browser non supportato'
     BROWSER_WARNING_TEXT: "Si sta utilizzando un browser Web che non è supportato da SilverStripe. <br/> Effettuare l'aggiornamento a una delle seguenti opzioni."
     CollapsePanel: 'Comprimi pannello'
+    DELETE: Elimina
     DELETED: Cancellato.
     DropdownBatchActionsDefault: "Scegli un'azione..."
     ErrorDetail: 'Dettagli errore: {detail}'

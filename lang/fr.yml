@@ -29,6 +29,7 @@ fr:
     BROWSER_WARNING_HEADING: 'Navigateur non pris en charge'
     BROWSER_WARNING_TEXT: "Vous utilisez un navigateur qui n'est pas supporté par SilverStripe.<br />Veuillez en utiliser un avec les options suivantes."
     CollapsePanel: 'Fermer le panneau'
+    DELETE: Supprimer
     DELETED: Effacé.
     DropdownBatchActionsDefault: 'Choisir une action...'
     ExpandPanel: 'Ouvrir le panneau'

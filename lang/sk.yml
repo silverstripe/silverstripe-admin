@@ -1,4 +1,10 @@
 sk:
+  SilverStripe\Admin\AdminController:
+    ErrorMessage: 'Ľutujeme, zdá sa, že došlo k chybe {errorcode}.'
+    ErrorMessage403: 'Ľutujeme, zdá sa, že akcia, ktorú ste sa pokúšali vykonať, je zakázaná.'
+    ErrorMessage404: 'Ľutujeme, zdá sa, že ste sa pokúšali o prístup k sekcii alebo objektu, ktorý neexistuje.'
+    ErrorMessage500: 'Ľutujeme, zdá sa, že došlo k internej chybe servera.'
+    ErrorMessage503: 'Ľutujeme, zdá sa, že služba je dočasne nedostupná.'
   SilverStripe\Admin\CMSBatchAction:
     PUBLISHED_PAGES: 'Publikovaných %d stránok, %d zlyhaní'
     PUBLISH_PAGES: Zverejniť
@@ -37,6 +43,7 @@ sk:
     BROWSER_WARNING_HEADING: 'Nepodporovaný prehliadač'
     BROWSER_WARNING_TEXT: 'Používate webový prehliadač, ktorý SilverStripe nepodporuje.<br />Aktualizujte prosím na jednu z nasledujúcich možností.'
     CollapsePanel: 'Zbaliť panel'
+    DELETE: Odstrániť
     DELETED: Odstránené.
     DropdownBatchActionsDefault: 'Vyberte akciu...'
     ErrorDetail: 'Podrobnosti o chybe: {detail}'

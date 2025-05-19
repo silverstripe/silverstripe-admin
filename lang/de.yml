@@ -1,4 +1,10 @@
 de:
+  SilverStripe\Admin\AdminController:
+    ErrorMessage: 'Entschuldigung, es scheint ein {errorcode} Fehler aufgetreten zu sein.'
+    ErrorMessage403: 'Entschuldigung, aber es scheint, dass die Aktion, die Sie durchführen wollten, verboten ist.'
+    ErrorMessage404: 'Entschuldigung, Sie haben versucht, auf einen Abschnitt oder ein Objekt zuzugreifen, das nicht existiert.'
+    ErrorMessage500: 'Entschuldigung, es scheint ein interner Serverfehler aufgetreten zu sein.'
+    ErrorMessage503: 'Entschuldigung, aber der Dienst scheint vorübergehend nicht verfügbar zu sein.'
   SilverStripe\Admin\CMSProfileController:
     CANTEDIT: 'Dafür haben Sie keine Berechtigung'
     MENUTITLE: 'Mein Profil'
@@ -30,6 +36,7 @@ de:
     BROWSER_WARNING_HEADING: 'NIcht unterstützter Browser'
     BROWSER_WARNING_TEXT: 'Sie verwenden einen Browser der nicht von SilverStripe unterstützt wird.<br />Bitte verwenden Sie eine der folgenden Optionen.'
     CollapsePanel: 'Panel zuklappen'
+    DELETE: Löschen
     DELETED: Gelöscht.
     DropdownBatchActionsDefault: 'Aktion auswählen...'
     ErrorDetail: 'Fehler-Detail: {detail}'
