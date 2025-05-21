@@ -7,8 +7,11 @@ import { injectTabContext } from 'hooks/useTabContext';
 const provideUsedOnData = (UsedOnTable) => {
   class UsedOnDataProvider extends Component {
     componentDidMount() {
+      const firstMount = this.haveFetchedData === undefined;
+      const tabContext = this.props.tabContext ? this.props.tabContext : false;
+      const activeTab = tabContext ? tabContext.isOnActiveTab : false;
       this.haveFetchedData = false;
-      if (this.props.forceFetch) {
+      if ((firstMount && activeTab) || this.props.forceFetch) {
         this.fetchDataFromEndpoint();
       }
     }
