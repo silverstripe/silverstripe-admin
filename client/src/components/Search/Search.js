@@ -67,6 +67,7 @@ class Search extends Component {
       display: props.display,
       searchText: term,
       initialSearchText: term,
+      forceLoadForm: false,
     };
   }
 
@@ -293,10 +294,14 @@ class Search extends Component {
    * Show this field when the Search Toggle is click.
    */
   show() {
+    this.setState({
+      forceLoadForm: true
+    });
     if (this.state.display !== DISPLAY.VISIBLE) {
-      this.setState({ display: DISPLAY.VISIBLE });
+      this.setState({
+        display: DISPLAY.VISIBLE
+      });
     }
-
     const { schemaName, formData, name, actions } = this.props;
     if (typeof formData[name] !== 'undefined') {
       actions.reduxForm.change(schemaName, name, this.state.searchText);
@@ -473,12 +478,12 @@ class Search extends Component {
           onTagClick={this.focusFormFilter}
           tagData={this.formatTagData()}
         >
-
           <SearchForm
             id={formId}
             identifier={identifier}
             visible={visible}
             expanded={expanded}
+            forceLoadForm={this.state.forceLoadForm}
             formSchemaUrl={formSchemaUrl}
             onSearch={this.doSearch}
             onClear={this.clearFilters}

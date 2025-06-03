@@ -26,11 +26,10 @@ function onEnter(callback) {
  * Display an advanced filter form.
  */
 function SearchForm({
-  visible, expanded, onSearch, onClear, formSchemaUrl, id, identifier, clearable
+  expanded, forceLoadForm, onSearch, onClear, formSchemaUrl, id, identifier, clearable
 }) {
   const handleKeyDown = onEnter(onSearch);
-  const loadForm = (visible || expanded);
-
+  const loadForm = expanded || forceLoadForm;
   return (
     <Collapse id={id} isOpen={expanded} className="search-form">
       {// eslint-disable-next-line jsx-a11y/no-static-element-interactions
@@ -63,16 +62,17 @@ function SearchForm({
 SearchForm.propTypes = {
   onSearch: PropTypes.func,
   onClear: PropTypes.func,
-  visible: PropTypes.bool,
   expanded: PropTypes.bool,
   id: PropTypes.string.isRequired,
   formSchemaUrl: PropTypes.string,
   identifier: PropTypes.string,
   clearable: PropTypes.bool,
+  forceLoadForm: PropTypes.bool,
 };
 
 SearchForm.defaultProps = {
-  formData: {}
+  formData: {},
+  forceLoadForm: false,
 };
 
 export { SearchForm as Component };
