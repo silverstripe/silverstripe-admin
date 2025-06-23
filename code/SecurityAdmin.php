@@ -68,16 +68,21 @@ class SecurityAdmin extends ModelAdmin implements PermissionProvider
     {
         $models = parent::getManagedModels();
         // Ensure tab titles can be localised
-        foreach ($models as $key => $spec) {
+        foreach ($models as $key => &$spec) {
             switch ($spec['dataClass']) {
                 case Member::class:
-                    $spec['title'] = _t(__CLASS__ . '.Users', 'Users');
+                    $spec['title'] = _t(__CLASS__ . '.TABUSERS', 'Users');
                     break;
                 case Group::class:
+                    $spec['title'] = _t(__CLASS__ . '.TABGROUPS', 'Groups');
+                    break;
                 case PermissionRole::class:
-                    $spec['title'] = singleton($spec['dataClass'])->i18n_plural_name();
+                    $spec['title'] = _t(__CLASS__ . '.TABROLES', 'Roles');
             }
         }
+
+        unset($spec);
+
         return $models;
     }
 

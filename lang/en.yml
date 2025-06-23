@@ -128,8 +128,9 @@ en:
     ImportFormHelpMember: '<p>Groups can be assigned by the <em>Groups</em> column. Groups are identified by their <em>Code</em> property, multiple groups can be separated by comma. Existing group memberships are not cleared.</p>'
     MENUTITLE: Security
     MemberListCaution: 'Caution: Removing members from this list will remove them from all groups and the database'
-    TABROLES: Roles
-    Users: Users
+    TABUSERS: 'Users'
+    TABGROUPS: 'Groups'
+    TABROLES: 'Roles'
   SilverStripe\Admin\SudoModeController:
     INVALID: 'Incorrect password'
     ImportFormHelpGroup: '<ul><li>Existing groups are matched by their unique <em>Code</em> value, and updated with any new values from the imported file</li><li>Group hierarchies can be created by using a <em>ParentCode</em> column.</li><li>Permission codes can be assigned by the <em>PermissionCode</em> column. Existing permission codes are not cleared.</li></ul>'

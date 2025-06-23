@@ -106,8 +106,9 @@ de:
     IMPORTUSERS: 'Benutzer importieren'
     MENUTITLE: Sicherheit
     MemberListCaution: 'Achtung: Benutzer von dieser Liste zu entfernen, wird diese von allen Gruppen entfernen und aus der Datenbank löschen.'
-    TABROLES: Rollen
-    Users: Benutzer
+    TABUSERS: 'Benutzer'
+    TABGROUPS: 'Gruppen'
+    TABROLES: 'Rollen'
   SilverStripe\Admin\SudoModeController:
     INVALID: 'Falsches Passwort'
     TIMEOUT: 'Sitzung wurde unterbrochen, bitte aktualisieren Sie und versuchen Sie es erneut.'
