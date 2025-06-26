@@ -107,7 +107,7 @@ abstract class CMSBatchAction
             }
 
             // Now make sure the tree title is appropriately updated
-            $publishedRecord = DataObject::get_by_id($this->managedClass, $id);
+            $publishedRecord = DataObject::get($this->managedClass)->setUseCache(true)->byID($id);
             if ($publishedRecord) {
                 if ($publishedRecord instanceof SiteTree) {
                     $treeTitle = CMSMain::singleton()->getRecordTreeMarkup($publishedRecord);

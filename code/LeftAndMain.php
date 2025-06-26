@@ -790,7 +790,7 @@ class LeftAndMain extends FormSchemaController implements PermissionProvider
             return DataObject::singleton($className);
         }
         if (is_numeric($id)) {
-            return DataObject::get_by_id($className, $id);
+            return DataObject::get($className)->setUseCache(true)->byID($id);
         }
         return null;
     }
@@ -822,7 +822,7 @@ class LeftAndMain extends FormSchemaController implements PermissionProvider
         // Existing or new record?
         $id = $data['ID'];
         if (is_numeric($id) && $id > 0) {
-            $record = DataObject::get_by_id($className, $id);
+            $record = DataObject::get($className)->setUseCache(true)->byID($id);
             if ($record && !$record->canEdit()) {
                 return Security::permissionFailure($this);
             }
@@ -879,7 +879,7 @@ class LeftAndMain extends FormSchemaController implements PermissionProvider
         $className = $this->getModelClass();
 
         $id = $data['ID'];
-        $record = DataObject::get_by_id($className, $id);
+        $record = DataObject::get($className)->setUseCache(true)->byID($id);
         if ($record && !$record->canDelete()) {
             return Security::permissionFailure();
         }

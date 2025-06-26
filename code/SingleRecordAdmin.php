@@ -46,7 +46,7 @@ abstract class SingleRecordAdmin extends LeftAndMain
         $record = null;
         $modelClass = $this->getModelClass();
         if (static::config()->get('restrict_to_single_record')) {
-            $record = DataObject::get_one($modelClass);
+            $record = DataObject::get($modelClass)->setUseCache(true)->first();
         }
         if (!$record && static::config()->get('allow_new_record')) {
             $record = $modelClass::create();
