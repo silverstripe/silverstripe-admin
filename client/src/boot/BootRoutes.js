@@ -98,7 +98,7 @@ class BootRoutes {
 
       // Check if the beginning of the route is the same as the current location.
       // Since we haven't decided on a router yet, we can't use it for route matching.
-      return currentPath.match(route);
+      return currentPath.match(`${route}(/|$)`);
     });
   }
 

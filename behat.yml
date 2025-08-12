@@ -21,6 +21,9 @@ default:
         -
           SilverStripe\BehatExtension\Context\FixtureContext:
             - '%paths.modules.admin%/tests/behat/features/files/'
+        -
+          SilverStripe\Framework\Tests\Behaviour\ConfigContext:
+            - '%paths.modules.admin%/tests/behat/features/files/'
 
   extensions:
     SilverStripe\BehatExtension\MinkExtension:

@@ -1,0 +1,5 @@
+---
+Name: fake-asset-admin
+---
+TestModelAdmin:
+  url_segment: 'assets-test'
