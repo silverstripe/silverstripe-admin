@@ -173,6 +173,16 @@ class BootRoutes {
           lastPath = window.location.pathname;
         }
 
+        // When navigating from a non-react route to a react route, we must
+        // completely load the page for react's router to kick in.
+        if (ctx.state?.path && this.matchesReactRoute(ctx.state.path)) {
+          // Add the current path to the history so we can go back to it
+          history.pushState({}, '');
+          // Navigate to the new path
+          window.location = ctx.state.path;
+          return;
+        }
+
         // Verify that this is a true state change. E.g. not a hash change.
         // This emulates behaviour of old html history.js
         const forceReload = ctx.state && ctx.state.__forceReload;

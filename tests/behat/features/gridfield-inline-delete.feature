@@ -16,7 +16,6 @@ Feature: GridField inline delete
     And I go to "/admin/test"
 
   Scenario: I can see toast message when I successfully delete a record by clicking the Delete button in action menu
-  Given I take a screenshot after every step
     When I click "Company C" in the "#Form_EditForm" element
     And I click "Employees" in the ".ui-tabs-nav" element
     Then I should see "Employee A" in the "#Form_ItemEditForm_Employees" element
