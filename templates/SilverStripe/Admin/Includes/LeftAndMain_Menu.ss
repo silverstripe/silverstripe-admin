@@ -1,6 +1,6 @@
 <div class="cms-mobile-menu-toggle-wrapper"></div>
 
-<nav class="fill-height cms-menu cms-panel cms-panel-layout" id="cms-menu" data-layout-type="border" aria-label="<%t SilverStripe\\Admin\\LeftAndMain_Menu.MainMenu 'Main menu' %>" aria-expanded="false">
+<nav class="fill-height cms-menu cms-panel cms-panel-layout" id="cms-menu" data-layout-type="border" aria-label="<%t SilverStripe\\Admin\\LeftAndMain_Menu.MainMenu 'Main menu' %>">
 	<div class="cms-menu__header">
 		<% include SilverStripe\\Admin\\LeftAndMain_MenuLogo %>
 		<% include SilverStripe\\Admin\\LeftAndMain_MenuStatus %>

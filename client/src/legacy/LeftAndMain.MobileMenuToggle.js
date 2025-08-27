@@ -21,8 +21,7 @@ $.entwine('ss', function($){
         const state = store.getState();
         const isOpen = state.mobileMenu.isOpen;
         menu
-          .toggleClass('cms-menu--open', isOpen)
-          .attr('aria-expanded', isOpen);
+          .toggleClass('cms-menu--open', isOpen);
         menuOverlay.attr('aria-expanded', isOpen);
       });
     }
