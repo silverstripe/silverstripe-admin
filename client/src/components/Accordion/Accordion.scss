@@ -19,7 +19,7 @@
   text-decoration: none;
   border-bottom: 1px solid $border-color;
 
-  &:before {
+  .accordion__arrow-icon:before {
     padding: calc($spacer * .75) $panel-padding;
     position: absolute;
     right: 0;
@@ -28,8 +28,8 @@
     line-height: $line-height-base;
     color: lighten($body-color, 30);
     text-align: center;
+    // equivalent of font-icon-up-open-big
     content: "7";
-    font-family: "silverstripe";
 	}
 
   &:hover,
@@ -37,12 +37,13 @@
   &:focus {
     text-decoration: none;
 
-    &:before {
+    .accordion__arrow-icon:before {
       color: $body-color;
     }
   }
 
-  &.collapsed:before {
+  &.collapsed .accordion__arrow-icon:before {
+    // equivalent of font-icon-down-open-big
     content: "6";
     display: block;
   }

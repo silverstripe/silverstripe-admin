@@ -39,14 +39,6 @@
 $paginator-button-width: 36px;
 $paginator-button-height: 30px;
 
-.paginator-prev button:before {
-  content: "'";
-}
-
-.paginator-next button:before {
-  content: "&";
-}
-
 .paginator-prev,
 .paginator-next {
   // hold space so pagination doesn't move around
@@ -62,29 +54,16 @@ $paginator-button-height: 30px;
     border-radius: $btn-border-radius;
     overflow: hidden;
 
-    &:before {
-      font-family: "silverstripe";
-      color: $text-muted;
-      width: $paginator-button-width;
-      height: $paginator-button-height;
-      background-color: $body-bg;
-      position: absolute;
-      top: 0;
-      left: 0;
-      padding: $input-btn-padding-y;
-      transition: all .2s ease-in-out;
-      font-size: $font-size-lg;
-      -webkit-font-smoothing: antialiased;
-      line-height: $line-height-base;
-    }
-
     &:hover {
       background-color: $gray-200;
       border-color: transparent;
+    }
 
-      &:before {
-        background-color: $gray-200;
-      }
+    .paginator-icon:before {
+      color: $text-muted;
+      padding: $input-btn-padding-y;
+      transition: all .2s ease-in-out;
+      font-size: $font-size-lg;
     }
   }
 }

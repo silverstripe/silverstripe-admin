@@ -71,6 +71,7 @@
         &.fill{
           &:before{
             color:#fff;
+            // Not a font-icon reference - it's a literal question mark
             content: '?';
             font-size:12px;
             box-sizing: border-box;

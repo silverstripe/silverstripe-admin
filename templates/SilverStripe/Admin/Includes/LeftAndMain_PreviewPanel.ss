@@ -1,7 +1,7 @@
 <div class="cms-preview fill-height flexbox-area-grow" data-layout-type="border">
 	<div class="panel flexbox-area-grow fill-height">
 		<div class="preview-note">
-            <div class="icon font-icon-monitor display-1"></div>
+            <div class="icon font-icon-monitor display-1" aria-hidden="true"></div>
             <%t SilverStripe\Admin\LeftAndMain.NO_PREVIEW 'No preview available' %>
         </div>
 		<div class="preview__device">

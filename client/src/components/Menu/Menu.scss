@@ -97,11 +97,11 @@
           width: auto;
           right: 0;
 
-          > span {
+          > .cms-login-status__profile-text {
             opacity: 0;
           }
 
-          i {
+          .cms-login-status__profile-icon {
             padding-left: 8px;
           }
         }
@@ -230,7 +230,7 @@
   background-color: $brand-secondary;
   min-height: $toolbar-total-height * 2;
 
-  span {
+  .cms-login-status__profile-text {
     color: $white;
     display: block;
     padding-left: 26px;
@@ -264,6 +264,10 @@
 
   .cms-sitename__link {
     display: none;
+
+    .font-icon-silverstripe-cms:before {
+      vertical-align: middle;
+    }
   }
 
   .cms-sitename__title {
@@ -326,7 +330,7 @@
       background-color: $brand-secondary-hover;
     }
 
-    i {
+    .cms-login-status__profile-icon {
       position: absolute;
       top: 17px;
       left: 13px;
@@ -341,7 +345,7 @@
       }
     }
 
-    span {
+    .cms-login-status__profile-text {
       width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -420,6 +424,7 @@
       &[href^="http://"],
       &[href^="https://"] {
         .text:after {
+          // equivalent of font-icon-external-link
           content: "@";
           position: relative;
           top: 2px;

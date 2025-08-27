@@ -55,6 +55,7 @@
   }
 
   &:after {
+    // equivalent of font-icon-caret-up-down
     content: ")";
     display: inline-block;
     font-family: "silverstripe";
@@ -71,10 +72,12 @@
   }
 
   &.ss-gridfield-sorted-desc:after {
+    // equivalent of font-icon-caret-up-two
     content: "*";
   }
 
   &.ss-gridfield-sorted-asc:after {
+    // equivalent of font-icon-caret-down-two
     content: "(";
   }
 
@@ -109,10 +112,13 @@
 
   &:hover,
   &[class*="font-icon-"]:hover,
+  span[class*="font-icon-"]:hover,
   &:active,
   &[class*="font-icon-"]:active,
+  span[class*="font-icon-"]:active,
   &:focus,
-  &[class*="font-icon-"]:focus {
+  &[class*="font-icon-"]:focus,
+  span[class*="font-icon-"]:focus {
     background-color: darken($table-bg-tools, 6%);
 
     &:before {
@@ -170,7 +176,8 @@ div.grid-field__sort-field + .form__fieldgroup-item {
     text-decoration: none; // For links
   }
 
-  &:before {
+  &:before,
+  span[class*="font-icon-"]:before {
     top: 0;
     color: lighten($body-color, 10%);
   }

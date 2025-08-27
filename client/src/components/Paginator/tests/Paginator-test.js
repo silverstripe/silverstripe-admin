@@ -43,7 +43,7 @@ test('Paginator renders next button when on first page and not prev button', () 
   })}
   />);
   expect(container.querySelectorAll('.paginator-prev button').length).toBe(0);
-  expect(container.querySelector('.paginator-next button').innerHTML).toBe('Next');
+  expect(container.querySelector('.paginator-next button .visually-hidden').innerHTML).toBe('Next');
   fireEvent.click(screen.getByText('Next'));
   expect(onChangePage).toHaveBeenCalled();
   expect(nextPage).toBe(2);
@@ -59,19 +59,19 @@ test('Paginator renders prev button when not on first page and not next button',
     onChangePage,
   })}
   />);
-  expect(container.querySelector('.paginator-prev button').innerHTML).toBe('Previous');
+  expect(container.querySelector('.paginator-prev button .visually-hidden').innerHTML).toBe('Previous');
   expect(container.querySelectorAll('.paginator-next button').length).toBe(0);
   fireEvent.click(screen.getByText('Previous'));
   expect(onChangePage).toHaveBeenCalled();
   expect(nextPage).toBe(1);
 });
 
-test('Paginator renders button buttons when it needs to', () => {
+test('Paginator renders both buttons when it needs to', () => {
   const { container } = render(<Paginator {...makeProps({
     currentPage: 2,
     totalItems: 11,
   })}
   />);
-  expect(container.querySelector('.paginator-prev button').innerHTML).toBe('Previous');
-  expect(container.querySelector('.paginator-next button').innerHTML).toBe('Next');
+  expect(container.querySelector('.paginator-prev button .visually-hidden').innerHTML).toBe('Previous');
+  expect(container.querySelector('.paginator-next button .visually-hidden').innerHTML).toBe('Next');
 });

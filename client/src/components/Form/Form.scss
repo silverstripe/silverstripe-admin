@@ -43,6 +43,7 @@
   border-bottom: 1px solid $border-color-light;
   visibility: visible;
   width: 100%;
+  // Not a font-icon reference, it's a literal space
   content: "\0020";
   display: block;
 }

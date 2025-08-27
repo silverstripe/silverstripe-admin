@@ -69,7 +69,10 @@ function Paginator(props) {
       return null;
     }
     const label = i18n._t('Admin.PREVIOUS', 'Previous');
-    return <button type="button" onClick={() => handlePrev()}>{label}</button>;
+    return <button type="button" onClick={() => handlePrev()}>
+      <span className="paginator-icon font-icon-angle-left" aria-hidden="true" />
+      <span className="visually-hidden">{label}</span>
+    </button>;
   }
 
   /**
@@ -80,7 +83,10 @@ function Paginator(props) {
       return null;
     }
     const label = i18n._t('Admin.NEXT', 'Next');
-    return <button type="button" onClick={() => handleNext()}>{label}</button>;
+    return <button type="button" onClick={() => handleNext()}>
+      <span className="paginator-icon font-icon-angle-right" aria-hidden="true" />
+      <span className="visually-hidden">{label}</span>
+    </button>;
   }
 
   // Render the paginator

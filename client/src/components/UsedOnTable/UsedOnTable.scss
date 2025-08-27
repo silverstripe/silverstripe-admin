@@ -58,6 +58,7 @@
   display: inline;
 
   &:after {
+    // Not a font-icon reference - it's a literal slash
     content: "/";
     display: inline;
     margin: 0 5px;

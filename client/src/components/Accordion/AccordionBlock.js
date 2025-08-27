@@ -13,6 +13,8 @@ const AccordionBlock = (props) => {
     role: 'tabpanel',
     'aria-labelledby': headerID,
   };
+  // Note the `font-icon-` css class on the icon is necessary.
+  // The actual icon itself is chosen through CSS based on whether the accordion is collapsed or not.
   return (
     <div className="accordion__block">
       <a
@@ -23,7 +25,9 @@ const AccordionBlock = (props) => {
         aria-controls={listID}
         id={headerIDAttr}
         role="tab"
-      >{props.title}
+      >
+        <span className="accordion__arrow-icon font-icon-" aria-hidden="true" />
+        {props.title}
       </a>
       <div {...groupProps}>
         {props.children}

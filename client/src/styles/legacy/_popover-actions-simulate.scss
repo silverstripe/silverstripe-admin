@@ -25,6 +25,7 @@
       margin: 0;
       line-height: $line-height-base * $font-size-root;
       height: $line-height-base * $font-size-root !important;
+      // equivalent of font-icon-dot-3
       content: "9";
       font-size: 21px;
       color: $text-muted;
