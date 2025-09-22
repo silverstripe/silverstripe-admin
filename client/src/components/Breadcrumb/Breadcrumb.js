@@ -6,6 +6,17 @@ import FileStatusIcon from 'components/FileStatusIcon/FileStatusIcon';
 import Link from 'components/Link/Link';
 
 class Breadcrumb extends Component {
+  constructor(props) {
+    super(props);
+    this.h2Ref = React.createRef();
+  }
+
+  componentDidMount() {
+    if (this.props.autoFocus && this.h2Ref.current) {
+      this.h2Ref.current.focus();
+    }
+  }
+
   /**
    * @returns {Object|false}
    */
@@ -44,7 +55,11 @@ class Breadcrumb extends Component {
     }
     return (
       <div className="breadcrumb__item breadcrumb__item--last">
-        <h2 className="breadcrumb__item-title">
+        <h2
+          className="breadcrumb__item-title"
+          ref={this.h2Ref}
+          tabIndex="-1"
+        >
           {crumb.text}
           {crumb.icon && this.renderIcons([crumb.icon])}
           {crumb.icons && this.renderIcons(crumb.icons)}
@@ -106,8 +121,13 @@ Breadcrumb.propTypes = {
       nodeName: PropTypes.string,
       className: PropTypes.string,
       onClick: PropTypes.func,
-    }))
+    })),
+    autoFocus: PropTypes.bool
   })),
+};
+
+Breadcrumb.defaultProps = {
+  autoFocus: false,
 };
 
 function mapStateToProps(state) {
