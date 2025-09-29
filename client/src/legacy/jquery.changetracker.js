@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 import debounce from 'lodash.debounce';
+import debounceByElement from 'lib/debounceByElement';
 
 // Copyright (c) 2009, SilverStripe Ltd.
 // All rights reserved.
@@ -166,13 +167,14 @@ import debounce from 'lodash.debounce';
           }
 
           // Perform global change detection on the form
-          ondetect();
+          ondetect(e.target)();
         }
       };
 
-      var ondetect = debounce(detectChanges, 250, { leading: true, trailing: true });
-
-      var onchange = debounce(handleChanges, 250, { leading: true, trailing: true });
+      const debounceOptions = { leading: true, trailing: true };
+      const debounceWait = 250;
+      var ondetect = debounceByElement(detectChanges, debounceWait, debounceOptions);
+      var onchange = debounce(handleChanges, debounceWait, debounceOptions);
 
       // Delegate handlers
       self.on('click.changetracker', options.fieldSelector , onchange);
@@ -180,7 +182,9 @@ import debounce from 'lodash.debounce';
       self.on('change.changetracker', options.fieldSelector , onchange);
 
       // Bind observer to subtree
-      self.on('change.changetracker', ondetect);
+      self.on('change.changetracker', function (e) {
+        ondetect(e.target)(e);
+      });
 
       // Set initial state
       this.getFields().each(function() {
@@ -189,9 +193,9 @@ import debounce from 'lodash.debounce';
       });
 
       // Set dirty handler
-      self.on('dirty.changetracker', function() {
+      self.on('dirty.changetracker', function(e) {
         self.data('dirty', true);
-        ondetect();
+        ondetect(e.target)();
       });
 
       this.data('changetracker', true);
