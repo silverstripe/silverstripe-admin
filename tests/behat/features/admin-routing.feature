@@ -20,4 +20,4 @@ Feature: Single-page routing works as expected
   Scenario: Admin sections can start with the same string as a react section
     Given I have a config file "fake-asset-admin.yml"
     When I go to "/admin/assets-test"
-    Then I should see "Add Company"
+    Then I should see "Add new Company"

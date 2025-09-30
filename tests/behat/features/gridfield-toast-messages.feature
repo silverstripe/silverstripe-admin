@@ -15,7 +15,7 @@ Feature: Show toast messages
     And I go to "/admin/test"
 
   Scenario: I can see toast message when I successfully create or publish a record
-    When I press the "Add Company" button
+    When I press the "Add new Company" button
     And I fill in "Name" with "My Company"
     And I press the "Create" button
     Then I should see a "Saved Company "My Company" successfully" success toast

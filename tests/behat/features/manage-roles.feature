@@ -15,7 +15,7 @@ Feature: Manage Roles
 
   Scenario: I can create a new role with permissions
     When I click the "Roles" CMS tab
-    And I press the "Add Role" button
+    And I press the "Add new Role" button
     And I fill in "Title" with "MyRole"
     And I check "View draft content"
     And I press the "Create" button
@@ -27,7 +27,7 @@ Feature: Manage Roles
     And I click "Jane" in the "#Form_EditForm_groups" element
     And I click the "Roles" CMS tab
     And I click "Manage roles" in the "#Root_Roles" element
-    Then I should see "Add Role"
+    Then I should see "Add new Role"
     And I should see "This role is just another role"
 
   Scenario: Members of a group with role permissions can view draft content

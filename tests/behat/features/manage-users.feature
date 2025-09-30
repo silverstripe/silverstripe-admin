@@ -79,7 +79,7 @@ Feature: Manage users
 
   Scenario: I can add a user to the system
     When I click the "Users" CMS tab
-    And I press the "Add Member" button
+    And I press the "Add new Member" button
     And I fill in the following:
       | First Name | John |
       | Surname | Doe |

@@ -13,7 +13,7 @@ Feature: Form validation
 
   Scenario: Field validation works as expected even if no validator is explicitly declared
     Given I go to "/admin/test/SilverStripe-FrameworkTest-Model-Employee"
-    And I press the "Add Employee" button
+    And I press the "Add new Employee" button
     When I fill in "Name" with "any name"
     And I fill in "Email" with "invalid email"
     And I press the "Create" button

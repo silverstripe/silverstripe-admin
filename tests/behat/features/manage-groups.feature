@@ -17,7 +17,7 @@ Feature: Manage groups
   Scenario: I can create a new group with permissions
     # Create a user group
     When I click the "Groups" CMS tab
-    And I press the "Add Group" button
+    And I press the "Add new Group" button
     And I fill in "Group name" with "MyGroup"
     And I press the "Create" button
     Then I should not see "Validation Error"
@@ -30,7 +30,7 @@ Feature: Manage groups
 
   Scenario: Group cannot have a blank name
     When I click the "Groups" CMS tab
-    And I press the "Add Group" button
+    And I press the "Add new Group" button
     And I fill in "Group name" with ""
     And I press the "Create" button
     Then I should see "Validation Error"

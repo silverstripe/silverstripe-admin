@@ -132,7 +132,7 @@ Feature: Use Gridfield with arbitrary data
 
   Scenario: I can create new editable arbitrary data
     When I go to "/admin/arbitrary-data/custommodel"
-    And I press the "Add Arbitrary Datum" button
+    And I press the "Add new Arbitrary Datum" button
       # Validate it's a new item with no preset data
       Then I should see "New Arbitrary Datum" in the ".breadcrumbs-wrapper" element
       And I should see the "input#Form_ItemEditForm_Title" element
