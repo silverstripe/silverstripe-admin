@@ -21,7 +21,7 @@ function makeProps(obj = {}) {
 
 test('Tip render() should display a button with a lamp icon by default', () => {
   const { container } = render(<Tip {...makeProps()} />);
-  expect(container.querySelectorAll('.btn.font-icon-lamp')).toHaveLength(1);
+  expect(container.querySelectorAll('.btn .font-icon-lamp')).toHaveLength(1);
 });
 
 test('Tip render() should display a button with a different icon if specified', () => {
@@ -31,7 +31,7 @@ test('Tip render() should display a button with a different icon if specified', 
     })}
     />
   );
-  expect(container.querySelectorAll('.btn.font-icon-white-question')).toHaveLength(1);
+  expect(container.querySelectorAll('.btn .font-icon-white-question')).toHaveLength(1);
 });
 
 test('Tip render() should not display the popover by default', () => {

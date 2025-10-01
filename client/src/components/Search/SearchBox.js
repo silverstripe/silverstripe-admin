@@ -1,8 +1,9 @@
 /* global document window */
 import i18n from 'i18n';
 import React, { Component } from 'react';
-import { Label, Button } from 'reactstrap';
+import { Label } from 'reactstrap';
 import classNames from 'classnames';
+import Button from 'components/Button/Button';
 import CompactTagList from 'components/Tag/CompactTagList';
 import ResizeAware from 'components/ResizeAware/ResizeAware';
 import PropTypes from 'prop-types';
@@ -275,7 +276,6 @@ class SearchBox extends Component {
     const { expanded, onToggleFilter, formId } = this.props;
     const classes = classNames(
       'btn--icon',
-      'font-icon-caret-down-two',
       'search-box__filter-trigger',
       this.state.width < 576 ? 'search-box--no-label' : '',
       { collapsed: !expanded }
@@ -288,6 +288,7 @@ class SearchBox extends Component {
       onClick={onToggleFilter}
       className={classes}
       title={i18n._t('Admin.ADVANCED', 'Advanced')}
+      icon="caret-down-two"
     >
       <span className={spanClass}>{i18n._t('Admin.SEARCH_OPTIONS', 'Search options')}</span>
     </Button>);
@@ -302,7 +303,8 @@ class SearchBox extends Component {
       onClick={onHide}
       title={i18n._t('Admin.CLOSE', 'Close')}
       aria-label={i18n._t('Admin.CLOSE', 'Close')}
-      className="font-icon-cancel btn--no-text btn--icon-lg search-box__cancel"
+      className="btn--no-text btn--icon-lg search-box__cancel"
+      icon="cancel"
       aria-controls={id}
       aria-expanded="true"
     />);
@@ -335,7 +337,7 @@ class SearchBox extends Component {
             { this.renderInput() }
             { showEnter && this.renderEnterHint() }
             { children }
-            <div className="icon font-icon-search" />
+            <div className="icon font-icon-search" aria-hidden="true" />
             { showFilters && this.renderFilterButton() }
             { hideable && this.renderHideButton() }
           </div>

@@ -51,12 +51,6 @@ class FormAction extends Component {
       buttonClasses[`btn-${style}`] = true;
     }
 
-    // Add icon class
-    const icon = this.getIcon();
-    if (icon) {
-      buttonClasses[`font-icon-${icon}`] = true;
-    }
-
     if (typeof extraClass === 'string') {
       buttonClasses[extraClass] = true;
     }
@@ -160,8 +154,11 @@ class FormAction extends Component {
   render() {
     const { title } = this.props;
 
+    const icon = this.getIcon();
+
     return (
       <button {...this.getButtonProps()}>
+        {icon && <span className={`font-icon-${icon}`} aria-hidden="true" />}
         {this.getLoadingIcon()}
         {castStringToElement('span', title, { className: 'btn__title' })}
       </button>

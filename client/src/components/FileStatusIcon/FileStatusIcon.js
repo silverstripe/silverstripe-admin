@@ -28,7 +28,7 @@ class FileStatusIcon extends PureComponent {
         'SilverStripe\\Admin\\FileStatusIcon.TRACKED_FORM_UPLOAD_UNRESTRICTED',
         'Form submission, unrestricted access'
       );
-    return { className, 'data-title': dataTitle };
+    return { className, 'data-title': dataTitle, 'aria-label': dataTitle };
   }
 
   /**
@@ -40,7 +40,7 @@ class FileStatusIcon extends PureComponent {
       'SilverStripe\\Admin\\FileStatusIcon.ACCESS_RESTRICTED',
       'Restricted access'
     );
-    return { className, 'data-title': dataTitle };
+    return { className, 'data-title': dataTitle, 'aria-label': dataTitle };
   }
 
   /**

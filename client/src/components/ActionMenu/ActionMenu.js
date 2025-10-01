@@ -33,6 +33,7 @@ class ActionMenu extends PureComponent {
       dropdownToggleProps,
       dropdownMenuProps,
       dropdownToggleClassNames,
+      dropdownToggleChildren,
       className,
       // remove props that we don't want to pass through to Dropdown
       toggleCallback, // eslint-disable-line no-unused-vars
@@ -44,6 +45,7 @@ class ActionMenu extends PureComponent {
       dropdownToggleProps.className
     );
     const menuClassName = classnames('action-menu__dropdown', dropdownMenuProps.className);
+    const toggleText = i18n._t('Admin.ACTIONS', 'View actions');
 
     return (
       <Dropdown
@@ -52,7 +54,9 @@ class ActionMenu extends PureComponent {
         toggle={this.toggle}
         {...restProps}
       >
-        <DropdownToggle className={toggleClassName} aria-label={i18n._t('Admin.ACTIONS', 'View actions')} {...dropdownToggleProps} />
+        <DropdownToggle className={toggleClassName} title={toggleText} aria-label={toggleText} {...dropdownToggleProps} >
+          {dropdownToggleChildren}
+        </DropdownToggle>
         <DropdownMenu className={menuClassName} {...dropdownMenuProps}>
           {this.props.children}
         </DropdownMenu>
@@ -64,6 +68,10 @@ class ActionMenu extends PureComponent {
 ActionMenu.propTypes = {
   toggleCallback: PropTypes.func,
   dropdownToggleClassNames: PropTypes.arrayOf(PropTypes.string),
+  dropdownToggleChildren: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]),
 };
 
 ActionMenu.defaultProps = {
@@ -73,9 +81,9 @@ ActionMenu.defaultProps = {
     'btn',
     'btn--no-text',
     'btn--icon-xl',
-    'font-icon-dot-3'
   ],
   dropdownToggleProps: {},
+  dropdownToggleChildren: <span className="font-icon-dot-3" aria-hidden="true" />,
   dropdownMenuProps: {},
 };
 

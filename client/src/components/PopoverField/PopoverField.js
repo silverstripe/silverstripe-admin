@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import Button from 'components/Button/Button';
 
 class PopoverField extends Component {
   constructor(props) {
@@ -49,6 +50,16 @@ class PopoverField extends Component {
     window.setTimeout(() => this.setState({ isOpen: !this.state.isOpen }, toggleCallback), 0);
   }
 
+  getButtonIcon() {
+    if (this.props.buttonIcon) {
+      return this.props.buttonIcon;
+    }
+    if (this.props.title) {
+      return undefined;
+    }
+    return 'dot-3';
+  }
+
   render() {
     const placement = this.getPlacement();
 
@@ -58,7 +69,7 @@ class PopoverField extends Component {
       [this.props.className]: true,
       [this.props.buttonClassName]: true,
       'btn--no-focus': this.state.isOpen,
-      'font-icon-dot-3 btn--no-text': !this.props.title,
+      'btn--no-text': !this.props.title,
       [`btn--icon-${this.props.buttonSize}`]: !this.props.title,
     });
 
@@ -68,6 +79,7 @@ class PopoverField extends Component {
       className: buttonClasses,
       onClick: this.toggle,
       title: this.props.data.buttonTooltip,
+      icon: this.getButtonIcon(),
     };
 
     const wrapperClasses = classnames({
@@ -102,6 +114,7 @@ PopoverField.propTypes = {
   container: PropTypes.any,
   className: PropTypes.string,
   buttonClassName: PropTypes.string,
+  buttonIcon: PropTypes.string,
   popoverClassName: PropTypes.string,
   buttonSize: PropTypes.oneOf(['sm', 'md', 'large', 'xl']),
   data: PropTypes.oneOfType([

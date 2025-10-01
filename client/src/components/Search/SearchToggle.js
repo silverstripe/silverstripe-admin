@@ -1,6 +1,6 @@
 import i18n from 'i18n';
 import React from 'react';
-import { Button } from 'reactstrap';
+import Button from 'components/Button/Button';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -9,7 +9,6 @@ const label = i18n._t('Admin.SHOW_SEARCH', 'Show search');
 const toggleBtnClasses = (toggled) => classnames(
   'btn--no-text',
   'search-toggle',
-  'font-icon-search',
   'btn--icon-lg',
   { 'search-toggle__active': toggled }
 );
@@ -21,6 +20,7 @@ const SearchToggle = ({ onToggle, toggled }) => (<Button
   title={label}
   onClick={onToggle}
   className={toggleBtnClasses(toggled)}
+  icon="search"
 >
   <span className="visually-hidden">{label}</span>
 </Button>);

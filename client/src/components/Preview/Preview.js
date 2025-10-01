@@ -57,7 +57,8 @@ class Preview extends Component {
     if (this.props.itemLinks && this.props.itemLinks.edit) {
       const editUrl = this.props.itemLinks.edit.href;
       toolbarButtons.push(
-        <a key="edit" href={editUrl} className="btn btn-outline-secondary font-icon-edit">
+        <a key="edit" href={editUrl} className="btn btn-outline-secondary">
+          <span className="font-icon-edit" aria-hidden="true" />
           <span className="btn__title">{i18n._t('Admin.EDIT', 'Edit')}</span>
         </a>
       );

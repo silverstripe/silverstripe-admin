@@ -18,7 +18,7 @@ test('ViewModeToggle simulate click events in split mode', () => {
     />
   );
   expect(container.querySelector('.viewmode-toggle__chosen-view-title').innerHTML).toBe('Split mode');
-  fireEvent.click(container.querySelectorAll('.font-icon-edit-write')[0]);
+  fireEvent.click(container.querySelectorAll('.font-icon-edit-write')[0].parentElement);
   expect(mockOnEditSelect).toHaveBeenCalled();
 });
 
@@ -35,7 +35,7 @@ test('ViewModeToggle should call the preview button onClick function', () => {
     />
   );
   expect(container.querySelector('.viewmode-toggle__chosen-view-title').innerHTML).toBe('Split mode');
-  fireEvent.click(container.querySelectorAll('.font-icon-eye')[0]);
+  fireEvent.click(container.querySelectorAll('.font-icon-eye')[0].parentElement);
   expect(mockOnPreviewSelect).toHaveBeenCalled();
 });
 
@@ -52,7 +52,7 @@ test('ViewModeToggle simulate click events in edit mode should call the split bu
     />
   );
   expect(container.querySelector('.viewmode-toggle__chosen-view-title').innerHTML).toBe('Edit mode');
-  fireEvent.click(container.querySelectorAll('.font-icon-columns')[0]);
+  fireEvent.click(container.querySelectorAll('.font-icon-columns')[0].parentElement);
   expect(mockOnSplitSelect).not.toHaveBeenCalled();
 });
 
@@ -69,7 +69,7 @@ test('ViewModeToggle simulate click events in edit mode should call the preview 
     />
   );
   expect(container.querySelector('.viewmode-toggle__chosen-view-title').innerHTML).toBe('Edit mode');
-  fireEvent.click(container.querySelectorAll('.font-icon-eye')[0]);
+  fireEvent.click(container.querySelectorAll('.font-icon-eye')[0].parentElement);
   expect(mockOnPreviewSelect).toHaveBeenCalled();
 });
 
@@ -125,9 +125,9 @@ test('ViewModeToggle classes', () => {
   expect(container.querySelectorAll('.font-icon-columns')).toHaveLength(2);
   expect(container.querySelectorAll('.font-icon-edit-write')).toHaveLength(1);
   expect(container.querySelectorAll('.font-icon-eye')).toHaveLength(1);
-  const splitButton = container.querySelectorAll('.font-icon-columns')[1];
-  const editButton = container.querySelectorAll('.font-icon-edit-write')[0];
-  const previewButton = container.querySelectorAll('.font-icon-eye')[0];
+  const splitButton = container.querySelectorAll('.font-icon-columns')[1].parentElement;
+  const editButton = container.querySelectorAll('.font-icon-edit-write')[0].parentElement;
+  const previewButton = container.querySelectorAll('.font-icon-eye')[0].parentElement;
   expect(splitButton.classList.contains('viewmode-toggle--selected')).toBe(true);
   expect(editButton.classList.contains('viewmode-toggle--selected')).toBe(false);
   expect(previewButton.classList.contains('viewmode-toggle--selected')).toBe(false);

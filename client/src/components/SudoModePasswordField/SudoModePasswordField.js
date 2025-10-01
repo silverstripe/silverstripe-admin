@@ -115,9 +115,10 @@ function SudoModePasswordField(props) {
       </p>
       { !showVerify && (
         <Button
-          className="sudo-mode-password-field__notice-button font-icon-lock"
+          className="sudo-mode-password-field__notice-button"
           color="info"
           onClick={() => handleConfirmClick()}
+          icon="lock"
         >
           { i18n._t('Admin.VERIFY_TO_CONTINUE', 'Verify to continue') }
         </Button>
@@ -168,9 +169,10 @@ function SudoModePasswordField(props) {
       <div className="sudo-mode-password-field__expander-text-container">{ verifyMessageValue }</div>
       <div className="sudo-mode-password-field__expander-button-container">
         <Button
-          className="sudo-mode-password-field__expander-button font-icon-lock"
+          className="sudo-mode-password-field__expander-button"
           color="info"
           onClick={() => handleConfirmClick()}
+          icon="lock"
         >
           { i18n._t('Admin.VERIFY', 'Verify') }
         </Button>

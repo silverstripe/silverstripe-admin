@@ -59,23 +59,32 @@ class Breadcrumb extends Component {
    */
   renderIcons(icons) {
     return icons.map((icon, i) => {
-      const { nodeName, className, hasRestrictedAccess, ...other } = icon;
+      const { className, hasRestrictedAccess, ...other } = icon;
+      let NodeName = icon.nodeName;
       // reassign with let so linter won't suggest 'const' above for unmodified nodeName/className
       let attrs = { ...other };
-      const extraClassName = classNames(['breadcrumb__icon', className]);
+      let extraClassName = classNames(['breadcrumb__icon', className]);
+      const iconClassNames = classNames(extraClassName.match(/font-icon-[^\s]+/g));
+      extraClassName = extraClassName.replace(/font-icon-[^\s]+\s?/g, '');
       attrs = { tabIndex: '0', ...attrs };
-      if (attrs.hasOwnProperty('onClick')) {
-        attrs = { role: 'button', ...attrs };
+      if (attrs.hasOwnProperty('onClick') && !NodeName) {
+        NodeName = 'button';
+        extraClassName = classNames(extraClassName, 'btn btn-secondary');
       }
       attrs.key = `breadcrumb-icon-${i}`;
-      if (nodeName === 'FileStatusIcon') {
+      if (NodeName === 'FileStatusIcon') {
         attrs.fileID = 0;
         attrs.hasRestrictedAccess = hasRestrictedAccess;
         attrs.extraClassName = extraClassName;
         return <FileStatusIcon {...attrs} />;
       }
+      if (!NodeName) {
+        NodeName = 'span';
+      }
       attrs.className = extraClassName;
-      return <span {...attrs} />;
+      return <NodeName {...attrs} >
+        {iconClassNames && <span className={iconClassNames} aria-hidden="true" />}
+      </NodeName>;
     });
   }
 

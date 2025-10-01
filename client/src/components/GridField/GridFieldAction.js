@@ -14,9 +14,11 @@ class GridFieldAction extends Component {
   render() {
     return (
       <button
-        className={`grid-field__icon-action font-icon-${this.props.icon} btn--icon-lg`}
+        className="grid-field__icon-action btn--icon-lg"
         onClick={this.handleClick}
-      />
+      >
+        <span className={`font-icon-${this.props.icon}`} aria-hidden="true" />
+      </button>
     );
   }
 }

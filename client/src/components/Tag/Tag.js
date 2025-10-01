@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'reactstrap';
+import Button from 'components/Button/Button';
 import classnames from 'classnames';
 import i18n from 'i18n';
 import PropTypes from 'prop-types';
@@ -94,7 +94,8 @@ const DeleteButton = ({ dataKey, onDelete }) => (
     title={i18n._t('Admin.REMOVE_TAG', 'Remove Tag')}
     onFocus={focusOnParent}
     tabIndex={-1}
-    className="tag-component__delete font-icon-cancel btn--no-text btn--icon-sm"
+    className="tag-component__delete btn--no-text btn--icon-sm"
+    icon="cancel"
   />
 );
 

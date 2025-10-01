@@ -360,7 +360,7 @@ $.entwine('ss', function($) {
 
   $('.grid-field .ss-gridfield-item').entwine({
     onclick: function (event) {
-      if (event.target.classList.contains('action-menu__toggle')) {
+      if ($(event.target).closest('.action-menu__toggle').length) {
         this._super(event);
         return false;
       }
@@ -578,7 +578,7 @@ $.entwine('ss', function($) {
       if ($(this).hasClass('action--archive')) {
         confirmMessage = i18n._t('Admin.ARCHIVECONFIRMMESSAGE', 'Are you sure you want to archive this record?');
         toastNotificationMessage = i18n._t('Admin.ARCHIVE_CONFIRM_MESSAGE', 'Archived');
-      } else if ($(this).hasClass('action--unlink')) { 
+      } else if ($(this).hasClass('action--unlink')) {
         confirmMessage = i18n._t('Admin.UNLINKCONFIRMMESSAGE', 'Are you sure you want to unlink this record?');
         toastNotificationMessage = i18n._t('Admin.UNLINK_CONFIRM_MESSAGE', 'Unlinked');
       }

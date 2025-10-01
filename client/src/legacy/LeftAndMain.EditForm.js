@@ -175,7 +175,7 @@ $.entwine('ss', function($){
           $invalidTabPanes.each((i) => {
             const invalidTabPaneId = $invalidTabPanes.eq(i).attr('id');
             const $tabLi = getTabLi(invalidTabPaneId);
-            const $icon = $(`<i class="${iconClass}" title="${iconTitle}" aria-hidden="true"></i>`);
+            const $icon = $(`<span class="${iconClass}" title="${iconTitle}" aria-hidden="true"></span>`);
             const $screenReaderSpan = $(`<span class="tab-validation-error-sr visually-hidden">${iconScreenReaderText}</span>`);
             $tabLi.append($icon);
             $tabLi.append($screenReaderSpan);

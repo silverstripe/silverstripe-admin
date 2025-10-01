@@ -41,9 +41,9 @@
 
 // Button icons
 .btn[class*="font-icon-"]:before,
-.btn span[class*="font-icon-"]:before,
+.btn [class*="font-icon-"]:before,
 .dropdown-item[class*="font-icon-"]:before,
-.dropdown-item span[class*="font-icon-"]:before  {
+.dropdown-item [class*="font-icon-"]:before  {
   position: relative;
   margin-right: $btn-icon-spacing;
   line-height: $line-height-base * $font-size-root;
@@ -57,33 +57,33 @@
 
 // Gives button a larger icon
 .btn--icon-sm[class*="font-icon-"]:before,
-.btn--icon-sm span[class*="font-icon-"]:before {
+.btn--icon-sm [class*="font-icon-"]:before {
   font-size: 14px;
 }
 
 .btn--icon-md[class*="font-icon-"]:before,
-.btn--icon-md span[class*="font-icon-"]:before {
+.btn--icon-md [class*="font-icon-"]:before {
   font-size: 17px;
 }
 
 // Please use .btn--icon-lg
 .btn--icon-large[class*="font-icon-"]:before,
-.btn--icon-large span[class*="font-icon-"]:before,
+.btn--icon-large [class*="font-icon-"]:before,
 .btn--icon-lg[class*="font-icon-"]:before,
-.btn--icon-lg span[class*="font-icon-"]:before {
+.btn--icon-lg [class*="font-icon-"]:before {
   font-size: 20px;
 }
 
 .btn--icon-xl[class*="font-icon-"]:before,
-.btn--icon-xl span[class*="font-icon-"]:before {
+.btn--icon-xl [class*="font-icon-"]:before {
   font-size: 22px;
 }
 
 // For buttons with icon and no text, removes space after icon
 .btn--no-text[class*="font-icon-"]:before,
-.btn--no-text span[class*="font-icon-"]:before,
+.btn--no-text [class*="font-icon-"]:before,
 .no-text[class*="font-icon-"]:before,
-.no-text span[class*="font-icon-"]:before {
+.no-text [class*="font-icon-"]:before {
   margin-right: 0;
   text-indent: 0;
 }

@@ -2,18 +2,21 @@ import React from 'react';
 import { Button as BaseButton } from 'reactstrap';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import IconHOC from './IconHOC';
 
-const Button = ({ className, noText, children, ...props }) =>
+const Button = ({ icon, className, noText, children, ...props }) =>
   (<BaseButton
     className={classnames(className, { 'btn--no-text': noText })}
     aria-label={noText ? children : undefined}
     {...props}
-  >{noText ? undefined : children}</BaseButton>);
+  >
+    {icon && <span className={`font-icon-${icon}`} aria-hidden="true" />}
+    {noText ? undefined : children}
+  </BaseButton>);
 
 Button.propTypes = {
   ...BaseButton.propTypes,
-  noText: PropTypes.bool
+  noText: PropTypes.bool,
+  icon: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -21,4 +24,4 @@ Button.defaultProps = {
   noText: false
 };
 
-export default IconHOC(Button);
+export default Button;

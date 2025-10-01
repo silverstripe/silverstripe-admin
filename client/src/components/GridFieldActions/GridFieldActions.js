@@ -28,7 +28,6 @@ class GridFieldActions extends PureComponent {
       'btn',
       'btn--no-text',
       'btn-sm',
-      'font-icon-dot-3'
     ];
 
     return (

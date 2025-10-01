@@ -85,7 +85,6 @@ class ViewModeToggle extends Component {
 
     const itemClass = classNames(
       'btn', 'icon-view', 'first',
-      splitIconClass,
       {
         'viewmode-toggle__button': true,
         'viewmode-toggle--selected': (activeState === VIEW_MODE_STATES.SPLIT),
@@ -102,6 +101,7 @@ class ViewModeToggle extends Component {
         onClick={this.handleSplitSelect}
         id="splitModeButton"
       >
+        <span className={splitIconClass} aria-hidden="true" />
         {i18n._t('Admin.SPLIT_MODE', 'Split mode')}
       </DropdownItem>
     );
@@ -113,7 +113,6 @@ class ViewModeToggle extends Component {
     // Highlight if chosen view mode
     const itemClass = classNames(
       'btn', 'icon-view', 'last', 'viewmode-toggle__button',
-      editIconClass,
       { 'viewmode-toggle--selected': (activeState === VIEW_MODE_STATES.EDIT) }
     );
 
@@ -124,6 +123,7 @@ class ViewModeToggle extends Component {
         value="content"
         onClick={this.handleEditSelect}
       >
+        <span className={editIconClass} aria-hidden="true" />
         {i18n._t('Admin.EDIT_MODE', 'Edit mode')}
       </DropdownItem>
     );
@@ -135,7 +135,6 @@ class ViewModeToggle extends Component {
     // Highlight if chosen view mode
     const itemClass = classNames(
       'btn', 'icon-view', 'viewmode-toggle__button',
-      previewIconClass,
       { 'viewmode-toggle--selected': (activeState === VIEW_MODE_STATES.PREVIEW) }
     );
 
@@ -146,6 +145,7 @@ class ViewModeToggle extends Component {
         value="preview"
         onClick={this.handlePreviewSelect}
       >
+        <span className={previewIconClass} aria-hidden="true" />
         {i18n._t('Admin.PREVIEW_MODE', 'Preview mode')}
       </DropdownItem>
     );
@@ -165,7 +165,6 @@ class ViewModeToggle extends Component {
     }
 
     const toggleClassName = classNames(
-      this.getIconClass(),
       'btn',
       'viewmode-toggle__dropdown',
       dropdownToggleProps.classname
@@ -182,6 +181,7 @@ class ViewModeToggle extends Component {
           caret
           {...dropdownToggleProps}
         >
+          <span className={this.getIconClass()} aria-hidden="true" />
           <span className="viewmode-toggle__chosen-view-title" >{this.getTitle()}</span>
         </DropdownToggle>
         <DropdownMenu >

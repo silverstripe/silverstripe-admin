@@ -562,7 +562,7 @@ class TreeDropdownField extends Component {
         tabIndex={0}
       >
         <button type="button" className="treedropdownfield__breadcrumbs-button">
-          <span className={`icon ${icon}`} />
+          <span className={`icon ${icon}`} aria-hidden="true" />
         </button>
         <span className="treedropdownfield__breadcrumbs-crumbs flexbox-area-grow">
           {breadcrumbs}
@@ -607,7 +607,7 @@ class TreeDropdownField extends Component {
           onKeyDown={(event) => this.handleKeyDown(event)}
           onTouchStart={handleNavigate}
         >
-          <span className="treedropdownfield__option-count-icon font-icon-right-open-big" />
+          <span className="treedropdownfield__option-count-icon font-icon-right-open-big" aria-hidden="true" />
         </button>
       );
     }
