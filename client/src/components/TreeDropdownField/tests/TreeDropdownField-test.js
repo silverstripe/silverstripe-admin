@@ -52,6 +52,7 @@ function makeProps(obj = {}) {
     },
     fetch: () => Promise.resolve({ json: () => ({ tree: 'data' }) }),
     selectedValues: [],
+    tabIndex: 0,
     ...obj
   };
 }

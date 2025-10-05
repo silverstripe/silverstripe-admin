@@ -34,6 +34,7 @@ class OptionField extends Component {
       onChange: this.handleChange,
       checked: !!this.props.value,
       value: 1,
+      tabIndex: this.props.tabIndex,
     };
     if (this.props.role) {
       inputProps.role = this.props.role;
@@ -107,6 +108,7 @@ OptionField.propTypes = {
   ]),
   readOnly: PropTypes.bool,
   disabled: PropTypes.bool,
+  tabIndex: PropTypes.number,
 };
 
 OptionField.defaultProps = {
@@ -115,7 +117,8 @@ OptionField.defaultProps = {
   className: '',
   type: 'radio',
   leftTitle: null,
-  rightTitle: null
+  rightTitle: null,
+  tabIndex: 0,
 };
 
 export { OptionField as Component };

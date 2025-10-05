@@ -73,6 +73,7 @@ class SingleSelectField extends Component {
       id: this.props.id,
       name: this.props.name,
       disabled: this.props.disabled,
+      tabIndex: this.props.tabIndex,
     };
 
     if (!this.props.readOnly) {
@@ -128,6 +129,7 @@ SingleSelectField.propTypes = {
       emptyString: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     }),
   ]),
+  tabIndex: PropTypes.number,
 };
 
 SingleSelectField.defaultProps = {
@@ -137,6 +139,7 @@ SingleSelectField.defaultProps = {
   data: {
     emptyString: i18n._t('Boolean.ANY', 'Any'),
   },
+  tabIndex: 0,
 };
 
 export { SingleSelectField as Component };

@@ -674,7 +674,7 @@ class TreeDropdownField extends Component {
           className="treedropdownfield__title"
           role="textbox"
           aria-readonly="true"
-          tabIndex="0"
+          tabIndex={this.props.tabIndex}
         >{title}</span>
         <Input
           type="hidden"
@@ -780,6 +780,7 @@ class TreeDropdownField extends Component {
             option: () => 'fill-width',
           }}
           isOptionDisabled={(option) => option.disabled}
+          tabIndex={this.props.tabIndex}
         />
       </EmotionCssCacheProvider>
     );
@@ -824,6 +825,7 @@ TreeDropdownField.propTypes = {
     treeDropdownField: PropTypes.object,
   }),
   fetch: PropTypes.func, // Allows mocking / wrapping of fetch calls
+  tabIndex: PropTypes.number,
 };
 
 TreeDropdownField.defaultProps = {
@@ -837,7 +839,8 @@ TreeDropdownField.defaultProps = {
   failed: [],
   findTreeByPath,
   findTreePath,
-  fetch
+  fetch,
+  tabIndex: 0,
 };
 
 function mapStateToProps(state, ownProps) {

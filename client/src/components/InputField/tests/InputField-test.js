@@ -24,6 +24,7 @@ function makeProps(obj = {}) {
       'data-def': '456',
     },
     title: 'My title',
+    tabIndex: 0,
     ...obj
   };
 }

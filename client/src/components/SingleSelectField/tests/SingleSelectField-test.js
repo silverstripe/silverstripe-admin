@@ -16,6 +16,7 @@ function makeProps(obj = {}) {
     data: {
       emptyString: 'Any'
     },
+    tabIndex: 0,
     ...obj
   };
 }

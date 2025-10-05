@@ -15,6 +15,7 @@ function makeProps(obj = {}) {
       { value: 'four', title: '4' },
     ],
     value: null,
+    tabIndex: 0,
     ...obj
   };
 }
