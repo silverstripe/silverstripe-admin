@@ -33,7 +33,8 @@ class InputField extends Component {
       maxLength: this.props.data && this.props.data.maxlength,
       type: this.props.type ? this.props.type : null,
       onBlur: this.props.onBlur,
-      onFocus: this.props.onFocus
+      onFocus: this.props.onFocus,
+      tabIndex: this.props.tabIndex,
     };
 
     if (this.props.attributes && !Array.isArray(this.props.attributes)) {
@@ -104,6 +105,7 @@ InputField.propTypes = {
   autoFocus: PropTypes.bool,
   attributes: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   tip: PropTypes.shape(tipShape),
+  tabIndex: PropTypes.number,
 };
 
 InputField.defaultProps = {

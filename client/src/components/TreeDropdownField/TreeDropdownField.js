@@ -775,6 +775,7 @@ class TreeDropdownField extends Component {
             option: () => 'fill-width',
           }}
           isOptionDisabled={(option) => option.disabled}
+          tabIndex={this.props.tabIndex}
         />
       </EmotionCssCacheProvider>
     );
@@ -819,6 +820,7 @@ TreeDropdownField.propTypes = {
     treeDropdownField: PropTypes.object,
   }),
   fetch: PropTypes.func, // Allows mocking / wrapping of fetch calls
+  tabIndex: PropTypes.number,
 };
 
 TreeDropdownField.defaultProps = {
@@ -832,7 +834,7 @@ TreeDropdownField.defaultProps = {
   failed: [],
   findTreeByPath,
   findTreePath,
-  fetch
+  fetch,
 };
 
 function mapStateToProps(state, ownProps) {

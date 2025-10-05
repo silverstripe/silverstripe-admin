@@ -424,7 +424,7 @@ class FormBuilderLoader extends Component {
       onSubmitSuccess: this.props.onSubmitSuccess,
       onSubmit: this.handleSubmit,
       onAutofill: this.handleAutofill,
-      autoFocus: this.props.autoFocus
+      autoFocus: this.props.autoFocus,
     });
 
     return <FormBuilder {...props} />;
@@ -447,6 +447,7 @@ FormBuilderLoader.propTypes = Object.assign({}, basePropTypes, {
   onFetchingSchema: PropTypes.func,
   onReduxFormInit: PropTypes.func,
   loadingComponent: PropTypes.elementType.isRequired,
+  fieldTabIndex: PropTypes.number,
 });
 
 FormBuilderLoader.defaultProps = {

@@ -50,6 +50,7 @@ class LookupField extends Component {
       id: this.props.id,
       name: this.props.name,
       className: `${this.props.className} ${this.props.extraClass}`,
+      tabIndex: this.props.tabIndex,
     };
   }
 
@@ -74,6 +75,7 @@ LookupField.propTypes = {
     disabled: PropTypes.bool,
   })),
   value: PropTypes.any,
+  tabIndex: PropTypes.number,
 };
 
 LookupField.defaultProps = {

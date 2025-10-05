@@ -178,10 +178,10 @@ class FormBuilder extends Component {
         {
           onAutofill: this.props.onAutofill,
           formid: this.props.form,
+          tabIndex: this.props.fieldTabIndex,
         },
         props
       );
-
       // Don't wrap structural or readonly fields, since they don't need connected fields.
       // The redux-form connected fields also messed up reactstrap's tab handling.
       if (field.schemaType === 'Structural' || field.readOnly === true) {

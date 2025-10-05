@@ -45,6 +45,7 @@ class OptionsetField extends Component {
       value: `${this.props.value}` === `${item.value}`,
       title: item.title,
       type: 'radio',
+      tabIndex: this.props.tabIndex,
     };
   }
 
@@ -93,6 +94,7 @@ OptionsetField.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   readOnly: PropTypes.bool,
   disabled: PropTypes.bool,
+  tabIndex: PropTypes.number,
 };
 
 OptionsetField.defaultProps = {
