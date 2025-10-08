@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Input, InputGroup, Popover, Util as reactstrapUtil } from 'reactstrap';
+import { Input, InputGroup, Popover, Util as reactstrapUtil } from 'reactstrap';
+import Button from 'components/Button/Button';
 import classNames from 'classnames';
 import i18n from 'i18n';
 
@@ -182,6 +183,7 @@ class PopoverOptionSet extends Component {
             }
             key={button.key}
             onClick={button.onClick}
+            icon={button.icon}
           >
             {button.content}
           </ButtonComponent>

@@ -34,6 +34,7 @@ class GridFieldDropdownAction extends PureComponent {
         data-action-state={data['data-action-state']}
         name={data.name}
       >
+        {data.icon && <span className={`font-icon-${data.icon}`} aria-hidden="true" />}
         {title}
       </DropdownItem>
     );

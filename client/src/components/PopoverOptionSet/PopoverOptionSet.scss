@@ -70,8 +70,15 @@ $divided-panel-padding-x: calc($panel-padding-x / 2);
     }
   }
 
+  // Removes the margin-right from the .btn__icon element since it's added to the
+  // :before pseudo element instead
+  & &__button .btn__icon {
+    margin-right: 0;
+  }
+
   // Adds necessary specificity to override default font-size and margins
-  & &__button:before {
+  & &__button:before,
+  & &__button .btn__icon:before {
     font-size: 2.1rem;
     margin-right: $divided-panel-padding-x;
   }

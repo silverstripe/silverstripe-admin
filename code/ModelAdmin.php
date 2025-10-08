@@ -623,7 +623,8 @@ abstract class ModelAdmin extends LeftAndMain
 
         $actions = new FieldList(
             FormAction::create('import', _t(__CLASS__ . '.IMPORT', 'Import from CSV'))
-                ->addExtraClass('btn btn-outline-secondary font-icon-upload')
+                ->setIcon('upload')
+                ->addExtraClass('btn btn-outline-secondary')
         );
 
         $form = new Form(

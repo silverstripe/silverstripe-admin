@@ -15,7 +15,7 @@ Used for form actions. For example a submit button.
    * 'outline-secondary'
    * 'link'
    * 'danger'
- * `icon` (string): The icon to be used on the button, adds `font-icon-{icon}` class to the button. See available icons [here](../../../../fonts/incon-reference.html).
+ * `icon` (string): The icon to be used on the button, adds `font-icon-{icon}` class to a child element in the button. See available icons [here](../../font/icons-reference.html).
  * `loading` (boolean): If true, replaces the text/icon with a loading icon.
  * `disabled` (boolean): If true, gives the button a visually disabled state and disables click events.
  * `readOnly` (boolean): If true, will also cause the button to be disabled.

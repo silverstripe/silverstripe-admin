@@ -158,7 +158,7 @@ class FormAction extends Component {
 
     return (
       <button {...this.getButtonProps()}>
-        {icon && <span className={`font-icon-${icon}`} aria-hidden="true" />}
+        {icon && <span className={`font-icon-${icon} btn__icon`} aria-hidden="true" />}
         {this.getLoadingIcon()}
         {castStringToElement('span', title, { className: 'btn__title' })}
       </button>

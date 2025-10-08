@@ -72,6 +72,7 @@ class GridFieldActions extends PureComponent {
         name={data.name}
         color="secondary"
       >
+        {data.icon && <span className={`font-icon-${data.icon}`} aria-hidden="true" />}
         {title}
       </Button>
     );

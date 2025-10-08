@@ -697,6 +697,7 @@ $.entwine('ss.preview', function($){
 
       var target = this.parent().find('.chosen-container a.chosen-single');
       var oldIcon = target.attr('data-icon');
+
       if(typeof oldIcon !== 'undefined'){
         target.removeClass(oldIcon);
       }

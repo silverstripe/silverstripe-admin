@@ -9,7 +9,7 @@ const Button = ({ icon, className, noText, children, ...props }) =>
     aria-label={noText ? children : undefined}
     {...props}
   >
-    {icon && <span className={`font-icon-${icon}`} aria-hidden="true" />}
+    {icon && <span className={`btn__icon font-icon-${icon}`} aria-hidden="true" />}
     {noText ? undefined : children}
   </BaseButton>);
 

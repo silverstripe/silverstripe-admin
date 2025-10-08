@@ -90,6 +90,8 @@
 
 // Used buttons with text and icons, but you wan to hide the text only. eg. gridfield pagination
 // Not needed for inner spans holding the icons
+// This is only here for backwards compatibility - you should use `btn--no-text` instead and just not include text in the button.
+// Ideally a `title` and `aria-label` attribute are added for accessibility.
 .btn--hide-text[class*="font-icon-"] {
   &:before {
     margin-right: 0;

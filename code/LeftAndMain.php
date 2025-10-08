@@ -985,7 +985,7 @@ class LeftAndMain extends FormSchemaController implements PermissionProvider
                     $actions->push(
                         FormAction::create('save', _t(__CLASS__ . '.SAVE', 'Save'))
                             ->addExtraClass('btn btn-primary')
-                            ->addExtraClass('font-icon-add-circle')
+                            ->setIcon('add-circle')
                     );
                 }
                 if ($record->hasMethod('canDelete') && $record->canDelete()) {
