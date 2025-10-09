@@ -37,6 +37,21 @@ const resetTabindexToCurrentPage = ($tree) => {
   }
 };
 
+const updateTreeAriaExpanded = ($treeNode, expanded) => {
+  if (!$treeNode || !$treeNode.length) {
+    return;
+  }
+
+  const ariaExpanded = expanded ? 'true' : 'false';
+
+  $treeNode
+    .children('a[role="treeitem"][aria-expanded], strong[role="treeitem"][aria-expanded]')
+    .attr('aria-expanded', ariaExpanded);
+  $treeNode
+    .children('.jstree-icon--arrow[role="button"]')
+    .attr('aria-expanded', ariaExpanded);
+};
+
 // this conditional check is so that we can unit test the functions above in this file without needing to
 // load in jquery.entwine
 if (typeof $.entwine === 'function') {
@@ -174,6 +189,17 @@ if (typeof $.entwine === 'function') {
               return;
             }
             resetTabindexToCurrentPage(self);
+          })
+          .on('open_node.jstree close_node.jstree', function(e, data) {
+            var node = data && data.rslt ? data.rslt.obj : null;
+            if ((!node || !$(node).length) && data && data.args && data.args.length) {
+              node = data.args[0];
+            }
+            if ((!node || !$(node).length) && data && data.node) {
+              node = data.node;
+            }
+
+            updateTreeAriaExpanded($(node), e.type === 'open_node');
           })
           .on('keydown', function(e) {
             var key = e.key;
@@ -719,4 +745,4 @@ if (typeof $.entwine === 'function') {
   });
 }
 
-export { updateRovingTabindex, resetTabindexToCurrentPage };
+export { updateRovingTabindex, resetTabindexToCurrentPage, updateTreeAriaExpanded };
