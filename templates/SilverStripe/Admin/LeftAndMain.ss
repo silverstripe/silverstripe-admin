@@ -19,7 +19,7 @@
     <div class="cms-container" data-layout-type="custom">
         $Menu
         <main id="cms-container-skip-link-target"
-             class="cms-container-skip-link-target"
+             class="cms-container-skip-link-target flexbox-area-grow fill-height fill-width"
              tabindex="-1"
         >$Content</main>
         $PreviewPanel

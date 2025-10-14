@@ -54,7 +54,7 @@ html, body {
 
   // Uses off screen hiding instead of `visibility:hidden;` or `display: none;`
   // so that the element is fully accessible
-  top: -100px; 
+  top: -100px;
   left: 3px;
   background: $base-menu;
   color: $gray-700;
@@ -64,12 +64,6 @@ html, body {
   &:focus {
     top: 3px;
   }
-}
-
-.cms-container-skip-link-target {
-  display: flex;
-  height: 100%;
-  width: 100vw;
 }
 
 .cms-container--content-mode {

@@ -353,7 +353,7 @@ $.entwine('ss', function($) {
       var mode = options.mode;
       this.clearViewMode();
 
-      var content = this.find('.cms-content');
+      var content = this.find('.cms-container-skip-link-target');
       var preview = this.find('.cms-preview');
 
       content.css({'min-width': 0});
