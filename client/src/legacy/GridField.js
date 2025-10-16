@@ -10,10 +10,6 @@ import '../../../thirdparty/jquery-entwine/jquery.entwine.js';
 $.entwine('ss', function($) {
   $('.grid-field').entwine({
     onmatch: function () {
-      if (this.needsColumnFix()) {
-        this.fixColumns();
-      }
-
       this.fixShowFilters();
 
       if (this.is('.grid-field--lazy-loadable') && (
@@ -157,25 +153,6 @@ $.entwine('ss', function($) {
         return true;
       }
       return false;
-    },
-
-    needsColumnFix: function() {
-      return (
-        this.find('.cms-content-filters').length &&
-        !this.find('.grid-field__col-compact').length &&
-        !this.find('th.col-Actions').length
-      );
-    },
-
-    // Adds an actions column for the search action if it does not exist already
-    fixColumns: function (visible) {
-      this.find('.sortable-header').append('<th class="main col-Actions" />');
-      this.find('tbody tr').each(function () {
-        var cell = $(this).find('td:last');
-        // Note we need to add 1 to the current column span, because we're going to add a new column
-        var colspan = cell.attr('colspan') ?? 1;
-        cell.attr('colspan', Number(colspan) + 1);
-      });
     },
 
     /**
