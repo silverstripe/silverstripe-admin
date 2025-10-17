@@ -96,7 +96,8 @@ class LeftAndMainTest extends FunctionalTest
             'body should contain custom js'
         );
         $this->assertMatchesRegularExpression(
-            '/<script.*?src="[^"]*?tests\/php\/assets\/LeftAndMainTestWithOptions\.js.*?crossorigin="anonymous".*?>/i',
+            // positive look ahead used because the `crossorigin` might be before or after the `src` - but either is fine.
+            '/<script(?=[^<>]*?crossorigin="anonymous").*?(src="[^"]*?tests\/php\/assets\/LeftAndMainTestWithOptions\.js).*?>/i',
             $response->getBody(),
             'body should contain custom js with options'
         );
