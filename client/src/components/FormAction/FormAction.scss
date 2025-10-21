@@ -288,7 +288,8 @@ button.btn-close {
 }
 
 // Main Save & Publish actions for edit page
-.btn-outline-secondary.font-icon-check-mark {
+.btn-outline-secondary.font-icon-check-mark,
+.btn-outline-secondary .font-icon-check-mark {
   color: #0f0;
 }
 

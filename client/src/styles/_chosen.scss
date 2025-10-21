@@ -1,5 +1,11 @@
 @import "~chosen-js/chosen.css";
 
+// data-icon is used to tell the JS which icon class to use in a child element
+// but will also add content if we don't null it out.
+.chosen-single[data-icon]:before {
+  content: none;
+}
+
 .chosen-container-multi .chosen-choices {
   padding: 4px 5px;
 }
@@ -8,4 +14,10 @@
 // affects non-firefox #1422
 .chosen-container:not(.chosen-container-active) .chosen-drop {
   overflow: hidden;
+}
+
+// Override styles from chosen's baked in css that break icon styling
+.chosen-container-single .chosen-single span.chosen__icon {
+  display: initial;
+  margin-right: 0;
 }

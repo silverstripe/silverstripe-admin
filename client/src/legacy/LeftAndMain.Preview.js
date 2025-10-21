@@ -691,21 +691,21 @@ $.entwine('ss.preview', function($){
       this._addIcon();
     },
 
-    _addIcon: function(){
+    _addIcon: function() {
       var selected = this.find(':selected');
       var iconClass = selected.attr('data-icon');
 
       var target = this.parent().find('.chosen-container a.chosen-single');
       var oldIcon = target.attr('data-icon');
 
-      if(typeof oldIcon !== 'undefined'){
-        target.removeClass(oldIcon);
+      if(typeof oldIcon !== 'undefined') {
+        target.find('.chosen__icon').remove();
       }
-      target.addClass(iconClass);
+      target.prepend(`<span class="chosen__icon ${iconClass}" aria-hidden="true"></span>`);
       target.attr('data-icon', iconClass);
 
       return this;
-    }
+    },
   });
 
   $('.preview-mode-selector .chosen-drop li:last-child').entwine({

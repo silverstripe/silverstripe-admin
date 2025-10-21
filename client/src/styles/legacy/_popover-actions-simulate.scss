@@ -33,6 +33,15 @@
       width: 100% !important;
       text-align: center;
     }
+
+    .tab__icon {
+      height: $line-height-base * $font-size-root !important;
+      color: $text-muted;
+    }
+  }
+
+  .popover-actions-simulate--no-icon .ui-tabs-anchor:after {
+    content: none;
   }
 
   #ActionMenus_MoreOptions {

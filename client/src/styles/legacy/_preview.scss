@@ -5,9 +5,11 @@
   /* Styling for icons in controls */
   .icon-view, .preview-selector.dropdown a.chosen-single {
     white-space: nowrap;
-    &:before {
+
+    &:before,
+    :before {
       display:inline-block;
-      float:left;
+      float: left;
       width: 20px;
       overflow: hidden;
       color: $body-color-dark;
@@ -28,7 +30,7 @@
       .chosen-single {
         padding-right: 10px;
 
-        > span {
+        > span:not(.chosen__icon) {
           width: 44px;
         }
 
@@ -52,7 +54,7 @@
       border-color: transparent;
       border-radius: $btn-border-radius;
 
-      > span {
+      > span:not(.chosen__icon) {
         margin-right: 0;
         font-size: 10px;
         line-height: 10px;
@@ -63,7 +65,7 @@
         display: inline-block;
       }
 
-      &:before {
+      :before {
         font-size: 18px;
         line-height: 20px;
         vertical-align: middle;
@@ -245,7 +247,7 @@
     &.dropdown{
       max-width:150px;
       a.chosen-single{
-        span{
+        span:not(.chosen__icon) {
           margin:0;
         }
       }

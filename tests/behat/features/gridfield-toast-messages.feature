@@ -29,11 +29,11 @@ Feature: Show toast messages
     And I press the "Publish" button
     Then I should see a "Published Company "Company B"" success toast
     And I wait for 5 seconds
-    And I click "More options" in the "#ActionMenus" element
+    And I press the "More options" button
     And I press the "Unpublish" button, confirming the dialog
     Then I should see a "Unpublished Company "Company B"" success toast
     And I wait for 5 seconds
-    And I click "More options" in the "#ActionMenus" element
+    And I press the "More options" button
     And I press the "Archive" button, confirming the dialog
     And I should not see "Validation Error"
     And I should see a "Archived Company "Company B"" success toast

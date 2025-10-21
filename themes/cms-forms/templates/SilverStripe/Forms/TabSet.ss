@@ -2,7 +2,10 @@
 	<ul class="nav nav-tabs">
 	  <% loop $Tabs %>
 		<li class="$FirstLast $MiddleString $extraClass nav-item">
-			<a href="#$id" id="tab-$id" class="nav-link">$Title</a>
+			<a href="#$id" id="tab-$id" class="nav-link">
+                <% if $Icon %><span class="tab__icon font-icon-$Icon" aria-hidden="true"></span><% end_if %>
+                $Title
+            </a>
 		</li>
 	  <% end_loop %>
 	</ul>
