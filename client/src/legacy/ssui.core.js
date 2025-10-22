@@ -212,3 +212,10 @@ $.extend($.ssui.titlebar, {
     return 'ui-dialog-title-' + ($el.attr('id') || ++this.uuid);
   }
 });
+
+// Use bootstrap styling for the dialog/modal
+$.extend($.ui.dialog.prototype.options.classes, {
+  'ui-dialog-titlebar': 'modal-header',
+  'ui-dialog-title': 'modal-title',
+  'ui-dialog-titlebar-close': 'close btn btn-close btn--no-text btn--icon-xl modal__close-button',
+});

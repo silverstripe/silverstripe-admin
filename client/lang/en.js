@@ -21,6 +21,7 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.BATCH_UNPUBLISH_PROMPT": "You have {num} page(s) selected.\n\nDo you really want to unpublish",
     "Admin.CLEAR": "Clear",
     "Admin.CLOSE": "Close",
+    "Admin.CLOSE_SEARCH": "Close search",
     "Admin.CMS_LOGIN_TITLE": "Login",
     "Admin.COLLAPSEPANEL": "Collapse panel",
     "Admin.CONFIRMUNSAVED": "Are you sure you want to navigate away from this page?\n\nWARNING: Your changes have not been saved.\n\nPress OK to continue, or Cancel to stay on the current page.",

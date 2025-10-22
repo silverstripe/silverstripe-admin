@@ -32,13 +32,17 @@
     padding: 6px 10px;
   }
 
-  a.ui-dialog-titlebar-close {
-    position:  absolute;
-    top: -5px;
-    right: -13px;
-    width: 30px;
-    height:  30px;
-    z-index: 100000;
+  // Extra specificity required both to override styles completely and to
+  // ensure we don't mess with someone's weird custom from before the bootstrap
+  // classes were put on top of the jQuery UI ones
+  .ui-dialog-titlebar-close.modal__close-button {
+    // reset jQuery UI styles so bootstrap styles can sit nicely on top
+    margin: 0;
+    width: initial;
+    height: initial;
+    border: 0;
+    // auto margin left so the button is on the right like bootstrap
+    margin-left: auto;
   }
 
   .ui-icon-closethick {

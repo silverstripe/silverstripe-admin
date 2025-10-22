@@ -301,8 +301,8 @@ class SearchBox extends Component {
     const { id, onHide } = this.props;
     return (<Button
       onClick={onHide}
-      title={i18n._t('Admin.CLOSE', 'Close')}
-      aria-label={i18n._t('Admin.CLOSE', 'Close')}
+      title={i18n._t('Admin.CLOSE_SEARCH', 'Close search')}
+      aria-label={i18n._t('Admin.CLOSE_SEARCH', 'Close search')}
       className="btn--no-text btn--icon-lg search-box__cancel"
       icon="cancel"
       aria-controls={id}

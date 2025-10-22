@@ -45,14 +45,8 @@
     position: relative;
     z-index: 2;
     height: 32px;
-    opacity: 1;
     margin-top: 0;
     margin-right: -$panel-padding-x;
-    color: $text-muted;
-
-    span {
-      display: none;
-    }
   }
 
   .modal-title {
@@ -69,34 +63,20 @@
   // Replace .btn-close background, which renders the wrong button icon
   --bs-btn-close-bg: none;
 
-  // We can't insert our own classes into the header close button
-  // so manually add font icon styles
-  &:before {
-    content: "\44"; // font-icon-cancel
+  .btn__icon {
     color: $text-muted;
     position: relative;
     top: -.2em;
-    font-size: 22px; // btn-icon-xl
-    font-family: "silverstripe";
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    speak: none;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    transition: color $transition-speed-fast;
+
+    &:before {
+      color: $text-muted;
+      transition: color $transition-speed-fast;
+    }
   }
 
   // Extra specificity to override bootstrap
   &:not(.disabled):hover {
     opacity: 1;
-  }
-
-  // Hide default modal close icon
-  span {
-    display: none;
   }
 }
 

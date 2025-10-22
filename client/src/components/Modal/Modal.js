@@ -5,6 +5,7 @@ import {
 } from 'reactstrap';
 import i18n from 'i18n';
 import PropTypes from 'prop-types';
+import ModalCloseButton from './ModalCloseButton';
 
 /**
  * The modal title can be pass as a string or an object with a html property.
@@ -32,6 +33,7 @@ const Modal = ({
   modalClassName,
   ModalComponent,
   ModalHeaderComponent,
+  ModalCloseButtonComponent,
   onClosed,
   showCloseButton,
   size,
@@ -48,6 +50,7 @@ const Modal = ({
     <ModalHeaderComponent
       toggle={onClosed}
       title={title}
+      close={<ModalCloseButtonComponent onClosed={onClosed} />}
     >
       {parseTitle(title)}
     </ModalHeaderComponent>
@@ -74,6 +77,7 @@ Modal.propTypes = {
   modalClassName: PropTypes.string,
   ModalComponent: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   ModalHeaderComponent: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  ModalCloseButtonComponent: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   onClosed: PropTypes.func,
   size: PropTypes.oneOf(['', 'sm', 'lg', 'xl']),
   showCloseButton: PropTypes.bool,
@@ -88,6 +92,7 @@ Modal.defaultProps = {
   isOpen: false,
   ModalComponent: ReactStrapModal,
   ModalHeaderComponent: ReactStrapModalHeader,
+  ModalCloseButtonComponent: ModalCloseButton,
   title: null,
 };
 

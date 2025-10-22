@@ -27,6 +27,7 @@ import 'expose-loader?exposes=FileStatusIcon!components/FileStatusIcon/FileStatu
 import 'expose-loader?exposes=FormBuilder!components/FormBuilder/FormBuilder';
 import 'expose-loader?exposes=FormBuilderLoader!containers/FormBuilderLoader/FormBuilderLoader';
 import 'expose-loader?exposes=Modal!components/Modal/Modal';
+import 'expose-loader?exposes=ModalCloseButton!components/Modal/ModalCloseButton';
 import 'expose-loader?exposes=FormBuilderModal!components/FormBuilderModal/FormBuilderModal';
 import 'expose-loader?exposes=FileSchemaModalHandler!containers/InsertLinkModal/fileSchemaModalHandler';
 import 'expose-loader?exposes=InsertLinkModal!containers/InsertLinkModal/InsertLinkModal';

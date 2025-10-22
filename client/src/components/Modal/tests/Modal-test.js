@@ -47,7 +47,7 @@ test('Modal renders', () => {
   const modalBody = root.getByText('My Content');
   expect(modalBody).toBeTruthy();
 
-  const closeButton = root.getByLabelText('Close');
+  const closeButton = root.getByTitle('Close');
   expect(closeButton).toBeTruthy();
 });
 
@@ -69,7 +69,7 @@ test('Closing the Modal', () => {
     <Modal {...makeProps()} onClosed={onClosed}>My Content</Modal>
   );
 
-  const closeButton = root.getByLabelText('Close');
+  const closeButton = root.getByTitle('Close');
   fireEvent.click(closeButton);
 
   expect(onClosed).toBeCalled();
