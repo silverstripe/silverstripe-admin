@@ -5,9 +5,6 @@ import FormBuilderLoader from 'containers/FormBuilderLoader/FormBuilderLoader';
 import { Collapse, Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 
-const searchLabel = i18n._t('Admin.SEARCH', 'Search');
-const clearLabel = i18n._t('Admin.CLEAR', 'Clear');
-
 /**
  * Perform the callback when the enter key is pressed
  * @param function callback
@@ -50,11 +47,11 @@ function SearchForm({
           onClick={() => onSearch()}
           color="primary"
           type="button"
-        >{searchLabel}</Button>
+        >{i18n._t('Admin.SEARCH', 'Search')}</Button>
         { clearable && <Button
           className="search-form__clear"
           onClick={() => onClear()}
-        >{clearLabel}</Button> }
+        >{i18n._t('Admin.CLEAR', 'Clear')}</Button> }
       </div>
     </Collapse>
   );
