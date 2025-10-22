@@ -12625,9 +12625,7 @@ $.widget( "ui.dialog", {
 		// dialog in IE (#9312)
 		this.uiDialogTitlebarClose = $( "<button type='button'></button>" )
 			.button( {
-				label: $( "<a>" ).text( this.options.closeText ).html(),
-				icon: "ui-icon-closethick",
-				showLabel: false
+				label: `<span class="font-icon-cancel btn__icon btn--icon-md" aria-hidden="true"></span><span class="sr-only">${this.options.closeText}</span>`,
 			} )
 			.appendTo( this.uiDialogTitlebar );
 
