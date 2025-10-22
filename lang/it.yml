@@ -13,6 +13,10 @@ it:
     LINKDESCR: 'Descrizione del collegamento'
     LINKTEXT: 'Link al testo'
     SUBJECT: Oggetto
+  SilverStripe\Admin\Forms\EditorPhoneLinkFormFactory:
+    PHONE: Telefono
+    LINKDESCR: 'Descrizione del collegamento'
+    LINKTEXT: 'Link al testo'
   SilverStripe\Admin\Forms\EditorExternalLinkFormFactory:
     ANCHORVALUE: Ancora
     LINKDESCR: 'Descrizione del collegamento'

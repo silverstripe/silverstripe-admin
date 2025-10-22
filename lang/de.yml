@@ -13,6 +13,10 @@ de:
     LINKDESCR: Link-Beschreibung
     LINKTEXT: Link-Text
     SUBJECT: Betreff
+  SilverStripe\Admin\Forms\EditorPhoneLinkFormFactory:
+    PHONE: Telefon
+    LINKDESCR: Link-Beschreibung
+    LINKTEXT: Link-Text
   SilverStripe\Admin\Forms\EditorExternalLinkFormFactory:
     ANCHORVALUE: Anker
     LINKDESCR: Link-Beschreibung

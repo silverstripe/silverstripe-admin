@@ -18,6 +18,10 @@ en:
     LINKDESCR: 'Link description'
     LINKTEXT: 'Link text'
     SUBJECT: Subject
+  SilverStripe\Admin\Forms\EditorPhoneLinkFormFactory:
+    PHONE: Phone
+    LINKDESCR: 'Link description'
+    LINKTEXT: 'Link text'
   SilverStripe\Admin\Forms\EditorExternalLinkFormFactory:
     ANCHORVALUE: Anchor
     LINKDESCR: 'Link description'

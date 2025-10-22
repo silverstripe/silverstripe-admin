@@ -5,6 +5,7 @@ namespace SilverStripe\Admin;
 use LogicException;
 use SilverStripe\Admin\Forms\EditorEmailLinkFormFactory;
 use SilverStripe\Admin\Forms\EditorExternalLinkFormFactory;
+use SilverStripe\Admin\Forms\EditorPhoneLinkFormFactory;
 use SilverStripe\Admin\Forms\LinkFormFactory;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
@@ -38,6 +39,7 @@ class ModalController extends FormSchemaController
     private static array $link_modal_form_factories = [
         'EditorExternalLink' => EditorExternalLinkFormFactory::class,
         'EditorEmailLink' => EditorEmailLinkFormFactory::class,
+        'EditorPhoneLink' => EditorPhoneLinkFormFactory::class,
     ];
 
     /**

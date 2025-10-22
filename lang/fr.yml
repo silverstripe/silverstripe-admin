@@ -7,6 +7,10 @@ fr:
     LINKDESCR: 'Description du lien'
     LINKTEXT: 'Texte du lien'
     SUBJECT: Sujet
+  SilverStripe\Admin\Forms\EditorPhoneLinkFormFactory:
+    PHONE: Téléphone
+    LINKDESCR: 'Description du lien'
+    LINKTEXT: 'Texte du lien'
   SilverStripe\Admin\Forms\EditorExternalLinkFormFactory:
     ANCHORVALUE: Ancre
     LINKDESCR: 'Description du lien'
