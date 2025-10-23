@@ -32,7 +32,10 @@ Feature: Search in GridField
     Then I should see "Walmart" in the "#Form_EditForm" element
       But I should not see "ExxonMobil" in the ".col-Name" element
       And I should not see "Vitol" in the ".col-Name" element
-      And I click "Walmart" in the "#Form_EditForm" element
+      # The search filter should still be open
+      And I should not see the "Open search and filter" button
+      And I should see "Name: Walmart" in the ".search-box__tags" element
+    When I click "Walmart" in the "#Form_EditForm" element
     Then I should see "Walmart"
       And I should see "Walmart" in the ".breadcrumbs-wrapper" element
 

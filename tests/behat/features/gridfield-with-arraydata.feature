@@ -102,3 +102,6 @@ Feature: Use Gridfield with ArrayData
       And I should not see "item 15" in the "#Form_EditForm" element
       And I should not see "item 20" in the "#Form_EditForm" element
       And I should not see "item 29" in the "#Form_EditForm" element
+      # The search filter should still be open
+      And I should not see the "Open search and filter" button
+      And I should see "Title: 3" in the ".search-box__tags" element
