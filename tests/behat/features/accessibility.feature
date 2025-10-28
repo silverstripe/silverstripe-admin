@@ -265,3 +265,24 @@ Feature: Accessibility
     And I should not see "No items found"
     When I press the "Tab" key globally
     Then the "#Form_ItemEditForm_Name" element should have focus
+
+  Scenario: Edit form tab-pane has tabindex when page has no focusable fields
+    Given I add an extension "SilverStripe\Admin\Tests\Behat\Context\Extension\LiteralFieldPageExtension" to the "Page" class
+    And a "page" "MyPage"
+    And I am logged in with "ADMIN" permissions
+    When I go to "/admin/pages"
+    And I follow "About Us"
+    Then I should see "Nothing to focus on"
+    And I should see an ".cms-edit-form .tab-pane[tabindex='0'] p[id='lf01']" element
+
+  Scenario: Edit form tabs has tabindex selectively applied if they have no focusable fields
+    Given I add an extension "SilverStripe\Admin\Tests\Behat\Context\Extension\TabsLiteralFieldPageExtension" to the "Page" class
+    And a "page" "MyPage"
+    And I am logged in with "ADMIN" permissions
+    When I go to "/admin/pages"
+    And I follow "MyPage"
+    Then I should see "Nothing to focus on"
+    And I should see an ".cms-edit-form .tab-pane[tabindex='0'] p[id='lf01']" element
+    When I follow "Tab02"
+    Then I should see "Something to focus on"
+    And I should not see an ".cms-edit-form .tab-pane[tabindex='0'] p[id='lf02']" element

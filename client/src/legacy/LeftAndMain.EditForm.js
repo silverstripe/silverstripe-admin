@@ -609,10 +609,10 @@ $.entwine('ss', function($){
   });
 
   /**
-   * Add support for key navigation between tabs on the primary/main tab nav
+   * Add support for key navigation between tabs on the secondary nav
    *
    * Note that prior to this, arrow keys did work on secondary tabsets, presumably
-   * set by jquery-ui tabs, and they did auto load the panel, though PageUp and PageDown did not.
+   * set by jquery-ui tabs, and they did auto load the panel, though Home and End did not.
    * In order to get everything working consistently, we handle all keys here
    */
   $('.cms-edit-form .ss-tabset .ui-tabs-tab').entwine({
@@ -625,7 +625,7 @@ $.entwine('ss', function($){
   });
 
   /**
-   * Restore focus to secondaru active tab if it was set by keyboard navigation after pjax reload
+   * Restore focus to secondary active tab if it was set by keyboard navigation after pjax reload
    */
   $('.cms-edit-form .ss-tabset .ui-tabs-tab.ui-state-active').entwine({
     onmatch: function() {
@@ -652,6 +652,30 @@ $.entwine('ss', function($){
       this._super();
     },
     onunmatch: function() {
+      this._super();
+    }
+  });
+
+  // Check if there is is focusable content inside tab panels
+  // otherwise set tabindex="0" so that the panel itself can be focused
+  // See point 4 under notes on https://www.w3.org/WAI/ARIA/apg/patterns/tabs/
+  $('.cms-edit-form .tab-pane').entwine({
+    onmatch: function() {
+      // This selector is duplicated in TabItem.js - keep in sync
+      const cssSelector = [
+        'a[href]',
+        'button:not([disabled])',
+        'input:not([disabled]):not([type="hidden"])',
+        'select:not([disabled])',
+        'textarea:not([disabled])',
+        '[tabindex]:not([tabindex="-1"])',
+        'summary',
+        'iframe',
+        'object',
+      ].join(', ');
+      if (this.find(cssSelector).length === 0) {
+        this.attr('tabindex', '0');
+      }
       this._super();
     }
   });

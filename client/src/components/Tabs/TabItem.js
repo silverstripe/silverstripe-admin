@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, useRef } from 'react';
 import { TabPane, Fade } from 'reactstrap';
 import PropTypes from 'prop-types';
 import useTabContext, { TabContext } from 'hooks/useTabContext';
@@ -16,6 +16,35 @@ import classnames from 'classnames';
 function TabItem({ name, className, extraClass, disabled, children }) {
   const { activeTab, isOnActiveTab } = useTabContext();
   const currentTab = name;
+
+  // Putting the ref on the <Fade> rather than the <TabPane> as there seems to be a bug
+  // with reactstrap where TabPane where innerRef doesn't work as expected
+  const fadeRef = useRef(null);
+
+  // Set tabindex="0" on the tab content if there are no focusable elements inside it
+  // See point 4 under notes on https://www.w3.org/WAI/ARIA/apg/patterns/tabs/
+  useEffect(() => {
+    if (!fadeRef.current) {
+      return;
+    }
+    // This selector is duplicated in LeftAndMain.EditForm.js - keep in sync
+    const cssSelector = [
+      'a[href]',
+      'button:not([disabled])',
+      'input:not([disabled]):not([type="hidden"])',
+      'select:not([disabled])',
+      'textarea:not([disabled])',
+      '[tabindex]:not([tabindex="-1"])',
+      'summary',
+      'iframe',
+      'object',
+    ].join(', ');
+    if (fadeRef.current.querySelectorAll(cssSelector).length === 0) {
+      // Note - setting tabindex on the Fade element's parentNode, which is the actual tab pane
+      fadeRef.current.parentNode.setAttribute('tabindex', '0');
+    }
+  }, [fadeRef]);
+
   const nextTabContext = useMemo(() => (
     {
       activeTab,
@@ -28,7 +57,7 @@ function TabItem({ name, className, extraClass, disabled, children }) {
   return (
     <TabContext.Provider value={nextTabContext}>
       <TabPane tabId={name} className={classnames(className, extraClass)} disabled={disabled}>
-        <Fade in={isOnActiveTab}>
+        <Fade in={isOnActiveTab} innerRef={fadeRef}>
           {children}
         </Fade>
       </TabPane>
