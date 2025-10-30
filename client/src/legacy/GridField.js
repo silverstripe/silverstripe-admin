@@ -335,28 +335,42 @@ $.entwine('ss', function($) {
     },
   });
 
-  $('.grid-field .ss-gridfield-item').entwine({
+  $('.grid-field .ss-gridfield-item td:not(.action-menu)').entwine({
+    onmatch: function() {
+      this._super();
+      // Cache data on whether the parent row has interactive elements and any link to a form
+      var formLink = this.closest('tr').find('.edit-link, .view-link').prop('href');
+      var cssSelector = [
+        'a[href]',
+        'button:not([disabled])',
+        'input:not([disabled]):not([type="hidden"])',
+        'select:not([disabled])',
+        'textarea:not([disabled])',
+        '[tabindex]:not([tabindex="-1"])',
+      ].join(', ');
+      var hasInteractiveElements = this.find(cssSelector).length > 0;
+      this.data('hasInteractiveElements', hasInteractiveElements);
+      this.data('formLink', formLink);
+    },
     onclick: function (event) {
-      if ($(event.target).closest('.action-menu__toggle').length) {
-        this._super(event);
-        return false;
+      // Disallow clicking if there are interactive elements inside this cell as this would be non-accessible
+      if (this.data('hasInteractiveElements')) {
+        return;
       }
-
-      if($(event.target).closest('.action').length) {
-        this._super(event);
-        return false;
-      }
-
-      var formLink = this.find('.edit-link, .view-link');
-      if(formLink.length) {
-        this.getGridField().showDetailView(formLink.prop('href'), event);
+      var formLink = this.data('formLink');
+      if (formLink) {
+        this.getGridField().showDetailView(formLink, event);
       }
     },
     onmouseover: function() {
-      if(this.find('.edit-link, .view-link').length) this.css('cursor', 'pointer');
+      if (!this.data('hasInteractiveElements') && this.data('formLink')) {
+        this.css('cursor', 'pointer');
+      }
     },
     onmouseout: function() {
-      this.css('cursor', 'default');
+      if (!this.data('hasInteractiveElements') && this.data('formLink')) {
+        this.css('cursor', 'default');
+      }
     }
   });
 
