@@ -17,8 +17,7 @@ body {
   display: flex;
 }
 
-.CMSPageEditController,
-.CMSPageSettingsController {
+.CMSMain {
   &.has-panel {
     @include media-breakpoint-down(lg) {
       .cms-content-tools {
