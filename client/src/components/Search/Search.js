@@ -522,6 +522,7 @@ Search.propTypes = {
   display: PropTypes.oneOf(Object.values(DISPLAY)),
   formSchemaUrl: PropTypes.string,
   filters: PropTypes.object,
+  addFilterPrefix: PropTypes.bool,
   formData: PropTypes.object,
   placeholder: PropTypes.string,
   displayBehavior: PropTypes.oneOf(Object.values(BEHAVIOR)),
@@ -546,6 +547,7 @@ Search.defaultProps = {
   display: DISPLAY.VISIBLE,
   displayBehavior: BEHAVIOR.NONE,
   filters: {},
+  addFilterPrefix: false,
   formData: {},
   term: '',
   filterPrefix: '',
@@ -555,6 +557,16 @@ Search.defaultProps = {
 };
 
 function mapStateToProps(state, ownProps) {
+  let filters = ownProps.filters;
+  // Add filter prefix if needed.
+  if (ownProps.addFilterPrefix && ownProps.filterPrefix && hasFilters(ownProps.filters)) {
+    filters = Object.fromEntries(
+      Object.entries(ownProps.filters).map(
+        ([key, value]) => [`${ownProps.filterPrefix}${key}`, value]
+      )
+    );
+  }
+
   const schema = state.form.formSchemas[ownProps.formSchemaUrl];
   if (!schema || !schema.name) {
     return { formData: {} };
@@ -565,10 +577,10 @@ function mapStateToProps(state, ownProps) {
   const form = getIn(getFormState(state), schemaName);
 
   const formData = (form && form.values) || {};
-  const tagData = mapFormSchemaToTags(schema, ownProps.filters, ownProps.tagHandlers || {});
+  const tagData = mapFormSchemaToTags(schema, filters, ownProps.tagHandlers || {});
   const formIsDirty = isDirty(schemaName, getFormState)(state);
 
-  return { formData, formIsDirty, schemaName, tagData };
+  return { filters, formData, formIsDirty, schemaName, tagData };
 }
 
 function mapDispatchToProps(dispatch) {
