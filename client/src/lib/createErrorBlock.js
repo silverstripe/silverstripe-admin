@@ -13,7 +13,8 @@ const createErrorHtml = (errors) => ({
       // eslint-disable-next-line react/no-array-index-key
       <span key={index} className="form__validation-message">{error}</span>
     ))
-  }
+  },
+  rawValue: errors,
 });
 
 /**

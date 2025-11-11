@@ -17,6 +17,7 @@ class FormBuilder extends Component {
     });
     this.mapActionsToComponents = this.mapActionsToComponents.bind(this);
     this.mapFieldsToComponents = this.mapFieldsToComponents.bind(this);
+    this.normalizeFields = this.normalizeFields.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleAction = this.handleAction.bind(this);
     this.buildComponent = this.buildComponent.bind(this);
@@ -167,7 +168,24 @@ class FormBuilder extends Component {
     const FieldComponent = this.props.baseFieldComponent;
     return fields.map((field) => {
       let props = field;
-      if (field.children) {
+      if (field.schemaType === 'StructuralCustom') {
+        // Pass children schema in a separate prop instead of as the `children` prop, which is usually
+        // reserved for actual components that will be rendered.
+        // Also pass through necessary functions for converting field schema to components.
+        props = Object.assign(
+          {},
+          field,
+          {
+            children: null,
+            childrenSchema: field.children,
+            formFieldSchemaFunctions: {
+              mapFieldsToComponents: this.mapFieldsToComponents,
+              normalizeFields: this.normalizeFields,
+            },
+          }
+        );
+      } else if (field.children) {
+        // Recursively map child field schema to components
         props = Object.assign(
           {},
           field,

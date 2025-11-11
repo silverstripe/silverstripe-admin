@@ -21,6 +21,7 @@ import LiteralField from 'components/LiteralField/LiteralField';
 import HtmlReadonlyField from 'components/HtmlReadonlyField/HtmlReadonlyField';
 import LookupField from 'components/LookupField/LookupField';
 import CompositeField from 'components/CompositeField/CompositeField';
+import DependentCompositeField from 'components/DependentCompositeField/DependentCompositeField';
 import LabelField from 'components/LabelField/LabelField';
 import Tabs from 'components/Tabs/Tabs';
 import TabItem from 'components/Tabs/TabItem';
@@ -79,6 +80,7 @@ export default () => {
     HtmlReadonlyField,
     LookupField,
     CompositeField,
+    DependentCompositeField,
     Tabs,
     TabItem,
     FormAction,

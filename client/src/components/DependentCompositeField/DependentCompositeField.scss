@@ -1,0 +1,4 @@
+.dependent-composite-field__container {
+  // Ensures the loading indicator is limited to overlaying over the child fields.
+  position: relative;
+}
