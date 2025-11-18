@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import contextType from './injectorContext';
+import contextType from './contextType';
 
 const defaultContext = (props, injectorContext) => injectorContext;
 

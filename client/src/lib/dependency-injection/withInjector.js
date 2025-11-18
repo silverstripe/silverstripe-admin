@@ -1,10 +1,10 @@
-import injectorContext from './injectorContext';
+import contextType from './contextType';
 
 const withInjector = (Component) => {
   // eslint-disable-next-line no-param-reassign
   Component.contextTypes = {
     ...(Component.contextTypes || {}),
-    ...injectorContext,
+    ...contextType,
   };
   // eslint-disable-next-line no-param-reassign
   Component.displayName = `withInjector(

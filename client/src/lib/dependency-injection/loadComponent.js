@@ -5,7 +5,7 @@ import NotFoundComponent from 'components/NotFoundComponent/NotFoundComponent';
 import provideInjector from './provideInjector';
 import withInjector from './withInjector';
 import Injector from './Container';
-import contextType from './injectorContext';
+import contextType from './contextType';
 
 /**
  * Handles loading SilverStripe-centric providers

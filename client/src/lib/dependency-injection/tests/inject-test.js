@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { render } from '@testing-library/react';
 import inject from '../inject';
-import injectorContext from '../injectorContext';
+import contextType from '../contextType';
 
 const injectorGet = jest.fn(item => item);
 const emptyComponent = () => <div>Empty</div>;
@@ -24,7 +24,7 @@ const provideTestInjector = (context) => (Injectable) => {
       return <Injectable {...this.props} />;
     }
   }
-  InjectorProvider.childContextTypes = injectorContext;
+  InjectorProvider.childContextTypes = contextType;
   return InjectorProvider;
 };
 
