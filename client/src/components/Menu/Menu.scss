@@ -364,12 +364,12 @@
   position: absolute;
   margin-top: -1px;
   left: 13px;
-  font-size: $h3-font-size;
+  font-size: $h2-font-size;
   min-width: 16px;
   background-repeat: no-repeat;
   background-position: 50% 2px;
   transition: all $transition-speed-fast;
-  color: darken($base-menu-bg, 44%);
+  color: #497792;
 
   @include media-breakpoint-up(md) {
     .collapsed & {
@@ -444,7 +444,7 @@
 
       .text {
         display: block;
-        margin-left: 30px;
+        margin-left: 32px;
 
         @include media-breakpoint-down(md) {
           margin-left: 38px;
