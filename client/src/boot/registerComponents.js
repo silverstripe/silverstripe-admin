@@ -55,6 +55,7 @@ import SudoModePasswordField from 'components/SudoModePasswordField/SudoModePass
 import Paginator from 'components/Paginator/Paginator';
 import UnsavedChangesIndicator from 'components/UnsavedChangesIndicator/UnsavedChangesIndicator';
 import UnsavedChangesIndicatorTimer from 'components/UnsavedChangesIndicator/UnsavedChangesIndicatorTimer';
+import ComplexTreeView from 'components/ComplexTreeView/ComplexTreeView';
 
 export default () => {
   Injector.component.registerMany({
@@ -114,5 +115,6 @@ export default () => {
     Paginator,
     UnsavedChangesIndicator,
     UnsavedChangesIndicatorTimer,
+    ComplexTreeView,
   });
 };
