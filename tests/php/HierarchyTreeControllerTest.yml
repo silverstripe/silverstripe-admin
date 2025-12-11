@@ -1,0 +1,18 @@
+SilverStripe\Admin\Tests\HierarchyTreeControllerTest\TestHierarchyModel:
+  root:
+    Title: 'Root Node'
+  child1:
+    Title: 'Child 1'
+    Parent: '=>SilverStripe\Admin\Tests\HierarchyTreeControllerTest\TestHierarchyModel.root'
+  child2:
+    Title: 'Child 2'
+    Parent: '=>SilverStripe\Admin\Tests\HierarchyTreeControllerTest\TestHierarchyModel.root'
+  grandchild1:
+    Title: 'Grandchild 1'
+    Parent: '=>SilverStripe\Admin\Tests\HierarchyTreeControllerTest\TestHierarchyModel.child1'
+  grandchild2:
+    Title: 'Grandchild 2'
+    Parent: '=>SilverStripe\Admin\Tests\HierarchyTreeControllerTest\TestHierarchyModel.child1'
+  grandchild3:
+    Title: 'Grandchild 3'
+    Parent: '=>SilverStripe\Admin\Tests\HierarchyTreeControllerTest\TestHierarchyModel.child2'

@@ -33,7 +33,7 @@ class UnsavedChangesIndicator extends DatalessField
     public function getSchemaDataDefaults()
     {
         // This is used for initialising the React component
-        // Refer UnsavedChangesIndicator.js
+        // Refer UnsavedChangesIndicatorTimer.js
         $data = parent::getSchemaDataDefaults();
         $data['minutes'] = $this->getMinutes();
         return $data;

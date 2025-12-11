@@ -7,6 +7,7 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
 } else {
   ss.i18n.addDictionary('en', {
     "Admin.ACTIONS": "View actions",
+    "Admin.ADD_CHILD": "Add child",
     "Admin.ADD_TO_CAMPAIGN": "Add to campaign",
     "Admin.ADVANCED": "Advanced",
     "Admin.ANY": "Any",
@@ -30,6 +31,9 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.DELETE_CONFIRM_MESSAGE": "Deleted",
     "Admin.DISABLESPLITVIEW": "Screen too small to show site preview in split mode",
     "Admin.DISMISS": "Dismiss",
+    "Admin.DUPLICATE": "Duplicate",
+    "Admin.DUPLICATE_THIS_ONLY": "This record only",
+    "Admin.DUPLICATE_WITH_CHILDREN": "This record and children",
     "Admin.EDIT": "Edit",
     "Admin.EDIT_LINK": "Edit link",
     "Admin.EDIT_MODE": "Edit mode",
@@ -65,6 +69,7 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "Admin.SEARCH": "Search",
     "Admin.SEARCH_OPTIONS": "Search options",
     "Admin.SELECTONEPAGE": "Please select at least one page",
+    "Admin.SHOW_AS_LIST": "Show children as list",
     "Admin.SHOW_SEARCH": "Show search",
     "Admin.SPLIT_MODE": "Split mode",
     "Admin.SUMMARY_TAG_LABEL": "filters",
