@@ -70,6 +70,11 @@
             padding-right: 18px;
           }
         }
+
+        .opened a {
+          // Offset by the 3px of the left border
+          padding-left: 15px;
+        }
       }
 
       span.text {
@@ -371,14 +376,28 @@
   transition: all $transition-speed-fast;
   color: #497792;
 
+  .opened & {
+    // Offset by the 3px of the left border
+    left: 10px;
+  }
+
   @include media-breakpoint-up(md) {
     .collapsed & {
       left: 22px;
+    }
+    // Offset by the 3px of the left border
+    .collapsed .opened & {
+      left: 19px;
     }
   }
 
   @include media-breakpoint-down(md) {
     left: 20px;
+
+    .opened & {
+      // Offset by the 3px of the left border
+      left: 17px;
+    }
   }
 }
 
@@ -452,6 +471,11 @@
       }
     }
 
+    &.opened a {
+      // Offset by the 3px of the left border
+      padding-left: 5px;
+    }
+
     &.current {
 
       >a {
@@ -480,6 +504,10 @@
 
       }
     }
+  }
+
+  .opened {
+    border-left: 3px solid #497792;
   }
 }
 
