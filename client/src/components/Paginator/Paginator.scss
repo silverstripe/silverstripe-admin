@@ -20,12 +20,10 @@
     text-align: center;
     display: inline;
 
-    &:focus {
+    &:focus-visible {
       color: $input-focus-color;
       background-color: $input-focus-bg;
       border-color: $input-focus-border-color;
-      outline: 0;
-      box-shadow: $input-box-shadow, $input-focus-box-shadow;
     }
   }
 }

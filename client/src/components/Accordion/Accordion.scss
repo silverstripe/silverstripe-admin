@@ -42,6 +42,11 @@
     }
   }
 
+  // override default link offset
+  &:focus-visible {
+    --focus-outline-offset: var(--focus-outline-offset-inset);
+  }
+
   &.collapsed .accordion__arrow-icon:before {
     // equivalent of font-icon-down-open-big
     content: "6";

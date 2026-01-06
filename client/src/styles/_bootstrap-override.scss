@@ -76,3 +76,25 @@ html [type="button"] {
 textarea.form-control, .field textarea {
   height: auto;
 }
+
+// Override bootstrap's `outline: 0;` rules
+.btn:focus-visible,
+.btn-close:focus-visible,
+.form-check-input:focus-visible,
+.form-control:focus-visible,
+.form-select:focus-visible,
+.nav-link:focus-visible {
+  outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
+}
+
+.field {
+    input.text:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible {
+      outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
+  }
+}
+
+.form-check-input:focus-visible {
+  box-shadow: none;
+}

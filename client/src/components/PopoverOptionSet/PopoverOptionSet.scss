@@ -96,11 +96,12 @@ $divided-panel-padding-x: calc($panel-padding-x / 2);
         border: 0;
         border-bottom: 1px solid $border-color-light;
         border-radius: 0;
-        outline: none;
       }
     }
 
     &-input {
+      --focus-outline-offset: var(--focus-outline-offset-inset);
+
       height: auto;
       padding-left: $panel-padding-x;
     }

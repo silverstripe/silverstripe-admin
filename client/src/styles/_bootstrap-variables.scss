@@ -349,9 +349,10 @@ $input-btn-padding-y-sm: .3077rem; // 4px
 //$input-btn-line-height-lg:  1.5 !default;
 
 //$btn-font-weight:                $font-weight-normal !default;
-//$btn-box-shadow:                 inset 0 1px 0 rgba($white,.15), 0 1px 1px rgba($black,.075) !default;
-//$btn-focus-box-shadow:           0 0 0 3px rgba($primary, .25) !default;
+$btn-box-shadow: none;
+$btn-focus-box-shadow: none;
 //$btn-active-box-shadow:          inset 0 3px 5px rgba($black,.125) !default;
+$btn-close-focus-shadow: none;
 
 //$btn-link-disabled-color:        $gray-600 !default;
 
@@ -381,7 +382,7 @@ $input-border-color: darken($body-bg, 14);
 
 //$input-focus-bg:                 $input-bg !default;
 $input-focus-border-color:       #66afe9;
-$input-focus-box-shadow:         rgba(102, 175, 233, .6);
+$input-focus-box-shadow:         none;
 //$input-focus-color:              $input-color !default;
 
 $input-placeholder-color:        darken($gray-400, 4%); // #8295b2 - target 3:1 contrast ratio
@@ -431,7 +432,7 @@ $input-group-addon-bg:           $gray-100;
 //$custom-control-indicator-checked-bg:         $primary !default;
 //$custom-control-indicator-checked-box-shadow: none !default;
 
-//$custom-control-indicator-focus-box-shadow: 0 0 0 1px $body-bg, 0 0 0 3px $primary !default;
+$custom-control-indicator-focus-box-shadow: none;
 
 //$custom-control-indicator-active-color:      $white !default;
 //$custom-control-indicator-active-bg:         lighten($primary, 35%) !default;
@@ -465,14 +466,14 @@ $input-group-addon-bg:           $gray-100;
 //$custom-select-border-radius: $border-radius !default;
 
 //$custom-select-focus-border-color: lighten($primary, 25%) !default;
-//$custom-select-focus-box-shadow:   inset 0 1px 2px rgba($black, .075), 0 0 5px rgba($custom-select-focus-border-color, .5) !default;
+$custom-select-focus-box-shadow: none;
 
 //$custom-select-font-size-sm:  75% !default;
 //$custom-select-height-sm: $input-height-sm !default;
 
 //$custom-file-height:           $input-height !default;
 //$custom-file-width:            14rem !default;
-//$custom-file-focus-box-shadow: 0 0 0 .075rem $white, 0 0 0 .2rem $primary !default;
+$custom-file-focus-box-shadow: none;
 
 //$custom-file-padding-y:     $input-btn-padding-y !default;
 //$custom-file-padding-x:     $input-btn-padding-x !default;

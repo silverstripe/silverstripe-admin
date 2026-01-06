@@ -78,6 +78,10 @@ $search-box-height: 53px;
   &[class*="font-icon-"]:before {
     font-size: 24px;
   }
+
+  &.btn {
+    --focus-outline-offset: var(--focus-outline-offset-inset);
+  }
 }
 
 // Expand filters panel
@@ -169,6 +173,8 @@ $search-box-height: 53px;
 }
 
 .search-box__content-field {
+  --focus-outline-offset: var(--focus-outline-offset-inset);
+
   box-sizing: border-box;
   padding-right: $search-box-height + $search-base-padding;
   padding-left: 55px;

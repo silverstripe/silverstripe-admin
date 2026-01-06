@@ -58,6 +58,12 @@ $font-size-root: 13px;
 $font-size-xs: .846rem; // 11px
 $font-size-xxs: .75rem; // 10px
 
+// Focus outline
+$focus-outline-width: 2px;
+$focus-outline-style: solid;
+$focus-outline-color: #2A62BC;
+$focus-outline-offset: 2px;
+
 // Component
 $component-active-bg-light: lighten($component-active-bg, 57%);
 $component-active-border-color: $brand-primary;

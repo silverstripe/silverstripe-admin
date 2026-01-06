@@ -21,3 +21,25 @@
   display: initial;
   margin-right: 0;
 }
+
+// We have to use focus-within here because the actual element with focus
+// isn't the visible element we need to apply the styles to.
+// This isn't great because it's happening regardless of whether the
+// dropdown would normally be focus-visible or not, but it is better than
+// nothing.
+.chosen-container-active:focus-within {
+  .chosen-choices,
+  .chosen-single {
+    // override default link offset
+    --focus-outline-offset: inherit;
+
+    outline-offset: var(--focus-outline-offset);
+    outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
+    box-shadow: none;
+
+    // Extra specificity needed here to override existing styles
+    .field & {
+      border-color: transparent;
+    }
+  }
+}

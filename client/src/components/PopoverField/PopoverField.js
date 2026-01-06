@@ -68,7 +68,6 @@ class PopoverField extends Component {
       'btn-secondary': true,
       [this.props.className]: true,
       [this.props.buttonClassName]: true,
-      'btn--no-focus': this.state.isOpen,
       'btn--no-text': !this.props.title,
       [`btn--icon-${this.props.buttonSize}`]: !this.props.title,
     });

@@ -43,11 +43,6 @@
     &:hover {
       background-color: $body-bg-dark;
     }
-
-    &:focus {
-      outline: none;
-      border-bottom: $table-border-width solid $cyan;
-    }
   }
 
   &:hover {
@@ -203,6 +198,10 @@ div.grid-field__sort-field + .form__fieldgroup-item {
   margin: -16px -20px;
   padding: 16px 20px;
   display: block;
+
+  &:focus-visible {
+    --focus-outline-offset: var(--focus-outline-offset-inset);
+  }
 
   .grid-field .grid-field__table & {  // Override legacy styles
     color: $text-muted;

@@ -255,6 +255,8 @@
 
 // Remove focus from these actions
 // For things like popovers which have other indications they are focused
+// Deprecated - don't use this, the focus state should always be used on
+// the focused element!
 .btn--no-focus:focus {
   outline: none;
 }

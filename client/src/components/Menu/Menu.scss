@@ -36,6 +36,10 @@
     overflow-x: hidden;
     // Account for logo, logout and south bar
     height: calc(100% - #{$toolbar-total-height * 3}) !important;
+
+    a {
+      --focus-outline-offset: var(--focus-outline-offset-inset);
+    }
   }
 
   @include media-breakpoint-up(md) {
@@ -128,6 +132,8 @@
   }
 
   .cms-panel-toggle {
+    --focus-outline-offset: var(--focus-outline-offset-inset);
+
     height: $toolbar-total-height;
     background-color: $base-menu-bg;
     box-shadow: inset $border-color -1px 0 0;
@@ -231,6 +237,8 @@
 }
 
 .cms-menu__header {
+  --focus-outline-color: var(--focus-outline-color-inverted);
+
   padding: 0;
   background-color: $brand-secondary;
   min-height: $toolbar-total-height * 2;
@@ -286,6 +294,11 @@
       opacity: .9;
     }
 
+    // override default link offset
+    &:focus-visible {
+      --focus-outline-offset: inherit;
+    }
+
     @include media-breakpoint-down(md) {
       margin-left: $toolbar-total-height;
       margin-right: $toolbar-total-height;
@@ -301,6 +314,8 @@
   min-height: $toolbar-total-height;
 
   .cms-login-status__logout-link {
+    --focus-outline-offset: var(--focus-outline-offset-inset);
+
     position: absolute;
     top: 0;
     right: 0;
@@ -321,6 +336,8 @@
   }
 
   .cms-login-status__profile-link {
+    --focus-outline-offset: var(--focus-outline-offset-inset);
+
     position: absolute;
     left: 0;
     right: 36px;

@@ -105,6 +105,10 @@
   }
 
   .grid-field__table {
+    .sortable-header {
+      --focus-outline-offset: var(--focus-outline-offset-inset);
+    }
+
     tbody {
       td {
         &.col-listChildrenLink {

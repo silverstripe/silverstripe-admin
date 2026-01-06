@@ -9,11 +9,14 @@
 
   &--is-focused {
     box-shadow: none;
-    border-color: $input-focus-border-color;
+    border-color: transparent;
+    outline-offset: var(--focus-outline-offset);
+    // We have to use !important here to override react-select styles, which also use !important
+    outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color) !important;
 
     // this is required to override default react-select style
     &:hover {
-      border-color: $input-focus-border-color;
+      border-color: transparent;
     }
   }
 }
