@@ -714,8 +714,8 @@ a .jstree-recordicon {
   }
 }
 
-@include tree-status-icon('addedtodraft', #ff7f22, $state-draft, #fff2ea);
-@include tree-status-icon('modified', #fff2e8, $state-draft, #fff2ea);
+@include tree-status-icon('addedtodraft', #ff7f22, $state-draft, $state-draft-bg);
+@include tree-status-icon('modified', #fff2e8, $state-modified, $state-modified-bg);
 @include tree-status-icon('archived', #5F7688, #455b6c, #f1f3f6);
 @include tree-status-icon('deletedonlive', #f1f3f6, #455b6c, #f1f3f6);
 @include tree-status-icon('removedfromdraft', #f1f3f6, #455b6c, #f1f3f6);
