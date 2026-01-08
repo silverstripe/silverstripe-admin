@@ -1538,7 +1538,7 @@ $.entwine('ss', function($) {
       $('#filters-button').showHide();
       const props = this.data('schema');
 
-      if(props.filters) {
+      if (props.filters && Object.keys(props.filters).length) {
         const url = $('.cms-search-form').attr('action');
         const container = this.closest('.cms-container');
         container.loadPanel(url, "", {}, true);
