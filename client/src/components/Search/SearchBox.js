@@ -320,12 +320,12 @@ const SearchBox = ({
           <Label for={id} id={`${id}_label`} hidden>
             {i18n._t('Admin.SEARCH', 'Search')}
           </Label>
+          <div className="icon font-icon-search" aria-hidden="true" />
           { renderTags() }
           { renderInput() }
           { showEnter && renderEnterHint() }
-          { children }
-          <div className="icon font-icon-search" aria-hidden="true" />
           { showFilters && renderFilterButton() }
+          { children }
           { hideable && renderHideButton() }
         </div>
       </ResizeAware>
