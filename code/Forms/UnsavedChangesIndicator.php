@@ -33,7 +33,7 @@ class UnsavedChangesIndicator extends DatalessField
     public function getSchemaDataDefaults()
     {
         // This is used for initialising the React component
-        // Refer UnsavedChangesIndicator.js
+        // Refer to UnsavedChangesIndicatorTimer.js
         $data = parent::getSchemaDataDefaults();
         $data['minutes'] = $this->getMinutes();
         return $data;
@@ -42,7 +42,7 @@ class UnsavedChangesIndicator extends DatalessField
     public function getAttributes()
     {
         // This is used for entwine initialisation
-        // Refer UnsavedChangesIndicatorEntwine.js
+        // Refer to UnsavedChangesIndicatorEntwine.js
         $attributes = parent::getAttributes();
         $attributes['data-minutes'] = json_encode($this->getMinutes());
         return $attributes;

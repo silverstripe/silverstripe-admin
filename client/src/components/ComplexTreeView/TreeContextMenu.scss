@@ -1,0 +1,120 @@
+.tree-context-menu {
+  position: fixed;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 200px;
+  padding: 4px 0;
+  font-size: 14px;
+
+  &__item {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    background: transparent;
+    border: 0;
+    text-align: left;
+    cursor: pointer;
+    color: #333;
+    white-space: nowrap;
+    position: relative;
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
+
+    &:active {
+      background-color: #eee;
+    }
+
+    &--submenu {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &:hover {
+        background-color: #f5f5f5;
+
+        .tree-context-menu__submenu {
+          display: block;
+        }
+      }
+    }
+  }
+
+  &__divider {
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 4px 0;
+  }
+
+  &__arrow {
+    margin-left: auto;
+    padding-left: 8px;
+    font-size: 16px;
+    color: #999;
+  }
+
+  &__submenu {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    min-width: 200px;
+    margin-left: 4px;
+    padding: 4px 0;
+    display: none;
+    z-index: 1001;
+
+    // Multi-column layout for long submenus
+    &[style*="columns: 2"] {
+      column-gap: 12px;
+
+      .tree-context-menu__submenu-item {
+        break-inside: avoid;
+      }
+    }
+
+    &[style*="columns: 3"] {
+      column-gap: 12px;
+
+      .tree-context-menu__submenu-item {
+        break-inside: avoid;
+      }
+    }
+  }
+
+  &__submenu-item {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    background: transparent;
+    border: 0;
+    text-align: left;
+    cursor: pointer;
+    color: #333;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
+
+    &:active {
+      background-color: #eee;
+    }
+
+    &:disabled {
+      color: #999;
+      cursor: not-allowed;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+}

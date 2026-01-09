@@ -123,5 +123,6 @@ import '../legacy/HtmlEditorField';
 import '../legacy/TabSet';
 import '../legacy/GridField';
 import '../legacy/SearchableDropdownField/SearchableDropdownFieldEntwine';
+import '../legacy/ComplexTreeView/ComplexTreeViewEntwine';
 
 import 'boot';
