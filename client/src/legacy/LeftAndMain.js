@@ -1530,7 +1530,8 @@ $.entwine('ss', function($) {
     },
 
     close() {
-      $('#filters-button').showHide();
+      const filterID = this.closest('.cms-content-filters').attr('id');
+      $(`:button[aria-controls=${filterID}]`).showHide();
       const props = this.data('schema');
 
       if (props.filters && Object.keys(props.filters).length) {
