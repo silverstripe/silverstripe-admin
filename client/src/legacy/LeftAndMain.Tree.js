@@ -274,6 +274,18 @@ $.entwine('ss.tree', function($){
     },
 
     /**
+     * Expands the parent of the given node and selects this node
+     */
+    expandTreeAndSelect(node) {
+      if (!node.length) {
+        return;
+      }
+      this.jstree('deselect_all');
+      this.jstree('reopen');
+      this.jstree('select_node', node);
+    },
+
+    /**
      * Creates a new node from the given HTML.
      * Wrapping around jstree API because we want the flexibility to define
      * the node's <li> ourselves. Places the node in the tree
@@ -438,25 +450,24 @@ $.entwine('ss.tree', function($){
                 // This can happen for deep trees which require ajax loading.
                 // Assumes that the new node has been submitted to the server already.
                 if (nodeData.ParentID && !self.find('li[data-id=' + nodeData.ParentID + ']').length) {
-                  self.jstree('load_node', -1);
+                  self.jstree('load_node', -1, () => {
+                    const newNode = self.find('li[data-id=' + nodeId + ']');
+                    self.expandTreeAndSelect(newNode);
+                  });
                 } else {
 
                   self.createNode(nodeData.html, nodeData, (node) => {
                     // If there's no currently selected node and we're only updating 1
                     // node, assume we want that node selected
                     if (!selected.length && ids.length === 1) {
-                      selected = node;
+                      self.expandTreeAndSelect(node);
                     }
                   });
                 }
               }
             });
 
-            if (selected.length) {
-              self.jstree('deselect_all');
-              self.jstree('reopen');
-              self.jstree('select_node', selected);
-            }
+            self.expandTreeAndSelect(selected);
           },
           complete: function () {
             self.setIsUpdatingTree(false);
