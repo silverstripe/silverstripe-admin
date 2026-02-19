@@ -20,3 +20,37 @@ test('LiteralField render() renders', () => {
   expect(h2.innerHTML).toBe('My literal heading');
   expect(p.innerHTML).toBe('My literal content');
 });
+
+test('LiteralField renders with minimal props', () => {
+  const { container } = render(
+    <LiteralField {...{
+      name: 'MinimalField',
+      value: '',
+    }}
+    />
+  );
+  const div = container.querySelector('div');
+  expect(div).not.toBeNull();
+  expect(div.getAttribute('name')).toBe('MinimalField');
+  expect(div.getAttribute('id')).toBeNull();
+  expect(div.className.trim()).toBe('');
+  expect(div.innerHTML).toBe('');
+});
+
+test('LiteralField applies id and class names', () => {
+  const { container } = render(
+    <LiteralField {...{
+      id: 'field-id',
+      name: 'FieldName',
+      className: 'field-class',
+      extraClass: 'extra-class',
+      value: 'Content',
+    }}
+    />
+  );
+  const div = container.querySelector('div');
+  expect(div.getAttribute('id')).toBe('field-id');
+  expect(div.getAttribute('name')).toBe('FieldName');
+  expect(div.className).toBe('field-class extra-class');
+  expect(div.innerHTML).toBe('Content');
+});
