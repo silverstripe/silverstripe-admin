@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import i18n from 'i18n';
 import classnames from 'classnames';
 import { inject } from 'lib/Injector';
@@ -16,7 +16,6 @@ const Preview = ({
   moreActions,
   ViewModeComponent,
 }) => {
-  const lastPreviewUrlRef = useRef(null);
   const [frameLoaded, setFrameLoaded] = useState(false);
 
   let previewUrl = null;
@@ -33,14 +32,8 @@ const Preview = ({
 
   useEffect(() => {
     // Reset frame loaded state when the preview URL changes
-    if (!frameLoaded) {
-      return;
-    }
-    if (lastPreviewUrlRef.current !== previewUrl) {
-      setFrameLoaded(false);
-      lastPreviewUrlRef.current = previewUrl;
-    }
-  }, [frameLoaded, previewUrl]);
+    setFrameLoaded(false);
+  }, [previewUrl]);
 
   /**
    * Update state to indicate that the preview page has completed loading
