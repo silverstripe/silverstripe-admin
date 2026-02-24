@@ -132,6 +132,14 @@ class LeftAndMainTest extends FunctionalTest
         $this->assertMatchesRegularExpression('/<body[^>]*>/i', $response->getBody(), "$link should contain <body> tag");
     }
 
+    public function testGetClientConfigNormalisesReactRoutePath()
+    {
+        $controller = MyTreeController::singleton();
+        $config = $controller->getClientConfig();
+
+        $this->assertSame('/mytree/edit', $config['reactRoutePath']);
+    }
+
     public function testCanView()
     {
         $adminuser = $this->objFromFixture(Member::class, 'admin');
