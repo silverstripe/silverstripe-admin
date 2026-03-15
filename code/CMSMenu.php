@@ -135,7 +135,7 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
      *                    {@link remove_menu_item}. Also used as a CSS-class for icon customization.
      * @param string $menuTitle Localized title showing in the menu bar
      * @param string $url A relative URL that will be linked in the menu bar.
-     * @param string $controllerClass The controller class for this menu, used to check permisssions.
+     * @param string $controllerClass The controller class for this menu, used to check permissions.
      *                    If blank, it's assumed that this is public, and always shown to users who
      *                    have the rights to access some other part of the admin area.
      * @param int $priority
@@ -318,7 +318,7 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
      * @param string $menuTitle Localized title showing in the menu bar
      * @param string $url A relative URL that will be linked in the menu bar.
      *                    Make sure to add a matching route via {@link Director::$rules} to this url.
-     * @param string $controllerClass The controller class for this menu, used to check permisssions.
+     * @param string $controllerClass The controller class for this menu, used to check permissions.
      *                    If blank, it's assumed that this is public, and always shown to users who
      *                    have the rights to access some other part of the admin area.
      * @param int $priority
@@ -365,7 +365,7 @@ class CMSMenu implements IteratorAggregate, i18nEntityProvider
     }
 
     /**
-     * A utility funciton to retrieve subclasses of a given class that
+     * A utility function to retrieve subclasses of a given class that
      * are instantiable (ie, not abstract) and have a valid menu title.
      *
      * Sorted by url_priority config.

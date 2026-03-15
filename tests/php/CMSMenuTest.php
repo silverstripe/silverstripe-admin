@@ -107,7 +107,7 @@ class CMSMenuTest extends SapphireTest implements TestOnly
     public function testAdvancedMenuHandling()
     {
 
-        // Populate from CMS Classes, check for existance of SecurityAdmin
+        // Populate from CMS Classes, check for existence of SecurityAdmin
         CMSMenu::clear_menu();
         CMSMenu::populate_menu();
         $menuItem = CMSMenu::get_menu_item('SilverStripe-Admin-SecurityAdmin');

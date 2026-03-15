@@ -21,7 +21,7 @@ use SilverStripe\View\TemplateGlobalProvider;
 class AdminRootController extends Controller implements TemplateGlobalProvider
 {
     /**
-     * Fallback admin URL in case this cannot be infered from Director.rules
+     * Fallback admin URL in case this cannot be inferred from Director.rules
      */
     private static string $url_base = 'admin';
 
@@ -60,7 +60,7 @@ class AdminRootController extends Controller implements TemplateGlobalProvider
     {
         $parts = [AdminRootController::get_admin_route(), $action];
         // If the base tag is disabled, we need to make the admin URL absolute to ensure it works correctly
-        // As a major version chagne, we could drop this condition and always prefix with Director::baseURL()
+        // As a major version change, we could drop this condition and always prefix with Director::baseURL()
         if (!Deprecation::withSuppressedNotice(fn() => SSViewer::config()->get('enable_base_tag'))) {
             array_unshift($parts, Director::baseURL());
         }

@@ -61,7 +61,7 @@ class UnsavedChangesIndicator extends DatalessField
             throw new RuntimeException('minutes config must contain both "notice" and "warning" keys');
         }
         // Allow decimals here for partial minutes, as this is required for behat
-        // testing and develoment so that we don't have to wait long periods of time
+        // testing and development so that we don't have to wait long periods of time
         if (!is_numeric($minutes['notice']) || !is_numeric($minutes['warning'])) {
             throw new RuntimeException('minutes config values must be numeric');
         }

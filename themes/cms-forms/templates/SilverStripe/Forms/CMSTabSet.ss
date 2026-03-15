@@ -1,5 +1,5 @@
 <%-- Exclude ".ss-tabset" class to avoid inheriting behaviour --%>
-<%-- The ".cms-tabset" class needs to be manually applied to a container elment, --%>
+<%-- The ".cms-tabset" class needs to be manually applied to a container element, --%>
 <%-- above the level where the tab navigation is placed. --%>
 <%-- Tab navigation is rendered through various templates, --%>
 <%-- e.g. through LeftAndMain_EditForm.ss. --%>

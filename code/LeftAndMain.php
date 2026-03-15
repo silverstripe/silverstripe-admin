@@ -520,7 +520,7 @@ class LeftAndMain extends FormSchemaController implements PermissionProvider
     public static function menu_title($class = null, $localise = true)
     {
         if ($class && is_subclass_of($class, __CLASS__)) {
-            // Respect oveloading of menu_title() in subclasses
+            // Respect overloading of menu_title() in subclasses
             return $class::menu_title(null, $localise);
         }
         if (!$class) {
@@ -913,7 +913,7 @@ class LeftAndMain extends FormSchemaController implements PermissionProvider
      *
      * @param HTTPRequest $request Passed if executing a HTTPRequest directly on the form.
      * If empty, this is invoked as $EditForm in the template
-     * @return Form Should return a form regardless wether a record has been found.
+     * @return Form Should return a form regardless whether a record has been found.
      *  Form might be readonly if the current user doesn't have the permission to edit
      *  the record.
      */
@@ -1444,7 +1444,7 @@ class LeftAndMain extends FormSchemaController implements PermissionProvider
         ];
 
         // Add any custom ModelAdmin subclasses. Can't put this on ModelAdmin itself
-        // since its marked abstract, and needs to be singleton instanciated.
+        // since its marked abstract, and needs to be singleton instantiated.
         foreach (ClassInfo::subclassesFor(ModelAdmin::class) as $i => $class) {
             if ($class === ModelAdmin::class) {
                 continue;

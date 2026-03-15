@@ -32,7 +32,7 @@ class CMSProfileControllerTest extends FunctionalTest
         parent::tearDown();
         $session = Controller::curr()->getRequest()->getSession();
         $service = Injector::inst()->get(SudoModeServiceInterface::class);
-        // deactive() isn't part of the interface
+        // deactivate() isn't part of the interface
         if (method_exists($service, 'deactivate')) {
             call_user_func([$service, 'deactivate'], $session);
         }

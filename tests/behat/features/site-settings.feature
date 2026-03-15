@@ -24,7 +24,7 @@ Feature: Site settings
     When I go to "/home"
     Then I should see "Home"
 
-    # Change site visbility
+    # Change site visibility
     When I am logged in with "ADMIN" permissions
     When I go to "/admin/settings"
     When I click the "Access" CMS tab

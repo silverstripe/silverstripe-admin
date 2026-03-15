@@ -58,7 +58,7 @@ class SilverStripeNavigator extends ModelData
                 continue;
             }
 
-            // This funny litle formula ensures that the first item added with the same priority will be left-most.
+            // This funny little formula ensures that the first item added with the same priority will be left-most.
             $priority = $item->getPriority() * 100 - 1;
 
             // Ensure that we can have duplicates with the same (default) priority
