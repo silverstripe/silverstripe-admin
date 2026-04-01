@@ -1,19 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
 import OptionField from 'components/OptionsetField/OptionField';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import PropTypes from 'prop-types';
 
 // a group of check boxes
-const CheckboxSet = (_props) => {
-  const defaultProps = {
-    className: '',
-    extraClass: '',
-    value: [],
-  };
-  const props = {
-    ...defaultProps,
-    ..._props,
-  };
+class CheckboxSet extends Component {
+  constructor(props) {
+    super(props);
+
+    this.getItemKey = this.getItemKey.bind(this);
+    this.getOptionProps = this.getOptionProps.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.getValues = this.getValues.bind(this);
+  }
 
   /**
    * Generates a unique key for an item
@@ -22,15 +21,17 @@ const CheckboxSet = (_props) => {
    * @param {int} index
    * @returns {string} key
    */
-  const getItemKey = (item, index) => `${props.id}-${item.value || `empty${index}`}`;
+  getItemKey(item, index) {
+    return `${this.props.id}-${item.value || `empty${index}`}`;
+  }
 
   /**
    * Gets the array of values possible, converts to array if it is not.
    *
    * @returns {Array} values
    */
-  const getValues = () => {
-    let values = props.value;
+  getValues() {
+    let values = this.props.value;
 
     if (!Array.isArray(values)) {
       if (typeof values === 'string') {
@@ -46,7 +47,33 @@ const CheckboxSet = (_props) => {
       return values.map((value) => `${value}`);
     }
     return [];
-  };
+  }
+
+  /**
+   * Fetches properties for an item
+   *
+   * @param {object} item
+   * @param {int} index
+   * @returns {object} properties
+   */
+  getOptionProps(item, index) {
+    const values = this.getValues();
+    const key = this.getItemKey(item, index);
+
+    return {
+      key,
+      id: key,
+      name: this.props.name,
+      className: this.props.itemClass,
+      disabled: item.disabled || this.props.disabled,
+      readOnly: this.props.readOnly,
+      onChange: this.handleChange,
+      value: values.indexOf(`${item.value}`) > -1,
+      title: item.title,
+      role: 'option',
+      type: 'checkbox',
+    };
+  }
 
   /**
    * Handler for sorting what the value of the field will be, this flows on from the
@@ -56,58 +83,35 @@ const CheckboxSet = (_props) => {
    * @param {Event} event
    * @param {object} field
    */
-  const handleChange = (event, field) => {
-    if (typeof props.onChange === 'function') {
-      const oldValue = getValues();
-      const value = props.source
+  handleChange(event, field) {
+    if (typeof this.props.onChange === 'function') {
+      const oldValue = this.getValues();
+      const value = this.props.source
         .filter((item, index) => {
-          if (getItemKey(item, index) === field.id) {
+          if (this.getItemKey(item, index) === field.id) {
             return field.value === 1;
           }
           return oldValue.indexOf(`${item.value}`) > -1;
         })
         .map((item) => `${item.value}`);
 
-      props.onChange(event, { id: props.id, value });
+      this.props.onChange(event, { id: this.props.id, value });
     }
-  };
-
-  /**
-   * Fetches properties for an item
-   *
-   * @param {object} item
-   * @param {int} index
-   * @returns {object} properties
-   */
-  const getOptionProps = (item, index) => {
-    const values = getValues();
-    const key = getItemKey(item, index);
-
-    return {
-      key,
-      id: key,
-      name: props.name,
-      className: props.itemClass,
-      disabled: item.disabled || props.disabled,
-      readOnly: props.readOnly,
-      onChange: handleChange,
-      value: values.indexOf(`${item.value}`) > -1,
-      title: item.title,
-      role: 'option',
-      type: 'checkbox',
-    };
-  };
-  if (!props.source) {
-    return null;
   }
-  return (
-    <div role="listbox">
-      { props.source.map((item, index) => (
-        <OptionField {...getOptionProps(item, index)} hideLabels />
-      )) }
-    </div>
-  );
-};
+
+  render() {
+    if (!this.props.source) {
+      return null;
+    }
+    return (
+      <div role="listbox">
+        { this.props.source.map((item, index) => (
+          <OptionField {...this.getOptionProps(item, index)} hideLabels />
+        )) }
+      </div>
+    );
+  }
+}
 
 CheckboxSet.propTypes = {
   className: PropTypes.string,
@@ -124,6 +128,13 @@ CheckboxSet.propTypes = {
   value: PropTypes.any,
   readOnly: PropTypes.bool,
   disabled: PropTypes.bool,
+};
+
+CheckboxSet.defaultProps = {
+  // React considers "undefined" as an uncontrolled component.
+  extraClass: '',
+  className: '',
+  value: [],
 };
 
 export { CheckboxSet as Component };
