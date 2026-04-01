@@ -1,109 +1,134 @@
-import React, { Component } from 'react';
+import React from 'react';
 import castStringToElement from 'lib/castStringToElement';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
-class FormAction extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  /**
-   * Get props for the button
-   *
-   * @returns {Object}
-   */
-  getButtonProps() {
-    const { attributes, id, name } = this.props;
-
-    // Merge attributes
-    const buttonAttributes = typeof attributes === 'undefined' ? {} : attributes;
-    return {
-      ...buttonAttributes,
-      id,
-      name,
-      className: this.getButtonClasses(),
-      disabled: this.isDisabled(),
-      onClick: this.handleClick,
-    };
-  }
+const FormAction = (_props) => {
+  const defaultProps = {
+    title: '',
+    icon: '',
+    extraClass: '',
+    attributes: {},
+    data: {},
+    disabled: false,
+    readOnly: false,
+  };
+  const props = {
+    ...defaultProps,
+    ..._props,
+  };
 
   /**
-   * Returns the necessary button classes based on the given props
+   * Returns whether the button is disabled or readonly
    *
-   * @returns string
+   * @returns {boolean}
    */
-  getButtonClasses() {
-    const { title, loading, extraClass } = this.props;
+  const isDisabled = () => props.disabled || props.readOnly;
 
-    const buttonClasses = {
-      btn: true,
-      'btn--no-text': (typeof title !== 'string'),
-      'btn--loading': loading,
-      disabled: this.isDisabled(),
-    };
-    // Add 'type' class
-    const style = this.getButtonStyle();
-
-    if (style) {
-      buttonClasses[`btn-${style}`] = true;
-    }
-
-    if (typeof extraClass === 'string') {
-      buttonClasses[extraClass] = true;
-    }
-
-    return classnames(buttonClasses);
-  }
+  /**
+   * @returns {boolean}
+   */
+  const isPrimary = () => (
+    props.name === 'action_save' ||
+    !!props.extraClass.split(' ').find(className => className === 'ss-ui-action-constructive')
+  );
 
   /**
    * Gets the bootstrap classname for this action
    *
    * @return {String}
    */
-  getButtonStyle() {
+  const getButtonStyle = () => {
     // Add 'type' class
-    if (typeof this.props.data.buttonStyle !== 'undefined') {
-      return this.props.data.buttonStyle;
+    if (typeof props.data.buttonStyle !== 'undefined') {
+      return props.data.buttonStyle;
     }
 
-    if (typeof this.props.buttonStyle !== 'undefined') {
-      return this.props.buttonStyle;
+    if (typeof props.buttonStyle !== 'undefined') {
+      return props.buttonStyle;
     }
-
-    const extraClasses = this.props.extraClass.split(' ');
 
     // defined their own `btn-${something}` class
-    if (extraClasses.find((className) => className.indexOf('btn-') > -1)) {
+    if (props.extraClass.split(' ').find((className) => className.indexOf('btn-') > -1)) {
       return null;
     }
 
-    if (this.isPrimary()) {
+    if (isPrimary()) {
       return 'primary';
     }
 
     return 'secondary';
-  }
+  };
+
+  /**
+   * Returns the necessary button classes based on the given props
+   *
+   * @returns string
+   */
+  const getButtonClasses = () => {
+    const buttonClasses = {
+      btn: true,
+      'btn--no-text': (typeof props.title !== 'string'),
+      'btn--loading': props.loading,
+      disabled: isDisabled(),
+    };
+    // Add 'type' class
+    const style = getButtonStyle();
+
+    if (style) {
+      buttonClasses[`btn-${style}`] = true;
+    }
+
+    if (typeof props.extraClass === 'string') {
+      buttonClasses[props.extraClass] = true;
+    }
+
+    return classnames(buttonClasses);
+  };
+
+  /**
+   * Event handler triggered when a user clicks the button.
+   *
+   * @param {Object} event
+   */
+  const handleClick = (event) => {
+    if (typeof props.onClick === 'function') {
+      props.onClick(event, props.name || props.id);
+    }
+  };
+
+  /**
+   * Get props for the button
+   *
+   * @returns {Object}
+   */
+  const getButtonProps = () => {
+    // Merge attributes
+    const buttonAttributes = typeof props.attributes === 'undefined' ? {} : props.attributes;
+    return {
+      ...buttonAttributes,
+      id: props.id,
+      name: props.name,
+      className: getButtonClasses(),
+      disabled: isDisabled(),
+      onClick: handleClick,
+    };
+  };
 
   /**
    * Get icon name
    *
    * @returns {String}
    */
-  getIcon() {
-    // In case this is specified directly
-    return this.props.icon || this.props.data.icon || null;
-  }
+  const getIcon = () => props.icon || props.data.icon || null;
 
   /**
    * Returns markup for the loading icon
    *
    * @returns {Object|null}
    */
-  getLoadingIcon() {
-    if (this.props.loading) {
+  const getLoadingIcon = () => {
+    if (props.loading) {
       return (
         <div className="btn__loading-icon" >
           <span className="btn__circle btn__circle--1" />
@@ -114,57 +139,17 @@ class FormAction extends Component {
     }
 
     return null;
-  }
+  };
 
-  /**
-   * Returns whether the button is disabled or readonly
-   *
-   * @returns {boolean}
-   */
-  isDisabled() {
-    const { disabled, readOnly } = this.props;
-
-    return disabled || readOnly;
-  }
-
-  /**
-   * @returns {boolean}
-   */
-  isPrimary() {
-    const { extraClass, name } = this.props;
-
-    const extraClasses = extraClass ? extraClass.split(' ') : [];
-    return (
-      name === 'action_save' ||
-      !!extraClasses.find(className => className === 'ss-ui-action-constructive')
-    );
-  }
-
-  /**
-   * Event handler triggered when a user clicks the button.
-   *
-   * @param {Object} event
-   */
-  handleClick(event) {
-    if (typeof this.props.onClick === 'function') {
-      this.props.onClick(event, this.props.name || this.props.id);
-    }
-  }
-
-  render() {
-    const { title } = this.props;
-
-    const icon = this.getIcon();
-
-    return (
-      <button {...this.getButtonProps()}>
-        {icon && <span className={`font-icon-${icon} btn__icon`} aria-hidden="true" />}
-        {this.getLoadingIcon()}
-        {castStringToElement('span', title, { className: 'btn__title' })}
-      </button>
-    );
-  }
-}
+  const iconName = getIcon();
+  return (
+    <button {...getButtonProps()}>
+      {iconName && <span className={`font-icon-${iconName} btn__icon`} aria-hidden="true" />}
+      {getLoadingIcon()}
+      {castStringToElement('span', props.title, { className: 'btn__title' })}
+    </button>
+  );
+};
 
 FormAction.propTypes = {
   id: PropTypes.string,
@@ -184,16 +169,6 @@ FormAction.propTypes = {
   ]),
   extraClass: PropTypes.string,
   attributes: PropTypes.object,
-};
-
-FormAction.defaultProps = {
-  title: '',
-  icon: '',
-  extraClass: '',
-  attributes: {},
-  data: {},
-  disabled: false,
-  readOnly: false,
 };
 
 export default FormAction;
