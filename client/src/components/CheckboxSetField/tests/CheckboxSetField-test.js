@@ -1,9 +1,8 @@
-/* global jest, test, describe, beforeEach, it, expect, Event */
+/* global jest, test, expect */
 
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-// get non-default because it uses FieldHolder by default
-import { Component as CheckboxSetField } from '../CheckboxSetField';
+import { fireEvent, render, screen } from '@testing-library/react';
+import CheckboxSetFieldDefault, { Component as CheckboxSetField } from '../CheckboxSetField';
 
 function makeProps(obj = {}) {
   return {
@@ -101,4 +100,79 @@ test('CheckboxSetField onChange removes a value', () => {
     expect.objectContaining({ _reactName: 'onChange' }),
     { id: 'checkbox', value: ['three'] }
   );
+});
+
+test('CheckboxSetField renders null without a source', () => {
+  const { container } = render(
+    <CheckboxSetField {...makeProps({
+      source: null
+    })}
+    />
+  );
+  expect(container.firstChild).toBeNull();
+});
+
+test('CheckboxSetField coerces numeric values and empty item keys', () => {
+  const { container } = render(
+    <CheckboxSetField {...makeProps({
+      id: 'numeric-checkbox',
+      value: 2,
+      source: [
+        { value: '', title: 'Empty' },
+        { value: 2, title: '2' },
+      ],
+    })}
+    />
+  );
+  expect(container.querySelector('input#numeric-checkbox-empty0')).not.toBeNull();
+  expect(container.querySelector('input#numeric-checkbox-empty0').hasAttribute('checked')).toBe(false);
+  expect(container.querySelector('input#numeric-checkbox-2').hasAttribute('checked')).toBe(true);
+});
+
+test('CheckboxSetField passes item classes and disabled state to options', () => {
+  const { container } = render(
+    <CheckboxSetField {...makeProps({
+      itemClass: 'custom-item',
+      readOnly: true,
+      source: [
+        { value: 'one', title: '1' },
+        { value: 'two', title: '2', disabled: true },
+      ],
+    })}
+    />
+  );
+  expect(container.querySelector('input#checkbox-one').classList.contains('custom-item')).toBe(true);
+  expect(container.querySelector('input#checkbox-one').hasAttribute('disabled')).toBe(true);
+  expect(container.querySelector('input#checkbox-one').hasAttribute('readonly')).toBe(true);
+  expect(container.querySelector('input#checkbox-two').hasAttribute('disabled')).toBe(true);
+});
+
+test('CheckboxSetField does not call onChange when readOnly', () => {
+  const onChange = jest.fn();
+  const { container } = render(
+    <CheckboxSetField {...makeProps({
+      onChange,
+      readOnly: true,
+      value: ['two'],
+    })}
+    />
+  );
+  fireEvent.click(container.querySelector('input#checkbox-one'));
+  expect(onChange).not.toBeCalled();
+});
+
+test('CheckboxSetField default export renders with field holder', () => {
+  render(
+    <CheckboxSetFieldDefault {...makeProps({
+      description: 'Choose every option that applies',
+      extraClass: 'extra-holder',
+      title: 'Checkbox choices',
+      value: ['one'],
+    })}
+    />
+  );
+  expect(screen.getByText('Checkbox choices')).not.toBeNull();
+  expect(screen.getByText('Choose every option that applies')).not.toBeNull();
+  expect(screen.getByRole('listbox')).not.toBeNull();
+  expect(screen.getByText('Checkbox choices').closest('.field').classList.contains('extra-holder')).toBe(true);
 });
