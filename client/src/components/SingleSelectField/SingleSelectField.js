@@ -1,55 +1,63 @@
-import React, { Component } from 'react';
+import React from 'react';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import i18n from 'i18n';
 import { Input } from 'reactstrap';
 import PropTypes from 'prop-types';
 
-class SingleSelectField extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleChange = this.handleChange.bind(this);
-  }
-
+const SingleSelectField = (_props) => {
+  const defaultProps = {
+    source: [],
+    extraClass: '',
+    className: '',
+    data: {
+      emptyString: i18n._t('Boolean.ANY', 'Any'),
+    },
+  };
+  const props = {
+    ...defaultProps,
+    ..._props,
+  };
   /**
    * Builds the select field in readonly mode with current props
    *
    * @returns {object}
    */
-  getReadonlyField() {
-    let label = this.props.source
-      && this.props.source.find((item) => item.value === this.props.value);
+  const getReadonlyField = () => {
+    let label = props.source
+      && props.source.find((item) => item.value === props.value);
 
     label = typeof label === 'string'
       ? label
-      : (this.props.value || '');
+      : (props.value || '');
 
-    return <Input plaintext {...this.getInputProps()} tag="p">{label}</Input>;
-  }
+    // eslint-disable-next-line no-use-before-define
+    return <Input plaintext {...getInputProps()} tag="p">{label}</Input>;
+  };
 
   /**
    * Builds the select field with current props
    *
    * @returns {object}
    */
-  getSelectField() {
+  const getSelectField = () => {
     // .slice() to copy the array, because we could modify it with an empty item
-    const options = (this.props.source)
-      ? this.props.source.slice()
+    const options = (props.source)
+      ? props.source.slice()
       : [];
 
-    if (this.props.data.hasEmptyDefault && !options.find((item) => !item.value)) {
+    if (props.data.hasEmptyDefault && !options.find((item) => !item.value)) {
       options.unshift({
         value: '',
-        title: this.props.data.emptyString,
+        title: props.data.emptyString,
         disabled: false,
       });
     }
 
     return (
-      <Input type="select" {...this.getInputProps()}>
+      // eslint-disable-next-line no-use-before-define
+      <Input type="select" {...getInputProps()}>
         { options.map((item, index) => {
-          const key = `${this.props.name}-${item.value || `empty${index}`}`;
+          const key = `${props.name}-${item.value || `empty${index}`}`;
           const description = item.description || null;
 
           return (
@@ -60,53 +68,51 @@ class SingleSelectField extends Component {
         }) }
       </Input>
     );
-  }
+  };
 
   /**
    * Fetches the properties for the select field
    *
    * @returns {object} properties
    */
-  getInputProps() {
-    const props = {
-      className: `${this.props.className} ${this.props.extraClass} no-chosen`,
-      id: this.props.id,
-      name: this.props.name,
-      disabled: this.props.disabled,
+  const getInputProps = () => {
+    const inputProps = {
+      className: `${props.className} ${props.extraClass} no-chosen`,
+      id: props.id,
+      name: props.name,
+      disabled: props.disabled,
     };
 
-    if (!this.props.readOnly) {
-      Object.assign(props, {
-        onChange: this.handleChange,
-        value: this.props.value || '',
+    if (!props.readOnly) {
+      Object.assign(inputProps, {
+        // eslint-disable-next-line no-use-before-define
+        onChange: handleChange,
+        value: props.value || '',
       });
     }
 
-    return props;
-  }
+    return inputProps;
+  };
 
   /**
    * Handles changes to the select field's value.
    *
    * @param {Event} event
    */
-  handleChange(event) {
-    if (typeof this.props.onChange === 'function') {
-      this.props.onChange(event, { id: this.props.id, value: event.target.value });
+  const handleChange = (event) => {
+    if (typeof props.onChange === 'function') {
+      props.onChange(event, { id: props.id, value: event.target.value });
     }
-  }
+  };
 
-  render() {
-    let field = null;
-    if (this.props.readOnly) {
-      field = this.getReadonlyField();
-    } else {
-      field = this.getSelectField();
-    }
-
-    return field;
+  let field = null;
+  if (props.readOnly) {
+    field = getReadonlyField();
+  } else {
+    field = getSelectField();
   }
-}
+  return field;
+};
 
 SingleSelectField.propTypes = {
   id: PropTypes.string,
@@ -128,15 +134,6 @@ SingleSelectField.propTypes = {
       emptyString: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     }),
   ]),
-};
-
-SingleSelectField.defaultProps = {
-  source: [],
-  extraClass: '',
-  className: '',
-  data: {
-    emptyString: i18n._t('Boolean.ANY', 'Any'),
-  },
 };
 
 export { SingleSelectField as Component };

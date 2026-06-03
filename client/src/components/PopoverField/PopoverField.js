@@ -1,111 +1,115 @@
-import React, { Component } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import Button from 'components/Button/Button';
 
-class PopoverField extends Component {
-  constructor(props) {
-    super(props);
+const PopoverField = (_props) => {
+  const defaultProps = {
+    data: {},
+    className: '',
+    buttonClassName: '',
+    popoverClassName: '',
+    buttonSize: 'xl',
+    toggleCallback: () => {},
+  };
+  const props = {
+    ...defaultProps,
+    ..._props,
+  };
+  const [isOpen, setIsOpen] = useState(false);
+  const wrapperRef = useRef(null);
+  const toggleCallbackRef = useRef(null);
 
-    this.toggle = this.toggle.bind(this);
-
-    this.state = {
-      isOpen: false,
-    };
-  }
-
+  useEffect(() => {
+    if (toggleCallbackRef.current) {
+      const callback = toggleCallbackRef.current;
+      toggleCallbackRef.current = null;
+      callback();
+    }
+  }, [isOpen]);
   /**
    * Get popup placement direction
    *
    * @returns {String}
    */
-  getPlacement() {
-    const placement = this.props.data.placement;
+  const getPlacement = () => {
+    const placement = props.data.placement;
     return placement || 'bottom';
-  }
-
+  };
   /**
    * Gets the DOM element the Popover markup will be appended to
    * @return {*}
    */
-  getContainer() {
-    if (this.props.container) {
-      return this.props.container;
+  const getContainer = () => {
+    if (props.container) {
+      return props.container;
     }
-    return this.wrapper;
-  }
-
+    return wrapperRef.current;
+  };
   /**
    * Toggle the popover on or off, then run an optional callback after each toggle
    */
-  toggle() {
-    const { toggleCallback } = this.props;
-
+  const toggle = () => {
     // Force setting state to the end of the execution queue to clear a potential race condition
     // with entwine click handlers
     //
     // ignore linting rule because following the recommended replacement caused behat failures
     // eslint-disable-next-line react/no-access-state-in-setstate
-    window.setTimeout(() => this.setState({ isOpen: !this.state.isOpen }, toggleCallback), 0);
-  }
-
-  getButtonIcon() {
-    if (this.props.buttonIcon) {
-      return this.props.buttonIcon;
+    window.setTimeout(() => {
+      toggleCallbackRef.current = props.toggleCallback;
+      setIsOpen((current) => !current);
+    }, 0);
+  };
+  const getButtonIcon = () => {
+    if (props.buttonIcon) {
+      return props.buttonIcon;
     }
-    if (this.props.title) {
+    if (props.title) {
       return undefined;
     }
     return 'dot-3';
-  }
-
-  render() {
-    const placement = this.getPlacement();
-
-    const buttonClasses = classnames({
-      btn: true,
-      'btn-secondary': true,
-      [this.props.className]: true,
-      [this.props.buttonClassName]: true,
-      'btn--no-text': !this.props.title,
-      [`btn--icon-${this.props.buttonSize}`]: !this.props.title,
-    });
-
-    const buttonProps = {
-      id: this.props.id,
-      type: 'button',
-      className: buttonClasses,
-      onClick: this.toggle,
-      title: this.props.data.buttonTooltip,
-      icon: this.getButtonIcon(),
-    };
-
-    const wrapperClasses = classnames({
-      [this.props.className]: true,
-      'popover-container': true,
-      'popover-field': true
-    });
-
-    return (
-      <div className={wrapperClasses} ref={(wrapper) => { this.wrapper = wrapper; }}>
-        <Button {...buttonProps}>{this.props.title}</Button>
-        <Popover
-          id={`${this.props.id}_Popover`}
-          placement={placement}
-          isOpen={this.state.isOpen}
-          target={this.props.id}
-          toggle={this.toggle}
-          className={this.props.popoverClassName}
-          container={this.getContainer()}
-        >
-          <PopoverHeader>{this.props.data.popoverTitle}</PopoverHeader>
-          <PopoverBody>{this.props.children}</PopoverBody>
-        </Popover>
-      </div>
-    );
-  }
-}
+  };
+  const placement = getPlacement();
+  const buttonClasses = classnames({
+    btn: true,
+    'btn-secondary': true,
+    [props.className]: true,
+    [props.buttonClassName]: true,
+    'btn--no-text': !props.title,
+    [`btn--icon-${props.buttonSize}`]: !props.title,
+  });
+  const buttonProps = {
+    id: props.id,
+    type: 'button',
+    className: buttonClasses,
+    onClick: toggle,
+    title: props.data.buttonTooltip,
+    icon: getButtonIcon(),
+  };
+  const wrapperClasses = classnames({
+    [props.className]: true,
+    'popover-container': true,
+    'popover-field': true
+  });
+  return (
+    <div className={wrapperClasses} ref={wrapperRef}>
+      <Button {...buttonProps}>{props.title}</Button>
+      <Popover
+        id={`${props.id}_Popover`}
+        placement={placement}
+        isOpen={isOpen}
+        target={props.id}
+        toggle={toggle}
+        className={props.popoverClassName}
+        container={getContainer()}
+      >
+        <PopoverHeader>{props.data.popoverTitle}</PopoverHeader>
+        <PopoverBody>{props.children}</PopoverBody>
+      </Popover>
+    </div>
+  );
+};
 
 PopoverField.propTypes = {
   id: PropTypes.string.isRequired,
@@ -125,15 +129,6 @@ PopoverField.propTypes = {
     }),
   ]),
   toggleCallback: PropTypes.func,
-};
-
-PopoverField.defaultProps = {
-  data: {},
-  className: '',
-  buttonClassName: '',
-  popoverClassName: '',
-  buttonSize: 'xl',
-  toggleCallback: () => {},
 };
 
 export default PopoverField;
