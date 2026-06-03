@@ -1,47 +1,47 @@
-import React, { Component } from 'react';
+import React from 'react';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import { Input } from 'reactstrap';
 import PropTypes from 'prop-types';
 
-class HtmlReadonlyField extends Component {
+const HtmlReadonlyField = (_props) => {
+  const defaultProps = {
+    // React considers "undefined" as an uncontrolled component.
+    extraClass: '',
+    className: '',
+  };
+  const props = {
+    ...defaultProps,
+    ..._props,
+  };
+
   /**
    * Fetches the properties for the text field
    *
    * @returns {object} properties
    */
-  getInputProps() {
-    return {
-      // The extraClass property is defined on both the holder and element
-      // for legacy reasons (same behaviour as PHP rendering)
-      className: `${this.props.className} ${this.props.extraClass}`,
-      id: this.props.id,
-      name: this.props.name,
-    };
-  }
+  const getInputProps = () => ({
+    // The extraClass property is defined on both the holder and element
+    // for legacy reasons (same behaviour as PHP rendering)
+    className: `${props.className} ${props.extraClass}`,
+    id: props.id,
+    name: props.name,
+  });
 
-  render() {
-    return (
-      <Input
-        plaintext
-        tag="p"
-        dangerouslySetInnerHTML={{ __html: this.props.value }}
-        {...this.getInputProps()}
-      />
-    );
-  }
-}
+  return (
+    <Input
+      plaintext
+      tag="p"
+      dangerouslySetInnerHTML={{ __html: props.value }}
+      {...getInputProps()}
+    />
+  );
+};
 
 HtmlReadonlyField.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string.isRequired,
   extraClass: PropTypes.string,
   value: PropTypes.string,
-};
-
-HtmlReadonlyField.defaultProps = {
-  // React considers "undefined" as an uncontrolled component.
-  extraClass: '',
-  className: '',
 };
 
 export { HtmlReadonlyField as Component };
