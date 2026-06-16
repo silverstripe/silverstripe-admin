@@ -24,6 +24,18 @@ abstract class SingleRecordAdmin extends LeftAndMain
      */
     private static bool $allow_new_record = true;
 
+    /**
+     * Single-record admins never use a URL-based record ID — the record is always
+     * fetched via getSingleRecord(). Returning null here prevents query parameters
+     * such as ?ID= (e.g. from a TreeDropdownField AJAX subtree request) from being
+     * mistaken for the managed record's ID, which would cause getEditForm() to return
+     * an empty form and break field AJAX actions.
+     */
+    public function currentRecordID(): ?int
+    {
+        return null;
+    }
+
     public function getEditForm($id = null, $fields = null): ?Form
     {
         if (!$fields) {
