@@ -112,3 +112,43 @@ test('PopoverOptionSet render should render a Popover', async () => {
   const popover = await screen.findByTestId('test-popover');
   expect(popover.querySelector('.popover-option-set__button-container')).not.toBeNull();
 });
+
+test('PopoverOptionSet disableSearch hides the search box', async () => {
+  render(
+    <PopoverOptionSet {...makeProps({ disableSearch: true })}/>
+  );
+  const popover = await screen.findByTestId('test-popover');
+  expect(popover.querySelector('input')).toBeNull();
+});
+
+test('PopoverOptionSet shows no results message when search matches nothing', async () => {
+  render(
+    <PopoverOptionSet {...makeProps({
+      onSearch: () => []
+    })}
+    />
+  );
+  const popover = await screen.findByTestId('test-popover');
+  const input = popover.querySelector('input.popover-option-set__search-input');
+  fireEvent.change(input, { target: { value: 'zzz' } });
+  const noResults = await screen.findByText('No results found');
+  expect(noResults).not.toBeNull();
+});
+
+test('PopoverOptionSet handleKeyDown Escape calls doToggle', async () => {
+  const toggle = jest.fn();
+  render(
+    <PopoverOptionSet {...makeProps({
+      toggle,
+      PopoverComponent: ({ onKeyDown, children }) => (
+        <div data-testid="test-popover-keydown" onKeyDown={onKeyDown}>
+          {children}
+        </div>
+      ),
+    })}
+    />
+  );
+  const popover = await screen.findByTestId('test-popover-keydown');
+  fireEvent.keyDown(popover, { key: 'Escape' });
+  expect(toggle).toHaveBeenCalled();
+});
