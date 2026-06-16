@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
 import { inject } from 'lib/Injector';
@@ -9,56 +9,53 @@ import PopoverOptionSet from './PopoverOptionSet';
  * Simple component that presents a button that will toggle a PopoverOptionSet.
  * Using this component means that you won't be able to manage "open" state yourself.
  */
-class PopoverOptionSetToggle extends Component {
-  constructor(props) {
-    super(props);
+const PopoverOptionSetToggle = (_props) => {
+  const defaultProps = {
+    toggleText: i18n._t('PopoverOptionSetToggle.TOGGLE', 'Toggle'),
+  };
+  const props = {
+    ...defaultProps,
+    ..._props,
+  };
 
-    this.handleToggle = this.handleToggle.bind(this);
-
-    this.state = {
-      isOpen: false,
-    };
-  }
+  const [isOpen, setIsOpen] = useState(false);
 
   /**
    * Handle toggling the "open" state of the popover.
    */
-  handleToggle() {
+  const handleToggle = () => {
     // Force setting state to the end of the execution queue to clear a potential race condition
     // with entwine click handlers
     //
     // ignore linting rule because following the recommended replacement caused behat failures
     // eslint-disable-next-line react/no-access-state-in-setstate
-    window.setTimeout(() => this.setState({ isOpen: !this.state.isOpen }), 0);
-  }
+    window.setTimeout(() => setIsOpen((prev) => !prev), 0);
+  };
 
-  render() {
-    const { isOpen } = this.state;
-    const { id, toggleText, buttonProps: forwardedButtonProps, ...forwardedProps } = this.props;
+  const { id, toggleText, buttonProps: forwardedButtonProps, ...forwardedProps } = props;
 
-    const popoverProps = {
-      ...forwardedProps,
-      toggle: this.handleToggle,
-      isOpen,
-      target: id,
-    };
+  const popoverProps = {
+    ...forwardedProps,
+    toggle: handleToggle,
+    isOpen,
+    target: id,
+  };
 
-    const buttonProps = {
-      ...forwardedButtonProps,
-      id,
-      onClick: this.handleToggle,
-    };
+  const buttonProps = {
+    ...forwardedButtonProps,
+    id,
+    onClick: handleToggle,
+  };
 
-    return (
-      <div>
-        <Button {...buttonProps} >
-          {toggleText}
-        </Button>
-        <PopoverOptionSet {...popoverProps} />
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <Button {...buttonProps} >
+        {toggleText}
+      </Button>
+      <PopoverOptionSet {...popoverProps} />
+    </div>
+  );
+};
 
 PopoverOptionSetToggle.propTypes = {
   // Unique identifier for this toggle - passed through as an ID attribute onto the popover
@@ -68,10 +65,6 @@ PopoverOptionSetToggle.propTypes = {
   // Provide props for the toggle button
   buttonProps: PropTypes.object,
   // Other given props will be forwarded to the included PopoverOptionSet
-};
-
-PopoverOptionSetToggle.defaultProps = {
-  toggleText: i18n._t('PopoverOptionSetToggle.TOGGLE', 'Toggle'),
 };
 
 export { PopoverOptionSetToggle as Component };
