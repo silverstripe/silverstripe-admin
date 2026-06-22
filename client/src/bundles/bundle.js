@@ -66,6 +66,7 @@ import 'expose-loader?exposes=Search!components/Search/Search';
 import 'expose-loader?exposes=SearchToggle!components/Search/SearchToggle';
 import 'expose-loader?exposes=TreeDropdownFieldNode!components/TreeDropdownField/TreeDropdownFieldNode';
 import 'expose-loader?exposes=TreeDropdownField!components/TreeDropdownField/TreeDropdownField';
+import 'expose-loader?exposes=LegacyTreeDropdownField!legacy/ReactComponents/LegacyTreeDropdownField';
 import 'expose-loader?exposes=BreadcrumbsActions!state/breadcrumbs/BreadcrumbsActions';
 import 'expose-loader?exposes=RecordsActionTypes!state/records/RecordsActionTypes';
 import 'expose-loader?exposes=UnsavedFormsActions!state/unsavedForms/UnsavedFormsActions';
