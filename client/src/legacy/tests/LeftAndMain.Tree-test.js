@@ -1,7 +1,12 @@
 /* global jest, test, expect */
 
 import $ from 'jquery';
-import { updateRovingTabindex, resetTabindexToCurrentPage } from '../LeftAndMain.Tree';
+import {
+  updateRovingTabindex,
+  resetTabindexToCurrentPage,
+  openTreeToRecord,
+  isOpenButUnloaded,
+} from '../LeftAndMain.Tree';
 
 // Helper to simulate tree structure
 const setupTreeDOM = (html) => {
@@ -274,4 +279,99 @@ test('Tree container element exists for focus styling', () => {
   const $tree = $('.cms-tree');
   expect($tree.length).toBe(1);
   expect($tree.hasClass('cms-tree')).toBe(true);
+});
+
+// Fake tree containing only the nodes in loadedIds, where opening a node loads its children
+const createFakeTree = (hierarchy, loadedIds) => {
+  const loaded = new Set(loadedIds);
+  const opened = [];
+  let selectedId = null;
+  return {
+    opened,
+    getSelectedId: () => selectedId,
+    hasNode: (id) => loaded.has(id),
+    getParentId: (id) => Promise.resolve(hierarchy[id]),
+    openNode: (id) => {
+      opened.push(id);
+      Object.keys(hierarchy)
+        .filter((childId) => hierarchy[childId] === id)
+        .forEach((childId) => loaded.add(parseInt(childId, 10)));
+      return Promise.resolve();
+    },
+    selectNode: (id) => {
+      selectedId = id;
+    },
+  };
+};
+
+test('openTreeToRecord opens each unloaded ancestor in turn and selects the record', async () => {
+  const tree = createFakeTree({ 1: 0, 2: 1, 3: 2, 4: 3 }, [0, 1]);
+  await openTreeToRecord(4, 3, tree);
+  expect(tree.opened).toEqual([1, 2, 3]);
+  expect(tree.getSelectedId()).toBe(4);
+});
+
+test('openTreeToRecord starts from the closest ancestor already in the tree', async () => {
+  const tree = createFakeTree({ 1: 0, 2: 1, 3: 2, 4: 3 }, [0, 1, 2, 3]);
+  await openTreeToRecord(4, 3, tree);
+  expect(tree.opened).toEqual([3]);
+  expect(tree.getSelectedId()).toBe(4);
+});
+
+test('openTreeToRecord opens the root for a top level record', async () => {
+  const tree = createFakeTree({ 1: 0 }, [0]);
+  await openTreeToRecord(1, 0, tree);
+  expect(tree.opened).toEqual([0]);
+  expect(tree.getSelectedId()).toBe(1);
+});
+
+test('openTreeToRecord does nothing when an ancestor cannot be resolved', async () => {
+  const tree = createFakeTree({ 4: 3 }, [0]);
+  await openTreeToRecord(4, 3, tree);
+  expect(tree.opened).toEqual([]);
+  expect(tree.getSelectedId()).toBe(null);
+});
+
+// The tree renders an ancestor of the current record as open, but stopped short of its children
+// because the site is over the node threshold
+const setupThresholdTreeDOM = () => setupTreeDOM(`
+  <div class="cms-tree">
+    <ul>
+      <li id="record-0" class="jstree-open" data-id="0">
+        <ul>
+          <li data-id="12" class="jstree-open"><a>Mock Parent</a></li>
+          <li data-id="16" class="jstree-closed">
+            <a>Mock Filler 1</a>
+            <ul><li data-id="17" class="jstree-leaf"><a>Child</a></li></ul>
+          </li>
+          <li data-id="18" class="jstree-leaf"><a>Mock Filler 3</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+`);
+
+test('isOpenButUnloaded detects an open ancestor whose children were never rendered', () => {
+  setupThresholdTreeDOM();
+  expect(isOpenButUnloaded($('[data-id="12"]'))).toBe(true);
+});
+
+test('isOpenButUnloaded ignores a closed node, which jstree loads on open', () => {
+  setupThresholdTreeDOM();
+  expect(isOpenButUnloaded($('[data-id="16"]'))).toBe(false);
+});
+
+test('isOpenButUnloaded ignores a leaf, which has no children to load', () => {
+  setupThresholdTreeDOM();
+  expect(isOpenButUnloaded($('[data-id="18"]'))).toBe(false);
+});
+
+test('isOpenButUnloaded ignores an open node which already has its children', () => {
+  setupThresholdTreeDOM();
+  expect(isOpenButUnloaded($('#record-0'))).toBe(false);
+});
+
+test('isOpenButUnloaded ignores a node which is not in the tree', () => {
+  setupThresholdTreeDOM();
+  expect(isOpenButUnloaded($('[data-id="13"]'))).toBe(false);
 });
