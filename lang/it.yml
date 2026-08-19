@@ -1,10 +1,15 @@
 it:
   SilverStripe\Admin\AdminController:
     ErrorMessage: 'Spiacente, sembra ci sia stato un errore {errorcode}.'
+    ErrorMessage400: 'Spiacente, sembra ci sia stato un problema nella richiesta.'
+    ErrorMessage401: 'Spiacente, sembra tu non sia autorizzato ad accedere in questa sezione o a questo oggetto.'
     ErrorMessage403: "Spiacente, sembra che l'azione che hai provato ad eseguire non sia consentita."
     ErrorMessage404: 'Spiacente, sembra tu abbia provato ad accedere ad una sezione o ad un oggetto che non esiste.'
     ErrorMessage500: 'Spiacente, sembra ci sia stato un errore interno al server.'
     ErrorMessage503: 'Spiacente, sembra che il servizio sia temporaneamente non disponibile.'
+    PERMAGAIN: 'Sei uscito dal CMS.'
+    PERMALREADY: 'Spiacente, non puoi accedere a questa parte del CMS.'
+    PERMDEFAULT: 'Devi essere loggato per poter accedere al pannello di amministrazione.'
   SilverStripe\Admin\CMSProfileController:
     CANTEDIT: 'Non hai il permesso di farlo'
     MENUTITLE: 'Il mio profilo'
@@ -21,6 +26,7 @@ it:
   SilverStripe\Admin\Forms\EditorPhoneLinkFormFactory:
     LINKDESCR: 'Descrizione del collegamento'
     LINKTEXT: 'Link al testo'
+    PHONE: Telefono
   SilverStripe\Admin\Forms\LinkFormFactory:
     INSERT_LINK: 'Inserisci il link'
   SilverStripe\Admin\Forms\UsedOnTable:
@@ -34,16 +40,20 @@ it:
     ResultDeleted: '{count} Gruppi cancellati'
     ResultUpdated: '{count} Gruppi aggiornati'
   SilverStripe\Admin\LeftAndMain:
+    ACCESS: "Accesso alla sezione '{title}'"
     ACCESSALLINTERFACES: 'Accesso a tutte le sezioni CMS'
     ACCESSALLINTERFACESHELP: 'Annulla le impostazioni di accesso più specifiche.'
     BROWSER_WARNING_HEADING: 'Browser non supportato'
     BROWSER_WARNING_TEXT: "Si sta utilizzando un browser Web che non è supportato da SilverStripe. <br/> Effettuare l'aggiornamento a una delle seguenti opzioni."
+    CMS_ACCESS_CATEGORY: 'Accesso al CMS'
     CollapsePanel: 'Comprimi pannello'
     DELETE: Elimina
     DELETED: Cancellato.
     DropdownBatchActionsDefault: "Scegli un'azione..."
     ErrorDetail: 'Dettagli errore: {detail}'
     ErrorMessage: 'Spiacente, sembra ci sia stato un errore {errorcode}.'
+    ErrorMessage400: 'Spiacente, sembra ci sia stato un problema nella richiesta.'
+    ErrorMessage401: 'Spiacente, sembra tu non sia autorizzato ad accedere in questa sezione o a questo oggetto.'
     ErrorMessage403: "Spiacente, sembra che l'azione che hai provato ad eseguire non sia consentita."
     ErrorMessage404: 'Spiacente, sembra tu abbia provato ad accedere ad una sezione o ad un oggetto che non esiste.'
     ErrorMessage500: 'Spiacente, sembra ci sia stato un errore interno al server.'
@@ -59,10 +69,14 @@ it:
     PROFILE: 'Profilo {name}'
     PreviewButton: Anteprima
     REQUIREJS: 'Il CMS richiede che JavaScript sia abilitato.'
+    SAVE: Salva
     SAVEDUP: Salvato.
     SUBMIT_BUTTON_LABEL: Vai
+    SkipLink: 'Salta navigazione principale'
     ValidationError: 'Errore di convalida'
     Version: Versione
+  SilverStripe\Admin\LeftAndMain_Menu:
+    MainMenu: 'Menu principale'
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
     ChangeViewMode: 'Cambia la modalità di visualizzazione'
     DualWindowView: 'Doppia finestra'

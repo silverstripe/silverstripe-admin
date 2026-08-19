@@ -26,6 +26,7 @@ nl:
   SilverStripe\Admin\Forms\EditorPhoneLinkFormFactory:
     LINKDESCR: 'Link omschrijving'
     LINKTEXT: 'Link tekst'
+    PHONE: Telefoon
   SilverStripe\Admin\Forms\LinkFormFactory:
     INSERT_LINK: 'Voeg link toe'
   SilverStripe\Admin\Forms\UsedOnTable:
@@ -71,8 +72,11 @@ nl:
     SAVE: Opslaan
     SAVEDUP: Opgeslagen.
     SUBMIT_BUTTON_LABEL: Ga
+    SkipLink: 'Ga naar inhoud'
     ValidationError: Validatiefout
     Version: Versie
+  SilverStripe\Admin\LeftAndMain_Menu:
+    MainMenu: Hoofdmenu
   SilverStripe\Admin\LeftAndMain_ViewModeSelector:
     ChangeViewMode: 'Verander view modus'
     DualWindowView: 'Dubbel Venster'
