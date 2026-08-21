@@ -2,6 +2,7 @@
 /vendor/
 /resources/
 /node_modules/
+/.yarn/
 /**/*.js.map
 /**/*.css.map
 yarn-error.log
