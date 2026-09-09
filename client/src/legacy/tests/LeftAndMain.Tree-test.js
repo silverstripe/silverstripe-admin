@@ -1,7 +1,7 @@
 /* global jest, test, expect */
 
 import $ from 'jquery';
-import { updateRovingTabindex, resetTabindexToCurrentPage } from '../LeftAndMain.Tree';
+import { updateRovingTabindex, resetTabindexToCurrentPage, isOpenButUnloaded } from '../LeftAndMain.Tree';
 
 // Helper to simulate tree structure
 const setupTreeDOM = (html) => {
@@ -274,4 +274,58 @@ test('Tree container element exists for focus styling', () => {
   const $tree = $('.cms-tree');
   expect($tree.length).toBe(1);
   expect($tree.hasClass('cms-tree')).toBe(true);
+});
+
+test('A node is treated as loaded based on its direct children, not its grandchildren', () => {
+  setupTreeDOM(`
+    <div class="cms-tree">
+      <ul>
+        <li data-id="1" class="jstree-open">
+          <a class="node-1">Page 1</a>
+          <ul>
+            <li data-id="2" class="jstree-open">
+              <a class="node-2">Page 2</a>
+              <ul>
+                <li data-id="3" class="jstree-leaf"><a class="node-3">Page 3</a></li>
+                <li data-id="4" class="jstree-leaf"><a class="node-4">Page 4</a></li>
+                <li data-id="5" class="jstree-leaf"><a class="node-5">Page 5</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  `);
+  // Node 1 is loaded on the strength of node 2 alone, regardless of node 2's own children
+  expect(isOpenButUnloaded($('.cms-tree').find('[data-id=1]'))).toBe(false);
+  expect(isOpenButUnloaded($('.cms-tree').find('[data-id=2]'))).toBe(false);
+});
+
+test('A parent stops being treated as unloaded once its hidden children are loaded in', () => {
+  setupTreeDOM(`
+    <div class="cms-tree">
+      <ul>
+        <li data-id="1" class="jstree-open">
+          <a class="node-1">Page 1</a>
+          <ul>
+            <li data-id="2" class="jstree-open">
+              <a class="node-2">Page 2</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  `);
+  const $parent = $('.cms-tree').find('[data-id=2]');
+  // The server rendered the parent open but stopped short of its children, hiding all three
+  expect(isOpenButUnloaded($parent)).toBe(true);
+  $parent.append(`
+    <ul>
+      <li data-id="3" class="jstree-leaf"><a class="node-3">Page 3</a></li>
+      <li data-id="4" class="jstree-leaf"><a class="node-4">Page 4</a></li>
+      <li data-id="5" class="jstree-leaf"><a class="node-5">Page 5</a></li>
+    </ul>
+  `);
+  expect(isOpenButUnloaded($parent)).toBe(false);
+  expect($parent.children('ul').children('li').length).toBe(3);
 });

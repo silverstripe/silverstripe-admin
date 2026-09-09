@@ -4,6 +4,13 @@
 
 import $ from 'jquery';
 
+// jstree's _is_loaded() counts any .jstree-open node as loaded, so a node the server marked
+// open without rendering its children never fetches them via open_node()
+const isOpenButUnloaded = ($node) => $node.length > 0
+  && !$node.hasClass('jstree-closed')
+  && !$node.hasClass('jstree-leaf')
+  && $node.children('ul').children('li').length === 0;
+
 const updateRovingTabindex = ($tree, $targetAnchor) => {
   if (!$targetAnchor || !$targetAnchor.length) {
     return;
@@ -567,6 +574,10 @@ if (typeof $.entwine === 'function') {
         if(node.length) {
           this.jstree('deselect_all');
           this.jstree('select_node', node);
+          // load_node() ignores _is_loaded(), so it can fill in children the server left out
+          if (isOpenButUnloaded(node)) {
+            this.jstree('load_node', node, $.noop, $.noop);
+          }
         } else {
           // If form is showing an ID that doesn't exist in the tree,
           // get it from the server
@@ -626,8 +637,20 @@ if (typeof $.entwine === 'function') {
                 // If the parent node can't be found, it might have not been loaded yet.
                 // This can happen for deep trees which require ajax loading.
                 // Assumes that the new node has been submitted to the server already.
+                var parentNode = nodeData.ParentID ? self.getNodeByID(nodeData.ParentID) : $();
                 if (nodeData.ParentID && !self.find('li[data-id=' + nodeData.ParentID + ']').length) {
                   self.jstree('load_node', -1);
+                } else if (isOpenButUnloaded(parentNode)) {
+                  // Creating the node here would graft it in as the parent's only child, hiding its siblings
+                  self.jstree('load_node', parentNode, function () {
+                    if (!selected.length && ids.length === 1) {
+                      selected = self.getNodeByID(nodeId);
+                      if (selected.length) {
+                        self.jstree('deselect_all');
+                        self.jstree('select_node', selected);
+                      }
+                    }
+                  }, $.noop);
                 } else {
 
                   self.createNode(nodeData.html, nodeData, (node) => {
@@ -719,4 +742,4 @@ if (typeof $.entwine === 'function') {
   });
 }
 
-export { updateRovingTabindex, resetTabindexToCurrentPage };
+export { updateRovingTabindex, resetTabindexToCurrentPage, isOpenButUnloaded };
