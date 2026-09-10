@@ -37,6 +37,43 @@ const resetTabindexToCurrentPage = ($tree) => {
   }
 };
 
+// jstree's _is_loaded() counts any .jstree-open node as loaded and open_node() returns early for
+// anything not .jstree-closed, so a node the server marked open without children never loads them
+const isOpenButUnloaded = ($node) => $node.length > 0
+  && !$node.hasClass('jstree-closed')
+  && !$node.hasClass('jstree-leaf')
+  && $node.children('ul').children('li').length === 0;
+
+// Resolves top down to the closest ancestor already in the tree, or to an empty path when one can't
+// be resolved. One level per request, as updatetreenodes only reports a record's immediate parent.
+const collectAncestorPath = (parentId, tree, path = []) => {
+  const currentId = parseInt(parentId, 10) || 0;
+  if (!currentId || tree.hasNode(currentId)) {
+    return Promise.resolve([currentId, ...path]);
+  }
+  // A record can't be its own ancestor, so a repeat means the hierarchy is broken
+  if (path.includes(currentId)) {
+    return Promise.resolve([]);
+  }
+  return tree.getParentId(currentId).then((grandParentId) => (
+    grandParentId === null || grandParentId === undefined
+      ? []
+      : collectAncestorPath(grandParentId, tree, [currentId, ...path])
+  ));
+};
+
+// Ancestors are opened in sequence, not in parallel, as opening one is what loads the next into the tree
+const openTreeToRecord = (id, parentId, tree) => collectAncestorPath(parentId, tree)
+  .then((path) => path.reduce(
+    (chain, nodeId) => chain.then(() => tree.openNode(nodeId)),
+    Promise.resolve()
+  ))
+  .then(() => {
+    if (tree.hasNode(id)) {
+      tree.selectNode(id);
+    }
+  });
+
 // this conditional check is so that we can unit test the functions above in this file without needing to
 // load in jquery.entwine
 if (typeof $.entwine === 'function') {
@@ -580,6 +617,79 @@ if (typeof $.entwine === 'function') {
     },
 
     /**
+     * Asks the server for the parent of a record, which doesn't need to be in the tree.
+     *
+     * Parameters:
+     *  (Int) id
+     *
+     * Returns:
+     *  (Promise) Resolves with the parent ID, or null if the record can't be retrieved
+     */
+    getParentIDFromServer: function(id) {
+      var url = $.path.addSearchParams(this.data('urlUpdatetreenodes'), 'ids=' + id);
+      return new Promise(function(resolve) {
+        $.ajax({url: url, dataType: 'json'})
+          .done(function(data) {
+            resolve(data && data[id] ? data[id].ParentID : null);
+          })
+          .fail(function() {
+            resolve(null);
+          });
+      });
+    },
+
+    /**
+     * Adapter giving openTreeToRecord() access to the tree.
+     *
+     * Returns:
+     *  (Object)
+     */
+    getTreeAdapter: function() {
+      var self = this;
+      return {
+        hasNode: function(id) {
+          return self.getNodeByID(id).length > 0;
+        },
+        getParentId: function(id) {
+          return self.getParentIDFromServer(id);
+        },
+        openNode: function(id) {
+          return new Promise(function(resolve) {
+            var node = self.getNodeByID(id);
+            // jstree's open_node() only invokes its callback when it has a node to act on
+            if (!node.length) {
+              resolve();
+              return;
+            }
+            if (isOpenButUnloaded(node)) {
+              self.jstree('load_node', node, resolve, resolve);
+              return;
+            }
+            self.jstree('open_node', node, resolve);
+          });
+        },
+        selectNode: function(id) {
+          self.jstree('deselect_all');
+          self.jstree('select_node', self.getNodeByID(id));
+        }
+      };
+    },
+
+    /**
+     * Expands the tree down onto a record which isn't in the tree yet, and selects it.
+     *
+     * Parameters:
+     *  (Int) id
+     *  (Int) parentId
+     *
+     * Returns:
+     *  (Promise)
+     */
+    openToRecord: function(id, parentId) {
+      return openTreeToRecord(id, parentId, this.getTreeAdapter());
+    },
+
+    /**
      * Reloads the view of one or more tree nodes
      * from the server, ensuring that their state is up to date
      * (icon, title, hierarchy, badges, etc).
@@ -627,7 +737,7 @@ if (typeof $.entwine === 'function') {
                 // This can happen for deep trees which require ajax loading.
                 // Assumes that the new node has been submitted to the server already.
                 if (nodeData.ParentID && !self.find('li[data-id=' + nodeData.ParentID + ']').length) {
-                  self.jstree('load_node', -1);
+                  self.openToRecord(nodeId, nodeData.ParentID);
                 } else {
 
                   self.createNode(nodeData.html, nodeData, (node) => {
@@ -719,4 +829,4 @@ if (typeof $.entwine === 'function') {
   });
 }
 
-export { updateRovingTabindex, resetTabindexToCurrentPage };
+export { updateRovingTabindex, resetTabindexToCurrentPage, openTreeToRecord, isOpenButUnloaded };
