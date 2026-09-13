@@ -3,6 +3,7 @@
 namespace SilverStripe\Admin;
 
 use SilverStripe\Forms\Form;
+use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\HiddenField;
 use SilverStripe\ORM\DataObject;
 
@@ -40,6 +41,25 @@ abstract class SingleRecordAdmin extends LeftAndMain
         }
 
         $form = parent::getEditForm($id, $fields);
+
+        // LeftAndMain::getEditForm() only adds the default Save (and Delete)
+        // action when the record's getCMSActions() returns an EMPTY list. A
+        // single-record model (e.g. SiteConfig) usually defines no actions of
+        // its own, so as soon as any extension adds one via updateCMSActions()
+        // - for example a "translate" button - the list is no longer empty and
+        // the Save button silently disappears, leaving no way to save the
+        // record. Guarantee a Save action here for editable records.
+        // See https://github.com/silverstripe/silverstripe-admin/issues/1841.
+        $record = $this->getRecord($id ?: $this->currentRecordID());
+        if ($form && $record && $record->hasMethod('canEdit') && $record->canEdit()
+            && !$form->Actions()->fieldByName('action_save')
+        ) {
+            $form->Actions()->unshift(
+                FormAction::create('save', _t(LeftAndMain::class . '.SAVE', 'Save'))
+                    ->addExtraClass('btn btn-primary')
+                    ->setIcon('add-circle')
+            );
+        }
         // Keep the tabs on the top row, rather than underneath
         if ($form?->Fields()->hasTabSet()) {
             $form->addExtraClass('cms-tabset'); // Required for tabsets to work, see CMSTabSet.ss for info
