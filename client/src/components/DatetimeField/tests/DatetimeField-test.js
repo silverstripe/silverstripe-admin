@@ -184,6 +184,23 @@ test('DatetimeField convertToIso() html4 en_NZ iso input', () => {
   );
 });
 
+test('DatetimeField convertToIso() html4 en_NZ date only input defaults time to 00:00:00', () => {
+  const onChange = jest.fn();
+  const { container } = render(
+    <DatetimeField {...makePropsHtml4({
+      lang: 'en_NZ',
+      onChange
+    })}
+    />
+  );
+  const input = container.querySelector('input#date');
+  fireEvent.change(input, { target: { value: '23/04/2017' } });
+  expect(onChange).toBeCalledWith(
+    expect.objectContaining({ _reactName: 'onChange' }),
+    { id: 'date', value: '2017-04-23T00:00:00' }
+  );
+});
+
 test('DatetimeField convertToIso() html4 en_NZ invalid input', () => {
   const onChange = jest.fn();
   const { container } = render(
@@ -336,6 +353,30 @@ test('DatetimeField html5 en_NZ enter iso value', () => {
     expect.objectContaining({ _reactName: 'onChange' }),
     { id: 'date', value: '2017-04-23T13:22:00' }
   );
+});
+
+test('DatetimeField html5 en_NZ incomplete input (badInput) does not fire onChange', () => {
+  // jsdom doesn't implement the native datetime-local partial-entry behaviour (a real
+  // browser reports an empty `value` with `validity.badInput = true` once part of the
+  // control - e.g. only the date - has been filled in). This is simulated here by
+  // overriding `validity` on the input before firing a change back to an empty value.
+  const onChange = jest.fn();
+  const { container } = render(
+    <DatetimeField {...makePropsHtml5({
+      lang: 'en_NZ',
+      value: '2017-04-23T13:22:00',
+      onChange
+    })}
+    />
+  );
+  const input = container.querySelector('input#date');
+  Object.defineProperty(input, 'validity', {
+    value: { badInput: true },
+    configurable: true,
+  });
+  fireEvent.change(input, { target: { value: '' } });
+  expect(onChange).not.toBeCalled();
+  expect(container.querySelector('.form__field-message--error')).not.toBeNull();
 });
 
 test('DatetimeField html5 en_NZ enter localised value', () => {

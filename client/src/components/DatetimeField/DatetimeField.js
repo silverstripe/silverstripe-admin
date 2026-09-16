@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import fieldHolder from 'components/FieldHolder/FieldHolder';
 import moment from 'moment';
 import modernizr from 'modernizr';
@@ -45,9 +46,21 @@ const convertToIso = (props, localTime) => {
   moment.locale(props.lang);
   let isoTime = '';
   if (localTime) {
-    // Input value can be in local format 'L', 'L LT' or ISO format
-    const formats = [localFormat, dateOnlyLocalFormat, moment.ISO_8601];
-    const timeObject = momentDateField(props, hasNativeSupport, localTime, formats);
+    // Input value can be in local format 'L LT', date-only local format 'L', or ISO format.
+    // These are tried in order with strict parsing, since lenient parsing against an array of
+    // formats of different lengths can produce inconsistent results (e.g. a date-only value
+    // matching against 'L LT' and being treated as invalid instead of falling back to 'L').
+    let timeObject = momentDateField(props, hasNativeSupport, localTime, localFormat, true);
+    if (!timeObject.isValid()) {
+      // No time was entered - default it to the start of the day (00:00:00)
+      timeObject = momentDateField(props, hasNativeSupport, localTime, dateOnlyLocalFormat, true);
+      if (timeObject.isValid()) {
+        timeObject.startOf('day');
+      }
+    }
+    if (!timeObject.isValid()) {
+      timeObject = momentDateField(props, hasNativeSupport, localTime, moment.ISO_8601, true);
+    }
     if (timeObject.isValid()) {
       isoTime = timeObject.format('YYYY-MM-DDTHH:mm:ss');
     }
@@ -61,7 +74,7 @@ const handleChange = (props, event) => {
   handleDateFieldChange(props, event, asHTML5, convertToIso, triggerChange);
 };
 
-const getInputProps = (props) => {
+const getInputProps = (props, handleChangeFn = handleChange) => {
   const placeholder = i18n.inject(
     i18n._t('Admin.FormatExample', 'Example: {format}'),
     { format: momentDateField(props, hasNativeSupport).endOf('month').format(localFormat) }
@@ -71,7 +84,7 @@ const getInputProps = (props) => {
     ? props.value
     : getLocalisedValue(props);
   const type = asHTML5(props) ? 'datetime-local' : 'text';
-  const inputProps = getInputFieldProps(props, handleChange);
+  const inputProps = getInputFieldProps(props, handleChangeFn);
   return {
     ...inputProps,
     type,
@@ -94,8 +107,44 @@ const DatetimeField = (_props) => {
     ...defaultProps,
     ..._props,
   };
-  const inputProps = getInputProps(props);
-  return render(props, inputProps);
+
+  // The native `datetime-local` input only reports a value once both the date and time are
+  // filled in - an incomplete entry (e.g. a date without a time) is reported as an empty
+  // value with no way to recover what was typed. Rather than letting that empty value
+  // silently clear the field (and get dropped from e.g. a search), we detect the incomplete
+  // state via the input's validity and warn the user instead.
+  const [incomplete, setIncomplete] = useState(false);
+  const handleChangeWithIncompleteCheck = (nextProps, event) => {
+    if (asHTML5(nextProps)) {
+      const target = event.target;
+      const isIncomplete = Boolean(!target.value && target.validity && target.validity.badInput);
+      if (isIncomplete !== incomplete) {
+        setIncomplete(isIncomplete);
+      }
+      if (isIncomplete) {
+        return;
+      }
+    } else if (incomplete) {
+      setIncomplete(false);
+    }
+    handleChange(nextProps, event);
+  };
+
+  const inputProps = getInputProps(props, handleChangeWithIncompleteCheck);
+  const field = render(props, inputProps);
+  if (!incomplete) {
+    return field;
+  }
+  const message = i18n._t(
+    'Admin.DATETIME_INCOMPLETE',
+    'Please enter both a date and a time'
+  );
+  return (
+    <>
+      {field}
+      <div className="form__field-message form__field-message--error">{message}</div>
+    </>
+  );
 };
 
 DatetimeField.propTypes = DateField.propTypes;
