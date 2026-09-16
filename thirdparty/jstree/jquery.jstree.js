@@ -2732,7 +2732,7 @@
 		ml = $("<div />").attr({ id : "jstree-marker-line" }).hide()
 			.on("mouseup", function (e) { 
 				if(r && r.length) { 
-					r.children("a").trigger(e);
+					r.children("a").trigger("mouseup");
 					e.preventDefault();
 					e.stopImmediatePropagation();
 					return false;
@@ -2742,7 +2742,7 @@
 				var rt = $(e.relatedTarget);
 				if(rt.is(".jstree") || rt.closest(".jstree").length === 0) {
 					if(r && r.length) { 
-						r.children("a").trigger(e);
+						r.children("a").trigger("mouseleave");
 						m.hide();
 						ml.hide();
 						e.preventDefault();
