@@ -3,7 +3,6 @@
 namespace SilverStripe\Admin;
 
 use SilverStripe\Forms\Form;
-use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\HiddenField;
 use SilverStripe\ORM\DataObject;
 
@@ -27,14 +26,13 @@ abstract class SingleRecordAdmin extends LeftAndMain
 
     public function getEditForm($id = null, $fields = null): ?Form
     {
-        if (!$fields) {
-            if (!$id) {
-                $id = $this->currentRecordID();
-            }
-            $record = $this->getRecord($id);
-            if ($record) {
-                $fields = $record->getCMSFields();
-            }
+        if (!$id) {
+            $id = $this->currentRecordID();
+        }
+        $record = $this->getRecord($id);
+
+        if (!$fields && $record) {
+            $fields = $record->getCMSFields();
         }
         if ($fields && !$fields->dataFieldByName('ID')) {
             $fields->add(HiddenField::create('ID'));
@@ -42,23 +40,12 @@ abstract class SingleRecordAdmin extends LeftAndMain
 
         $form = parent::getEditForm($id, $fields);
 
-        // LeftAndMain::getEditForm() only adds the default Save (and Delete)
-        // action when the record's getCMSActions() returns an EMPTY list. A
-        // single-record model (e.g. SiteConfig) usually defines no actions of
-        // its own, so as soon as any extension adds one via updateCMSActions()
-        // - for example a "translate" button - the list is no longer empty and
-        // the Save button silently disappears, leaving no way to save the
-        // record. Guarantee a Save action here for editable records.
-        // See https://github.com/silverstripe/silverstripe-admin/issues/1841.
-        $record = $this->getRecord($id ?: $this->currentRecordID());
+        // A single-record model that defines no CMS actions loses LeftAndMain's default Save button as soon
+        // as an extension adds one of its own (e.g. a "translate" action), so re-add it. See issue #1841.
         if ($form && $record && $record->hasMethod('canEdit') && $record->canEdit()
             && !$form->Actions()->fieldByName('action_save')
         ) {
-            $form->Actions()->unshift(
-                FormAction::create('save', _t(LeftAndMain::class . '.SAVE', 'Save'))
-                    ->addExtraClass('btn btn-primary')
-                    ->setIcon('add-circle')
-            );
+            $form->Actions()->unshift(static::getDefaultSaveAction());
         }
         // Keep the tabs on the top row, rather than underneath
         if ($form?->Fields()->hasTabSet()) {

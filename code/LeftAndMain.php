@@ -928,6 +928,26 @@ class LeftAndMain extends FormSchemaController implements PermissionProvider
     }
 
     /**
+     * The default "Save" form action, added when a record defines no CMS actions of its own. Exposed so
+     * subclasses (e.g. SingleRecordAdmin) can reuse the exact same action instead of duplicating it.
+     */
+    public static function getDefaultSaveAction(): FormAction
+    {
+        return FormAction::create('save', _t(__CLASS__ . '.SAVE', 'Save'))
+            ->addExtraClass('btn btn-primary')
+            ->setIcon('add-circle');
+    }
+
+    /**
+     * The default "Delete" form action, added when a record defines no CMS actions of its own.
+     */
+    public static function getDefaultDeleteAction(): FormAction
+    {
+        return FormAction::create('delete', _t(__CLASS__ . '.DELETE', 'Delete'))
+            ->addExtraClass('btn btn-secondary');
+    }
+
+    /**
      * Calls {@link SiteTree->getCMSFields()} by default to determine the form fields to display.
      *
      * @param int $id
@@ -988,17 +1008,10 @@ class LeftAndMain extends FormSchemaController implements PermissionProvider
             // add default actions if none are defined
             if (!$actions || !$actions->count()) {
                 if ($record->hasMethod('canEdit') && $record->canEdit()) {
-                    $actions->push(
-                        FormAction::create('save', _t(__CLASS__ . '.SAVE', 'Save'))
-                            ->addExtraClass('btn btn-primary')
-                            ->setIcon('add-circle')
-                    );
+                    $actions->push(static::getDefaultSaveAction());
                 }
                 if ($record->hasMethod('canDelete') && $record->canDelete()) {
-                    $actions->push(
-                        FormAction::create('delete', _t(__CLASS__ . '.DELETE', 'Delete'))
-                            ->addExtraClass('btn btn-secondary')
-                    );
+                    $actions->push(static::getDefaultDeleteAction());
                 }
             }
         }
