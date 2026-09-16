@@ -1,8 +1,18 @@
-/* global jest, test, describe, beforeEach, it, expect, Event */
+/* global jest, test, expect */
 
 import React from 'react';
-import { render } from '@testing-library/react';
-import { Component as CompositeField } from '../CompositeField';
+import { render, screen } from '@testing-library/react';
+import CompositeFieldDefault, { Component as CompositeField, getClassName, getLegend } from '../CompositeField';
+
+const makeProps = (overrides = {}) => ({
+  data: {
+    tag: 'fieldset',
+    legend: 'my legend',
+  },
+  className: 'myclass',
+  extraClass: '',
+  ...overrides,
+});
 
 test('CompositeField renders', () => {
   const { container } = render(
@@ -100,4 +110,53 @@ test('CompositeField getLegend() returns a legend tag', () => {
   );
   const legend = container.querySelector('legend');
   expect(legend.textContent).toBe('my legend');
+});
+
+test('CompositeField default export renders with minimal props', () => {
+  const { container } = render(
+    <CompositeFieldDefault data={[]}>
+      <span>child content</span>
+    </CompositeFieldDefault>
+  );
+  expect(container.firstChild.tagName).toBe('DIV');
+  expect(container.firstChild.classList).toHaveLength(0);
+  expect(container.querySelector('legend')).toBeNull();
+  expect(screen.getByText('child content').tagName).toBe('SPAN');
+});
+
+test('CompositeField re-exports helper functions for downstream consumers', () => {
+  expect(getClassName({ className: 'myclass', extraClass: 'myextra' })).toBe('myclass myextra');
+  expect(getLegend(makeProps().data).props.children).toBe('my legend');
+});
+
+test('CompositeField renders extraClass when className is omitted', () => {
+  const { container } = render(
+    <CompositeField {...makeProps({
+      className: undefined,
+      extraClass: 'only-extra',
+    })}
+    >
+      <span>child content</span>
+    </CompositeField>
+  );
+  const fieldset = container.querySelector('fieldset');
+  expect(fieldset.classList).toContain('only-extra');
+  expect(container.querySelector('legend').textContent).toBe('my legend');
+});
+
+test('CompositeField falls back to a div and ignores legends when no tag is provided', () => {
+  const { container } = render(
+    <CompositeField {...makeProps({
+      data: {
+        legend: 'my legend',
+      },
+    })}
+    >
+      <span>child content</span>
+    </CompositeField>
+  );
+  expect(container.firstChild.tagName).toBe('DIV');
+  expect(container.querySelector('legend')).toBeNull();
+  expect(container.textContent).toContain('child content');
+  expect(container.textContent).not.toContain('my legend');
 });

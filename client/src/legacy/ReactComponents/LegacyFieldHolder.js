@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { FormGroup, InputGroup, InputGroupText, Label } from 'reactstrap';
 import castStringToElement from 'lib/castStringToElement';
 import classnames from 'classnames';
@@ -6,24 +6,7 @@ import PropTypes from 'prop-types';
 import Tip, { tipShape, TIP_TYPES } from 'components/Tip/Tip';
 
 function fieldHolder(Field) {
-  const FieldHolder = (_props) => {
-    const defaultProps = {
-      className: '',
-      extraClass: '',
-      leftTitle: null,
-      rightTitle: null,
-      title: '',
-      description: null,
-      hideLabels: false,
-      noHolder: false,
-      message: null,
-      data: {},
-    };
-    const props = {
-      ...defaultProps,
-      ..._props,
-    };
-
+  class FieldHolder extends Component {
     /**
      * Gets the message from props or validation meta
      *
@@ -31,45 +14,47 @@ function fieldHolder(Field) {
      *
      * @return {object|string|null}
      */
-    const getMessage = () => {
+    getMessage() {
       let message = null;
-      if (props.message && props.message.value) {
-        message = props.message;
+      if (this.props.message && this.props.message.value) {
+        message = this.props.message;
       }
 
       // If we have both meta and message, prefer meta only if form is dirty
-      const meta = props.meta;
+      const meta = this.props.meta;
       if (meta && meta.error && meta.touched && (!message || meta.dirty)) {
         message = meta.error;
       }
 
       return message;
-    };
+    }
 
     /**
      * Generates the properties for the field holder
      *
      * @returns {object}
      */
-    const getHolderProps = () => ({
+    getHolderProps() {
       // The extraClass property is defined on both the holder and element
       // for legacy reasons (same behaviour as PHP rendering)
-      className: classnames({
-        field: true,
-        [props.extraClass]: true,
-        readonly: props.readOnly,
-        'form-group': true,
-      }),
-      id: props.holderId,
-    });
+      return {
+        className: classnames({
+          field: true,
+          [this.props.extraClass]: true,
+          readonly: this.props.readOnly,
+          'form-group': true,
+        }),
+        id: this.props.holderId,
+      };
+    }
 
     /**
      * Build a FormAlert
      *
      * @returns {object}
      */
-    const renderMessage = () => {
-      const message = getMessage();
+    renderMessage() {
+      const message = this.getMessage();
       if (!message) {
         return null;
       }
@@ -80,19 +65,19 @@ function fieldHolder(Field) {
       ]);
       const body = castStringToElement('div', message.value);
       return <div className={classNames}>{body}</div>;
-    };
+    }
 
     /**
      * Build title label
      *
      * @returns {object}
      */
-    const renderLeftTitle = () => {
-      const labelText = props.leftTitle
-        ? props.leftTitle
-        : props.title;
+    renderLeftTitle() {
+      const labelText = this.props.leftTitle
+        ? this.props.leftTitle
+        : this.props.title;
 
-      if (!labelText || props.hideLabels) {
+      if (!labelText || this.props.hideLabels) {
         return null;
       }
 
@@ -101,49 +86,49 @@ function fieldHolder(Field) {
         labelText,
         {
           className: 'form__field-label',
-          for: props.id,
+          for: this.props.id,
         }
       );
-    };
+    }
 
     /**
      * Build title label
      *
      * @returns {object}
      */
-    const renderRightTitle = () => {
-      if (!props.rightTitle || props.hideLabels) {
+    renderRightTitle() {
+      if (!this.props.rightTitle || this.props.hideLabels) {
         return null;
       }
 
       return castStringToElement(
         Label,
-        props.rightTitle,
+        this.props.rightTitle,
         {
           className: 'form__field-label',
-          for: props.id,
+          for: this.props.id,
         }
       );
-    };
+    }
 
     /**
      * Render the actual field, or input group wrapper with prefix and suffix
      *
      * @return {object}
      */
-    const renderField = () => {
-      const hasMessage = Boolean(getMessage());
-      const fieldProps = {
-        ...props,
+    renderField() {
+      const hasMessage = Boolean(this.getMessage());
+      const props = {
+        ...this.props,
         extraClass: classnames(
-          props.extraClass,
+          this.props.extraClass,
           { 'is-invalid': hasMessage }
         ),
       };
 
-      const field = <Field {...fieldProps} />;
-      let prefix = props.data && props.data.prefix ? props.data.prefix : '';
-      let suffix = props.data && props.data.suffix ? props.data.suffix : '';
+      const field = <Field {...props} />;
+      let prefix = this.props.data && this.props.data.prefix ? this.props.data.prefix : '';
+      let suffix = this.props.data && this.props.data.suffix ? this.props.data.suffix : '';
       if (!prefix && !suffix) {
         return field;
       }
@@ -160,59 +145,61 @@ function fieldHolder(Field) {
           {suffix}
         </InputGroup>
       );
-    };
+    }
 
     /**
      * @returns {JSX.Element}
      */
-    const renderTitleTip = () => {
-      if (!props.id || !props.titleTip || !props.titleTip.content) {
+    renderTitleTip() {
+      if (!this.props.id || !this.props.titleTip || !this.props.titleTip.content) {
         return null;
       }
       return (
         <Tip
-          id={`FieldHolder-${props.id}-titleTip`}
-          content={props.titleTip.content}
-          fieldTitle={props.title}
+          id={`FieldHolder-${this.props.id}-titleTip`}
+          content={this.props.titleTip.content}
+          fieldTitle={this.props.title}
           type={TIP_TYPES.TITLE}
           icon="menu-help"
         />
       );
-    };
+    }
 
     /**
      * Build description
      *
      * @returns {JSX.Element}
      */
-    const renderDescription = () => {
-      if (props.description === null) {
+    renderDescription() {
+      if (this.props.description === null) {
         return null;
       }
 
       return castStringToElement(
         'div',
-        props.description,
+        this.props.description,
         { className: 'form__field-description' }
       );
-    };
-
-    if (props.noHolder) {
-      return renderField();
     }
-    return (
-      <FormGroup {...getHolderProps()}>
-        {renderLeftTitle()}
-        {renderTitleTip()}
-        <div className="form__field-holder">
-          {renderField()}
-          {renderMessage()}
-          {renderDescription()}
-        </div>
-        {renderRightTitle()}
-      </FormGroup>
-    );
-  };
+
+    render() {
+      if (this.props.noHolder) {
+        return this.renderField();
+      }
+      return (
+        <FormGroup {...this.getHolderProps()}>
+          {this.renderLeftTitle()}
+          {this.renderTitleTip()}
+          <div className="form__field-holder">
+            {this.renderField()}
+            {this.renderMessage()}
+            {this.renderDescription()}
+          </div>
+          {this.renderRightTitle()}
+        </FormGroup>
+      );
+    }
+  }
 
   FieldHolder.propTypes = {
     leftTitle: PropTypes.any,
@@ -237,6 +224,19 @@ function fieldHolder(Field) {
       }),
     ]),
     titleTip: PropTypes.shape(tipShape)
+  };
+
+  FieldHolder.defaultProps = {
+    className: '',
+    extraClass: '',
+    leftTitle: null,
+    rightTitle: null,
+    title: '',
+    description: null,
+    hideLabels: false,
+    noHolder: false,
+    message: null,
+    data: {},
   };
 
   return FieldHolder;
