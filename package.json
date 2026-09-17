@@ -117,7 +117,8 @@
     "webpack-cli": "^5.0.0"
   },
   "resolutions": {
-    "colors": "1.4.0"
+    "colors": "1.4.0",
+    "path-to-regexp": "8.4.0"
   },
   "browserslist": [
     "defaults"
