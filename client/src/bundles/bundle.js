@@ -54,6 +54,7 @@ import 'expose-loader?exposes=LegacyInputField!legacy/ReactComponents/LegacyInpu
 import 'expose-loader?exposes=LegacyTextField!legacy/ReactComponents/LegacyTextField';
 import 'expose-loader?exposes=LegacyDateField!legacy/ReactComponents/LegacyDateField';
 import 'expose-loader?exposes=LegacyDatetimeField!legacy/ReactComponents/LegacyDatetimeField';
+import 'expose-loader?exposes=LegacyLiteralField!legacy/ReactComponents/LegacyLiteralField';
 import 'expose-loader?exposes=Toolbar!components/Toolbar/Toolbar';
 import 'expose-loader?exposes=Breadcrumb!components/Breadcrumb/Breadcrumb';
 import 'expose-loader?exposes=ResizeAware!components/ResizeAware/ResizeAware';
