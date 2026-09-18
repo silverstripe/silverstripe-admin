@@ -26,20 +26,27 @@ abstract class SingleRecordAdmin extends LeftAndMain
 
     public function getEditForm($id = null, $fields = null): ?Form
     {
-        if (!$fields) {
-            if (!$id) {
-                $id = $this->currentRecordID();
-            }
-            $record = $this->getRecord($id);
-            if ($record) {
-                $fields = $record->getCMSFields();
-            }
+        if (!$id) {
+            $id = $this->currentRecordID();
+        }
+        $record = $this->getRecord($id);
+
+        if (!$fields && $record) {
+            $fields = $record->getCMSFields();
         }
         if ($fields && !$fields->dataFieldByName('ID')) {
             $fields->add(HiddenField::create('ID'));
         }
 
         $form = parent::getEditForm($id, $fields);
+
+        // A single-record model that defines no CMS actions loses LeftAndMain's default Save button as soon
+        // as an extension adds one of its own (e.g. a "translate" action), so re-add it. See issue #1841.
+        if ($form && $record && $record->hasMethod('canEdit') && $record->canEdit()
+            && !$form->Actions()->fieldByName('action_save')
+        ) {
+            $form->Actions()->unshift(static::getDefaultSaveAction());
+        }
         // Keep the tabs on the top row, rather than underneath
         if ($form?->Fields()->hasTabSet()) {
             $form->addExtraClass('cms-tabset'); // Required for tabsets to work, see CMSTabSet.ss for info
