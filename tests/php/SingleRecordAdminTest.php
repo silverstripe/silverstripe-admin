@@ -7,6 +7,8 @@ use SilverStripe\Admin\CMSProfileController;
 use SilverStripe\Admin\LeftAndMain;
 use SilverStripe\Admin\Tests\SingleRecordAdminTest\TestAdmin;
 use SilverStripe\Admin\Tests\SingleRecordAdminTest\TestRecord;
+use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Control\Session;
 use SilverStripe\Dev\SapphireTest;
 
 class SingleRecordAdminTest extends SapphireTest
@@ -138,5 +140,44 @@ class SingleRecordAdminTest extends SapphireTest
         }
         $this->assertSame("Access to 'My Profile' section", $permissions[$code]['name']);
         $this->assertSame('CMS Access', $permissions[$code]['category']);
+    }
+
+    public static function provideCurrentRecordID(): array
+    {
+        return [
+            'unrelated ID request var is ignored' => [
+                'explicitID' => null,
+                'requestVars' => ['ID' => '915', 'format' => 'json'],
+                'expected' => null,
+            ],
+            'explicit id wins over request var' => [
+                'explicitID' => 123,
+                'requestVars' => ['ID' => '915'],
+                'expected' => 123,
+            ],
+        ];
+    }
+
+    #[DataProvider('provideCurrentRecordID')]
+    public function testCurrentRecordID(?int $explicitID, array $requestVars, ?int $expected): void
+    {
+        $admin = new TestAdmin();
+        $admin->setRequest(new HTTPRequest('GET', 'admin/test/EditForm/field/MyField/tree', $requestVars));
+        $admin->setCurrentRecordID($explicitID);
+        $this->assertSame($expected, $admin->currentRecordID());
+    }
+
+    public function testGetEditFormIgnoresUnrelatedIDRequestVar(): void
+    {
+        $this->logInWithPermission('ADMIN');
+        $record = new TestRecord();
+        $recordID = $record->write();
+        $requestVars = ['ID' => $recordID + 1, 'format' => 'json'];
+        $request = new HTTPRequest('GET', 'admin/test/EditForm/field/MyField/tree', $requestVars);
+        $request->setSession(new Session([]));
+        $admin = new TestAdmin();
+        $admin->setRequest($request);
+        $form = $admin->getEditForm();
+        $this->assertSame($recordID, (int) $form->Fields()->dataFieldByName('ID')->dataValue());
     }
 }

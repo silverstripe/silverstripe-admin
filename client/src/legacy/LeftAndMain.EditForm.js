@@ -20,6 +20,140 @@ window.onbeforeunload = function(e) {
   return undefined;
 };
 
+/**
+ * Find the tab nav item that controls a panel, at any level of tab nesting.
+ *
+ * jQuery UI puts role="tab" and aria-controls on every nav item it decorates, in the
+ * primary nav of a GridField detail form and in nested tabsets alike, so that lookup
+ * reaches every nav on the form.
+ *
+ * The redraw handler also runs before jQuery UI has decorated the nested tabsets, so
+ * fall back to the markup the templates emit: TabSet.ss gives each anchor an
+ * id="tab-<panelId>", and every nav anchor links to the panel by hash.
+ *
+ * @param {Object} $form - the .cms-edit-form as a jQuery object
+ * @param {String} panelId
+ * @return {Object} jQuery object, empty when the panel has no nav item
+ */
+const findTabLi = ($form, panelId) => {
+  const $decorated = $form.find(`li[role="tab"][aria-controls="${panelId}"]`);
+  if ($decorated.length) {
+    return $decorated;
+  }
+  return $form.find(`a[id="tab-${panelId}"], a[href$="#${panelId}"]`).closest('li');
+};
+
+/**
+ * All the tab panels enclosing an element, innermost first.
+ *
+ * A panel is either an element jQuery UI has marked role="tabpanel", or a direct child
+ * of a .tab-content for the redraws that run before it has. Panels cannot be found by
+ * .tab-pane alone: a tab which is itself a TabSet has no .tab-pane, because TabSet.ss
+ * renders the nested .ss-tabset straight into .tab-content and that div is the panel.
+ *
+ * @param {Object} $element - jQuery object
+ * @return {Object} jQuery object
+ */
+const enclosingTabPanels = ($element) => $element.parents().filter((index, panel) => {
+  const $panel = $(panel);
+  return Boolean($panel.attr('id'))
+    && ($panel.attr('role') === 'tabpanel' || $panel.parent().hasClass('tab-content'));
+});
+
+/**
+ * Add an invalid icon to each tab that contains form fields that failed validation, and
+ * set an alert message in the edit form error banner.
+ *
+ * A field can sit several tabsets deep, so each error marks a tab at every level of
+ * nesting: the sub-tab holding the field, and every outer tab the editor has to open to
+ * reach it.
+ *
+ * Exported so it can be unit tested against captured CMS markup without booting entwine.
+ *
+ * @param {Object} $form - the .cms-edit-form as a jQuery object
+ */
+const markTabValidationErrors = ($form) => {
+  const iconClass = 'font-icon-attention-1 tab-attention';
+  const iconTitle = i18n._t(
+    'Admin.VALIDATION_ERRORS_IN_TAB',
+    'This tab contains validation errors.'
+  );
+  const iconScreenReaderText = i18n._t(
+    'Admin.VALIDATION_ERRORS_IN_TAB_SCREEN_READER',
+    '(Has validation errors)'
+  );
+  const alertMessageText = i18n._t(
+    'Admin.VALIDATION_ERRORS_ON_PAGE',
+    'There are validation errors on this page, please fix them before saving or publishing.'
+  );
+
+  const $editFormErrorBanner = $('#Form_EditForm_error, #Form_ItemEditForm_error');
+
+  // Remove any existing invalid tab icons and screen-reader text
+  $form.find('.tab-attention, .tab-validation-error-sr').remove();
+
+  // Check if there are any form validation errors
+  let validationErrorExists = false;
+
+  // Validation errors from the form validator
+  if ($form.hasClass('validationerror')) {
+    validationErrorExists = true;
+  }
+
+  // Validation errors from DataObject::validate() .. ValidationResult::addError();
+  if ($editFormErrorBanner.html() !== '') {
+    validationErrorExists = true;
+  }
+
+  // Validation errors from DataObject::validate() .. ValidationResult::addFieldError()
+  if ($form.find('.alert.error').length > 0) {
+    validationErrorExists = true;
+  }
+
+  // If there are no validation errors then hide any old messages and exit
+  if (!validationErrorExists) {
+    $editFormErrorBanner.hide();
+    return;
+  }
+
+  // Find the validation .alert's rendered inside a tab-pane
+  const $fieldAlerts = $form.find('.tab-pane .alert-danger, .tab-pane .alert.error');
+  if (!$fieldAlerts.length) {
+    // If we are at this point it's probably a failed DataObject::validate()
+    // where there was a general (non-field) error added via ValidationResult::addError()
+    return;
+  }
+
+  // Add invalid icons to tabs
+  $fieldAlerts.each((alertIndex, alertElement) => {
+    enclosingTabPanels($(alertElement)).each((panelIndex, panel) => {
+      const $tabLi = findTabLi($form, $(panel).attr('id'));
+      // A single field can produce more than one alert, and outer tabs are shared
+      // between the fields below them, so only mark a tab once
+      if (!$tabLi.length || $tabLi.find('.tab-attention').length) {
+        return;
+      }
+      const $icon = $(`<span class="${iconClass}" title="${iconTitle}" aria-hidden="true"></span>`);
+      const $screenReaderSpan = $(`<span class="tab-validation-error-sr visually-hidden">${iconScreenReaderText}</span>`);
+      $tabLi.append($icon);
+      $tabLi.append($screenReaderSpan);
+    });
+  });
+
+  // Set an alert message in the edit form error banner. This reports that the form has
+  // errors, so it does not depend on a tab having been found to say where they are.
+  $editFormErrorBanner.attr('class', 'alert alert-danger');
+  $editFormErrorBanner.html(alertMessageText);
+  $editFormErrorBanner.show();
+
+  // Ensure the class "validationerror" is set for the scenario where
+  // the error came from validate() .. ValidationResult::addFieldError()
+  // so that css styles are applied to tab icons
+  $form.addClass('validationerror');
+};
+
+// entwine is not loaded in unit tests, where this file is imported for its exports
+if (typeof $.entwine === 'function') {
 $.entwine('ss', function($){
 
   /**
@@ -103,93 +237,7 @@ $.entwine('ss', function($){
 
     'from .cms-tabset': {
       onafterredrawtabs: function () {
-
-        // This function will:
-        // - Add an invalid icon on each tab that contains form fields than failed validation
-        // - Set an alert message in the edit form error banner
-        const iconClass = 'font-icon-attention-1 tab-attention';
-        const iconTitle = ss.i18n._t(
-          'Admin.VALIDATION_ERRORS_IN_TAB',
-          'This tab contains validation errors.'
-        );
-        const iconScreenReaderText = ss.i18n._t(
-          'Admin.VALIDATION_ERRORS_IN_TAB_SCREEN_READER',
-          '(Has validation errors)'
-        );
-        const alertMessageText = ss.i18n._t(
-          'Admin.VALIDATION_ERRORS_ON_PAGE',
-          'There are validation errors on this page, please fix them before saving or publishing.'
-        );
-
-        const $editFormErrorBanner = $("#Form_EditForm_error, #Form_ItemEditForm_error");
-
-        // Remove any existing invalid tab icons and screen-reader text
-        this.find('.tab-attention, .tab-validation-error-sr').remove();
-
-        // Check if there are any form validation errors
-        let validationErrorExists = false;
-
-        // Validation errors from the form validator
-        if (this.hasClass('validationerror')) {
-          validationErrorExists = true;
-        }
-
-        // Validation errors from DataObject::validate() .. ValidationResult::addError();
-        if ($editFormErrorBanner.html() !== '') {
-          validationErrorExists = true;
-        }
-
-        // Validation errors from DataObject::validate() .. ValidationResult::addFieldError()
-        if (this.find('.alert.error').length > 0) {
-          validationErrorExists = true;
-        }
-
-        // If there are no validation errors then hide any old messages and exit
-        if (!validationErrorExists) {
-          $editFormErrorBanner.hide();
-          return;
-        }
-
-        // Find tab-pane's with decedent validation .alert's
-        const $invalidTabPanes = this.find('.tab-pane .alert-danger, .tab-pane .alert.error').closest('.tab-pane');
-        if (!$invalidTabPanes.length) {
-          // If we are at this point it's probably a failed DataObject::validate()
-          // where there was a general (non-field) error added via ValidationResult::addError()
-          return;
-        }
-
-        // Get the tabs for this form
-        const $gridfieldTabs = this.find('.cms-content-header-tabs.cms-tabset-nav-primary li[role="tab"]');
-        const $ssTabSet = $invalidTabPanes.closest('.tab-content').closest('.ss-tabset');
-        let getTabLi = null;
-        if ($gridfieldTabs.length > 1) {
-          // GridField logic
-          getTabLi = (invalidTabPaneId) => $gridfieldTabs.filter(`[aria-controls="${invalidTabPaneId}"]`);
-        } else if ($ssTabSet.length) {
-          // SiteTree logic
-          getTabLi = (invalidTabPaneId) => $ssTabSet.find(`#tab-${invalidTabPaneId}`).closest('li');
-        }
-
-        if (getTabLi !== null) {
-          // Add invalid icons to tabs
-          $invalidTabPanes.each((i) => {
-            const invalidTabPaneId = $invalidTabPanes.eq(i).attr('id');
-            const $tabLi = getTabLi(invalidTabPaneId);
-            const $icon = $(`<span class="${iconClass}" title="${iconTitle}" aria-hidden="true"></span>`);
-            const $screenReaderSpan = $(`<span class="tab-validation-error-sr visually-hidden">${iconScreenReaderText}</span>`);
-            $tabLi.append($icon);
-            $tabLi.append($screenReaderSpan);
-          });
-          // Set an alert message in the edit form error banner
-          $editFormErrorBanner.attr('class', 'alert alert-danger');
-          $editFormErrorBanner.html(alertMessageText);
-          $editFormErrorBanner.show();
-        }
-
-        // Ensure the class "validationerror" is set for the scenario where
-        // the error came from validate() .. ValidationResult::addFieldError()
-        // so that css styles are applied to tab icons
-        this.addClass('validationerror');
+        markTabValidationErrors(this);
       }
     },
     onremove: function() {
@@ -744,7 +792,10 @@ $.entwine('ss', function($){
   });
 
 });
+}
 
 var errorMessage = function(text) {
   jQuery.noticeAdd({text: text, type: 'error', stayTime: 5000, inEffect: {left: '0', opacity: 'show'}});
 };
+
+export { markTabValidationErrors };

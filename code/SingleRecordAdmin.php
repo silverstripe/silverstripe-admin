@@ -48,6 +48,14 @@ abstract class SingleRecordAdmin extends LeftAndMain
         return $form;
     }
 
+    public function currentRecordID(): ?int
+    {
+        // Unlike parent LeftAndMain, do not fall back to use GET/POST/URL parameters such as 'ID'
+        $id = $this->recordID ? (int) $this->recordID : null;
+        $this->extend('updateCurrentRecordID', $id);
+        return $id;
+    }
+
     public function getRecord($id): ?DataObject
     {
         if (!$id) {
