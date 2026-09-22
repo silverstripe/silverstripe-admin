@@ -14,6 +14,8 @@ import url from 'url';
 import { Input } from 'reactstrap';
 import { mapHighlight } from 'lib/castStringToElement';
 import { findTreeByPath, findTreeByID, findTreePath } from './treeUtils';
+import Config from 'lib/Config';
+import FormConstants from 'components/Form/FormConstants';
 
 const SEARCH_DELAY = 500; // ms
 
@@ -251,8 +253,11 @@ class TreeDropdownField extends Component {
     fetchURL.query.format = 'json';
     fetchURL.search = null;
     const fetchURLString = url.format(fetchURL);
+    const headers = {};
+    headers[FormConstants.CSRF_HEADER] = Config.get('SecurityID');
     return this.props.fetch(fetchURLString, {
       credentials: 'same-origin',
+      headers,
     })
       .then(response => response.json());
   }
