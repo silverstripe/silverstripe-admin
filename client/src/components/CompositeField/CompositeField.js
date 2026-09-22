@@ -1,42 +1,52 @@
-import React, { Component } from 'react';
+import React from 'react';
 import castStringToElement from 'lib/castStringToElement';
 import PropTypes from 'prop-types';
 
-class CompositeField extends Component {
-  /**
-   * Builds the legend for a fieldset if it is defined
-   *
-   * @returns {Component}
-   */
-  getLegend() {
-    if (this.props.data.tag === 'fieldset' && this.props.data.legend) {
-      return castStringToElement(
-        'legend',
-        this.props.data.legend
-      );
-    }
-    return null;
-  }
+const defaultProps = {
+  className: '',
+  extraClass: '',
+};
 
-  getClassName() {
-    return `${this.props.className} ${this.props.extraClass}`;
-  }
-
-  render() {
-    const legend = this.getLegend();
-    const Tag = this.props.data.tag || 'div';
-    const className = this.getClassName();
-
-    return (
-      <Tag className={className}>
-        {legend}
-        {this.props.children}
-      </Tag>
+/**
+ * Builds the legend for a fieldset if it is defined
+ *
+ * @returns {Component|null}
+ */
+const getLegend = (data) => {
+  if (data.tag === 'fieldset' && data.legend) {
+    return castStringToElement(
+      'legend',
+      data.legend
     );
   }
-}
+  return null;
+};
+
+const getClassName = ({
+  className = defaultProps.className,
+  extraClass = defaultProps.extraClass,
+} = defaultProps) => `${className} ${extraClass}`;
+
+const CompositeField = (_props) => {
+  const props = {
+    ...defaultProps,
+    ..._props,
+  };
+  const legend = getLegend(props.data);
+  const Tag = props.data.tag || 'div';
+  const resolvedClassName = getClassName({ className: props.className, extraClass: props.extraClass });
+
+  return (
+    <Tag className={resolvedClassName}>
+      {legend}
+      {props.children}
+    </Tag>
+  );
+};
 
 CompositeField.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
   data: PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.shape({
@@ -47,11 +57,8 @@ CompositeField.propTypes = {
   extraClass: PropTypes.string,
 };
 
-CompositeField.defaultProps = {
-  className: '',
-  extraClass: '',
-};
-
 export { CompositeField as Component };
+// Exported for use by FieldGroup and HistoricElementView which derive this behaviour without class inheritance.
+export { defaultProps, getClassName, getLegend };
 
 export default CompositeField;

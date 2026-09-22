@@ -1,13 +1,23 @@
-/* global jest, test, describe, it, expect, beforeEach */
+/* global jest, test, expect */
+/* eslint-disable react/prop-types */
 
 import React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import fieldHolder from '../FieldHolder';
 
 jest.mock('components/FormAlert/FormAlert');
 
 const InnerField = () => <div id="innerfield">Field</div>;
+const ClickableField = ({ extraClass, onClick }) => (
+  <button className={extraClass} type="button" onClick={onClick}>
+    Clickable field
+  </button>
+);
+const ClassNameField = ({ extraClass }) => <div className={extraClass}>Class name field</div>;
+
 const FieldHolder = fieldHolder(InnerField);
+const ClickableFieldHolder = fieldHolder(ClickableField);
+const ClassNameFieldHolder = fieldHolder(ClassNameField);
 
 test('FieldHolder should render innerfield', () => {
   const { container } = render(
@@ -215,6 +225,76 @@ test('FieldHolder prefix', () => {
   expect(container.querySelector('.input-group .input-group-text').innerHTML).toBe('My suffix');
 });
 
+test('FieldHolder should apply holder id and classes', () => {
+  const { container } = render(
+    <FieldHolder {...{
+      extraClass: 'custom-class',
+      holderId: 'custom-holder',
+      readOnly: true,
+    }}
+    />
+  );
+  const holder = container.querySelector('#custom-holder');
+  expect(holder.classList.contains('field')).toBe(true);
+  expect(holder.classList.contains('form-group')).toBe(true);
+  expect(holder.classList.contains('custom-class')).toBe(true);
+  expect(holder.classList.contains('readonly')).toBe(true);
+});
+
+test('FieldHolder should not render the holder markup when noHolder is true', () => {
+  const { container } = render(
+    <FieldHolder {...{
+      description: 'mydesc',
+      leftTitle: 'My title',
+      noHolder: true,
+    }}
+    />
+  );
+  expect(container.querySelectorAll('.form-group')).toHaveLength(0);
+  expect(container.querySelectorAll('.form__field-description')).toHaveLength(0);
+  expect(container.querySelectorAll('.form__field-label')).toHaveLength(0);
+  expect(container.querySelector('div#innerfield').innerHTML).toBe('Field');
+});
+
+test('FieldHolder should pass through event handlers to the wrapped field', () => {
+  const onClick = jest.fn();
+  render(
+    <ClickableFieldHolder {...{ onClick }} />
+  );
+  fireEvent.click(screen.getByRole('button', { name: 'Clickable field' }));
+  expect(onClick).toHaveBeenCalledTimes(1);
+});
+
+test('FieldHolder should add the invalid class to the wrapped field when a message exists', () => {
+  render(
+    <ClassNameFieldHolder {...{
+      extraClass: 'custom-class',
+      message: {
+        value: 'hello!',
+        type: 'error',
+      }
+    }}
+    />
+  );
+  expect(screen.getByText('Class name field').className).toContain('custom-class');
+  expect(screen.getByText('Class name field').className).toContain('is-invalid');
+});
+
+test('FieldHolder should render both prefix and suffix in an input group', () => {
+  const { container } = render(
+    <FieldHolder {...{
+      data: {
+        prefix: 'My prefix',
+        suffix: 'My suffix',
+      }
+    }}
+    />
+  );
+  expect(container.querySelectorAll('.input-group-text')).toHaveLength(2);
+  expect(container.querySelector('.input-group').textContent).toContain('My prefix');
+  expect(container.querySelector('.input-group').textContent).toContain('My suffix');
+});
+
 test('FieldHolder titleTip should be rendered if one is provided', () => {
   const { container } = render(
     <FieldHolder {...{
@@ -234,6 +314,19 @@ test('FieldHolder titleTip should not be rendered if one is not provided', () =>
     <FieldHolder {...{
       id: 'my-id',
       title: 'My title',
+    }}
+    />
+  );
+  expect(container.querySelectorAll('button.tip.tip--title')).toHaveLength(0);
+});
+
+test('FieldHolder should not render the title tip when the field id is missing', () => {
+  const { container } = render(
+    <FieldHolder {...{
+      title: 'My title',
+      titleTip: {
+        content: 'My content',
+      }
     }}
     />
   );
