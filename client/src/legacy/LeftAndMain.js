@@ -1418,6 +1418,15 @@ $.entwine('ss', function($) {
 
       var id = this.attr('id'), activeTab = this.find('ul:first .ui-tabs-active');
 
+      // jQuery UI Tabs claims the first ol/ul inside this element as its tab navigation,
+      // whatever that list holds. Layouts that render their navigation outside this element
+      // therefore hand the widget an unrelated content list, which is then styled as a row of
+      // tabs. Leave those alone rather than claiming a list that is page content.
+      if(!this.data('uiTabs') && !this.hasTabNavigation()) {
+        this.trigger('afterredrawtabs');
+        return;
+      }
+
       if(!this.data('uiTabs')) this.tabs({
         active: (activeTab.index() != -1) ? activeTab.index() : 0,
         beforeLoad: function(e, ui) {
@@ -1444,6 +1453,20 @@ $.entwine('ss', function($) {
         }
       });
       this.trigger('afterredrawtabs');
+    },
+
+    /**
+     * Whether the list jQuery UI Tabs would claim is really tab navigation.
+     * The list has to hold a link whose hash matches a panel inside this element.
+     */
+    hasTabNavigation: function() {
+      var self = this;
+
+      return this.find('ol, ul').first().children('li').children('a[href]').filter(function() {
+        var hash = $(this).attr('href').replace(/^[^#]*/, '');
+
+        return hash.length > 1 && self.find(hash).length > 0;
+      }).length > 0;
     },
 
     /**
