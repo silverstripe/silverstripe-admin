@@ -193,4 +193,71 @@ describe('ChangeTracker', () => {
       expect(warnSpy).not.toHaveBeenCalled();
     });
   });
+
+  describe('HtmlEditorField', () => {
+    // The editor that the mocked entwine getEditor() hands out for textarea.htmleditor
+    let editor;
+
+    beforeEach(() => {
+      editor = null;
+      jQuery.fn.entwine = jest.fn(() => ({ getEditor: () => editor }));
+      jQuery('body').append(
+        '<form method="GET" id="form_test" action="#">'
+        + '<textarea class="htmleditor" name="field_html">origval</textarea>'
+        + '</form>'
+      );
+    });
+
+    afterEach(() => {
+      jQuery('#form_test').remove();
+      delete jQuery.fn.entwine;
+    });
+
+    it('passes values through the editor when there is one', async () => {
+      editor = { prepValueForChangeTracker: jest.fn((value) => value.trim()) };
+      jQuery('#form_test').changetracker();
+      await delay(300);
+
+      // Only whitespace differs, which the editor strips out
+      jQuery(':input[name=field_html]').val(' origval ').trigger('change');
+      await delay(300);
+
+      expect(editor.prepValueForChangeTracker).toHaveBeenCalled();
+      expect(jQuery('#form_test').is('.changed')).toBeFalsy();
+      expect(errorSpy).not.toHaveBeenCalled();
+      expect(warnSpy).not.toHaveBeenCalled();
+    });
+
+    it('falls back to the raw value when there is no editor', async () => {
+      expect(() => {
+        jQuery('#form_test').changetracker();
+      }).not.toThrow();
+      await delay(300);
+
+      jQuery(':input[name=field_html]').val('newval').trigger('change');
+      await delay(300);
+
+      expect(jQuery(':input[name=field_html]').is('.changed')).toBeTruthy();
+      expect(jQuery('#form_test').is('.changed')).toBeTruthy();
+      expect(errorSpy).not.toHaveBeenCalled();
+      expect(warnSpy).not.toHaveBeenCalled();
+    });
+
+    it('does not throw if the editor goes away before the debounced change detection runs', async () => {
+      editor = { prepValueForChangeTracker: jest.fn((value) => value) };
+      jQuery('#form_test').changetracker();
+      await delay(300);
+
+      // Two changes within the debounce window, so a trailing call is scheduled
+      jQuery(':input[name=field_html]').val('newval').trigger('change');
+      jQuery(':input[name=field_html]').val('newval2').trigger('change');
+      // The editor is torn down (e.g. the edit form is replaced) before that trailing call runs
+      editor = null;
+      await delay(300);
+
+      expect(jQuery('#form_test').is('.changed')).toBeTruthy();
+      expect(errorSpy).not.toHaveBeenCalled();
+      expect(warnSpy).not.toHaveBeenCalled();
+    });
+  });
 });
