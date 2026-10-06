@@ -699,7 +699,12 @@ Sizzle is good for finding elements for a selector, but not so good for telling 
 
 	$.selector.SelectorBase.addMethod('matches', function(el){	
 		this.matches = new Function('el', join([ 
-			'if (!el) return false;',
+			// Only element nodes (nodeType 1) can match a CSS selector. Guarding
+			// here covers EVERY caller of matches() — the entwine event proxies
+			// (selector_proxy/property_proxy) run matches(e.target), and e.target
+			// can be a text or comment node for bubbled DOM events, which have no
+			// getAttribute() and would otherwise throw inside this compiled body.
+			'if (!el || el.nodeType !== 1) return false;',
 			this.compile(new State()).replace(BAD, 'return false').replace(GOOD, 'return true')
 		]));
 		return this.matches(el);
@@ -1296,7 +1301,12 @@ Sizzle is good for finding elements for a selector, but not so good for telling 
 		// Get all mutated elements.
 		const mutated = [];
 		for (let node of list) {
-			if (node.nodeName === '#text') {
+			// Only element nodes can match a selector. Text nodes were already
+			// skipped, but comment nodes (and any other non-element node) also
+			// have no getAttribute() and would throw inside the compiled matcher,
+			// aborting the whole EntwineElementsAdded batch. Skip anything that
+			// is not an element (nodeType 1) — mirrors addNodeChildrenToList.
+			if (node.nodeType !== 1) {
 				continue;
 			}
 			mutated.push(node);
