@@ -93,7 +93,11 @@ import debounceByElement from 'lib/debounceByElement';
 
         if ($field && $field.is('textarea.htmleditor')) {
           const editor = $field.entwine('ss').getEditor();
-          value = editor.prepValueForChangeTracker(value);
+          // The editor can be missing, e.g. when the form has been replaced or removed
+          // before a debounced change detection call runs. Use the raw value in that case.
+          if (editor) {
+            value = editor.prepValueForChangeTracker(value);
+          }
         }
 
         return value;
