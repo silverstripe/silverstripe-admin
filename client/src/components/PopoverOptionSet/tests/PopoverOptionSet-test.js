@@ -112,3 +112,90 @@ test('PopoverOptionSet render should render a Popover', async () => {
   const popover = await screen.findByTestId('test-popover');
   expect(popover.querySelector('.popover-option-set__button-container')).not.toBeNull();
 });
+
+test('PopoverOptionSet should not render the search box when disableSearch is true', async () => {
+  render(
+    <PopoverOptionSet {...makeProps({ disableSearch: true })}/>
+  );
+  const popover = await screen.findByTestId('test-popover');
+  expect(popover.querySelector('input')).toBeNull();
+});
+
+test('PopoverOptionSet should filter buttons using the default search handler', async () => {
+  render(
+    <PopoverOptionSet {...makeProps()}/>
+  );
+  const popover = await screen.findByTestId('test-popover');
+  const input = popover.querySelector('input.popover-option-set__search-input');
+  fireEvent.change(input, { target: { value: 'hello a' } });
+  expect(screen.getAllByTestId('test-button')).toHaveLength(1);
+  expect(input.value).toBe('hello a');
+});
+
+test('PopoverOptionSet should call onSearch with the search value and the buttons', async () => {
+  const onSearch = jest.fn(() => []);
+  render(
+    <PopoverOptionSet {...makeProps({ onSearch })}/>
+  );
+  const popover = await screen.findByTestId('test-popover');
+  const input = popover.querySelector('input.popover-option-set__search-input');
+  fireEvent.change(input, { target: { value: 'abc' } });
+  expect(onSearch).toHaveBeenCalledWith('abc', [buttonTypeA, buttonTypeB]);
+});
+
+test('PopoverOptionSet clear button should clear the search value', async () => {
+  render(
+    <PopoverOptionSet {...makeProps()}/>
+  );
+  const popover = await screen.findByTestId('test-popover');
+  const input = popover.querySelector('input.popover-option-set__search-input');
+  fireEvent.change(input, { target: { value: 'something' } });
+  fireEvent.click(await screen.findByText('Clear'));
+  expect(input.value).toBe('');
+  expect(screen.queryByText('Clear')).toBeNull();
+  expect(screen.queryByText('No results found')).toBeNull();
+});
+
+test('PopoverOptionSet toggle should clear the search value', async () => {
+  render(
+    <PopoverOptionSet {...makeProps()}/>
+  );
+  const popover = await screen.findByTestId('test-popover');
+  const input = popover.querySelector('input.popover-option-set__search-input');
+  fireEvent.change(input, { target: { value: 'something' } });
+  expect(input.value).toBe('something');
+  fireEvent.click(popover);
+  expect(input.value).toBe('');
+});
+
+test('PopoverOptionSet pressing Escape should toggle and focus the target', async () => {
+  const toggle = jest.fn();
+  render(
+    <button id="popover-target" type="button">Target</button>
+  );
+  render(
+    <PopoverOptionSet {...makeProps({
+      toggle,
+      target: 'popover-target',
+      PopoverComponent: ({ onKeyDown, children }) => (
+        <div data-testid="test-popover" onKeyDown={onKeyDown}>
+          {children}
+        </div>
+      ),
+    })}
+    />
+  );
+  const popover = await screen.findByTestId('test-popover');
+  fireEvent.keyDown(popover, { key: 'Enter' });
+  expect(toggle).not.toHaveBeenCalled();
+  fireEvent.keyDown(popover, { key: 'Escape' });
+  expect(toggle).toHaveBeenCalledTimes(1);
+  expect(document.activeElement).toBe(screen.getByRole('button', { name: 'Target' }));
+});
+
+test('PopoverOptionSet should render a message when there are no buttons', async () => {
+  render(
+    <PopoverOptionSet {...makeProps({ buttons: [] })}/>
+  );
+  expect(await screen.findByText('No results found')).not.toBeNull();
+});
