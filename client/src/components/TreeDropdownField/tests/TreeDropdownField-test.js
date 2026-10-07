@@ -388,3 +388,139 @@ test('TreeDropdownField handleBack() should go up one level in the path', () => 
   expect(setVisible).toHaveBeenNthCalledWith(1, 'Form_Test', [5]);
   expect(setVisible).toHaveBeenNthCalledWith(2, 'Form_Test', []);
 });
+
+test('TreeDropdownField should render a readonly textbox with the selected title', () => {
+  const { container, getByRole } = render(
+    <TreeDropdownField {...makeProps({
+      readOnly: true,
+      value: 5,
+      selectedValues: [{ id: 5, title: 'page five' }],
+    })}
+    />
+  );
+  expect(getByRole('textbox').textContent).toBe('page five');
+  expect(container.querySelector('input[type="hidden"]').value).toBe('5');
+  expect(container.querySelector('.treedropdownfield__value-container')).toBeNull();
+});
+
+test('TreeDropdownField should render joined titles when readonly and multiple', () => {
+  const { getByRole } = render(
+    <TreeDropdownField {...makeProps({
+      disabled: true,
+      value: [5, 9],
+      data: { urlTree: 'foo', multiple: true },
+      selectedValues: [{ id: 5, title: 'page five' }, { id: 9, title: 'page nine' }],
+    })}
+    />
+  );
+  expect(getByRole('textbox').textContent).toBe('page five, page nine');
+});
+
+test('TreeDropdownField should load the tree on mount unless readonly or disabled', () => {
+  const beginTreeUpdating = jest.fn();
+  const actions = {
+    treeDropdownField: { ...makeProps().actions.treeDropdownField, beginTreeUpdating },
+  };
+  render(<TreeDropdownField {...makeProps({ actions })} />);
+  expect(beginTreeUpdating).toHaveBeenCalledWith('Form_Test', []);
+  beginTreeUpdating.mockClear();
+  render(<TreeDropdownField {...makeProps({ actions, readOnly: true })} />);
+  render(<TreeDropdownField {...makeProps({ actions, disabled: true })} />);
+  expect(beginTreeUpdating).not.toHaveBeenCalled();
+});
+
+test('TreeDropdownField should request the tree url as json', () => {
+  const fetch = jest.fn(() => new Promise(() => {}));
+  render(<TreeDropdownField {...makeProps({ fetch, value: 67 })} />);
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch.mock.calls[0][0]).toContain('url-callback');
+  expect(fetch.mock.calls[0][0]).toContain('format=json');
+  expect(fetch.mock.calls[0][0]).toContain('forceValue=67');
+  expect(fetch.mock.calls[0][1]).toEqual({ credentials: 'same-origin' });
+});
+
+test('TreeDropdownField should reload the tree when the search, url or cache key changes', () => {
+  const beginTreeUpdating = jest.fn();
+  const actions = {
+    treeDropdownField: { ...makeProps().actions.treeDropdownField, beginTreeUpdating },
+  };
+  const props = makeProps({ actions, visible: [5] });
+  const { rerender } = render(<TreeDropdownField {...props} />);
+  beginTreeUpdating.mockClear();
+  rerender(<TreeDropdownField {...props} />);
+  expect(beginTreeUpdating).not.toHaveBeenCalled();
+  rerender(<TreeDropdownField {...props} search="abc" />);
+  expect(beginTreeUpdating).toHaveBeenLastCalledWith('Form_Test', [5]);
+  beginTreeUpdating.mockClear();
+  rerender(<TreeDropdownField {...props} search="abc" data={{ urlTree: 'other' }} />);
+  expect(beginTreeUpdating).toHaveBeenLastCalledWith('Form_Test', []);
+  beginTreeUpdating.mockClear();
+  rerender(<TreeDropdownField {...props} search="abc" data={{ urlTree: 'other', cacheKey: 'k' }} />);
+  expect(beginTreeUpdating).toHaveBeenLastCalledWith('Form_Test', []);
+});
+
+test('TreeDropdownField should not reload the tree on update when readonly', () => {
+  const beginTreeUpdating = jest.fn();
+  const actions = {
+    treeDropdownField: { ...makeProps().actions.treeDropdownField, beginTreeUpdating },
+  };
+  const props = makeProps({ actions, readOnly: true });
+  const { rerender } = render(<TreeDropdownField {...props} />);
+  rerender(<TreeDropdownField {...props} search="abc" />);
+  expect(beginTreeUpdating).not.toHaveBeenCalled();
+});
+
+test('TreeDropdownField should debounce setting the search value', () => {
+  const setSearch = jest.fn();
+  const { container } = render(
+    <TreeDropdownField {...makeProps({
+      actions: {
+        ...makeProps().actions,
+        treeDropdownField: { ...makeProps().actions.treeDropdownField, setSearch },
+      },
+      data: { urlTree: 'foo', showSearch: true },
+    })}
+    />
+  );
+  const input = container.querySelector('.treedropdownfield__value-container input');
+  fireEvent.change(input, { target: { value: 'a' } });
+  fireEvent.change(input, { target: { value: 'ab' } });
+  expect(setSearch).not.toHaveBeenCalledWith('Form_Test', 'a');
+  act(() => jest.runAllTimers());
+  expect(setSearch).toHaveBeenCalledWith('Form_Test', 'ab');
+  expect(setSearch).not.toHaveBeenCalledWith('Form_Test', 'a');
+});
+
+test('TreeDropdownField should call onLoadingError when loading the tree fails', async () => {
+  const onLoadingError = jest.fn();
+  const updateTreeFailed = jest.fn();
+  render(
+    <TreeDropdownField {...makeProps({
+      onLoadingError,
+      fetch: () => Promise.reject(new Error('boom')),
+      actions: {
+        ...makeProps().actions,
+        treeDropdownField: { ...makeProps().actions.treeDropdownField, updateTreeFailed },
+      },
+    })}
+    />
+  );
+  await act(async () => { await Promise.resolve(); });
+  expect(updateTreeFailed).toHaveBeenCalledWith('Form_Test', []);
+  expect(onLoadingError).toHaveBeenCalledWith({ errors: [{ value: 'boom', type: 'error' }] });
+});
+
+test('TreeDropdownField should show a no options message for an empty tree', () => {
+  const { container } = render(
+    <TreeDropdownField {...makeProps({ tree: { children: [], count: 0 } })} />
+  );
+  const input = container.querySelector('.treedropdownfield__value-container input');
+  fireEvent.focus(input);
+  fireEvent.keyDown(input, { key: 'ArrowDown' });
+  expect(container.querySelector('.treedropdownfield__menu').textContent).toContain('No options');
+});
+
+test('TreeDropdownField should apply extraClass', () => {
+  const { container } = render(<TreeDropdownField {...makeProps({ extraClass: 'my-class' })} />);
+  expect(container.querySelector('.treedropdownfield.my-class')).not.toBeNull();
+});
