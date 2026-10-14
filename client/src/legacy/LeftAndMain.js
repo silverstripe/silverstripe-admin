@@ -890,6 +890,35 @@ $.entwine('ss', function($) {
           var styles = newContentEl.find('style').detach();
           if(styles.length) $(document).find('head').append(styles);
 
+          // Ensure declarative shadow DOMs get injected correctly
+          newContentEl.find('template[shadowrootmode]').each((_, template) => {
+            const mode = template.getAttribute('shadowrootmode');
+            const shadowSettings = { mode };
+            const clonable = template.getAttribute('shadowrootclonable');
+            if (clonable) {
+              shadowSettings['clonable'] = true;
+            }
+            const delegatesFocus = template.getAttribute('shadowrootdelegatesfocus');
+            if (delegatesFocus) {
+              shadowSettings['delegatesFocus'] = true;
+            }
+            const referenceTarget = template.getAttribute('shadowrootreferencetarget');
+            if (referenceTarget !== null) {
+              shadowSettings['referenceTarget'] = referenceTarget;
+            }
+            const slotAssignment = template.getAttribute('shadowrootslotassignment');
+            if (slotAssignment !== null) {
+              shadowSettings['slotAssignment'] = slotAssignment;
+            }
+            const serializable = template.getAttribute('shadowrootserializable');
+            if (serializable) {
+              shadowSettings['serializable'] = true;
+            }
+            const shadowRoot = template.parentElement.attachShadow(shadowSettings);
+            shadowRoot.appendChild(template.content);
+            template.remove();
+          });
+
           // Replace panel completely (we need to override the "layout" attribute, so can't replace the child instead)
           contentEl.replaceWith(newContentEl);
 
