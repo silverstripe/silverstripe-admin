@@ -373,7 +373,7 @@ if (typeof $.entwine === 'function') {
     'from .cms-container form': {
       onaftersubmitform: function(e){
         const id = $('.cms-edit-form :input[name=ID]').val();
-        const node = this.find(`[data-id=${id}]`);
+        const node = this.find(`[data-id="${id}"]`);
         let ids = [+id];
         node.find('li').each(function () {
           ids.push($(this).data('id'));
@@ -496,7 +496,7 @@ if (typeof $.entwine === 'function') {
      *  DOMElement
      */
     getNodeByID: function(id) {
-      return this.find('*[data-id='+id+']');
+      return this.find('*[data-id="'+id+'"]');
     },
 
     /**
@@ -736,7 +736,7 @@ if (typeof $.entwine === 'function') {
                 // If the parent node can't be found, it might have not been loaded yet.
                 // This can happen for deep trees which require ajax loading.
                 // Assumes that the new node has been submitted to the server already.
-                if (nodeData.ParentID && !self.find('li[data-id=' + nodeData.ParentID + ']').length) {
+                if (nodeData.ParentID && !self.find('li[data-id="' + nodeData.ParentID + '"]').length) {
                   self.openToRecord(nodeId, nodeData.ParentID);
                 } else {
 
