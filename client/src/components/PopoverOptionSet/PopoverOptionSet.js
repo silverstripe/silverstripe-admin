@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Input, InputGroup, Popover, Util as reactstrapUtil } from 'reactstrap';
 import Button from 'components/Button/Button';
@@ -9,161 +9,147 @@ import i18n from 'i18n';
  * Fills a popover with buttons and a search box to filter the buttons.
  * See the storybook for more details
  */
-class PopoverOptionSet extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleToggle = this.handleToggle.bind(this);
-    this.handleSearchValueClear = this.handleSearchValueClear.bind(this);
-    this.handleSearchValueChange = this.handleSearchValueChange.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.doToggle = this.doToggle.bind(this);
-    this.focusOnTarget = this.focusOnTarget.bind(this);
-
-    this.state = {
-      searchValue: ''
-    };
-  }
+const PopoverOptionSet = (_props) => {
+  const defaultProps = {
+    searchPlaceholder: i18n._t('PopoverOptionSet.SEARCH_PLACEHOLDER', 'Search'),
+    onSearch: (query, buttons) => buttons.filter(
+      ({ content }) => content.toLowerCase().includes(query.toLowerCase())
+    ),
+    disableSearch: false,
+    ButtonComponent: Button,
+    PopoverComponent: Popover,
+    className: 'popover-option-set',
+    searchClassName: 'popover-option-set__search',
+    searchInputClassName: 'popover-option-set__search-input',
+    clearButtonClassName: 'popover-option-set__search-clear btn btn-link',
+    buttonContainerClassName: 'popover-option-set__button-container',
+    emptyResultClassName: 'popover-option-set__no-results',
+    buttonClassName: 'popover-option-set__button',
+  };
+  const props = {
+    ...defaultProps,
+    ..._props,
+  };
+  const [searchValue, setSearchValue] = useState('');
 
   /**
-   * Handle the toggle from the underlying react strap component.
+   * Handle click on clear button within search bar
    */
-  handleToggle() {
-    this.doToggle(false);
-  }
+  const handleSearchValueClear = () => {
+    setSearchValue('');
+  };
+
+  /**
+   * Move the focus back to the popover target
+   */
+  const focusOnTargetElement = () => {
+    if (props.target) {
+      const el = reactstrapUtil.getTarget(props.target);
+      if (el) {
+        el.focus();
+      }
+    }
+  };
 
   /**
    * Pass toggle to parent (props requires a toggle function) and clear the search input
    * @param {bool} focusOnTarget Whether we should give the focus back to the popover target.
    */
-  doToggle(focusOnTarget) {
-    const { toggle } = this.props;
-
-    toggle();
-    this.handleSearchValueClear();
+  const doToggle = (focusOnTarget) => {
+    props.toggle();
+    handleSearchValueClear();
 
     if (focusOnTarget) {
-      this.focusOnTarget();
+      focusOnTargetElement();
     }
-  }
+  };
 
   /**
-   * Move the focus back to the popover target
+   * Handle the toggle from the underlying react strap component.
    */
-  focusOnTarget() {
-    const { target } = this.props;
-    if (target) {
-      const el = reactstrapUtil.getTarget(target);
-      if (el) {
-        el.focus();
-      }
-    }
-  }
-
-  /**
-   * Handle click on clear button within search bar
-   */
-  handleSearchValueClear() {
-    this.setState(
-      { searchValue: '' }
-    );
-  }
+  const handleToggle = () => {
+    doToggle(false);
+  };
 
   /**
    * Update the internal state on user input change
    * @param {Event} event
    */
-  handleSearchValueChange(event) {
-    this.setState(
-      { searchValue: event.target.value }
-    );
-  }
+  const handleSearchValueChange = (event) => {
+    setSearchValue(event.target.value);
+  };
 
   /**
    * Handle key presses that are triggered while the popover is focused
    *
    * @param {SyntheticEvent} event
    */
-  handleKeyDown(event) {
+  const handleKeyDown = (event) => {
     if (event.key === 'Escape') {
-      this.doToggle(true);
+      doToggle(true);
     }
-  }
+  };
 
   /**
    * Render a link to clear the search field if user entered input
    * @returns {button|null}
    */
-  renderSearchValueClearLink() {
-    const { clearButtonClassName } = this.props;
-    const { searchValue } = this.state;
-
+  const renderSearchValueClearLink = () => {
     if (searchValue.length === 0) {
       return null;
     }
 
     return (
       <button
-        className={classNames(clearButtonClassName)}
-        onClick={this.handleSearchValueClear}
+        className={classNames(props.clearButtonClassName)}
+        onClick={handleSearchValueClear}
       >
         {i18n._t('PopoverOptionSet.CLEAR', 'Clear')}
       </button>
     );
-  }
+  };
 
   /**
    * Render the search value input box (which is in turn used to filter the buttons)
    *
    * @return {InputGroup|null}
    */
-  renderSearchBox() {
-    const {
-      searchPlaceholder, disableSearch, searchClassName, searchInputClassName
-    } = this.props;
-    const { searchValue } = this.state;
-
-    if (disableSearch) {
+  const renderSearchBox = () => {
+    if (props.disableSearch) {
       return null;
     }
 
     return (
-      <InputGroup className={classNames(searchClassName)}>
+      <InputGroup className={classNames(props.searchClassName)}>
         <Input
           autoFocus
-          className={classNames(searchInputClassName)}
-          onChange={this.handleSearchValueChange}
-          placeholder={searchPlaceholder}
+          className={classNames(props.searchInputClassName)}
+          onChange={handleSearchValueChange}
+          placeholder={props.searchPlaceholder}
           type="text"
           value={searchValue}
         />
-        {this.renderSearchValueClearLink()}
+        {renderSearchValueClearLink()}
       </InputGroup>
     );
-  }
+  };
 
   /**
    * Render either all buttons available, buttons matching the search term, or a message that
    * there are no matching buttons
    * @returns {DOMElement}
    */
-  renderOptionButtons() {
-    const {
-      buttons, onSearch, buttonContainerClassName,
-      emptyResultClassName, buttonClassName, ButtonComponent
-    } = this.props;
-    const { searchValue } = this.state;
-
-    let buttonsToRender = buttons;
+  const renderOptionButtons = () => {
+    let buttonsToRender = props.buttons;
 
     if (searchValue.length !== 0) {
-      buttonsToRender = onSearch(searchValue, buttonsToRender);
+      buttonsToRender = props.onSearch(searchValue, buttonsToRender);
     }
 
     if (buttonsToRender.length === 0) {
       return (
-        <div className={classNames(buttonContainerClassName)}>
-          <div className={classNames(emptyResultClassName)}>
+        <div className={classNames(props.buttonContainerClassName)}>
+          <div className={classNames(props.emptyResultClassName)}>
             {i18n._t('PopoverOptionSet.NO_RESULTS', 'No results found')}
           </div>
         </div>
@@ -171,14 +157,14 @@ class PopoverOptionSet extends Component {
     }
 
     return (
-      <div className={classNames(buttonContainerClassName)}>
+      <div className={classNames(props.buttonContainerClassName)}>
         {buttonsToRender.map((button) => (
-          <ButtonComponent
+          <props.ButtonComponent
             {...button.buttonProps}
             className={
               classNames(
                 button.className,
-                buttonClassName
+                props.buttonClassName
               )
             }
             key={button.key}
@@ -186,37 +172,29 @@ class PopoverOptionSet extends Component {
             icon={button.icon}
           >
             {button.content}
-          </ButtonComponent>
+          </props.ButtonComponent>
         ))}
       </div>
     );
-  }
+  };
 
-  /**
-   * Render the option set popover
-   * @returns {Popover}
-   */
-  render() {
-    const { container, className, isOpen, placement, target, PopoverComponent } = this.props;
-
-    return (
-      <PopoverComponent
-        className={classNames(className)}
-        container={container}
-        hideArrow
-        isOpen={isOpen}
-        onKeyDown={this.handleKeyDown}
-        placement={placement}
-        target={target}
-        toggle={this.handleToggle}
-        trigger="legacy"
-      >
-        {this.renderSearchBox()}
-        {this.renderOptionButtons()}
-      </PopoverComponent>
-    );
-  }
-}
+  return (
+    <props.PopoverComponent
+      className={classNames(props.className)}
+      container={props.container}
+      hideArrow
+      isOpen={props.isOpen}
+      onKeyDown={handleKeyDown}
+      placement={props.placement}
+      target={props.target}
+      toggle={handleToggle}
+      trigger="legacy"
+    >
+      {renderSearchBox()}
+      {renderOptionButtons()}
+    </props.PopoverComponent>
+  );
+};
 
 PopoverOptionSet.propTypes = {
   buttons: PropTypes.arrayOf(PropTypes.shape({
@@ -253,24 +231,6 @@ PopoverOptionSet.propTypes = {
     PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
   emptyResultClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
   buttonClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
-};
-
-PopoverOptionSet.defaultProps = {
-  searchPlaceholder: i18n._t('PopoverOptionSet.SEARCH_PLACEHOLDER', 'Search'),
-  onSearch: (query, buttons) => buttons.filter(
-    ({ content }) => content.toLowerCase().includes(query.toLowerCase())
-  ),
-  disableSearch: false,
-  ButtonComponent: Button,
-  PopoverComponent: Popover,
-  className: 'popover-option-set',
-  searchClassName: 'popover-option-set__search',
-  searchInputClassName: 'popover-option-set__search-input',
-  clearButtonClassName: 'popover-option-set__search-clear btn btn-link',
-  buttonContainerClassName: 'popover-option-set__button-container',
-  emptyResultClassName: 'popover-option-set__no-results',
-  buttonClassName: 'popover-option-set__button',
-
 };
 
 export default PopoverOptionSet;
