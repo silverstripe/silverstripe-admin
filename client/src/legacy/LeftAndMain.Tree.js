@@ -44,6 +44,11 @@ const isOpenButUnloaded = ($node) => $node.length > 0
   && !$node.hasClass('jstree-leaf')
   && $node.children('ul').children('li').length === 0;
 
+// A parent missing from the tree, or one in it without any children, has to be loaded before a child
+// can be shown, as creating the child alone would graft it in as the only child and hide its siblings
+const needsChildrenLoaded = ($parent) => $parent.length === 0
+  || $parent.children('ul').children('li').length === 0;
+
 // Resolves top down to the closest ancestor already in the tree, or to an empty path when one can't
 // be resolved. One level per request, as updatetreenodes only reports a record's immediate parent.
 const collectAncestorPath = (parentId, tree, path = []) => {
@@ -604,6 +609,10 @@ if (typeof $.entwine === 'function') {
         if(node.length) {
           this.jstree('deselect_all');
           this.jstree('select_node', node);
+          // load_node() ignores _is_loaded(), so it can fill in children the server left out
+          if (isOpenButUnloaded(node)) {
+            this.jstree('load_node', node, $.noop, $.noop);
+          }
         } else {
           // If form is showing an ID that doesn't exist in the tree,
           // get it from the server
@@ -736,7 +745,7 @@ if (typeof $.entwine === 'function') {
                 // If the parent node can't be found, it might have not been loaded yet.
                 // This can happen for deep trees which require ajax loading.
                 // Assumes that the new node has been submitted to the server already.
-                if (nodeData.ParentID && !self.find('li[data-id="' + nodeData.ParentID + '"]').length) {
+                if (nodeData.ParentID && needsChildrenLoaded(self.getNodeByID(nodeData.ParentID))) {
                   self.openToRecord(nodeId, nodeData.ParentID);
                 } else {
 
@@ -829,4 +838,10 @@ if (typeof $.entwine === 'function') {
   });
 }
 
-export { updateRovingTabindex, resetTabindexToCurrentPage, openTreeToRecord, isOpenButUnloaded };
+export {
+  updateRovingTabindex,
+  resetTabindexToCurrentPage,
+  openTreeToRecord,
+  isOpenButUnloaded,
+  needsChildrenLoaded,
+};

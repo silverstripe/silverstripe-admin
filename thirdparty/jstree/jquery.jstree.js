@@ -4164,9 +4164,11 @@
 						s.ajax.error = error_func;
 						s.ajax.success = success_func;
 						if(!s.ajax.dataType) { s.ajax.dataType = "html"; }
-						if(typeof s.ajax.url === 'function') { s.ajax.url = s.ajax.url.call(this, obj); }
-						if(typeof s.ajax.data === 'function') { s.ajax.data = s.ajax.data.call(this, obj); }
-						$.ajax(s.ajax);
+						// Resolve url and data on a copy, so the next load_node() still calls them for its own node
+						var ajax_settings = $.extend({}, s.ajax);
+						if(typeof s.ajax.url === 'function') { ajax_settings.url = s.ajax.url.call(this, obj); }
+						if(typeof s.ajax.data === 'function') { ajax_settings.data = s.ajax.data.call(this, obj); }
+						$.ajax(ajax_settings);
 						break;
 				}
 			}
