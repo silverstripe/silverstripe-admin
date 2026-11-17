@@ -6,6 +6,7 @@ import {
   resetTabindexToCurrentPage,
   openTreeToRecord,
   isOpenButUnloaded,
+  needsChildrenLoaded,
 } from '../LeftAndMain.Tree';
 
 // Helper to simulate tree structure
@@ -374,4 +375,24 @@ test('isOpenButUnloaded ignores an open node which already has its children', ()
 test('isOpenButUnloaded ignores a node which is not in the tree', () => {
   setupThresholdTreeDOM();
   expect(isOpenButUnloaded($('[data-id="13"]'))).toBe(false);
+});
+
+test('needsChildrenLoaded is true for a parent which is not in the tree', () => {
+  setupThresholdTreeDOM();
+  expect(needsChildrenLoaded($('[data-id="13"]'))).toBe(true);
+});
+
+test('needsChildrenLoaded is true for an open parent whose children were never rendered', () => {
+  setupThresholdTreeDOM();
+  expect(needsChildrenLoaded($('[data-id="12"]'))).toBe(true);
+});
+
+test('needsChildrenLoaded is true for a leaf which is gaining its first child', () => {
+  setupThresholdTreeDOM();
+  expect(needsChildrenLoaded($('[data-id="18"]'))).toBe(true);
+});
+
+test('needsChildrenLoaded is false for a parent which already has its children', () => {
+  setupThresholdTreeDOM();
+  expect(needsChildrenLoaded($('[data-id="16"]'))).toBe(false);
 });
