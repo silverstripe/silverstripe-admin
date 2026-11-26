@@ -1,0 +1,52 @@
+/**
+ * Status badge
+ */
+
+.status-badge {
+  --status-badge-archived-bg-color: #f1f3f6;
+  --status-badge-archived-color: #455b6c;
+  --status-badge-bg-color: #{$color-notice};
+  --status-badge-border-radius: var(--bs-border-radius);
+  --status-badge-color: #{$body-color-dark};
+  --status-badge-draft-bg-color: #{$state-draft-bg};
+  --status-badge-draft-color: #{$state-draft};
+  --status-badge-font-size: #{$font-size-xxs};
+  --status-badge-font-weight: 400;
+  --status-badge-letter-spacing: 0.0231rem;
+  --status-badge-margin-start: 0.2308rem;
+  --status-badge-modified-bg-color: #{$state-modified-bg};
+  --status-badge-modified-color: #{$state-modified};
+  --status-badge-padding: 0.35rem 0.4rem;
+
+  background-color: var(--status-badge-bg-color);
+  border-radius: var(--status-badge-border-radius);
+  color: var(--status-badge-color);
+  display: inline-block;
+  flex-shrink: 0;
+  font-size: var(--status-badge-font-size);
+  font-weight: var(--status-badge-font-weight);
+  letter-spacing: var(--status-badge-letter-spacing);
+  line-height: 1;
+  margin-inline-start: var(--status-badge-margin-start);
+  padding: var(--status-badge-padding);
+  text-align: center;
+  text-shadow: none;
+  text-transform: uppercase;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.status-badge--archived {
+  --status-badge-bg-color: var(--status-badge-archived-bg-color);
+  --status-badge-color: var(--status-badge-archived-color);
+}
+
+.status-badge--draft {
+  --status-badge-bg-color: var(--status-badge-draft-bg-color);
+  --status-badge-color: var(--status-badge-draft-color);
+}
+
+.status-badge--modified {
+  --status-badge-bg-color: var(--status-badge-modified-bg-color);
+  --status-badge-color: var(--status-badge-modified-color);
+}

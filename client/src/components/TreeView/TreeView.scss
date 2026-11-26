@@ -1,0 +1,314 @@
+/**
+ * Tree view
+ *
+ * The tree has no scroll container of its own. An element around the tree scrolls it, as for the legacy tree.
+ *
+ * The lengths are the pixel values of the legacy tree divided by the 13px root font size, so `1.5385rem` is 20px.
+ *
+ * Many declarations only reset global `a`, `button` and `ul` styles. Remove each one when the rule it undoes goes.
+ *
+ * Rules read only CSS custom properties. A Sass variable appears only as a token default, where the admin keeps a
+ * shared value in `_variables.scss`.
+ */
+
+.tree-view {
+  --tree-view-focus-outline-offset: calc(var(--focus-outline-offset) * 7.5 + var(--focus-outline-width));
+  --tree-view-focus-outline-style: dashed;
+  --tree-view-group-padding-start: 1.5385rem;
+  --tree-view-icon-dot-addedtodraft-bg-color: #ff7f22;
+  --tree-view-icon-dot-addedtodraft-ring-color: #{$state-draft};
+  --tree-view-icon-dot-archived-bg-color: #5f7688;
+  --tree-view-icon-dot-bg-color: transparent;
+  --tree-view-icon-dot-border: 0.0769rem solid var(--bs-white);
+  --tree-view-icon-dot-display: none;
+  --tree-view-icon-dot-modified-bg-color: #fff2e8;
+  --tree-view-icon-dot-modified-ring-color: #{$state-modified};
+  --tree-view-icon-dot-removed-bg-color: #f1f3f6;
+  --tree-view-icon-dot-removed-ring-color: #455b6c;
+  --tree-view-icon-dot-ring-color: transparent;
+  --tree-view-icon-dot-ring-width: 0.0769rem;
+  --tree-view-icon-dot-shadow: 0 0.0769rem 0.0769rem rgba(0, 0, 0, 0.3);
+  --tree-view-icon-dot-size: 0.6154rem;
+  --tree-view-icon-margin-end: 0.3077rem;
+  --tree-view-item-content-width: auto;
+  --tree-view-item-display: grid;
+  --tree-view-item-min-width: auto;
+  --tree-view-item-padding-start: 0;
+  --tree-view-item-too-many-color: var(--bs-gray-600);
+  --tree-view-line-height: 1.9231rem;
+  --tree-view-link-addedtodraft-bg-color: #{$state-draft-bg};
+  --tree-view-link-bg-color: transparent;
+  --tree-view-link-border-radius: var(--bs-border-radius);
+  --tree-view-link-color: var(--bs-link-color);
+  --tree-view-link-current-bg-color: #e8f5ff;
+  --tree-view-link-cursor: pointer;
+  --tree-view-link-display: flex;
+  --tree-view-link-font-style: normal;
+  --tree-view-link-hover-bg-color: #e8f5ff;
+  --tree-view-link-justify-self: start;
+  --tree-view-link-line-height: 1.2308rem;
+  --tree-view-link-margin-end: 0.3846rem;
+  --tree-view-link-margin-top: 0.1538rem;
+  --tree-view-link-modified-bg-color: #{$state-modified-bg};
+  --tree-view-link-overflow: visible;
+  --tree-view-link-padding-x: 0.4615rem;
+  --tree-view-link-padding-y: 0.2308rem;
+  --tree-view-link-removed-bg-color: #f1f3f6;
+  --tree-view-link-text-shadow: 0.0769rem 0.0769rem 0.0769rem var(--bs-white);
+  --tree-view-list-margin-end: 0;
+  --tree-view-list-padding-start: 0.2308rem;
+  --tree-view-padding-bottom: #{$panel-padding-y};
+  --tree-view-title-row-text-font-weight: 700;
+  --tree-view-title-row-text-padding-start: 0.0769rem;
+  --tree-view-item-row-height: var(--tree-view-line-height);
+  --tree-view-title-flex-grow: 0;
+  --tree-view-title-overflow: visible;
+  --tree-view-title-text-decoration: none;
+  --tree-view-toggle-expanded-transform: rotate(90deg);
+  --tree-view-toggle-font-size: 1.5385rem;
+  --tree-view-toggle-margin-top: 0.1538rem;
+  --tree-view-toggle-size: 1.3846rem;
+  --tree-view-toggle-transition: transform 0.2s ease-in;
+
+  flex-grow: 1;
+  padding-block-end: var(--tree-view-padding-bottom);
+  white-space: nowrap;
+
+  @media (prefers-reduced-motion: reduce) {
+    --tree-view-toggle-transition: none;
+  }
+
+  &:has(:focus-visible) {
+    outline: var(--focus-outline-width) var(--tree-view-focus-outline-style) var(--focus-outline-color);
+    outline-offset: var(--tree-view-focus-outline-offset);
+  }
+}
+
+.tree-view--side-panel {
+  --tree-view-item-content-width: minmax(0, 1fr);
+  --tree-view-item-min-width: 14.3846rem;
+  --tree-view-link-justify-self: stretch;
+  --tree-view-link-margin-top: 0;
+  --tree-view-link-overflow: hidden;
+  // As in the legacy side-panel tree, the list reaches 20px past the panel and the badge sits at the row's right edge.
+  --tree-view-link-padding-end: 0;
+  --tree-view-list-margin-end: -1.5385rem;
+  --tree-view-item-row-height: calc(var(--tree-view-link-line-height) + 2 * var(--tree-view-link-padding-y));
+  --tree-view-title-flex-grow: 1;
+  --tree-view-title-overflow: hidden;
+}
+
+.tree-view__title-row {
+  --tree-view-toggle-transform: none;
+
+  align-items: start;
+  display: grid;
+  grid-template-columns: var(--tree-view-toggle-size) auto;
+  line-height: var(--tree-view-line-height);
+}
+
+.tree-view__title-row--expanded {
+  --tree-view-toggle-transform: var(--tree-view-toggle-expanded-transform);
+}
+
+.tree-view__title-row-text {
+  font-weight: var(--tree-view-title-row-text-font-weight);
+  grid-column: 2;
+  padding-inline-start: var(--tree-view-title-row-text-padding-start);
+}
+
+.tree-view__toggle {
+  background: none;
+  block-size: var(--tree-view-toggle-size);
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  display: grid;
+  font-size: var(--tree-view-toggle-font-size);
+  inline-size: var(--tree-view-toggle-size);
+  line-height: var(--tree-view-toggle-size);
+  margin-block-start: var(--tree-view-toggle-margin-top);
+  padding: 0;
+  place-items: center;
+  transform: var(--tree-view-toggle-transform);
+  transition: var(--tree-view-toggle-transition);
+
+  &:focus-visible {
+    outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
+    outline-offset: var(--focus-outline-offset);
+  }
+}
+
+.tree-view__list {
+  list-style: none;
+  margin-block: 0;
+  margin-inline: 0 var(--tree-view-list-margin-end);
+  padding-block: 0;
+  padding-inline: var(--tree-view-list-padding-start) 0;
+}
+
+// Every item resets the toggle transform. The children of an expanded item then do not inherit the rotation.
+.tree-view__item {
+  --tree-view-toggle-transform: none;
+
+  align-items: start;
+  display: var(--tree-view-item-display);
+  grid-template-columns: var(--tree-view-toggle-size) var(--tree-view-item-content-width);
+  grid-template-rows: var(--tree-view-item-row-height);
+  line-height: var(--tree-view-line-height);
+  min-inline-size: var(--tree-view-item-min-width);
+  padding-inline-start: var(--tree-view-item-padding-start);
+}
+
+.tree-view__item--expanded {
+  --tree-view-toggle-transform: var(--tree-view-toggle-expanded-transform);
+}
+
+// The loading item and the too-many item hold bare text, which cannot take a grid column, so they indent it instead.
+.tree-view__item--loading {
+  --tree-view-item-display: block;
+  --tree-view-item-padding-start: calc(var(--tree-view-toggle-size) + var(--tree-view-link-padding-x));
+}
+
+.tree-view__item--too-many {
+  --tree-view-item-display: block;
+  --tree-view-item-padding-start: var(--tree-view-toggle-size);
+  --tree-view-link-display: inline;
+  --tree-view-link-margin-end: 0;
+  --tree-view-link-padding-x: 0;
+  --tree-view-link-padding-y: 0;
+
+  color: var(--tree-view-item-too-many-color);
+}
+
+.tree-view__link {
+  align-items: center;
+  background-color: var(--tree-view-link-bg-color);
+  block-size: calc(var(--tree-view-link-line-height) + 2 * var(--tree-view-link-padding-y));
+  border: 0;
+  border-radius: var(--tree-view-link-border-radius);
+  color: var(--tree-view-link-color);
+  cursor: var(--tree-view-link-cursor);
+  display: var(--tree-view-link-display);
+  font: inherit;
+  font-style: var(--tree-view-link-font-style);
+  grid-column: 2;
+  justify-self: var(--tree-view-link-justify-self);
+  line-height: var(--tree-view-link-line-height);
+  margin-block-start: var(--tree-view-link-margin-top);
+  margin-inline-end: var(--tree-view-link-margin-end);
+  min-inline-size: 0;
+  overflow: var(--tree-view-link-overflow);
+  padding-block: var(--tree-view-link-padding-y);
+  padding-inline: var(--tree-view-link-padding-x) var(--tree-view-link-padding-end, var(--tree-view-link-padding-x));
+  text-align: start;
+  text-decoration: none;
+  text-shadow: var(--tree-view-link-text-shadow);
+
+  // The global `a:hover` rule outranks `.tree-view__link`, so the hover state removes its underline again.
+  &:hover {
+    --tree-view-link-bg-color: var(--tree-view-link-hover-bg-color);
+    --tree-view-link-text-shadow: none;
+
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
+    outline-offset: var(--focus-outline-offset);
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.tree-view__link--current {
+  --tree-view-link-bg-color: var(--tree-view-link-current-bg-color);
+}
+
+.tree-view__link--status-addedtodraft {
+  --tree-view-icon-dot-bg-color: var(--tree-view-icon-dot-addedtodraft-bg-color);
+  --tree-view-icon-dot-display: block;
+  --tree-view-icon-dot-ring-color: var(--tree-view-icon-dot-addedtodraft-ring-color);
+  --tree-view-link-current-bg-color: var(--tree-view-link-addedtodraft-bg-color);
+  --tree-view-link-hover-bg-color: var(--tree-view-link-addedtodraft-bg-color);
+}
+
+.tree-view__link--status-modified {
+  --tree-view-icon-dot-bg-color: var(--tree-view-icon-dot-modified-bg-color);
+  --tree-view-icon-dot-display: block;
+  --tree-view-icon-dot-ring-color: var(--tree-view-icon-dot-modified-ring-color);
+  --tree-view-link-current-bg-color: var(--tree-view-link-modified-bg-color);
+  --tree-view-link-hover-bg-color: var(--tree-view-link-modified-bg-color);
+}
+
+.tree-view__link--status-archived {
+  --tree-view-icon-dot-bg-color: var(--tree-view-icon-dot-archived-bg-color);
+  --tree-view-icon-dot-display: block;
+  --tree-view-icon-dot-ring-color: var(--tree-view-icon-dot-removed-ring-color);
+  --tree-view-link-current-bg-color: var(--tree-view-link-removed-bg-color);
+  --tree-view-link-hover-bg-color: var(--tree-view-link-removed-bg-color);
+  --tree-view-title-text-decoration: line-through;
+}
+
+.tree-view__link--status-deletedonlive {
+  --tree-view-icon-dot-bg-color: var(--tree-view-icon-dot-removed-bg-color);
+  --tree-view-icon-dot-display: block;
+  --tree-view-icon-dot-ring-color: var(--tree-view-icon-dot-removed-ring-color);
+  --tree-view-link-current-bg-color: var(--tree-view-link-removed-bg-color);
+  --tree-view-link-hover-bg-color: var(--tree-view-link-removed-bg-color);
+  --tree-view-title-text-decoration: line-through;
+}
+
+.tree-view__link--status-removedfromdraft {
+  --tree-view-icon-dot-bg-color: var(--tree-view-icon-dot-removed-bg-color);
+  --tree-view-icon-dot-display: block;
+  --tree-view-icon-dot-ring-color: var(--tree-view-icon-dot-removed-ring-color);
+  --tree-view-link-current-bg-color: var(--tree-view-link-removed-bg-color);
+  --tree-view-link-hover-bg-color: var(--tree-view-link-removed-bg-color);
+}
+
+.tree-view__link--disabled {
+  --tree-view-link-current-bg-color: transparent;
+  --tree-view-link-cursor: default;
+  --tree-view-link-font-style: italic;
+  --tree-view-link-hover-bg-color: transparent;
+}
+
+.tree-view__icon {
+  flex-shrink: 0;
+  margin-inline-end: var(--tree-view-icon-margin-end);
+  position: relative;
+
+  &:after {
+    background-color: var(--tree-view-icon-dot-bg-color);
+    block-size: var(--tree-view-icon-dot-size);
+    border: var(--tree-view-icon-dot-border);
+    border-radius: 50%;
+    box-shadow:
+      var(--tree-view-icon-dot-shadow),
+      inset 0 0 0 var(--tree-view-icon-dot-ring-width) var(--tree-view-icon-dot-ring-color);
+    box-sizing: border-box;
+    content: '';
+    display: var(--tree-view-icon-dot-display);
+    inline-size: var(--tree-view-icon-dot-size);
+    inset-block-end: 0;
+    inset-inline-end: 0;
+    position: absolute;
+  }
+}
+
+.tree-view__title {
+  flex-grow: var(--tree-view-title-flex-grow);
+  min-inline-size: 0;
+  overflow: var(--tree-view-title-overflow);
+  text-decoration: var(--tree-view-title-text-decoration);
+  text-overflow: ellipsis;
+}
+
+.tree-view__group {
+  grid-column: 1 / -1;
+  list-style: none;
+  margin: 0;
+  padding-block: 0;
+  padding-inline: var(--tree-view-group-padding-start) 0;
+}
